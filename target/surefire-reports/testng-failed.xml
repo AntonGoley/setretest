@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite verbose="0" name="Failed suite [Command line suite]">
+  <test name="Command line test(failed)">
+    <classes>
+      <class name="ru.crystals.test2.TableReportTest">
+        <methods>
+          <include name="testAdverstingHTMLReportTableHead"/>
+          <include name="testGoodInReport"/>
+          <include name="testWithEmptyShop"/>
+          <include name="testEmptyAdverstingHTMLReport"/>
+        </methods>
+      </class> <!-- ru.crystals.test2.TableReportTest -->
+      <class name="ru.crystals.test2.SpiritRestrictionsToSAPTest">
+        <methods>
+          <include name="prepareTest"/>
+          <include name="setupWebDriver"/>
+          <include name="test"/>
+        </methods>
+      </class> <!-- ru.crystals.test2.SpiritRestrictionsToSAPTest -->
+    </classes>
+  </test> <!-- Command line test(failed) -->
+</suite> <!-- Failed suite [Command line suite] -->

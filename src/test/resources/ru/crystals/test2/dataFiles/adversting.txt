@@ -1,0 +1,14 @@
+<AdvertisingActions>
+<AdvertisingAction transaction-id="%2$s" worksAnyTime="false" ignoreRestictions="true" priority="1" mode="automatic" active="true" name="test_%1$s" external-code="TEST_%2$s" discountType="38">
+<shop-indices/>
+<begin-date>2014-06-20T00:00:00</begin-date>
+<end-date>2014-06-29T23:59:59</end-date>
+<actionResults>
+<set name="BB1.2 TEST_%1$s">
+<row requiedQuantity="1.000" fixedPrice="15">
+<marking-of-the-good id="%1$s"/>
+</row>
+</set>
+</actionResults>
+</AdvertisingAction>
+</AdvertisingActions>
