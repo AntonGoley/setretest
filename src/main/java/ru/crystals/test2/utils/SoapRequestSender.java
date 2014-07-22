@@ -96,6 +96,7 @@ public class SoapRequestSender {
 	}
 	
 	public void getAlcoRestrictions(){
+		delay(2000);
 		this.soapRequest = soapGetAlcoRestrictions;
 		this.service = Config.ALCO_RESTRICTIONS; 
 		this.method = METHOD_ALCO_RESTRICTIONS;
@@ -194,7 +195,8 @@ public class SoapRequestSender {
 	}
 	
 	
-	public String assertSOAPResponseXpath(String xpathExpression)  {
+	public boolean assertSOAPResponseXpath(String xpathExpression)  {
+		boolean xpathResult = false;
 		String result = null;
 		DocumentBuilderFactory builderFactory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder builder = null;
@@ -209,13 +211,7 @@ public class SoapRequestSender {
 		    byte[] decoded = DatatypeConverter.parseBase64Binary(result);
 		    xmlDocument = builder.parse(new ByteArrayInputStream(decoded));
 		    // и проверяем
-		    Object xpathResult = xPath.compile(xpathExpression).evaluate(xmlDocument, XPathConstants.BOOLEAN);
-		    NodeList nodes = (NodeList) xpathResult;
-	        log.info("Have I found anything? " + (nodes.getLength() > 0 ? "Yes": "No"));
-		    
-	        for (int i = 0; i < nodes.getLength(); i++) {
-	            System.out.println("nodes: "+ nodes.item(i).getNodeValue()); 
-	        }
+		    xpathResult = (boolean) xPath.compile(xpathExpression).evaluate(xmlDocument, XPathConstants.BOOLEAN);
 		    
 		
 		} catch (ParserConfigurationException e) {
@@ -227,7 +223,7 @@ public class SoapRequestSender {
 		} catch (XPathExpressionException e) {
 			 e.printStackTrace();  
 		}
-		return result;
+		return xpathResult;
 	}
 	
 	public boolean assertSOAPResponse(String expectedResult, String ti){
@@ -246,4 +242,11 @@ public class SoapRequestSender {
 		return false;
 	}
 	
+	private void delay(long timeOut){
+		try {
+			Thread.sleep(timeOut);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
 }

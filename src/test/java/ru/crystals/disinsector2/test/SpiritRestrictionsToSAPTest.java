@@ -5,8 +5,10 @@ import java.util.Date;
 import junit.framework.Assert;
 
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import ru.crystals.disinsector2.test.dataproviders.SpiritRistrictionsDataprovider;
 import ru.crystals.test2.basic.LoginPage;
 import ru.crystals.test2.basic.MainPage;
 import ru.crystals.test2.basic.SalesPage;
@@ -31,8 +33,6 @@ public class SpiritRestrictionsToSAPTest extends AbstractTest{
 	AlcoholTabsRestrictionsPage alcoholRestrictionTab;
 	AlcoholRestrictionPage alcoholRestrictionPage;
 	SoapRequestSender soapSender  = new SoapRequestSender();
-	String restrictionName = "New_restriction" + String.valueOf(new Date().getTime());
-	
 	
 	@BeforeClass
 	public void goToAlcoholRestrictions() {
@@ -40,31 +40,52 @@ public class SpiritRestrictionsToSAPTest extends AbstractTest{
 		salesPage = mainPage.openSales();
 		alcoholPage = salesPage.navigateMenu(SalesMenuItemsAdmin.PREFERENCES, SalesPreferencesPage.class).navigateTab(SalesPreferencesPageTabs.GOODS_TYPES_AND_PAYSMENTS).
 				selectProductTypeItem(ProductTypeItems.ALCOHOL);
-		alcoholRestrictionPage = alcoholPage.selectAlcoholTab(AlcoholTabs.ALCOHOL_RESTRICTIONS).addNewRestriction();
+		alcoholRestrictionTab = alcoholPage.selectAlcoholTab(AlcoholTabs.ALCOHOL_RESTRICTIONS);
+	}
+	
+	@BeforeMethod
+	public void addRestriction(){
+		alcoholRestrictionPage = alcoholRestrictionTab.addNewRestriction();
+	}
+	
+	@Test (description = "SLR-163. Выгрузка в SAP отчета по алкогольным ограничениям. Процент содержания алкоголя", 
+			dataProvider = "Процент содержания алкоголя", 
+			dataProviderClass = SpiritRistrictionsDataprovider.class)
+	public void spiritSAPExportSpiritPercentTest(String name, String percentValue, String xpath) {
+		alcoholRestrictionPage.setPersentAlco(percentValue);
+		alcoholRestrictionPage.setRestrictionName(name);
+		alcoholRestrictionPage.backToRestrictionsTab();
+		validateTrue(String.format(xpath, name));
+	}
+	
+	//@Test (description = "SLR-163. Выгрузка в SAP отчета по алкогольным ограничениям. Период действия", 
+	//		dataProvider = "Период действия", 
+	//		dataProviderClass = SpiritRistrictionsDataprovider.class)
+	public void spiritSAPExportDateRangeTest(String name, String period, String dateToValidate, String xpath) {
+		alcoholRestrictionPage.setDate(period);
+		alcoholRestrictionPage.setRestrictionName(name);
+		alcoholRestrictionPage.backToRestrictionsTab();
+		validateTrue(String.format(xpath, name, dateToValidate));
+	}
+	
+	@Test (description = "SLR-163. Выгрузка в SAP отчета по алкогольным ограничениям. Время действия", 
+			dataProvider = "Время действия", 
+			dataProviderClass = SpiritRistrictionsDataprovider.class)
+	public void spiritSAPExportTimeRangeTest(String name, String fromTime, String toTime, String timeToValidate, String xpath) {
+		alcoholRestrictionPage.setTime(fromTime.split(":"), toTime.split(":"));
+		alcoholRestrictionPage.setRestrictionName(name);
+		alcoholRestrictionPage.backToRestrictionsTab();
+		validateTrue(String.format(xpath, name, timeToValidate));
 	}
 	
 	
-	@Test
-	public void test() {
-		alcoholRestrictionPage.setRestrictionName(restrictionName);
-		alcoholRestrictionPage.backToRestrictionsTab();
+	private void validateTrue(String xpath){
+		log.info("Проверка ограничения:" + xpath);
 		SoapRequestSender soapValidate = new  SoapRequestSender();
 		soapValidate.setSoapServiceIP(Config.CENTRUM_HOST);
 		soapValidate.getAlcoRestrictions();
-		//Assert.assertEquals("В ответе отсутствует поле name ", !soapValidate.assertSOAPResponseXpath("//restriction[@name][1]").equals(null));
-		Assert.assertEquals("Неверное значение поля name ", restrictionName.equals(
-				soapValidate.assertSOAPResponseXpath(String.format("//restriction[@name = \"%s\"]", restrictionName))));
+		Assert.assertTrue("Неверное значение поля ", soapValidate.assertSOAPResponseXpath(xpath));
 	}
-	
-	
-	/*
-	 * 	alcoholRestrictionPage.setMinPrice("100.05");
-		alcoholRestrictionPage.setDate("08.07.14 (00:00) — 15.07.14 (23:59)");
-		alcoholRestrictionPage.setPersentAlco("5.55");
-		alcoholRestrictionPage.setTime("21:00".split(":"), "11:00".split(":"));
-		
-		soapSender.getAlcoRestrictions();
-		soapSender.assertSOAPResponseXpath("//alcoholic-content-percentage").contains("10");
-	 */
+
 }
 
