@@ -85,7 +85,7 @@ public class AbstractTest {
     
     @AfterClass
     public void close() {
-    	//driver.close();
+    	driver.close();
     	// close all windows and quite
     	driver.quit();
     	log.info("trying to stop service");
