@@ -4,6 +4,7 @@
 	<test name="SpiritRestrictions" preserve-order="false" >
 	  	<classes>
 	  	<class name="ru.crystals.disinsector2.test.SpiritRestrictionsToSAPTest"/>
+	  	<class name="ru.crystals.disinsector2.test.tablereports.TableReportAdverstingTest"/>
 		</classes>	 
   	</test>	 
 

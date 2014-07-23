@@ -27,15 +27,18 @@ public class TableReportAdverstingTest extends AbstractTest{
 	String adverstingRequest = "";
 	ArrayList<String> htmlReportResults;
 	SoapRequestSender soapSender  = new SoapRequestSender();
+	
 	String ti = soapSender.generateTI();;
 	String erpCode = 47 + ti;
 	String barCode = "78" + ti;
+	
 	
 	@BeforeClass
 	public void navigateToAdverstingReports() {
 		mainPage = new LoginPage(getDriver()).doLogin(Config.MANAGER, Config.MANAGER_PASSWORD);
 		tableReportsPage = mainPage.openOperDay().openTableReports();
 		adverstingConfigPage = tableReportsPage.openReportConfigPage(AdverstingReportConfigPage.class, TAB_ADVERSTING, REPORT_NAME_ADVERSTING);
+		soapSender.setSoapServiceIP(Config.CENTRUM_HOST);
 		sendData();
 		generateReport();
 	}	
@@ -76,6 +79,7 @@ public class TableReportAdverstingTest extends AbstractTest{
 		// завести рекламную акцию на товар с erpCode
 		ti = soapSender.generateTI();
 		soapSender = new SoapRequestSender();
+		soapSender.setSoapServiceIP(Config.CENTRUM_HOST);
 		adverstingRequest = DisinsectorTools.getFileContentAsString("adversting.txt");
 		soapSender.sendAdversting(String.format(adverstingRequest, erpCode, ti),ti);
 		soapSender.assertSOAPResponse("status-message=\"correct\"", ti);
@@ -84,9 +88,9 @@ public class TableReportAdverstingTest extends AbstractTest{
 		Assert.assertTrue(htmlReportResults.contains(erpCode), "Отсутствует ERP код в отчете");
 	}
 	
-	@Test(	dependsOnMethods = "testGoodInReport",
-			description = "Если не указаны магазины, отчет генерится для всей сети (все магазины)", 
-			alwaysRun = true) 
+//	@Test(	dependsOnMethods = "testGoodInReport",
+//			description = "Если не указаны магазины, отчет генерится для всей сети (все магазины)", 
+//			alwaysRun = true) 
 	public void testWithEmptyShop(){
 		Assert.assertTrue(htmlReportResults.contains(Config.SHOP_NUMBER), "В отчете отсутствует информация по магазину: " + Config.SHOP_NUMBER);
 		Assert.assertTrue(htmlReportResults.contains(Config.RETAIL_NUMBER), "В отчете отсутствует информация по центруму" + Config.RETAIL_NUMBER);

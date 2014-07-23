@@ -4,12 +4,9 @@ import javax.xml.bind.DatatypeConverter;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Date;
@@ -22,7 +19,6 @@ import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
-import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 import ru.crystals.test2.config.Config;
@@ -142,7 +138,7 @@ public class SoapRequestSender {
 		URL resourceURL;
 		HttpURLConnection con = null;
 		String result = "";
-		String serviceUrl ="http://" + this.soapServiceIP+ ":" + Config.DEFAULT_PORT; 
+		String serviceUrl ="http://" + this.soapServiceIP + ":" + Config.DEFAULT_PORT; 
 		
 		log.info("Send SOAP request: " + this.soapRequest);
 
