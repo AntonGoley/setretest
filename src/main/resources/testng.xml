@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="Functional" preserve-order="false" configfailurepolicy="continue" >
-	<test name="Licence" preserve-order="false" enabled="true">
+	<test name="SpiritRestrictions" preserve-order="false" >
 	  	<classes>
-	  	<class name="ru.crystals.disinsector2.SpiritRestrictionsToSAPTest"/>
+	  	<class name="ru.crystals.disinsector2.test.SpiritRestrictionsToSAPTest"/>
 		</classes>	 
   	</test>	 
 
