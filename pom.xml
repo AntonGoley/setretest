@@ -34,13 +34,20 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>2.16</version>
                 <configuration>
-                	<argLine>-Dfile.encoding=UTF-8</argLine>
                     <suiteXmlFiles>
                         <suiteXmlFile>target/test-classes/testng.xml</suiteXmlFile>
                     </suiteXmlFiles>
                     <junitArtifactName>none:none</junitArtifactName>
                 </configuration>
             </plugin>
+            <plugin>
+		        <groupId>org.apache.maven.plugins</groupId>
+		        <artifactId>maven-resources-plugin</artifactId>
+		        <version>2.6</version>
+		        <configuration>
+		        <encoding>UTF-8</encoding>
+		        </configuration>
+      		</plugin>
         	</plugins>
         </build>
         <dependencies>
