@@ -26,8 +26,8 @@ public class TableReportAdverstingTest extends AbstractTest{
 	String goodRequest = "";
 	String adverstingRequest = "";
 	HTMLRepotResultPage htmlReportResults;
+
 	SoapRequestSender soapSender  = new SoapRequestSender();
-	
 	String ti = soapSender.generateTI();;
 	String erpCode = 47 + ti;
 	String barCode = "78" + ti;

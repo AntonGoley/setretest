@@ -20,6 +20,8 @@ public class  AbstractReportConfigPage extends AbstractPage{
 	}
 
 	public HTMLRepotResultPage generateReport(String reportType){
+		// doFlexMouseDown чтобы убрать flexSuggest
+		doFlexMouseDown(getDriver(), ID_OPERDAYSWF, reportType);
 		waitForElement(getDriver(), ID_OPERDAYSWF, reportType);
 		clickElement(getDriver(), ID_OPERDAYSWF, reportType);
 		switchWindow(false);

@@ -13,6 +13,7 @@
 	  	<classes>
 	  		<class name="ru.crystals.disinsector2.test.tablereports.TableReportAdverstingTest"/>
 	  		<class name="ru.crystals.disinsector2.test.tablereports.PriceCheckerReportTest"/>
+	  		<class name="ru.crystals.disinsector2.test.tablereports.GoodOnTKReportTest"/>
 		</classes>	 
   	</test>	
 </suite> 

@@ -28,16 +28,7 @@ public class  AdverstingReportConfigPage extends AbstractReportConfigPage{
 	public void setGoodIDs(String goodIDs){
 		waitForElement(getDriver(), ID_OPERDAYSWF, LOCATOR_SETGOOD);
 		typeText(getDriver(), ID_OPERDAYSWF, LOCATOR_SETGOOD, goodIDs);
-		waitForElement(getDriver(), ID_OPERDAYSWF, "codeLabel");
-	}
-	
-	@Override
-	public HTMLRepotResultPage generateReport(String reportType){
-		// doFlexMouseDown чтобы убрать flexSuggest
-		doFlexMouseDown(getDriver(), ID_OPERDAYSWF, reportType);
-		clickElement(getDriver(), ID_OPERDAYSWF, reportType);
-		switchWindow(false);
-		return new HTMLRepotResultPage(getDriver());
+		waitForElement(getDriver(), ID_OPERDAYSWF, LOCATOR_SUGGEST_CODE);
 	}
 	
 }
