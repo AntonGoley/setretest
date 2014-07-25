@@ -3,8 +3,7 @@
 <suite name="Functional" preserve-order="true" configfailurepolicy="continue" >
 <listeners>
     <listener class-name="org.uncommons.reportng.HTMLReporter" />
-  </listeners>
-
+ </listeners>
 	<test name="SpiritRestrictions" preserve-order="true" >
 	  	<classes>
 	  	<class name="ru.crystals.disinsector2.test.SpiritRestrictionsToSAPTest"/>
@@ -12,8 +11,8 @@
   	</test>	 
   	<test name="TableReports" preserve-order="true" >
 	  	<classes>
-	  	<class name="ru.crystals.disinsector2.test.tablereports.TableReportAdverstingTest"/>
+	  		<class name="ru.crystals.disinsector2.test.tablereports.TableReportAdverstingTest"/>
+	  		<class name="ru.crystals.disinsector2.test.tablereports.PriceCheckerReportTest"/>
 		</classes>	 
   	</test>	
-
 </suite> 

@@ -37,7 +37,7 @@ public class TestConfiguration extends AbstractPage{
 	
 	private void addRegionAndCity() {
 		doLogin();
-		topologyPage = mainPage.openSales().navigateMenu(SalesMenuItemsAdmin.TOPOLOGY, TopologyPage.class);
+	//	topologyPage = mainPage.openSales().navigateMenu(SalesMenuItemsAdmin.TOPOLOGY, TopologyPage.class);
 		regionPage = topologyPage.addRegion().setRegionName("TestRegion");
 		cityPage = regionPage.addCity();
 		cityPage.setCityName("TestCity");

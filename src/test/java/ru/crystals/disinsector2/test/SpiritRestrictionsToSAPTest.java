@@ -1,13 +1,9 @@
 package ru.crystals.disinsector2.test;
 
-import java.util.Date;
-
 import junit.framework.Assert;
-
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-
 import ru.crystals.disinsector2.test.dataproviders.SpiritRistrictionsDataprovider;
 import ru.crystals.test2.basic.LoginPage;
 import ru.crystals.test2.basic.MainPage;

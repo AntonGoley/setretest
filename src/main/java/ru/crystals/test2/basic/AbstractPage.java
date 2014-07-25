@@ -77,10 +77,11 @@ public abstract class  AbstractPage {
 			e.printStackTrace();
 		}
 		String mainWindow = getDriver().getWindowHandle();
+		Set<String> set = getDriver().getWindowHandles();
 		if (closeMainWindow) {
 			getDriver().close();
 		}
-		Set<String> set = getDriver().getWindowHandles();
+		
 		Iterator<String> i = set.iterator();
 		String window;
 		while (i.hasNext()) {

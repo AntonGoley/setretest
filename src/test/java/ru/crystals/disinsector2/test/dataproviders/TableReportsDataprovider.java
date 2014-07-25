@@ -28,5 +28,20 @@ public class TableReportsDataprovider {
 		};	
 	}
 	
+	@DataProvider (name = "Шапка отчета Прайс чекеры")
+	public static Object[][] priceCheckerTableHead() {
+		return new Object[][] {
+		{"Отчёт для Прайс чекеров"},
+		{"№ ТК"},
+		{"Дата"},
+		{"Время"},
+		{"MAC адрес"},
+		{"Прайс Чекер"},
+		{"Штрихкод"},
+		{"Код товара"},
+		{"Наименование"},
+		};	
+	}
+	
 }
 

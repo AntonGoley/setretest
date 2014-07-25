@@ -24,7 +24,8 @@ public class  TableReportPage extends AbstractPage{
 	
 	public static final String REPORT_NAME_ADVERSTING = "Отчет по товарам в рекламных акциях"; 
 	public static final String REPORT_NAME_GOOD_ON_TK = "Отчет по товару на ТК"; 
-	public static final String REPORT_NAME_PRICE_CHECKER = "Отчет по обращениям к прайсчекерам во всех ТК"; 
+	public static final String REPORT_NAME_PRICE_CHECKER = "Отчёт по обращениям к прайсчекерам по всем ТК"; 
+
 	
 	
 	public TableReportPage(WebDriver driver) {
