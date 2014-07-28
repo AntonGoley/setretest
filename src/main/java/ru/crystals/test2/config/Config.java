@@ -19,10 +19,6 @@ public class Config {
     public static final String RETAIL_HOST;
     public static final String SHOP_NUMBER;
     public static final String RETAIL_NUMBER;
-    public static final String ERP_INTEGRATION_GOOSERVICE = "/SET-ERPIntegration/SET/WSGoodsCatalogImport";
-    public static final String ERP_INTEGRATION_ADVERTSING_ACTIONS = "/SET-ERPIntegration/AdvertisingActionsImport";
-    public static final String ERP_INTEGRATION_FEDDBACK = "/SET-ERPIntegration/SET/FeedbackWS";
-    public static final String ALCO_RESTRICTIONS = "/SET-Alcohol/SET/SpiritRestrictionsExportWS";
     public static final String DEFAULT_PORT;
     
     private static Properties props;

@@ -30,7 +30,12 @@ public class  HTMLRepotResultPage extends AbstractPage{
 	}
 	
 	public boolean containsValue(String value){
-		return this.reportResults.contains(value);
+		boolean result = false;
+		if (this.reportResults.contains(value)) {
+			result = true;
+			reportResults.remove(value);
+		}
+		return result;
 	}
 	
 	

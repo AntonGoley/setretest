@@ -104,17 +104,7 @@ public class TableReportAdverstingTest extends AbstractTest{
 	//@Test(description = "Проверить генерацию отчета для двух ERP кодов, указанных через запятую")
 	public void testTwoERPCodes() {
 	}
-	
-	
-	
-//	@Test(dependsOnMethods = "testHTMLFormat",
-//			alwaysRun = true)
-//	public void testPDFFormat() {
-//		adverstingConfigPage.switchWindow(true);
-//		adverstingConfigPage.generateReport(PDFREPORT);
-//		adverstingConfigPage.saveReportFile();
-//		savedReportFileName = new DisinsectorTools().getReportFileName(savedReportsLocalPath, ".pdf");
-//	}
+
 	
 	
 }

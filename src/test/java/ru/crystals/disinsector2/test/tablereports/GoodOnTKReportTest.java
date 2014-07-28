@@ -2,6 +2,7 @@ package ru.crystals.disinsector2.test.tablereports;
 
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import ru.crystals.disinsector2.test.AbstractTest;
 import ru.crystals.disinsector2.test.dataproviders.TableReportsDataprovider;
@@ -25,10 +26,19 @@ public class GoodOnTKReportTest extends AbstractTest{
 	HTMLRepotResultPage htmlReportResults;
 	String goodRequest = "";
 	
-	SoapRequestSender soapSender  = new SoapRequestSender();
-	String ti = soapSender.generateTI();;
-	String erpCode = 47 + ti;
-
+	static SoapRequestSender soapSender  = new SoapRequestSender();
+	static String ti = soapSender.generateTI();;
+	static String  erpCode = 47 + ti;
+	static String barCode = "78" + ti;
+	
+	@DataProvider (name = "Данные отчета")
+	public static Object[][] adverstingReportTableHead() {
+		return new Object[][] {
+		{"Название рекламной акции", "test_" + erpCode},
+		{"id товара", erpCode},
+		{"Штрих-код", barCode},
+		};	
+	}
 	
 	@BeforeClass
 	public void navigateToPriceCheckerReports() {
@@ -36,31 +46,49 @@ public class GoodOnTKReportTest extends AbstractTest{
 		tableReportsPage = mainPage.openOperDay().openTableReports();
 		goodOnTKConfig = tableReportsPage.openReportConfigPage(GoodsOnTKConfigPage.class, TAB_OTHER, REPORT_NAME_GOOD_ON_TK);
 		soapSender.setSoapServiceIP(Config.CENTRUM_HOST);
-		sendData();
+		sendGoodData();
+		sendAdverstingForGood();
 		goodOnTKConfig.setErpCode(erpCode);
 		doReport();
 	}	
 	
-	private void sendData() {
+	private void sendGoodData() {
 		goodRequest = DisinsectorTools.getFileContentAsString("good.txt");
-		soapSender.sendGoods(String.format(goodRequest, erpCode, erpCode),ti);
+		soapSender.sendGoods(String.format(goodRequest, erpCode, barCode),ti);
 		soapSender.assertSOAPResponse("status-message=\"correct\"", ti);
 	}
 	
+	private void sendAdverstingForGood() {
+	// завести рекламную акцию на товар с erpCode
+		ti = soapSender.generateTI();
+		soapSender = new SoapRequestSender();
+		soapSender.setSoapServiceIP(Config.CENTRUM_HOST);
+		String adverstingRequest = DisinsectorTools.getFileContentAsString("adversting.txt");
+		soapSender.sendAdversting(String.format(adverstingRequest, erpCode, ti),ti);
+		soapSender.assertSOAPResponse("status-message=\"correct\"", ti);
+	}		
+	
 	public void doReport(){
 		htmlReportResults = goodOnTKConfig.generateReport(HTMLREPORT);
-		// закрыть окно отчета
 		goodOnTKConfig.switchWindow(true);
 	}
 	
 	@Test (	description = "Проверить названия отчета и название колонок в шапке таблицы отчета по товарам на ТК", 
 			alwaysRun = true,
 			dataProvider = "Шапка отчета Товары на ТК", dataProviderClass = TableReportsDataprovider.class)
-	public void testAdverstingHTMLReportTableHead(String fieldName){
+	public void testGoodOnTKHTMLReportTableHead(String fieldName){
 		log.info(fieldName);
 		Assert.assertTrue(htmlReportResults.containsValue(fieldName), "Неверное значение поля в шапке отчета: " + fieldName);
 	}
-
+	
+	
+	@Test (	description = "Проверить наличие данных в отчете по товарам на ТК", 
+			alwaysRun = true,
+			dataProvider = "Данные отчета")
+	public void testGoodOnTKHTMLReportData(String field, String value){
+		log.info(field);
+		Assert.assertTrue(htmlReportResults.containsValue(value), "Неверное значение поля в отчете по ТК: " + field);
+	}
 	
 	
 }

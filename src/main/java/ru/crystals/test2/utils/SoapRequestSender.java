@@ -27,9 +27,17 @@ import ru.crystals.test2.config.Config;
 public class SoapRequestSender {
 	protected static final Logger log = Logger.getLogger(SoapRequestSender.class);
 	
+    public static final String ERP_INTEGRATION_GOOSERVICE = "/SET-ERPIntegration/SET/WSGoodsCatalogImport";
+    public static final String ERP_INTEGRATION_ADVERTSING_ACTIONS = "/SET-ERPIntegration/AdvertisingActionsImport";
+    public static final String ERP_INTEGRATION_FEDDBACK = "/SET-ERPIntegration/SET/FeedbackWS";
+    public static final String SERVICE_ALCO_RESTRICTIONS = "/SET-Alcohol/SET/SpiritRestrictionsExportWS";
+    public static final String SERVICE_PRICE_CHECKER = "/SET-Products/SET/Products";
+	
+	
 	private static final String METHOD_GOODS_WITHTI = "#getGoodsCatalogWithTi";
 	private static final String METHOD_ACTIONS_WITHTI = "#importActionsWithTi";
 	private static final String METHOD_ALCO_RESTRICTIONS = "#getSpiritRestrictions";
+	private static final String METHOD_PRICECHECKER_SHUTTLE = "#getProductInfoForShuttle";
 	
 	String soapServiceIP = ""; 
 	String soapRequest = "";
@@ -74,7 +82,21 @@ public class SoapRequestSender {
 		"</soapenv:Body>" +
 		"</soapenv:Envelope>";
 	
+	private static String getProductInfoForShuttle = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:prod=\"http://products.setretailx.crystals.ru/\">" +
+		   "<soapenv:Header/>" +
+		   "<soapenv:Body>" +
+		      "<prod:getProductInfoForShuttle>" +
+		         "<CMDMNEMONIC></CMDMNEMONIC>" +
+		         "<CLIENTIP></CLIENTIP>" +
+		         "<CLIENTMAC>%s</CLIENTMAC>" +
+		         "<REQUEST>%s</REQUEST>" +
+		      "</prod:getProductInfoForShuttle>" +
+		   "</soapenv:Body>" +
+		"</soapenv:Envelope>";
+	
+	
 	public void setSoapServiceIP(String ip){
+		log.info("Таргет хост для отправки soap запроса: " + ip);
 		this.soapServiceIP = ip;
 	}
 	
@@ -92,42 +114,37 @@ public class SoapRequestSender {
 	}
 	
 	public void getAlcoRestrictions(){
-		delay(2000);
+		DisinsectorTools.delay(1500);
 		this.soapRequest = soapGetAlcoRestrictions;
-		this.service = Config.ALCO_RESTRICTIONS; 
+		this.service = SERVICE_ALCO_RESTRICTIONS; 
 		this.method = METHOD_ALCO_RESTRICTIONS;
 		sendSOAPRequest();
 	}
 	
-	
-	/*
-	 * 
-	 * goodRequest = DisinsectorTools.getFileContentAsString("good.txt");
-		soapSender.sendGoods(String.format(goodRequest, erpCode, barCode),ti);
-		soapSender.assertSOAPResponse("status-message=\"correct\"", ti);
-	 * 
-	 * 
-	 * 
-	 * 
-	 */
+	public void sendPriceCheckerRequest(String mac, String barcode){
+		this.soapRequest = String.format(getProductInfoForShuttle, mac, barcode);
+		this.service = SERVICE_PRICE_CHECKER; 
+		this.method = METHOD_PRICECHECKER_SHUTTLE;
+		sendSOAPRequest();
+	}
 	
 	public void sendGoods(String request, String ti){
 		this.soapRequest = String.format(soapRequestGoods, encodeBase64(request), ti);
-		this.service = Config.ERP_INTEGRATION_GOOSERVICE; 
+		this.service = ERP_INTEGRATION_GOOSERVICE; 
 		this.method = METHOD_GOODS_WITHTI;
 		sendSOAPRequest();
 	}
 	
 	public void sendAdversting(String request, String ti){
 		this.soapRequest = String.format(soapRequestAdversting, encodeBase64(request), ti);
-		this.service = Config.ERP_INTEGRATION_ADVERTSING_ACTIONS; 
+		this.service = ERP_INTEGRATION_ADVERTSING_ACTIONS; 
 		this.method = METHOD_ACTIONS_WITHTI;
 		sendSOAPRequest();
 	}
 	
 	public void getFeedBack(String ti){
 		this.soapRequest = String.format(soapGetFeedBack, ti);
-		this.service = Config.ERP_INTEGRATION_FEDDBACK; 
+		this.service = ERP_INTEGRATION_FEDDBACK; 
 		this.method = METHOD_ACTIONS_WITHTI;
 		sendSOAPRequest();
 	}
@@ -234,15 +251,8 @@ public class SoapRequestSender {
 		}
 		} catch (InterruptedException e) {
 			e.printStackTrace();
+			log.info("Пакет с ti " + ti + "не содержит " + expectedResult);
 		}
 		return false;
-	}
-	
-	private void delay(long timeOut){
-		try {
-			Thread.sleep(timeOut);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
 	}
 }
