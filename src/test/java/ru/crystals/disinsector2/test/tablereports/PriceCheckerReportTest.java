@@ -73,7 +73,7 @@ public class PriceCheckerReportTest extends AbstractTest{
 	}
 	
 	
-	@Test (	description = "Проверить, что данные от прайсчекера приходят в отчет", 
+	@Test (	description = "Проверить, что данные от прайсчекера приходят в отчет по прайсчекерам", 
 			alwaysRun = true, 
 			priority = 2
 			)
