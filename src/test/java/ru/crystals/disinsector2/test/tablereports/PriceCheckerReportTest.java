@@ -35,7 +35,7 @@ public class PriceCheckerReportTest extends AbstractTest{
 	
 	@BeforeClass
 	public void navigateToPriceCheckerReports() {
-		mainPage = new LoginPage(getDriver()).doLogin(Config.MANAGER, Config.MANAGER_PASSWORD);
+		mainPage = new LoginPage(getDriver(), Config.CENTRUM_URL).doLogin(Config.MANAGER, Config.MANAGER_PASSWORD);
 		tableReportsPage = mainPage.openOperDay().openTableReports();
 		soapSender.setSoapServiceIP(Config.CENTRUM_HOST);
 		// Послать товар, который будет проверен на прайсчекере

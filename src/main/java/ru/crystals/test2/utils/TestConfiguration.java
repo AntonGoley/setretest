@@ -32,7 +32,7 @@ public class TestConfiguration extends AbstractPage{
 	ShopPreferencesPage shopPreferences;
 	
 	private void doLogin() {
-		mainPage = new LoginPage(getDriver()).doLogin(Config.MANAGER, Config.MANAGER_PASSWORD);
+		mainPage = new LoginPage(getDriver(), Config.CENTRUM_URL).doLogin(Config.MANAGER, Config.MANAGER_PASSWORD);
 	}
 	
 	private void addRegionAndCity() {

@@ -35,7 +35,7 @@ public class TableReportAdverstingTest extends AbstractTest{
 	
 	@BeforeClass
 	public void navigateToAdverstingReports() {
-		mainPage = new LoginPage(getDriver()).doLogin(Config.MANAGER, Config.MANAGER_PASSWORD);
+		mainPage = new LoginPage(getDriver(), Config.CENTRUM_URL).doLogin(Config.MANAGER, Config.MANAGER_PASSWORD);
 		tableReportsPage = mainPage.openOperDay().openTableReports();
 		adverstingConfigPage = tableReportsPage.openReportConfigPage(AdverstingReportConfigPage.class, TAB_ADVERSTING, REPORT_NAME_ADVERSTING);
 		soapSender.setSoapServiceIP(Config.CENTRUM_HOST);

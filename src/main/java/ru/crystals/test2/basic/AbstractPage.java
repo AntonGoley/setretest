@@ -25,7 +25,7 @@ public abstract class  AbstractPage {
 	private WebDriverWait wait;
 	
 	
-	public static final String BASEURL = Config.BASE_URL; 
+	//public static final String BASEURL = Config.BASE_URL; 
 
 	public AbstractPage(WebDriver driver) {
 		this.driver = driver;

@@ -1,6 +1,8 @@
 package ru.crystals.disinsector2.test;
 
+import org.testng.ITestResult;
 import org.testng.annotations.AfterClass;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import java.io.File;
@@ -15,10 +17,9 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.annotations.BeforeMethod;
 import ru.crystals.test2.config.*;
-import ru.crystals.test2.utils.DbConnection;
 import ru.crystals.test2.utils.TestConfiguration;
 import ru.crystals.test2.basic.*;
-import ru.crystals.test2.basic.LoginPage.Set10ShopRoles;
+
 
 public class AbstractTest {
 	
@@ -75,13 +76,13 @@ public class AbstractTest {
     		log.info("---------------------------------------");
     }
 
-//    @AfterMethod(alwaysRun = true)
-//    public void printTestResult(Method method, ITestResult result) throws Exception {
-//    	log.info(method.getDeclaringClass() + "." +  method.getName() + " finished with RESULT " + result.getStatus());
+    @AfterMethod(alwaysRun = true)
+    public void printTestResult(Method method, ITestResult result) throws Exception {
+    	log.info(method.getDeclaringClass() + "." +  method.getName() + " finished with RESULT " + result.getStatus());
 //    	log.info("Asserts executed withing suite: " + method.getName() + " - " + Base.getAssertsEcexuted());
 //    	log.info("TOTAL asserts executed: " + Base.getTotalAssertsEcexuted());
 //    	Base.resetAssertsEcexuted();
-//    }
+    }
     
     @AfterClass
     public void close() {
@@ -93,9 +94,8 @@ public class AbstractTest {
     	log.info("service has stopped successfully");
     }
     
-    protected LoginPage loginAs(String user, String pwd) {
-    	getDriver().get(AbstractPage.BASEURL);
-    	return new LoginPage(getDriver());
+    protected LoginPage loginAs(String user, String pwd, String url) {
+    	return new LoginPage(getDriver(), url);
     	
     }
     

@@ -6,14 +6,16 @@
  </listeners>
 	<test name="SpiritRestrictions" preserve-order="true" >
 	  	<classes>
-	  	<class name="ru.crystals.disinsector2.test.SpiritRestrictionsToSAPTest"/>
+<!-- 	  	<class name="ru.crystals.disinsector2.test.SpiritRestrictionsToSAPTest"/> -->
 		</classes>	 
   	</test>	 
-  	<test name="TableReports" preserve-order="true" >
+  	<test name="TableReports" preserve-order="true" parallel = "false">
 	  	<classes>
 	  		<class name="ru.crystals.disinsector2.test.tablereports.TableReportAdverstingTest"/>
 	  		<class name="ru.crystals.disinsector2.test.tablereports.PriceCheckerReportTest"/>
 	  		<class name="ru.crystals.disinsector2.test.tablereports.GoodOnTKReportTest"/>
+	  		<class name="ru.crystals.disinsector2.test.tablereports.PLUinWeightReportTest"/>
+	  		<class name="ru.crystals.disinsector2.test.tablereports.RefundChecksReportTest"/>
 		</classes>	 
   	</test>	
 </suite> 

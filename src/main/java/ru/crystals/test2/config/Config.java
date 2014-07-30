@@ -11,7 +11,8 @@ public class Config {
 	
 	private final static org.slf4j.Logger log =  LoggerFactory.getLogger(Config.class);
 
-    public static final String BASE_URL;
+    public static final String CENTRUM_URL;
+    public static final String RETAIL_URL;
     public static final String PATH_TO_DRIVER;
     public static final String MANAGER;
     public static final String MANAGER_PASSWORD;
@@ -43,14 +44,16 @@ public class Config {
         
         CENTRUM_HOST= props.getProperty("centrum.host.ip");
         RETAIL_HOST= props.getProperty("retail.host.ip");
-        BASE_URL = "http://" + CENTRUM_HOST + ":" + props.getProperty("port");
+        CENTRUM_URL = "http://" + CENTRUM_HOST + ":" + props.getProperty("port");
+        RETAIL_URL = "http://" + RETAIL_HOST + ":" + props.getProperty("port");
         MANAGER =  props.getProperty("managerLogin");
         MANAGER_PASSWORD =  props.getProperty("managerPassword");
         SHOP_NUMBER = props.getProperty("shop.number");
         RETAIL_NUMBER = props.getProperty("retail.number");
         DEFAULT_PORT = props.getProperty("port");
         
-        log.info("Base url:   " + BASE_URL);
+        log.info("Centrum url:   " + CENTRUM_URL);
+        log.info("Centrum url:   " + RETAIL_URL);
         log.info("Manager login:   " + MANAGER);
         log.info("Manager password:   " + MANAGER_PASSWORD); 
         log.info("Centrum host:   " + CENTRUM_HOST);

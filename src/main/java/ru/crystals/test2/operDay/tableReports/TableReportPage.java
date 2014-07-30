@@ -25,6 +25,8 @@ public class  TableReportPage extends AbstractPage{
 	public static final String REPORT_NAME_ADVERSTING = "Отчет по товарам в рекламных акциях"; 
 	public static final String REPORT_NAME_GOOD_ON_TK = "Отчет по товару на ТК"; 
 	public static final String REPORT_NAME_PRICE_CHECKER = "Отчёт по обращениям к прайсчекерам по всем ТК"; 
+	public static final String REPORT_NAME_PLU_ON_WEIGHT = "Отчёт по количеству PLU в весах на ТК";
+	public static final String REPORT_NAME_REFUND_CHECKS= "Отчёт по возвратам";
 
 	
 	

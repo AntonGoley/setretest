@@ -42,8 +42,8 @@ public class GoodOnTKReportTest extends AbstractTest{
 	}
 	
 	@BeforeClass
-	public void navigateToPriceCheckerReports() {
-		mainPage = new LoginPage(getDriver()).doLogin(Config.MANAGER, Config.MANAGER_PASSWORD);
+	public void navigateToGoodOnTKReports() {
+		mainPage = new LoginPage(getDriver(), Config.CENTRUM_URL).doLogin(Config.MANAGER, Config.MANAGER_PASSWORD);
 		tableReportsPage = mainPage.openOperDay().openTableReports();
 		goodOnTKConfig = tableReportsPage.openReportConfigPage(GoodsOnTKConfigPage.class, TAB_OTHER, REPORT_NAME_GOOD_ON_TK);
 		soapSender.setSoapServiceIP(Config.CENTRUM_HOST);

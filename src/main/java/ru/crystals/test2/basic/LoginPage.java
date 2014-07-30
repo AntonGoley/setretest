@@ -13,9 +13,10 @@ public class LoginPage extends AbstractPage{
 	static final String LOGINPAGESWF = "RetailX";
 
 	
-	public LoginPage(WebDriver driver) {
+	public LoginPage(WebDriver driver, String url) {
 		super(driver);
-		getDriver().get(BASEURL);
+		getDriver().get(url);
+		log.info("Открыть страницу: " + url);
 		isSWFReady();
 	}
 	
