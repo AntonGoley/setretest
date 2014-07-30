@@ -6,7 +6,7 @@
  </listeners>
 	<test name="SpiritRestrictions" preserve-order="true" >
 	  	<classes>
-<!-- 	  	<class name="ru.crystals.disinsector2.test.SpiritRestrictionsToSAPTest"/> -->
+	  	<class name="ru.crystals.disinsector2.test.SpiritRestrictionsToSAPTest"/>
 		</classes>	 
   	</test>	 
   	<test name="TableReports" preserve-order="true" parallel = "false">
