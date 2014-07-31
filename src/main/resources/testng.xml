@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="Functional" preserve-order="true" configfailurepolicy="continue" >
+<suite name="Functional" preserve-order="false" configfailurepolicy="continue" >
 <listeners>
     <listener class-name="org.uncommons.reportng.HTMLReporter" />
  </listeners>
-	<test name="SpiritRestrictions" preserve-order="true" >
+	<test name="SpiritRestrictions" preserve-order="false" >
 	  	<classes>
 	  	<class name="ru.crystals.disinsector2.test.SpiritRestrictionsToSAPTest"/>
 		</classes>	 
