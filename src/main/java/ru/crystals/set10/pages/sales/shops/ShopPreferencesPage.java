@@ -4,10 +4,10 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
-import ru.crystals.test2.basic.AbstractPage;
-import ru.crystals.test2.basic.BasicElements;
-import static ru.crystals.test2.basic.BasicElements.*;
-import static ru.crystals.test2.utils.FlexMediator.*;
+import ru.crystals.set10.pages.basic.AbstractPage;
+import ru.crystals.set10.pages.basic.BasicElements;
+import static ru.crystals.set10.pages.basic.BasicElements.*;
+import static ru.crystals.set10.utils.FlexMediator.*;
 
 
 public class ShopPreferencesPage extends AbstractPage {

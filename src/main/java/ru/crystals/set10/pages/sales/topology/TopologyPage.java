@@ -1,10 +1,12 @@
 package ru.crystals.set10.pages.sales.topology;
 
-import static ru.crystals.test2.utils.FlexMediator.*;
+import static ru.crystals.set10.utils.FlexMediator.*;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import ru.crystals.test2.basic.SalesPage;
+
+import ru.crystals.set10.pages.basic.SalesPage;
 
 
 public class TopologyPage extends SalesPage{

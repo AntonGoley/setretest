@@ -1,11 +1,13 @@
 package ru.crystals.set10.pages.sales.topology;
 
-import static ru.crystals.test2.utils.FlexMediator.*;
+import static ru.crystals.set10.utils.FlexMediator.*;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import ru.crystals.test2.basic.AbstractPage;
-import ru.crystals.test2.basic.BasicElements;
+
+import ru.crystals.set10.pages.basic.AbstractPage;
+import ru.crystals.set10.pages.basic.BasicElements;
 
 
 public class RegionPage extends AbstractPage{
@@ -23,13 +25,11 @@ public class RegionPage extends AbstractPage{
 	
 	
 	public RegionPage setRegionName(String regionName){
-		waitForElement(getDriver(), ID_SALESSWF, LOCATOR_REGION_NAME_INPUT);
 		typeText(getDriver(), ID_SALESSWF, LOCATOR_REGION_NAME_INPUT, regionName);
 		return this;
 	}
 	
 	public CityPage addCity(){
-		waitForElement(getDriver(), ID_SALESSWF, LOCATOR_ADD_CITY_BUTTON);
 		clickElement(getDriver(), ID_SALESSWF, LOCATOR_ADD_CITY_BUTTON);
 		return new CityPage(getDriver());
 	}

@@ -24,7 +24,7 @@
         			<directory>src/main/resources</directory>
         			<includes>
                     	<include>*.exe</include>
-                    	<include>testng.xml</include>
+                    	<include>testng*.xml</include>
                 	</includes>
       			</testResource>
     		</testResources>
@@ -35,7 +35,7 @@
                 <version>2.14.1</version>
                 <configuration>
                     <suiteXmlFiles>
-                        <suiteXmlFile>target/test-classes/testng.xml</suiteXmlFile>
+                        <suiteXmlFile>target/test-classes/${suiteXmlFile}</suiteXmlFile>
                     </suiteXmlFiles>
                     <property>
                         <name>listener</name>
@@ -150,7 +150,13 @@
 					<artifactId>blazeds-common</artifactId>
 					<version>3.2.0.3978</version>
 			</dependency>	
-			
+<!-- 			<dependency> -->
+<!-- 			     <groupId>ldapjdk</groupId> -->
+<!-- 			     <artifactId>ldapjdk</artifactId> -->
+<!-- 			     <scope>system</scope> -->
+<!-- 			     <version>1.0</version> -->
+<!-- 			     <systemPath>c:\CashEmu\cashEmulator.jar</systemPath> -->
+<!--   			 </dependency> -->
         </dependencies>
         
         <dependencyManagement>
