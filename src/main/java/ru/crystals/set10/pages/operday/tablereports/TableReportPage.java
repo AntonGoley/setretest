@@ -43,12 +43,10 @@ public class  TableReportPage extends AbstractPage{
 	
 	private void openReportOnTab(int tabIndex, String reportUrl){
 		selectTab(tabIndex);
-		waitForElement(getDriver(), ID_OPERDAYSWF, reportUrl);
 		clickElement(getDriver(), ID_OPERDAYSWF, reportUrl);
 	}
 	
 	public TableReportPage selectTab(int tabIndex){
-		waitForElement(getDriver(), ID_OPERDAYSWF, ID_TABBAR);
 		doFlexProperty(getDriver(), ID_OPERDAYSWF, ID_TABBAR, new String[]{"selectedIndex", String.valueOf(tabIndex)});
 		return this;
 	}

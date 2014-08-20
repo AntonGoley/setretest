@@ -21,7 +21,6 @@ public class AlcoholPage extends AbstractPage{
 	
 	//TODO: make factory
 	public AlcoholTabsRestrictionsPage selectAlcoholTab(AlcoholTabs alcoholTab) {
-		waitForElement(getDriver(), ID_SALESSWF, LOCATOR_TABRESTRICTIONS);
 		doFlexProperty(getDriver(), ID_SALESSWF, LOCATOR_TABRESTRICTIONS, new String[] {"selectedIndex", String.valueOf(alcoholTab.ordinal()) });
 		return new AlcoholTabsRestrictionsPage(getDriver());
 	}

@@ -36,12 +36,10 @@ public class AlcoholRestrictionPage extends AbstractPage{
 	
 	
 	public void setRestrictionName(String restrictionName){
-		waitForElement(getDriver(), ID_SALESSWF, LOCATOR_RESTRICTION_NAME);
 		typeText(getDriver(), ID_SALESSWF, LOCATOR_RESTRICTION_NAME, restrictionName);
 	}
 	
 	public void setCheckBoxValue(String checkBox, boolean value) {
-		waitForElement(getDriver(), ID_SALESSWF, checkBox);
 		checkBoxValue(getDriver(), ID_SALESSWF, checkBox, value);
 	}
 	
@@ -70,12 +68,10 @@ public class AlcoholRestrictionPage extends AbstractPage{
 	}
 	
 	public void setMinPrice(String minPrice) {
-		waitForElement(getDriver(), ID_SALESSWF, LOCATOR_INPUT_ALKOMINPRICE);
 		doFlexProperty(getDriver(), ID_SALESSWF, LOCATOR_INPUT_ALKOMINPRICE, new String[]{"text", minPrice});
 	}
 	
 	public AlcoholTabsRestrictionsPage backToRestrictionsTab(){
-		waitForElement(getDriver(), ID_SALESSWF, LOCATOR_BACK_TO_RESTRICTIONS_TAB);
 		clickElement(getDriver(), ID_SALESSWF, LOCATOR_BACK_TO_RESTRICTIONS_TAB);
 		return new AlcoholTabsRestrictionsPage(getDriver());
 	}

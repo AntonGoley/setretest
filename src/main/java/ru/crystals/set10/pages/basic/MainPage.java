@@ -19,13 +19,11 @@ public class MainPage extends AbstractPage{
 	}
 	
 	public OperDayPage openOperDay() {
-		waitForElement(getDriver(), ID_MAINPAGESWF, ID_OPERDAYBUTTON);
 		clickElement(getDriver(), ID_MAINPAGESWF, ID_OPERDAYBUTTON);
 		return new OperDayPage(getDriver()); 
 	}
 	
 	public SalesPage openSales() {
-		waitForElement(getDriver(), ID_MAINPAGESWF, ID_SALESBUTTON);
 		clickElement(getDriver(), ID_MAINPAGESWF, ID_SALESBUTTON);
 		// переключаемся на окно продаж т.к родажи открываются в новом окне 
 		switchWindow(true);

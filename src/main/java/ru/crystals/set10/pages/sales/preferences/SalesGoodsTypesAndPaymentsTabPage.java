@@ -23,7 +23,6 @@ public class SalesGoodsTypesAndPaymentsTabPage extends AbstractPage{
 	
 	// TODO: rewrite to Abstract factory
 	public AlcoholPage selectProductTypeItem(ProductTypeItems productTypeItem) {
-		waitForElement(getDriver(), ID_SALESSWF, LOCATOR_PRODUCT_TYPE_LIST);
 		doFlexProperty(getDriver(), ID_SALESSWF, LOCATOR_PRODUCT_TYPE_LIST, new String[] {"selectedIndex", String.valueOf(productTypeItem.ordinal()) });
 		waitForProperty(getDriver(), ID_SALESSWF, LOCATOR_PRODUCT_PREFERENCES_BUTTON, new String[] {"enabled", "true"});
 		clickElement(getDriver(), ID_SALESSWF, LOCATOR_PRODUCT_PREFERENCES_BUTTON);

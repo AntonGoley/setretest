@@ -23,13 +23,11 @@ public class OperDayPage extends AbstractPage{
 	
 	
 	public TableReportPage openTableReports() {
-		//waitForElement(getDriver(), ID_OPERDAYSWF, LOCATOR_TABLEREPORTS);
 		clickElement(getDriver(), ID_OPERDAYSWF, LOCATOR_TABLEREPORTS);
 		return new TableReportPage(getDriver());
 	}
 	
 	public CheckSearchPage openCheckSearch() {
-		//waitForElement(getDriver(), ID_OPERDAYSWF, LOCATOR_SEARCH_CHECK);
 		clickElement(getDriver(), ID_OPERDAYSWF, LOCATOR_SEARCH_CHECK);
 		return new CheckSearchPage(getDriver());
 	}

@@ -27,19 +27,16 @@ public class ShopPreferencesPage extends AbstractPage {
 	
 	
 	public ShopPreferencesPage setShopNumber(String number){
-		waitForElement(getDriver(), ID_SALESSWF, LOCATOR_SHOP_NUMBER_INPUT);
 		typeText(getDriver(), ID_SALESSWF, LOCATOR_SHOP_NUMBER_INPUT, number);
 		return this;
 	}
 	
 	public ShopPreferencesPage setName(String name){
-		waitForElement(getDriver(), ID_SALESSWF, LOCATOR_SHOP_NAME_INPUT);
 		typeText(getDriver(), ID_SALESSWF, LOCATOR_SHOP_NAME_INPUT, name);
 		return this;
 	}
 	
 	public ShopPreferencesPage ifShopUseOwnServer(boolean virtualServer){
-		waitForElement(getDriver(), ID_SALESSWF, LOCATOR_VIRTUAL_CHECKBOX);
 		checkBoxValue(getDriver(), ID_SALESSWF, LOCATOR_VIRTUAL_CHECKBOX, virtualServer);
 		return this;
 	}

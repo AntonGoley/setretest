@@ -22,7 +22,6 @@ public class SalesUsersPage extends AbstractPage{
 	
 	
 	public SalesActiveUsersPage showUsers(){
-		waitForElement(getDriver(), ID_SALESSWF, LOCATOR_SHOW_USERS);
 		clickElement(getDriver(), ID_SALESSWF, LOCATOR_SHOW_USERS);
 		return new SalesActiveUsersPage(getDriver());
 	}

@@ -20,7 +20,6 @@ public class  GoodsOnTKConfigPage extends AbstractReportConfigPage{
 	}
 	
 	public void setErpCode(String erpCode){
-		waitForElement(getDriver(), ID_OPERDAYSWF, LOCATOR_SETGOOD);
 		typeText(getDriver(), ID_OPERDAYSWF, LOCATOR_SETGOOD, erpCode);
 		waitForElement(getDriver(), ID_OPERDAYSWF, LOCATOR_SUGGEST_CODE);
 		//выбрать элемент

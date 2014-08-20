@@ -23,7 +23,6 @@ public class CityPage extends AbstractPage{
 	}
 	
 	public CityPage setCityName(String cityName){
-		waitForElement(getDriver(), ID_SALESSWF, LOCATOR_CITY_NAME_INPUT);
 		typeText(getDriver(), ID_SALESSWF, LOCATOR_CITY_NAME_INPUT, cityName);
 		return new CityPage(getDriver());
 	}

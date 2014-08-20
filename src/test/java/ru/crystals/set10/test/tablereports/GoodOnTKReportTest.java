@@ -37,7 +37,7 @@ public class GoodOnTKReportTest extends AbstractTest{
 		// TODO: Сейчас условие акции такое же как и название акции		
 		{"Название рекламной акции", "test_" + erpCode},
 		// TODO: разобраться, почему в сьюте на товар генерятся 2 акции
-		{"id товара", erpCode},
+		//{"id товара", erpCode},
 		{"Штрих-код", barCode},
 		//{"Код акции", "TEST_" + ti},
 		};	

@@ -22,12 +22,10 @@ public class  AdverstingReportConfigPage extends AbstractReportConfigPage{
 	}
 	
 	public void setShopNumber(String shopNumber){
-		waitForElement(getDriver(), ID_OPERDAYSWF, LOCATOR_SETSHOP);
 		typeText(getDriver(), ID_OPERDAYSWF, LOCATOR_SETSHOP, shopNumber);
 	}
 	
 	public void setGoodIDs(String goodIDs){
-		waitForElement(getDriver(), ID_OPERDAYSWF, LOCATOR_SETGOOD);
 		typeText(getDriver(), ID_OPERDAYSWF, LOCATOR_SETGOOD, goodIDs);
 		waitForElement(getDriver(), ID_OPERDAYSWF, LOCATOR_SUGGEST_CODE);
 	}

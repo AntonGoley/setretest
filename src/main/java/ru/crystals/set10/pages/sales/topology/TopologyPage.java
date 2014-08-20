@@ -21,7 +21,6 @@ public class TopologyPage extends SalesPage{
 	}
 	
 	public RegionPage addRegion(){
-		waitForElement(getDriver(), ID_SALESSWF, LOCATOR_ADD_REGION);
 		clickElement(getDriver(), ID_SALESSWF, LOCATOR_ADD_REGION);
 		return new RegionPage(getDriver());
 	}

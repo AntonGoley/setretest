@@ -23,7 +23,6 @@ public class SalesPreferencesPage extends AbstractPage{
 	
 	//TODO replace with factory
 	public SalesGoodsTypesAndPaymentsTabPage  navigateTab(SalesPreferencesPageTabs salesPreferencesTab) {
-		waitForElement(getDriver(), ID_SALESSWF, LOCATOR_TABBAR);
 		doFlexProperty(getDriver(), ID_SALESSWF, LOCATOR_TABBAR, new String[] {"selectedIndex", String.valueOf(salesPreferencesTab.ordinal()) });
 		return new SalesGoodsTypesAndPaymentsTabPage(getDriver());
 	}
