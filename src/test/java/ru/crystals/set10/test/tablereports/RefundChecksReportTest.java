@@ -28,7 +28,7 @@ public class RefundChecksReportTest extends AbstractTest{
 	HTMLRepotResultPage htmlReportResults;
 
 	
-	//@BeforeClass
+	@BeforeClass
 	public void navigateToRefundChecksReports() {
 		mainPage = new LoginPage(getDriver(),  Config.RETAIL_URL).doLogin(Config.MANAGER, Config.MANAGER_PASSWORD);
 		tableReportsPage = mainPage.openOperDay().openTableReports();
@@ -49,9 +49,9 @@ public class RefundChecksReportTest extends AbstractTest{
 //		cheGenerator.logCheckEntities(pe);
 	}
 	
-//	@Test (	description = "Проверить названия отчета и название колонок в шапке таблицы отчета по возвратам", 
-//			alwaysRun = true,
-//			dataProvider = "Шапка отчета по возвратам", dataProviderClass = TableReportsDataprovider.class)
+	@Test (	description = "Проверить названия отчета и название колонок в шапке таблицы отчета по возвратам", 
+			alwaysRun = true,
+			dataProvider = "Шапка отчета по возвратам", dataProviderClass = TableReportsDataprovider.class)
 	public void testPLUTKHTMLReportTableHead(String fieldName){
 		log.info(fieldName);
 		Assert.assertTrue(htmlReportResults.containsValue(fieldName), "Неверное значение поля в шапке отчета: " + fieldName);
