@@ -21,8 +21,8 @@ public class Config {
     public static final String SHOP_NUMBER;
     public static final String RETAIL_NUMBER;
     public static final String DEFAULT_PORT;
-    public static final String DB_USER = "postgres";
-    public static final String DB_PASSWORD = "postgres";
+    public static final String DB_USER;
+    public static final String DB_PASSWORD;
     
     private static Properties props;
 
@@ -53,6 +53,9 @@ public class Config {
         SHOP_NUMBER = props.getProperty("shop.number");
         RETAIL_NUMBER = props.getProperty("retail.number");
         DEFAULT_PORT = props.getProperty("port");
+        DB_USER = props.getProperty("db_user");
+        DB_PASSWORD = props.getProperty("db_password");
+        
         
         log.info("Centrum url:   " + CENTRUM_URL);
         log.info("Centrum url:   " + RETAIL_URL);

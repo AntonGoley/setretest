@@ -1,6 +1,6 @@
 <goods-catalog>
 <good marking-of-the-good="%1$s">
-		<name>Виски Баллантайнс Файнест_%1$s 40 0.5л</name>
+		<name>New Alco good name_%1$s 40 0.5л</name>
 		<bar-code code="%2$s">
 			<count>1</count>
 			<default-code>true</default-code>
@@ -34,6 +34,7 @@
 		<manufacturer id="86">
 			<name>Шотландия</name>
 		</manufacturer>
+		<plugin-property key="alcoholic-content-percentage" value="40.0"/>
 		<plugin-property key="alcoholic-content-percentage" value="40.0"/>
 	</good>
 </goods-catalog>

@@ -39,7 +39,7 @@ public class FlexMediator {
 	public static void waitForElement(WebDriver driver, String swfSrc, String flexId) {
 		//TODO
 		// doFlexWaitForElement falls if no delay before execution
-		sleep(1000);
+		sleep(500);
 		// 30000 - about 15 sec??
 		ecxecute(driver, String.format("document.getElementById('%s').doFlexWaitForElement('%s', '15')", swfSrc, flexId));	
 	}

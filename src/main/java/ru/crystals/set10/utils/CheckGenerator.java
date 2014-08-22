@@ -1,55 +1,84 @@
 package ru.crystals.set10.utils;
 
-import java.io.BufferedReader;
-import java.io.DataInputStream;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-//import ru.crystals.pos.catalog.BarcodeEntity;
-//import ru.crystals.pos.catalog.MeasureEntity;
-//import ru.crystals.pos.catalog.ProductEntity;
-//import ru.crystals.pos.check.CheckStatus;
-//import ru.crystals.pos.check.DocumentEntity;
-//import ru.crystals.pos.check.InsertType;
-//import ru.crystals.pos.check.PositionEntity;
-//import ru.crystals.pos.check.PurchaseEntity;
-//import ru.crystals.pos.check.SessionEntity;
-//import ru.crystals.pos.check.ShiftEntity;
-//import ru.crystals.pos.check.UserEntity;
-//import ru.crystals.pos.payments.CashPaymentEntity;
-
-
+import org.springframework.jdbc.support.rowset.SqlRowSet;
+import ru.crystals.pos.catalog.BarcodeEntity;
+import ru.crystals.pos.catalog.MeasureEntity;
+import ru.crystals.pos.catalog.ProductEntity;
+import ru.crystals.pos.check.CheckStatus;
+import ru.crystals.pos.check.DocumentEntity;
+import ru.crystals.pos.check.InsertType;
+import ru.crystals.pos.check.PositionEntity;
+import ru.crystals.pos.check.PurchaseEntity;
+import ru.crystals.pos.check.SessionEntity;
+import ru.crystals.pos.check.ShiftEntity;
+import ru.crystals.pos.check.UserEntity;
+import ru.crystals.pos.payments.CashPaymentEntity;
+import static ru.crystals.set10.utils.DbAdapter.*;
 
 public class CheckGenerator {
-/*	
+
 	private static final Logger log = LoggerFactory.getLogger(DocsSender.class);
-	//private final String SERVER_MODULE_NAME = "OPERDAY";
-	
 	private static ArrayList<ProductEntity> catalogGoods = new ArrayList();
 	private static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-DD hh:mm:ss");
 	private static ArrayList<DocumentEntity> peList = new ArrayList(10);
-
+	
+	private static DbAdapter db = new  DbAdapter();
+	
+	private static int goodsInDb = 0;
+	private static int checkNumber = 0;
+	private static int shiftNum = 0;
+	
+	private static final String SQL_GOODS = 
+				"SELECT  markingofthegood, barc.code as barcode, pr.name as name, fullname, lastimporttime, measure_code, vat " +
+				"FROM  un_cg_product pr " +
+				"JOIN " +
+				"un_cg_barcode barc " +
+				"on barc.product_marking = pr.markingofthegood";
+	
+	private static final String SQL_GOODS_COUNT = "select count(*) from un_cg_product";
+		
+	private static final String SQL_MAX_SHIFT_NUM = "select max(numshift) as shiftnum from od_shift";
+	
+	private static final String SQL_CHECK_NUM = "select max(numberfield) from od_purchase where id_shift = " +
+												"(select max(id) from od_shift where numshift = " +
+												"(select  max(numshift) from od_shift))";
+	
 	private int cashId;
 	private int shopNumber = -1;
-	private ShiftEntity shift;
-	DocsSender docSender;
+	private  ShiftEntity shift;
+	
+	private DocsSender docSender;
 	
 	static
 	  {
-	    parsePurchasesDBFile("src/test/resources/ru/crystals/test2/dataFiles/goods.db");
+		// задать номер смены и номер чека
+		shiftNum = db.queryForInt(DB_RETAIL_OPERDAY, SQL_MAX_SHIFT_NUM);
+		
+		if (shiftNum == 0) {
+			shiftNum = 1;
+			checkNumber = 1;
+		} else {
+			// выбрать последний номер чека, созданный в смене shiftNum
+			checkNumber = db.queryForInt(DB_RETAIL_OPERDAY, SQL_CHECK_NUM) + 1;
+		}
+		
+		// проверить, есть ли товары в set_operday, и если нет, импортировать через ERP импорт
+		if ((db.queryForInt(DB_RETAIL_SET, SQL_GOODS_COUNT)) < 30 ) {
+			//TODO отправить товары
+		}
+		parsePurchasesFromDB();
 	    generateChecks();
 	  }
+	
 	
 	public CheckGenerator(String serverIP, int shopNumber, int cashNumber) {
 	    this.cashId = cashNumber;
@@ -58,32 +87,31 @@ public class CheckGenerator {
 	} 
 	
 	
-	public static void addPe(){
-		ProductEntity pe = new ProductEntity();
-        pe.setItem("284406_KG");
-        try {
-			pe.setLastImportTime(sdf.parse("2014-08-08 12:34:52.069".substring(1, "2014-08-08 12:34:52.069".length() - 1)));
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-        MeasureEntity me = new MeasureEntity();
-        me.setCode("1");
-        me.setName("1");
-        pe.setMeasure(me);
-        pe.setName("");
-        pe.setNds(Float.valueOf(18.0F));
-        pe.setNdsClass("NDS");
-        BarcodeEntity be = new BarcodeEntity();
-        be.setBarCode("1268044977064");
-        pe.setBarCode(be);
-        catalogGoods.add(pe);
-	}
+//	public static void addPe(){
+//		ProductEntity pe = new ProductEntity();
+//        pe.setItem("284406_KG");
+//        try {
+//			pe.setLastImportTime(sdf.parse("2014-08-08 12:34:52.069".substring(1, "2014-08-08 12:34:52.069".length() - 1)));
+//		} catch (ParseException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//        MeasureEntity me = new MeasureEntity();
+//        me.setCode("1");
+//        me.setName("1");
+//        pe.setMeasure(me);
+//        pe.setName("");
+//        pe.setNds(Float.valueOf(18.0F));
+//        pe.setNdsClass("NDS");
+//        BarcodeEntity be = new BarcodeEntity();
+//        be.setBarCode("1268044977064");
+//        pe.setBarCode(be);
+//        catalogGoods.add(pe);
+//	}
 	
 	
 	protected void sendDocument(Serializable document) {
 		log.info("Try send one document - {}", document);
-		// PurchaseEntity
 		int type = 201;
         
 //        type = DataTypesEnum.PURCHASE_TYPE.code;
@@ -114,7 +142,7 @@ public class CheckGenerator {
 	    de.setDateCommit(d);
 	    de.setShift(this.shift);
 	    //de.setNumber(System.currentTimeMillis());
-	    de.setNumber((long) 1);
+	    de.setNumber((long) checkNumber);
 	    de.setSession(this.shift.getSessionStart());
 	    de.setId(System.currentTimeMillis());
 	    if ((de instanceof PurchaseEntity)) {
@@ -128,11 +156,11 @@ public class CheckGenerator {
 	}
 	
     private ShiftEntity nextShift(SessionEntity session) {
-      Calendar c = Calendar.getInstance();
+      //Calendar c = Calendar.getInstance();
       SessionEntity sess = session != null ? session : nextSession();
       ShiftEntity shift = new ShiftEntity();
       shift.setFiscalNum("Emulator." + this.shopNumber + "." + this.cashId);
-      shift.setNumShift(Long.valueOf(c.get(5)));
+      shift.setNumShift(Long.valueOf(shiftNum));
       shift.setShiftOpen(new Date(System.currentTimeMillis()));
       shift.setCashNum(new Long(this.cashId));
       shift.setShopIndex(Long.valueOf(this.shopNumber));
@@ -143,7 +171,6 @@ public class CheckGenerator {
     private SessionEntity nextSession() {
       SessionEntity se = new SessionEntity();
       se.setDateBegin(new Date(System.currentTimeMillis()));
-
       UserEntity ue = new UserEntity();
       ue.setFirstName("Admin");
       ue.setLastName("Admin");
@@ -154,36 +181,27 @@ public class CheckGenerator {
       return se;
     }
 	  
-	public static int parsePurchasesDBFile(String fileName) {
-	    catalogGoods.clear();
-	    BufferedReader br = null;
-	    try {
-	      FileInputStream fstream = new FileInputStream(fileName);
-	      DataInputStream in = new DataInputStream(fstream);
-	      br = new BufferedReader(new InputStreamReader(in));
+	public static void parsePurchasesFromDB() {
+		
+		SqlRowSet goods = db.queryForRowSet(DB_RETAIL_SET, SQL_GOODS);
 
-	      br.readLine();
-	      String strLine;
-	      while ((strLine = br.readLine()) != null) {
-	        String[] params = strLine.split(";");
+		try {
+	      while (goods.next()) {
 	        ProductEntity pe = new ProductEntity();
-	        pe.setItem(params[0]);
+	        pe.setItem(goods.getString("markingofthegood"));
 	       // pe.setDiscriminator(params[1]);
 	        //pe.setLastImportTime(sdf.parse(params[2].substring(1, params[2].length() - 1)));
-	        pe.setLastImportTime(sdf.parse(params[1].substring(1, params[1].length() - 1)));
+	        pe.setLastImportTime(sdf.parse(goods.getString("lastimporttime").substring(1, goods.getString("lastimporttime").length() - 1)));
 	        MeasureEntity me = new MeasureEntity();
-	        //me.setCode(params[3]);
-	        me.setCode(params[2]);
-	        //me.setName(params[3]);
-	        me.setName(params[2]);
+	        me.setCode(goods.getString("measure_code"));
+	        //me.setName();
 	        pe.setMeasure(me);
-	        //pe.setName(params[4]);
-	        pe.setName(params[3]);
+	        pe.setName(goods.getString("name"));
 	        pe.setNds(Float.valueOf(18.0F));
 	        //pe.setNdsClass(params[6]);
 	        pe.setNdsClass("NDS");
 	        BarcodeEntity be = new BarcodeEntity();
-	        be.setBarCode(String.valueOf(System.currentTimeMillis()));
+	        be.setBarCode(goods.getString("barcode"));
 	        pe.setBarCode(be);
 	        //pe.setPrecision(Double.parseDouble(params[7]));
 	        //pe.setPrecision(Double.parseDouble(params[7]));
@@ -196,23 +214,11 @@ public class CheckGenerator {
 	      }
 	    } catch (Exception e) {
 	      log.warn("Error: " + e.getMessage());
-	      int in = -1;
-	      return in;
 	    }
-	    finally
-	    {
-	      try
-	      {
-	        br.close();
-	      } catch (IOException e) {
-	        e.printStackTrace();
-	      }
-	    }
-	    return 0;
 	  }
 	
 	private static void generateChecks() {
-	    long reportId = 1L;
+	    //long reportId = 1L;
 	    while (peList.size() < 5) {
 	      peList.add(new PurchaseEntity());
 	      peList.get(peList.size() - 1);
@@ -226,15 +232,15 @@ public class CheckGenerator {
 	      //int end = 100;
 	      long qnt = 0L;
 	      long summ = 0L;
-	      for (int i = 0; i < end; i++) {
+	      for (int i = 1; i < end; i++) {
 	        PositionEntity pos = new PositionEntity();
-	        if (i == 0) {
-	        	addPe();
-	        	pos.setProduct((ProductEntity)catalogGoods.get(catalogGoods.size() - 1));
-	        } else {
-	        	pos.setProduct((ProductEntity)catalogGoods.get((int)(Math.random() * catalogGoods.size() - 1.0D)));
-	        }
-	        //pos.setProduct((ProductEntity)catalogGoods.get((int)(Math.random() * catalogGoods.size() - 1.0D)));
+//	        if (i == 0) {
+//	        	addPe();
+//	        	pos.setProduct((ProductEntity)catalogGoods.get(catalogGoods.size() - 1));
+//	        } else {
+//	        	pos.setProduct((ProductEntity)catalogGoods.get((int)(Math.random() * catalogGoods.size() - 1.0D)));
+//	        }
+	        pos.setProduct((ProductEntity)catalogGoods.get((int)(Math.random() * catalogGoods.size() - 1.0D)));
 	        pos.setNumber(Long.valueOf(i));
 	        if (i == 0) {
 	        	qnt = (long) 1.235;
@@ -304,5 +310,5 @@ public class CheckGenerator {
 			log.info("Позиция в товаре: " + poe.getName() + "; Баркод: " + poe.getBarCode());
 		}
 	}
-*/	
+	
 }

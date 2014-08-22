@@ -1,12 +1,11 @@
 package ru.crystals.set10.test.tablereports;
 
-import java.util.Iterator;
-
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-//import ru.crystals.pos.check.PositionEntity;
-//import ru.crystals.pos.check.PurchaseEntity;
+import ru.crystals.pos.check.PurchaseEntity;
+import ru.crystals.pos.check.PositionEntity;
+import ru.crystals.pos.check.PurchaseEntity;
 import ru.crystals.set10.config.Config;
 import ru.crystals.set10.pages.basic.LoginPage;
 import ru.crystals.set10.pages.basic.MainPage;
@@ -28,7 +27,7 @@ public class RefundChecksReportTest extends AbstractTest{
 	HTMLRepotResultPage htmlReportResults;
 
 	
-	@BeforeClass
+	//@BeforeClass
 	public void navigateToRefundChecksReports() {
 		mainPage = new LoginPage(getDriver(),  Config.RETAIL_URL).doLogin(Config.MANAGER, Config.MANAGER_PASSWORD);
 		tableReportsPage = mainPage.openOperDay().openTableReports();
@@ -44,12 +43,13 @@ public class RefundChecksReportTest extends AbstractTest{
 	
 	@Test
 	public void testSendCheck(){
-//		CheckGenerator cheGenerator = new CheckGenerator(Config.RETAIL_HOST, 2103, 1);
-//		PurchaseEntity pe = (PurchaseEntity) cheGenerator.nextPurchase();
-//		cheGenerator.logCheckEntities(pe);
+		CheckGenerator checkGenerator = new CheckGenerator(Config.RETAIL_HOST, 2103, 1);
+		PurchaseEntity pe = (PurchaseEntity) checkGenerator.nextPurchase();
+		checkGenerator.logCheckEntities(pe);
 	}
 	
-	@Test (	description = "Проверить названия отчета и название колонок в шапке таблицы отчета по возвратам", 
+	@Test (	enabled = false,
+			description = "Проверить названия отчета и название колонок в шапке таблицы отчета по возвратам", 
 			alwaysRun = true,
 			dataProvider = "Шапка отчета по возвратам", dataProviderClass = TableReportsDataprovider.class)
 	public void testPLUTKHTMLReportTableHead(String fieldName){

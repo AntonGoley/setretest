@@ -11,8 +11,8 @@
 	    </run>
 	  </groups>
 	<classes>
-			<class name="ru.crystals.set10.test.configuration.ConfigureEnvTest" />
 			<class name="ru.crystals.set10.test.configuration.SetTopologyTest" />
+			<class name="ru.crystals.set10.test.configuration.ConfigureEnvTest" />
 		</classes>
 	</test>
 </suite> 

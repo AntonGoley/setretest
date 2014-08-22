@@ -8,6 +8,8 @@ import java.util.Map;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.jdbc.support.rowset.SqlRowSet;
+
 import ru.crystals.set10.config.*;
 
 
@@ -52,6 +54,11 @@ public class DbAdapter {
 	public  List<Map<String, String>> queryForList(String db, String sql) {
 		return (ArrayList<Map<String, String>>) connectionPool.get(db).queryForList(sql); 
 	}
+	
+	public  SqlRowSet queryForRowSet(String db, String sql) {
+		return connectionPool.get(db).queryForRowSet(sql); 
+	}
+	
 
 	public  String queryForString(String db, String sql) {
 		String result = "";

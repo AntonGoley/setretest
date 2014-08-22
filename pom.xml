@@ -150,13 +150,41 @@
 					<artifactId>blazeds-common</artifactId>
 					<version>3.2.0.3978</version>
 			</dependency>	
-<!-- 			<dependency> -->
-<!-- 			     <groupId>ldapjdk</groupId> -->
-<!-- 			     <artifactId>ldapjdk</artifactId> -->
-<!-- 			     <scope>system</scope> -->
-<!-- 			     <version>1.0</version> -->
-<!-- 			     <systemPath>c:\CashEmu\cashEmulator.jar</systemPath> -->
-<!--   			 </dependency> -->
+			<dependency>
+			     <groupId>CashDS</groupId>
+			     <artifactId>CashDS</artifactId>
+			     <scope>system</scope>
+			     <version>1.0</version>
+			     <systemPath>${basedir}\libs\CashDS.jar</systemPath>
+  			 </dependency>
+  			 <dependency>
+			     <groupId>DataStructsModule</groupId>
+			     <artifactId>DataStructsModule</artifactId>
+			     <scope>system</scope>
+			     <version>1.0</version>
+			     <systemPath>${basedir}\libs\DataStructsModule.jar</systemPath>
+  			 </dependency>
+  			  <dependency>
+			     <groupId>CrystalAMF</groupId>
+			     <artifactId>CrystalAMF</artifactId>
+			     <scope>system</scope>
+			     <version>1.0</version>
+			     <systemPath>${basedir}\libs\CrystalAMF.jar</systemPath>
+  			 </dependency>
+  			 <dependency>
+			     <groupId>ServerHttpClient</groupId>
+			     <artifactId>ServerHttpClient</artifactId>
+			     <scope>system</scope>
+			     <version>1.0</version>
+			     <systemPath>${basedir}\libs\ServerHttpClient.jar</systemPath>
+  			 </dependency>
+  			 <dependency>
+			     <groupId>hibernate-jpa-2.0-api-1.0.1.Final</groupId>
+			     <artifactId>hibernate-jpa-2.0-api-1.0.1.Final</artifactId>
+			     <scope>system</scope>
+			     <version>1.0</version>
+			     <systemPath>${basedir}\libs\hibernate-jpa-2.0-api-1.0.1.Final.jar</systemPath>
+  			 </dependency>
         </dependencies>
         
         <dependencyManagement>
