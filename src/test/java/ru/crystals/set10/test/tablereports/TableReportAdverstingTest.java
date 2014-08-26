@@ -18,7 +18,7 @@ import static ru.crystals.set10.pages.operday.tablereports.AdverstingReportConfi
 import static ru.crystals.set10.pages.operday.tablereports.TableReportPage.*;
 
 
-public class TableReportAdverstingTest extends AbstractTest{
+public class TableReportAdverstingTest extends AbstractTest {
 	
 	LoginPage loginPage;
 	MainPage mainPage;
@@ -106,7 +106,7 @@ public class TableReportAdverstingTest extends AbstractTest{
 //			alwaysRun = true) 
 	public void testWithEmptyShop(){
 		Assert.assertTrue(htmlReportResults.containsValue(Config.SHOP_NUMBER), "В отчете отсутствует информация по магазину: " + Config.SHOP_NUMBER);
-		Assert.assertTrue(htmlReportResults.containsValue(Config.RETAIL_NUMBER), "В отчете отсутствует информация по центруму" + Config.RETAIL_NUMBER);
+		Assert.assertTrue(htmlReportResults.containsValue(Config.SHOP_NUMBER), "В отчете отсутствует информация по центруму" + Config.SHOP_NUMBER);
 	}
 	
 	

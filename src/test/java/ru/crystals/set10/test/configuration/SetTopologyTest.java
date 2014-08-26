@@ -41,7 +41,7 @@ public class SetTopologyTest extends AbstractTest{
 		salesPage = new SalesPage(getDriver());
 		shopPage = salesPage.navigateMenu(SalesMenuItemsAdmin.SHOPS, ShopPage.class);
 		shopPreferences = shopPage.addShop();
-		shopPreferences.setName("Shop" + Config.RETAIL_NUMBER).
+		shopPreferences.setName("Shop" + Config.SHOP_NUMBER).
 						setShopNumber(Config.SHOP_NUMBER).
 						ifShopUseOwnServer(false);
 		shopPage = shopPreferences.goBack();

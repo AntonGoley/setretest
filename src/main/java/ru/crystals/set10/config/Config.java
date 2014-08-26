@@ -19,10 +19,10 @@ public class Config {
     public static final String CENTRUM_HOST;
     public static final String RETAIL_HOST;
     public static final String SHOP_NUMBER;
-    public static final String RETAIL_NUMBER;
     public static final String DEFAULT_PORT;
     public static final String DB_USER;
     public static final String DB_PASSWORD;
+    public static final String CHECKS_COUNT;
     
     private static Properties props;
 
@@ -51,10 +51,10 @@ public class Config {
         MANAGER =  props.getProperty("managerLogin");
         MANAGER_PASSWORD =  props.getProperty("managerPassword");
         SHOP_NUMBER = props.getProperty("shop.number");
-        RETAIL_NUMBER = props.getProperty("retail.number");
         DEFAULT_PORT = props.getProperty("port");
         DB_USER = props.getProperty("db_user");
         DB_PASSWORD = props.getProperty("db_password");
+        CHECKS_COUNT = props.getProperty("check_count");
         
         
         log.info("Centrum url:   " + CENTRUM_URL);
