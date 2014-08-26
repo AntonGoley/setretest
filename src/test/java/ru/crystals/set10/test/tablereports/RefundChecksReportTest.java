@@ -3,6 +3,8 @@ package ru.crystals.set10.test.tablereports;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+
+import ru.crystals.pos.catalog.ProductEntity;
 import ru.crystals.pos.check.PurchaseEntity;
 import ru.crystals.pos.check.PositionEntity;
 import ru.crystals.pos.check.PurchaseEntity;
@@ -43,9 +45,12 @@ public class RefundChecksReportTest extends AbstractTest{
 	
 	@Test
 	public void testSendCheck(){
-		CheckGenerator checkGenerator = new CheckGenerator(Config.RETAIL_HOST, 2103, 1);
+		CheckGenerator checkGenerator = new CheckGenerator(Config.RETAIL_HOST, Integer.valueOf(Config.SHOP_NUMBER), 1);
 		PurchaseEntity pe = (PurchaseEntity) checkGenerator.nextPurchase();
 		checkGenerator.logCheckEntities(pe);
+		PositionEntity prE = pe.getPositions().get(0);
+		checkGenerator.nextReturnCheck(prE, prE.getQnty())  ;
+		
 	}
 	
 	@Test (	enabled = false,

@@ -22,14 +22,14 @@ public class DocsSender {
 	private String serverIP;
 	private int shopNumber;
 	private int cashNumber;
-	private int od_purchase_id;
+	private static int od_purchase_id;
 	
 
 	public DocsSender(String serverIP, int shopNumber, int cashNumber) {
 		this.serverIP = serverIP;
 		this.shopNumber = shopNumber;
 		this.cashNumber = cashNumber;
-		this.od_purchase_id = new DbAdapter().queryForInt(DbAdapter.DB_RETAIL_OPERDAY,
+		od_purchase_id = new DbAdapter().queryForInt(DbAdapter.DB_RETAIL_OPERDAY,
 						"select max(id) from od_inbound_files");
 	}
 
@@ -55,12 +55,12 @@ public class DocsSender {
                 oos.close();
 
                 log.info("response message = " + connect.getResponseMessage());
-                // сетим в базу новый чек, который подложен в nginx для обработки
+                // сетим в базу опердня (od_inbound_files) новый чек, который подложен в nginx для обработки
                 if (connect.getResponseMessage().equals("Created")){
                 	log.info("DocName: " + docName);
                 	new DbAdapter().updateDb(DbAdapter.DB_RETAIL_OPERDAY, 
                 			String.format("INSERT INTO od_inbound_files( id, cash_number, shop_number, documents_count, file_path, status) " +
-                				"VALUES (%s, %s, %s, 1, '%s', 0)", od_purchase_id + 7, cashNumber, shopNumber, docName));
+                				"VALUES (%s, %s, %s, 1, '%s', 0)", od_purchase_id++ + 7, cashNumber, shopNumber, docName));
                 }
                 
         } catch (Exception e) {

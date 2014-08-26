@@ -87,29 +87,6 @@ public class CheckGenerator {
 	} 
 	
 	
-//	public static void addPe(){
-//		ProductEntity pe = new ProductEntity();
-//        pe.setItem("284406_KG");
-//        try {
-//			pe.setLastImportTime(sdf.parse("2014-08-08 12:34:52.069".substring(1, "2014-08-08 12:34:52.069".length() - 1)));
-//		} catch (ParseException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//        MeasureEntity me = new MeasureEntity();
-//        me.setCode("1");
-//        me.setName("1");
-//        pe.setMeasure(me);
-//        pe.setName("");
-//        pe.setNds(Float.valueOf(18.0F));
-//        pe.setNdsClass("NDS");
-//        BarcodeEntity be = new BarcodeEntity();
-//        be.setBarCode("1268044977064");
-//        pe.setBarCode(be);
-//        catalogGoods.add(pe);
-//	}
-	
-	
 	protected void sendDocument(Serializable document) {
 		log.info("Try send one document - {}", document);
 		int type = 201;
@@ -142,7 +119,7 @@ public class CheckGenerator {
 	    de.setDateCommit(d);
 	    de.setShift(this.shift);
 	    //de.setNumber(System.currentTimeMillis());
-	    de.setNumber((long) checkNumber);
+	    de.setNumber((long) checkNumber++);
 	    de.setSession(this.shift.getSessionStart());
 	    de.setId(System.currentTimeMillis());
 	    if ((de instanceof PurchaseEntity)) {
@@ -154,6 +131,29 @@ public class CheckGenerator {
 	    sendDocument(de);
 	    return de;
 	}
+	
+	public DocumentEntity nextReturnCheck(PositionEntity returnEntity, long qnty) {
+	    if (this.shift == null) {
+	      this.shift = nextShift(null);
+	    }
+	    DocumentEntity de = returnCheck(returnEntity, qnty);
+	    Date d = new Date(System.currentTimeMillis());
+	    de.setDateCommit(d);
+	    de.setShift(this.shift);
+	    //de.setNumber(System.currentTimeMillis());
+	    de.setNumber((long) checkNumber++);
+	    de.setSession(this.shift.getSessionStart());
+	    de.setId(System.currentTimeMillis());
+	    if ((de instanceof PurchaseEntity)) {
+	    	PurchaseEntity pe = (PurchaseEntity)de;
+	      for (PositionEntity pos : pe.getPositions()) {
+	        pos.setDateTime(d);
+	      }
+	    }  
+	    sendDocument(de);
+	    return de;
+	}
+	
 	
     private ShiftEntity nextShift(SessionEntity session) {
       //Calendar c = Calendar.getInstance();
@@ -167,7 +167,8 @@ public class CheckGenerator {
       shift.setSessionStart(sess);
       return shift;
     }
-
+    
+    
     private SessionEntity nextSession() {
       SessionEntity se = new SessionEntity();
       se.setDateBegin(new Date(System.currentTimeMillis()));
@@ -217,6 +218,79 @@ public class CheckGenerator {
 	    }
 	  }
 	
+	
+//	public static void addPe(){
+	//	ProductEntity pe = new ProductEntity();
+	//    pe.setItem("284406_KG");
+	//    try {
+	//		pe.setLastImportTime(sdf.parse("2014-08-08 12:34:52.069".substring(1, "2014-08-08 12:34:52.069".length() - 1)));
+	//	} catch (ParseException e) {
+	//		// TODO Auto-generated catch block
+	//		e.printStackTrace();
+	//	}
+	//    MeasureEntity me = new MeasureEntity();
+	//    me.setCode("1");
+	//    me.setName("1");
+	//    pe.setMeasure(me);
+	//    pe.setName("");
+	//    pe.setNds(Float.valueOf(18.0F));
+	//    pe.setNdsClass("NDS");
+	//    BarcodeEntity be = new BarcodeEntity();
+	//    be.setBarCode("1268044977064");
+	//    pe.setBarCode(be);
+	//    catalogGoods.add(pe);
+//}
+	
+	public static DocumentEntity returnCheck(PositionEntity returnEntity, long qnty){
+		 long summ = 0L; 
+		 List positions = new ArrayList(1);
+		 PurchaseEntity returnPe = new PurchaseEntity();
+		 returnPe.setCheckStatus(CheckStatus.Registered);
+		 returnPe.setOperationType(Boolean.valueOf(true));
+		 
+		 returnEntity.setProduct(returnEntity.getProduct());
+		 //pos.setNumber(Long.valueOf(1)); 
+		 //pos.setQnty(Long.valueOf(qnty * 1000L));
+		 //pos.setPriceEnd(returnEntity.getPriceEnd());
+		 //pos.setSum(Long.valueOf(qnty * pos.getPriceEnd().longValue()));
+		 summ += returnEntity.getSum().longValue();
+		 
+		 //pos.setNdsSum(Long.valueOf(Math.round(pos.getSum().longValue() * 0.2D)));
+	     //pos.setInsertType(InsertType.Hand);
+	     //pos.setCalculateDiscount(Boolean.valueOf(true));
+	     //pos.setSumDiscount(Long.valueOf(0L));
+	     //pos.setDeleted(Boolean.valueOf(false));
+	     //pos.setSuccessProcessed(true);
+	     //pos.setDateTime(new Date(System.currentTimeMillis()));
+		 
+		 positions.add(returnEntity);
+	     returnPe.setFiscalDocNum("4012;80" + 1);
+	     returnPe.setPositions(positions);
+	     returnPe.setReturn();
+	     
+	     
+	     List paymentEntityList = new ArrayList(1);
+	      CashPaymentEntity payE = new CashPaymentEntity();
+	      payE.setDateCreate(new Date(System.currentTimeMillis()));
+	      payE.setDateCommit(new Date(System.currentTimeMillis()));
+	      payE.setSumPay(Long.valueOf(summ + 10000L));
+	      
+	      //payE.setChange(Long.valueOf(10000L));
+	      payE.setPaymentType("CashPaymentEntity");
+	      payE.setCurrency("RUB");
+	      paymentEntityList.add(payE);
+	      returnPe.setPayments(paymentEntityList);
+	      returnPe.setDiscountValueTotal(Long.valueOf(0L));
+	      returnPe.setCheckSumEnd(Long.valueOf(summ));
+	      returnPe.setCheckSumStart(Long.valueOf(summ));
+	      
+	      return returnPe;
+	      
+	}
+	
+	
+	
+	
 	private static void generateChecks() {
 	    //long reportId = 1L;
 	    while (peList.size() < 5) {
@@ -224,7 +298,6 @@ public class CheckGenerator {
 	      peList.get(peList.size() - 1);
 
 	      PurchaseEntity pe = (PurchaseEntity)peList.get(peList.size() - 1);
-
 	      pe.setCheckStatus(CheckStatus.Registered);
 	      pe.setOperationType(Boolean.valueOf(true));
 	      List positions = new ArrayList(100);

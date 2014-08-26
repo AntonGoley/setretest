@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="GenerateChecks"  configfailurepolicy="continue" >
+  	<parameter name="shopNumber"  value="2103"/>
+  	<parameter name="dbUser"  value="postgres"/>
+  	<parameter name="dbPassword"  value="postgres"/>
+  	<parameter name="checkCount"  value="1"/>
+  	
+  	<test name="GenerateChecks">
+	  	<classes>
+	  		<class name="ru.crystals.set10.test.CheckGeneratorTest"/>
+		</classes>	 
+  	</test>	
+</suite> 
