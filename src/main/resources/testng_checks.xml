@@ -5,6 +5,7 @@
   	<parameter name="dbUser"  value="postgres"/>
   	<parameter name="dbPassword"  value="postgres"/>
   	<parameter name="checkCount"  value="1"/>
+  	<parameter name="retail_ip"  value="127.0.0.1"/>
   	
   	<test name="GenerateChecks">
 	  	<classes>

@@ -12,13 +12,13 @@ public class CheckGeneratorTest {
 	
 	 protected static final Logger log = Logger.getLogger(CheckGeneratorTest.class);
 	
-	@Parameters({"shopNumber", "dbUser", "dbPassword", "checkCount" })
+	@Parameters({"shopNumber", "dbUser", "dbPassword", "checkCount", "retail_ip"})
 	@Test 
-	public void testSendReturnCheck(String shopNumber, String dbUser, String dbPassword, String checkCount){
+	public void testSendReturnCheck(String shopNumber, String dbUser, String dbPassword, String checkCount, String retail_ip){
 		log.info("Send checks to " + shopNumber + "; dbUser: " + dbUser + "; dbPassword: " + dbPassword);
 		
 		for (int i=1; i<=Integer.valueOf(checkCount); i++) {
-			CheckGenerator checkGenerator = new CheckGenerator("127.0.0.1", Integer.valueOf(shopNumber), 1);
+			CheckGenerator checkGenerator = new CheckGenerator(retail_ip, Integer.valueOf(shopNumber), 1);
 			PurchaseEntity pe = (PurchaseEntity) checkGenerator.nextPurchase();
 			checkGenerator.logCheckEntities(pe);
 			PositionEntity prE = pe.getPositions().get(0);
