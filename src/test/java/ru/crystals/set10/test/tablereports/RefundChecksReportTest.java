@@ -30,6 +30,7 @@ public class RefundChecksReportTest extends AbstractTest{
 	public void navigateToRefundChecksReports() {
 		mainPage = new LoginPage(getDriver(),  Config.RETAIL_URL).doLogin(Config.MANAGER, Config.MANAGER_PASSWORD);
 		refundChecksConfigPage = mainPage.openOperDay().openTableReports().openReportConfigPage(AbstractReportConfigPage.class, TAB_OTHER, REPORT_NAME_REFUND_CHECKS);
+		doReport();
 	}	
 	
 	public void doReport(){
@@ -67,6 +68,7 @@ public class RefundChecksReportTest extends AbstractTest{
 	
 	@Test (	description = "Проверить названия отчета и название колонок в шапке таблицы отчета по возвратам", 
 			alwaysRun = true,
+			priority = 1,
 			dataProvider = "Шапка отчета по возвратам", dataProviderClass = TableReportsDataprovider.class)
 	public void testRefundReportTableHead(String fieldName){
 		log.info(fieldName);
