@@ -11,7 +11,8 @@ import static ru.crystals.set10.utils.FlexMediator.*;
 public class  CheckSearchPage extends AbstractPage{
 	
 	static final String ID_OPERDAYSWF = "OperDay";
-	static final String BUTTON_SEARCH = "label=Найти";
+	// id кнопки "Найти", если выделен таб "по данным чека"
+	static final String BUTTON_SEARCH = "findCheckByCheckDataButton";
 	static final String INPUT_CHECK_NUMBER = "checkNumberInput";
 	static final String BUTTON_GO_TO_CHECK = "label=Перейти к чеку";
 	
@@ -40,6 +41,7 @@ public class  CheckSearchPage extends AbstractPage{
 	
 	public boolean isCheckInOperDay(String checkNumber){
 		long timeoutCount = 0;
+		
 		delay(5000);
 		doSearch();
 		while (timeoutCount <= 3 ){

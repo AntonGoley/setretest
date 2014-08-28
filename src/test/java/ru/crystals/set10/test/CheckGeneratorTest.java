@@ -20,10 +20,8 @@ public class CheckGeneratorTest {
 		for (int i=1; i<=Integer.valueOf(Config.CHECKS_COUNT); i++) {
 			CheckGenerator checkGenerator = new CheckGenerator(Config.RETAIL_HOST, Integer.valueOf(Config.SHOP_NUMBER), 1);
 			PurchaseEntity pe = (PurchaseEntity) checkGenerator.nextPurchase();
-			checkGenerator.logCheckEntities(pe);
-			PositionEntity prE = pe.getPositions().get(0);
-			delay();
-			checkGenerator.nextReturnCheck(prE, prE.getQnty());
+			PositionEntity pos = pe.getPositions().get(0);
+			checkGenerator.nextRefundCheck(pe, pos, pos.getQnty(), false);
 		}	
 	}
 	
