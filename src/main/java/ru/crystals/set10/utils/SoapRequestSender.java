@@ -114,7 +114,7 @@ public class SoapRequestSender {
 	}
 	
 	public void getAlcoRestrictions(){
-		DisinsectorTools.delay(1500);
+		DisinsectorTools.delay(1000);
 		this.soapRequest = soapGetAlcoRestrictions;
 		this.service = SERVICE_ALCO_RESTRICTIONS; 
 		this.method = METHOD_ALCO_RESTRICTIONS;

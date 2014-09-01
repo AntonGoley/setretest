@@ -131,6 +131,7 @@ public class CheckGenerator {
 	    }  
 	    sendDocument(de);
 	    logCheckEntities((PurchaseEntity) de);
+	    ifCheckInRetail((PurchaseEntity) de);
 	    return de;
 	}
 	
@@ -144,9 +145,7 @@ public class CheckGenerator {
 	    if (this.shift == null) {
 	      this.shift = nextShift(null);
 	    }
-	    
-	    ifCheckInRetail(superPurchase);
-	    
+
 	    DocumentEntity de = refundCheck(superPurchase, returnEntity, qnty, arbitraryReturn);
 	    Date d = new Date(System.currentTimeMillis());
 	    de.setDateCommit(d);
@@ -161,6 +160,8 @@ public class CheckGenerator {
 	      }
 	    }  
 	    sendDocument(de);
+	    logCheckEntities((PurchaseEntity) de);
+	    ifCheckInRetail((PurchaseEntity) de);
 	    return de;
 	}
 	

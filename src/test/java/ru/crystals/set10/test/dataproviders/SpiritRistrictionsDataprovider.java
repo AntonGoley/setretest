@@ -5,6 +5,8 @@ import java.util.Date;
 
 import org.testng.annotations.DataProvider;
 
+import ru.crystals.set10.utils.DisinsectorTools;
+
 
 public class SpiritRistrictionsDataprovider {
 	
@@ -20,11 +22,7 @@ public class SpiritRistrictionsDataprovider {
 	}
 	
 	private static String getName(){
-		try {
-			Thread.sleep(100);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
+		DisinsectorTools.delay(1000);
 		return "Алкогольное ограничение_" + new Date().getTime();
 	}
 	

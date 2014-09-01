@@ -15,6 +15,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import ru.crystals.set10.config.*;
+import ru.crystals.set10.utils.DisinsectorTools;
 
 
 public abstract class  AbstractPage {
@@ -56,9 +57,7 @@ public abstract class  AbstractPage {
 		String propertyActualValue;
 		JavascriptExecutor js = (JavascriptExecutor) getDriver(); 
 		while (counter<timeout*1000) {
-			
 				propertyActualValue = (String)js.executeScript("return document.getElementById('RetailX').getFlexProperty(arguments[0], arguments[1])", flexId, property);
-
 			
 			if (propertyExpectedValue.equals(propertyActualValue)) {
 				return true;
@@ -71,11 +70,8 @@ public abstract class  AbstractPage {
 	
 	public void switchWindow(Boolean closeMainWindow) {
 		// get main window name
-		try {
-			Thread.sleep(1000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
+		
+		DisinsectorTools.delay(2000);
 		String mainWindow = getDriver().getWindowHandle();
 		Set<String> set = getDriver().getWindowHandles();
 		if (closeMainWindow) {
@@ -91,7 +87,6 @@ public abstract class  AbstractPage {
 		         getDriver().manage().window().maximize();
 		    }
 		}
-		
 	}
 	
 	public boolean isElementDisplayedSingleP(WebElement element) {
