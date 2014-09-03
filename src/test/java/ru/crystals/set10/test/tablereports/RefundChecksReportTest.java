@@ -11,8 +11,8 @@ import ru.crystals.pos.check.PositionEntity;
 import ru.crystals.set10.config.Config;
 import ru.crystals.set10.pages.basic.LoginPage;
 import ru.crystals.set10.pages.basic.MainPage;
+import ru.crystals.set10.pages.operday.HTMLRepotResultPage;
 import ru.crystals.set10.pages.operday.tablereports.AbstractReportConfigPage;
-import ru.crystals.set10.pages.operday.tablereports.HTMLRepotResultPage;
 import ru.crystals.set10.test.AbstractTest;
 import ru.crystals.set10.test.dataproviders.TableReportsDataprovider;
 import ru.crystals.set10.utils.CheckGenerator;
@@ -46,7 +46,8 @@ public class RefundChecksReportTest extends AbstractTest{
 	PurchaseEntity refundCheck;
 	HashMap<String, String> purchaseEntityData;
 	
-
+	
+	// TODO: добавить проверку дат и бар кода 
 	@DataProvider (name = "Данные последней записи отчета")
 	private static Object[][] lastLineReportData(){
 		return new Object[][]{
@@ -139,13 +140,13 @@ public class RefundChecksReportTest extends AbstractTest{
 		purchaseEntityData.put(FIELD_RETURNCHECK_CASHIER, purchase.getSession().getUser().getStringView());
 		purchaseEntityData.put(FIELD_RETURNCHECK_SUM, "-"  + sum.substring(0, sum.length() - 2) + "," + sum.substring(sum.length() - 2, sum.length()));
 		purchaseEntityData.put(FIELD_GOOD_GOODCODE, purchase.getPositions().get(0).getProduct().getBarCode().getBarCode());
-		
+
+		// если произвольный возврат, то чек продажи должен быть пустой
 		if (purchase.getSuperPurchase()!=null) {
 			purchaseEntityData.put(FIELD_SALECHECK_DATE, "29.08.14");
 			purchaseEntityData.put(FIELD_SALECHECK_CASHNUMBER, String.valueOf(purchase.getSuperPurchase().getShift().getCashNum()));
 			purchaseEntityData.put(FIELD_SALECHECK_SHIFT, String.valueOf(purchase.getSuperPurchase().getShift().getNumShift()));
 			purchaseEntityData.put(FIELD_SALECHECK_CHECKNUMBER, String.valueOf(purchase.getSuperPurchase().getNumber()));
-			// если произвольный возврат, то чек продажи пустой
 		} else {
 			purchaseEntityData.put(FIELD_SALECHECK_DATE, "");
 			purchaseEntityData.put(FIELD_SALECHECK_CASHNUMBER, "");

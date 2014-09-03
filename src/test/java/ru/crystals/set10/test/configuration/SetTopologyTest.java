@@ -15,6 +15,8 @@ import ru.crystals.set10.pages.sales.topology.RegionPage;
 import ru.crystals.set10.pages.sales.topology.TopologyPage;
 import ru.crystals.set10.test.AbstractTest;
 import ru.crystals.set10.utils.DbAdapter;
+import ru.crystals.set10.utils.DisinsectorTools;
+import ru.crystals.set10.utils.SoapRequestSender;
 import static ru.crystals.set10.pages.basic.SalesPage.SALES_MENU_TOPOLOGY;
 
 public class SetTopologyTest extends AbstractTest{
@@ -28,34 +30,18 @@ public class SetTopologyTest extends AbstractTest{
 	ShopPage shopPage;
 	ShopPreferencesPage shopPreferences;
 	DbAdapter dba = new DbAdapter();
-		
-	private void addRegionAndCity() {
-		topologyPage = mainPage.openSales().navigateMenu(SALES_MENU_TOPOLOGY, "1", TopologyPage.class);
-		regionPage = topologyPage.addRegion().setRegionName("TestRegion");
-		cityPage = regionPage.addCity();
-		cityPage.setCityName("TestCity");
-		topologyPage = cityPage.goBack().goBack();
-	}
 	
-	public void addShop() {
-		salesPage = new SalesPage(getDriver());
-		shopPage = salesPage.navigateMenu(SalesMenuItemsAdmin.SHOPS, ShopPage.class);
-		shopPreferences = shopPage.addShop();
-		shopPreferences.setName("Shop" + Config.SHOP_NUMBER).
-						setShopNumber(Config.SHOP_NUMBER).
-						ifShopUseOwnServer(false);
-		shopPage = shopPreferences.goBack();
-	}
-	
-	@Test (groups = "Config",
+	@Test (	priority = 1,
+			groups = "Config",
 			description = "Настроить топологию: создать регион, город, магазин")
 	public void setTopology() {
 		mainPage = new LoginPage(getDriver(), Config.CENTRUM_URL).doLogin(Config.MANAGER, Config.MANAGER_PASSWORD);
 		addRegionAndCity();
 		addShop();
+		sendGoods();
 	}
 	
-	@Test (	priority = 1,
+	@Test (	
 			description = "Добавить права пользователю manager на центруме",
 			groups = {"Config", "Roles"} )
 	public void setUpPrevilegesCentrum(){
@@ -65,7 +51,7 @@ public class SetTopologyTest extends AbstractTest{
 				"where serveruserentities_id = (select id from users_server_user where login = '%s')", Config.MANAGER));
 	}	
 
-	@Test (	priority = 1,
+	@Test (	
 			description = "Добавить все роли пользователю manager на ретейле",
 			groups = {"Config", "Roles"} )
 	public void setUpPrevilegesRetail(){
@@ -76,5 +62,40 @@ public class SetTopologyTest extends AbstractTest{
 			dba.updateDb(DbAdapter.DB_RETAIL_SET, String.format("INSERT INTO users_server_user_users_server_user_role(serveruserentities_id, roles_id)" +
 										" VALUES (%s, %s)", 1, i));
 		}	
+	}
+	
+	private void addRegionAndCity() {
+		topologyPage = mainPage.openSales().navigateMenu(SALES_MENU_TOPOLOGY, "1", TopologyPage.class);
+		regionPage = topologyPage.addRegion().setRegionName("TestRegion");
+		cityPage = regionPage.addCity();
+		cityPage.setCityName("TestCity");
+		topologyPage = cityPage.goBack().goBack();
+	}
+	
+	private void addShop() {
+		salesPage = new SalesPage(getDriver());
+		shopPage = salesPage.navigateMenu(SalesMenuItemsAdmin.SHOPS, ShopPage.class);
+		shopPreferences = shopPage.addShop();
+		shopPreferences.setName("Shop" + Config.SHOP_NUMBER).
+						setShopNumber(Config.SHOP_NUMBER).
+						ifShopUseOwnServer(false);
+		shopPage = shopPreferences.goBack();
+	}
+	
+	private void addCash(){
+		//document.getElementById('Sales').doFlexProperty('dataGrid', 'selectedIndex', '1')
+		//document.getElementById('Sales').doFlexClick('label=Настройки','')
+		//document.getElementById('Sales').doFlexProperty('shopSettingsTabNav', 'selectedIndex', '1')
+		//
+		
+	}
+	
+	private void sendGoods(){
+		SoapRequestSender soapSender  = new SoapRequestSender();
+		soapSender.setSoapServiceIP(Config.CENTRUM_HOST);
+		String ti = soapSender.generateTI();
+		String goodRequest = DisinsectorTools.getFileContentAsString("goodsData.txt");
+		soapSender.sendGoods(goodRequest,ti);
+		soapSender.assertSOAPResponse("status-message=\"correct\"", ti);
 	}
 }

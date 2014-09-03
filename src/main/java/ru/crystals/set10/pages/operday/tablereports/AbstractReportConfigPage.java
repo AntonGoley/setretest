@@ -5,6 +5,7 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import ru.crystals.set10.pages.basic.AbstractPage;
+import ru.crystals.set10.pages.operday.HTMLRepotResultPage;
 import static ru.crystals.set10.utils.FlexMediator.*;
 
 

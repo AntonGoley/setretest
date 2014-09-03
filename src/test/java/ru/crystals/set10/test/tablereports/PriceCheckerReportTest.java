@@ -8,7 +8,7 @@ import org.testng.annotations.Test;
 import ru.crystals.set10.config.Config;
 import ru.crystals.set10.pages.basic.LoginPage;
 import ru.crystals.set10.pages.basic.MainPage;
-import ru.crystals.set10.pages.operday.tablereports.HTMLRepotResultPage;
+import ru.crystals.set10.pages.operday.HTMLRepotResultPage;
 import ru.crystals.set10.pages.operday.tablereports.PriceCheckerConfigPage;
 import ru.crystals.set10.pages.operday.tablereports.TableReportPage;
 import ru.crystals.set10.test.AbstractTest;

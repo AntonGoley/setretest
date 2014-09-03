@@ -44,14 +44,14 @@ public class DisinsectorTools {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		log.info("Report text contains: " + result);
+		log.info("Report text contains: \n" + result);
 		return result;
 	}
 	
 	public static String getFileContentAsString(String filePath) {
 		String result = "";
 		try (
-			FileReader fReader = new FileReader(new File("src/test/resources/ru/crystals/test2/dataFiles/" + filePath));
+			FileReader fReader = new FileReader(new File("src/test/resources/ru/crystals/dataFiles/" + filePath));
 			BufferedReader br = new BufferedReader(fReader);
 		)		
 		{	

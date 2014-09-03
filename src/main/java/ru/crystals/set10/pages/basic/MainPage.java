@@ -3,6 +3,8 @@ package ru.crystals.set10.pages.basic;
 
 import org.openqa.selenium.*;
 
+import ru.crystals.set10.pages.operday.OperDayPage;
+
 import static ru.crystals.set10.utils.FlexMediator.*;
 
 
@@ -20,7 +22,7 @@ public class MainPage extends AbstractPage{
 	
 	public OperDayPage openOperDay() {
 		clickElement(getDriver(), ID_MAINPAGESWF, ID_OPERDAYBUTTON);
-		return new OperDayPage(getDriver()); 
+		return new OperDayPage(getDriver(), true); 
 	}
 	
 	public SalesPage openSales() {
