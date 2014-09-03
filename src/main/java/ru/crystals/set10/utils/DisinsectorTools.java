@@ -54,7 +54,7 @@ public class DisinsectorTools {
 	public static String getFileContentAsString(String filePath) {
 		String result = "";
 		try (
-				InputStreamReader ir =new InputStreamReader(new FileInputStream("src/test/resources/ru/crystals/dataFiles/" + filePath), "UTF8");	
+				InputStreamReader ir =new InputStreamReader(new FileInputStream("src/test/resources/ru/crystals/dataFiles/" + filePath), "UTF-8");	
 				BufferedReader br = new BufferedReader(ir);
 		)		
 		{	
