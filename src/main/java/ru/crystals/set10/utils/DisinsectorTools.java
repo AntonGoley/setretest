@@ -6,10 +6,13 @@ import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FilenameFilter;
 import java.io.IOException;
+import java.io.InputStreamReader;
+
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
@@ -51,8 +54,8 @@ public class DisinsectorTools {
 	public static String getFileContentAsString(String filePath) {
 		String result = "";
 		try (
-			FileReader fReader = new FileReader(new File("src/test/resources/ru/crystals/dataFiles/" + filePath));
-			BufferedReader br = new BufferedReader(fReader);
+				InputStreamReader ir =new InputStreamReader(new FileInputStream("src/test/resources/ru/crystals/dataFiles/" + filePath), "UTF8");	
+				BufferedReader br = new BufferedReader(ir);
 		)		
 		{	
 			String line = "";
