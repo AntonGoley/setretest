@@ -37,8 +37,8 @@ public class SetTopologyTest extends AbstractTest{
 	public void setTopology() {
 		mainPage = new LoginPage(getDriver(), Config.CENTRUM_URL).doLogin(Config.MANAGER, Config.MANAGER_PASSWORD);
 		salesPage = mainPage.openSales();
-		addRegionAndCity();
-		addShop();
+//		addRegionAndCity();
+//		addShop();
 		sendGoods();
 		addCash();
 	}
