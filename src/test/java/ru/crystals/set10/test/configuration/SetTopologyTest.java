@@ -17,7 +17,7 @@ import ru.crystals.set10.test.AbstractTest;
 import ru.crystals.set10.utils.DbAdapter;
 import ru.crystals.set10.utils.DisinsectorTools;
 import ru.crystals.set10.utils.SoapRequestSender;
-import static ru.crystals.set10.pages.basic.SalesPage.SALES_MENU_TOPOLOGY;
+import static ru.crystals.set10.pages.basic.SalesPage.*;
 
 public class SetTopologyTest extends AbstractTest{
 	
@@ -36,9 +36,11 @@ public class SetTopologyTest extends AbstractTest{
 			description = "Настроить топологию: создать регион, город, магазин")
 	public void setTopology() {
 		mainPage = new LoginPage(getDriver(), Config.CENTRUM_URL).doLogin(Config.MANAGER, Config.MANAGER_PASSWORD);
+		salesPage = mainPage.openSales();
 		addRegionAndCity();
 		addShop();
 		sendGoods();
+		addCash();
 	}
 	
 	@Test (	
@@ -65,7 +67,7 @@ public class SetTopologyTest extends AbstractTest{
 	}
 	
 	private void addRegionAndCity() {
-		topologyPage = mainPage.openSales().navigateMenu(SALES_MENU_TOPOLOGY, "1", TopologyPage.class);
+		topologyPage = salesPage.navigateMenu(SALES_MENU_TOPOLOGY, "1", TopologyPage.class);
 		regionPage = topologyPage.addRegion().setRegionName("TestRegion");
 		cityPage = regionPage.addCity();
 		cityPage.setCityName("TestCity");
@@ -74,7 +76,7 @@ public class SetTopologyTest extends AbstractTest{
 	
 	private void addShop() {
 		salesPage = new SalesPage(getDriver());
-		shopPage = salesPage.navigateMenu(SalesMenuItemsAdmin.SHOPS, ShopPage.class);
+		shopPage = salesPage.navigateMenu(SALES_MENU_SHOPS, "0", ShopPage.class);
 		shopPreferences = shopPage.addShop();
 		shopPreferences.setName("Shop" + Config.SHOP_NUMBER).
 						setShopNumber(Config.SHOP_NUMBER).
@@ -83,11 +85,11 @@ public class SetTopologyTest extends AbstractTest{
 	}
 	
 	private void addCash(){
-		//document.getElementById('Sales').doFlexProperty('dataGrid', 'selectedIndex', '1')
-		//document.getElementById('Sales').doFlexClick('label=Настройки','')
-		//document.getElementById('Sales').doFlexProperty('shopSettingsTabNav', 'selectedIndex', '1')
-		//
-		
+		getDriver().navigate().refresh();
+		salesPage = new SalesPage(getDriver());
+		shopPage = salesPage.navigateMenu(SALES_MENU_SHOPS, "0", ShopPage.class);
+		shopPreferences = shopPage.openFirstShopPreferences();
+		shopPreferences.addCashes("1");
 	}
 	
 	private void sendGoods(){

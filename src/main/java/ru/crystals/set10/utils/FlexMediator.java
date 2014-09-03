@@ -50,7 +50,7 @@ public class FlexMediator {
 	public static boolean waitForProperty(WebDriver driver, String swfSrc, String flexId, String[] args) {
 		String result;
 		int timeout = 0;
-		// TODO: replace 15000 with parameters
+		// TODO: заменить параметром
 		while (timeout < 10000 ){
 			sleep(1000);
 			result = (String) ecxecuteAndReturnString(driver, String.format("return document.getElementById('%s').getFlexProperty('%s', '%s')", swfSrc, flexId, args[0]));
