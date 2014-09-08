@@ -96,7 +96,7 @@ public class SetTopologyTest extends AbstractTest{
 		SoapRequestSender soapSender  = new SoapRequestSender();
 		soapSender.setSoapServiceIP(Config.CENTRUM_HOST);
 		String ti = soapSender.generateTI();
-		String goodRequest = DisinsectorTools.getFileContentAsString("goodsData.txt");
+		String goodRequest = DisinsectorTools.getFileContentAsString("goods.txt");
 		soapSender.sendGoods(goodRequest,ti);
 		soapSender.assertSOAPResponse("status-message=\"correct\"", ti);
 	}
