@@ -6,31 +6,24 @@ import ru.crystals.set10.config.*;
 import ru.crystals.pos.check.PositionEntity;
 import ru.crystals.pos.check.PurchaseEntity;
 import ru.crystals.set10.utils.CheckGenerator;
+import ru.crystals.set10.utils.DisinsectorTools;
 
 public class CheckGeneratorTest {
 	
-	 protected static final Logger log = Logger.getLogger(CheckGeneratorTest.class);
+	protected static final Logger log = Logger.getLogger(CheckGeneratorTest.class);
+	CheckGenerator checkGenerator = new CheckGenerator(Config.RETAIL_HOST, Integer.valueOf(Config.SHOP_NUMBER), 1);
 	
-	@Test 
+	@Test (description = "Сгенерить чеки продажи и чеки возврата")
 	public void testSendReturnCheck(){
 		log.info("Send checks to " + Config.SHOP_NUMBER + 
 				"; dbUser: " + Config.DB_USER + 
 				"; dbPassword: " + Config.DB_PASSWORD);
 		
 		for (int i=1; i<=Integer.valueOf(Config.CHECKS_COUNT); i++) {
-			CheckGenerator checkGenerator = new CheckGenerator(Config.RETAIL_HOST, Integer.valueOf(Config.SHOP_NUMBER), 1);
 			PurchaseEntity pe = (PurchaseEntity) checkGenerator.nextPurchase();
+			DisinsectorTools.delay(3000);
 			PositionEntity pos = pe.getPositions().get(0);
 			checkGenerator.nextRefundCheck(pe, pos, pos.getQnty(), false);
 		}	
 	}
-	
-	private void delay(){
-		try {
-			Thread.sleep(5000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-	}
-	
 }

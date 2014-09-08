@@ -28,7 +28,7 @@ public class CheckGenerator {
 	private static final Logger log = LoggerFactory.getLogger(DocsSender.class);
 	private static ArrayList<ProductEntity> catalogGoods = new ArrayList();
 	private static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-DD hh:mm:ss");
-	private static ArrayList<DocumentEntity> peList = new ArrayList(10);
+	private static ArrayList<DocumentEntity> peList = new ArrayList();
 	
 	private int cashId;
 	private int shopNumber = -1;
@@ -283,7 +283,7 @@ public class CheckGenerator {
 	
 	private static void generateChecks() {
 	    //long reportId = 1L;
-	    while (peList.size() < 5) {
+	    while (peList.size() < 10) {
 	      peList.add(new PurchaseEntity());
 	      peList.get(peList.size() - 1);
 
