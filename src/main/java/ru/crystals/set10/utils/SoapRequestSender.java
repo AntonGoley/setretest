@@ -7,6 +7,7 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Date;
@@ -101,8 +102,13 @@ public class SoapRequestSender {
 	}
 	
 	public String encodeBase64(String stringToEncode){
-		Base64 codec = new Base64();
-		return new String(codec.encode(stringToEncode.getBytes()));
+		try {
+			Base64 codec = new Base64();
+			return new String(codec.encode(stringToEncode.getBytes("UTF-8")));
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		return "";
 	}
 	
 	public String generateTI(){
