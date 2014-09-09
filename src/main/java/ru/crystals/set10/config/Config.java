@@ -22,7 +22,7 @@ public class Config {
     public static final String DEFAULT_PORT;
     public static final String DB_USER;
     public static final String DB_PASSWORD;
-    public static final String CHECKS_COUNT;
+    public static final String CHECK_COUNT;
     
     private static Properties props;
 
@@ -42,19 +42,26 @@ public class Config {
         }
         
         
+        RETAIL_HOST = System.getProperty("testng_target_host");
+        SHOP_NUMBER = System.getProperty("testng_shop_number");
+    	CHECK_COUNT = System.getProperty("testng_check_number");
+    	DB_USER = System.getProperty("testng_dbUser");
+    	DB_PASSWORD = System.getProperty("testng_dbPassword");
+        
+        
         PATH_TO_DRIVER = "target/test-classes/chromedriver.exe";
         
         CENTRUM_HOST= props.getProperty("centrum.host.ip");
-        RETAIL_HOST= props.getProperty("retail.host.ip");
+        //RETAIL_HOST = props.getProperty("retail.host.ip");
         CENTRUM_URL = "http://" + CENTRUM_HOST + ":" + props.getProperty("port");
         RETAIL_URL = "http://" + RETAIL_HOST + ":" + props.getProperty("port");
         MANAGER =  props.getProperty("managerLogin");
         MANAGER_PASSWORD =  props.getProperty("managerPassword");
-        SHOP_NUMBER = props.getProperty("shop.number");
+        //SHOP_NUMBER = props.getProperty("shop.number");
         DEFAULT_PORT = props.getProperty("port");
-        DB_USER = props.getProperty("db_user");
-        DB_PASSWORD = props.getProperty("db_password");
-        CHECKS_COUNT = props.getProperty("check_count");
+        //DB_USER = props.getProperty("db_user");
+       // DB_PASSWORD = props.getProperty("db_password");
+        
         
         
         log.info("Centrum url:   " + CENTRUM_URL);
