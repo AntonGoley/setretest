@@ -44,7 +44,7 @@ public class SetTopologyTest extends AbstractTest{
 			description = "Добавить права пользователю manager на центруме",
 			groups = {"Config", "Roles"} )
 	public void setUpPrevilegesCentrum(){
-		// Добавить роль админа польлзователю Config.MANAGER на центруме
+		// Добавить роль админа польлователю Config.MANAGER на центруме
 		dba.updateDb(DbAdapter.DB_CENTRUM_SET , String.format("update users_server_user_users_server_user_role " + 
 				"set roles_id = '10' " +
 				"where serveruserentities_id = (select id from users_server_user where login = '%s')", Config.MANAGER));

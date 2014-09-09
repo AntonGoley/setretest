@@ -119,7 +119,7 @@ public class CheckGenerator {
 	    if (this.shift == null) {
 	      this.shift = nextShift(null);
 	    }
-	    int idx = (int)random(peList.size() - 1);
+	    int idx = (int)random(peList.size() - 2) + 1;
 	    DocumentEntity de = (DocumentEntity)peList.get(idx);
 	    Date d = new Date(System.currentTimeMillis());
 	    de.setDateCommit(d);
@@ -287,7 +287,7 @@ public class CheckGenerator {
 	
 	private static void generateChecks() {
 	    //long reportId = 1L;
-	    while (peList.size() < 10) {
+	    while (peList.size() < 20) {
 	      peList.add(new PurchaseEntity());
 	      peList.get(peList.size() - 1);
 
