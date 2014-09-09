@@ -34,7 +34,7 @@
 		<manufacturer id="86">
 			<name>Шотландия</name>
 		</manufacturer>
-		<plugin-property key="alcoholic-content-percentage" value="40.0"/>
+		<fullname>New Alco good name_%1$s   (Россия) fullname </fullname>
 		<plugin-property key="alcoholic-content-percentage" value="40.0"/>
 	</good>
 </goods-catalog>

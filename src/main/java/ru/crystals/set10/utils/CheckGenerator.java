@@ -30,6 +30,8 @@ public class CheckGenerator {
 	private static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-DD hh:mm:ss");
 	private static ArrayList<DocumentEntity> peList = new ArrayList();
 	
+	private static int positionCount = 1;
+	
 	private int cashId;
 	private int shopNumber = -1;
 	private  ShiftEntity shift;
@@ -292,7 +294,6 @@ public class CheckGenerator {
 	      pe.setOperationType(Boolean.valueOf(true));
 	      List positions = new ArrayList(100);
 	      int end = (int)random(20) + 1;
-	      //int end = 100;
 	      long qnt = 0L;
 	      long summ = 0L;
 	      for (int i = 1; i < end; i++) {
@@ -378,8 +379,9 @@ public class CheckGenerator {
 	public boolean ifCheckInRetail(PurchaseEntity purchase){
 	    String fiscalDocNum =   purchase.getFiscalDocNum();
     	// ждем в течение минуты
+	    int timeOut = 60;
     	int tryCount = 0;
-    	while (tryCount < 60) {
+    	while (tryCount < timeOut) {
     		tryCount++;
     		DisinsectorTools.delay(1000);
     		if (db.queryForInt(DB_RETAIL_OPERDAY, String.format(SQL_GET_CHECK_BY_FISCALDOCNUM, fiscalDocNum)) >= 1) {

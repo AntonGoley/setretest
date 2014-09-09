@@ -41,6 +41,13 @@
                         <name>listener</name>
                         <value>org.uncommons.reportng.HTMLReporter</value>
                     </property>
+                    <systemPropertyVariables>
+                    	<testng_target_host>${targetHost}</testng_target_host>
+                    	<testng_shop_number>${shopNumber}</testng_shop_number>
+                    	<testng_dbUser>${dbUser}</testng_dbUser>
+                    	<testng_dbPassword>${dbPassword}</testng_dbPassword>
+                    	<testng_check_number>${checkNumber}</testng_check_number>
+               		 </systemPropertyVariables>
                 </configuration>
             </plugin>
        	</plugins>
