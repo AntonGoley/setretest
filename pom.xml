@@ -34,6 +34,7 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>2.14.1</version>
                 <configuration>
+                <outputEncoding>UTF-8</outputEncoding>
                 <argLine>-Dfile.encoding=UTF-8</argLine>
                     <suiteXmlFiles>
                         <suiteXmlFile>target/test-classes/${suiteXmlFile}</suiteXmlFile>
