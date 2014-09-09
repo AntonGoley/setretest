@@ -6,15 +6,8 @@ import ru.crystals.set10.config.*;
 import ru.crystals.pos.check.PositionEntity;
 import ru.crystals.pos.check.PurchaseEntity;
 import ru.crystals.set10.utils.CheckGenerator;
-import ru.crystals.set10.utils.DisinsectorTools;
 
 public class CheckGeneratorTest {
-	
-//	public String host = System.getProperty("testng_target_host");
-//	public String shopNumber = System.getProperty("testng_shop_number");
-//	public String checkNumber = System.getProperty("testng_check_number");
-//	public String dbUser = System.getProperty("testng_dbUser");
-//	public String dbPassword = System.getProperty("testng_dbPassword");
 	
 	
 	protected static final Logger log = Logger.getLogger(CheckGeneratorTest.class);
@@ -26,7 +19,7 @@ public class CheckGeneratorTest {
 				"; dbUser: " + Config.DB_USER + 
 				"; dbPassword: " + Config.DB_PASSWORD );
 		
-		for (int i=1; i<=Integer.valueOf(Config.SHOP_NUMBER); i++) {
+		for (int i=1; i<=Integer.valueOf(Config.CHECK_COUNT); i++) {
 			PurchaseEntity pe = (PurchaseEntity) checkGenerator.nextPurchase();
 			PositionEntity pos = pe.getPositions().get(0);
 			checkGenerator.nextRefundCheck(pe, pos, pos.getQnty(), false);

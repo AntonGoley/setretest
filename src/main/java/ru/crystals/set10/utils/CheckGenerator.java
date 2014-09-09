@@ -21,6 +21,7 @@ import ru.crystals.pos.check.SessionEntity;
 import ru.crystals.pos.check.ShiftEntity;
 import ru.crystals.pos.check.UserEntity;
 import ru.crystals.pos.payments.CashPaymentEntity;
+import ru.crystals.set10.config.Config;
 import static ru.crystals.set10.utils.DbAdapter.*;
 
 public class CheckGenerator {
@@ -76,8 +77,9 @@ public class CheckGenerator {
 		}
 		
 		// проверить, есть ли товары в set_operday, и если нет, импортировать через ERP импорт
-		if ((db.queryForInt(DB_RETAIL_SET, SQL_GOODS_COUNT)) < 30 ) {
-			//TODO отправить товары
+		if ((db.queryForInt(DB_RETAIL_SET, SQL_GOODS_COUNT)) < 10 ) {
+			SoapRequestSender soapSender  = new SoapRequestSender();
+			soapSender.sendGoodsToStartTesting(Config.RETAIL_HOST);
 		}
 		parsePurchasesFromDB();
 	    generateChecks();

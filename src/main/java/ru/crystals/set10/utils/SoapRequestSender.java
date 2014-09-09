@@ -261,4 +261,13 @@ public class SoapRequestSender {
 		}
 		return false;
 	}
+	
+	public void sendGoodsToStartTesting(String targetHost){
+		setSoapServiceIP(targetHost);
+		String ti = generateTI();
+		String goodRequest = DisinsectorTools.getFileContentAsString("goods.txt");
+		sendGoods(goodRequest,ti);
+		assertSOAPResponse("status-message=\"correct\"", ti);
+	}
+	
 }

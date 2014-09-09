@@ -42,7 +42,8 @@ public class Config {
         }
         
         
-        RETAIL_HOST = System.getProperty("testng_target_host");
+        CENTRUM_HOST = System.getProperty("testng_centrum_host");
+        RETAIL_HOST = System.getProperty("testng_retail_host");
         SHOP_NUMBER = System.getProperty("testng_shop_number");
     	CHECK_COUNT = System.getProperty("testng_check_number");
     	DB_USER = System.getProperty("testng_dbUser");
@@ -51,7 +52,7 @@ public class Config {
         
         PATH_TO_DRIVER = "target/test-classes/chromedriver.exe";
         
-        CENTRUM_HOST= props.getProperty("centrum.host.ip");
+        //CENTRUM_HOST= props.getProperty("centrum.host.ip");
         //RETAIL_HOST = props.getProperty("retail.host.ip");
         CENTRUM_URL = "http://" + CENTRUM_HOST + ":" + props.getProperty("port");
         RETAIL_URL = "http://" + RETAIL_HOST + ":" + props.getProperty("port");

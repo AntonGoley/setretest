@@ -1,10 +1,7 @@
 package ru.crystals.set10.test.configuration;
 
 
-import org.openqa.selenium.WebDriver;
-import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-
 import ru.crystals.set10.config.Config;
 import ru.crystals.set10.pages.basic.*;
 import ru.crystals.set10.pages.basic.SalesPage.SalesMenuItemsAdmin;
@@ -94,10 +91,6 @@ public class SetTopologyTest extends AbstractTest{
 	
 	private void sendGoods(){
 		SoapRequestSender soapSender  = new SoapRequestSender();
-		soapSender.setSoapServiceIP(Config.CENTRUM_HOST);
-		String ti = soapSender.generateTI();
-		String goodRequest = DisinsectorTools.getFileContentAsString("goods.txt");
-		soapSender.sendGoods(goodRequest,ti);
-		soapSender.assertSOAPResponse("status-message=\"correct\"", ti);
+		soapSender.sendGoodsToStartTesting(Config.CENTRUM_HOST);
 	}
 }

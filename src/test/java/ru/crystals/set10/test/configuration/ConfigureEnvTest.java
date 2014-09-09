@@ -4,7 +4,6 @@ import org.testng.annotations.Test;
 import ru.crystals.set10.amfcall.AMFRequester;
 import ru.crystals.set10.config.Config;
 import ru.crystals.set10.test.AbstractTest;
-import ru.crystals.set10.utils.DbAdapter;
 import flex.messaging.io.amf.client.exceptions.ClientStatusException;
 
 
