@@ -37,7 +37,6 @@
                 <encoding>UTF-8</encoding>
         		<inputEncoding>UTF-8</inputEncoding>
                 <outputEncoding>UTF-8</outputEncoding>
-                <argLine>-Dfile.encoding=UTF-8</argLine>
                     <suiteXmlFiles>
                         <suiteXmlFile>target/test-classes/${suiteXmlFile}</suiteXmlFile>
                     </suiteXmlFiles>
