@@ -11,7 +11,7 @@ public class CheckGeneratorTest {
 	
 	
 	protected static final Logger log = Logger.getLogger(CheckGeneratorTest.class);
-	CheckGenerator checkGenerator = new CheckGenerator(Config.RETAIL_HOST, Integer.valueOf(Config.SHOP_NUMBER), 1);
+	CheckGenerator checkGenerator = new CheckGenerator(Config.RETAIL_HOST, Integer.valueOf(Config.SHOP_NUMBER), Integer.valueOf(Config.CASH_NUMBER));
 	
 	@Test (description = "Сгенерить чеки продажи и чеки возврата")
 	public void testSendReturnCheck(){

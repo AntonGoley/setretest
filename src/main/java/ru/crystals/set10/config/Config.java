@@ -23,6 +23,7 @@ public class Config {
     public static final String DB_USER;
     public static final String DB_PASSWORD;
     public static final String CHECK_COUNT;
+    public static final String CASH_NUMBER;
     
     private static Properties props;
 
@@ -48,7 +49,7 @@ public class Config {
     	CHECK_COUNT = System.getProperty("testng_check_number");
     	DB_USER = System.getProperty("testng_dbUser");
     	DB_PASSWORD = System.getProperty("testng_dbPassword");
-        
+    	CASH_NUMBER = System.getProperty("testng_cash_number");
         
         PATH_TO_DRIVER = "target/test-classes/chromedriver.exe";
         

@@ -51,6 +51,7 @@
                     	<testng_dbUser>${dbUser}</testng_dbUser>
                     	<testng_dbPassword>${dbPassword}</testng_dbPassword>
                     	<testng_check_number>${checkNumber}</testng_check_number>
+                    	<testng_cash_number>${cashNumber}</testng_cash_number>
                		 </systemPropertyVariables>
                 </configuration>
             </plugin>
