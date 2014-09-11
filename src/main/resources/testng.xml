@@ -4,7 +4,7 @@
 	<parameter name="first-name"  value="Cedric"/>
 	<test name="Licence" preserve-order="true" enabled="true">
 	  	<classes>
-	  	<class name="ru.crystals.test2.SpiritRestrictionsToSAPTest"/>
+	  	<class name="ru.crystals.disinsector2.test.SpiritRestrictionsToSAPTest"/>
 <!-- 	  	<class name="ru.crystals.test2.SpiritRestrictionsToSAPTest"/>
 	  	<class name="ru.crystals.test2.TableReportTest"/> -->
 		</classes>	 

@@ -43,7 +43,8 @@ public class Config {
         }
         
         
-        PATH_TO_DRIVER = "target/test-classes/chromedriver.exe";
+       // PATH_TO_DRIVER = "target/test-classes/chromedriver.exe";
+        PATH_TO_DRIVER = "target/test-classes/chromedriver 2";
         
         CENTRUM_HOST= props.getProperty("centrum.host.ip");
         RETAIL_HOST= props.getProperty("retail.host.ip");

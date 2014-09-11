@@ -23,6 +23,7 @@
       			<testResource>
         			<directory>src/main/resources</directory>
         			<includes>
+                    	<include>chromedriver 2</include>
                     	<include>*.exe</include>
                     	<include>testng.xml</include>
                 	</includes>
