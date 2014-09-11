@@ -3,8 +3,8 @@
                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
         <modelVersion>4.0.0</modelVersion>
-        <groupId>Disinsector2</groupId>
-        <artifactId>Disinsector2</artifactId>
+        <groupId>Disinsector</groupId>
+        <artifactId>Disinsector</artifactId>
         <version>2.0</version>
         <properties>
         <maven.compiler.source>1.7</maven.compiler.source>
@@ -25,25 +25,63 @@
         			<includes>
                     	<include>chromedriver 2</include>
                     	<include>*.exe</include>
-                    	<include>testng.xml</include>
+                    	<include>testng*.xml</include>
                 	</includes>
       			</testResource>
     		</testResources>
         	<plugins>
-<!--         	<plugin> -->
-<!--                 <groupId>org.apache.maven.plugins</groupId> -->
-<!--                 <artifactId>maven-surefire-plugin</artifactId> -->
-<!--                 <version>2.16</version> -->
-<!--                 <configuration> -->
-<!--                     <suiteXmlFiles> -->
-<!--                         <suiteXmlFile>target/test-classes/testng.xml</suiteXmlFile> -->
-<!--                     </suiteXmlFiles> -->
-<!--                     <junitArtifactName>none:none</junitArtifactName> -->
-<!--                 </configuration> -->
-<!--             </plugin> -->
-        	</plugins>
-        </build>
+        	<plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.14.1</version>
+                <configuration>
+                <encoding>UTF-8</encoding>
+        		<inputEncoding>UTF-8</inputEncoding>
+                <outputEncoding>UTF-8</outputEncoding>
+                    <suiteXmlFiles>
+                        <suiteXmlFile>target/test-classes/${suiteXmlFile}</suiteXmlFile>
+                    </suiteXmlFiles>
+                    <property>
+                        <name>listener</name>
+                        <value>org.uncommons.reportng.HTMLReporter</value>
+                    </property>
+                    <systemPropertyVariables>
+                    	<testng_centrum_host>${centrumHost}</testng_centrum_host>
+                    	<testng_retail_host>${retailHost}</testng_retail_host>
+                    	<testng_shop_number>${shopNumber}</testng_shop_number>
+                    	<testng_dbUser>${dbUser}</testng_dbUser>
+                    	<testng_dbPassword>${dbPassword}</testng_dbPassword>
+                    	<testng_check_number>${checkNumber}</testng_check_number>
+                    	<testng_cash_number>${cashNumber}</testng_cash_number>
+                    	<testng_next_shift_number>${nextShift}</testng_next_shift_number>
+               		 </systemPropertyVariables>
+                </configuration>
+            </plugin>
+       	</plugins>
+        </build> 
         <dependencies>
+        <dependency>
+          <groupId>com.google.inject</groupId>
+          <artifactId>guice</artifactId>
+          <version>3.0</version>
+        </dependency>
+        <dependency>
+            <groupId>velocity</groupId>
+            <artifactId>velocity-dep</artifactId>
+            <version>1.4</version>
+            <scope>test</scope>
+        </dependency>
+            <dependency>
+		        <groupId>org.uncommons</groupId>
+		        <artifactId>reportng</artifactId>
+		        <version>1.1.4</version>
+		        <exclusions>
+                    <exclusion>
+                        <groupId>org.testng</groupId>
+                        <artifactId>testng</artifactId>
+                    </exclusion>
+                     </exclusions>
+   			 </dependency>
             <dependency>
                 <groupId>org.seleniumhq.selenium</groupId>
                 <artifactId>selenium-java</artifactId>
@@ -117,6 +155,11 @@
 				<version>9.1-901.jdbc4</version>
 			</dependency>
 			<dependency>
+				<groupId>org.apache.commons</groupId>
+				<artifactId>commons-lang3</artifactId>
+				<version>3.0</version>
+			</dependency>
+			<dependency>
 					<groupId>com.adobe.blazeds</groupId>
 					<artifactId>blazeds-core</artifactId>
 					<version>3.2.0.3978</version>
@@ -126,7 +169,41 @@
 					<artifactId>blazeds-common</artifactId>
 					<version>3.2.0.3978</version>
 			</dependency>	
-			
+			<dependency>
+			     <groupId>CashDS</groupId>
+			     <artifactId>CashDS</artifactId>
+			     <scope>system</scope>
+			     <version>1.0</version>
+			     <systemPath>${basedir}/libs/CashDS.jar</systemPath>
+  			 </dependency>
+  			 <dependency>
+			     <groupId>DataStructsModule</groupId>
+			     <artifactId>DataStructsModule</artifactId>
+			     <scope>system</scope>
+			     <version>1.0</version>
+			     <systemPath>${basedir}/libs/DataStructsModule.jar</systemPath>
+  			 </dependency>
+  			  <dependency>
+			     <groupId>CrystalAMF</groupId>
+			     <artifactId>CrystalAMF</artifactId>
+			     <scope>system</scope>
+			     <version>1.0</version>
+			     <systemPath>${basedir}/libs/CrystalAMF.jar</systemPath>
+  			 </dependency>
+  			 <dependency>
+			     <groupId>ServerHttpClient</groupId>
+			     <artifactId>ServerHttpClient</artifactId>
+			     <scope>system</scope>
+			     <version>1.0</version>
+			     <systemPath>${basedir}/libs/ServerHttpClient.jar</systemPath>
+  			 </dependency>
+  			 <dependency>
+			     <groupId>hibernate-jpa-2.0-api-1.0.1.Final</groupId>
+			     <artifactId>hibernate-jpa-2.0-api-1.0.1.Final</artifactId>
+			     <scope>system</scope>
+			     <version>1.0</version>
+			     <systemPath>${basedir}/libs/hibernate-jpa-2.0-api-1.0.1.Final.jar</systemPath>
+  			 </dependency>
         </dependencies>
         
         <dependencyManagement>

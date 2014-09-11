@@ -4,10 +4,10 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
-import ru.crystals.test2.basic.AbstractPage;
-import ru.crystals.test2.basic.BasicElements;
-import static ru.crystals.test2.basic.BasicElements.*;
-import static ru.crystals.test2.utils.FlexMediator.*;
+import ru.crystals.set10.pages.basic.AbstractPage;
+import ru.crystals.set10.pages.basic.BasicElements;
+import static ru.crystals.set10.pages.basic.BasicElements.*;
+import static ru.crystals.set10.utils.FlexMediator.*;
 
 
 public class ShopPreferencesPage extends AbstractPage {
@@ -16,8 +16,10 @@ public class ShopPreferencesPage extends AbstractPage {
 	static final String LOCATOR_SHOP_NUMBER_INPUT = "shopNumberTI";
 	static final String LOCATOR_SHOP_NAME_INPUT = "shopNameTI";
 	static final String LOCATOR_VIRTUAL_CHECKBOX = "virtualShopCB";
-	static final String LOCATOR_BACK_BUTTON= "label=К магазинам";
-	
+	static final String LOCATOR_BACK_BUTTON = "label=К магазинам";
+	static final String LOCATOR_ADD_CASH_TO_SHOP_BUTTON = "addCashB";
+	static final String LOCATOR_CASHES_TAB = "shopSettingsTabNav";
+	static final String LOCATOR_CASHES_COUNT_INPUT = "amountPole";
 	
 	public ShopPreferencesPage(WebDriver driver) {
 		super(driver);
@@ -25,22 +27,28 @@ public class ShopPreferencesPage extends AbstractPage {
 
 	}
 	
-	
 	public ShopPreferencesPage setShopNumber(String number){
-		waitForElement(getDriver(), ID_SALESSWF, LOCATOR_SHOP_NUMBER_INPUT);
 		typeText(getDriver(), ID_SALESSWF, LOCATOR_SHOP_NUMBER_INPUT, number);
 		return this;
 	}
 	
 	public ShopPreferencesPage setName(String name){
-		waitForElement(getDriver(), ID_SALESSWF, LOCATOR_SHOP_NAME_INPUT);
 		typeText(getDriver(), ID_SALESSWF, LOCATOR_SHOP_NAME_INPUT, name);
 		return this;
 	}
 	
 	public ShopPreferencesPage ifShopUseOwnServer(boolean virtualServer){
-		waitForElement(getDriver(), ID_SALESSWF, LOCATOR_VIRTUAL_CHECKBOX);
 		checkBoxValue(getDriver(), ID_SALESSWF, LOCATOR_VIRTUAL_CHECKBOX, virtualServer);
+		return this;
+	}
+	
+	public ShopPreferencesPage addCashes(String cashCount){
+		doFlexProperty(getDriver(), ID_SALESSWF, LOCATOR_CASHES_TAB, new String[] {"selectedIndex", "1"});
+		typeText(getDriver(), ID_SALESSWF, LOCATOR_CASHES_COUNT_INPUT, cashCount);
+		clickElement(getDriver(), ID_SALESSWF, LOCATOR_ADD_CASH_TO_SHOP_BUTTON);
+		// ждем пока не обновится счетчик касс
+		//TODO : сделать универсальный способ ожидания: сколько касс было, сколько ожидать, после добавления
+		waitForElement(getDriver(), ID_SALESSWF, "numberOfItems=1");
 		return this;
 	}
 	
