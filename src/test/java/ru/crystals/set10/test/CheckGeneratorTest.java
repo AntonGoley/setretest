@@ -18,7 +18,9 @@ public class CheckGeneratorTest {
 		log.info("Send checks to " + Config.SHOP_NUMBER + 
 				"; dbUser: " + Config.DB_USER + 
 				"; dbPassword: " + Config.DB_PASSWORD );
-		
+		if (Boolean.valueOf("true")) {
+			checkGenerator.useNextShift();
+		}
 		for (int i=1; i<=Integer.valueOf(Config.CHECK_COUNT); i++) {
 			PurchaseEntity pe = (PurchaseEntity) checkGenerator.nextPurchase();
 			PositionEntity pos = pe.getPositions().get(0);
