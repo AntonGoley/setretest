@@ -52,6 +52,7 @@
                     	<testng_dbPassword>${dbPassword}</testng_dbPassword>
                     	<testng_check_number>${checkNumber}</testng_check_number>
                     	<testng_cash_number>${cashNumber}</testng_cash_number>
+                    	<testng_next_shift_number>${nextShift}</testng_next_shift_number>
                		 </systemPropertyVariables>
                 </configuration>
             </plugin>
@@ -151,6 +152,11 @@
 				<groupId>postgresql</groupId>
 				<artifactId>postgresql</artifactId>
 				<version>9.1-901.jdbc4</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.commons</groupId>
+				<artifactId>commons-lang3</artifactId>
+				<version>3.0</version>
 			</dependency>
 			<dependency>
 					<groupId>com.adobe.blazeds</groupId>
