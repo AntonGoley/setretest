@@ -33,7 +33,6 @@ public class Config {
     
     static {
         try (
-        	//TODO: добавить возможность запуска с разными конфигурациями	
         	Reader reader = new FileReader("target/classes/testing.properties");
         	)
         {	
@@ -45,6 +44,7 @@ public class Config {
             e.printStackTrace();
         }
         
+        // TODO: разрулить запуск с разных ос
         PATH_TO_DRIVER = "target/test-classes/chromedriver.exe";
         //PATH_TO_DRIVER = "target/test-classes/chromedriver 2";
         
