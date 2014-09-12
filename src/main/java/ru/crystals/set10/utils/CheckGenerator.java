@@ -24,6 +24,7 @@ import ru.crystals.pos.check.ShiftEntity;
 import ru.crystals.pos.check.UserEntity;
 import ru.crystals.pos.payments.CashPaymentEntity;
 import ru.crystals.set10.config.Config;
+import ru.crystals.transport.DataTypesEnum;
 import static ru.crystals.set10.utils.DbAdapter.*;
 
 public class CheckGenerator {
@@ -60,9 +61,16 @@ public class CheckGenerator {
 		
 	private static final String SQL_MAX_SHIFT_NUM = "select max(numshift) from od_shift as od_s join od_purchase as od_p on od_p.id_shift = od_s.id where cashnum = %s";
 														
+	private static final String SQL_SHIFT_STATUS = "select state from od_shift where numshift = %s and cashnum = %s";
+	
 	private static final String SQL_CHECK_NUM = "select max(numberfield) from od_shift as od_s join od_purchase as od_p on od_p.id_shift = od_s.id where cashnum = %s and numshift = %s";
 	
 	private static  String SQL_GET_CHECK_BY_FISCALDOCNUM = "select count(*) from od_purchase where fiscaldocnum = '%s' ";
+	
+	private static  String SQL_GET_REPORT_BY_FISCALDOCNUM = "select count(*) from od_reportshift where fiscaldocnum = '%s' ";	
+	
+	private static  String SQL_GET_SHIFT_FINAL_SUM = "select sum(checksumstart) from od_purchase where operationtype = %s  and " +
+													"id_shift = (select id from od_shift where cashnum=%s and numshift=%s)";
 	
 	static
 	  {
@@ -88,6 +96,8 @@ public class CheckGenerator {
 		shiftNum = db.queryForInt(DB_RETAIL_OPERDAY, String.format(SQL_MAX_SHIFT_NUM, cashNumber));
 		if (shiftNum == 0) {
 			shiftNum = 1;
+		} else {
+			ifShiftClosed(cashNumber, shiftNum);
 		}
 		return shiftNum;
 	}
@@ -97,29 +107,47 @@ public class CheckGenerator {
 		return ++checkNumber;
 	}
 	
+	public int getShiftSumChecks() {
+		return db.queryForInt(DB_RETAIL_OPERDAY, String.format(SQL_GET_SHIFT_FINAL_SUM, String.valueOf("true"), cashNumber, shiftNum));
+	}
+	
+	public int getShiftSumChecksRefund() {
+		return db.queryForInt(DB_RETAIL_OPERDAY, String.format(SQL_GET_SHIFT_FINAL_SUM, String.valueOf("false"), cashNumber, shiftNum));
+	}
+	
+	private boolean ifShiftClosed(int cashNumber, int shiftNumber) {
+		int querryResult;
+		querryResult = db.queryForInt(DB_RETAIL_OPERDAY, String.format(SQL_SHIFT_STATUS, shiftNumber, cashNumber)); 
+		if ((int) querryResult == 0) { 
+			return false;
+		} else {
+			useNextShift();
+			return true;
+		}
+	}
 	
 	protected void sendDocument(Serializable document) {
 		log.info("Try send one document - {}", document);
-		int type = 201;
-        
-//        type = DataTypesEnum.PURCHASE_TYPE.code;
-//        if (document instanceof PurchaseEntity) {
-//            type = DataTypesEnum.PURCHASE_TYPE.code;
-//        } else if (document instanceof ReportShiftEntity) {
-//            type = DataTypesEnum.REPORT_TYPE.code;
+		int type;
+		type = DataTypesEnum.PURCHASE_TYPE.code;
+		
+        if (document instanceof PurchaseEntity) {
+            type = DataTypesEnum.PURCHASE_TYPE.code;
+        } else if (document instanceof ReportShiftEntity) {
+            type = DataTypesEnum.REPORT_TYPE.code;
 //        } else if (document instanceof WithdrawalEntity) {
 //            type = DataTypesEnum.WITHDRAWAL_TYPE.code;
 //        } else if (document instanceof IntroductionEntity) {
 //            type = DataTypesEnum.INTRODUCTION_TYPE.code;
 //        } else {
 //            LOG.warn("Неизвестный тип документа: {}", document);
-//        }
+        }
 		docSender.sendObject(type, document);
     }
 	
 	public DocumentEntity nextPurchase() {
 	    generateChecks();
-	    if (this.shift == null || nextShift) {
+	    if (this.shift == null || nextShift || ifShiftClosed(cashNumber, shiftNum)) {
 	      this.shift = nextShift(null);
 	      nextShift = false;
 	    }
@@ -174,16 +202,46 @@ public class CheckGenerator {
 	    return de;
 	}
 	
+	// закрывает текущую смену
+	public DocumentEntity nextZReport(){
+		if (this.shift == null) {
+		      this.shift = nextShift(null);
+		    }
+	    ReportShiftEntity rse = new ReportShiftEntity();
+	    rse.setReportZ(true);
+	    rse.setCountPurchase(Long.valueOf(1L));
+	    rse.setSumCashEnd(Long.valueOf(2851771786L));
+	    rse.setFiscalDocNum("testZ;" + String.valueOf(System.currentTimeMillis()));
+	    // сумма чеков продажи за смену в ФР
+	    rse.setSumPurchaseFiscal(Long.valueOf(getShiftSumChecks()));
+	    // сумма возвратов по ФР
+	    rse.setSumReturnFiscal((long) getShiftSumChecksRefund());
+	    rse.setId(Long.valueOf(reportId++));
+
+	    ReportPaymentTypeEntity reportPaymentTypeEntity = new ReportPaymentTypeEntity(rse.getId().longValue(), "CashPaymentEntity", 'P');
+	    //reportPaymentTypeEntity.setPSumm(getShiftSum(false));
+	    
+	    List listRPTE = new ArrayList();
+	    listRPTE.add(reportPaymentTypeEntity);
+	    rse.setPaymentsTypesList(listRPTE);
+	    rse.setShift(shift);
+	    rse.setNumber((long) checkNumber);
+	    rse.setSession(shift.getSessionStart());
+	    
+	    nextShift = true;
+	    sendDocument(rse);
+	    //logCheckEntities((PurchaseEntity) rse);
+	    ifCheckInRetail((ReportShiftEntity) rse);
+	    return rse;
+	}
+	
 	
     private ShiftEntity nextShift(SessionEntity session) {
       SessionEntity sess = session != null ? session : nextSession();
       ShiftEntity shift = new ShiftEntity();
       shift.setFiscalNum("Emulator." + this.shopNumber + "." + this.cashNumber);
-      
       if (nextShift) {
-    	  shiftNum++;
     	  nextShift = false;
-    	  checkNumber = 1;
       }
       shift.setNumShift(Long.valueOf(shiftNum));
       shift.setShiftOpen(new Date(System.currentTimeMillis() - yesterday));
@@ -253,7 +311,7 @@ public class CheckGenerator {
 	      CashPaymentEntity payE = new CashPaymentEntity();
 	      payE.setDateCreate(new Date(System.currentTimeMillis()));
 	      payE.setDateCommit(new Date(System.currentTimeMillis()));
-	      payE.setSumPay(Long.valueOf(summ + 10000L));
+	      payE.setSumPay(Long.valueOf(summ));
 	      payE.setPaymentType("CashPaymentEntity");
 	      payE.setCurrency("RUB");
 	
@@ -317,8 +375,8 @@ public class CheckGenerator {
 	      CashPaymentEntity payE = new CashPaymentEntity();
 	      payE.setDateCreate(new Date(System.currentTimeMillis()));
 	      payE.setDateCommit(new Date(System.currentTimeMillis()));
-	      payE.setSumPay(Long.valueOf(summ + 10000L));
-	      payE.setChange(Long.valueOf(10000L));
+	      payE.setSumPay(Long.valueOf(summ));
+	      //payE.setChange(Long.valueOf(10000L));
 	      payE.setPaymentType("CashPaymentEntity");
 	      payE.setCurrency("RUB");
 	      paymentEntityList.add(payE);
@@ -345,27 +403,6 @@ public class CheckGenerator {
 //	    peList.add(rse);
 	  }
 	
-	
-	public void nextZReport(){
-	    ReportShiftEntity rse = new ReportShiftEntity();
-	    rse.setReportZ(true);
-	    rse.setSumPurchaseFiscal(Long.valueOf(34650L));
-	    rse.setCountPurchase(Long.valueOf(1L));
-	    rse.setSumCashEnd(Long.valueOf(2851771786L));
-	    rse.setFiscalDocNum("testZ;" + String.valueOf(System.currentTimeMillis()));
-
-	    rse.setId(Long.valueOf(reportId++));
-
-	    ReportPaymentTypeEntity reportPaymentTypeEntity = new ReportPaymentTypeEntity(rse.getId().longValue(), "CashPaymentEntity", 'P');
-	    reportPaymentTypeEntity.setPSumm(34650L);
-	    List listRPTE = new ArrayList();
-	    listRPTE.add(reportPaymentTypeEntity);
-	    rse.setPaymentsTypesList(listRPTE);
-	    nextShift = true;
-	    //peList.add(rse);
-	}
-	
-	
 	public void logCheckEntities(PurchaseEntity pe){
 		Iterator<PositionEntity> i = pe.getPositions().iterator();
 		PositionEntity  poe;
@@ -379,15 +416,22 @@ public class CheckGenerator {
 	} 
 	
 	// проверить, что чек покупки зарегистрирован в od_purchase (ищем по fiscaldocnum)
-	public boolean ifCheckInRetail(PurchaseEntity purchase){
+	public boolean ifCheckInRetail(DocumentEntity purchase){
 	    String fiscalDocNum =   purchase.getFiscalDocNum();
+	    String dbRequest = "";
+	    if (purchase instanceof PurchaseEntity) {
+	    	dbRequest = SQL_GET_CHECK_BY_FISCALDOCNUM;
+	    } else if (purchase instanceof ReportShiftEntity) {
+	    	dbRequest = SQL_GET_REPORT_BY_FISCALDOCNUM;
+	    }
+	    
     	// ждем в течение минуты
 	    int timeOut = 60;
     	int tryCount = 0;
     	while (tryCount < timeOut) {
     		tryCount++;
     		DisinsectorTools.delay(1000);
-    		if (db.queryForInt(DB_RETAIL_OPERDAY, String.format(SQL_GET_CHECK_BY_FISCALDOCNUM, fiscalDocNum)) >= 1) {
+    		if (db.queryForInt(DB_RETAIL_OPERDAY, String.format(dbRequest, fiscalDocNum)) == 1) {
     			return true;
     		}	
     	}
@@ -397,6 +441,8 @@ public class CheckGenerator {
 	
 	public void useNextShift(){
 		this.nextShift = true;
+		shiftNum++;
+		checkNumber = 1;
 	}
 	
 	public static void parsePurchasesFromDB() {

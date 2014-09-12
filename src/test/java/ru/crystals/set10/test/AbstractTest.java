@@ -10,16 +10,15 @@ import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.concurrent.TimeUnit;
 import org.apache.log4j.Logger;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriverService;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.annotations.BeforeMethod;
-
 import ru.crystals.set10.config.*;
 import ru.crystals.set10.pages.basic.*;
-import ru.crystals.set10.test.configuration.SetTopologyTest;
 
 
 public class AbstractTest {
@@ -28,9 +27,8 @@ public class AbstractTest {
 	
     private WebDriver driver;
     private static ChromeDriverService service;
+    private static String chromeDownloadPath = null;
     
-    SetTopologyTest configuration;
-
     public WebDriver getDriver() {
         return driver;
     }
@@ -56,7 +54,8 @@ public class AbstractTest {
     	
     	driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
     	driver.manage().deleteAllCookies();
-
+    	
+    	chromeDownloadPath =getChromeDownloadPath();
 	}
     
     @BeforeMethod(alwaysRun = true)
@@ -92,5 +91,19 @@ public class AbstractTest {
     	return new LoginPage(getDriver(), url);
     	
     }
+    
+    protected String getChromeDownloadPath(){
+    	if (chromeDownloadPath == null) {
+    		setChromeDownloadPath();
+    	}
+    	return this.chromeDownloadPath;
+    }
+    
+    public String setChromeDownloadPath() {
+		driver.get("chrome://settings");
+		driver.get("chrome://settings-frame");
+		driver.findElement(By.xpath(".//button[@id='advanced-settings-expander']")).click();
+		return driver.findElement(By.xpath(".//input[@id='downloadLocationPath']")).getAttribute("value");
+	}
     
 }

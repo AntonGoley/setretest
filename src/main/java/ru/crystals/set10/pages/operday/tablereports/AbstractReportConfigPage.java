@@ -14,7 +14,7 @@ public class  AbstractReportConfigPage extends AbstractPage{
 	static final String ID_OPERDAYSWF = "OperDay";
 	public static final String HTMLREPORT = "download_html";
 	public static final String EXCELREPORT = "download_excel";
-	
+	public static final String PDFREPORT = "download_pdf";
 	
 	public AbstractReportConfigPage(WebDriver driver) {
 		super(driver);
@@ -29,15 +29,14 @@ public class  AbstractReportConfigPage extends AbstractPage{
 		return new HTMLRepotResultPage(getDriver());
 	}
 	
+	// for excel and pdf reports
+	public void saveReportFile(String reportType){
+		doFlexMouseDown(getDriver(), ID_OPERDAYSWF, reportType);
+		clickElement(getDriver(), ID_OPERDAYSWF, reportType);
+	}
 	
-//	// for excel and pdf reports
-//	public void saveReportFile(){
-//		// remove focus from 
-//		waitForElement(getDriver(), ID_OPERDAYSWF, LOCATOR_ALERT_YES);
-//		//doFlexMouseDown(getDriver(), ID_OPERDAYSWF, LOCATOR_ALERT_YES);
-//		getDriver().findElement(By.id(ID_OPERDAYSWF)).click();
-//		new Actions(getDriver()).sendKeys(Keys.SPACE).perform();
-//		new Actions(getDriver()).sendKeys(Keys.SPACE).perform();
-//	}
 	
+	protected void removeOldReports(String filePath, String prefix){
+		
+	}
 }

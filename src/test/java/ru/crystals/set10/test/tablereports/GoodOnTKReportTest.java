@@ -8,6 +8,7 @@ import ru.crystals.set10.config.Config;
 import ru.crystals.set10.pages.basic.LoginPage;
 import ru.crystals.set10.pages.basic.MainPage;
 import ru.crystals.set10.pages.operday.HTMLRepotResultPage;
+import ru.crystals.set10.pages.operday.tablereports.AbstractReportConfigPage;
 import ru.crystals.set10.pages.operday.tablereports.GoodsOnTKConfigPage;
 import ru.crystals.set10.pages.operday.tablereports.TableReportPage;
 import ru.crystals.set10.test.AbstractTest;
@@ -45,9 +46,11 @@ public class GoodOnTKReportTest extends AbstractTest{
 	
 	@BeforeClass
 	public void navigateToGoodOnTKReports() {
+		new DisinsectorTools().deleteOldDownloadedReports(getChromeDownloadPath());
 		mainPage = new LoginPage(getDriver(), Config.CENTRUM_URL).doLogin(Config.MANAGER, Config.MANAGER_PASSWORD);
 		tableReportsPage = mainPage.openOperDay().openTableReports();
 		goodOnTKConfig = tableReportsPage.openReportConfigPage(GoodsOnTKConfigPage.class, TAB_OTHER, REPORT_NAME_GOOD_ON_TK);
+		
 		soapSender.setSoapServiceIP(Config.CENTRUM_HOST);
 		sendGoodData();
 		sendAdverstingForGood();
@@ -78,21 +81,27 @@ public class GoodOnTKReportTest extends AbstractTest{
 	}
 	
 	@Test (	description = "Проверить названия отчета и название колонок в шапке таблицы отчета по товарам на ТК", 
-			alwaysRun = true,
+			//alwaysRun = true,
 			dataProvider = "Шапка отчета Товары на ТК", dataProviderClass = TableReportsDataprovider.class)
 	public void testGoodOnTKHTMLReportTableHead(String fieldName){
 		log.info(fieldName);
 		Assert.assertTrue(htmlReportResults.containsValue(fieldName), "Неверное значение поля в шапке отчета: " + fieldName);
 	}
 	
-	
 	@Test (	description = "Проверить наличие данных в отчете по товарам на ТК", 
-			alwaysRun = true,
+			//alwaysRun = true,
 			dataProvider = "Данные отчета")
 	public void testGoodOnTKHTMLReportData(String field, String value){
 		log.info(field);
 		Assert.assertTrue(htmlReportResults.containsValue(value), "Неверное значение поля в отчете по ТК: " + field);
 	}
 	
+	@Test (	
+			description = "Проверить, что скачивается pdf формат")
+	public void testGoodOnTKSavePdf(){
+		goodOnTKConfig.saveReportFile(AbstractReportConfigPage.EXCELREPORT);
+		//Assert.assertTrue(htmlReportResults.containsValue(value), "Неверное значение поля в отчете по ТК: " + field);
+	}
+		
 	
 }

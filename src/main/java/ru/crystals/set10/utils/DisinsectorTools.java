@@ -24,6 +24,9 @@ import org.openqa.selenium.interactions.Actions;
 public class DisinsectorTools {
 	protected static final Logger log = Logger.getLogger(DisinsectorTools.class);
 	
+	private static String fileDownloadPath;
+	
+	
 	public static String getConsoleOutput(WebDriver driver)  {
 		String result = "";
 		try {
@@ -71,13 +74,17 @@ public class DisinsectorTools {
 		return result;
 	}
 	
-	public static String getDownloadPath(WebDriver driver) {
-		driver.get("chrome://settings");
-		driver.get("chrome://settings-frame");
-		driver.findElement(By.xpath(".//button[@id='advanced-settings-expander']")).click();
-		return driver.findElement(By.xpath(".//input[@id='downloadLocationPath']")).getAttribute("value");
-	}
 	
+	// Удалить все файлы отчетов (*.xls; *.pdf) из папки загрузок хрома
+	public  void deleteOldDownloadedReports(String chromeDownloadPath){
+		GenericExtFilter xlsFilter = new GenericExtFilter(".pdf");
+		File dir = new File(chromeDownloadPath);
+		String[] xlsReportFileName = dir.list(xlsFilter);
+		
+		for (String filePath:xlsReportFileName) {
+			new File(filePath).delete();
+		}
+	}
 	
 	public String getReportFileName(String path, String extension) {
 		GenericExtFilter filter = new GenericExtFilter(extension);
@@ -86,11 +93,11 @@ public class DisinsectorTools {
 		String[] reportFileName = dir.list(filter);
 		if (reportFileName.length == 0) {
 			log.info("no file report end with : " + extension);
-			return null;
+			return "";
 		}
 		if (reportFileName.length > 1) {
 			log.info("Previos report files won't deleted : " + extension);
-			return null;
+			return "";
 		}
 		String result = new StringBuffer(path).append(File.separator)
 				.append(reportFileName[0]).toString();
@@ -108,6 +115,27 @@ public class DisinsectorTools {
 			return (name.endsWith(ext));
 		}
 	}
+	
+	public static void waitForDownloadComplete(File path) {
+		long waitTime = 1000;
+		// ждем 30 секунд пока файл загрузится
+		while (waitTime < 30000) {
+			if (!path.exists()) {
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				waitTime += 1000;	
+			} else {
+				log.info("Видео отчет загрузился. Время загрузки " + waitTime);
+				return;
+			}
+		}
+		// TODO: throw exception to notify that file hasn't been downloaded for 20 secs
+	}
+	
+	
 	
 	public static void delay(long timeOut){
 		try {
