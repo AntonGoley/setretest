@@ -45,7 +45,7 @@ public class Config {
         }
         
         // TODO: разрулить запуск с разных ос
-        PATH_TO_DRIVER = "target/test-classes/chromedriver.exe";
+        PATH_TO_DRIVER = "target/test-classes/chromedriver_win.exe";
         //PATH_TO_DRIVER = "target/test-classes/chromedriver 2";
         
         
