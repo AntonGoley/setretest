@@ -25,6 +25,6 @@ public class CheckGeneratorTest {
 			PositionEntity pos = pe.getPositions().get(0);
 			checkGenerator.nextRefundCheck(pe, pos, pos.getQnty(), false);
 		}	
-		checkGenerator.nextZReport();
+		//checkGenerator.nextZReport();
 	}
 }

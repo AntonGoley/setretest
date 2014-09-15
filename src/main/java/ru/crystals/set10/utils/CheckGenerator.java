@@ -41,7 +41,7 @@ public class CheckGenerator {
 	private  ShiftEntity shift;
 	
 	public  boolean nextShift = false;
-	public  long yesterday = 0; //Long.valueOf("-11232000000"); //(86400000 * 130);
+	public  long yesterday = Long.valueOf("-0"); //(86400000 * 130); ("-11232000000")
 	
 	private int reportId = 1;
 
@@ -216,7 +216,7 @@ public class CheckGenerator {
 	    rse.setSumPurchaseFiscal(Long.valueOf(getShiftSumChecks()));
 	    // сумма возвратов по ФР
 	    rse.setSumReturnFiscal((long) getShiftSumChecksRefund());
-	    shift.setShiftClose( new Date(System.currentTimeMillis() - yesterday));
+	    shift.setShiftClose(new Date(System.currentTimeMillis() - yesterday));
 	    rse.setId(Long.valueOf(reportId++));
 
 	    ReportPaymentTypeEntity reportPaymentTypeEntity = new ReportPaymentTypeEntity(rse.getId().longValue(), "CashPaymentEntity", 'P');
@@ -225,15 +225,16 @@ public class CheckGenerator {
 	    List listRPTE = new ArrayList();
 	    listRPTE.add(reportPaymentTypeEntity);
 	    rse.setPaymentsTypesList(listRPTE);
-	    rse.setShift(shift);
+	    rse.setShift(this.shift);
 	    rse.setNumber((long) checkNumber);
-	    rse.setSession(shift.getSessionStart());
-
+	    rse.setSession(this.shift.getSessionStart());
 	    
-	    nextShift = true;
+	    rse.setIncresentTotalStart(100L);
+	    rse.setIncresentTotalFinish(200L);
+	    
 	    sendDocument(rse);
-	    //logCheckEntities((PurchaseEntity) rse);
 	    ifCheckInRetail((ReportShiftEntity) rse);
+	    nextShift = true;
 	    return rse;
 	}
 	
