@@ -8,13 +8,11 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
 import org.apache.log4j.Logger;
-import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.WebDriver;
@@ -23,9 +21,6 @@ import org.openqa.selenium.interactions.Actions;
 
 public class DisinsectorTools {
 	protected static final Logger log = Logger.getLogger(DisinsectorTools.class);
-	
-	private static String fileDownloadPath;
-	
 	
 	public static String getConsoleOutput(WebDriver driver)  {
 		String result = "";
@@ -74,15 +69,21 @@ public class DisinsectorTools {
 		return result;
 	}
 	
-	
 	// Удалить все файлы отчетов (*.xls; *.pdf) из папки загрузок хрома
-	public  void deleteOldDownloadedReports(String chromeDownloadPath){
-		GenericExtFilter xlsFilter = new GenericExtFilter(".pdf");
+	public  void removeOldDownloadedReports(String chromeDownloadPath){
+		GenericExtFilter xlsFilter = new GenericExtFilter(".xls");
+		GenericExtFilter pdfFilter = new GenericExtFilter(".pdf");
+		
 		File dir = new File(chromeDownloadPath);
 		String[] xlsReportFileName = dir.list(xlsFilter);
+		String[] pdfReportFileName = dir.list(pdfFilter);
 		
 		for (String filePath:xlsReportFileName) {
-			new File(filePath).delete();
+			new File(chromeDownloadPath + "/" + filePath).delete();
+		}
+		
+		for (String filePath:pdfReportFileName) {
+			new File(chromeDownloadPath + "/" + filePath).delete();
 		}
 	}
 	
@@ -117,22 +118,18 @@ public class DisinsectorTools {
 	}
 	
 	public static void waitForDownloadComplete(File path) {
-		long waitTime = 1000;
+		long waitTime = 0;
 		// ждем 30 секунд пока файл загрузится
 		while (waitTime < 30000) {
 			if (!path.exists()) {
-				try {
-					Thread.sleep(1000);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-				waitTime += 1000;	
+				delay(500);
+				waitTime += 500;	
 			} else {
-				log.info("Видео отчет загрузился. Время загрузки " + waitTime);
+				log.info("Файл отчета загрузился. Примерное время загрузки " + waitTime);
 				return;
 			}
 		}
-		// TODO: throw exception to notify that file hasn't been downloaded for 20 secs
+		log.info("Файл отчета не загрузился! " + path);
 	}
 	
 	

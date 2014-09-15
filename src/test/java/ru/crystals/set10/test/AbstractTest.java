@@ -19,6 +19,7 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.annotations.BeforeMethod;
 import ru.crystals.set10.config.*;
 import ru.crystals.set10.pages.basic.*;
+import ru.crystals.set10.utils.DisinsectorTools;
 
 
 public class AbstractTest {
@@ -92,18 +93,20 @@ public class AbstractTest {
     	
     }
     
-    protected String getChromeDownloadPath(){
+    public String getChromeDownloadPath(){
     	if (chromeDownloadPath == null) {
     		setChromeDownloadPath();
     	}
     	return this.chromeDownloadPath;
     }
     
-    public String setChromeDownloadPath() {
+    public void setChromeDownloadPath() {
 		driver.get("chrome://settings");
 		driver.get("chrome://settings-frame");
 		driver.findElement(By.xpath(".//button[@id='advanced-settings-expander']")).click();
-		return driver.findElement(By.xpath(".//input[@id='downloadLocationPath']")).getAttribute("value");
+		this.chromeDownloadPath = driver.findElement(By.xpath(".//input[@id='downloadLocationPath']")).getAttribute("value");
+		log.info("Chrome download path: " + chromeDownloadPath);
+		new DisinsectorTools().removeOldDownloadedReports(getChromeDownloadPath());
 	}
     
 }

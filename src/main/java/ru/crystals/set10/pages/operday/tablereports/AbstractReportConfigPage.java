@@ -35,8 +35,4 @@ public class  AbstractReportConfigPage extends AbstractPage{
 		clickElement(getDriver(), ID_OPERDAYSWF, reportType);
 	}
 	
-	
-	protected void removeOldReports(String filePath, String prefix){
-		
-	}
 }

@@ -1,5 +1,7 @@
 package ru.crystals.set10.test.tablereports;
 
+import java.io.File;
+
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
@@ -46,7 +48,6 @@ public class GoodOnTKReportTest extends AbstractTest{
 	
 	@BeforeClass
 	public void navigateToGoodOnTKReports() {
-		new DisinsectorTools().deleteOldDownloadedReports(getChromeDownloadPath());
 		mainPage = new LoginPage(getDriver(), Config.CENTRUM_URL).doLogin(Config.MANAGER, Config.MANAGER_PASSWORD);
 		tableReportsPage = mainPage.openOperDay().openTableReports();
 		goodOnTKConfig = tableReportsPage.openReportConfigPage(GoodsOnTKConfigPage.class, TAB_OTHER, REPORT_NAME_GOOD_ON_TK);
@@ -96,12 +97,13 @@ public class GoodOnTKReportTest extends AbstractTest{
 		Assert.assertTrue(htmlReportResults.containsValue(value), "Неверное значение поля в отчете по ТК: " + field);
 	}
 	
-	@Test (	
-			description = "Проверить, что скачивается pdf формат")
-	public void testGoodOnTKSavePdf(){
-		goodOnTKConfig.saveReportFile(AbstractReportConfigPage.EXCELREPORT);
-		//Assert.assertTrue(htmlReportResults.containsValue(value), "Неверное значение поля в отчете по ТК: " + field);
-	}
+//	@Test (	
+//			description = "Проверить, что скачивается pdf формат")
+//	public void testGoodOnTKSavePdf(){
+//		goodOnTKConfig.saveReportFile(AbstractReportConfigPage.PDFREPORT);
+//		DisinsectorTools.waitForDownloadComplete(new File(new DisinsectorTools().getReportFileName(getChromeDownloadPath(), "Coupons")));
+//		//Assert.assertTrue(htmlReportResults.containsValue(value), "Неверное значение поля в отчете по ТК: " + field);
+//	}
 		
 	
 }
