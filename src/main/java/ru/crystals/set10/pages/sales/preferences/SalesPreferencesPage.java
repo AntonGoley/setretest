@@ -1,12 +1,9 @@
 package ru.crystals.set10.pages.sales.preferences;
 
 import static ru.crystals.set10.utils.FlexMediator.doFlexProperty;
-import static ru.crystals.set10.utils.FlexMediator.waitForElement;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-
 import ru.crystals.set10.pages.basic.AbstractPage;
 
 

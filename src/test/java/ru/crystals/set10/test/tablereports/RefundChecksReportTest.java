@@ -48,6 +48,9 @@ public class RefundChecksReportTest extends AbstractTest{
 	
 	
 	// TODO: добавить проверку дат и бар кода 
+	/*
+	 * Датапровайдер, описывающий колонки таблицы
+	 */
 	@DataProvider (name = "Данные последней записи отчета")
 	private static Object[][] lastLineReportData(){
 		return new Object[][]{

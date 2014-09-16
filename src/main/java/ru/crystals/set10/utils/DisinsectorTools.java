@@ -6,12 +6,14 @@ import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileFilter;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+import org.apache.commons.io.filefilter.WildcardFileFilter;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.Point;
@@ -87,25 +89,36 @@ public class DisinsectorTools {
 		}
 	}
 	
-	public String getReportFileName(String path, String extension) {
-		GenericExtFilter filter = new GenericExtFilter(extension);
-		 
-		File dir = new File(path);
-		String[] reportFileName = dir.list(filter);
-		if (reportFileName.length == 0) {
-			log.info("no file report end with : " + extension);
-			return "";
+	/*
+	 * возвращает файлы по маске @filter
+	 */
+	public static File[] fileFilter(String directory, String filter){
+		File dir = new File(directory);
+		FileFilter fileFilter = new WildcardFileFilter(filter);
+		File[] files = dir.listFiles(fileFilter);
+		return files;
+	}	
+	
+	/*
+	 * Метод проверяет есть ли файлы, совпадающие по маске @filter
+	 *  и если есть, возвращает первый файл в списке
+	 */
+	public static File getDownloadedFile(String directory, String filter){
+		long waitTime = 0;
+		while (waitTime < 30000) {
+			if (fileFilter(directory, filter).length == 0) {
+				delay(500);
+				waitTime += 500;	
+			} else {
+				log.info("Файл отчета загрузился. Примерное время загрузки " + waitTime);
+				return fileFilter(directory, filter)[0];
+			}
 		}
-		if (reportFileName.length > 1) {
-			log.info("Previos report files won't deleted : " + extension);
-			return "";
-		}
-		String result = new StringBuffer(path).append(File.separator)
-				.append(reportFileName[0]).toString();
-		return result;
+		log.info(String.format("Файлы, соответсвующие маске %s не найдены!", filter));
+		return new File("");
 	}
 	
-	// inner class, generic extension filter
+	
 	public class GenericExtFilter implements FilenameFilter {
 		String ext;
 		public GenericExtFilter(String ext) {
@@ -116,24 +129,7 @@ public class DisinsectorTools {
 			return (name.endsWith(ext));
 		}
 	}
-	
-	public static void waitForDownloadComplete(File path) {
-		long waitTime = 0;
-		// ждем 30 секунд пока файл загрузится
-		while (waitTime < 30000) {
-			if (!path.exists()) {
-				delay(500);
-				waitTime += 500;	
-			} else {
-				log.info("Файл отчета загрузился. Примерное время загрузки " + waitTime);
-				return;
-			}
-		}
-		log.info("Файл отчета не загрузился! " + path);
-	}
-	
-	
-	
+
 	public static void delay(long timeOut){
 		try {
 			Thread.sleep(timeOut);

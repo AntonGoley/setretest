@@ -28,7 +28,7 @@ public class AbstractTest {
 	
     private WebDriver driver;
     private static ChromeDriverService service;
-    private static String chromeDownloadPath = null;
+    protected static String chromeDownloadPath = null;
     
     public WebDriver getDriver() {
         return driver;
@@ -56,7 +56,7 @@ public class AbstractTest {
     	driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
     	driver.manage().deleteAllCookies();
     	
-    	chromeDownloadPath =getChromeDownloadPath();
+    	chromeDownloadPath = getChromeDownloadPath();
 	}
     
     @BeforeMethod(alwaysRun = true)
@@ -93,18 +93,18 @@ public class AbstractTest {
     	
     }
     
-    public String getChromeDownloadPath(){
+    private String getChromeDownloadPath(){
     	if (chromeDownloadPath == null) {
     		setChromeDownloadPath();
     	}
-    	return this.chromeDownloadPath;
+    	return chromeDownloadPath;
     }
     
     public void setChromeDownloadPath() {
 		driver.get("chrome://settings");
 		driver.get("chrome://settings-frame");
 		driver.findElement(By.xpath(".//button[@id='advanced-settings-expander']")).click();
-		this.chromeDownloadPath = driver.findElement(By.xpath(".//input[@id='downloadLocationPath']")).getAttribute("value");
+		chromeDownloadPath = driver.findElement(By.xpath(".//input[@id='downloadLocationPath']")).getAttribute("value");
 		log.info("Chrome download path: " + chromeDownloadPath);
 		new DisinsectorTools().removeOldDownloadedReports(getChromeDownloadPath());
 	}

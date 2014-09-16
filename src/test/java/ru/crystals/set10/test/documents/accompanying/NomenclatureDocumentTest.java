@@ -47,18 +47,17 @@ public class NomenclatureDocumentTest extends AbstractTest{
  		DisinsectorTools.getConsoleOutput(getDriver());
 	}
 	
-	private void validateReportResult(){
-
-	}
-	
+//	private void validateReportResult(){
+//
+//	}
 	
 	
 //	@Test (	description = "Проверить названия отчета и название колонок в шапке таблицы отчета по возвратам", 
 //			alwaysRun = true,
 //			dataProvider = "Шапка отчета по возвратам", dataProviderClass = TableReportsDataprovider.class)
-	public void test(){
+//	public void test(){
 //		log.info(fieldName);
 //		Assert.assertTrue(htmlReportResults.containsValue(fieldName), "Неверное значение поля в шапке отчета: " + fieldName);
-	}
+//	}
 	
 }

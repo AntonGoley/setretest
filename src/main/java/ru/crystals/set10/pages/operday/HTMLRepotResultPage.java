@@ -2,7 +2,6 @@ package ru.crystals.set10.pages.operday;
 
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;

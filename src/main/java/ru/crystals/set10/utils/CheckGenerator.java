@@ -216,7 +216,7 @@ public class CheckGenerator {
 	    rse.setSumPurchaseFiscal(Long.valueOf(getShiftSumChecks()));
 	    // сумма возвратов по ФР
 	    rse.setSumReturnFiscal((long) getShiftSumChecksRefund());
-	    shift.setShiftClose(new Date(System.currentTimeMillis() - yesterday));
+	    //shift.setShiftClose(new Date(System.currentTimeMillis() - yesterday));
 	    rse.setId(Long.valueOf(reportId++));
 
 	    ReportPaymentTypeEntity reportPaymentTypeEntity = new ReportPaymentTypeEntity(rse.getId().longValue(), "CashPaymentEntity", 'P');

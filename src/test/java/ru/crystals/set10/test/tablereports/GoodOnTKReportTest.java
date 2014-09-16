@@ -1,7 +1,5 @@
 package ru.crystals.set10.test.tablereports;
 
-import java.io.File;
-
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
@@ -33,18 +31,6 @@ public class GoodOnTKReportTest extends AbstractTest{
 	static String ti = soapSender.generateTI();
 	static String  erpCode = 47 + ti;
 	static String barCode = "78" + ti;
-	
-	@DataProvider (name = "Данные отчета")
-	public static Object[][] adverstingReportTableHead() {
-		return new Object[][] {
-		// TODO: Сейчас условие акции такое же как и название акции		
-		{"Название рекламной акции", "test_" + erpCode},
-		// TODO: разобраться, почему в сьюте на товар генерятся 2 акции
-		//{"id товара", erpCode},
-		{"Штрих-код", barCode},
-		//{"Код акции", "TEST_" + ti},
-		};	
-	}
 	
 	@BeforeClass
 	public void navigateToGoodOnTKReports() {
@@ -97,13 +83,33 @@ public class GoodOnTKReportTest extends AbstractTest{
 		Assert.assertTrue(htmlReportResults.containsValue(value), "Неверное значение поля в отчете по ТК: " + field);
 	}
 	
-//	@Test (	
-//			description = "Проверить, что скачивается pdf формат")
-//	public void testGoodOnTKSavePdf(){
-//		goodOnTKConfig.saveReportFile(AbstractReportConfigPage.PDFREPORT);
-//		DisinsectorTools.waitForDownloadComplete(new File(new DisinsectorTools().getReportFileName(getChromeDownloadPath(), "Coupons")));
-//		//Assert.assertTrue(htmlReportResults.containsValue(value), "Неверное значение поля в отчете по ТК: " + field);
-//	}
-		
+	@Test (	description = "Проверить, что отчет доступен для скачивания в формате pdf/xls",
+			dataProvider = "Доступные форматы для скачивания"
+			)
+	public void testGoodOnTKSaveFormats(String reportFormat, String reportNamePattern){
+		long fileSize = 0;
+		fileSize =  goodOnTKConfig.saveReportFile(reportFormat, chromeDownloadPath, reportNamePattern).length();
+		log.info("Размер сохраненного файла: " + fileSize);
+		Assert.assertTrue(fileSize > 0, "Файл отчета сохранился некорректно");
+	}
 	
+	@DataProvider (name = "Данные отчета")
+	public static Object[][] adverstingReportTableHead() {
+		return new Object[][] {
+		// TODO: Сейчас условие акции такое же как и название акции		
+		{"Название рекламной акции", "test_" + erpCode},
+		// TODO: разобраться, почему в сьюте на товар генерятся 2 акции
+		//{"id товара", erpCode},
+		{"Штрих-код", barCode},
+		//{"Код акции", "TEST_" + ti},
+		};	
+	}
+	
+	@DataProvider (name = "Доступные форматы для скачивания")
+	public static Object[][] reportFormats(){
+		return new  Object[][] {
+			{AbstractReportConfigPage.PDFREPORT, "ProductReport*.pdf"},
+			{AbstractReportConfigPage.EXCELREPORT, "ProductReport*.xls"}
+		};
+	}
 }

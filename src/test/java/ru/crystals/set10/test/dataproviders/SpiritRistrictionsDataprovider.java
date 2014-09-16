@@ -63,7 +63,7 @@ public class SpiritRistrictionsDataprovider {
 
 	@DataProvider (name = "Минимальная цена")
 	public static Object[][] minPrice() {
-		long today = new Date().getTime();
+		//long today = new Date().getTime();
 		return new Object[][] {
 		{getName(), "0", "//restriction[@name=\"%s\"][alcoholic-content-percentage='0.00']"},
 
