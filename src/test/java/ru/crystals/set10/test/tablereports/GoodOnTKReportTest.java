@@ -25,7 +25,8 @@ public class GoodOnTKReportTest extends AbstractTest{
 	TableReportPage tableReportsPage;
 	GoodsOnTKConfigPage goodOnTKConfig;
 	HTMLRepotResultPage htmlReportResults;
-	String goodRequest = "";
+	String goodRequest;
+	String adverstingRequest;
 	
 	static SoapRequestSender soapSender  = new SoapRequestSender();
 	static String ti = soapSender.generateTI();
@@ -37,35 +38,17 @@ public class GoodOnTKReportTest extends AbstractTest{
 		mainPage = new LoginPage(getDriver(), Config.CENTRUM_URL).doLogin(Config.MANAGER, Config.MANAGER_PASSWORD);
 		tableReportsPage = mainPage.openOperDay().openTableReports();
 		goodOnTKConfig = tableReportsPage.openReportConfigPage(GoodsOnTKConfigPage.class, TAB_OTHER, REPORT_NAME_GOOD_ON_TK);
-		
 		soapSender.setSoapServiceIP(Config.CENTRUM_HOST);
+		
+		// послать товар и акцию
 		sendGoodData();
 		sendAdverstingForGood();
+		
+		// сгенерить отчет
 		goodOnTKConfig.setErpCode(erpCode);
-		doReport();
-	}	
-	
-	private void sendGoodData() {
-		log.info("Загрузить товар с erpCode = " + erpCode + ", barCode = " + barCode);
-		goodRequest = DisinsectorTools.getFileContentAsString("good.txt");
-		soapSender.sendGoods(String.format(goodRequest, erpCode, barCode),ti);
-		soapSender.assertSOAPResponse("status-message=\"correct\"", ti);
-	}
-	
-	private void sendAdverstingForGood() {
-	// завести рекламную акцию на товар с erpCode
-		ti = soapSender.generateTI();
-		soapSender = new SoapRequestSender();
-		soapSender.setSoapServiceIP(Config.CENTRUM_HOST);
-		String adverstingRequest = DisinsectorTools.getFileContentAsString("adversting.txt");
-		soapSender.sendAdversting(String.format(adverstingRequest, erpCode, ti),ti);
-		soapSender.assertSOAPResponse("status-message=\"correct\"", ti);
-	}		
-	
-	public void doReport(){
 		htmlReportResults = goodOnTKConfig.generateReport(HTMLREPORT);
 		goodOnTKConfig.switchWindow(true);
-	}
+	}	
 	
 	@Test (	description = "Проверить названия отчета и название колонок в шапке таблицы отчета по товарам на ТК", 
 			//alwaysRun = true,
@@ -111,5 +94,23 @@ public class GoodOnTKReportTest extends AbstractTest{
 			{AbstractReportConfigPage.PDFREPORT, "ProductReport*.pdf"},
 			{AbstractReportConfigPage.EXCELREPORT, "ProductReport*.xls"}
 		};
+	}
+	
+	private void sendGoodData() {
+		ti = soapSender.generateTI();
+		log.info("Загрузить товар с erpCode = " + erpCode + ", barCode = " + barCode);
+		goodRequest = DisinsectorTools.getFileContentAsString("good.txt");
+		soapSender.sendGoods(String.format(goodRequest, erpCode, barCode),ti);
+		soapSender.assertSOAPResponse("status-message=\"correct\"", ti);
+	}
+	
+	private void sendAdverstingForGood() {
+	// завести рекламную акцию на товар с erpCode
+		ti = soapSender.generateTI();
+		log.info("Добавить рекламную акцию для товара с erpCode = " + erpCode + ", barCode = " + barCode);
+		adverstingRequest = DisinsectorTools.getFileContentAsString("adversting.txt");
+		soapSender.sendAdversting(String.format(adverstingRequest, erpCode, ti),ti);
+		soapSender.assertSOAPResponse("status-message=\"correct\"", ti);
+		
 	}
 }

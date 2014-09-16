@@ -155,7 +155,6 @@ public class SoapRequestSender {
 		sendSOAPRequest();
 	}
 	
-	
 	public void sendSOAPRequest(){
 		
 		URL resourceURL;
