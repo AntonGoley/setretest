@@ -50,8 +50,7 @@ public class PriceCheckerReportTest extends AbstractTest{
 	
 	@Test (	description = "Проверить название отчета и название колонок в шапке таблицы отчета по прайсчекерам", 
 			alwaysRun = true,
-			dataProvider = "Шапка отчета Прайс чекеры", dataProviderClass = TableReportsDataprovider.class, 
-			priority = 1)
+			dataProvider = "Шапка отчета Прайс чекеры", dataProviderClass = TableReportsDataprovider.class)
 	public void testPricechekerHTMLReportTableHead(String fieldName){
 		log.info(fieldName);
 		Assert.assertTrue(htmlReportResults.containsValue(fieldName), "Неверное значение поля в шапке отчета: " + fieldName);
@@ -59,8 +58,7 @@ public class PriceCheckerReportTest extends AbstractTest{
 	
 	
 	@Test (	description = "Проверить, что данные от прайсчекера приходят в отчет по прайсчекерам", 
-			alwaysRun = true, 
-			priority = 2
+			alwaysRun = true
 			)
 	public void testPricechekerHTMLReportData(){
 		Assert.assertTrue(htmlReportResults.containsValue(mac), "В отчете не отображается информация о мак адресе " + mac);
