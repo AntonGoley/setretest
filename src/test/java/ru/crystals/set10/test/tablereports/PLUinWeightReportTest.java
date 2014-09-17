@@ -47,7 +47,7 @@ public class PLUinWeightReportTest extends AbstractTest{
 	@Test (	description = "Проверить, что отчет доступен для скачивания в формате xls",
 			dataProvider = "Доступные форматы для скачивания"
 			)
-	public void testGoodOnTKSaveFormats(String reportFormat, String reportNamePattern){
+	public void testPLUReportSaveFormats(String reportFormat, String reportNamePattern){
 		long fileSize = 0;
 		fileSize =  PLUConfigPage.saveReportFile(reportFormat, chromeDownloadPath, reportNamePattern).length();
 		log.info("Размер сохраненного файла: " + fileSize);
@@ -57,7 +57,7 @@ public class PLUinWeightReportTest extends AbstractTest{
 	@DataProvider (name = "Доступные форматы для скачивания")
 	public static Object[][] reportFormats(){
 		return new  Object[][] {
-			{AbstractReportConfigPage.EXCELREPORT, "PLUInScalesReport_*.xls"}
+			{AbstractReportConfigPage.EXCELREPORT, "PluInScales_*.xls"}
 		};
 	}
 	

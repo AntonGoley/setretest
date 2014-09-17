@@ -48,7 +48,7 @@ public class PriceCheckerReportTest extends AbstractTest{
 		doReport();
 	}	
 	
-	@Test (	description = "Проверить названия отчета и название колонок в шапке таблицы отчета по прайсчекерам", 
+	@Test (	description = "Проверить название отчета и название колонок в шапке таблицы отчета по прайсчекерам", 
 			alwaysRun = true,
 			dataProvider = "Шапка отчета Прайс чекеры", dataProviderClass = TableReportsDataprovider.class, 
 			priority = 1)
@@ -63,16 +63,15 @@ public class PriceCheckerReportTest extends AbstractTest{
 			priority = 2
 			)
 	public void testPricechekerHTMLReportData(){
-		doReport();
 		Assert.assertTrue(htmlReportResults.containsValue(mac), "В отчете не отображается информация о мак адресе " + mac);
 		Assert.assertTrue(htmlReportResults.containsValue(barCode), "В отчете не отображается информация о бар коде товара " + barCode);
-		getDriver().navigate().refresh();
 	}
 
-	@Test (	description = "Проверить, что отчет доступен для скачивания в формате xls",
+	@Test (	enabled = false,
+			description = "Проверить, что отчет доступен для скачивания в формате xls",
 			dataProvider = "Доступные форматы для скачивания"
 			)
-	public void testGoodOnTKSaveFormats(String reportFormat, String reportNamePattern){
+	public void testPricechekerSaveFormats(String reportFormat, String reportNamePattern){
 		long fileSize = 0;
 		fileSize =  priceCheckerConfig.saveReportFile(reportFormat, chromeDownloadPath, reportNamePattern).length();
 		log.info("Размер сохраненного файла: " + fileSize);
