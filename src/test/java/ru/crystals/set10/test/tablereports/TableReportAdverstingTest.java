@@ -3,11 +3,13 @@ package ru.crystals.set10.test.tablereports;
 
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import ru.crystals.set10.config.Config;
 import ru.crystals.set10.pages.basic.LoginPage;
 import ru.crystals.set10.pages.basic.MainPage;
 import ru.crystals.set10.pages.operday.HTMLRepotResultPage;
+import ru.crystals.set10.pages.operday.tablereports.AbstractReportConfigPage;
 import ru.crystals.set10.pages.operday.tablereports.AdverstingReportConfigPage;
 import ru.crystals.set10.pages.operday.tablereports.TableReportPage;
 import ru.crystals.set10.test.AbstractTest;
@@ -24,8 +26,8 @@ public class TableReportAdverstingTest extends AbstractTest {
 	MainPage mainPage;
 	TableReportPage tableReportsPage;
 	AdverstingReportConfigPage adverstingConfigPage;
-	String goodRequest = "";
-	String adverstingRequest = "";
+	String goodRequest;
+	String adverstingRequest;
 	HTMLRepotResultPage htmlReportResults;
 
 	SoapRequestSender soapSender  = new SoapRequestSender();
@@ -44,9 +46,56 @@ public class TableReportAdverstingTest extends AbstractTest {
 		doReport();
 	}	
 	
+	@Test ( description = "Проверить название отчета и названия колонок в шапке таблицы отчета по рекламным акциям", 
+			alwaysRun = true,
+			dataProvider = "Шапка отчета Рекламные акции", dataProviderClass = TableReportsDataprovider.class)
+	public void testAdverstingHTMLReportTableHead(String fieldName){
+		log.info("Проверить название/наличие поля: " + fieldName);
+		Assert.assertTrue(this.htmlReportResults.containsValue(fieldName), "Неверное значение поля в шапке отчета: " + fieldName);
+	}
+	
+	@Test(description = "Проверить, что генерируется пустой отчет, если на товар не заведена рекламная акция")
+	public void testEmptyAdverstingHTMLReport() {
+		Assert.assertTrue(this.htmlReportResults.getReportSize() == 17, "Сгененированный отчет не пустой");
+	}	
+
+	
+	@Test (dependsOnMethods = "testEmptyAdverstingHTMLReport",
+			description = "Проверить, наличие товара в отчете, если на него заведена рекламная акция, действующая сегодня", 
+			alwaysRun = true)
+	public void testGoodInReport(){
+		// завести рекламную акцию на товар с erpCode
+		ti = soapSender.generateTI();
+		adverstingRequest = DisinsectorTools.getFileContentAsString("adversting.txt");
+		soapSender.sendAdversting(String.format(adverstingRequest, erpCode, ti),ti);
+		soapSender.assertSOAPResponse("status-message=\"correct\"", ti);
+		doReport();
+		Assert.assertTrue(htmlReportResults.containsValue(erpCode), "Отсутствует ERP код в отчете");
+	}
+	
+	@Test(	dependsOnMethods = "testGoodInReport",
+			description = "Если не задан код товара (поле ERP код пустое) выводятся все рекламные акции на ТК")
+	public void testReportAllActionsIfNoParameters() {
+		String expectedErpCode = erpCode;
+		erpCode = "";
+		doReport();
+		// Проверяем название акции в отчете
+		Assert.assertTrue(htmlReportResults.containsValue("test_" + expectedErpCode), "Не выводятся существующие рекламные акции, если не задан код товара");
+	}	
+	
+	@Test (	description = "Проверить, что отчет доступен для скачивания в формате pdf/xls",
+			dataProvider = "Доступные форматы для скачивания"
+			)
+	public void testGoodOnTKSaveFormats(String reportFormat, String reportNamePattern){
+		long fileSize = 0;
+		fileSize =  adverstingConfigPage.saveReportFile(reportFormat, chromeDownloadPath, reportNamePattern).length();
+		log.info("Размер сохраненного файла: " + fileSize);
+		Assert.assertTrue(fileSize > 0, "Файл отчета сохранился некорректно");
+	}
+	
 	public void doReport(){
 		adverstingConfigPage.setGoodIDs(erpCode);
-		htmlReportResults = adverstingConfigPage.generateReport(HTMLREPORT);
+		this.htmlReportResults = adverstingConfigPage.generateReport(HTMLREPORT);
 		// закрыть окно отчета
 		adverstingConfigPage.switchWindow(true);
 	}
@@ -57,48 +106,13 @@ public class TableReportAdverstingTest extends AbstractTest {
 		soapSender.assertSOAPResponse("status-message=\"correct\"", ti);
 	}
 	
-	@Test (	priority = 1,
-			description = "Проверить название отчета и названия колонок в шапке таблицы отчета по рекламным акциям", 
-			alwaysRun = true,
-			dataProvider = "Шапка отчета Рекламные акции", dataProviderClass = TableReportsDataprovider.class)
-	public void testAdverstingHTMLReportTableHead(String fieldName){
-		log.info("Проверить название/наличие поля: " + fieldName);
-		Assert.assertTrue(htmlReportResults.containsValue(fieldName), "Неверное значение поля в шапке отчета: " + fieldName);
+	@DataProvider (name = "Доступные форматы для скачивания")
+	public static Object[][] reportFormats(){
+		return new  Object[][] {
+			{AbstractReportConfigPage.PDFREPORT, "ProductReportInAction*.pdf"},
+			{AbstractReportConfigPage.EXCELREPORT, "ProductReportInAction*.xls"}
+		};
 	}
-	
-	@Test(description = "Проверить, что генерируется пустой отчет, если на товар не заведена рекламная акция")
-	public void testEmptyAdverstingHTMLReport() {
-		doReport();
-		Assert.assertTrue(htmlReportResults.getReportSize() == 17, "Сгененированный отчет не пустой");
-	}	
-	 
-	@Test (dependsOnMethods = "testEmptyAdverstingHTMLReport",
-			description = "Проверить, наличие товара в отчете, если на него заведена рекламная акция, действующая сегодня", 
-			alwaysRun = true)
-	public void testGoodInReport(){
-		// завести рекламную акцию на товар с erpCode
-		ti = soapSender.generateTI();
-		soapSender = new SoapRequestSender();
-		soapSender.setSoapServiceIP(Config.CENTRUM_HOST);
-		adverstingRequest = DisinsectorTools.getFileContentAsString("adversting.txt");
-		soapSender.sendAdversting(String.format(adverstingRequest, erpCode, ti),ti);
-		soapSender.assertSOAPResponse("status-message=\"correct\"", ti);
-		doReport();
-
-		Assert.assertTrue(htmlReportResults.containsValue(erpCode), "Отсутствует ERP код в отчете");
-	}
-	
-	@Test(	dependsOnMethods = "testGoodInReport",
-			description = "Проверить, что генерируется пустой отчет, если на товар не заведена рекламная акция")
-	public void testReportAllActionsIfNoParameters() {
-		String expectedErpCode = erpCode;
-		erpCode = "";
-		doReport();
-		// Проверяем название акции в отчете
-		Assert.assertTrue(htmlReportResults.containsValue("test_" + expectedErpCode), "Не выводятся существующие рекламные акции, если не задан код товара");
-	}	
-	
-	
 	
 	
 //	@Test(	dependsOnMethods = "testGoodInReport",

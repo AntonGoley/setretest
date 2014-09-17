@@ -91,8 +91,8 @@ public class GoodOnTKReportTest extends AbstractTest{
 	@DataProvider (name = "Доступные форматы для скачивания")
 	public static Object[][] reportFormats(){
 		return new  Object[][] {
-			{AbstractReportConfigPage.PDFREPORT, "ProductReport*.pdf"},
-			{AbstractReportConfigPage.EXCELREPORT, "ProductReport*.xls"}
+			{AbstractReportConfigPage.PDFREPORT, "ProductReport_*.pdf"},
+			{AbstractReportConfigPage.EXCELREPORT, "ProductReport_*.xls"}
 		};
 	}
 	

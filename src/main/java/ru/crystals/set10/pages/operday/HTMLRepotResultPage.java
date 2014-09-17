@@ -36,7 +36,7 @@ public class  HTMLRepotResultPage extends AbstractPage{
 		
 		if (this.reportResults.contains(value)) {
 			result = true;
-			reportResults.remove(value);
+			//reportResults.remove(value);
 		}
 		return result;
 	}
