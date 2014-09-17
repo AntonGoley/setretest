@@ -4,11 +4,13 @@ import java.util.Date;
 
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import ru.crystals.set10.config.Config;
 import ru.crystals.set10.pages.basic.LoginPage;
 import ru.crystals.set10.pages.basic.MainPage;
 import ru.crystals.set10.pages.operday.HTMLRepotResultPage;
+import ru.crystals.set10.pages.operday.tablereports.AbstractReportConfigPage;
 import ru.crystals.set10.pages.operday.tablereports.PriceCheckerConfigPage;
 import ru.crystals.set10.pages.operday.tablereports.TableReportPage;
 import ru.crystals.set10.test.AbstractTest;
@@ -46,23 +48,6 @@ public class PriceCheckerReportTest extends AbstractTest{
 		doReport();
 	}	
 	
-	private void sendGoodData() {
-		String goodRequest = DisinsectorTools.getFileContentAsString("good.txt");
-		soapSender.sendGoods(String.format(goodRequest, erpCode, barCode),ti);
-		soapSender.assertSOAPResponse("status-message=\"correct\"", ti);
-	}
-	
-	private void sendPriceCheckerData(){
-		soapSender.sendPriceCheckerRequest(mac, barCode);
-		DisinsectorTools.delay(5000);
-	}
-	
-	public void doReport(){
-		htmlReportResults = priceCheckerConfig.generateReport(HTMLREPORT);
-		// закрыть окно отчета
-		priceCheckerConfig.switchWindow(true);
-	}
-	
 	@Test (	description = "Проверить названия отчета и название колонок в шапке таблицы отчета по прайсчекерам", 
 			alwaysRun = true,
 			dataProvider = "Шапка отчета Прайс чекеры", dataProviderClass = TableReportsDataprovider.class, 
@@ -84,6 +69,37 @@ public class PriceCheckerReportTest extends AbstractTest{
 		getDriver().navigate().refresh();
 	}
 
+	@Test (	description = "Проверить, что отчет доступен для скачивания в формате xls",
+			dataProvider = "Доступные форматы для скачивания"
+			)
+	public void testGoodOnTKSaveFormats(String reportFormat, String reportNamePattern){
+		long fileSize = 0;
+		fileSize =  priceCheckerConfig.saveReportFile(reportFormat, chromeDownloadPath, reportNamePattern).length();
+		log.info("Размер сохраненного файла: " + fileSize);
+		Assert.assertTrue(fileSize > 0, "Файл отчета сохранился некорректно");
+	}
 	
+	@DataProvider (name = "Доступные форматы для скачивания")
+	public static Object[][] reportFormats(){
+		return new  Object[][] {
+			{AbstractReportConfigPage.EXCELREPORT, "PriceCheckerReport_*.xls"}
+		};
+	}
 	
+	private void sendGoodData() {
+		String goodRequest = DisinsectorTools.getFileContentAsString("good.txt");
+		soapSender.sendGoods(String.format(goodRequest, erpCode, barCode),ti);
+		soapSender.assertSOAPResponse("status-message=\"correct\"", ti);
+	}
+	
+	private void sendPriceCheckerData(){
+		soapSender.sendPriceCheckerRequest(mac, barCode);
+		DisinsectorTools.delay(5000);
+	}
+	
+	public void doReport(){
+		htmlReportResults = priceCheckerConfig.generateReport(HTMLREPORT);
+		// закрыть окно отчета
+		priceCheckerConfig.switchWindow(true);
+	}
 }

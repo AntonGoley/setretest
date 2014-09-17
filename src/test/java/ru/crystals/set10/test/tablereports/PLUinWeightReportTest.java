@@ -2,6 +2,7 @@ package ru.crystals.set10.test.tablereports;
 
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import ru.crystals.set10.config.Config;
 import ru.crystals.set10.pages.basic.LoginPage;
@@ -37,11 +38,27 @@ public class PLUinWeightReportTest extends AbstractTest{
 	}
 	
 	@Test (	description = "Проверить названия отчета и название колонок в шапке таблицы отчета по количеству PLU в весах", 
-			alwaysRun = true,
 			dataProvider = "Шапка отчета по количеству PLU в весах", dataProviderClass = TableReportsDataprovider.class)
 	public void testPLUTKHTMLReportTableHead(String fieldName){
 		log.info(fieldName);
 		Assert.assertTrue(htmlReportResults.containsValue(fieldName), "Неверное значение поля в шапке отчета: " + fieldName);
+	}
+	
+	@Test (	description = "Проверить, что отчет доступен для скачивания в формате xls",
+			dataProvider = "Доступные форматы для скачивания"
+			)
+	public void testGoodOnTKSaveFormats(String reportFormat, String reportNamePattern){
+		long fileSize = 0;
+		fileSize =  PLUConfigPage.saveReportFile(reportFormat, chromeDownloadPath, reportNamePattern).length();
+		log.info("Размер сохраненного файла: " + fileSize);
+		Assert.assertTrue(fileSize > 0, "Файл отчета сохранился некорректно");
+	}
+	
+	@DataProvider (name = "Доступные форматы для скачивания")
+	public static Object[][] reportFormats(){
+		return new  Object[][] {
+			{AbstractReportConfigPage.EXCELREPORT, "PLUInScalesReport_*.xls"}
+		};
 	}
 	
 }
