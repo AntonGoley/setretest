@@ -67,7 +67,7 @@ public class PriceCheckerReportTest extends AbstractTest{
 
 	@Test (	description = "Проверить, что отчет \"Отчёт для Прайс чекеров\" доступен для скачивания в формате xls",
 			dataProvider = "Доступные форматы для скачивания"
-			)
+			enabled = false)
 	public void testPricechekerSaveFormats(String reportFormat, String reportNamePattern){
 		long fileSize = 0;
 		fileSize =  priceCheckerConfig.saveReportFile(reportFormat, chromeDownloadPath, reportNamePattern).length();
