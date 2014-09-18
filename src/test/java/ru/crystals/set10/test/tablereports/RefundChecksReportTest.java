@@ -121,16 +121,17 @@ public class RefundChecksReportTest extends AbstractTest{
 				purchaseEntityData.get(tableColumnName));
 	}
 	
-	@Test (	priority = 1,
-			description = "Проверить, что отчет \"Отчёт по возвратам\" доступен для скачивания в формате xls"
-			)
-	public void testRefundReportSaveFormats(){
-		refundChecksConfigPage.switchWindow(true);
-		long fileSize = 0;
-		fileSize =  refundChecksConfigPage.saveReportFile(AbstractReportConfigPage.EXCELREPORT, chromeDownloadPath, "RefunddReport_*.xls").length();
-		log.info("Размер сохраненного файла: " + "RefunddReport_*.xls" + " равен " +  fileSize);
-		Assert.assertTrue(fileSize > 0, "Файл отчета сохранился некорректно");
-	}
+//	@Test (	priority = 1,
+//			description = "Проверить, что отчет \"Отчёт по возвратам\" доступен для скачивания в формате xls"
+//			)
+//	public void testRefundReportSaveFormats(){
+//		refundChecksConfigPage.switchWindow(true);
+//		long fileSize = 0;
+//		String pattern = "RefundReport_*.xls";
+//		fileSize =  refundChecksConfigPage.saveReportFile(AbstractReportConfigPage.EXCELREPORT, chromeDownloadPath, pattern).length();
+//		log.info("Размер сохраненного файла: " + pattern + " равен " +  fileSize);
+//		Assert.assertTrue(fileSize > 0, "Файл отчета сохранился некорректно");
+//	}
 	
 	
 	private HTMLRepotResultPage sendRefundCheck(boolean refundCheckType){
