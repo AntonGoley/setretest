@@ -66,13 +66,13 @@ public class GoodOnTKReportTest extends AbstractTest{
 		Assert.assertTrue(htmlReportResults.containsValue(value), "Неверное значение поля в отчете по ТК: " + field);
 	}
 	
-	@Test (	description = "Проверить, что отчет доступен для скачивания в формате pdf/xls",
+	@Test (	description = "Проверить, что \"Отчет по товару на ТК\" доступен для скачивания в формате pdf/xls",
 			dataProvider = "Доступные форматы для скачивания"
 			)
 	public void testGoodOnTKSaveFormats(String reportFormat, String reportNamePattern){
 		long fileSize = 0;
 		fileSize =  goodOnTKConfig.saveReportFile(reportFormat, chromeDownloadPath, reportNamePattern).length();
-		log.info("Размер сохраненного файла: " + fileSize);
+		log.info("Размер сохраненного файла: " + reportNamePattern + " равен " +  fileSize);
 		Assert.assertTrue(fileSize > 0, "Файл отчета сохранился некорректно");
 	}
 	

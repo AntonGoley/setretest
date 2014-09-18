@@ -65,14 +65,13 @@ public class PriceCheckerReportTest extends AbstractTest{
 		Assert.assertTrue(htmlReportResults.containsValue(barCode), "В отчете не отображается информация о бар коде товара " + barCode);
 	}
 
-	@Test (	enabled = false,
-			description = "Проверить, что отчет доступен для скачивания в формате xls",
+	@Test (	description = "Проверить, что отчет \"Отчёт для Прайс чекеров\" доступен для скачивания в формате xls",
 			dataProvider = "Доступные форматы для скачивания"
 			)
 	public void testPricechekerSaveFormats(String reportFormat, String reportNamePattern){
 		long fileSize = 0;
 		fileSize =  priceCheckerConfig.saveReportFile(reportFormat, chromeDownloadPath, reportNamePattern).length();
-		log.info("Размер сохраненного файла: " + fileSize);
+		log.info("Размер сохраненного файла: " + reportNamePattern + " равен " +  fileSize);
 		Assert.assertTrue(fileSize > 0, "Файл отчета сохранился некорректно");
 	}
 	

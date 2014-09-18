@@ -59,11 +59,11 @@ public class CheckGenerator {
 	
 	private static final String SQL_GOODS_COUNT = "select count(*) from un_cg_product";
 		
-	private static final String SQL_MAX_SHIFT_NUM = "select max(numshift) from od_shift as od_s join od_purchase as od_p on od_p.id_shift = od_s.id where cashnum = %s";
+	private static final String SQL_MAX_SHIFT_NUM = "select max(numshift) from od_shift as od_s join od_purchase as od_p on od_p.id_shift = od_s.id where cashnum = %s and shiftcreate >= '%s 00:00:00' and shiftcreate < '%s 23:59:59.999'";
 														
-	private static final String SQL_SHIFT_STATUS = "select state from od_shift where numshift = %s and cashnum = %s";
+	private static final String SQL_SHIFT_STATUS = "select state from od_shift where numshift = %s and cashnum = %s and shiftcreate >= '%s 00:00:00' and shiftcreate < '%s 23:59:59.999'";
 	
-	private static final String SQL_CHECK_NUM = "select max(numberfield) from od_shift as od_s join od_purchase as od_p on od_p.id_shift = od_s.id where cashnum = %s and numshift = %s";
+	private static final String SQL_CHECK_NUM = "select max(numberfield) from od_shift as od_s join od_purchase as od_p on od_p.id_shift = od_s.id where cashnum = %s and numshift = %s and shiftcreate >= '%s 00:00:00' and shiftcreate < '%s 23:59:59.999'";
 	
 	private static  String SQL_GET_CHECK_BY_FISCALDOCNUM = "select count(*) from od_purchase where fiscaldocnum = '%s' ";
 	
@@ -93,7 +93,9 @@ public class CheckGenerator {
 	} 
 	
 	public int getCurrentShiftNum(int cashNumber) {
-		shiftNum = db.queryForInt(DB_RETAIL_OPERDAY, String.format(SQL_MAX_SHIFT_NUM, cashNumber));
+		// TODO: привести в порядок
+		String date = getDate("yyyy-MM-dd", System.currentTimeMillis() - yesterday);
+		shiftNum = db.queryForInt(DB_RETAIL_OPERDAY, String.format(SQL_MAX_SHIFT_NUM, cashNumber, date, date));
 		if (shiftNum == 0) {
 			shiftNum = 1;
 		} else {
@@ -103,7 +105,9 @@ public class CheckGenerator {
 	}
 	
 	public int getNextCheckNum(int cashNumber, int shiftNumber) {
-		checkNumber = db.queryForInt(DB_RETAIL_OPERDAY, String.format(SQL_CHECK_NUM, cashNumber, shiftNumber));
+		// TODO: привести в порядок
+		String date = getDate("yyyy-MM-dd", System.currentTimeMillis() - yesterday);
+		checkNumber = db.queryForInt(DB_RETAIL_OPERDAY, String.format(SQL_CHECK_NUM, cashNumber, shiftNumber, date, date));
 		return ++checkNumber;
 	}
 	
@@ -116,8 +120,10 @@ public class CheckGenerator {
 	}
 	
 	private boolean ifShiftClosed(int cashNumber, int shiftNumber) {
+		// TODO: привести в порядок
+		String date = getDate("yyyy-MM-dd", System.currentTimeMillis() - yesterday);
 		int querryResult;
-		querryResult = db.queryForInt(DB_RETAIL_OPERDAY, String.format(SQL_SHIFT_STATUS, shiftNumber, cashNumber)); 
+		querryResult = db.queryForInt(DB_RETAIL_OPERDAY, String.format(SQL_SHIFT_STATUS, shiftNumber, cashNumber, date, date)); 
 		if ((int) querryResult == 0) { 
 			return false;
 		} else {
@@ -475,6 +481,11 @@ public class CheckGenerator {
 	
 	public static long random(int max) {
 	    return Math.round(Math.random() * max);
+	}
+	
+	public  String getDate(String format, long date) {
+		SimpleDateFormat dateFormat = new SimpleDateFormat(format);
+		return dateFormat.format(date);
 	}
 	
 }

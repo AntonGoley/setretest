@@ -44,13 +44,13 @@ public class PLUinWeightReportTest extends AbstractTest{
 		Assert.assertTrue(htmlReportResults.containsValue(fieldName), "Неверное значение поля в шапке отчета: " + fieldName);
 	}
 	
-	@Test (	description = "Проверить, что отчет доступен для скачивания в формате xls",
+	@Test (	description = "Проверить, что \"Отчёт по количеству PLU в весах на ТК\" доступен для скачивания в формате xls",
 			dataProvider = "Доступные форматы для скачивания"
 			)
 	public void testPLUReportSaveFormats(String reportFormat, String reportNamePattern){
 		long fileSize = 0;
 		fileSize =  PLUConfigPage.saveReportFile(reportFormat, chromeDownloadPath, reportNamePattern).length();
-		log.info("Размер сохраненного файла: " + fileSize);
+		log.info("Размер сохраненного файла: " + reportNamePattern + " равен " +  fileSize);
 		Assert.assertTrue(fileSize > 0, "Файл отчета сохранился некорректно");
 	}
 	

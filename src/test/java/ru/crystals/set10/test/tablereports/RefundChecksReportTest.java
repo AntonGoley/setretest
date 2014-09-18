@@ -79,7 +79,7 @@ public class RefundChecksReportTest extends AbstractTest{
 		htmlReportResults = refundChecksConfigPage.generateReport(HTMLREPORT);
 	}	
 	
-	@Test (	priority = 1,
+	@Test (	priority = 2,
 			description = "Проверить названия отчета и название колонок в шапке таблицы отчета по возвратам", 
 			dataProvider = "Шапка отчета по возвратам", dataProviderClass = TableReportsDataprovider.class)
 	public void testRefundReportTableHead(String fieldName){
@@ -87,7 +87,7 @@ public class RefundChecksReportTest extends AbstractTest{
 		Assert.assertTrue(htmlReportResults.containsValue(fieldName), "Неверное значение поля в шапке отчета: " + fieldName);
 	}
 	
-	@Test (	priority = 2,
+	@Test (	priority = 3,
 			description = "Проверить, что в отчет по возвратам попал новый возвратный чек: возврат позиции") 
 	public void testRefundReportContainsRefunds(){
 		int reportSizeBefore = htmlReportResults.getReportSize();
@@ -120,6 +120,18 @@ public class RefundChecksReportTest extends AbstractTest{
 		Assert.assertEquals(htmlReportResults.getLastLineColumnValue(columnNumber), 
 				purchaseEntityData.get(tableColumnName));
 	}
+	
+	@Test (	priority = 1,
+			description = "Проверить, что отчет \"Отчёт по возвратам\" доступен для скачивания в формате xls"
+			)
+	public void testRefundReportSaveFormats(){
+		refundChecksConfigPage.switchWindow(true);
+		long fileSize = 0;
+		fileSize =  refundChecksConfigPage.saveReportFile(AbstractReportConfigPage.EXCELREPORT, chromeDownloadPath, "RefunddReport_*.xls").length();
+		log.info("Размер сохраненного файла: " + "RefunddReport_*.xls" + " равен " +  fileSize);
+		Assert.assertTrue(fileSize > 0, "Файл отчета сохранился некорректно");
+	}
+	
 	
 	private HTMLRepotResultPage sendRefundCheck(boolean refundCheckType){
 		PurchaseEntity pe = (PurchaseEntity) checkGenerator.nextPurchase();
