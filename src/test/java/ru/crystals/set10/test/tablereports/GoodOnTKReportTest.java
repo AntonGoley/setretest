@@ -51,7 +51,6 @@ public class GoodOnTKReportTest extends AbstractTest{
 	}	
 	
 	@Test (	description = "Проверить названия отчета и название колонок в шапке таблицы отчета по товарам на ТК", 
-			//alwaysRun = true,
 			dataProvider = "Шапка отчета Товары на ТК", dataProviderClass = TableReportsDataprovider.class)
 	public void testGoodOnTKHTMLReportTableHead(String fieldName){
 		log.info(fieldName);
@@ -59,7 +58,6 @@ public class GoodOnTKReportTest extends AbstractTest{
 	}
 	
 	@Test (	description = "Проверить наличие данных в отчете по товарам на ТК", 
-			//alwaysRun = true,
 			dataProvider = "Данные отчета")
 	public void testGoodOnTKHTMLReportData(String field, String value){
 		log.info(field);

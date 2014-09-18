@@ -47,7 +47,6 @@ public class TableReportAdverstingTest extends AbstractTest {
 	}	
 	
 	@Test ( description = "Проверить название отчета и названия колонок в шапке таблицы отчета по рекламным акциям", 
-			alwaysRun = true,
 			dataProvider = "Шапка отчета Рекламные акции", dataProviderClass = TableReportsDataprovider.class)
 	public void testAdverstingHTMLReportTableHead(String fieldName){
 		log.info("Проверить название/наличие поля: " + fieldName);
@@ -58,7 +57,6 @@ public class TableReportAdverstingTest extends AbstractTest {
 	public void testEmptyAdverstingHTMLReport() {
 		Assert.assertTrue(this.htmlReportResults.getReportSize() == 17, "Сгененированный отчет не пустой");
 	}	
-
 	
 	@Test (dependsOnMethods = "testEmptyAdverstingHTMLReport",
 			description = "Проверить, наличие товара в отчете, если на него заведена рекламная акция, действующая сегодня", 

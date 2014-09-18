@@ -56,9 +56,8 @@ public class PriceCheckerReportTest extends AbstractTest{
 		Assert.assertTrue(htmlReportResults.containsValue(fieldName), "Неверное значение поля в шапке отчета: " + fieldName);
 	}
 	
-	
-	@Test (	description = "Проверить, что данные от прайсчекера приходят в отчет по прайсчекерам", 
-			alwaysRun = true
+	//TODO: валидировать последнюю строку полностью
+	@Test (	description = "Проверить, что данные от прайсчекера приходят в отчет по прайсчекерам"
 			)
 	public void testPricechekerHTMLReportData(){
 		Assert.assertTrue(htmlReportResults.containsValue(mac), "В отчете не отображается информация о мак адресе " + mac);
@@ -66,8 +65,7 @@ public class PriceCheckerReportTest extends AbstractTest{
 	}
 
 	@Test (	description = "Проверить, что отчет \"Отчёт для Прайс чекеров\" доступен для скачивания в формате xls",
-			dataProvider = "Доступные форматы для скачивания",
-			enabled = false)
+			dataProvider = "Доступные форматы для скачивания")
 	public void testPricechekerSaveFormats(String reportFormat, String reportNamePattern){
 		long fileSize = 0;
 		fileSize =  priceCheckerConfig.saveReportFile(reportFormat, chromeDownloadPath, reportNamePattern).length();
