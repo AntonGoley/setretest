@@ -23,7 +23,7 @@
       			<testResource>
         			<directory>src/main/resources</directory>
         			<includes>
-                    	<include>chromedriver 2</include>
+                    	<include>chromedriver*</include>
                     	<include>*.exe</include>
                     	<include>testng*.xml</include>
                 	</includes>
@@ -71,17 +71,17 @@
             <version>1.4</version>
             <scope>test</scope>
         </dependency>
-            <dependency>
-		        <groupId>org.uncommons</groupId>
-		        <artifactId>reportng</artifactId>
-		        <version>1.1.4</version>
-		        <exclusions>
-                    <exclusion>
-                        <groupId>org.testng</groupId>
-                        <artifactId>testng</artifactId>
-                    </exclusion>
-                     </exclusions>
-   			 </dependency>
+<!--             <dependency> -->
+<!-- 		        <groupId>org.uncommons</groupId> -->
+<!-- 		        <artifactId>reportng</artifactId> -->
+<!-- 		        <version>1.1.4</version> -->
+<!-- 		        <exclusions> -->
+<!--                     <exclusion> -->
+<!--                         <groupId>org.testng</groupId> -->
+<!--                         <artifactId>testng</artifactId> -->
+<!--                     </exclusion> -->
+<!--                      </exclusions> -->
+<!--    			 </dependency> -->
             <dependency>
                 <groupId>org.seleniumhq.selenium</groupId>
                 <artifactId>selenium-java</artifactId>
@@ -203,6 +203,19 @@
 			     <scope>system</scope>
 			     <version>1.0</version>
 			     <systemPath>${basedir}/libs/hibernate-jpa-2.0-api-1.0.1.Final.jar</systemPath>
+  			 </dependency>
+  			 <dependency>
+			     <groupId>reportng-1.10</groupId>
+			     <artifactId>reportng-1.10</artifactId>
+			     <scope>system</scope>
+			     <version>1.10</version>
+			     <systemPath>${basedir}/libs/reportng-1.10.jar</systemPath>
+			     <exclusions> 
+                    <exclusion>
+                        <groupId>org.testng</groupId>
+                        <artifactId>testng</artifactId>
+                    </exclusion>
+                     </exclusions>
   			 </dependency>
         </dependencies>
         

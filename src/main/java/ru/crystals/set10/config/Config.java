@@ -46,7 +46,7 @@ public class Config {
         
         // TODO: разрулить запуск с разных ос
         PATH_TO_DRIVER = "target/test-classes/chromedriver_win.exe";
-        //PATH_TO_DRIVER = "target/test-classes/chromedriver 2";
+//        PATH_TO_DRIVER = "target/test-classes/chromedriver";
         
         
         // Берем параметры из коммандной строки (передаваемые при запуске проекта maven)
