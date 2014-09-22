@@ -45,7 +45,6 @@ public class SalesPage extends AbstractPage{
 	}
 	
 	
-	
 	// TODO: подумать, как реализовать меню для ритейла и центрума
 	public enum SalesMenuItemsAdmin {
 		SHOPS (SALES_MENU_SHOPS),
