@@ -16,8 +16,6 @@ public class Config {
     public static  String CENTRUM_URL;
     public static  String RETAIL_URL;
     public static  String PATH_TO_DRIVER;
-    public static  String MANAGER;
-    public static  String MANAGER_PASSWORD;
     public static  String CENTRUM_HOST;
     public static  String RETAIL_HOST;
     public static  String SHOP_NUMBER;
@@ -38,6 +36,16 @@ public class Config {
     public static String SHOP_KPP;
     public static String SHOP_OKPO;
     public static String SHOP_OKDP;
+    
+    /*
+     * Пользователь manager
+     */
+    public static  String MANAGER;
+    public static  String MANAGER_PASSWORD;
+    public static  String MANAGER_NAME;
+    public static  String MANAGER_LASTNAME;
+    public static  String MANAGER_MIDDLENAME;
+    
     
     private static Properties props;
 
@@ -81,8 +89,12 @@ public class Config {
     	NEXT_SHIFT = StringUtils.defaultString(NEXT_SHIFT, "false");
     	
         // параметры, которые хранятся только в проперти файле
-        MANAGER =  props.getProperty("managerLogin");
-        MANAGER_PASSWORD =  props.getProperty("managerPassword");
+        MANAGER =  props.getProperty("manager.login");
+        MANAGER_PASSWORD =  props.getProperty("manager.password");
+        MANAGER_NAME =  props.getProperty("manager.name");
+        MANAGER_LASTNAME =  props.getProperty("manager.lastname");
+        MANAGER_MIDDLENAME =  props.getProperty("manager.middlename");
+        
         DEFAULT_PORT = props.getProperty("port");
         
         SHOP_NAME = "Magazin " + SHOP_NUMBER;
