@@ -12,11 +12,11 @@
   	<test name="TableReports">
 	  	<classes>
 	  		<class name="ru.crystals.set10.test.tablereports.TableReportAdverstingTest"/>
-<!-- 	  		<class name="ru.crystals.set10.test.tablereports.PriceCheckerReportTest"/> -->
-<!-- 	  		<class name="ru.crystals.set10.test.tablereports.GoodOnTKReportTest"/> -->
+	  		<class name="ru.crystals.set10.test.tablereports.PriceCheckerReportTest"/>
+	  		<class name="ru.crystals.set10.test.tablereports.GoodOnTKReportTest"/>
 
-<!-- 	  		<class name="ru.crystals.set10.test.tablereports.RefundChecksReportTest"/> -->
-<!-- 	  		<class name="ru.crystals.set10.test.tablereports.PLUinWeightReportTest"/> -->
+	  		<class name="ru.crystals.set10.test.tablereports.RefundChecksReportTest"/>
+	  		<class name="ru.crystals.set10.test.tablereports.PLUinWeightReportTest"/>
 	  		
 		</classes>	 
   	</test>	

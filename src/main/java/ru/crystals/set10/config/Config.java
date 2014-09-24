@@ -88,15 +88,19 @@ public class Config {
     	CHECK_COUNT = StringUtils.defaultString(CHECK_COUNT, props.getProperty("check.count"));
     	NEXT_SHIFT = StringUtils.defaultString(NEXT_SHIFT, "false");
     	
-        // параметры, которые хранятся только в проперти файле
+        /*
+         * параметры, которые хранятся только в проперти файле 
+         */
+    	// Пользователь manager
         MANAGER =  props.getProperty("manager.login");
         MANAGER_PASSWORD =  props.getProperty("manager.password");
         MANAGER_NAME =  props.getProperty("manager.name");
         MANAGER_LASTNAME =  props.getProperty("manager.lastname");
         MANAGER_MIDDLENAME =  props.getProperty("manager.middlename");
         
-        DEFAULT_PORT = props.getProperty("port");
-        
+        /*
+         * Магазин
+         */
         SHOP_NAME = "Magazin " + SHOP_NUMBER;
         SHOP_ADRESS = props.getProperty("shop.adress");
         SHOP_PHONE = props.getProperty("shop.phone");
@@ -105,6 +109,7 @@ public class Config {
         SHOP_OKPO = props.getProperty("shop.okpo");
         SHOP_OKDP = props.getProperty("shop.okdp");
         
+        DEFAULT_PORT = props.getProperty("port");
         CENTRUM_URL = "http://" + CENTRUM_HOST + ":" + props.getProperty("port");
         RETAIL_URL = "http://" + RETAIL_HOST + ":" + props.getProperty("port");
         
