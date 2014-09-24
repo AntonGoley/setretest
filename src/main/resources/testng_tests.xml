@@ -4,20 +4,23 @@
 <listeners>
     <listener class-name="org.uncommons.reportng.HTMLReporter" />
  </listeners>
+	<test name="Accompayning docs" >
+	  	<classes>
+	  	<class name="ru.crystals.set10.test.documents.accompanying.AccompanyingDocumentTest"/>
+		</classes>	 
+  	</test>	
+	<test name="TableReports">
+	  	<classes>
+	  		<class name="ru.crystals.set10.test.tablereports.TableReportAdverstingTest"/>
+	  		<class name="ru.crystals.set10.test.tablereports.PriceCheckerReportTest"/>
+	  		<class name="ru.crystals.set10.test.tablereports.GoodOnTKReportTest"/>
+	  		<class name="ru.crystals.set10.test.tablereports.RefundChecksReportTest"/>
+	  		<class name="ru.crystals.set10.test.tablereports.PLUinWeightReportTest"/>
+		</classes>	 
+  	</test>	
 	<test name="SpiritRestrictions" >
 	  	<classes>
 	  	<class name="ru.crystals.set10.test.SpiritRestrictionsToSAPTest"/>
 		</classes>	 
   	</test>	 
-  	<test name="TableReports">
-	  	<classes>
-	  		<class name="ru.crystals.set10.test.tablereports.TableReportAdverstingTest"/>
-	  		<class name="ru.crystals.set10.test.tablereports.PriceCheckerReportTest"/>
-	  		<class name="ru.crystals.set10.test.tablereports.GoodOnTKReportTest"/>
-
-	  		<class name="ru.crystals.set10.test.tablereports.RefundChecksReportTest"/>
-	  		<class name="ru.crystals.set10.test.tablereports.PLUinWeightReportTest"/>
-	  		
-		</classes>	 
-  	</test>	
 </suite> 

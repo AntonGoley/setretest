@@ -7,7 +7,7 @@ import org.testng.annotations.Test;
 import static ru.crystals.set10.pages.operday.searchcheck.CheckContentPage.*;
 
 
-public class NomenclatureDocumentTest extends AccompanyngDocumentsAbstractTest{
+public class AccompanyingDocumentTest extends AccompanyngDocumentsAbstractTest{
 	
 	String reportResult;
 	String counterpartName = "Counterpart name";
@@ -22,26 +22,26 @@ public class NomenclatureDocumentTest extends AccompanyngDocumentsAbstractTest{
 	}	
 	
 	@Test (description = "SRTE-36. Печать товарного чека")
-	public void testGoodsCheckReport(){
+	public void testPrintGoodsCkeck(){
 		Assert.assertTrue("Не выводится название отчета \"Товарный чек\"", 
 				checkContent.generateReport(LINK_GOODS_CHECK ).contains("Товарный чек"));
 	}
 	
 	@Test (description = "SRTE-35. Печать номенклатуры кассового чека")
-	public void testNomenclatureCheckReport(){
+	public void testPrintCheckNomenclature(){
 		Assert.assertTrue("Не выводится название отчета \"Номенклатура кассового чека\"", 
 				checkContent.generateReport(LINK_NOMENCLATURE).contains("Номенклатура кассового чека"));
 	}
 	
 	@Test (description = "SRTE-38. Печать счет-фактуры")
-	public void testGoodsBillReport(){
+	public void testPrintGoodsBill(){
 		Assert.assertTrue("Не выводится название отчета \"Счет-фактура\"", 
 				checkContent.generateReportWithCounterpart(LINK_GOODS_BILL, counterpartName, counterpartInn, counterpartKpp, counterpartAdress)
 				.contains("СЧЕТ-ФАКТУРА"));
 	}
 	
 	@Test (description = "SRTE-37. Печать товарной накладной")
-	public void testInvoiceReport(){
+	public void testPrintInvoice(){
 		Assert.assertTrue("Не выводится название отчета \"Тованая накладная\"", 
 				checkContent.generateReportWithCounterpart(LINK_INVOICE, counterpartName, counterpartInn, counterpartKpp, counterpartAdress)
 				.contains("ТОВАРНАЯ НАКЛАДНАЯ"));
