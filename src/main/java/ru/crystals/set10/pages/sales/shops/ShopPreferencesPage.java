@@ -12,7 +12,6 @@ import static ru.crystals.set10.utils.FlexMediator.*;
 
 public class ShopPreferencesPage extends AbstractPage {
 	
-	
 	static final String LOCATOR_SHOP_NUMBER_INPUT = "shopNumberTI";
 	static final String LOCATOR_SHOP_NAME_INPUT = "shopNameTI";
 	static final String LOCATOR_VIRTUAL_CHECKBOX = "virtualShopCB";
@@ -20,6 +19,9 @@ public class ShopPreferencesPage extends AbstractPage {
 	static final String LOCATOR_ADD_CASH_TO_SHOP_BUTTON = "addCashB";
 	static final String LOCATOR_CASHES_TAB = "shopSettingsTabNav";
 	static final String LOCATOR_CASHES_COUNT_INPUT = "amountPole";
+	static final String LOCATOR_ADD_JURISTIC_PERSON_BUTTON = "addLegalEntityButton";
+	static final String LOCATOR_CASHES_TOTAL = "id:shopCashesTab/id:pagination";
+
 	
 	public ShopPreferencesPage(WebDriver driver) {
 		super(driver);
@@ -42,16 +44,28 @@ public class ShopPreferencesPage extends AbstractPage {
 		return this;
 	}
 	
-	public ShopPreferencesPage addCashes(String cashCount){
+	public ShopPreferencesPage addCashes(int cashCount){
+		int totalCashesBefore;
 		doFlexProperty(getDriver(), ID_SALESSWF, LOCATOR_CASHES_TAB, new String[] {"selectedIndex", "1"});
-		typeText(getDriver(), ID_SALESSWF, LOCATOR_CASHES_COUNT_INPUT, cashCount);
+		typeText(getDriver(), ID_SALESSWF, LOCATOR_CASHES_COUNT_INPUT, String.valueOf(cashCount));
+		totalCashesBefore = getTotalCashesInShop();
 		clickElement(getDriver(), ID_SALESSWF, LOCATOR_ADD_CASH_TO_SHOP_BUTTON);
-		// ждем пока не обновится счетчик касс
-		//TODO : сделать универсальный способ ожидания: сколько касс было, сколько ожидать, после добавления
-		waitForElement(getDriver(), ID_SALESSWF, "numberOfItems=1");
+		/*
+		 *  ждем пока счетчик касс увеличится на cashCount
+		 */
+		waitForElement(getDriver(), ID_SALESSWF, String.format("numberOfItems=%s", String.valueOf(totalCashesBefore + cashCount)));
 		return this;
 	}
 	
+	public int getTotalCashesInShop(){
+		return Integer.valueOf(
+				getElementProperty(getDriver(), ID_SALESSWF, LOCATOR_CASHES_TOTAL, "numberOfItems"));		 
+	}
+	
+	public JuristicPersonPage addJuristicPerson(){
+		clickElement(getDriver(), ID_SALESSWF, LOCATOR_ADD_JURISTIC_PERSON_BUTTON);
+		return new JuristicPersonPage(getDriver());
+	}
 	
 	public ShopPage goBack(){
 		return BasicElements.goBack(getDriver(), ShopPage.class, ID_SALESSWF, LOCATOR_BACK_BUTTON);

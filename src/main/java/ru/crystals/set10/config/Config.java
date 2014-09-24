@@ -28,6 +28,17 @@ public class Config {
     public static String CASH_NUMBER;
     public static String NEXT_SHIFT;
     
+    /*
+     * Настройки юридического лица для магазина
+     */
+    public static String SHOP_NAME;
+    public static String SHOP_ADRESS;
+    public static String SHOP_PHONE;
+    public static String SHOP_INN;
+    public static String SHOP_KPP;
+    public static String SHOP_OKPO;
+    public static String SHOP_OKDP;
+    
     private static Properties props;
 
     
@@ -73,6 +84,14 @@ public class Config {
         MANAGER =  props.getProperty("managerLogin");
         MANAGER_PASSWORD =  props.getProperty("managerPassword");
         DEFAULT_PORT = props.getProperty("port");
+        
+        SHOP_NAME = "Magazin " + SHOP_NUMBER;
+        SHOP_ADRESS = props.getProperty("shop.adress");
+        SHOP_PHONE = props.getProperty("shop.phone");
+        SHOP_INN = props.getProperty("shop.inn");
+        SHOP_KPP = props.getProperty("shop.kpp");
+        SHOP_OKPO = props.getProperty("shop.okpo");
+        SHOP_OKDP = props.getProperty("shop.okdp");
         
         CENTRUM_URL = "http://" + CENTRUM_HOST + ":" + props.getProperty("port");
         RETAIL_URL = "http://" + RETAIL_HOST + ":" + props.getProperty("port");

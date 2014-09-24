@@ -27,6 +27,12 @@ public class FlexMediator {
 		ecxecute(driver, String.format("document.getElementById('%s').doFlexCheckBox('%s', '%s')", swfSrc, flexId, checkBoxValue));	
 	}
 	
+	public static String getElementProperty(WebDriver driver, String swfSrc, String flexId, String propertyName) {
+		waitForElement(driver, swfSrc, flexId);
+		return ecxecuteAndReturnString(driver, String.format("return document.getElementById('%s').getFlexProperty('%s', '%s')", swfSrc, flexId, propertyName));	
+	}
+	
+	
 	/*
 	 * args - [property value] 
 	 */
@@ -40,7 +46,6 @@ public class FlexMediator {
 		//TODO
 		// doFlexWaitForElement falls if no delay before execution
 		sleep(500);
-		// 30000 - about 15 sec??
 		ecxecute(driver, String.format("document.getElementById('%s').doFlexWaitForElement('%s', '15')", swfSrc, flexId));	
 	}
 	 

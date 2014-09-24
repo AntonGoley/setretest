@@ -4,7 +4,7 @@ package ru.crystals.set10.test.configuration;
 import org.testng.annotations.Test;
 import ru.crystals.set10.config.Config;
 import ru.crystals.set10.pages.basic.*;
-import ru.crystals.set10.pages.basic.SalesPage.SalesMenuItemsAdmin;
+import ru.crystals.set10.pages.sales.shops.JuristicPersonPage;
 import ru.crystals.set10.pages.sales.shops.ShopPage;
 import ru.crystals.set10.pages.sales.shops.ShopPreferencesPage;
 import ru.crystals.set10.pages.sales.topology.CityPage;
@@ -20,21 +20,21 @@ public class SetTopologyTest extends AbstractTest{
 	MainPage mainPage;
 	TopologyPage topologyPage;
 	SalesPage salesPage;
-	SalesMenuItemsAdmin adminItems;
 	RegionPage regionPage;
 	CityPage cityPage;
 	ShopPage shopPage;
 	ShopPreferencesPage shopPreferences;
+	JuristicPersonPage juristicPerson;
 	DbAdapter dba = new DbAdapter();
 	
 	@Test (	priority = 1,
 			groups = "Config",
-			description = "Настроить топологию: создать регион, город, магазин")
+			description = "Настроить топологию: создать регион, город, магазин, юридическое лицо, добавить кассы, создать кассира")
 	public void setTopology() {
 		mainPage = new LoginPage(getDriver(), Config.CENTRUM_URL).doLogin(Config.MANAGER, Config.MANAGER_PASSWORD);
 		salesPage = mainPage.openSales();
 		addRegionAndCity();
-		addShop();
+		addShop(false);
 		sendGoods();
 		addCash();
 	}
@@ -70,22 +70,36 @@ public class SetTopologyTest extends AbstractTest{
 		topologyPage = cityPage.goBack().goBack();
 	}
 	
-	private void addShop() {
+	private void addShop(boolean shopUseOwnServer) {
 		salesPage = new SalesPage(getDriver());
 		shopPage = salesPage.navigateMenu(SALES_MENU_SHOPS, "0", ShopPage.class);
 		shopPreferences = shopPage.addShop();
 		shopPreferences.setName("Shop" + Config.SHOP_NUMBER).
 						setShopNumber(Config.SHOP_NUMBER).
-						ifShopUseOwnServer(false);
+						ifShopUseOwnServer(shopUseOwnServer);
+		juristicPerson = shopPreferences.addJuristicPerson();
+		addJuristicPerson();
 		shopPage = shopPreferences.goBack();
+	}
+	
+	private void addJuristicPerson(){
+		juristicPerson.setName(Config.SHOP_NAME)
+						.setAdress(Config.SHOP_ADRESS)
+						.setPhone(Config.SHOP_PHONE)
+						.setINN(Config.SHOP_INN)
+						.setKPP(Config.SHOP_KPP)
+						.setOKPO(Config.SHOP_OKPO)
+						.setOKDP(Config.SHOP_OKDP);
+		juristicPerson.goBack();
+						
 	}
 	
 	private void addCash(){
 		getDriver().navigate().refresh();
 		salesPage = new SalesPage(getDriver());
 		shopPage = salesPage.navigateMenu(SALES_MENU_SHOPS, "0", ShopPage.class);
-		shopPreferences = shopPage.openFirstShopPreferences();
-		shopPreferences.addCashes("1");
+		shopPreferences = shopPage.openShopPreferences(Config.SHOP_NAME);
+		shopPreferences.addCashes(5);
 	}
 	
 	private void sendGoods(){

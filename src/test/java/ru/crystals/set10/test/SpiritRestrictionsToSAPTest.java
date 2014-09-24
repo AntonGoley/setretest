@@ -8,7 +8,6 @@ import ru.crystals.set10.config.Config;
 import ru.crystals.set10.pages.basic.LoginPage;
 import ru.crystals.set10.pages.basic.MainPage;
 import ru.crystals.set10.pages.basic.SalesPage;
-import ru.crystals.set10.pages.basic.SalesPage.SalesMenuItemsAdmin;
 import ru.crystals.set10.pages.sales.preferences.SalesGoodsTypesAndPaymentsTabPage;
 import ru.crystals.set10.pages.sales.preferences.SalesPreferencesPage;
 import ru.crystals.set10.pages.sales.preferences.SalesGoodsTypesAndPaymentsTabPage.ProductTypeItems;
@@ -19,6 +18,7 @@ import ru.crystals.set10.pages.sales.preferences.goodstypes.alcohol.AlcoholTabsR
 import ru.crystals.set10.pages.sales.preferences.goodstypes.alcohol.AlcoholPage.AlcoholTabs;
 import ru.crystals.set10.test.dataproviders.SpiritRistrictionsDataprovider;
 import ru.crystals.set10.utils.SoapRequestSender;
+import static ru.crystals.set10.pages.basic.SalesPage.*;
 
 public class SpiritRestrictionsToSAPTest extends AbstractTest{
 	
@@ -34,7 +34,7 @@ public class SpiritRestrictionsToSAPTest extends AbstractTest{
 	public void goToAlcoholRestrictions() {
 		mainPage = new LoginPage(getDriver(), Config.CENTRUM_URL).doLogin(Config.MANAGER, Config.MANAGER_PASSWORD);
 		salesPage = mainPage.openSales();
-		alcoholPage = salesPage.navigateMenu(SalesMenuItemsAdmin.PREFERENCES, SalesPreferencesPage.class).navigateTab(SalesPreferencesPageTabs.GOODS_TYPES_AND_PAYSMENTS).
+		alcoholPage = salesPage.navigateMenu(SALES_MENU_MODULES_PREFERENCES, "11", SalesPreferencesPage.class).navigateTab(SalesPreferencesPageTabs.GOODS_TYPES_AND_PAYSMENTS).
 				selectProductTypeItem(ProductTypeItems.ALCOHOL);
 		alcoholRestrictionTab = alcoholPage.selectAlcoholTab(AlcoholTabs.ALCOHOL_RESTRICTIONS);
 	}
