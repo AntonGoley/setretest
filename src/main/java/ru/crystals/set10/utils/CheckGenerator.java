@@ -354,12 +354,6 @@ public class CheckGenerator {
 	      long summ = 0L;
 	      for (int i = 1; i < end; i++) {
 	        PositionEntity pos = new PositionEntity();
-//	        if (i == 0) {
-//	        	addPe();
-//	        	pos.setProduct((ProductEntity)catalogGoods.get(catalogGoods.size() - 1));
-//	        } else {
-//	        	pos.setProduct((ProductEntity)catalogGoods.get((int)(Math.random() * catalogGoods.size() - 1.0D)));
-//	        }
 	        pos.setProduct((ProductEntity)catalogGoods.get((int)(Math.random() * catalogGoods.size() - 1.0D)));
 	        pos.setNumber(Long.valueOf(i));
 	        if (i == 0) {

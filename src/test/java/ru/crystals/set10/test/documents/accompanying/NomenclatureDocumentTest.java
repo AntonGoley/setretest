@@ -1,63 +1,51 @@
 package ru.crystals.set10.test.documents.accompanying;
 
+import junit.framework.Assert;
+
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import ru.crystals.pos.check.PurchaseEntity;
-//import ru.crystals.pos.check.PositionEntity;
-//import ru.crystals.pos.check.PurchaseEntity;
-import ru.crystals.set10.config.Config;
-import ru.crystals.set10.pages.basic.LoginPage;
-import ru.crystals.set10.pages.basic.MainPage;
-import ru.crystals.set10.pages.operday.HTMLRepotResultPage;
-import ru.crystals.set10.pages.operday.searchcheck.CheckContentPage;
-import ru.crystals.set10.pages.operday.searchcheck.CheckSearchPage;
-import ru.crystals.set10.pages.operday.tablereports.AbstractReportConfigPage;
-import ru.crystals.set10.test.AbstractTest;
-import ru.crystals.set10.utils.CheckGenerator;
-import ru.crystals.set10.utils.DisinsectorTools;
 import static ru.crystals.set10.pages.operday.searchcheck.CheckContentPage.*;
 
 
-public class NomenclatureDocumentTest extends AbstractTest{
-
-	MainPage mainPage;
-	CheckSearchPage searchCheck;
-	AbstractReportConfigPage RefundChecksConfigPage;
-	HTMLRepotResultPage htmlReportResults;
-	PurchaseEntity pe;
-	CheckContentPage checkContent;
-	CheckGenerator checkGenerator = new CheckGenerator(Config.RETAIL_HOST, Integer.valueOf(Config.SHOP_NUMBER), 1);
+public class NomenclatureDocumentTest extends AccompanyngDocumentsAbstractTest{
+	
+	String reportResult;
+	String counterpartName = "Counterpart name";
+	String counterpartInn = "100200300400";
+	String counterpartKpp = "555666777";
+	String counterpartAdress = "199123, Spb, Street 1-20";
 	
 	@BeforeClass
-	public void navigateToheckSearchPage() {
-		pe = (PurchaseEntity) checkGenerator.nextPurchase();
-		mainPage = new LoginPage(getDriver(),  Config.RETAIL_URL).doLogin(Config.MANAGER, Config.MANAGER_PASSWORD);
-		searchCheck = mainPage.openOperDay().openCheckSearch();
+	public void prepareData() {
+		super.navigateToheckSearchPage();
+		reportResult = checkContent.generateReport(LINK_NOMENCLATURE);
 	}	
 	
-	public void sendCheck() {
+	@Test (description = "SRTE-36. Печать товарного чека")
+	public void testGoodsCheckReport(){
+		Assert.assertTrue("Не выводится название отчета \"Товарный чек\"", 
+				checkContent.generateReport(LINK_GOODS_CHECK ).contains("Товарный чек"));
 	}
 	
-	@Test
-	public void testSendCheck(){
-		String checkNumber = String.valueOf(pe.getNumber());
- 		searchCheck.setCheckNumber(checkNumber).doSearch();
- 		checkContent = searchCheck.selectCheck(checkNumber);
- 		checkContent.generateReport(LINK_NOMENCLATURE);
- 		DisinsectorTools.getConsoleOutput(getDriver());
+	@Test (description = "SRTE-35. Печать номенклатуры кассового чека")
+	public void testNomenclatureCheckReport(){
+		Assert.assertTrue("Не выводится название отчета \"Номенклатура кассового чека\"", 
+				checkContent.generateReport(LINK_NOMENCLATURE).contains("Номенклатура кассового чека"));
 	}
 	
-//	private void validateReportResult(){
-//
-//	}
+	@Test (description = "SRTE-38. Печать счет-фактуры")
+	public void testGoodsBillReport(){
+		Assert.assertTrue("Не выводится название отчета \"Счет-фактура\"", 
+				checkContent.generateReportWithCounterpart(LINK_GOODS_BILL, counterpartName, counterpartInn, counterpartKpp, counterpartAdress)
+				.contains("СЧЕТ-ФАКТУРА"));
+	}
 	
+	@Test (description = "SRTE-37. Печать товарной накладной")
+	public void testInvoiceReport(){
+		Assert.assertTrue("Не выводится название отчета \"Тованая накладная\"", 
+				checkContent.generateReportWithCounterpart(LINK_INVOICE, counterpartName, counterpartInn, counterpartKpp, counterpartAdress)
+				.contains("ТОВАРНАЯ НАКЛАДНАЯ"));
+	}
 	
-//	@Test (	description = "Проверить названия отчета и название колонок в шапке таблицы отчета по возвратам", 
-//			alwaysRun = true,
-//			dataProvider = "Шапка отчета по возвратам", dataProviderClass = TableReportsDataprovider.class)
-//	public void test(){
-//		log.info(fieldName);
-//		Assert.assertTrue(htmlReportResults.containsValue(fieldName), "Неверное значение поля в шапке отчета: " + fieldName);
-//	}
 	
 }
