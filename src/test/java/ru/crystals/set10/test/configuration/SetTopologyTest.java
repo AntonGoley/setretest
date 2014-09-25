@@ -109,6 +109,6 @@ public class SetTopologyTest extends AbstractTest{
 	
 	private void sendGoods(){
 		SoapRequestSender soapSender  = new SoapRequestSender();
-		soapSender.sendGoodsToStartTesting(Config.CENTRUM_HOST);
+		soapSender.sendGoodsToStartTesting(Config.CENTRUM_HOST, "goods.txt");
 	}
 }

@@ -35,6 +35,7 @@ public class ShopPreferencesPage extends AbstractPage {
 	}
 	
 	public ShopPreferencesPage setName(String name){
+		log.info("Задать имя магазину: " + name);
 		typeText(getDriver(), ID_SALESSWF, LOCATOR_SHOP_NAME_INPUT, name);
 		return this;
 	}

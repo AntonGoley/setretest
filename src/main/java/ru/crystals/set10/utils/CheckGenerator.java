@@ -30,7 +30,7 @@ import static ru.crystals.set10.utils.DbAdapter.*;
 public class CheckGenerator {
 
 	private static final Logger log = LoggerFactory.getLogger(DocsSender.class);
-	private static ArrayList<ProductEntity> catalogGoods = new ArrayList();
+	public static ArrayList<ProductEntity> catalogGoods = new ArrayList();
 	private static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-DD hh:mm:ss");
 	private static ArrayList<DocumentEntity> peList = new ArrayList();
 	
@@ -77,9 +77,9 @@ public class CheckGenerator {
 		// проверить, есть ли товары в set_operday, и если нет, импортировать через ERP импорт
 		if ((db.queryForInt(DB_RETAIL_SET, SQL_GOODS_COUNT)) < 10 ) {
 			SoapRequestSender soapSender  = new SoapRequestSender();
-			soapSender.sendGoodsToStartTesting(Config.RETAIL_HOST);
+			soapSender.sendGoodsToStartTesting(Config.RETAIL_HOST, "goods.txt");
 		}
-		parsePurchasesFromDB();
+		catalogGoods = parsePurchasesFromDB(db.queryForRowSet(DB_RETAIL_SET, SQL_GOODS));
 	    generateChecks();
 	  }
 	
@@ -179,6 +179,34 @@ public class CheckGenerator {
 	    ifCheckInRetail((PurchaseEntity) de);
 	    return de;
 	}
+	
+	public DocumentEntity nextPurchase(PurchaseEntity purchase) {
+
+	    if (this.shift == null || nextShift || ifShiftClosed(cashNumber, shiftNum)) {
+	      this.shift = nextShift(null);
+	      nextShift = false;
+	    }
+	    
+	    DocumentEntity de = (DocumentEntity)purchase;
+	    
+	    Date d = new Date(System.currentTimeMillis() - yesterday);
+	    de.setDateCommit(d);
+	    de.setShift(this.shift);
+	    de.setNumber((long) checkNumber++);
+	    de.setSession(this.shift.getSessionStart());
+	    de.setId(System.currentTimeMillis());
+	    if ((de instanceof PurchaseEntity)) {
+	    	PurchaseEntity pe = (PurchaseEntity)de;
+	      for (PositionEntity pos : pe.getPositions()) {
+	        pos.setDateTime(d);
+	      }
+	    }  
+	    sendDocument(de);
+	    logCheckEntities((PurchaseEntity) de);
+	    ifCheckInRetail((PurchaseEntity) de);
+	    return de;
+	}
+	
 	
 	public DocumentEntity nextRefundCheck(
 				PurchaseEntity superPurchase, 
@@ -451,9 +479,8 @@ public class CheckGenerator {
 		checkNumber = 1;
 	}
 	
-	public static void parsePurchasesFromDB() {
-
-		SqlRowSet goods = db.queryForRowSet(DB_RETAIL_SET, SQL_GOODS);
+	public static ArrayList<ProductEntity> parsePurchasesFromDB(SqlRowSet goods) {
+		ArrayList<ProductEntity> result = new ArrayList<ProductEntity>();
 		try {
 	      while (goods.next()) {
 	        ProductEntity pe = new ProductEntity();
@@ -468,12 +495,18 @@ public class CheckGenerator {
 	        BarcodeEntity be = new BarcodeEntity();
 	        be.setBarCode(goods.getString("barcode"));
 	        pe.setBarCode(be);
-	        catalogGoods.add(pe);
+	        result.add(pe);
 	      }
 	    } catch (Exception e) {
 	      log.warn("Error: " + e.getMessage());
 	    }
+		return result;
 	}
+	
+	public static void setProductEntity(){
+		
+	}
+	
 	
 	public static long random(int max) {
 	    return Math.round(Math.random() * max);

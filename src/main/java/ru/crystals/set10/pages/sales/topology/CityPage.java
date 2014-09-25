@@ -23,6 +23,7 @@ public class CityPage extends AbstractPage{
 	}
 	
 	public CityPage setCityName(String cityName){
+		log.info("Задать имя городу: " + cityName);
 		typeText(getDriver(), ID_SALESSWF, LOCATOR_CITY_NAME_INPUT, cityName);
 		return new CityPage(getDriver());
 	}

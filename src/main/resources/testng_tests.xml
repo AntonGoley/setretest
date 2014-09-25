@@ -7,6 +7,8 @@
 	<test name="Accompayning docs" >
 	  	<classes>
 	  	<class name="ru.crystals.set10.test.documents.accompanying.AccompanyingDocumentTest"/>
+	  	<class name="ru.crystals.set10.test.documents.accompanying.AccompanyngNomenclatureContentTest"/>
+	  	<class name="ru.crystals.set10.test.documents.accompanying.AccompanyngGoodsCheckContentTest"/>
 		</classes>	 
   	</test>	
 	<test name="TableReports">

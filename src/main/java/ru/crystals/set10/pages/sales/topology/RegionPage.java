@@ -25,6 +25,7 @@ public class RegionPage extends AbstractPage{
 	
 	
 	public RegionPage setRegionName(String regionName){
+		log.info("Задать имя региону: " + regionName);
 		typeText(getDriver(), ID_SALESSWF, LOCATOR_REGION_NAME_INPUT, regionName);
 		return this;
 	}
