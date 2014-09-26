@@ -10,7 +10,7 @@ import ru.crystals.set10.config.Config;
 import static ru.crystals.set10.pages.operday.searchcheck.CheckContentPage.*;
 
 
-public class AccompanyngGoodsCheckContentTest extends AccompanyngDocumentsAbstractTest{
+public class AccompanyingGoodsCheckContentTest extends AccompanyingDocumentsAbstractTest{
 	
 	String reportResult ="";
 	

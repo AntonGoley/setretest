@@ -24,7 +24,7 @@ import ru.crystals.set10.utils.SoapRequestSender;
 import static ru.crystals.set10.utils.DbAdapter.DB_RETAIL_SET;
 
 
-public class AccompanyngDocumentsAbstractTest extends AbstractTest{
+public class AccompanyingDocumentsAbstractTest extends AbstractTest{
 	
 	MainPage mainPage;
 	CheckSearchPage searchCheck;
