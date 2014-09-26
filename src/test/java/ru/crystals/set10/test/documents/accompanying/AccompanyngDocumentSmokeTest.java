@@ -7,7 +7,7 @@ import org.testng.annotations.Test;
 import static ru.crystals.set10.pages.operday.searchcheck.CheckContentPage.*;
 
 
-public class AccompanyngDocumentTest extends AccompanyngDocumentsAbstractTest{
+public class AccompanyngDocumentSmokeTest extends AccompanyngDocumentsAbstractTest{
 	
 	@BeforeClass
 	public void prepareData() {
