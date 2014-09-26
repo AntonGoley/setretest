@@ -60,6 +60,8 @@ public class  CheckContentPage extends OperDayPage{
 	private String getReportText(){
 		String reportText = "";
 		getWait().until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.xpath("//embed")));
+		//TODO: убрать задержку
+		DisinsectorTools.delay(2000);
 		switchWindow(false);
 		reportText = DisinsectorTools.getConsoleOutput(getDriver());
 		switchWindow(true);

@@ -42,7 +42,7 @@ public class AccompanyingGoodsCheckContentTest extends AccompanyingDocumentsAbst
 			dataProvider = "Товарный чек")
 	public void testGoodsCheckReport(String dataToCheck, String expectedValue, boolean condition){
 		log.info(dataToCheck);
-		String message = String.format("\"Номенклатура кассового чека\": ошибка данных отчета: %s ", dataToCheck);
+		String message = String.format("\"Печать товарного чека\": ошибка данных отчета: %s ", dataToCheck);
 		Assert.assertTrue(message, 
 				reportResult.contains(expectedValue) == condition );
 	}

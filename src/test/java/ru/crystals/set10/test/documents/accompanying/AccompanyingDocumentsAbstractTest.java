@@ -45,19 +45,36 @@ public class AccompanyingDocumentsAbstractTest extends AbstractTest{
 	static final String counterpartAdress = "199123, Spb, Street 1-20";
 	
 	/*
+	 * Данные юридического адреса магазина 
+	 */
+	static final String shopJuristicAdress = Config.SHOP_ADRESS;
+	static final String shopJuristicName = Config.SHOP_NAME;
+	static final String shopJuristicINN = Config.SHOP_INN;
+	static final String shopJuristicKPP = Config.SHOP_KPP;
+	
+	/*
 	 * Данные товара, запрещенного для печати (deny_and_allow_print_goods.txt)
 	 */
 	static final String denyPrintMarkingOfTheGood = "019559_ST";
 	static final String denyPrintFullName = "Вино Фронтера Шардоне геогр наим Долина\nСентраль бел п/сух алк. 13% (Чили) 0.75L"; 
+	static final String denyPrintName = "Вино Фронтера";
 	static final String denyPrintSumTotalInWords = "Сто рублей 20 копеек";
-	static final String denyPrintSumTotal = "Итого: 1,00 100,20";
 	/*
 	 * Данные товара, разрешенного для печати (good_deny_print.txt)
 	 */
 	static final String allowPrintMarkingOfTheGood = "83218";
 	static final String allowPrintFullName = "Ананасы консервированные вес Кулинария (Тайланд)";
+	static final String allowPrintName = "Ананасы консервированные вес";
 	static final String allowPrintSumTotalInWords = "Триста рублей 41 копейка";
+	
+	/*
+	 * Строка Итого в документах
+	 */
+	
+	static final String denyPrintSumTotal = "Итого: 1,00 100,20";
 	static final String allowPrintSumTotal = "Итого: 2,00 300,41";
+	static final String denyPrintSumTotalInvoice = "Всего по накладной 1 X 80,16 X 20,04 100,20";
+	static final String denyPrintSumTotalGoodsBill = "Всего к оплате 80,16 Х 20,04 100,20";
 	
 	private static final String SQL_GOODS = 
 			"SELECT  markingofthegood, barc.code as barcode, pr.name as name, fullname, lastimporttime, measure_code, vat " +

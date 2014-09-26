@@ -9,6 +9,8 @@
 	  	<class name="ru.crystals.set10.test.documents.accompanying.AccompanyingDocumentSmokeTest"/>
 	  	<class name="ru.crystals.set10.test.documents.accompanying.AccompanyingNomenclatureContentTest"/>
 	  	<class name="ru.crystals.set10.test.documents.accompanying.AccompanyingGoodsCheckContentTest"/>
+	  	<class name="ru.crystals.set10.test.documents.accompanying.AccompanyingGoodsBillContentTest"/>
+	  	<class name="ru.crystals.set10.test.documents.accompanying.AccompanyingInvoiceContentTest"/>
 		</classes>	 
   	</test>	
 	<test name="TableReports">
