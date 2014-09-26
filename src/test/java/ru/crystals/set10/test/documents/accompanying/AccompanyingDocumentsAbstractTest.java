@@ -48,7 +48,7 @@ public class AccompanyingDocumentsAbstractTest extends AbstractTest{
 	 * Данные товара, запрещенного для печати (deny_and_allow_print_goods.txt)
 	 */
 	static final String denyPrintMarkingOfTheGood = "019559_ST";
-	static final String denyPrintFullName = "Вино Фронтера Шардоне геогр наим Долина Сентраль бел п/сух алк. 13% (Чили) 0.75L"; 
+	static final String denyPrintFullName = "Вино Фронтера Шардоне геогр наим Долина\nСентраль бел п/сух алк. 13% (Чили) 0.75L"; 
 	static final String denyPrintSumTotalInWords = "Сто рублей 20 копеек";
 	static final String denyPrintSumTotal = "Итого: 1,00 100,20";
 	/*

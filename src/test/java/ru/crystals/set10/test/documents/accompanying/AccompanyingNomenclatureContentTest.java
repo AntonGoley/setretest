@@ -30,7 +30,7 @@ public class AccompanyingNomenclatureContentTest extends AccompanyingDocumentsAb
 				 */
 				{"Корректно отображается шапка таблицы", "Поз. Штрих-код Название Ед. изм В уп. Кол-во Цена Сумма", true },
 				{"Содержит fullName товара, разрешенного к печати", allowPrintFullName, true },
-//				{"Содержит fullName товара, запрещенного к печати", denyPrintFullName, true },
+				{"Содержит fullName товара, запрещенного к печати", denyPrintFullName, true },
 				{"Сумма прописью указана верно", allowPrintSumTotalInWords, true },
 				{"Строка Итого расчитана верно", allowPrintSumTotal, true }
 //				{"В документе содержится информация о продавце: графа ИНН", "ИНН " + Config.SHOP_INN, true }, 
