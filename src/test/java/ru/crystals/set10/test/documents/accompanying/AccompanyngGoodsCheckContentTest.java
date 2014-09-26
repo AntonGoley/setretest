@@ -40,7 +40,7 @@ public class AccompanyngGoodsCheckContentTest extends AccompanyngDocumentsAbstra
 	
 	@Test (description = "SRTE-35. Печать товарного чека. Проверка содержания документа",
 			dataProvider = "Товарный чек")
-	public void testNomenclatureCheckReport(String dataToCheck, String expectedValue, boolean condition){
+	public void testGoodsCheckReport(String dataToCheck, String expectedValue, boolean condition){
 		log.info(dataToCheck);
 		String message = String.format("\"Номенклатура кассового чека\": ошибка данных отчета: %s ", dataToCheck);
 		Assert.assertTrue(message, 
