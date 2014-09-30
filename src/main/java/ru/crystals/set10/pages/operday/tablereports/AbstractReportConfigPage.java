@@ -2,11 +2,8 @@ package ru.crystals.set10.pages.operday.tablereports;
 
 
 import java.io.File;
-
 import org.openqa.selenium.*;
-import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-
 import ru.crystals.set10.pages.basic.AbstractPage;
 import ru.crystals.set10.pages.operday.HTMLRepotResultPage;
 import ru.crystals.set10.utils.DisinsectorTools;
@@ -23,11 +20,6 @@ public class  AbstractReportConfigPage extends AbstractPage{
 	public AbstractReportConfigPage(WebDriver driver) {
 		super(driver);
 		getWait().until(ExpectedConditions.visibilityOfElementLocated(By.id(ID_OPERDAYSWF)));
-	}
-	
-	//TODO: добавить логин и переход на нужную страницу отчета
-	public <T> T navigateTo(Class<T> page){
-		return PageFactory.initElements(getDriver(), page);
 	}
 	
 	

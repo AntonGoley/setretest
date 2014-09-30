@@ -4,6 +4,11 @@
 <listeners>
     <listener class-name="org.uncommons.reportng.HTMLReporter" />
  </listeners>
+	<test name="MRC report" >
+	  	<classes>
+	  	<class name="ru.crystals.set10.test.tablereports.MRCPriceReportTest"/>
+		</classes>	 
+  	</test>	
 	<test name="Accompayning docs" >
 	  	<classes>
 	  	<class name="ru.crystals.set10.test.documents.accompanying.AccompanyingDocumentSmokeTest"/>

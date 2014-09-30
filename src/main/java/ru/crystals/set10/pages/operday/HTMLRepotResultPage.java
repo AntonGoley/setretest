@@ -41,6 +41,10 @@ public class  HTMLRepotResultPage extends AbstractPage{
 		return result;
 	}
 	
+	public void removeValue(String value){
+		reportResults.remove(value);
+	}
+	
 	// Возвращает значение последней строки отчета, отчет должен быть открыт (visible)
 	public String getLastLineColumnValue(int columnNumber){
 		String cellValue = "";

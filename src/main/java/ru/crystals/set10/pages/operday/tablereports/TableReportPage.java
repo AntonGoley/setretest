@@ -27,7 +27,7 @@ public class  TableReportPage extends AbstractPage{
 	public static final String REPORT_NAME_PRICE_CHECKER = "Отчёт по обращениям к прайсчекерам по всем ТК"; 
 	public static final String REPORT_NAME_PLU_ON_WEIGHT = "Отчёт по количеству PLU в весах на ТК";
 	public static final String REPORT_NAME_REFUND_CHECKS= "Отчёт по возвратам";
-
+	public static final String REPORT_NAME_MRC_PRICE= "Прейскурант на табачные изделия";
 	
 	
 	public TableReportPage(WebDriver driver) {
@@ -50,6 +50,5 @@ public class  TableReportPage extends AbstractPage{
 		doFlexProperty(getDriver(), ID_OPERDAYSWF, ID_TABBAR, new String[]{"selectedIndex", String.valueOf(tabIndex)});
 		return this;
 	}
-	
 	
 }

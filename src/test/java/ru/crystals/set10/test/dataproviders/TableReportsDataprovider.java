@@ -125,5 +125,14 @@ public class TableReportsDataprovider {
 		};	
 	}
 	
+	@DataProvider (name = "Шапка отчета MRC")
+	public static Object[][] mrcReportTableHead() {
+		return new Object[][] {
+		{"Прейскурант"},
+		{"Наименование"},
+		{"МРЦ"},
+		{"ПЦ"}
+		};	
+	}
 }
 

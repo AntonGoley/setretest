@@ -64,6 +64,7 @@ public class ShopPreferencesPage extends AbstractPage {
 	}
 	
 	public JuristicPersonPage addJuristicPerson(){
+		log.info("Добавить юридический адрес");
 		clickElement(getDriver(), ID_SALESSWF, LOCATOR_ADD_JURISTIC_PERSON_BUTTON);
 		return new JuristicPersonPage(getDriver());
 	}

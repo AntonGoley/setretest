@@ -40,11 +40,15 @@ public class SoapRequestSender {
 	private static final String METHOD_ALCO_RESTRICTIONS = "#getSpiritRestrictions";
 	private static final String METHOD_PRICECHECKER_SHUTTLE = "#getProductInfoForShuttle";
 	
+	public static final String RETURN_MESSAGE_CORRECT = "status-message=\"correct\""; 
+	
 	String soapServiceIP = ""; 
 	String soapRequest = "";
 	String service = "";
 	String method = "";
 	String response = "";
+	
+	public String ti;
 	
 	private static  String soapRequestGoods = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:plug=\"http://plugins.products.ERPIntegration.crystals.ru/\"> " +
 			"<soapenv:Header/> <soapenv:Body>" + 
@@ -112,11 +116,14 @@ public class SoapRequestSender {
 	}
 	
 	public String generateTI(){
-		String erpCode;
 		// get last numbers of date value
-		erpCode =  String.valueOf((new Date().getTime())).substring(6, 13);
-		log.info("TI = " + erpCode);
-		return erpCode;
+		this.ti =  String.valueOf((new Date().getTime())).substring(6, 13);
+		log.info("TI = " + this.ti);
+		return this.ti;
+	}
+	
+	public String getTI(){
+		return this.ti;
 	}
 	
 	public void getAlcoRestrictions(){
@@ -266,7 +273,7 @@ public class SoapRequestSender {
 		String ti = generateTI();
 		String goodRequest = DisinsectorTools.getFileContentAsString(fileName);
 		sendGoods(goodRequest,ti);
-		assertSOAPResponse("status-message=\"correct\"", ti);
+		assertSOAPResponse(RETURN_MESSAGE_CORRECT, ti);
 	}
 	
 }
