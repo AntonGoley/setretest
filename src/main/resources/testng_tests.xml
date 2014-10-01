@@ -6,6 +6,7 @@
  </listeners>
 	<test name="Прейскурант на тобачные изделия" >
 	  	<classes>
+	  	<class name="ru.crystals.set10.test.tablereports.CashRegNumbersReportTest"/>
 	  	<class name="ru.crystals.set10.test.tablereports.MRCPriceReportTest"/>
 	  	<class name="ru.crystals.set10.test.tablereports.MRCPriceReportWithLekondsTest"/>
 		</classes>	 
