@@ -33,6 +33,7 @@ public class AccompanyingDocumentsAbstractTest extends AbstractTest{
 	PurchaseEntity pe;
 	CheckContentPage checkContent;
 	CheckGenerator checkGenerator = new CheckGenerator(Config.RETAIL_HOST, Integer.valueOf(Config.SHOP_NUMBER), 1);
+	private static String predefindCheckNumber = "0";
 	
 	private static DbAdapter db = new  DbAdapter();
 	
@@ -86,12 +87,19 @@ public class AccompanyingDocumentsAbstractTest extends AbstractTest{
 	
 	
 	public void navigateToCheckSearchPage() {
-		pe = (PurchaseEntity) checkGenerator.nextPurchase(generatePredefinedCheck());
+		/*
+		 *  Сгенерим только один чек для всех тестов на сопроводительные документы
+		 */
+		if ( predefindCheckNumber.equals("0")) {
+			pe = (PurchaseEntity) checkGenerator.nextPurchase(generatePredefinedCheck());
+			predefindCheckNumber = String.valueOf(pe.getNumber());
+		}
+		
 		mainPage = new LoginPage(getDriver(),  Config.RETAIL_URL).doLogin(Config.MANAGER, Config.MANAGER_PASSWORD);
 		searchCheck = mainPage.openOperDay().openCheckSearch();
-		String checkNumber = String.valueOf(pe.getNumber());
- 		searchCheck.setCheckNumber(checkNumber).doSearch();
- 		checkContent = searchCheck.selectCheck(checkNumber);
+		
+ 		searchCheck.setCheckNumber(predefindCheckNumber).doSearch();
+ 		checkContent = searchCheck.selectCheck(predefindCheckNumber);
 	}	
 	
 	/*
