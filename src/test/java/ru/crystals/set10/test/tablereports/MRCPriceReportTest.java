@@ -52,11 +52,20 @@ public class MRCPriceReportTest extends AbstractReportTest{
 		Assert.assertTrue(fileSize > 0, "Файл отчета сохранился некорректно");
 	}
 	
-	@Test (	enabled = false,
-			dependsOnGroups = "MRC_Report_Smoke",
-			description = "В прейскуранте на табачные изделия проверить, что отображается 1-я цена, в случае, если при импорте нет plugin-property mrc")
+	@Test (	dependsOnGroups = "MRC_Report_Smoke",
+			description = "В прейскуранте на табачные изделия проверить, что отображается 1-я цена, в случае, если при импорте отсутсвует plugin-property mrc")
 	public void test1stPriceSetIfNoMRCPlugin(){
-		//Assert.assertTrue(htmlReportResults.containsValue(fieldName), "Неверное значение поля в шапке отчета: " + fieldName);
+		String goodName;
+		String request = DisinsectorTools.getFileContentAsString("MRC_Report/good_mrc_no_mrc_plugin.txt"); 
+		String first_price =  getPrice() +  ".11";
+		goodName = setPriceAndSendRequest(request, first_price);
+		
+		doHTMLReport(MRCConfigPage);
+		Assert.assertTrue(htmlReportResults.containsValue(goodName), "Не найден товар в отчете " + goodName);
+		Assert.assertTrue(htmlReportResults.containsValue(first_price.replace(".", ",")), "Не найдена первая цена МРЦ " + first_price);
+		htmlReportResults.removeValue(first_price);
+		Assert.assertTrue(htmlReportResults.containsValue(first_price.replace(".", ",")), "Не найдена первая ПЦ" + first_price);
+		
 	}
 	
 	
@@ -65,8 +74,8 @@ public class MRCPriceReportTest extends AbstractReportTest{
 	public void testMRCandCPSetIfAllInPlugin(){
 		String goodName;
 		String request = DisinsectorTools.getFileContentAsString("MRC_Report/good_mrc_prices.txt"); 
-		String mrc_price = String.valueOf((new Date().getTime())).substring(8, 13) +  ".55";
-		String sale_price = String.valueOf((new Date().getTime())).substring(8, 13) +  ".99";
+		String mrc_price =  getPrice() +  ".55";
+		String sale_price =  getPrice() +  ".99";
 		
 		goodName = setPriceAndSendRequest(request, mrc_price + ";" + sale_price);
 		doHTMLReport(MRCConfigPage);
@@ -81,7 +90,7 @@ public class MRCPriceReportTest extends AbstractReportTest{
 	public void testMRCEqualsCPIfNoCPInPlugin(){
 		String goodName;
 		String request = DisinsectorTools.getFileContentAsString("MRC_Report/good_mrc_prices.txt"); 
-		String mrc_price = String.valueOf((new Date().getTime())).substring(8, 13) +  ".55";
+		String mrc_price =  getPrice() +  ".55";
 		
 		goodName = setPriceAndSendRequest(request, mrc_price);
 		doHTMLReport(MRCConfigPage);
@@ -99,12 +108,8 @@ public class MRCPriceReportTest extends AbstractReportTest{
 	public void testAllMRCInPlugin(){
 		int totalMRCInDataFile = 4;
 		String request = DisinsectorTools.getFileContentAsString("MRC_Report/good_mrc_4_positions.txt"); 
+		String mrc_good_name = setPriceAndSendRequest(request, "");
 
-		String mrc_good_name = "Tabaco_" + String.valueOf(new Date().getTime());
-		soapRequestSender = new SoapRequestSender();
-		soapRequestSender.setSoapServiceIP(Config.RETAIL_HOST);
-		soapRequestSender.sendGoods(request.replace(mrcNameDataFilePattern, mrc_good_name), soapRequestSender.generateTI());
-		soapRequestSender.assertSOAPResponse(RETURN_MESSAGE_CORRECT, soapRequestSender.getTI());
 		doHTMLReport(MRCConfigPage);
 		
 		int counter = 0;
@@ -126,6 +131,10 @@ public class MRCPriceReportTest extends AbstractReportTest{
 				, soapRequestSender.generateTI());
 		soapRequestSender.assertSOAPResponse(RETURN_MESSAGE_CORRECT, soapRequestSender.getTI());
 		return mrc_good_name;
+	}
+	
+	private String getPrice(){
+		return String.valueOf((new Date().getTime())).substring(8, 13).replaceFirst("0", "1"); //замещаем первый 0, чтобы цена не начиналась с 0
 	}
 }
 

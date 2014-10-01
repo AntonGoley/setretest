@@ -12,6 +12,7 @@ import java.io.FileNotFoundException;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.text.SimpleDateFormat;
 
 import org.apache.commons.io.filefilter.WildcardFileFilter;
 import org.apache.log4j.Logger;
@@ -138,4 +139,8 @@ public class DisinsectorTools {
 		}
 	}
 	
+	public  static String getDate(String format, long date) {
+		SimpleDateFormat dateFormat = new SimpleDateFormat(format);
+		return dateFormat.format(date);
+	}
 }

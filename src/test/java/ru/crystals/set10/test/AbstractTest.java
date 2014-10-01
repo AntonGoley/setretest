@@ -53,7 +53,7 @@ public class AbstractTest {
     	
     	driver = new RemoteWebDriver(service.getUrl(), capabilities);
     	
-    	driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
+    	driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
     	driver.manage().deleteAllCookies();
     	
     	chromeDownloadPath = getChromeDownloadPath();

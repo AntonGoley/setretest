@@ -4,12 +4,12 @@
 <listeners>
     <listener class-name="org.uncommons.reportng.HTMLReporter" />
  </listeners>
-	<test name="MRC report" >
+	<test name="Прейскурант на тобачные изделия" >
 	  	<classes>
 	  	<class name="ru.crystals.set10.test.tablereports.MRCPriceReportTest"/>
 		</classes>	 
   	</test>	
-	<test name="Accompayning docs" >
+	<test name="Сопроводительные документы" >
 	  	<classes>
 	  	<class name="ru.crystals.set10.test.documents.accompanying.AccompanyingDocumentSmokeTest"/>
 	  	<class name="ru.crystals.set10.test.documents.accompanying.AccompanyingNomenclatureContentTest"/>
@@ -18,7 +18,7 @@
 	  	<class name="ru.crystals.set10.test.documents.accompanying.AccompanyingInvoiceContentTest"/>
 		</classes>	 
   	</test>	
-	<test name="TableReports">
+	<test name="Табличные отчеты">
 	  	<classes>
 	  		<class name="ru.crystals.set10.test.tablereports.TableReportAdverstingTest"/>
 	  		<class name="ru.crystals.set10.test.tablereports.PriceCheckerReportTest"/>
@@ -27,7 +27,7 @@
 	  		<class name="ru.crystals.set10.test.tablereports.PLUinWeightReportTest"/>
 		</classes>	 
   	</test>	
-	<test name="SpiritRestrictions" >
+	<test name="Выгрузка в SAP алкогольных ограничений" >
 	  	<classes>
 	  	<class name="ru.crystals.set10.test.SpiritRestrictionsToSAPTest"/>
 		</classes>	 

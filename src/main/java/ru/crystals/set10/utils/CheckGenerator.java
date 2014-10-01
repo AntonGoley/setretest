@@ -374,6 +374,7 @@ public class CheckGenerator {
 	      peList.get(peList.size() - 1);
 
 	      PurchaseEntity pe = (PurchaseEntity)peList.get(peList.size() - 1);
+	      
 	      pe.setCheckStatus(CheckStatus.Registered);
 	      pe.setOperationType(Boolean.valueOf(true));
 	      List positions = new ArrayList(100);
