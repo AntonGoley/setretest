@@ -5,29 +5,20 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import ru.crystals.set10.config.Config;
-import ru.crystals.set10.pages.basic.LoginPage;
-import ru.crystals.set10.pages.basic.MainPage;
-import ru.crystals.set10.pages.operday.HTMLRepotResultPage;
-import ru.crystals.set10.pages.operday.tablereports.AbstractReportConfigPage;
+import ru.crystals.set10.pages.operday.tablereports.ReportConfigPage;
 import ru.crystals.set10.pages.operday.tablereports.GoodsOnTKConfigPage;
-import ru.crystals.set10.pages.operday.tablereports.TableReportPage;
-import ru.crystals.set10.test.AbstractTest;
 import ru.crystals.set10.test.dataproviders.TableReportsDataprovider;
 import ru.crystals.set10.utils.DisinsectorTools;
 import ru.crystals.set10.utils.SoapRequestSender;
-import static ru.crystals.set10.pages.operday.tablereports.AbstractReportConfigPage.HTMLREPORT;
 import static ru.crystals.set10.pages.operday.tablereports.TableReportPage.*;
 
 
-public class GoodOnTKReportTest extends AbstractTest{
-	LoginPage loginPage;
-	MainPage mainPage;
-	TableReportPage tableReportsPage;
+public class GoodOnTKReportTest extends AbstractReportTest{
+
 	GoodsOnTKConfigPage goodOnTKConfig;
-	HTMLRepotResultPage htmlReportResults;
 	String goodRequest;
 	String adverstingRequest;
-	
+
 	static SoapRequestSender soapSender  = new SoapRequestSender();
 	static String ti = soapSender.generateTI();
 	static String  erpCode = 47 + ti;
@@ -35,10 +26,15 @@ public class GoodOnTKReportTest extends AbstractTest{
 	
 	@BeforeClass
 	public void navigateToGoodOnTKReports() {
-		mainPage = new LoginPage(getDriver(), Config.CENTRUM_URL).doLogin(Config.MANAGER, Config.MANAGER_PASSWORD);
-		tableReportsPage = mainPage.openOperDay().openTableReports();
-		goodOnTKConfig = tableReportsPage.openReportConfigPage(GoodsOnTKConfigPage.class, TAB_OTHER, REPORT_NAME_GOOD_ON_TK);
-		soapSender.setSoapServiceIP(Config.CENTRUM_HOST);
+		goodOnTKConfig =  navigateToReportConfig(
+				Config.RETAIL_URL, 
+				Config.MANAGER,
+				Config.MANAGER_PASSWORD,
+				GoodsOnTKConfigPage.class, 
+				TAB_OTHER, 
+				REPORT_NAME_GOOD_ON_TK);
+		
+		soapSender.setSoapServiceIP(Config.RETAIL_HOST);
 		
 		// послать товар и акцию
 		sendGoodData();
@@ -46,9 +42,9 @@ public class GoodOnTKReportTest extends AbstractTest{
 		
 		// сгенерить отчет
 		goodOnTKConfig.setErpCode(erpCode);
-		htmlReportResults = goodOnTKConfig.generateReport(HTMLREPORT);
-		goodOnTKConfig.switchWindow(true);
+		doHTMLReport(goodOnTKConfig, true);
 	}	
+
 	
 	@Test (	description = "Проверить названия отчета и название колонок в шапке таблицы отчета по товарам на ТК", 
 			dataProvider = "Шапка отчета Товары на ТК", dataProviderClass = TableReportsDataprovider.class)
@@ -89,8 +85,8 @@ public class GoodOnTKReportTest extends AbstractTest{
 	@DataProvider (name = "Доступные форматы для скачивания")
 	public static Object[][] reportFormats(){
 		return new  Object[][] {
-			{AbstractReportConfigPage.PDFREPORT, "ProductReport_*.pdf"},
-			{AbstractReportConfigPage.EXCELREPORT, "ProductReport_*.xls"}
+			{ReportConfigPage.PDFREPORT, "ProductReport_*.pdf"},
+			{ReportConfigPage.EXCELREPORT, "ProductReport_*.xls"}
 		};
 	}
 	

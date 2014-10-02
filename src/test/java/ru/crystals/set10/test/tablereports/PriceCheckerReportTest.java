@@ -7,26 +7,17 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import ru.crystals.set10.config.Config;
-import ru.crystals.set10.pages.basic.LoginPage;
-import ru.crystals.set10.pages.basic.MainPage;
-import ru.crystals.set10.pages.operday.HTMLRepotResultPage;
-import ru.crystals.set10.pages.operday.tablereports.AbstractReportConfigPage;
 import ru.crystals.set10.pages.operday.tablereports.PriceCheckerConfigPage;
-import ru.crystals.set10.pages.operday.tablereports.TableReportPage;
-import ru.crystals.set10.test.AbstractTest;
 import ru.crystals.set10.test.dataproviders.TableReportsDataprovider;
 import ru.crystals.set10.utils.DisinsectorTools;
 import ru.crystals.set10.utils.SoapRequestSender;
-import static ru.crystals.set10.pages.operday.tablereports.AbstractReportConfigPage.HTMLREPORT;
+import static ru.crystals.set10.pages.operday.tablereports.ReportConfigPage.*;
 import static ru.crystals.set10.pages.operday.tablereports.TableReportPage.*;
 
 
-public class PriceCheckerReportTest extends AbstractTest{
-	LoginPage loginPage;
-	MainPage mainPage;
-	TableReportPage tableReportsPage;
+public class PriceCheckerReportTest extends AbstractReportTest{
+
 	PriceCheckerConfigPage priceCheckerConfig;
-	HTMLRepotResultPage htmlReportResults;
 
 	SoapRequestSender soapSender  = new SoapRequestSender();
 	String ti = soapSender.generateTI();;
@@ -34,18 +25,21 @@ public class PriceCheckerReportTest extends AbstractTest{
 	String barCode = "78" + ti;
 	String mac = "mac_" +  new Date().getTime();
 	
-	
 	@BeforeClass
-	public void navigateToPriceCheckerReports() {
-		mainPage = new LoginPage(getDriver(), Config.CENTRUM_URL).doLogin(Config.MANAGER, Config.MANAGER_PASSWORD);
-		tableReportsPage = mainPage.openOperDay().openTableReports();
+	public void navigateToProceCheckerReport() {
+		priceCheckerConfig =  navigateToReportConfig(
+				Config.CENTRUM_URL, 
+				Config.MANAGER,
+				Config.MANAGER_PASSWORD,
+				PriceCheckerConfigPage.class, 
+				TAB_OTHER, 
+				REPORT_NAME_PRICE_CHECKER);
 		soapSender.setSoapServiceIP(Config.CENTRUM_HOST);
 		// Послать товар, который будет проверен на прайсчекере
 		sendGoodData();
 		// Послать запрос к прайсчекеру
 		sendPriceCheckerData();
-		priceCheckerConfig = tableReportsPage.openReportConfigPage(PriceCheckerConfigPage.class, TAB_OTHER, REPORT_NAME_PRICE_CHECKER);
-		doReport();
+		doHTMLReport(priceCheckerConfig, true);
 	}	
 	
 	@Test (	description = "Проверить название отчета и название колонок в шапке таблицы отчета по прайсчекерам", 
@@ -76,7 +70,7 @@ public class PriceCheckerReportTest extends AbstractTest{
 	@DataProvider (name = "Доступные форматы для скачивания")
 	public static Object[][] reportFormats(){
 		return new  Object[][] {
-			{AbstractReportConfigPage.EXCELREPORT, "PriceCheckerReport_*.xls"}
+			{EXCELREPORT, "PriceCheckerReport_*.xls"}
 		};
 	}
 	
@@ -89,11 +83,5 @@ public class PriceCheckerReportTest extends AbstractTest{
 	private void sendPriceCheckerData(){
 		soapSender.sendPriceCheckerRequest(mac, barCode);
 		DisinsectorTools.delay(5000);
-	}
-	
-	public void doReport(){
-		htmlReportResults = priceCheckerConfig.generateReport(HTMLREPORT);
-		// закрыть окно отчета
-		priceCheckerConfig.switchWindow(true);
 	}
 }

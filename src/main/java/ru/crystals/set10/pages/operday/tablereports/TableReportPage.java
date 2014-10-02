@@ -36,15 +36,10 @@ public class  TableReportPage extends AbstractPage{
 		getWait().until(ExpectedConditions.visibilityOfElementLocated(By.id(ID_OPERDAYSWF)));
 	}
 	
-	
 	public <T> T openReportConfigPage(Class<T> report, int tabIndex, String reportName) {
-		openReportOnTab(tabIndex, REPORT_LOCATOR + reportName);
-		return PageFactory.initElements(getDriver(), report);
-	}
-	
-	private void openReportOnTab(int tabIndex, String reportUrl){
 		selectTab(tabIndex);
-		clickElement(getDriver(), ID_OPERDAYSWF, reportUrl);
+		clickElement(getDriver(), ID_OPERDAYSWF, REPORT_LOCATOR + reportName);
+		return PageFactory.initElements(getDriver(), report);
 	}
 	
 	public TableReportPage selectTab(int tabIndex){

@@ -7,7 +7,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import ru.crystals.set10.config.Config;
-import ru.crystals.set10.pages.operday.tablereports.AbstractReportConfigPage;
+import ru.crystals.set10.pages.operday.tablereports.ReportConfigPage;
 import ru.crystals.set10.utils.DisinsectorTools;
 import ru.crystals.set10.utils.SoapRequestSender;
 import static ru.crystals.set10.pages.operday.tablereports.TableReportPage.*;
@@ -15,7 +15,7 @@ import static ru.crystals.set10.utils.SoapRequestSender.RETURN_MESSAGE_CORRECT;
 
 public class MRCPriceReportWithLekondsTest extends AbstractReportTest{
 	
-	AbstractReportConfigPage MRCConfigPage;
+	ReportConfigPage MRCConfigPage;
 	SoapRequestSender soapRequestSender;
 	String name = "${name}";
 	String since_date = "${since_date}";
@@ -34,12 +34,12 @@ public class MRCPriceReportWithLekondsTest extends AbstractReportTest{
 	private static final String LECOND_DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss";
 	
 	@BeforeClass
-	public void navigateToPLUReport() {
+	public void navigateToMRCReport() {
 		MRCConfigPage =  navigateToReportConfig(
 				Config.RETAIL_URL, 
 				Config.MANAGER,
 				Config.MANAGER_PASSWORD,
-				AbstractReportConfigPage.class, 
+				ReportConfigPage.class, 
 				TAB_OTHER, 
 				REPORT_NAME_MRC_PRICE);
 	}	
@@ -65,7 +65,7 @@ public class MRCPriceReportWithLekondsTest extends AbstractReportTest{
 	public void testMRCLeconds(String dateStart, String dateEnd, boolean expected){
 		sendRequest(lecondRequest, dateStart, dateEnd);
 		log.info("Период действий леконда: " + dateStart + "-" + dateEnd);
-		doHTMLReport(MRCConfigPage);
+		doHTMLReport(MRCConfigPage, true);
 		Assert.assertTrue(htmlReportResults.containsValue(goodName) == expected, "Не найден товар в отчете " + goodName);
 	}
 	

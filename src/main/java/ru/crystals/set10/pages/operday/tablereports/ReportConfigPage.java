@@ -10,14 +10,14 @@ import ru.crystals.set10.utils.DisinsectorTools;
 import static ru.crystals.set10.utils.FlexMediator.*;
 
 
-public class  AbstractReportConfigPage extends AbstractPage{
+public class  ReportConfigPage extends AbstractPage{
 	
 	static final String ID_OPERDAYSWF = "OperDay";
 	public static final String HTMLREPORT = "download_html";
 	public static final String EXCELREPORT = "download_excel";
 	public static final String PDFREPORT = "download_pdf";
 	
-	public AbstractReportConfigPage(WebDriver driver) {
+	public ReportConfigPage(WebDriver driver) {
 		super(driver);
 		getWait().until(ExpectedConditions.visibilityOfElementLocated(By.id(ID_OPERDAYSWF)));
 	}

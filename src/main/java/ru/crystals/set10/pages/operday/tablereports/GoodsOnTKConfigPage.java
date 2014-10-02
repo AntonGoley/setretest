@@ -7,7 +7,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import static ru.crystals.set10.utils.FlexMediator.*;
 
 
-public class  GoodsOnTKConfigPage extends AbstractReportConfigPage{
+public class  GoodsOnTKConfigPage extends ReportConfigPage{
 	
 
 	static final String LOCATOR_SETGOOD= "searchParam";

@@ -6,7 +6,7 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import ru.crystals.set10.config.Config;
-import ru.crystals.set10.pages.operday.tablereports.AbstractReportConfigPage;
+import ru.crystals.set10.pages.operday.tablereports.ReportConfigPage;
 import ru.crystals.set10.test.dataproviders.TableReportsDataprovider;
 import ru.crystals.set10.utils.DisinsectorTools;
 import ru.crystals.set10.utils.SoapRequestSender;
@@ -15,22 +15,22 @@ import static ru.crystals.set10.utils.SoapRequestSender.RETURN_MESSAGE_CORRECT;
 
 public class MRCPriceReportTest extends AbstractReportTest{
 	
-	AbstractReportConfigPage MRCConfigPage;
+	ReportConfigPage MRCConfigPage;
 	SoapRequestSender soapRequestSender;
 	String mrcNameDataFilePattern = "${name}";
 	String price = "${price}";
 
 	
 	@BeforeClass
-	public void navigateToPLUReport() {
+	public void navigateToMRCReport() {
 		MRCConfigPage =  navigateToReportConfig(
 				Config.RETAIL_URL, 
 				Config.MANAGER,
 				Config.MANAGER_PASSWORD,
-				AbstractReportConfigPage.class, 
+				ReportConfigPage.class, 
 				TAB_OTHER, 
 				REPORT_NAME_MRC_PRICE);
-		doHTMLReport(MRCConfigPage);
+		doHTMLReport(MRCConfigPage, true);
 	}	
 	
 	@Test (	groups = "MRC_Report_Smoke",
@@ -47,7 +47,7 @@ public class MRCPriceReportTest extends AbstractReportTest{
 	public void testMRCReportSaveXls(){
 		long fileSize = 0;
 		String reportNamePattern = "TobaccoPrice*.xls";
-		fileSize =  MRCConfigPage.saveReportFile(AbstractReportConfigPage.EXCELREPORT, chromeDownloadPath, reportNamePattern).length();
+		fileSize =  MRCConfigPage.saveReportFile(ReportConfigPage.EXCELREPORT, chromeDownloadPath, reportNamePattern).length();
 		log.info("Размер сохраненного файла: " + reportNamePattern + " равен " +  fileSize);
 		Assert.assertTrue(fileSize > 0, "Файл отчета сохранился некорректно");
 	}
@@ -60,7 +60,7 @@ public class MRCPriceReportTest extends AbstractReportTest{
 		String first_price =  getPrice() +  ".11";
 		goodName = setPriceAndSendRequest(request, first_price);
 		
-		doHTMLReport(MRCConfigPage);
+		doHTMLReport(MRCConfigPage, true);
 		Assert.assertTrue(htmlReportResults.containsValue(goodName), "Не найден товар в отчете " + goodName);
 		Assert.assertTrue(htmlReportResults.containsValue(first_price.replace(".", ",")), "Не найдена первая цена МРЦ " + first_price);
 		htmlReportResults.removeValue(first_price);
@@ -78,7 +78,7 @@ public class MRCPriceReportTest extends AbstractReportTest{
 		String sale_price =  getPrice() +  ".99";
 		
 		goodName = setPriceAndSendRequest(request, mrc_price + ";" + sale_price);
-		doHTMLReport(MRCConfigPage);
+		doHTMLReport(MRCConfigPage, true);
 
 		Assert.assertTrue(htmlReportResults.containsValue(goodName), "Не найден товар в отчете " + goodName);
 		Assert.assertTrue(htmlReportResults.containsValue(mrc_price.replace(".", ",")), "Не найдена цена МРЦ" + mrc_price);
@@ -93,7 +93,7 @@ public class MRCPriceReportTest extends AbstractReportTest{
 		String mrc_price =  getPrice() +  ".55";
 		
 		goodName = setPriceAndSendRequest(request, mrc_price);
-		doHTMLReport(MRCConfigPage);
+		doHTMLReport(MRCConfigPage, true);
 
 		Assert.assertTrue(htmlReportResults.containsValue(goodName), "Не найден товар в отчете " + goodName);
 		Assert.assertTrue(htmlReportResults.containsValue(mrc_price.replace(".", ",")), "Не найдена цена МРЦ (или ПЦ)" + mrc_price);
@@ -110,7 +110,7 @@ public class MRCPriceReportTest extends AbstractReportTest{
 		String request = DisinsectorTools.getFileContentAsString("MRC_Report/good_mrc_4_positions.txt"); 
 		String mrc_good_name = setPriceAndSendRequest(request, "");
 
-		doHTMLReport(MRCConfigPage);
+		doHTMLReport(MRCConfigPage, true);
 		
 		int counter = 0;
 		while (htmlReportResults.containsValue(mrc_good_name)){

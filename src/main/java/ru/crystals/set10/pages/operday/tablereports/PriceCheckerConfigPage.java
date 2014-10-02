@@ -5,7 +5,7 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
 
-public class  PriceCheckerConfigPage extends AbstractReportConfigPage{
+public class  PriceCheckerConfigPage extends ReportConfigPage{
 	
 	
 	public PriceCheckerConfigPage(WebDriver driver) {

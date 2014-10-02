@@ -6,41 +6,34 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import ru.crystals.set10.config.Config;
-import ru.crystals.set10.pages.basic.LoginPage;
-import ru.crystals.set10.pages.basic.MainPage;
-import ru.crystals.set10.pages.operday.HTMLRepotResultPage;
-import ru.crystals.set10.pages.operday.tablereports.AbstractReportConfigPage;
 import ru.crystals.set10.pages.operday.tablereports.AdverstingReportConfigPage;
-import ru.crystals.set10.pages.operday.tablereports.TableReportPage;
-import ru.crystals.set10.test.AbstractTest;
 import ru.crystals.set10.test.dataproviders.TableReportsDataprovider;
 import ru.crystals.set10.utils.DisinsectorTools;
 import ru.crystals.set10.utils.SoapRequestSender;
-import static ru.crystals.set10.pages.operday.tablereports.AdverstingReportConfigPage.*;
 import static ru.crystals.set10.pages.operday.tablereports.TableReportPage.*;
+import static ru.crystals.set10.pages.operday.tablereports.ReportConfigPage.*;
 
 
-public class TableReportAdverstingTest extends AbstractTest {
+public class AdverstingTableReportTest extends AbstractReportTest {
 	
-	LoginPage loginPage;
-	MainPage mainPage;
-	TableReportPage tableReportsPage;
 	AdverstingReportConfigPage adverstingConfigPage;
 	String goodRequest;
 	String adverstingRequest;
-	HTMLRepotResultPage htmlReportResults;
 
 	SoapRequestSender soapSender  = new SoapRequestSender();
 	String ti = soapSender.generateTI();
 	String erpCode = 47 + ti;
 	String barCode = "78" + ti;
 	
-	
 	@BeforeClass
-	public void navigateToAdverstingReports() {
-		mainPage = new LoginPage(getDriver(), Config.CENTRUM_URL).doLogin(Config.MANAGER, Config.MANAGER_PASSWORD);
-		tableReportsPage = mainPage.openOperDay().openTableReports();
-		adverstingConfigPage = tableReportsPage.openReportConfigPage(AdverstingReportConfigPage.class, TAB_ADVERSTING, REPORT_NAME_ADVERSTING);
+	public void navigateToAdverstingReport() {
+		adverstingConfigPage =  navigateToReportConfig(
+				Config.CENTRUM_URL, 
+				Config.MANAGER,
+				Config.MANAGER_PASSWORD,
+				AdverstingReportConfigPage.class, 
+				TAB_ADVERSTING, 
+				REPORT_NAME_ADVERSTING);
 		soapSender.setSoapServiceIP(Config.CENTRUM_HOST);
 		sendData();
 		doReport();
@@ -91,13 +84,6 @@ public class TableReportAdverstingTest extends AbstractTest {
 		Assert.assertTrue(fileSize > 0, "Файл отчета сохранился некорректно");
 	}
 	
-	public void doReport(){
-		adverstingConfigPage.setGoodIDs(erpCode);
-		this.htmlReportResults = adverstingConfigPage.generateReport(HTMLREPORT);
-		// закрыть окно отчета
-		adverstingConfigPage.switchWindow(true);
-	}
-	
 	private void sendData() {
 		goodRequest = DisinsectorTools.getFileContentAsString("good.txt");
 		soapSender.sendGoods(String.format(goodRequest, erpCode, barCode),ti);
@@ -107,11 +93,11 @@ public class TableReportAdverstingTest extends AbstractTest {
 	@DataProvider (name = "Доступные форматы для скачивания")
 	public static Object[][] reportFormats(){
 		return new  Object[][] {
-			{AbstractReportConfigPage.PDFREPORT, "ProductReportInAction*.pdf"},
-			{AbstractReportConfigPage.EXCELREPORT, "ProductReportInAction*.xls"}
+			{PDFREPORT, "ProductReportInAction*.pdf"},
+			{EXCELREPORT, "ProductReportInAction*.xls"}
 		};
 	}
-	
+		
 	
 //	@Test(	dependsOnMethods = "testGoodInReport",
 //			description = "Если не указаны магазины, отчет генерится для всей сети (все магазины)", 
@@ -130,6 +116,9 @@ public class TableReportAdverstingTest extends AbstractTest {
 	public void testTwoERPCodes() {
 	}
 
-	
+	private void doReport(){
+		adverstingConfigPage.setGoodIDs(erpCode);
+		doHTMLReport(adverstingConfigPage, true);
+	}
 	
 }

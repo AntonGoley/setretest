@@ -4,24 +4,25 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import ru.crystals.set10.config.Config;
-import ru.crystals.set10.pages.operday.tablereports.AbstractReportConfigPage;
+import ru.crystals.set10.pages.operday.tablereports.ReportConfigPage;
 import ru.crystals.set10.test.dataproviders.TableReportsDataprovider;
 import static ru.crystals.set10.pages.operday.tablereports.TableReportPage.*;
+import static ru.crystals.set10.pages.operday.tablereports.ReportConfigPage.*;
 
 public class CashRegNumbersReportTest extends AbstractReportTest{
 	
-	AbstractReportConfigPage cashNumbersConfigPage;
+	ReportConfigPage cashNumbersConfigPage;
 	
 	@BeforeClass
-	public void navigateToPLUReport() {
+	public void navigateCashRegNumsReport() {
 		cashNumbersConfigPage =  navigateToReportConfig(
 				Config.RETAIL_URL, 
 				Config.MANAGER,
 				Config.MANAGER_PASSWORD,
-				AbstractReportConfigPage.class, 
+				ReportConfigPage.class, 
 				TAB_OTHER, 
 				REPORT_NAME_CASH_REGNUMBERS);
-		doHTMLReport(cashNumbersConfigPage);
+		doHTMLReport(cashNumbersConfigPage, true);
 	}	
 	
 	@Test (	groups = "CashRegNumbers_Report_Smoke",
@@ -38,7 +39,7 @@ public class CashRegNumbersReportTest extends AbstractReportTest{
 	public void testMRCReportSaveXls(){
 		long fileSize = 0;
 		String reportNamePattern = "CashRegNumber*.xls";
-		fileSize =  cashNumbersConfigPage.saveReportFile(AbstractReportConfigPage.EXCELREPORT, chromeDownloadPath, reportNamePattern).length();
+		fileSize =  cashNumbersConfigPage.saveReportFile(EXCELREPORT, chromeDownloadPath, reportNamePattern).length();
 		log.info("Размер сохраненного файла: " + reportNamePattern + " равен " +  fileSize);
 		Assert.assertTrue(fileSize > 0, "Файл отчета сохранился некорректно");
 	}
@@ -49,7 +50,7 @@ public class CashRegNumbersReportTest extends AbstractReportTest{
 	public void testMRCReportSavePdf(){
 		long fileSize = 0;
 		String reportNamePattern = "CashRegNumber*.pdf";
-		fileSize =  cashNumbersConfigPage.saveReportFile(AbstractReportConfigPage.PDFREPORT, chromeDownloadPath, reportNamePattern).length();
+		fileSize =  cashNumbersConfigPage.saveReportFile(PDFREPORT, chromeDownloadPath, reportNamePattern).length();
 		log.info("Размер сохраненного файла: " + reportNamePattern + " равен " +  fileSize);
 		Assert.assertTrue(fileSize > 0, "Файл отчета сохранился некорректно");
 	}

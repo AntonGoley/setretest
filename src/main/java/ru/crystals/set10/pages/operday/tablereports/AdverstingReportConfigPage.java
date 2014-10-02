@@ -7,7 +7,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import static ru.crystals.set10.utils.FlexMediator.*;
 
 
-public class  AdverstingReportConfigPage extends AbstractReportConfigPage{
+public class  AdverstingReportConfigPage extends ReportConfigPage{
 	
 	static final String LOCATOR_SETERPCODE = "goodSearchWidget";
 	static final String LOCATOR_SETSHOP= "id:shopSearchWidget/id:searchTextBox";
@@ -28,6 +28,7 @@ public class  AdverstingReportConfigPage extends AbstractReportConfigPage{
 	public void setGoodIDs(String goodIDs){
 		typeText(getDriver(), ID_OPERDAYSWF, LOCATOR_SETGOOD, goodIDs);
 		waitForElement(getDriver(), ID_OPERDAYSWF, LOCATOR_SUGGEST_CODE);
+		log.info("Код товара для просмотра рекламных акций:" + goodIDs);
 	}
 	
 }

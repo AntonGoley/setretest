@@ -16,7 +16,7 @@ import ru.crystals.set10.pages.basic.MainPage;
 import ru.crystals.set10.pages.operday.HTMLRepotResultPage;
 import ru.crystals.set10.pages.operday.searchcheck.CheckContentPage;
 import ru.crystals.set10.pages.operday.searchcheck.CheckSearchPage;
-import ru.crystals.set10.pages.operday.tablereports.AbstractReportConfigPage;
+import ru.crystals.set10.pages.operday.tablereports.ReportConfigPage;
 import ru.crystals.set10.test.AbstractTest;
 import ru.crystals.set10.utils.CheckGenerator;
 import ru.crystals.set10.utils.DbAdapter;
@@ -28,7 +28,7 @@ public class AccompanyingDocumentsAbstractTest extends AbstractTest{
 	
 	MainPage mainPage;
 	CheckSearchPage searchCheck;
-	AbstractReportConfigPage RefundChecksConfigPage;
+	ReportConfigPage RefundChecksConfigPage;
 	HTMLRepotResultPage htmlReportResults;
 	PurchaseEntity pe;
 	CheckContentPage checkContent;

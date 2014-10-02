@@ -9,18 +9,14 @@ import org.testng.annotations.Test;
 import ru.crystals.pos.check.PurchaseEntity;
 import ru.crystals.pos.check.PositionEntity;
 import ru.crystals.set10.config.Config;
-import ru.crystals.set10.pages.basic.LoginPage;
-import ru.crystals.set10.pages.basic.MainPage;
 import ru.crystals.set10.pages.operday.HTMLRepotResultPage;
-import ru.crystals.set10.pages.operday.tablereports.AbstractReportConfigPage;
-import ru.crystals.set10.test.AbstractTest;
+import ru.crystals.set10.pages.operday.tablereports.ReportConfigPage;
 import ru.crystals.set10.test.dataproviders.TableReportsDataprovider;
 import ru.crystals.set10.utils.CheckGenerator;
-import static ru.crystals.set10.pages.operday.tablereports.AbstractReportConfigPage.HTMLREPORT;
 import static ru.crystals.set10.pages.operday.tablereports.TableReportPage.*;
 
 
-public class RefundChecksReportTest extends AbstractTest{
+public class RefundChecksReportTest extends AbstractReportTest{
 	
 	static final String FIELD_RETURNCHECK_DATE = "Чек Возврата: Дата";
 	static final String FIELD_RETURNCHECK_CASHNUMBER = "Чек Возврата: № кассы";
@@ -36,16 +32,11 @@ public class RefundChecksReportTest extends AbstractTest{
 	
 	//static final String FIELD_GOOD_GOODNAME = "Товар: Наименование товара";
 	static final String FIELD_GOOD_GOODCODE  = "Товар: Код товара";
-	
-	
-	MainPage mainPage;
-	LoginPage loginPage;
-	AbstractReportConfigPage refundChecksConfigPage;
-	HTMLRepotResultPage htmlReportResults;
+
+	ReportConfigPage refundChecksConfigPage;
 	CheckGenerator checkGenerator = new CheckGenerator(Config.RETAIL_HOST, Integer.valueOf(Config.SHOP_NUMBER), 1);
 	PurchaseEntity refundCheck;
 	HashMap<String, String> purchaseEntityData;
-	
 	
 	// TODO: добавить проверку дат и бар кода 
 	/*
@@ -72,13 +63,17 @@ public class RefundChecksReportTest extends AbstractTest{
 	}
 	
 	@BeforeClass
-	public void navigateToRefundChecksReports() {
-		mainPage = new LoginPage(getDriver(),  Config.RETAIL_URL).doLogin(Config.MANAGER, Config.MANAGER_PASSWORD);
-		refundChecksConfigPage = mainPage.openOperDay().openTableReports().openReportConfigPage(AbstractReportConfigPage.class, TAB_OTHER, REPORT_NAME_REFUND_CHECKS);
-		// генерим отчет
-		htmlReportResults = refundChecksConfigPage.generateReport(HTMLREPORT);
+	public void navigateToRefundReport() {
+		refundChecksConfigPage =  navigateToReportConfig(
+				Config.RETAIL_URL, 
+				Config.MANAGER,
+				Config.MANAGER_PASSWORD,
+				ReportConfigPage.class, 
+				TAB_OTHER, 
+				REPORT_NAME_REFUND_CHECKS);
+		doHTMLReport(refundChecksConfigPage, false);
 	}	
-	
+
 	@Test (	priority = 2,
 			description = "Проверить названия отчета и название колонок в шапке таблицы отчета по возвратам", 
 			dataProvider = "Шапка отчета по возвратам", dataProviderClass = TableReportsDataprovider.class)
@@ -141,8 +136,7 @@ public class RefundChecksReportTest extends AbstractTest{
 		
 		setPurchaseEntityData(refundCheck);
 		getDriver().navigate().refresh();
-		htmlReportResults = new HTMLRepotResultPage(getDriver());
-		return htmlReportResults;
+		return new HTMLRepotResultPage(getDriver());
 	} 
 	
 	private void setPurchaseEntityData(PurchaseEntity purchase){
