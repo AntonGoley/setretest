@@ -8,7 +8,7 @@ import org.testng.annotations.Test;
 import static ru.crystals.set10.pages.operday.searchcheck.CheckContentPage.*;
 
 
-public class AccompanyingGoodsCheckContentTest extends AccompanyingDocumentsAbstractTest{
+public class AccompanyingGoodsCheckContentTest extends AccompanyingDocumentsBasicTest{
 	
 	String reportResult ="";
 	

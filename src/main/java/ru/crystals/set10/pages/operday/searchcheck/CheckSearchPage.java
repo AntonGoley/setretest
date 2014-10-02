@@ -3,8 +3,6 @@ package ru.crystals.set10.pages.operday.searchcheck;
 
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-
-import ru.crystals.set10.pages.basic.AbstractPage;
 import ru.crystals.set10.pages.operday.OperDayPage;
 import static ru.crystals.set10.utils.FlexMediator.*;
 

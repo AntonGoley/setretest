@@ -11,7 +11,12 @@ package ru.crystals.set10.amfcall;
  */
 public class AMFServerConnectorException extends RuntimeException {
 
-    public AMFServerConnectorException(String message) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	public AMFServerConnectorException(String message) {
         super(message);
     }
 
