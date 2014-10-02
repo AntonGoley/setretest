@@ -22,7 +22,6 @@
   	</test>	
 	<test name="Сопроводительные документы" >
 	  	<classes>
-	  	<class name="ru.crystals.set10.test.documents.accompanying.AccompanyingDocumentSmokeTest"/>
 	  	<class name="ru.crystals.set10.test.documents.accompanying.AccompanyingNomenclatureContentTest"/>
 	  	<class name="ru.crystals.set10.test.documents.accompanying.AccompanyingGoodsCheckContentTest"/>
 	  	<class name="ru.crystals.set10.test.documents.accompanying.AccompanyingGoodsBillContentTest"/>

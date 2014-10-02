@@ -5,8 +5,6 @@ import junit.framework.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-
-import ru.crystals.set10.config.Config;
 import static ru.crystals.set10.pages.operday.searchcheck.CheckContentPage.*;
 
 
@@ -38,8 +36,9 @@ public class AccompanyingGoodsCheckContentTest extends AccompanyingDocumentsAbst
 		};
 	}
 	
-	@Test (description = "SRTE-35. Печать товарного чека. Проверка содержания документа",
-			dataProvider = "Товарный чек")
+	@Test (description = "SRTE-36. Печать товарного чека. Проверка содержания документа",
+			dataProvider = "Товарный чек", 
+			dependsOnGroups = "SMOKE_accompanying")
 	public void testGoodsCheckReport(String dataToCheck, String expectedValue, boolean condition){
 		log.info(dataToCheck);
 		String message = String.format("\"Печать товарного чека\": ошибка данных отчета: %s ", dataToCheck);
@@ -47,7 +46,11 @@ public class AccompanyingGoodsCheckContentTest extends AccompanyingDocumentsAbst
 				reportResult.contains(expectedValue) == condition );
 	}
 	
-	
-	
+	@Test (description = "SRTE-36. Печать товарного чека. Документ выводится на печать и содержит верный заголовок", 
+			groups = "SMOKE_accompanying")
+	public void testGoodsCheckReport(){
+		Assert.assertTrue("Не выводится название отчета \"Товарный чек\"", 
+				reportResult.contains("Товарный чек"));
+	}
 	
 }

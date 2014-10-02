@@ -38,13 +38,21 @@ public class AccompanyingGoodsBillContentTest extends AccompanyingDocumentsAbstr
 		};
 	}
 	
-	@Test (description = "SRTE-35. Печать счета-фактуры. Проверка содержания документа",
-			dataProvider = "Счет-фактура")
+	@Test (description = "SRTE-38. Печать счета-фактуры. Проверка содержания документа",
+			dataProvider = "Счет-фактура", 
+			dependsOnGroups = "SMOKE_accompanying")
 	public void testGoodsCheckReport(String dataToCheck, String expectedValue, boolean condition){
 		log.info(dataToCheck);
 		String message = String.format("\"Печать счета-фактуры\". Отсутсвуют или некорректно отображаются данные: %s ", dataToCheck);
 		Assert.assertTrue(message, 
 				reportResult.contains(expectedValue) == condition );
+	}
+	
+	@Test (description = "SRTE-38. Печать счет-фактуры. Документ выводится на печать и содержит верный заголовок", 
+			groups = "SMOKE_accompanying")
+	public void testGoodsBillReport(){
+		Assert.assertTrue("Не выводится название отчета \"Счет-фактура\"", 
+				reportResult.contains("СЧЕТ-ФАКТУРА"));
 	}
 	
 }

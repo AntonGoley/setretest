@@ -5,8 +5,6 @@ import junit.framework.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-
-import ru.crystals.set10.config.Config;
 import static ru.crystals.set10.pages.operday.searchcheck.CheckContentPage.*;
 
 
@@ -39,7 +37,8 @@ public class AccompanyingNomenclatureContentTest extends AccompanyingDocumentsAb
 	}
 	
 	@Test (description = "SRTE-35. Печать номенклатуры кассового чека. Проверка содержания документа", 
-			dataProvider = "Номенклатура чека")
+			dataProvider = "Номенклатура чека",
+			dependsOnGroups = "SMOKE_accompanying")
 	public void testNomenclatureCheckReport(String dataToCheck, String expectedValue, boolean condition){
 		log.info(dataToCheck);
 		String message = String.format("\"Номенклатура кассового чека\": ошибка данных отчета: %s ", dataToCheck);
@@ -47,4 +46,10 @@ public class AccompanyingNomenclatureContentTest extends AccompanyingDocumentsAb
 				reportResult.contains(expectedValue) == condition );
 	}
 	
+	@Test (description = "SRTE-35. Печать номенклатуры кассового чека. Документ выводится на печать и содержит верный заголовок",
+			groups = "SMOKE_accompanying")
+	public void testNomenclatureCheckReport(){
+		Assert.assertTrue("Не выводится название отчета \"Номенклатура кассового чека\"", 
+				reportResult.contains("Номенклатура кассового чека"));
+	}
 }

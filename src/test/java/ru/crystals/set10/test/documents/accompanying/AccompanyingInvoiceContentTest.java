@@ -38,8 +38,9 @@ public class AccompanyingInvoiceContentTest extends AccompanyingDocumentsAbstrac
 		};
 	}
 	
-	@Test (description = "SRTE-35. Печать товарной накладной. Проверка содержания документа", 
-			dataProvider = "Товарная накладная")
+	@Test (description = "SRTE-37. Печать товарной накладной. Проверка содержания документа", 
+			dataProvider = "Товарная накладная", 
+			dependsOnGroups = "SMOKE_accompanying")
 	public void testNomenclatureCheckReport(String dataToCheck, String expectedValue, boolean condition){
 		log.info(dataToCheck);
 		String message = String.format("\"Товарная накладная\". Отсутсвуют или некорректно отображаются данные: %s ", dataToCheck);
@@ -48,4 +49,10 @@ public class AccompanyingInvoiceContentTest extends AccompanyingDocumentsAbstrac
 		reportResult.replaceFirst(expectedValue, "");
 	}
 	
+	@Test (description = "SRTE-37. Печать товарной накладной. Документ выводится на печать и содержит верный заголовок",
+			groups = "SMOKE_accompanying")
+	public void testInvoiceReport(){
+		Assert.assertTrue("Не выводится название отчета \"Тованая накладная\"", 
+				reportResult.contains("ТОВАРНАЯ НАКЛАДНАЯ"));
+	}
 }
