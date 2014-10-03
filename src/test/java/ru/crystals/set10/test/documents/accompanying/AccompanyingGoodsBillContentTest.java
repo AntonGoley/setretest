@@ -41,7 +41,7 @@ public class AccompanyingGoodsBillContentTest extends AccompanyingDocumentsBasic
 	@Test (description = "SRTE-38. Печать счета-фактуры. Проверка содержания документа",
 			dataProvider = "Счет-фактура", 
 			dependsOnGroups = "SMOKE_accompanying_GoodsBill")
-	public void testGoodsCheckReport(String dataToCheck, String expectedValue, boolean condition){
+	public void testGoodsBillReport(String dataToCheck, String expectedValue, boolean condition){
 		log.info(dataToCheck);
 		String message = String.format("\"Печать счета-фактуры\". Отсутсвуют или некорректно отображаются данные: %s ", dataToCheck);
 		Assert.assertTrue(message, 

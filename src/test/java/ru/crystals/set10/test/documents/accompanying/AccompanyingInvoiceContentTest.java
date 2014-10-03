@@ -41,7 +41,7 @@ public class AccompanyingInvoiceContentTest extends AccompanyingDocumentsBasicTe
 	@Test (description = "SRTE-37. Печать товарной накладной. Проверка содержания документа", 
 			dataProvider = "Товарная накладная", 
 			dependsOnGroups = "SMOKE_accompanying_Invoice")
-	public void testNomenclatureCheckReport(String dataToCheck, String expectedValue, boolean condition){
+	public void testInvoiceReport(String dataToCheck, String expectedValue, boolean condition){
 		log.info(dataToCheck);
 		String message = String.format("\"Товарная накладная\". Отсутсвуют или некорректно отображаются данные: %s ", dataToCheck);
 		Assert.assertTrue(message, 
