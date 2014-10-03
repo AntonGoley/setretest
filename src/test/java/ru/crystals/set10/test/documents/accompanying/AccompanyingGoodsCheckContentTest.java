@@ -26,6 +26,7 @@ public class AccompanyingGoodsCheckContentTest extends AccompanyingDocumentsBasi
 				 * 	- проверку номера
 				 * 	- inn магазина
 				 */
+				{"Отображается название документа", "Товарный чек", true },
 				{"Корректно отображается шапка таблицы", "Поз. Штрих-код Название Ед. изм В уп. Кол-во Цена Сумма", true },
 				{"Содержит fullName товара, разрешенного к печати", allowPrintFullName, true },
 				{"Не содержит товар, запрещенный к печати", denyPrintFullName, false },
@@ -37,20 +38,11 @@ public class AccompanyingGoodsCheckContentTest extends AccompanyingDocumentsBasi
 	}
 	
 	@Test (description = "SRTE-36. Печать товарного чека. Проверка содержания документа",
-			dataProvider = "Товарный чек", 
-			dependsOnGroups = "SMOKE_accompanying_GoodsCheck")
+			dataProvider = "Товарный чек")
 	public void testGoodsCheckReport(String dataToCheck, String expectedValue, boolean condition){
 		log.info(dataToCheck);
 		String message = String.format("\"Печать товарного чека\": ошибка данных отчета: %s ", dataToCheck);
 		Assert.assertTrue(message, 
 				reportResult.contains(expectedValue) == condition );
 	}
-	
-	@Test (description = "SRTE-36. Печать товарного чека. Документ выводится на печать и содержит верный заголовок", 
-			groups = "SMOKE_accompanying_GoodsCheck")
-	public void testGoodsCheckReport(){
-		Assert.assertTrue("Не выводится название отчета \"Товарный чек\"", 
-				reportResult.contains("Товарный чек"));
-	}
-	
 }

@@ -25,6 +25,7 @@ public class AccompanyingGoodsBillContentTest extends AccompanyingDocumentsBasic
 				 * 	- проверку номера документа
 				 * 	- данные отправителя
 				 */
+				{"Отображается название отчета", "СЧЕТ-ФАКТУРА", true },
 //				{"Корректно отображается шапка таблицы", "Поз. Штрих-код Название Ед. изм В уп. Кол-во Цена Сумма", true },
 				{"Содержит имя товара, разрешенного к печати", allowPrintName, true },
 				{"Не содержит товар, запрещенный к печати", denyPrintName, false },
@@ -39,20 +40,11 @@ public class AccompanyingGoodsBillContentTest extends AccompanyingDocumentsBasic
 	}
 	
 	@Test (description = "SRTE-38. Печать счета-фактуры. Проверка содержания документа",
-			dataProvider = "Счет-фактура", 
-			dependsOnGroups = "SMOKE_accompanying_GoodsBill")
+			dataProvider = "Счет-фактура")
 	public void testGoodsBillReport(String dataToCheck, String expectedValue, boolean condition){
 		log.info(dataToCheck);
 		String message = String.format("\"Печать счета-фактуры\". Отсутсвуют или некорректно отображаются данные: %s ", dataToCheck);
 		Assert.assertTrue(message, 
 				reportResult.contains(expectedValue) == condition );
 	}
-	
-	@Test (description = "SRTE-38. Печать счет-фактуры. Документ выводится на печать и содержит верный заголовок", 
-			groups = "SMOKE_accompanying_GoodsBill")
-	public void testGoodsBillReport(){
-		Assert.assertTrue("Не выводится название отчета \"Счет-фактура\"", 
-				reportResult.contains("СЧЕТ-ФАКТУРА"));
-	}
-	
 }

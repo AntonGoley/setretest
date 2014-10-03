@@ -26,7 +26,8 @@ public class AccompanyingInvoiceContentTest extends AccompanyingDocumentsBasicTe
 				 * 	- проверку номера
 				 * 	- 
 				 */
-//				{"Корректно отображается шапка таблицы", "Поз. Штрих-код Название Ед. изм В уп. Кол-во Цена Сумма", true },
+				{"Отображается название документа ", "ТОВАРНАЯ НАКЛАДНАЯ" + counterpartInn, true },
+				{"Корректно отображается шапка таблицы", "Поз. Штрих-код Название Ед. изм В уп. Кол-во Цена Сумма", true },
 				//TODO: разобраться с транспортом юридического лица в магазин
 //				{"В документе содержится информация (адрес) Грузопоотправителя", shopJuristicAdress, true },
 				{"В документе содержится ИНН Грузополучателя ", "ИНН " + counterpartInn, true }, 
@@ -39,8 +40,7 @@ public class AccompanyingInvoiceContentTest extends AccompanyingDocumentsBasicTe
 	}
 	
 	@Test (description = "SRTE-37. Печать товарной накладной. Проверка содержания документа", 
-			dataProvider = "Товарная накладная", 
-			dependsOnGroups = "SMOKE_accompanying_Invoice")
+			dataProvider = "Товарная накладная")
 	public void testInvoiceReport(String dataToCheck, String expectedValue, boolean condition){
 		log.info(dataToCheck);
 		String message = String.format("\"Товарная накладная\". Отсутсвуют или некорректно отображаются данные: %s ", dataToCheck);
@@ -48,11 +48,5 @@ public class AccompanyingInvoiceContentTest extends AccompanyingDocumentsBasicTe
 				reportResult.contains(expectedValue) == condition );
 		reportResult.replaceFirst(expectedValue, "");
 	}
-	
-	@Test (description = "SRTE-37. Печать товарной накладной. Документ выводится на печать и содержит верный заголовок",
-			groups = "SMOKE_accompanying_Invoice")
-	public void testInvoiceReport(){
-		Assert.assertTrue("Не выводится название отчета \"Тованая накладная\"", 
-				reportResult.contains("ТОВАРНАЯ НАКЛАДНАЯ"));
-	}
+
 }
