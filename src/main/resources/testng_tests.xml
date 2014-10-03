@@ -16,7 +16,7 @@
 	  	<classes>
 	  		<class name="ru.crystals.set10.test.tablereports.AdverstingTableReportTest"/>
 	  		<class name="ru.crystals.set10.test.tablereports.PriceCheckerReportTest"/>
-	  		<class name="ru.crystals.set10.test.tablereports.GoodOnTKReportTest"/>
+<!-- 	  		<class name="ru.crystals.set10.test.tablereports.GoodOnTKReportTest"/> -->
 	  		<class name="ru.crystals.set10.test.tablereports.RefundChecksReportTest"/>
 	  		<class name="ru.crystals.set10.test.tablereports.PLUinWeightReportTest"/>
 		</classes>	 
