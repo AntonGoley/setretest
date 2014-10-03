@@ -26,7 +26,7 @@ public class AccompanyingGoodsCheckContentTest extends AccompanyingDocumentsBasi
 				 * 	- проверку номера
 				 * 	- inn магазина
 				 */
-				{"Отображается название документа", "Товарный чек", true },
+				{"Отображается название отчета", "Товарный чек", true },
 				{"Корректно отображается шапка таблицы", "Поз. Штрих-код Название Ед. изм В уп. Кол-во Цена Сумма", true },
 				{"Содержит fullName товара, разрешенного к печати", allowPrintFullName, true },
 				{"Не содержит товар, запрещенный к печати", denyPrintFullName, false },
