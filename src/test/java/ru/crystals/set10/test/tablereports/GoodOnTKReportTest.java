@@ -21,7 +21,7 @@ public class GoodOnTKReportTest extends AbstractReportTest{
 
 	static SoapRequestSender soapSender  = new SoapRequestSender();
 	static String ti = soapSender.generateTI();
-	static String  erpCode = 47 + ti;
+	static String  erpCode = "47" + ti;
 	static String barCode = "78" + ti;
 	
 	@BeforeClass

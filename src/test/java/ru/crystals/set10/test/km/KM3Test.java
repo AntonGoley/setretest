@@ -37,7 +37,8 @@ public class KM3Test extends AbstractTest{
 	
 	private static DbAdapter db = new  DbAdapter();
 	
-
+	
+	
 	
 	
 }

@@ -22,7 +22,7 @@ public class AdverstingTableReportTest extends AbstractReportTest {
 
 	SoapRequestSender soapSender  = new SoapRequestSender();
 	String ti = soapSender.generateTI();
-	String erpCode = 47 + ti;
+	String erpCode = "47" + ti;
 	String barCode = "78" + ti;
 	
 	@BeforeClass
