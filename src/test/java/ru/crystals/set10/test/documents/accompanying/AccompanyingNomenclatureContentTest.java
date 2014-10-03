@@ -38,7 +38,7 @@ public class AccompanyingNomenclatureContentTest extends AccompanyingDocumentsBa
 	
 	@Test (description = "SRTE-35. Печать номенклатуры кассового чека. Проверка содержания документа", 
 			dataProvider = "Номенклатура чека",
-			dependsOnGroups = "SMOKE_accompanying")
+			dependsOnGroups = "SMOKE_accompanying_Nomenclature")
 	public void testNomenclatureCheckReport(String dataToCheck, String expectedValue, boolean condition){
 		log.info(dataToCheck);
 		String message = String.format("\"Номенклатура кассового чека\": ошибка данных отчета: %s ", dataToCheck);
@@ -47,7 +47,7 @@ public class AccompanyingNomenclatureContentTest extends AccompanyingDocumentsBa
 	}
 	
 	@Test (description = "SRTE-35. Печать номенклатуры кассового чека. Документ выводится на печать и содержит верный заголовок",
-			groups = "SMOKE_accompanying")
+			groups = "SMOKE_accompanying_Nomenclature")
 	public void testNomenclatureCheckReport(){
 		Assert.assertTrue("Не выводится название отчета \"Номенклатура кассового чека\"", 
 				reportResult.contains("Номенклатура кассового чека"));

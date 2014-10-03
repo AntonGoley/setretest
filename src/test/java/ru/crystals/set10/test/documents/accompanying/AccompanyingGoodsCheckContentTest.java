@@ -38,7 +38,7 @@ public class AccompanyingGoodsCheckContentTest extends AccompanyingDocumentsBasi
 	
 	@Test (description = "SRTE-36. Печать товарного чека. Проверка содержания документа",
 			dataProvider = "Товарный чек", 
-			dependsOnGroups = "SMOKE_accompanying")
+			dependsOnGroups = "SMOKE_accompanying_GoodsCheck")
 	public void testGoodsCheckReport(String dataToCheck, String expectedValue, boolean condition){
 		log.info(dataToCheck);
 		String message = String.format("\"Печать товарного чека\": ошибка данных отчета: %s ", dataToCheck);
@@ -47,7 +47,7 @@ public class AccompanyingGoodsCheckContentTest extends AccompanyingDocumentsBasi
 	}
 	
 	@Test (description = "SRTE-36. Печать товарного чека. Документ выводится на печать и содержит верный заголовок", 
-			groups = "SMOKE_accompanying")
+			groups = "SMOKE_accompanying_GoodsCheck")
 	public void testGoodsCheckReport(){
 		Assert.assertTrue("Не выводится название отчета \"Товарный чек\"", 
 				reportResult.contains("Товарный чек"));
