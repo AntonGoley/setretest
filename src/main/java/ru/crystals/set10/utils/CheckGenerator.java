@@ -81,13 +81,14 @@ public class CheckGenerator {
 		}
 		catalogGoods = parsePurchasesFromDB(db.queryForRowSet(DB_RETAIL_SET, SQL_GOODS));
 	    generateChecks();
+	    
 	  }
 	
 	public CheckGenerator(String serverIP, int shopNumber, int cashNumber) {
 	    this.cashNumber = cashNumber;
 	    this.shopNumber = shopNumber;
-	    this.shiftNum = getCurrentShiftNum(cashNumber);
-	    this.checkNumber =  getNextCheckNum(cashNumber, shiftNum);
+	    // this.shiftNum = getCurrentShiftNum(cashNumber);
+	    //this.checkNumber =  getNextCheckNum(cashNumber, shiftNum);
 	    docSender = new DocsSender(serverIP, shopNumber, cashNumber);
 	    log.info("CashNumber = " + cashNumber +  "; ShiftNum = " + shiftNum + "; NextCheckNumber = " + checkNumber);
 	} 

@@ -93,7 +93,7 @@ public class CashRegNumbersReportTest extends AbstractReportTest{
 	
 	private void setCashVO() throws Exception{
 		CashVO cashVo = new CashVO();
-			cashVo.setNumber(1);
+			cashVo.setNumber(2);
 			cashVo.setShopNumber(Integer.valueOf(Config.SHOP_NUMBER));
 			cashVo.setEklzNum(eklzNum);
 			cashVo.setFactoryNum(factoryNum);

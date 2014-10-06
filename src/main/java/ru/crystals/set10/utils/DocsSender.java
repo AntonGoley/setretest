@@ -3,15 +3,19 @@ package ru.crystals.set10.utils;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import ru.crystals.commons.amf.io.Utils;
+import ru.crystals.httpclient.HttpClient;
 import ru.crystals.httpclient.HttpFileConnection;
 import ru.crystals.httpclient.HttpFileTransport;
+import ru.crystals.operday.transport.CashTransportBeanRemote;
+import ru.crystals.pos.check.DocumentEntity;
+import ru.crystals.pos.check.SentToServerStatus;
 import ru.crystals.transport.TransferObject;
 
 public class DocsSender {
@@ -23,7 +27,7 @@ public class DocsSender {
 	private int shopNumber;
 	private int cashNumber;
 	private static int od_purchase_id;
-	
+	CashTransportBeanRemote cashTransportManager;
 
 	public DocsSender(String serverIP, int shopNumber, int cashNumber) {
 		this.serverIP = serverIP;
@@ -31,6 +35,9 @@ public class DocsSender {
 		this.cashNumber = cashNumber;
 		od_purchase_id = new DbAdapter().queryForInt(DbAdapter.DB_RETAIL_OPERDAY,
 						"select max(id) from od_inbound_files");
+//		HttpClient client = new HttpClient();
+//        client.setUrl("http://" + serverIP + ":8090/SET-OperDay-Web/OperDayTransportServlet");
+//        cashTransportManager = client.find(CashTransportBeanRemote.class, "java:app/SET-OperDay/SET/OperDay/CashTransportBean!ru.crystals.operday.transport.CashTransportBeanRemote");
 	}
 
 	
@@ -53,8 +60,24 @@ public class DocsSender {
                 ObjectOutputStream oos = new ObjectOutputStream(connect.getOutputStream());
                 oos.writeObject(tObject);
                 oos.close();
-
-                log.info("response message = " + connect.getResponseMessage());
+                
+               log.info("response message = " + connect.getResponseMessage());
+               
+//               if (HttpURLConnection.HTTP_CREATED == connect.getResponseCode()) {
+//                   //documentSetStatus((DocumentEntity) object, SentToServerStatus.WAIT_ACKNOWLEDGEMENT, docName);
+//                   Long result = cashTransportManager.registerDocument(docName, shopNumber, cashNumber, 1);
+//
+//                   if (result != null && result > 0) {
+//                       log.info("document {} has been registreated", docName);
+//                       //documentSetStatus((DocumentEntity) object, SentToServerStatus.SENT, docName);
+//                       return result;
+//                   } else {
+//                       log.error("document {} has NOT been registreated on server", docName);
+//                       return null;
+//                   }
+//               }
+//               
+               
                 // сетим в базу опердня (od_inbound_files) новый чек, который подложен в nginx для обработки
                 if (connect.getResponseMessage().equals("Created")){
                 	log.info("DocName: " + docName);
