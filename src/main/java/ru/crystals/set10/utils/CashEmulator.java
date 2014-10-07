@@ -75,6 +75,10 @@ public class CashEmulator {
 	    log.info("Создан cashEmulator: " + cashNumber +  "; ShiftNum = " + shiftNum + "; NextCheckNumber = " + checkNumber);
 	} 
 	
+	/*
+	 * Смотрим, есть ли созданный эмулятор (ip + номер магазина + номер кассы)
+	 * если нет, создаем его
+	 */
 	public static CashEmulator getCashEmulator(String serverIP, int shopNum, int cashNum) {
 	    String key = serverIP + String.valueOf(shopNum) + String.valueOf(cashNum);
 	    if (!activeCashEmulators.containsKey(key)) {
@@ -83,6 +87,7 @@ public class CashEmulator {
 	    return activeCashEmulators.get(key);
 	}
 	
+	
 	public int getCurrentShiftNum(int cashNumber) {
 		// TODO: привести в порядок
 		String date = getDate("yyyy-MM-dd", System.currentTimeMillis() - yesterday);
@@ -90,6 +95,9 @@ public class CashEmulator {
 		if (shiftNum == 0) {
 			shiftNum = 1;
 		} else {
+			/* если смена уже создана
+			 * проверяем, закрыта ли она 
+			 */
 			ifShiftClosed(cashNumber, shiftNum);
 		}
 		return shiftNum;
@@ -322,7 +330,7 @@ public class CashEmulator {
       if (nextShift) {
     	  nextShift = false;
       }
-      shift.setNumShift(Long.valueOf(shiftNum));
+      shift.setNumShift(Long.valueOf(++shiftNum));
       shift.setShiftOpen(new Date(System.currentTimeMillis() - yesterday));
       shift.setCashNum(new Long(cashNumber));
       shift.setShopIndex(Long.valueOf(shopNumber));
@@ -446,7 +454,7 @@ public class CashEmulator {
 	}
 	
 	public void useNextShift(){
-		this.nextShift = true;
+		nextShift = true;
 		shiftNum++;
 		checkNumber = 1;
 	}

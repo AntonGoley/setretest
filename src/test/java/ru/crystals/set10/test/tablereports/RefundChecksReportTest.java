@@ -12,7 +12,6 @@ import ru.crystals.set10.config.Config;
 import ru.crystals.set10.pages.operday.HTMLRepotResultPage;
 import ru.crystals.set10.pages.operday.tablereports.ReportConfigPage;
 import ru.crystals.set10.test.dataproviders.TableReportsDataprovider;
-import ru.crystals.set10.utils.CashEmulator;
 import static ru.crystals.set10.pages.operday.tablereports.TableReportPage.*;
 
 

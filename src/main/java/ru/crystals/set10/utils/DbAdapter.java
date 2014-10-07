@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import org.slf4j.LoggerFactory;
-//import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
@@ -16,7 +14,6 @@ import ru.crystals.set10.config.*;
 
 public class DbAdapter {
 	
-	private final static org.slf4j.Logger log =  LoggerFactory.getLogger(DbAdapter.class);
 	public static final String DRIVER = "org.postgresql.Driver";
 	private static String USERNAME = Config.DB_USER; 
 	private static String PASSWORD = Config.DB_PASSWORD; 
