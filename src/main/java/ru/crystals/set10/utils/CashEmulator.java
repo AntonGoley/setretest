@@ -110,16 +110,22 @@ public class CashEmulator {
 		return ++checkNumber;
 	}
 	
+	/*
+	 * сумма продаж за смену
+	 */
 	public int getShiftSumChecks() {
 		String date = getDate("yyyy-MM-dd", System.currentTimeMillis() - yesterday);
 		return db.queryForInt(DB_RETAIL_OPERDAY, String.format(SQL_GET_SHIFT_FINAL_SUM, String.valueOf("true"), cashNumber, shiftNum, shopNumber, date, date));
 	}
 	
+	/*
+	 * сумма возвратов за смену 
+	 */
 	public int getShiftSumChecksRefund() {
 		String date = getDate("yyyy-MM-dd", System.currentTimeMillis() - yesterday);
 		return db.queryForInt(DB_RETAIL_OPERDAY, String.format(SQL_GET_SHIFT_FINAL_SUM, String.valueOf("false"), cashNumber, shiftNum, shopNumber, date, date));
 	}
-	
+
 	private boolean ifShiftClosed(int cashNumber, int shiftNumber) {
 		// TODO: привести в порядок
 		String date = getDate("yyyy-MM-dd", System.currentTimeMillis() - yesterday);
@@ -152,6 +158,9 @@ public class CashEmulator {
 		docSender.sendObject(type, document);
     }
 	
+	/*
+	 * выполнить изъятие
+	 */
 	public DocumentEntity nextWithdrawal(){
 		 if (shift == null || nextShift || ifShiftClosed(cashNumber, shiftNum)) {
 		      shift = nextShift(null);
@@ -176,6 +185,9 @@ public class CashEmulator {
 		return wdr;
 	}
 	
+	/*
+	 * выполнить внесение
+	 */
 	public DocumentEntity nextIntroduction(){
 		 if (shift == null || nextShift || ifShiftClosed(cashNumber, shiftNum)) {
 		      shift = nextShift(null);
@@ -200,6 +212,9 @@ public class CashEmulator {
 		return intr;
 	}
 	
+	/*
+	 * Сгенерить чек со свободным набором позиций
+	 */
 	public DocumentEntity nextPurchase() {
 
 	    if (shift == null || nextShift || ifShiftClosed(cashNumber, shiftNum)) {
@@ -227,6 +242,9 @@ public class CashEmulator {
 	    return de;
 	}
 	
+	/*
+	 * Сгенерить чек с заданным набором позиций
+	 */
 	public DocumentEntity nextPurchase(PurchaseEntity purchase) {
 
 	    if (shift == null || nextShift || ifShiftClosed(cashNumber, shiftNum)) {
@@ -254,7 +272,9 @@ public class CashEmulator {
 	    return de;
 	}
 	
-	
+	/*
+	 * сгенерить чек возврата
+	 */
 	public DocumentEntity nextRefundCheck(
 				PurchaseEntity superPurchase, 
 				PositionEntity returnEntity, 
@@ -285,7 +305,9 @@ public class CashEmulator {
 	    return de;
 	}
 	
-	// закрывает текущую смену
+	/*
+	 * закрытие текущей смены
+	 */
 	public DocumentEntity nextZReport(){
 		if (shift == null) {
 		      shift = nextShift(null);
@@ -375,10 +397,14 @@ public class CashEmulator {
 	//    catalogGoods.add(pe);
 //}
 	
+    /*
+     * заполнить возврата
+     */
 	public static DocumentEntity refundCheck( 
 						PurchaseEntity superPurchase, 
 						PositionEntity returnEntity, 
-						long qnty, 
+						long qnty,
+						// является ли чек возврата произвольным (т.е не привязан к чеку продажи)
 						boolean arbitraryReturn){
 		
 		 long summ = 0L; 
@@ -426,7 +452,9 @@ public class CashEmulator {
 		}
 	} 
 	
-	// проверить, что чек покупки зарегистрирован в od_purchase (ищем по fiscaldocnum)
+	/*
+	 *  проверить, что чек покупки зарегистрирован в od_purchase (ищем по fiscaldocnum)
+	 */
 	public boolean ifCheckInRetail(DocumentEntity purchase){
 	    String fiscalDocNum =   purchase.getFiscalDocNum();
 	    String dbRequest = "";
@@ -455,7 +483,6 @@ public class CashEmulator {
 	
 	public void useNextShift(){
 		nextShift = true;
-		shiftNum++;
 		checkNumber = 1;
 	}
 	
