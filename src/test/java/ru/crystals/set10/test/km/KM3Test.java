@@ -18,7 +18,7 @@ import ru.crystals.set10.pages.operday.searchcheck.CheckContentPage;
 import ru.crystals.set10.pages.operday.searchcheck.CheckSearchPage;
 import ru.crystals.set10.pages.operday.tablereports.ReportConfigPage;
 import ru.crystals.set10.test.AbstractTest;
-import ru.crystals.set10.utils.CheckGenerator;
+import ru.crystals.set10.utils.CashEmulator;
 import ru.crystals.set10.utils.DbAdapter;
 import ru.crystals.set10.utils.SoapRequestSender;
 import static ru.crystals.set10.utils.DbAdapter.DB_RETAIL_SET;
@@ -32,7 +32,7 @@ public class KM3Test extends AbstractTest{
 	HTMLRepotResultPage htmlReportResults;
 	PurchaseEntity pe;
 	CheckContentPage checkContent;
-	CheckGenerator checkGenerator = new CheckGenerator(Config.RETAIL_HOST, Integer.valueOf(Config.SHOP_NUMBER), 1);
+
 	private static String predefindCheckNumber = "0";
 	
 	private static DbAdapter db = new  DbAdapter();

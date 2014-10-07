@@ -4,17 +4,14 @@ import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.jdbc.support.rowset.SqlRowSet;
-import ru.crystals.pos.catalog.BarcodeEntity;
-import ru.crystals.pos.catalog.MeasureEntity;
-import ru.crystals.pos.catalog.ProductEntity;
 import ru.crystals.pos.check.CheckStatus;
 import ru.crystals.pos.check.DocumentEntity;
-import ru.crystals.pos.check.InsertType;
+import ru.crystals.pos.check.IntroductionEntity;
 import ru.crystals.pos.check.PositionEntity;
 import ru.crystals.pos.check.PurchaseEntity;
 import ru.crystals.pos.check.ReportPaymentTypeEntity;
@@ -22,42 +19,35 @@ import ru.crystals.pos.check.ReportShiftEntity;
 import ru.crystals.pos.check.SessionEntity;
 import ru.crystals.pos.check.ShiftEntity;
 import ru.crystals.pos.check.UserEntity;
+import ru.crystals.pos.check.WithdrawalEntity;
 import ru.crystals.pos.payments.CashPaymentEntity;
-import ru.crystals.set10.config.Config;
 import ru.crystals.transport.DataTypesEnum;
 import static ru.crystals.set10.utils.DbAdapter.*;
+import static ru.crystals.set10.utils.GoodsParser.*;
 
-public class CheckGenerator {
-
-	private static final Logger log = LoggerFactory.getLogger(DocsSender.class);
-	public static ArrayList<ProductEntity> catalogGoods = new ArrayList();
-	private static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-DD hh:mm:ss");
-	private static ArrayList<DocumentEntity> peList = new ArrayList();
+public class CashEmulator {
 	
-	private int cashNumber;
-	public  int checkNumber;
+	private static final Logger log = LoggerFactory.getLogger(CashEmulator.class);
+	
+	private  int cashNumber;
+	private  int checkNumber;
 	private  int shiftNum;
-	private int shopNumber = -1;
+	private  int shopNumber = -1;
 	private  ShiftEntity shift;
 	
 	public  boolean nextShift = false;
 	public  long yesterday = Long.valueOf("-0"); //(86400000 * 130); ("-11232000000")
 	
+	/*
+	 * Список созданных в тестах касс
+	 */
+	private static HashMap<String, CashEmulator> activeCashEmulators = new HashMap<String, CashEmulator>();
+	
 	private int reportId = 1;
-
 	
 	private DocsSender docSender;
 	
 	private static DbAdapter db = new  DbAdapter();
-	
-	private static final String SQL_GOODS = 
-				"SELECT  markingofthegood, barc.code as barcode, pr.name as name, fullname, lastimporttime, measure_code, vat " +
-				"FROM  un_cg_product pr " +
-				"JOIN " +
-				"un_cg_barcode barc " +
-				"on barc.product_marking = pr.markingofthegood";
-	
-	private static final String SQL_GOODS_COUNT = "select count(*) from un_cg_product";
 		
 	private static final String SQL_MAX_SHIFT_NUM = "select max(numshift) from od_shift as od_s join od_purchase as od_p on od_p.id_shift = od_s.id where cashnum = %s  and shopindex = %s and shiftcreate >= '%s 00:00:00' and shiftcreate < '%s 23:59:59.999'";
 														
@@ -69,29 +59,29 @@ public class CheckGenerator {
 	
 	private static  String SQL_GET_REPORT_BY_FISCALDOCNUM = "select count(*) from od_reportshift where fiscaldocnum = '%s' ";	
 	
+	private static  String SQL_GET_WITHDRAWAL_BY_FISCALDOCNUM = "select count(*) from od_withdrawal where fiscaldocnum = '%s' ";	
+	
+	private static  String SQL_GET_INTRODUCTION_BY_FISCALDOCNUM = "select count(*) from od_introduction where fiscaldocnum = '%s' ";	
+	
 	private static  String SQL_GET_SHIFT_FINAL_SUM = "select sum(checksumstart) from od_purchase where operationtype = %s  and " +
 													"id_shift = (select id from od_shift where cashnum=%s and numshift=%s and shopindex = %s and shiftcreate >= '%s 00:00:00' and shiftcreate < '%s 23:59:59.999')";
 	
-	static
-	  {
-		// проверить, есть ли товары в set_operday, и если нет, импортировать через ERP импорт
-		if ((db.queryForInt(DB_RETAIL_SET, SQL_GOODS_COUNT)) < 10 ) {
-			SoapRequestSender soapSender  = new SoapRequestSender();
-			soapSender.sendGoodsToStartTesting(Config.RETAIL_HOST, "goods.txt");
-		}
-		catalogGoods = parsePurchasesFromDB(db.queryForRowSet(DB_RETAIL_SET, SQL_GOODS));
-	    generateChecks();
-	    
-	  }
-	
-	public CheckGenerator(String serverIP, int shopNumber, int cashNumber) {
-	    this.cashNumber = cashNumber;
-	    this.shopNumber = shopNumber;
-	    // this.shiftNum = getCurrentShiftNum(cashNumber);
-	    //this.checkNumber =  getNextCheckNum(cashNumber, shiftNum);
+	private CashEmulator(String serverIP, int shopNum, int cashNum) {
+	    cashNumber = cashNum;
+	    shopNumber = shopNum;
+	    shiftNum = getCurrentShiftNum(cashNumber);
+	    checkNumber =  getNextCheckNum(cashNumber, shiftNum);
 	    docSender = new DocsSender(serverIP, shopNumber, cashNumber);
-	    log.info("CashNumber = " + cashNumber +  "; ShiftNum = " + shiftNum + "; NextCheckNumber = " + checkNumber);
+	    log.info("Создан cashEmulator: " + cashNumber +  "; ShiftNum = " + shiftNum + "; NextCheckNumber = " + checkNumber);
 	} 
+	
+	public static CashEmulator getCashEmulator(String serverIP, int shopNum, int cashNum) {
+	    String key = serverIP + String.valueOf(shopNum) + String.valueOf(cashNum);
+	    if (!activeCashEmulators.containsKey(key)) {
+	    	activeCashEmulators.put(key, new CashEmulator(serverIP, shopNum, cashNum));
+	    }
+	    return activeCashEmulators.get(key);
+	}
 	
 	public int getCurrentShiftNum(int cashNumber) {
 		// TODO: привести в порядок
@@ -144,20 +134,68 @@ public class CheckGenerator {
             type = DataTypesEnum.PURCHASE_TYPE.code;
         } else if (document instanceof ReportShiftEntity) {
             type = DataTypesEnum.REPORT_TYPE.code;
-//        } else if (document instanceof WithdrawalEntity) {
-//            type = DataTypesEnum.WITHDRAWAL_TYPE.code;
-//        } else if (document instanceof IntroductionEntity) {
-//            type = DataTypesEnum.INTRODUCTION_TYPE.code;
-//        } else {
-//            LOG.warn("Неизвестный тип документа: {}", document);
+        } else if (document instanceof WithdrawalEntity) {
+            type = DataTypesEnum.WITHDRAWAL_TYPE.code;
+        } else if (document instanceof IntroductionEntity) {
+            type = DataTypesEnum.INTRODUCTION_TYPE.code;
+        } else {
+            log.warn("Неизвестный тип документа: {}", document);
         }
 		docSender.sendObject(type, document);
     }
 	
+	public DocumentEntity nextWithdrawal(){
+		 if (shift == null || nextShift || ifShiftClosed(cashNumber, shiftNum)) {
+		      shift = nextShift(null);
+		      nextShift = false;
+		    }
+		
+		WithdrawalEntity wdr = new WithdrawalEntity();
+		wdr.setCurrency("RUB");
+		wdr.setWasBefore((long) 0);
+		wdr.setValue((long) 10000);
+		wdr.setShift(shift);
+		wdr.setFiscalDocNum("testWdr;" + String.valueOf(System.currentTimeMillis()));
+		wdr.setNumber((long) checkNumber++);
+		wdr.setId(new Date().getTime());
+		wdr.setSession(shift.getSessionStart());
+	    Date d = new Date(System.currentTimeMillis() - yesterday);
+	    wdr.setDateCommit(d);
+	    
+		sendDocument(wdr);
+		
+		ifCheckInRetail(wdr);
+		return wdr;
+	}
+	
+	public DocumentEntity nextIntroduction(){
+		 if (shift == null || nextShift || ifShiftClosed(cashNumber, shiftNum)) {
+		      shift = nextShift(null);
+		      nextShift = false;
+		    }
+		
+		IntroductionEntity intr = new IntroductionEntity();
+		intr.setCurrency("RUB");
+		intr.setWasBefore((long) 10000);
+		intr.setValue((long) 20000);
+		intr.setShift(shift);
+		intr.setFiscalDocNum("testIntr;" + String.valueOf(System.currentTimeMillis()));
+		intr.setNumber((long) checkNumber++);
+		intr.setId(new Date().getTime());
+		intr.setSession(shift.getSessionStart());
+	    Date d = new Date(System.currentTimeMillis() - yesterday);
+	    intr.setDateCommit(d);
+
+		sendDocument(intr);
+		
+		ifCheckInRetail(intr);
+		return intr;
+	}
+	
 	public DocumentEntity nextPurchase() {
-	    generateChecks();
-	    if (this.shift == null || nextShift || ifShiftClosed(cashNumber, shiftNum)) {
-	      this.shift = nextShift(null);
+
+	    if (shift == null || nextShift || ifShiftClosed(cashNumber, shiftNum)) {
+	      shift = nextShift(null);
 	      nextShift = false;
 	    }
 	    
@@ -165,9 +203,9 @@ public class CheckGenerator {
 	    DocumentEntity de = (DocumentEntity)peList.get(idx);
 	    Date d = new Date(System.currentTimeMillis() - yesterday);
 	    de.setDateCommit(d);
-	    de.setShift(this.shift);
+	    de.setShift(shift);
 	    de.setNumber((long) checkNumber++);
-	    de.setSession(this.shift.getSessionStart());
+	    de.setSession(shift.getSessionStart());
 	    de.setId(System.currentTimeMillis());
 	    if ((de instanceof PurchaseEntity)) {
 	    	PurchaseEntity pe = (PurchaseEntity)de;
@@ -183,8 +221,8 @@ public class CheckGenerator {
 	
 	public DocumentEntity nextPurchase(PurchaseEntity purchase) {
 
-	    if (this.shift == null || nextShift || ifShiftClosed(cashNumber, shiftNum)) {
-	      this.shift = nextShift(null);
+	    if (shift == null || nextShift || ifShiftClosed(cashNumber, shiftNum)) {
+	      shift = nextShift(null);
 	      nextShift = false;
 	    }
 	    
@@ -192,9 +230,9 @@ public class CheckGenerator {
 	    
 	    Date d = new Date(System.currentTimeMillis() - yesterday);
 	    de.setDateCommit(d);
-	    de.setShift(this.shift);
+	    de.setShift(shift);
 	    de.setNumber((long) checkNumber++);
-	    de.setSession(this.shift.getSessionStart());
+	    de.setSession(shift.getSessionStart());
 	    de.setId(System.currentTimeMillis());
 	    if ((de instanceof PurchaseEntity)) {
 	    	PurchaseEntity pe = (PurchaseEntity)de;
@@ -216,16 +254,16 @@ public class CheckGenerator {
 				// произвольный возврат
 				boolean arbitraryReturn) {
 		
-	    if (this.shift == null) {
-	      this.shift = nextShift(null);
+	    if (shift == null) {
+	      shift = nextShift(null);
 	    }
 
 	    DocumentEntity de = refundCheck(superPurchase, returnEntity, qnty, arbitraryReturn);
 	    Date d = new Date(System.currentTimeMillis() - yesterday);
 	    de.setDateCommit(d);
-	    de.setShift(this.shift);
+	    de.setShift(shift);
 	    de.setNumber((long) checkNumber++);
-	    de.setSession(this.shift.getSessionStart());
+	    de.setSession(shift.getSessionStart());
 	    de.setId(System.currentTimeMillis());
 	    if ((de instanceof PurchaseEntity)) {
 	    	PurchaseEntity pe = (PurchaseEntity)de;
@@ -241,8 +279,8 @@ public class CheckGenerator {
 	
 	// закрывает текущую смену
 	public DocumentEntity nextZReport(){
-		if (this.shift == null) {
-		      this.shift = nextShift(null);
+		if (shift == null) {
+		      shift = nextShift(null);
 		    }
 	    ReportShiftEntity rse = new ReportShiftEntity();
 	    rse.setReportZ(true);
@@ -263,9 +301,9 @@ public class CheckGenerator {
 	    List listRPTE = new ArrayList();
 	    listRPTE.add(reportPaymentTypeEntity);
 	    rse.setPaymentsTypesList(listRPTE);
-	    rse.setShift(this.shift);
+	    rse.setShift(shift);
 	    rse.setNumber((long) checkNumber);
-	    rse.setSession(this.shift.getSessionStart());
+	    rse.setSession(shift.getSessionStart());
 	    
 	    rse.setIncresentTotalStart(100L);
 	    rse.setIncresentTotalFinish(200L);
@@ -280,14 +318,14 @@ public class CheckGenerator {
     private ShiftEntity nextShift(SessionEntity session) {
       SessionEntity sess = session != null ? session : nextSession();
       ShiftEntity shift = new ShiftEntity();
-      shift.setFiscalNum("Emulator." + this.shopNumber + "." + this.cashNumber);
+      shift.setFiscalNum("Emulator." + shopNumber + "." + cashNumber);
       if (nextShift) {
     	  nextShift = false;
       }
       shift.setNumShift(Long.valueOf(shiftNum));
       shift.setShiftOpen(new Date(System.currentTimeMillis() - yesterday));
-      shift.setCashNum(new Long(this.cashNumber));
-      shift.setShopIndex(Long.valueOf(this.shopNumber));
+      shift.setCashNum(new Long(cashNumber));
+      shift.setShopIndex(Long.valueOf(shopNumber));
       shift.setSessionStart(sess);
       return shift;
     }
@@ -368,77 +406,6 @@ public class CheckGenerator {
 	      return returnPe;
 	}
 	
-	private static void generateChecks() {
-	    //long reportId = 1L;
-	    while (peList.size() < 20) {
-	      peList.add(new PurchaseEntity());
-	      peList.get(peList.size() - 1);
-
-	      PurchaseEntity pe = (PurchaseEntity)peList.get(peList.size() - 1);
-	      
-	      pe.setCheckStatus(CheckStatus.Registered);
-	      pe.setOperationType(Boolean.valueOf(true));
-	      List positions = new ArrayList(100);
-	      int end = (int)random(20) + 1;
-	      long qnt = 0L;
-	      long summ = 0L;
-	      for (int i = 1; i < end; i++) {
-	        PositionEntity pos = new PositionEntity();
-	        pos.setProduct((ProductEntity)catalogGoods.get((int)(Math.random() * catalogGoods.size() - 1.0D)));
-	        pos.setNumber(Long.valueOf(i));
-	        if (i == 0) {
-	        	qnt = (long) 1.235;
-	        } else {
-	        	qnt = random(5) + 1L;
-	        }
-	        pos.setQnty(Long.valueOf(qnt * 1000L));
-	        pos.setPriceEnd(Long.valueOf(random(1000) * 127L));
-	        pos.setSum(Long.valueOf(qnt * pos.getPriceEnd().longValue()));
-	        summ += pos.getSum().longValue();
-	        pos.setNdsSum(Long.valueOf(Math.round(pos.getSum().longValue() * 0.2D)));
-	        pos.setInsertType(InsertType.Hand);
-	        pos.setCalculateDiscount(Boolean.valueOf(true));
-	        pos.setSumDiscount(Long.valueOf(0L));
-	        pos.setDeleted(Boolean.valueOf(false));
-	        pos.setSuccessProcessed(true);
-	        pos.setDateTime(new Date(System.currentTimeMillis()));
-
-	        positions.add(pos);
-	        pe.setFiscalDocNum("test;" + String.valueOf(System.currentTimeMillis()));
-	      }
-	      pe.setPositions(positions);
-	      List paymentEntityList = new ArrayList(1);
-	      CashPaymentEntity payE = new CashPaymentEntity();
-	      payE.setDateCreate(new Date(System.currentTimeMillis()));
-	      payE.setDateCommit(new Date(System.currentTimeMillis()));
-	      payE.setSumPay(Long.valueOf(summ));
-	      //payE.setChange(Long.valueOf(10000L));
-	      payE.setPaymentType("CashPaymentEntity");
-	      payE.setCurrency("RUB");
-	      paymentEntityList.add(payE);
-	      pe.setPayments(paymentEntityList);
-	      pe.setDiscountValueTotal(Long.valueOf(0L));
-	      pe.setCheckSumEnd(Long.valueOf(summ));
-	      pe.setCheckSumStart(Long.valueOf(summ));
-	    }
-
-//	    ReportShiftEntity rse = new ReportShiftEntity();
-//	    rse.setReportZ(true);
-//	    rse.setSumPurchaseFiscal(Long.valueOf(34650L));
-//	    rse.setCountPurchase(Long.valueOf(1L));
-//	    rse.setSumCashEnd(Long.valueOf(2851771786L));
-//	    rse.setFiscalDocNum("1707:2465");
-//
-//	    rse.setId(Long.valueOf(reportId++));
-//
-//	    ReportPaymentTypeEntity reportPaymentTypeEntity = new ReportPaymentTypeEntity(rse.getId().longValue(), "CashPaymentEntity", 'P');
-//	    reportPaymentTypeEntity.setPSumm(34650L);
-//	    List listRPTE = new ArrayList();
-//	    listRPTE.add(reportPaymentTypeEntity);
-//	    rse.setPaymentsTypesList(listRPTE);
-//	    peList.add(rse);
-	  }
-	
 	public void logCheckEntities(PurchaseEntity pe){
 		Iterator<PositionEntity> i = pe.getPositions().iterator();
 		PositionEntity  poe;
@@ -459,8 +426,11 @@ public class CheckGenerator {
 	    	dbRequest = SQL_GET_CHECK_BY_FISCALDOCNUM;
 	    } else if (purchase instanceof ReportShiftEntity) {
 	    	dbRequest = SQL_GET_REPORT_BY_FISCALDOCNUM;
+	    } else if (purchase instanceof WithdrawalEntity) {
+	    	dbRequest = SQL_GET_WITHDRAWAL_BY_FISCALDOCNUM;
+	    }  else if (purchase instanceof IntroductionEntity) {
+	    	dbRequest = SQL_GET_INTRODUCTION_BY_FISCALDOCNUM;
 	    }
-	    
     	// ждем в течение минуты
 	    int timeOut = 60;
     	int tryCount = 0;
@@ -480,35 +450,6 @@ public class CheckGenerator {
 		shiftNum++;
 		checkNumber = 1;
 	}
-	
-	public static ArrayList<ProductEntity> parsePurchasesFromDB(SqlRowSet goods) {
-		ArrayList<ProductEntity> result = new ArrayList<ProductEntity>();
-		try {
-	      while (goods.next()) {
-	        ProductEntity pe = new ProductEntity();
-	        pe.setItem(goods.getString("markingofthegood"));
-	        pe.setLastImportTime(sdf.parse(goods.getString("lastimporttime").substring(1, goods.getString("lastimporttime").length() - 1)));
-	        MeasureEntity me = new MeasureEntity();
-	        me.setCode(goods.getString("measure_code"));
-	        pe.setMeasure(me);
-	        pe.setName(goods.getString("name"));
-	        pe.setNds(Float.valueOf(18.0F));
-	        pe.setNdsClass("NDS");
-	        BarcodeEntity be = new BarcodeEntity();
-	        be.setBarCode(goods.getString("barcode"));
-	        pe.setBarCode(be);
-	        result.add(pe);
-	      }
-	    } catch (Exception e) {
-	      log.warn("Error: " + e.getMessage());
-	    }
-		return result;
-	}
-	
-	public static void setProductEntity(){
-		
-	}
-	
 	
 	public static long random(int max) {
 	    return Math.round(Math.random() * max);

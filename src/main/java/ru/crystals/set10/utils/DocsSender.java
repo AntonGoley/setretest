@@ -3,19 +3,19 @@ package ru.crystals.set10.utils;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
-import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.crystals.commons.amf.io.Utils;
-import ru.crystals.httpclient.HttpClient;
+//import java.net.HttpURLConnection;
+//import ru.crystals.httpclient.HttpClient;
+//import ru.crystals.pos.check.DocumentEntity;
+//import ru.crystals.pos.check.SentToServerStatus;
 import ru.crystals.httpclient.HttpFileConnection;
 import ru.crystals.httpclient.HttpFileTransport;
 import ru.crystals.operday.transport.CashTransportBeanRemote;
-import ru.crystals.pos.check.DocumentEntity;
-import ru.crystals.pos.check.SentToServerStatus;
 import ru.crystals.transport.TransferObject;
 
 public class DocsSender {
@@ -76,7 +76,6 @@ public class DocsSender {
 //                       return null;
 //                   }
 //               }
-//               
                
                 // сетим в базу опердня (od_inbound_files) новый чек, который подложен в nginx для обработки
                 if (connect.getResponseMessage().equals("Created")){

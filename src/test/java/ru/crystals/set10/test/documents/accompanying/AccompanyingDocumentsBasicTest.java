@@ -18,11 +18,11 @@ import ru.crystals.set10.pages.operday.searchcheck.CheckContentPage;
 import ru.crystals.set10.pages.operday.searchcheck.CheckSearchPage;
 import ru.crystals.set10.pages.operday.tablereports.ReportConfigPage;
 import ru.crystals.set10.test.AbstractTest;
-import ru.crystals.set10.utils.CheckGenerator;
+import ru.crystals.set10.utils.CashEmulator;
 import ru.crystals.set10.utils.DbAdapter;
 import ru.crystals.set10.utils.SoapRequestSender;
 import static ru.crystals.set10.utils.DbAdapter.DB_RETAIL_SET;
-
+import ru.crystals.set10.utils.GoodsParser;
 
 public class AccompanyingDocumentsBasicTest extends AbstractTest{
 	
@@ -32,7 +32,7 @@ public class AccompanyingDocumentsBasicTest extends AbstractTest{
 	HTMLRepotResultPage htmlReportResults;
 	PurchaseEntity pe;
 	CheckContentPage checkContent;
-	CheckGenerator checkGenerator = new CheckGenerator(Config.RETAIL_HOST, Integer.valueOf(Config.SHOP_NUMBER), 1);
+
 	private static String predefindCheckNumber = "0";
 	
 	private static DbAdapter db = new  DbAdapter();
@@ -91,7 +91,7 @@ public class AccompanyingDocumentsBasicTest extends AbstractTest{
 		 *  Сгенерим только один чек для всех тестов на сопроводительные документы
 		 */
 		if ( predefindCheckNumber.equals("0")) {
-			pe = (PurchaseEntity) checkGenerator.nextPurchase(generatePredefinedCheck());
+			pe = (PurchaseEntity) cashEmulator.nextPurchase(generatePredefinedCheck());
 			predefindCheckNumber = String.valueOf(pe.getNumber());
 		}
 		
@@ -174,13 +174,13 @@ public class AccompanyingDocumentsBasicTest extends AbstractTest{
 	
 	private static ProductEntity getPurchasePosition(String markingOfTheGood){
 		ArrayList<ProductEntity> result = new ArrayList<ProductEntity>();
-		result = CheckGenerator.parsePurchasesFromDB(
+		result = GoodsParser.parsePurchasesFromDB(
 				db.queryForRowSet(DB_RETAIL_SET, String.format(SQL_GOODS, "'" + markingOfTheGood + "'")));
 
 		if (result.size() == 0) {
 			SoapRequestSender soapSender  = new SoapRequestSender();
 			soapSender.sendGoodsToStartTesting(Config.RETAIL_HOST, "deny_and_allow_print_goods.txt");
-			result = CheckGenerator.parsePurchasesFromDB(
+			result = GoodsParser.parsePurchasesFromDB(
 					db.queryForRowSet(DB_RETAIL_SET, String.format(SQL_GOODS, "'" + markingOfTheGood + "'")));
 		}
 		return result.get(0);

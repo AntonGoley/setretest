@@ -19,6 +19,7 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.annotations.BeforeMethod;
 import ru.crystals.set10.config.*;
 import ru.crystals.set10.pages.basic.*;
+import ru.crystals.set10.utils.CashEmulator;
 import ru.crystals.set10.utils.DisinsectorTools;
 
 
@@ -29,6 +30,7 @@ public class AbstractTest {
     private WebDriver driver;
     private static ChromeDriverService service;
     protected static String chromeDownloadPath = null;
+    protected static CashEmulator cashEmulator = CashEmulator.getCashEmulator(Config.RETAIL_HOST, Integer.valueOf(Config.SHOP_NUMBER), Integer.valueOf(Config.CASH_NUMBER));
     
     public WebDriver getDriver() {
         return driver;
@@ -108,5 +110,4 @@ public class AbstractTest {
 		log.info("Chrome download path: " + chromeDownloadPath);
 		new DisinsectorTools().removeOldDownloadedReports(getChromeDownloadPath());
 	}
-    
 }
