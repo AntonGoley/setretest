@@ -34,7 +34,7 @@ public class GoodsParser {
 	private static DbAdapter db = new  DbAdapter();
 	private static final String SQL_GOODS_COUNT = "select count(*) from un_cg_product";
 	private static final String SQL_GOODS = 
-			"SELECT  markingofthegood, barc.code as barcode, pr.name as name" + /*, fullname*/ ", lastimporttime, measure_code, vat " +
+			"SELECT  markingofthegood, barc.code as barcode, pr.name as name, fullname, lastimporttime, measure_code, vat " +
 			"FROM  un_cg_product pr " +
 			"JOIN " +
 			"un_cg_barcode barc " +
@@ -54,16 +54,13 @@ public class GoodsParser {
 	
 	private static void generateChecks() {
 	    //long reportId = 1L;
-	    while (peList.size() < 50) {
-	      peList.add(new PurchaseEntity());
-	      peList.get(peList.size() - 1);
-
-	      PurchaseEntity pe = (PurchaseEntity)peList.get(peList.size() - 1);
+	    while (peList.size() < 30) {
+	      PurchaseEntity pe = new PurchaseEntity();	
 	      
 	      pe.setCheckStatus(CheckStatus.Registered);
 	      pe.setOperationType(Boolean.valueOf(true));
 	      List<PositionEntity> positions = new ArrayList<PositionEntity>(100);
-	      int end = (int)random(20) + 1;
+	      int end = (int)random(20) + 3;
 	      long qnt = 0L;
 	      long summ = 0L;
 	      for (int i = 1; i < end; i++) {
@@ -75,20 +72,20 @@ public class GoodsParser {
 	        } else {
 	        	qnt = random(5) + 1L;
 	        }
-	        pos.setQnty(Long.valueOf(qnt * 1000L));
-	        pos.setPriceEnd(Long.valueOf(random(1000) * 127L));
-	        pos.setSum(Long.valueOf(qnt * pos.getPriceEnd().longValue()));
-	        summ += pos.getSum().longValue();
-	        pos.setNdsSum(Long.valueOf(Math.round(pos.getSum().longValue() * 0.2D)));
-	        pos.setInsertType(InsertType.Hand);
-	        pos.setCalculateDiscount(Boolean.valueOf(true));
-	        pos.setSumDiscount(Long.valueOf(0L));
-	        pos.setDeleted(Boolean.valueOf(false));
-	        pos.setSuccessProcessed(true);
-	        pos.setDateTime(new Date(System.currentTimeMillis()));
-
-	        positions.add(pos);
-	        pe.setFiscalDocNum("test;" + String.valueOf(System.currentTimeMillis()));
+		        pos.setQnty(Long.valueOf(qnt * 1000L));
+		        pos.setPriceEnd(Long.valueOf(random(1000) * 127L));
+		        pos.setSum(Long.valueOf(qnt * pos.getPriceEnd().longValue()));
+		        summ += pos.getSum().longValue();
+		        pos.setNdsSum(Long.valueOf(Math.round(pos.getSum().longValue() * 0.2D)));
+		        pos.setInsertType(InsertType.Hand);
+		        pos.setCalculateDiscount(Boolean.valueOf(true));
+		        pos.setSumDiscount(Long.valueOf(0L));
+		        pos.setDeleted(Boolean.valueOf(false));
+		        pos.setSuccessProcessed(true);
+		        pos.setDateTime(new Date(System.currentTimeMillis()));
+	
+		        positions.add(pos);
+		        pe.setFiscalDocNum("test;" + String.valueOf(System.currentTimeMillis()));
 	      }
 	      pe.setPositions(positions);
 	      List<PaymentEntity> paymentEntityList = new ArrayList<PaymentEntity>(1);
@@ -104,8 +101,10 @@ public class GoodsParser {
 	      pe.setDiscountValueTotal(Long.valueOf(0L));
 	      pe.setCheckSumEnd(Long.valueOf(summ));
 	      pe.setCheckSumStart(Long.valueOf(summ));
+	      
+	      peList.add(pe);
 	    }
-
+	    
 //	    ReportShiftEntity rse = new ReportShiftEntity();
 //	    rse.setReportZ(true);
 //	    rse.setSumPurchaseFiscal(Long.valueOf(34650L));
