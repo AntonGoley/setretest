@@ -12,6 +12,7 @@ import ru.crystals.set10.pages.sales.topology.RegionPage;
 import ru.crystals.set10.pages.sales.topology.TopologyPage;
 import ru.crystals.set10.test.AbstractTest;
 import ru.crystals.set10.utils.DbAdapter;
+import ru.crystals.set10.utils.DisinsectorTools;
 import ru.crystals.set10.utils.SoapRequestSender;
 import static ru.crystals.set10.pages.basic.SalesPage.*;
 
@@ -31,7 +32,10 @@ public class SetTopologyTest extends AbstractTest{
 			groups = "Config",
 			description = "Настроить топологию: создать регион, город, магазин, юридическое лицо, добавить кассы, создать кассира")
 	public void setTopology() {
+		DisinsectorTools.delay(3000);
 		mainPage = new LoginPage(getDriver(), Config.CENTRUM_URL).doLogin(Config.MANAGER, Config.MANAGER_PASSWORD);
+		// таймаут для певрого запуска
+		DisinsectorTools.delay(5000);
 		salesPage = mainPage.openSales();
 		addRegionAndCity();
 		addShop(false);
