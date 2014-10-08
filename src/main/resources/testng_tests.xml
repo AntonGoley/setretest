@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="Functional" preserve-order="true" configfailurepolicy="continue" >
+<suite name="Functional" preserve-order="true" configfailurepolicy="continue" parallel="tests" thread-count="3">
 <listeners>
     <listener class-name="org.uncommons.reportng.HTMLReporter" />
  </listeners>
@@ -28,9 +28,9 @@
 	  	<class name="ru.crystals.set10.test.tablereports.MRCPriceReportWithLekondsTest"/>
 		</classes>	 
   	</test>	
-	<test name="Выгрузка в SAP алкогольных ограничений" >
+		<test name="Выгрузка в SAP алкогольных ограничений" >
 	  	<classes>
-	  	<class name="ru.crystals.set10.test.SpiritRestrictionsToSAPTest"/>
+	  		<class name="ru.crystals.set10.test.SpiritRestrictionsToSAPTest"/>
 		</classes>	 
   	</test>	 
 </suite> 

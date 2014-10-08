@@ -20,20 +20,21 @@ import ru.crystals.pos.check.InsertType;
 import ru.crystals.pos.check.PositionEntity;
 import ru.crystals.pos.check.PurchaseEntity;
 import ru.crystals.pos.payments.CashPaymentEntity;
+import ru.crystals.pos.payments.PaymentEntity;
 import ru.crystals.set10.config.Config;
 
 public class GoodsParser {
 	
 	private static final Logger log = LoggerFactory.getLogger(GoodsParser.class);
 	
-	public static ArrayList<ProductEntity> catalogGoods = new ArrayList();
+	public static ArrayList<ProductEntity> catalogGoods = new ArrayList<ProductEntity>();
 	public static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-DD hh:mm:ss");
-	public static ArrayList<DocumentEntity> peList = new ArrayList();
+	public static ArrayList<DocumentEntity> peList = new ArrayList<DocumentEntity>();
 	
 	private static DbAdapter db = new  DbAdapter();
 	private static final String SQL_GOODS_COUNT = "select count(*) from un_cg_product";
 	private static final String SQL_GOODS = 
-			"SELECT  markingofthegood, barc.code as barcode, pr.name as name, fullname, lastimporttime, measure_code, vat " +
+			"SELECT  markingofthegood, barc.code as barcode, pr.name as name" + /*, fullname*/ ", lastimporttime, measure_code, vat " +
 			"FROM  un_cg_product pr " +
 			"JOIN " +
 			"un_cg_barcode barc " +
@@ -61,7 +62,7 @@ public class GoodsParser {
 	      
 	      pe.setCheckStatus(CheckStatus.Registered);
 	      pe.setOperationType(Boolean.valueOf(true));
-	      List positions = new ArrayList(100);
+	      List<PositionEntity> positions = new ArrayList<PositionEntity>(100);
 	      int end = (int)random(20) + 1;
 	      long qnt = 0L;
 	      long summ = 0L;
@@ -90,7 +91,7 @@ public class GoodsParser {
 	        pe.setFiscalDocNum("test;" + String.valueOf(System.currentTimeMillis()));
 	      }
 	      pe.setPositions(positions);
-	      List paymentEntityList = new ArrayList(1);
+	      List<PaymentEntity> paymentEntityList = new ArrayList<PaymentEntity>(1);
 	      CashPaymentEntity payE = new CashPaymentEntity();
 	      payE.setDateCreate(new Date(System.currentTimeMillis()));
 	      payE.setDateCommit(new Date(System.currentTimeMillis()));

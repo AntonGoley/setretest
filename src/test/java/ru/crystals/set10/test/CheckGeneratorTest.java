@@ -20,13 +20,14 @@ public class CheckGeneratorTest {
 				"; dbUser: " + Config.DB_USER + 
 				"; dbPassword: " + Config.DB_PASSWORD );
 		
-		cashEmulator.nextIntroduction();
+//		cashEmulator.nextIntroduction();
 		for (int i=1; i<=Integer.valueOf(Config.CHECK_COUNT); i++) {
-			PurchaseEntity pe = (PurchaseEntity) cashEmulator.nextPurchase();
-			PositionEntity pos = pe.getPositions().get(0);
-			cashEmulator.nextRefundCheck(pe, pos, pos.getQnty(), false);
+//			PurchaseEntity pe = (PurchaseEntity) cashEmulator.nextPurchase();
+//			PositionEntity pos = pe.getPositions().get(0);
+//			cashEmulator.nextRefundCheck(pe, pos, pos.getQnty(), false);
+			cashEmulator.nextIntroduction();
+			cashEmulator.nextWithdrawal();
 		}	
-		cashEmulator.nextWithdrawal();
 		cashEmulator.nextZReport();
 	}
 }

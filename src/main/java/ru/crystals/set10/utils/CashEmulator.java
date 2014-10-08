@@ -21,6 +21,7 @@ import ru.crystals.pos.check.ShiftEntity;
 import ru.crystals.pos.check.UserEntity;
 import ru.crystals.pos.check.WithdrawalEntity;
 import ru.crystals.pos.payments.CashPaymentEntity;
+import ru.crystals.pos.payments.PaymentEntity;
 import ru.crystals.transport.DataTypesEnum;
 import static ru.crystals.set10.utils.DbAdapter.*;
 import static ru.crystals.set10.utils.GoodsParser.*;
@@ -328,7 +329,7 @@ public class CashEmulator {
 	    ReportPaymentTypeEntity reportPaymentTypeEntity = new ReportPaymentTypeEntity(rse.getId().longValue(), "CashPaymentEntity", 'P');
 	    //reportPaymentTypeEntity.setPSumm(getShiftSum(false));
 	    
-	    List listRPTE = new ArrayList();
+	    List<ReportPaymentTypeEntity> listRPTE = new ArrayList<ReportPaymentTypeEntity>();
 	    listRPTE.add(reportPaymentTypeEntity);
 	    rse.setPaymentsTypesList(listRPTE);
 	    rse.setShift(shift);
@@ -369,7 +370,7 @@ public class CashEmulator {
       ue.setLastName(String.format("Cashier_%s", String.valueOf(cashNumber) + "_last_name"));
       ue.setMiddleName(String.format("Cashier_%s", String.valueOf(cashNumber) + "_middle_name"));
       ue.setTabNum(String.valueOf(cashNumber));
-      ue.setSessions(new ArrayList());
+      ue.setSessions(new ArrayList<SessionEntity>());
       ue.getSessions().add(se);
       se.setUser(ue);
       return se;
@@ -408,7 +409,7 @@ public class CashEmulator {
 						boolean arbitraryReturn){
 		
 		 long summ = 0L; 
-		 List positions = new ArrayList(1);
+		 List<PositionEntity> positions = new ArrayList<PositionEntity>(1);
 		 PurchaseEntity returnPe = new PurchaseEntity();
 		 returnPe.setCheckStatus(CheckStatus.Registered);
 		 returnPe.setOperationType(Boolean.valueOf(true));
@@ -420,7 +421,7 @@ public class CashEmulator {
 	     returnPe.setPositions(positions);
 	     returnPe.setReturn();
 	     
-	     List paymentEntityList = new ArrayList(1);
+	     List<PaymentEntity> paymentEntityList = new ArrayList<PaymentEntity>(1);
 	      CashPaymentEntity payE = new CashPaymentEntity();
 	      payE.setDateCreate(new Date(System.currentTimeMillis()));
 	      payE.setDateCommit(new Date(System.currentTimeMillis()));
