@@ -23,6 +23,7 @@ public class OperDayPage extends AbstractPage{
 	}
 	
 	
+	
 	public TableReportPage openTableReports() {
 		clickElement(getDriver(), ID_OPERDAYSWF, LOCATOR_TABLEREPORTS);
 		return new TableReportPage(getDriver());

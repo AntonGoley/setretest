@@ -10,6 +10,7 @@ import ru.crystals.pos.check.InsertType;
 import ru.crystals.pos.check.PositionEntity;
 import ru.crystals.pos.check.PurchaseEntity;
 import ru.crystals.pos.payments.CashPaymentEntity;
+import ru.crystals.pos.payments.PaymentEntity;
 import ru.crystals.set10.config.Config;
 import ru.crystals.set10.pages.basic.LoginPage;
 import ru.crystals.set10.pages.basic.MainPage;
@@ -143,7 +144,7 @@ public class AccompanyingDocumentsBasicTest extends AbstractTest{
 	    pe.setOperationType(Boolean.valueOf(true));
 		pe.setPositions(positions);
 		
-	      List paymentEntityList = new ArrayList(1);
+	      List<PaymentEntity> paymentEntityList = new ArrayList<PaymentEntity>(1);
 	      CashPaymentEntity payE = new CashPaymentEntity();
 	      payE.setDateCreate(new Date(System.currentTimeMillis()));
 	      payE.setDateCommit(new Date(System.currentTimeMillis()));

@@ -17,7 +17,7 @@ public class ConfigureEnvTest extends AbstractTest{
 
 	
 	@Test (description = "Подключить магазин к центруму",
-			groups = {"Config"})
+			groups = "Config")
 	public void connectShop(){
 		log.info("Подключить магазин " + Config.RETAIL_HOST + " к центруму " + Config.CENTRUM_HOST);
 		try {
