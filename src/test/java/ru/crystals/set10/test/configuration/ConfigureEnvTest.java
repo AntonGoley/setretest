@@ -16,8 +16,7 @@ public class ConfigureEnvTest extends AbstractTest{
 	AMFRequester requester;
 
 	
-	@Test (description = "Подключить магазин к центруму",
-			groups = "Config")
+	@Test (description = "Подключить магазин к центруму")
 	public void connectShop(){
 		log.info("Подключить магазин " + Config.RETAIL_HOST + " к центруму " + Config.CENTRUM_HOST);
 		try {

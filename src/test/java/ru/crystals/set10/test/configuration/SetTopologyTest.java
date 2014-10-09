@@ -44,8 +44,8 @@ public class SetTopologyTest extends AbstractTest{
 	}
 	
 	@Test (	
-			description = "Добавить права пользователю manager на центруме",
-			groups = {"Config", "Roles"} )
+			description = "Добавить права пользователю manager на центруме"
+			)
 	public void setUpPrevilegesCentrum(){
 		// Добавить роль админа пользователю Config.MANAGER на центруме
 		dba.updateDb(DbAdapter.DB_CENTRUM_SET , String.format("update users_server_user_users_server_user_role " + 
@@ -56,8 +56,8 @@ public class SetTopologyTest extends AbstractTest{
 	}	
 
 	@Test (	
-			description = "Добавить все роли пользователю manager на ретейле",
-			groups = {"Config", "Roles"} )
+			description = "Добавить все роли пользователю manager на ретейле"
+			 )
 	public void setUpPrevilegesRetail(){
 		//Добавить все роли на ритейле
 		dba.updateDb(DbAdapter.DB_RETAIL_SET, "delete from users_server_user_users_server_user_role");
