@@ -19,7 +19,6 @@ import ru.crystals.set10.pages.operday.searchcheck.CheckContentPage;
 import ru.crystals.set10.pages.operday.searchcheck.CheckSearchPage;
 import ru.crystals.set10.pages.operday.tablereports.ReportConfigPage;
 import ru.crystals.set10.test.AbstractTest;
-import ru.crystals.set10.utils.DbAdapter;
 import ru.crystals.set10.utils.SoapRequestSender;
 import static ru.crystals.set10.utils.DbAdapter.DB_RETAIL_SET;
 import ru.crystals.set10.utils.GoodsParser;
@@ -34,8 +33,6 @@ public class AccompanyingDocumentsBasicTest extends AbstractTest{
 	CheckContentPage checkContent;
 
 	private static String predefindCheckNumber = "0";
-	
-	private static DbAdapter db = new  DbAdapter();
 	
 	/*
 	 * Данные для заполнения контрагента
@@ -175,13 +172,13 @@ public class AccompanyingDocumentsBasicTest extends AbstractTest{
 	private static ProductEntity getPurchasePosition(String markingOfTheGood){
 		ArrayList<ProductEntity> result = new ArrayList<ProductEntity>();
 		result = GoodsParser.parsePurchasesFromDB(
-				db.queryForRowSet(DB_RETAIL_SET, String.format(SQL_GOODS, "'" + markingOfTheGood + "'")));
+				dbAdapter.queryForRowSet(DB_RETAIL_SET, String.format(SQL_GOODS, "'" + markingOfTheGood + "'")));
 
 		if (result.size() == 0) {
 			SoapRequestSender soapSender  = new SoapRequestSender();
 			soapSender.sendGoodsToStartTesting(Config.RETAIL_HOST, "deny_and_allow_print_goods.txt");
 			result = GoodsParser.parsePurchasesFromDB(
-					db.queryForRowSet(DB_RETAIL_SET, String.format(SQL_GOODS, "'" + markingOfTheGood + "'")));
+					dbAdapter.queryForRowSet(DB_RETAIL_SET, String.format(SQL_GOODS, "'" + markingOfTheGood + "'")));
 		}
 		return result.get(0);
 	}

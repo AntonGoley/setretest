@@ -5,6 +5,8 @@ import static ru.crystals.set10.utils.FlexMediator.*;
 
 import org.openqa.selenium.*;
 
+import ru.crystals.set10.pages.operday.OperDayPage;
+
 
 public class LoginPage extends AbstractPage{
 	
@@ -28,21 +30,12 @@ public class LoginPage extends AbstractPage{
 		return new MainPage(getDriver());
 	}
 	
-	
-	public enum Set10ShopRoles{
-		MARKETER (1),
-		GOODS_MANAGER (2),
-		SECTION_MANAGER (2),
-		ADMINISTRATOR_CO (10);
-		
-		private final int dbId; 
-		Set10ShopRoles(int dbId){
-			this.dbId = dbId;
-		}
-		
-		public int getDbId(){
-			return this.dbId;
-		}
-		
+	/*
+	 * Залогиниться и открыть опер день 
+	 * 
+	 */
+	public OperDayPage openOperDay(String username, String password){
+		return doLogin(username, password)
+			.openOperDay();
 	}
 }

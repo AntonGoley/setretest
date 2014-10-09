@@ -68,6 +68,10 @@ public class DbAdapter {
 	public void updateDb(String db, String sql){
 		connectionPool.get(db).update(sql);	
 	}
+	
+	public void batchUpdateDb(String db, String[] sql){
+		connectionPool.get(db).batchUpdate(sql);	
+	}
 }
 
 

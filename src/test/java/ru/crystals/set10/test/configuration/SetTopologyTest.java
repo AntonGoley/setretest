@@ -26,7 +26,7 @@ public class SetTopologyTest extends AbstractTest{
 	ShopPage shopPage;
 	ShopPreferencesPage shopPreferences;
 	JuristicPersonPage juristicPerson;
-	DbAdapter dba = new DbAdapter();
+
 	
 	@Test (	priority = 1,
 			groups = "Config",
@@ -48,10 +48,10 @@ public class SetTopologyTest extends AbstractTest{
 			)
 	public void setUpPrevilegesCentrum(){
 		// Добавить роль админа пользователю Config.MANAGER на центруме
-		dba.updateDb(DbAdapter.DB_CENTRUM_SET , String.format("update users_server_user_users_server_user_role " + 
+		dbAdapter.updateDb(DbAdapter.DB_CENTRUM_SET , String.format("update users_server_user_users_server_user_role " + 
 				"set roles_id = '10' " +
 				"where serveruserentities_id = (select id from users_server_user where login = '%s')", Config.MANAGER));
-		dba.updateDb(DbAdapter.DB_CENTRUM_SET, String.format("update users_server_user " +
+		dbAdapter.updateDb(DbAdapter.DB_CENTRUM_SET, String.format("update users_server_user " +
 				"set firstname = '%s', lastname='%s', middlename='%s' ", Config.MANAGER_NAME, Config.MANAGER_LASTNAME, Config.MANAGER_MIDDLENAME ));
 	}	
 
@@ -60,14 +60,14 @@ public class SetTopologyTest extends AbstractTest{
 			 )
 	public void setUpPrevilegesRetail(){
 		//Добавить все роли на ритейле
-		dba.updateDb(DbAdapter.DB_RETAIL_SET, "delete from users_server_user_users_server_user_role");
+		dbAdapter.updateDb(DbAdapter.DB_RETAIL_SET, "delete from users_server_user_users_server_user_role");
 		
 		for (int i=1; i<=7; i++) {
-			dba.updateDb(DbAdapter.DB_RETAIL_SET, String.format("INSERT INTO users_server_user_users_server_user_role(serveruserentities_id, roles_id)" +
+			dbAdapter.updateDb(DbAdapter.DB_RETAIL_SET, String.format("INSERT INTO users_server_user_users_server_user_role(serveruserentities_id, roles_id)" +
 										" VALUES (%s, %s)", 1, i));
 		}
 		
-		dba.updateDb(DbAdapter.DB_RETAIL_SET, String.format("update users_server_user " +
+		dbAdapter.updateDb(DbAdapter.DB_RETAIL_SET, String.format("update users_server_user " +
 				"set firstname = '%s', lastname='%s', middlename='%s' ", Config.MANAGER_NAME, Config.MANAGER_LASTNAME, Config.MANAGER_MIDDLENAME ));
 	}
 	

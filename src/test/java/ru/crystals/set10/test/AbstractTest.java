@@ -22,6 +22,7 @@ import org.testng.annotations.BeforeMethod;
 import ru.crystals.set10.config.*;
 import ru.crystals.set10.pages.basic.*;
 import ru.crystals.set10.utils.CashEmulator;
+import ru.crystals.set10.utils.DbAdapter;
 import ru.crystals.set10.utils.DisinsectorTools;
 
 
@@ -33,6 +34,7 @@ public class AbstractTest {
     private static ChromeDriverService service;
     protected static String chromeDownloadPath = null;
     protected static CashEmulator cashEmulator = CashEmulator.getCashEmulator(Config.RETAIL_HOST, Integer.valueOf(Config.SHOP_NUMBER), Integer.valueOf(Config.CASH_NUMBER));
+    protected static DbAdapter dbAdapter = new DbAdapter();
     
     public WebDriver getDriver() {
         return driver;
@@ -62,7 +64,7 @@ public class AbstractTest {
     	
     	driver = new RemoteWebDriver(service.getUrl(), capabilities);
     	
-    	driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+    	driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
     	driver.manage().deleteAllCookies();
     	chromeDownloadPath = getChromeDownloadPath();
     	
