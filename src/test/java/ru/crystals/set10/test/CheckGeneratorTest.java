@@ -24,7 +24,7 @@ public class CheckGeneratorTest {
 		for (int i=1; i<=Integer.valueOf(Config.CHECK_COUNT); i++) {
 			PurchaseEntity pe = (PurchaseEntity) cashEmulator.nextPurchase();
 			PositionEntity pos = pe.getPositions().get(0);
-			cashEmulator.nextRefundCheck(pe, pos, pos.getQnty(), false);
+			cashEmulator.nextRefundCheck(pe, pos, 1, false);
 		}	
 		cashEmulator.nextWithdrawal();
 		cashEmulator.nextZReport();

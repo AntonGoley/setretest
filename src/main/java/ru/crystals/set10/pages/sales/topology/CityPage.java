@@ -5,14 +5,12 @@ import static ru.crystals.set10.utils.FlexMediator.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-
-import ru.crystals.set10.pages.basic.AbstractPage;
 import ru.crystals.set10.pages.basic.BasicElements;
+import ru.crystals.set10.pages.basic.SalesPage;
 
 
-public class CityPage extends AbstractPage{
+public class CityPage extends SalesPage{
 	
-	static final String ID_SALESSWF = "Sales";
 	static final String LOCATOR_CITY_NAME_INPUT = "cityNameTI";
 	static final String LOCATOR_BACK_BUTTON = "label=К городам";
 	

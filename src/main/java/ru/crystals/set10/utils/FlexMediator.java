@@ -32,6 +32,10 @@ public class FlexMediator {
 		return ecxecuteAndReturnString(driver, String.format("return document.getElementById('%s').getFlexProperty('%s', '%s')", swfSrc, flexId, propertyName));	
 	}
 	
+	public static void selectElement(WebDriver driver, String swfSrc, String flexId, String element) {
+		waitForElement(driver, swfSrc, flexId);
+		ecxecute(driver, String.format("document.getElementById('%s').doFlexSelect('%s', '%s')", swfSrc, flexId, element));	
+	}
 	
 	/*
 	 * args - [property value] 

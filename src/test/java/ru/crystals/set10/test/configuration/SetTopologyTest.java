@@ -4,6 +4,8 @@ package ru.crystals.set10.test.configuration;
 import org.testng.annotations.Test;
 import ru.crystals.set10.config.Config;
 import ru.crystals.set10.pages.basic.*;
+import ru.crystals.set10.pages.sales.cashiers.CashiersMainPage;
+import ru.crystals.set10.pages.sales.cashiers.CashierConfigPage;
 import ru.crystals.set10.pages.sales.shops.JuristicPersonPage;
 import ru.crystals.set10.pages.sales.shops.ShopPage;
 import ru.crystals.set10.pages.sales.shops.ShopPreferencesPage;
@@ -26,12 +28,13 @@ public class SetTopologyTest extends AbstractTest{
 	ShopPage shopPage;
 	ShopPreferencesPage shopPreferences;
 	JuristicPersonPage juristicPerson;
-
+	CashierConfigPage cashierConfig;
 	
 	@Test (	priority = 1,
 			groups = "Config",
 			description = "Настроить топологию: создать регион, город, магазин, юридическое лицо, добавить кассы, создать кассира")
 	public void setTopology() {
+		// таймауты для певрого запуска
 		DisinsectorTools.delay(3000);
 		mainPage = new LoginPage(getDriver(), Config.CENTRUM_URL).doLogin(Config.MANAGER, Config.MANAGER_PASSWORD);
 		// таймаут для певрого запуска
@@ -41,6 +44,7 @@ public class SetTopologyTest extends AbstractTest{
 		addShop(false);
 		sendGoods();
 		addCash();
+		addCashier();
 	}
 	
 	@Test (	
@@ -109,6 +113,21 @@ public class SetTopologyTest extends AbstractTest{
 		shopPage = salesPage.navigateMenu(SALES_MENU_SHOPS, "0", ShopPage.class);
 		shopPreferences = shopPage.openShopPreferences(Config.SHOP_NAME);
 		shopPreferences.addCashes(5);
+	}
+	
+	private void addCashier(){
+		getDriver().navigate().refresh();
+		salesPage = new SalesPage(getDriver());
+		cashierConfig = salesPage
+				.navigateMenu(SALES_MENU_CASHIERS, "5", CashiersMainPage.class)
+				.addCashier();
+		cashierConfig.addNewCashier(
+				Config.CASHIER_ADMIN_NAME,
+				Config.CASHIER_ADMIN_LAST_NAME,
+				Config.CASHIER_ADMIN_MIDDLE_NAME,
+				Config.CASHIER_ADMIN_TAB_NUM,
+				Config.CASHIER_ADMIN_PASSWORD, 
+				Config.CASHIER_ADMIN_ROLE);
 	}
 	
 	private void sendGoods(){

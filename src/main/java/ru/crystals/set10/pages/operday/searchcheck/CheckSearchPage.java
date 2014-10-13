@@ -4,6 +4,7 @@ package ru.crystals.set10.pages.operday.searchcheck;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import ru.crystals.set10.pages.operday.OperDayPage;
+import ru.crystals.set10.utils.DisinsectorTools;
 import static ru.crystals.set10.utils.FlexMediator.*;
 
 
@@ -50,7 +51,7 @@ public class  CheckSearchPage extends OperDayPage{
 	public boolean isCheckInOperDay(String checkNumber){
 		long timeoutCount = 0;
 		
-		delay(5000);
+		DisinsectorTools.delay(5000);
 		doSearch();
 		while (timeoutCount <= 3 ){
 			try {

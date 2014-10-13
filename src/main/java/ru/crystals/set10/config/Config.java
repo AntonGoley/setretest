@@ -46,6 +46,17 @@ public class Config {
     public static  String MANAGER_LASTNAME;
     public static  String MANAGER_MIDDLENAME;
     
+    /*
+     * Кассир администратор
+     */
+    
+    public static  String CASHIER_ADMIN_NAME;
+    public static  String CASHIER_ADMIN_MIDDLE_NAME;
+    public static  String CASHIER_ADMIN_LAST_NAME;
+    public static  String CASHIER_ADMIN_TAB_NUM;
+    public static  String CASHIER_ADMIN_PASSWORD;
+    public static  String CASHIER_ADMIN_ROLE;
+    
     
     private static Properties props;
 
@@ -89,15 +100,26 @@ public class Config {
     	NEXT_SHIFT = StringUtils.defaultString(NEXT_SHIFT, "false");
     	
         /*
-         * параметры, которые хранятся только в проперти файле 
+         * параметры, которые хранятся только в проперти файле  testng.properties
          */
-    	// Пользователь manager
+    	/*
+    	 *  Пользователь manager
+    	 */
         MANAGER =  props.getProperty("manager.login");
         MANAGER_PASSWORD =  props.getProperty("manager.password");
         MANAGER_NAME =  props.getProperty("manager.name");
         MANAGER_LASTNAME =  props.getProperty("manager.lastname");
         MANAGER_MIDDLENAME =  props.getProperty("manager.middlename");
         
+        /*
+         * Кассир
+         */
+        CASHIER_ADMIN_NAME =  props.getProperty("cashier.admin.name");
+        CASHIER_ADMIN_MIDDLE_NAME =  props.getProperty("cashier.admin.middleName");
+        CASHIER_ADMIN_LAST_NAME =  props.getProperty("cashier.admin.surnameName");
+        CASHIER_ADMIN_TAB_NUM =  props.getProperty("cashier.admin.tabnum");
+        CASHIER_ADMIN_PASSWORD =  props.getProperty("cashier.admin.password");
+        CASHIER_ADMIN_ROLE = "Администратор";
         /*
          * Магазин
          */

@@ -11,7 +11,6 @@ import ru.crystals.set10.pages.basic.SalesPage;
 
 public class ShopPage extends SalesPage{
 	
-	static final String ID_SALESSWF = "Sales";
 	static final String LOCATOR_ADD_SHOP_BUTTON = "addShopB";
 	static final String LOCATOR_CITY_NAME_INPUT = "cityNameTI";
 	static final String LOCATOR_SHOPS_DATAGRID = "dataGrid";

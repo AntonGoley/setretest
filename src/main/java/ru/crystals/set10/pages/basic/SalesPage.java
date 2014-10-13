@@ -9,7 +9,7 @@ import static ru.crystals.set10.utils.FlexMediator.*;
 
 public class SalesPage extends AbstractPage{
 	
-	static final String ID_SALESSWF = "Sales";
+	protected static final String ID_SALESSWF = "Sales";
 	static final String LOCATOR_MENUITEM = "topList";
 	
 	public static final String SALES_MENU_SHOPS = "text=Магазины";

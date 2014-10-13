@@ -31,6 +31,7 @@ public class AbstractTest {
     protected static final Logger log = Logger.getLogger(AbstractTest.class);
 	
     private WebDriver driver;
+    private static final int IMPLICIT_WAIT = 15; //sec
     private static ChromeDriverService service;
     protected static String chromeDownloadPath = null;
     protected static CashEmulator cashEmulator = CashEmulator.getCashEmulator(Config.RETAIL_HOST, Integer.valueOf(Config.SHOP_NUMBER), Integer.valueOf(Config.CASH_NUMBER));
@@ -64,7 +65,7 @@ public class AbstractTest {
     	
     	driver = new RemoteWebDriver(service.getUrl(), capabilities);
     	
-    	driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+    	driver.manage().timeouts().implicitlyWait(IMPLICIT_WAIT, TimeUnit.SECONDS);
     	driver.manage().deleteAllCookies();
     	chromeDownloadPath = getChromeDownloadPath();
     	

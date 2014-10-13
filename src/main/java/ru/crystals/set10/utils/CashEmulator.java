@@ -403,20 +403,31 @@ public class CashEmulator {
      */
 	public static DocumentEntity refundCheck( 
 						PurchaseEntity superPurchase, 
-						PositionEntity returnEntity, 
-						long qnty,
+						PositionEntity returnPosition, 
+						long returnQnty,
 						// является ли чек возврата произвольным (т.е не привязан к чеку продажи)
 						boolean arbitraryReturn){
 		
 		 long summ = 0L; 
 		 List<PositionEntity> positions = new ArrayList<PositionEntity>(1);
+		 
 		 PurchaseEntity returnPe = new PurchaseEntity();
 		 returnPe.setCheckStatus(CheckStatus.Registered);
 		 returnPe.setOperationType(Boolean.valueOf(true));
 		 
-		 returnEntity.setProduct(returnEntity.getProduct());
-		 summ += returnEntity.getSum().longValue();
-		 positions.add(returnEntity);
+		 PositionEntity position =  new PositionEntity();
+		 position.setProduct(returnPosition.getProduct());
+		 position.setNumber((long)1);
+		 position.setPriceEnd(returnPosition.getPriceEnd());
+		 position.setDateTime(new Date(System.currentTimeMillis()));
+		 position.setQnty(returnQnty * 1000L);
+		 position.setSum(Long.valueOf(returnQnty * position.getPriceEnd().longValue()));
+		 position.setDeleted(Boolean.valueOf(false));
+		 position.setSuccessProcessed(true);
+		 position.setNumberInOriginal(returnPosition.getNumber());
+		 
+		 summ += position.getSum().longValue();
+		 positions.add(position);
 	     returnPe.setFiscalDocNum("test; refund" + String.valueOf(System.currentTimeMillis()));
 	     returnPe.setPositions(positions);
 	     returnPe.setReturn();
@@ -444,12 +455,11 @@ public class CashEmulator {
 	public void logCheckEntities(PurchaseEntity pe){
 		Iterator<PositionEntity> i = pe.getPositions().iterator();
 		PositionEntity  poe;
-		log.info("Номер чека: " + pe.getNumber());
 		log.info("Номер смены: " + pe.getShift());
-		
+		log.info("Номер чека: " + pe.getNumber());
 		while (i.hasNext()) {
 			poe = (PositionEntity) i.next();
-			log.info("Позиция в товаре: " + poe.getName() + "; Баркод: " + poe.getBarCode());
+			log.info("Позиция N: " + poe.getNumber() + " - " + poe.getName() +  " - " +  poe.getQnty()/1000 + "; Баркод: "  + poe.getBarCode());
 		}
 	} 
 	
