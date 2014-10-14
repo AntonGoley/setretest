@@ -16,8 +16,8 @@ public class AbstractReportTest extends AbstractTest{
 	HTMLRepotResultPage htmlReportResults;
 	
 	/*
-	 * если отчет формируется первый раз, 
-	 * необходимо немного подождать, т.к это может быть долго и тест отвалится
+	 * необходимо немного подождать, при первом формировании отчета 
+	 *  
 	 */
 	boolean ifFirstReport = true;
 
@@ -37,6 +37,7 @@ public class AbstractReportTest extends AbstractTest{
 		if (ifFirstReport) {
 			log.info("Ожидание первой загрузки отчета");
 			DisinsectorTools.delay(20000);
+			ifFirstReport = false;
 		}
 		htmlReportResults = reportConfigPage.generateReport(HTMLREPORT);
 		// закрываем окно отчета и переключаемся в главное окно

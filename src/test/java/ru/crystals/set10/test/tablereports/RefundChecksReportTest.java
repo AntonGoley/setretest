@@ -73,7 +73,7 @@ public class RefundChecksReportTest extends AbstractReportTest{
 	}	
 
 	@Test (	priority = 2,
-			description = "Проверить названия отчета и название колонок в шапке таблицы отчета по возвратам", 
+			description = "SRL-80. Проверить названия отчета и название колонок в шапке таблицы отчета по возвратам", 
 			dataProvider = "Шапка отчета по возвратам", dataProviderClass = TableReportsDataprovider.class)
 	public void testRefundReportTableHead(String fieldName){
 		log.info(fieldName);
@@ -81,13 +81,13 @@ public class RefundChecksReportTest extends AbstractReportTest{
 	}
 	
 	@Test (	priority = 3,
-			description = "Проверить, что в отчет по возвратам попал новый возвратный чек: возврат позиции") 
+			description = "SRL-80. Проверить, что в отчет по возвратам попал новый возвратный чек: возврат позиции") 
 	public void testRefundReportContainsRefunds(){
 		int reportSizeBefore = htmlReportResults.getReportSize();
 		Assert.assertTrue(reportSizeBefore < sendRefundCheck(false).getReportSize(), "В отчете не отображается новый возвратный чек");
 	}
 	
-	@Test (	description = "Проверить, что данные возврата позиции отображаются корректно", 
+	@Test (	description = "SRL-80. Проверить, что данные возврата позиции отображаются корректно", 
 			dependsOnMethods = "testRefundReportContainsRefunds",
 			dataProvider = "Данные последней записи отчета")
 	public void testReportContainsData(String tableColumnName, int columnNumber){
@@ -95,7 +95,7 @@ public class RefundChecksReportTest extends AbstractReportTest{
 		Assert.assertEquals(htmlReportResults.getLastLineColumnValue(columnNumber), purchaseEntityData.get(tableColumnName));
 	}
 	
-	@Test ( description = "Проверить, что в отчет по возвратам попал новый возвратный чек: произвольный возврат", 
+	@Test ( description = "SRL-80. Проверить, что в отчет по возвратам попал новый возвратный чек: произвольный возврат", 
 			alwaysRun = true,
 			dependsOnMethods = {"testRefundReportContainsRefunds", "testReportContainsData"}
 			) 
@@ -105,7 +105,7 @@ public class RefundChecksReportTest extends AbstractReportTest{
 				"В отчете не отображается новый возвратный чек");
 	}
 	
-	@Test (	description = "Проверить, что данные отчета произвольного возврата отображаются корректно", 
+	@Test (	description = "SRL-80. Проверить, что данные отчета произвольного возврата отображаются корректно", 
 			dependsOnMethods = "testRefundReportContainsArbitraryRefunds",
 			dataProvider = "Данные последней записи отчета" )
 	public void testReportContainsArbitraryReportData(String tableColumnName, int columnNumber){

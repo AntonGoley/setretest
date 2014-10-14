@@ -103,20 +103,19 @@ public class SetTopologyTest extends AbstractTest{
 						.setKPP(Config.SHOP_KPP)
 						.setOKPO(Config.SHOP_OKPO)
 						.setOKDP(Config.SHOP_OKDP);
-		juristicPerson.goBack();
+		juristicPerson.goBack().goBack();
 						
 	}
 	
 	private void addCash(){
-		getDriver().navigate().refresh();
 		salesPage = new SalesPage(getDriver());
 		shopPage = salesPage.navigateMenu(SALES_MENU_SHOPS, "0", ShopPage.class);
 		shopPreferences = shopPage.openShopPreferences(Config.SHOP_NAME);
 		shopPreferences.addCashes(5);
+		shopPreferences.goBack();
 	}
 	
 	private void addCashier(){
-		getDriver().navigate().refresh();
 		salesPage = new SalesPage(getDriver());
 		cashierConfig = salesPage
 				.navigateMenu(SALES_MENU_CASHIERS, "5", CashiersMainPage.class)

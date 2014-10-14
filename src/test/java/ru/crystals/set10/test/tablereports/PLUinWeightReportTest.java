@@ -28,14 +28,14 @@ public class PLUinWeightReportTest extends AbstractReportTest{
 	}	
 	
 	
-	@Test (	description = "Проверить названия отчета и название колонок в шапке таблицы отчета по количеству PLU в весах", 
+	@Test (	description = "SRL-177. Проверить названия отчета и название колонок в шапке таблицы отчета по количеству PLU в весах", 
 			dataProvider = "Шапка отчета по количеству PLU в весах", dataProviderClass = TableReportsDataprovider.class)
 	public void testPLUTKHTMLReportTableHead(String fieldName){
 		log.info(fieldName);
 		Assert.assertTrue(htmlReportResults.containsValue(fieldName), "Неверное значение поля в шапке отчета: " + fieldName);
 	}
 	
-	@Test (	description = "Проверить, что \"Отчёт по количеству PLU в весах на ТК\" доступен для скачивания в формате xls",
+	@Test (	description = "SRL-177. Проверить, что \"Отчёт по количеству PLU в весах на ТК\" доступен для скачивания в формате xls",
 			dataProvider = "Доступные форматы для скачивания"
 			)
 	public void testPLUReportSaveFormats(String reportFormat, String reportNamePattern){

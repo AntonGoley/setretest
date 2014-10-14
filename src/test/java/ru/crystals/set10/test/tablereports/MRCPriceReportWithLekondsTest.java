@@ -60,7 +60,7 @@ public class MRCPriceReportWithLekondsTest extends AbstractReportTest{
 	}
 	
 	
-	@Test (	description = "В прейскуранте на табачные изделия проверить действие лекондов", 
+	@Test (	description = "SRL-360. В прейскуранте на табачные изделия проверить действие лекондов", 
 			dataProvider = "Даты ограничений")
 	public void testMRCLeconds(String dateStart, String dateEnd, boolean expected){
 		sendRequest(lecondRequest, dateStart, dateEnd);

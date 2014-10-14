@@ -39,20 +39,20 @@ public class AdverstingTableReportTest extends AbstractReportTest {
 		doReport();
 	}	
 	
-	@Test ( description = "Проверить название отчета и названия колонок в шапке таблицы отчета по рекламным акциям", 
+	@Test ( description = "SRL-182. Проверить название отчета и названия колонок в шапке таблицы отчета по рекламным акциям", 
 			dataProvider = "Шапка отчета Рекламные акции", dataProviderClass = TableReportsDataprovider.class)
 	public void testAdverstingHTMLReportTableHead(String fieldName){
 		log.info("Проверить название/наличие поля: " + fieldName);
 		Assert.assertTrue(this.htmlReportResults.containsValue(fieldName), "Неверное значение поля в шапке отчета: " + fieldName);
 	}
 	
-	@Test(description = "Проверить, что генерируется пустой отчет, если на товар не заведена рекламная акция")
+	@Test(description = "SRL-182. Проверить, что генерируется пустой отчет, если на товар не заведена рекламная акция")
 	public void testEmptyAdverstingHTMLReport() {
 		Assert.assertTrue(this.htmlReportResults.getReportSize() == 17, "Сгененированный отчет не пустой");
 	}	
 	
 	@Test (dependsOnMethods = "testEmptyAdverstingHTMLReport",
-			description = "Проверить, наличие товара в отчете, если на него заведена рекламная акция, действующая сегодня", 
+			description = "SRL-182. Проверить, наличие товара в отчете, если на него заведена рекламная акция, действующая сегодня", 
 			alwaysRun = true)
 	public void testGoodInReport(){
 		// завести рекламную акцию на товар с erpCode
@@ -65,7 +65,7 @@ public class AdverstingTableReportTest extends AbstractReportTest {
 	}
 	
 	@Test(	dependsOnMethods = "testGoodInReport",
-			description = "Если не задан код товара (поле ERP код пустое) выводятся все рекламные акции на ТК")
+			description = "SRL-182. Если не задан код товара (поле ERP код пустое) выводятся все рекламные акции на ТК")
 	public void testReportAllActionsIfNoParameters() {
 		String expectedErpCode = erpCode;
 		erpCode = "";
@@ -75,7 +75,7 @@ public class AdverstingTableReportTest extends AbstractReportTest {
 	}	
 	
 	@Test (	description = "Проверить, что \"Отчет по товарам в Рекламных акциях\" доступен для скачивания в формате pdf/xls",
-			dataProvider = "Доступные форматы для скачивания"
+			dataProvider = "SRL-182. Доступные форматы для скачивания"
 			)
 	public void testGoodOnTKSaveFormats(String reportFormat, String reportNamePattern){
 		long fileSize = 0;

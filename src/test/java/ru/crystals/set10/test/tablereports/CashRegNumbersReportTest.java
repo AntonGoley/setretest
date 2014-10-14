@@ -55,22 +55,22 @@ public class CashRegNumbersReportTest extends AbstractReportTest{
 		doHTMLReport(cashNumbersConfigPage, true);
 	}
 	
-	@Test (	description = "Проверить данные о кассе 1 в отчете о регистрационных номерах касс на ТК", 
+	@Test (	description = "SRL-137. Проверить данные о кассе 1 в отчете о регистрационных номерах касс на ТК", 
 			dataProvider = "CashData")
-	public void testCashRegHTMLReportTableВфеф(String field, String value){
+	public void testCashRegHTMLReportCash1Data(String field, String value){
 		log.info(field);
 		Assert.assertTrue(htmlReportResults.containsValue(value), "Неверное значение поля : " + field);
 	}
 	
 	
-	@Test (	description = "Проверить названия отчета и название колонок в шапке таблицы отчета о регистрационных номерах касс на ТК", 
+	@Test (	description = "SRL-137. Проверить названия отчета и название колонок в шапке таблицы отчета о регистрационных номерах касс на ТК", 
 			dataProvider = "Шапка отчета о рег. номерах", dataProviderClass = TableReportsDataprovider.class)
 	public void testCashRegHTMLReportTableHead(String fieldName){
 		log.info(fieldName);
 		Assert.assertTrue(htmlReportResults.containsValue(fieldName), "Неверное значение поля в шапке отчета: " + fieldName);
 	}
 	
-	@Test ( description = "Проверить, что \"Отчет о регистрационных номерах касс на ТК\" доступен для скачивания в формате xls"
+	@Test ( description = "SRL-137. Проверить, что \"Отчет о регистрационных номерах касс на ТК\" доступен для скачивания в формате xls"
 			)
 	public void testCashRegReportSaveXls(){
 		long fileSize = 0;
@@ -81,7 +81,7 @@ public class CashRegNumbersReportTest extends AbstractReportTest{
 	}
 	
 	@Test ( groups = "CashRegNumbers_Report_Smoke",
-			description = "Проверить, что \"Отчет о регистрационных номерах касс на ТК\" доступен для скачивания в формате pdf"
+			description = "SRL-137. Проверить, что \"Отчет о регистрационных номерах касс на ТК\" доступен для скачивания в формате pdf"
 			)
 	public void testCashRegReportSavePdf(){
 		long fileSize = 0;

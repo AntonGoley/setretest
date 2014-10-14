@@ -34,7 +34,7 @@ public class MRCPriceReportTest extends AbstractReportTest{
 	}	
 	
 	@Test (	groups = "MRC_Report_Smoke",
-			description = "Проверить названия отчета и название колонок в шапке таблицы прейскуранта на табачные изделия", 
+			description = "SRL-360. Проверить названия отчета и название колонок в шапке таблицы прейскуранта на табачные изделия", 
 			dataProvider = "Шапка отчета MRC", dataProviderClass = TableReportsDataprovider.class)
 	public void testMRCHTMLReportTableHead(String fieldName){
 		log.info(fieldName);
@@ -42,7 +42,7 @@ public class MRCPriceReportTest extends AbstractReportTest{
 	}
 	
 	@Test ( groups = "MRC_Report_Smoke",
-			description = "Проверить, что \"Прейскурант на тобачные изделия\" доступен для скачивания в формате xls"
+			description = "SRL-360. Проверить, что \"Прейскурант на тобачные изделия\" доступен для скачивания в формате xls"
 			)
 	public void testMRCReportSaveXls(){
 		long fileSize = 0;
@@ -53,7 +53,7 @@ public class MRCPriceReportTest extends AbstractReportTest{
 	}
 	
 	@Test (	dependsOnGroups = "MRC_Report_Smoke",
-			description = "В прейскуранте на табачные изделия проверить, что отображается 1-я цена, в случае, если при импорте отсутсвует plugin-property mrc")
+			description = "SRL-360. В прейскуранте на табачные изделия проверить, что отображается 1-я цена, в случае, если при импорте отсутсвует plugin-property mrc")
 	public void test1stPriceSetIfNoMRCPlugin(){
 		String goodName;
 		String request = DisinsectorTools.getFileContentAsString("MRC_Report/good_mrc_no_mrc_plugin.txt"); 
@@ -70,7 +70,7 @@ public class MRCPriceReportTest extends AbstractReportTest{
 	
 	
 	@Test (	dependsOnGroups = "MRC_Report_Smoke",
-			description = "В прейскуранте на табачные изделия проверить, что МРЦ и ЦП заполняются, в случае, если они приходят в plugin-property")
+			description = "SRL-360. В прейскуранте на табачные изделия проверить, что МРЦ и ЦП заполняются, в случае, если они приходят в plugin-property")
 	public void testMRCandCPSetIfAllInPlugin(){
 		String goodName;
 		String request = DisinsectorTools.getFileContentAsString("MRC_Report/good_mrc_prices.txt"); 
@@ -86,7 +86,7 @@ public class MRCPriceReportTest extends AbstractReportTest{
 	}
 	
 	@Test (	dependsOnGroups = "MRC_Report_Smoke",
-			description = "В прейскуранте на табачные изделия проверить, что МРЦ=ЦП если в plugin-property не приходит цена продажи")
+			description = "SRL-360. В прейскуранте на табачные изделия проверить, что МРЦ=ЦП если в plugin-property не приходит цена продажи")
 	public void testMRCEqualsCPIfNoCPInPlugin(){
 		String goodName;
 		String request = DisinsectorTools.getFileContentAsString("MRC_Report/good_mrc_prices.txt"); 
@@ -104,7 +104,7 @@ public class MRCPriceReportTest extends AbstractReportTest{
 	
 	
 	@Test (	dependsOnGroups = "MRC_Report_Smoke", alwaysRun = true,
-			description = "В прейскуранте на табачные изделия есть все МРЦ на данный товар, перечисленные в plugin-property")
+			description = "SRL-360. В прейскуранте на табачные изделия есть все МРЦ на данный товар, перечисленные в plugin-property")
 	public void testAllMRCInPlugin(){
 		int totalMRCInDataFile = 4;
 		String request = DisinsectorTools.getFileContentAsString("MRC_Report/good_mrc_4_positions.txt"); 

@@ -26,6 +26,10 @@ public class  CheckContentPage extends OperDayPage{
 	public static final String INPUT_JURISTIC_ADRESS = "address";
 	public static final String BUTTON_OK = "id:spinnerPanel/label:OK";
 	
+	/* 
+	 * Флаг, что сопроводительный документ еще не загружался
+	 */
+	private boolean ifFirstDocument = true;
 	
 	public CheckContentPage(WebDriver driver) {
 		super(driver, false);
@@ -54,10 +58,15 @@ public class  CheckContentPage extends OperDayPage{
 		typeText(getDriver(), ID_OPERDAYSWF , INPUT_JURISTIC_ADRESS, juristicAdress);
 		clickElement(getDriver(), ID_OPERDAYSWF , BUTTON_OK);
 		return getReportText();
-		
 	}
 	
 	private String getReportText(){
+	// если это первый документ, который печатаем	
+		if (ifFirstDocument) {
+			log.info("Ожидание первой загрузки отчета");
+			DisinsectorTools.delay(10000);
+			ifFirstDocument = false;
+		}
 		String reportText = "";
 		getWait().until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.xpath("//embed")));
 		//TODO: убрать задержку

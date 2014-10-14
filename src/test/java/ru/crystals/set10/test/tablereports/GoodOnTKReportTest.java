@@ -46,21 +46,21 @@ public class GoodOnTKReportTest extends AbstractReportTest{
 	}	
 
 	
-	@Test (	description = "Проверить названия отчета и название колонок в шапке таблицы отчета по товарам на ТК", 
+	@Test (	description = "SRL-174. Проверить названия отчета и название колонок в шапке таблицы отчета по товарам на ТК", 
 			dataProvider = "Шапка отчета Товары на ТК", dataProviderClass = TableReportsDataprovider.class)
 	public void testGoodOnTKHTMLReportTableHead(String fieldName){
 		log.info(fieldName);
 		Assert.assertTrue(htmlReportResults.containsValue(fieldName), "Неверное значение поля в шапке отчета: " + fieldName);
 	}
 	
-	@Test (	description = "Проверить наличие данных в отчете по товарам на ТК", 
+	@Test (	description = "SRL-174. Проверить наличие данных в отчете по товарам на ТК", 
 			dataProvider = "Данные отчета")
 	public void testGoodOnTKHTMLReportData(String field, String value){
 		log.info(field);
 		Assert.assertTrue(htmlReportResults.containsValue(value), "Неверное значение поля в отчете по ТК: " + field);
 	}
 	
-	@Test (	description = "Проверить, что \"Отчет по товару на ТК\" доступен для скачивания в формате pdf/xls",
+	@Test (	description = "SRL-174. Проверить, что \"Отчет по товару на ТК\" доступен для скачивания в формате pdf/xls",
 			dataProvider = "Доступные форматы для скачивания"
 			)
 	public void testGoodOnTKSaveFormats(String reportFormat, String reportNamePattern){

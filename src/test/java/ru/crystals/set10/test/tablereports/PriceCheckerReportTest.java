@@ -42,7 +42,7 @@ public class PriceCheckerReportTest extends AbstractReportTest{
 		doHTMLReport(priceCheckerConfig, true);
 	}	
 	
-	@Test (	description = "Проверить название отчета и название колонок в шапке таблицы отчета по прайсчекерам", 
+	@Test (	description = "SRL-176. Проверить название отчета и название колонок в шапке таблицы отчета по прайсчекерам", 
 			alwaysRun = true,
 			dataProvider = "Шапка отчета Прайс чекеры", dataProviderClass = TableReportsDataprovider.class)
 	public void testPricechekerHTMLReportTableHead(String fieldName){
@@ -51,14 +51,14 @@ public class PriceCheckerReportTest extends AbstractReportTest{
 	}
 	
 	//TODO: валидировать последнюю строку полностью
-	@Test (	description = "Проверить, что данные от прайсчекера приходят в отчет по прайсчекерам"
+	@Test (	description = "SRL-176. Проверить, что данные от прайсчекера приходят в отчет по прайсчекерам"
 			)
 	public void testPricechekerHTMLReportData(){
 		Assert.assertTrue(htmlReportResults.containsValue(mac), "В отчете не отображается информация о мак адресе " + mac);
 		Assert.assertTrue(htmlReportResults.containsValue(barCode), "В отчете не отображается информация о бар коде товара " + barCode);
 	}
 
-	@Test (	description = "Проверить, что отчет \"Отчёт для Прайс чекеров\" доступен для скачивания в формате xls",
+	@Test (	description = "SRL-176. Проверить, что отчет \"Отчёт для Прайс чекеров\" доступен для скачивания в формате xls",
 			dataProvider = "Доступные форматы для скачивания")
 	public void testPricechekerSaveFormats(String reportFormat, String reportNamePattern){
 		long fileSize = 0;

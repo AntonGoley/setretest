@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 
-<!-- 	тесты запускаются параллельно в 2 потока parallel="tests" (т.е параллелятся тэги <test>)
+<!-- 	- тесты запускаются параллельно в 2 потока parallel="tests" (т.е параллелятся тэги <test>)
 		внутри тэга <test> выполнение идет в одном потоке, т.е последовательно
 		
-		необходимо учитывать, что параллельно запущенные тесты не должны конфликтовать 
+		- необходимо учитывать, что параллельно запущенные тесты не должны конфликтовать 
 		по части тестовых данных 
+		
+		- тесты, запущенные после конфигурации и зависящие от скорости импорта 
+		данных мд Центрумом и Ретейлом запускать не в первую очередь 
 	 -->
 
-<suite name="Functional" preserve-order="true" configfailurepolicy="continue" parallel="tests" thread-count="2">
+<suite name="Опердень. Отчеты и сопроводительные документы" preserve-order="true" configfailurepolicy="continue" parallel="tests" thread-count="2">
 <listeners>
     <listener class-name="org.uncommons.reportng.HTMLReporter" />
  </listeners>
@@ -22,12 +25,12 @@
   	</test>	
 	<test name="Табличные отчеты">
 	  	<classes>
-	  		<class name="ru.crystals.set10.test.tablereports.RefundChecksReportTest"/>
-	  		<class name="ru.crystals.set10.test.tablereports.CashRegNumbersReportTest"/>
-	  		<class name="ru.crystals.set10.test.tablereports.AdverstingTableReportTest"/>
-	  		<class name="ru.crystals.set10.test.tablereports.PriceCheckerReportTest"/>
 	  		<class name="ru.crystals.set10.test.tablereports.GoodOnTKReportTest"/>
+	  		<class name="ru.crystals.set10.test.tablereports.PriceCheckerReportTest"/>
+	  		<class name="ru.crystals.set10.test.tablereports.RefundChecksReportTest"/>
+	  		<class name="ru.crystals.set10.test.tablereports.AdverstingTableReportTest"/>
 	  		<class name="ru.crystals.set10.test.tablereports.PLUinWeightReportTest"/>
+	  		<class name="ru.crystals.set10.test.tablereports.CashRegNumbersReportTest"/>
 		</classes>	 
   	</test>	
 	<test name="Прейскурант на табачные изделия" >

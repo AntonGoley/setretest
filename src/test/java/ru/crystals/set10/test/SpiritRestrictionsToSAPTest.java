@@ -44,7 +44,7 @@ public class SpiritRestrictionsToSAPTest extends AbstractTest{
 		alcoholRestrictionPage = alcoholRestrictionTab.addNewRestriction();
 	}
 	
-	@Test (description = "SLR-163. Выгрузка в SAP отчета по алкогольным ограничениям. Процент содержания алкоголя", 
+	@Test (description = "SRL-163. Выгрузка в SAP отчета по алкогольным ограничениям. Процент содержания алкоголя", 
 			dataProvider = "Процент содержания алкоголя", 
 			dataProviderClass = SpiritRistrictionsDataprovider.class)
 	public void spiritSAPExportSpiritPercentTest(String name, String percentValue, String xpath) {
@@ -54,7 +54,7 @@ public class SpiritRestrictionsToSAPTest extends AbstractTest{
 		validateTrue(String.format(xpath, name));
 	}
 	
-	//@Test (description = "SLR-163. Выгрузка в SAP отчета по алкогольным ограничениям. Период действия", 
+	//@Test (description = "SRL-163. Выгрузка в SAP отчета по алкогольным ограничениям. Период действия", 
 	//		dataProvider = "Период действия", 
 	//		dataProviderClass = SpiritRistrictionsDataprovider.class)
 	public void spiritSAPExportDateRangeTest(String name, String period, String dateToValidate, String xpath) {
@@ -64,7 +64,7 @@ public class SpiritRestrictionsToSAPTest extends AbstractTest{
 		validateTrue(String.format(xpath, name, dateToValidate));
 	}
 	
-	@Test (description = "SLR-163. Выгрузка в SAP отчета по алкогольным ограничениям. Время действия", 
+	@Test (description = "SRL-163. Выгрузка в SAP отчета по алкогольным ограничениям. Время действия", 
 			dataProvider = "Время действия", 
 			dataProviderClass = SpiritRistrictionsDataprovider.class)
 	public void spiritSAPExportTimeRangeTest(String name, String fromTime, String toTime, String timeToValidate, String xpath) {
