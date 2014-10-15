@@ -63,7 +63,7 @@ public class Config {
     
     static {
         try (
-        	Reader reader = new FileReader("target/classes/testing.properties");
+        	Reader reader = new FileReader("target/test-classes/testing.properties");
         	)
         {	
         	props = new Properties();
@@ -75,7 +75,7 @@ public class Config {
         }
         
         // TODO: разрулить запуск с разных ос
-        PATH_TO_DRIVER = "target/test-classes/chromedriver_win.exe";
+        PATH_TO_DRIVER = "target/classes/chromedriver_win.exe";
 //        PATH_TO_DRIVER = "target/test-classes/chromedriver";
         
         

@@ -17,6 +17,12 @@ public class  ReportConfigPage extends AbstractPage{
 	public static final String EXCELREPORT = "download_excel";
 	public static final String PDFREPORT = "download_pdf";
 	
+	/*
+	 * необходимо немного подождать, при первом формировании отчета 
+	 *  
+	 */
+	boolean ifFirstReport = true;
+	
 	public ReportConfigPage(WebDriver driver) {
 		super(driver);
 		getWait().until(ExpectedConditions.visibilityOfElementLocated(By.id(ID_OPERDAYSWF)));
@@ -28,6 +34,13 @@ public class  ReportConfigPage extends AbstractPage{
 		doFlexMouseDown(getDriver(), ID_OPERDAYSWF, reportType);
 		clickElement(getDriver(), ID_OPERDAYSWF, reportType);
 		switchWindow(false);
+		
+		if (ifFirstReport) {
+			log.info("Ожидание первой загрузки отчета");
+			DisinsectorTools.delay(20000);
+			ifFirstReport = false;
+		}
+		
 		return new HTMLRepotResultPage(getDriver());
 	}
 	

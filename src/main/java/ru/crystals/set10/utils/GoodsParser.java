@@ -34,7 +34,7 @@ public class GoodsParser {
 	private static DbAdapter db = new  DbAdapter();
 	private static final String SQL_GOODS_COUNT = "select count(*) from un_cg_product";
 	private static final String SQL_GOODS = 
-			"SELECT  markingofthegood, barc.code as barcode, pr.name as name" /*, fullname*/ + ", lastimporttime, measure_code, vat " +
+			"SELECT  markingofthegood, barc.code as barcode, pr.name as name, lastimporttime, measure_code, vat " +
 			"FROM  un_cg_product pr " +
 			"JOIN " +
 			"un_cg_barcode barc " +

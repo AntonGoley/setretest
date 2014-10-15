@@ -55,6 +55,7 @@ public class ShopPreferencesPage extends AbstractPage {
 		 *  ждем пока счетчик касс увеличится на cashCount
 		 */
 		waitForElement(getDriver(), ID_SALESSWF, String.format("numberOfItems=%s", String.valueOf(totalCashesBefore + cashCount)));
+		log.info("Добавить кассы:" + cashCount );
 		return this;
 	}
 	

@@ -18,14 +18,34 @@
     </properties>
         <build>
         	<resources>
-        	</resources>
+	        	<resource>
+	        	<directory>src/main/resources</directory>
+	        			<includes>
+	                    	<include>chromedriver*</include>
+	                    	<include>*.xml</include>
+	                	</includes>
+	      			</resource>
+	        	</resources>
         	<testResources>
       			<testResource>
-        			<directory>src/main/resources</directory>
+        			<directory>src/test/resources</directory>
         			<includes>
-                    	<include>chromedriver*</include>
-                    	<include>*.exe</include>
                     	<include>testng*.xml</include>
+                    	<include>.properties</include>
+                	</includes>
+      			</testResource>
+      			<testResource>
+        			<directory>src/test/resources</directory>
+        			<includes>
+                    	<include>testng*.xml</include>
+                    	<include>*.properties</include>
+                	</includes>
+      			</testResource>
+      			<testResource>
+        			<directory>src/test/datafiles</directory>
+        			<targetPath>datafiles</targetPath>
+        			<includes>
+                    	<include>**/*.txt</include>
                 	</includes>
       			</testResource>
     		</testResources>

@@ -56,7 +56,7 @@ public class MRCPriceReportTest extends AbstractReportTest{
 			description = "SRL-360. В прейскуранте на табачные изделия проверить, что отображается 1-я цена, в случае, если при импорте отсутсвует plugin-property mrc")
 	public void test1stPriceSetIfNoMRCPlugin(){
 		String goodName;
-		String request = DisinsectorTools.getFileContentAsString("MRC_Report/good_mrc_no_mrc_plugin.txt"); 
+		String request = DisinsectorTools.getFileContentAsString("mrc_report/good_mrc_no_mrc_plugin.txt"); 
 		String first_price =  getPrice() +  ".11";
 		goodName = setPriceAndSendRequest(request, first_price);
 		
@@ -73,7 +73,7 @@ public class MRCPriceReportTest extends AbstractReportTest{
 			description = "SRL-360. В прейскуранте на табачные изделия проверить, что МРЦ и ЦП заполняются, в случае, если они приходят в plugin-property")
 	public void testMRCandCPSetIfAllInPlugin(){
 		String goodName;
-		String request = DisinsectorTools.getFileContentAsString("MRC_Report/good_mrc_prices.txt"); 
+		String request = DisinsectorTools.getFileContentAsString("mrc_report/good_mrc_prices.txt"); 
 		String mrc_price =  getPrice() +  ".55";
 		String sale_price =  getPrice() +  ".99";
 		
@@ -89,7 +89,7 @@ public class MRCPriceReportTest extends AbstractReportTest{
 			description = "SRL-360. В прейскуранте на табачные изделия проверить, что МРЦ=ЦП если в plugin-property не приходит цена продажи")
 	public void testMRCEqualsCPIfNoCPInPlugin(){
 		String goodName;
-		String request = DisinsectorTools.getFileContentAsString("MRC_Report/good_mrc_prices.txt"); 
+		String request = DisinsectorTools.getFileContentAsString("mrc_report/good_mrc_prices.txt"); 
 		String mrc_price =  getPrice() +  ".55";
 		
 		goodName = setPriceAndSendRequest(request, mrc_price);
@@ -107,7 +107,7 @@ public class MRCPriceReportTest extends AbstractReportTest{
 			description = "SRL-360. В прейскуранте на табачные изделия есть все МРЦ на данный товар, перечисленные в plugin-property")
 	public void testAllMRCInPlugin(){
 		int totalMRCInDataFile = 4;
-		String request = DisinsectorTools.getFileContentAsString("MRC_Report/good_mrc_4_positions.txt"); 
+		String request = DisinsectorTools.getFileContentAsString("mrc_report/good_mrc_4_positions.txt"); 
 		String mrc_good_name = setPriceAndSendRequest(request, "");
 
 		doHTMLReport(MRCConfigPage, true);

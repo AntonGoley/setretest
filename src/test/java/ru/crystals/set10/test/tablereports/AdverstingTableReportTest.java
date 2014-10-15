@@ -74,8 +74,8 @@ public class AdverstingTableReportTest extends AbstractReportTest {
 		Assert.assertTrue(htmlReportResults.containsValue("test_" + expectedErpCode), "Не выводятся существующие рекламные акции, если не задан код товара");
 	}	
 	
-	@Test (	description = "Проверить, что \"Отчет по товарам в Рекламных акциях\" доступен для скачивания в формате pdf/xls",
-			dataProvider = "SRL-182. Доступные форматы для скачивания"
+	@Test (	description = "SRL-182. Проверить, что \"Отчет по товарам в Рекламных акциях\" доступен для скачивания в формате pdf/xls",
+			dataProvider = "Доступные форматы для скачивания"
 			)
 	public void testGoodOnTKSaveFormats(String reportFormat, String reportNamePattern){
 		long fileSize = 0;

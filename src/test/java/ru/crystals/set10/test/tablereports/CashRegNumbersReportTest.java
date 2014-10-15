@@ -30,7 +30,7 @@ public class CashRegNumbersReportTest extends AbstractReportTest{
 	private String factoryNum = "fact" + prefix;
 	private String fiscalNum  = "fisc" + prefix;
 	private String eklzNum  = "ek" + prefix;
-	private String fiscalDate  = DisinsectorTools.getDate("dd-MM-yyyy", date);
+	private String fiscalDate  = DisinsectorTools.getDate("dd.MM.yyyy", date);
 	
 	@DataProvider (name = "CashData")
 	public Object[][] cashData(){
@@ -93,12 +93,13 @@ public class CashRegNumbersReportTest extends AbstractReportTest{
 	
 	private void setCashVO() throws Exception{
 		CashVO cashVo = new CashVO();
-			cashVo.setNumber(2);
+			cashVo.setNumber(1);
 			cashVo.setShopNumber(Integer.valueOf(Config.SHOP_NUMBER));
 			cashVo.setEklzNum(eklzNum);
 			cashVo.setFactoryNum(factoryNum);
 			cashVo.setFiscalNum(fiscalNum);
 			cashVo.setFiscalDate(fiscalDate);
+			cashVo.setHardwareName("Beetle");
 			
 		httpConnect.setUrl("http://" + Config.RETAIL_HOST + ":8090" + GLOBAL_SERVLET_PATH);
 		cashManager = httpConnect.find(CashManagerRemote.class, CashManagerRemote.SERVER_EJB_NAME);
