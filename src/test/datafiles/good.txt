@@ -19,11 +19,11 @@
 			</department>
 		</price-entry>
 		<vat>18</vat>
-		<group id="@105">
+		<group id="%1$s">
 			<name>Крепкие алкогольные напитки</name>
-			<parent-group id="50513">
+			<parent-group id="%1$s123">
 				<name>Алкоголь лицензионный</name>
-				<parent-group id="60623">
+				<parent-group id="%1$s321">
 					<name>Вино-Воды</name>
 				</parent-group>
 			</parent-group>
