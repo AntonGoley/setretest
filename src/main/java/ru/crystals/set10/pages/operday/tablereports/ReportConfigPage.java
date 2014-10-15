@@ -21,7 +21,7 @@ public class  ReportConfigPage extends AbstractPage{
 	 * необходимо немного подождать, при первом формировании отчета 
 	 *  
 	 */
-	boolean ifFirstReport = true;
+	static boolean ifFirstReport = true;
 	
 	public ReportConfigPage(WebDriver driver) {
 		super(driver);

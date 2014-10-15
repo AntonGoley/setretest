@@ -50,7 +50,8 @@ public class FlexMediator {
 		//TODO
 		// doFlexWaitForElement falls if no delay before execution
 		sleep(500);
-		ecxecute(driver, String.format("document.getElementById('%s').doFlexWaitForElement('%s', '15')", swfSrc, flexId));	
+		ecxecute(driver, String.format("document.getElementById('%s').doFlexWaitForElement('%s', '15')", swfSrc, flexId));
+		ecxecute(driver, String.format("document.getElementById('%s').doFlexWaitForElement('%s', '15')", swfSrc, flexId));
 	}
 	 
 	/*
@@ -60,7 +61,7 @@ public class FlexMediator {
 		String result;
 		int timeout = 0;
 		// TODO: заменить параметром
-		while (timeout < 10000 ){
+		while (timeout < 15000 ){
 			sleep(1000);
 			result = (String) ecxecuteAndReturnString(driver, String.format("return document.getElementById('%s').getFlexProperty('%s', '%s')", swfSrc, flexId, args[0]));
 			if (result.equals(args[1])) {

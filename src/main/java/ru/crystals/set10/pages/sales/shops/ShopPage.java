@@ -14,7 +14,7 @@ public class ShopPage extends SalesPage{
 	static final String LOCATOR_ADD_SHOP_BUTTON = "addShopB";
 	static final String LOCATOR_CITY_NAME_INPUT = "cityNameTI";
 	static final String LOCATOR_SHOPS_DATAGRID = "dataGrid";
-	static final String LOCATOR_BUTTON_PREFERENCES = "label=Настройки";
+	static final String LOCATOR_BUTTON_PREFERENCES = "editShopB";
 	static final String LOCATOR_SHOP_FILTER = "filter";
 	
 	
@@ -29,7 +29,7 @@ public class ShopPage extends SalesPage{
 	}
 	
 	/*
-	 * Вводим название магазина в филтре и ждем, пока отобразятся результаты поиска
+	 * Вводим название магазина в фильтре и ждем, пока отобразятся результаты поиска
 	 * Название магазина должно быть уникальным
 	 */
 	public ShopPreferencesPage openShopPreferences(String shopName){
@@ -39,6 +39,7 @@ public class ShopPage extends SalesPage{
 		waitForElement(getDriver(), ID_SALESSWF, "realDataLength=1");
 		// выбираем первый в списке (и единственный) объект
 		doFlexProperty(getDriver(), ID_SALESSWF, LOCATOR_SHOPS_DATAGRID, new String[] {"selectedIndex", "1"});
+		waitForProperty(getDriver(), ID_SALESSWF, LOCATOR_BUTTON_PREFERENCES, new String[] {"enabled", "true"});
 		clickElement(getDriver(), ID_SALESSWF, LOCATOR_BUTTON_PREFERENCES);
 		return new ShopPreferencesPage(getDriver());
 	}
