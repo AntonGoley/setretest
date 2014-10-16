@@ -72,8 +72,8 @@ public class GoodsParser {
 	        } else {
 	        	qnt = random(5) + 1L;
 	        }
-		        pos.setQnty(Long.valueOf(qnt * 1000L));
-		        pos.setPriceEnd(Long.valueOf(random(1000) * 127L));
+		        pos.setQnty(Long.valueOf(qnt * 100L));
+		        pos.setPriceEnd(Long.valueOf(random(1000) * 17L));
 		        pos.setSum(Long.valueOf(qnt * pos.getPriceEnd().longValue()));
 		        summ += pos.getSum().longValue();
 		        pos.setNdsSum(Long.valueOf(Math.round(pos.getSum().longValue() * 0.2D)));
