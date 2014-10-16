@@ -29,7 +29,7 @@ public class  CheckContentPage extends OperDayPage{
 	/* 
 	 * Флаг, что сопроводительный документ еще не загружался
 	 */
-	private boolean ifFirstDocument = true;
+	private static boolean ifFirstDocument = true;
 	
 	public CheckContentPage(WebDriver driver) {
 		super(driver, false);
@@ -63,7 +63,7 @@ public class  CheckContentPage extends OperDayPage{
 	private String getReportText(){
 	// если это первый документ, который печатаем	
 		if (ifFirstDocument) {
-			log.info("Ожидание первой загрузки отчета");
+			log.info("Ожидание первой загрузки сопроводительного документа");
 			DisinsectorTools.delay(10000);
 			ifFirstDocument = false;
 		}
