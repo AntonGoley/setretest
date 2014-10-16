@@ -30,15 +30,15 @@
 	  		<class name="ru.crystals.set10.test.tablereports.RefundChecksReportTest"/>
 	  		<class name="ru.crystals.set10.test.tablereports.AdverstingTableReportTest"/>
 	  		<class name="ru.crystals.set10.test.tablereports.PLUinWeightReportTest"/>
-	  		<class name="ru.crystals.set10.test.tablereports.CashRegNumbersReportTest"/>
+<!-- 	  		<class name="ru.crystals.set10.test.tablereports.CashRegNumbersReportTest"/> -->
 		</classes>	 
   	</test>	
-	<test name="Прейскурант на табачные изделия" >
-	  	<classes>
-		  	<class name="ru.crystals.set10.test.tablereports.MRCPriceReportTest"/>
-		  	<class name="ru.crystals.set10.test.tablereports.MRCPriceReportWithLekondsTest"/>
-		</classes>	 
-  	</test>	
+<!-- 	<test name="Прейскурант на табачные изделия" > -->
+<!-- 	  	<classes> -->
+<!-- 		  	<class name="ru.crystals.set10.test.tablereports.MRCPriceReportTest"/> -->
+<!-- 		  	<class name="ru.crystals.set10.test.tablereports.MRCPriceReportWithLekondsTest"/> -->
+<!-- 		</classes>	  -->
+<!--   	</test>	 -->
 		<test name="Выгрузка в SAP алкогольных ограничений" >
 	  	<classes>
 	  		<class name="ru.crystals.set10.test.SpiritRestrictionsToSAPTest"/>
