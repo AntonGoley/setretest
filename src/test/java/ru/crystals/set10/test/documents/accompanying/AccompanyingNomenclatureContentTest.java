@@ -26,12 +26,12 @@ public class AccompanyingNomenclatureContentTest extends AccompanyingDocumentsBa
 				 * 	- проверку номера
 				 * 	- 
 				 */
-				{"Отображается название отчета", "Номенклатура кассового чека", true },
-				{"Корректно отображается шапка таблицы", "Поз. Штрих-код Название Ед. изм В уп. Кол-во Цена Сумма", true },
+				{"Отображаение названия отчета", "Номенклатура кассового чека", true },
+				{"Отображение шапки таблицы ", "Поз. Штрих-код Название Ед. изм В уп. Кол-во Цена Сумма", true },
 				{"Содержит fullName товара, разрешенного к печати", allowPrintFullName, true },
 				{"Содержит fullName товара, запрещенного к печати", denyPrintFullName, true },
-				{"Сумма прописью указана верно", allowPrintSumTotalInWords, true },
-				{"Строка Итого расчитана верно", allowPrintSumTotal, true }
+				{"Сумма прописью ", allowPrintSumTotalInWords, true },
+				{"Строка Итого ", allowPrintSumTotal, true }
 //				{"В документе содержится информация о продавце: графа ИНН", "ИНН " + Config.SHOP_INN, true }, 
 //				{"В документе содержится информация о продавце: графа \"От кого\"", "От кого: " + Config.SHOP_NAME, true }
 		};

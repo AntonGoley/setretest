@@ -68,7 +68,6 @@ public class MRCPriceReportTest extends AbstractReportTest{
 		
 	}
 	
-	
 	@Test (	dependsOnGroups = "MRC_Report_Smoke",
 			description = "SRL-360. В прейскуранте на табачные изделия проверить, что МРЦ и ЦП заполняются, в случае, если они приходят в plugin-property")
 	public void testMRCandCPSetIfAllInPlugin(){

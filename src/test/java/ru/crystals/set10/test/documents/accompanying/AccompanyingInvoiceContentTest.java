@@ -26,16 +26,16 @@ public class AccompanyingInvoiceContentTest extends AccompanyingDocumentsBasicTe
 				 * 	- проверку номера
 				 * 	- 
 				 */
-				{"Отображается название отчета ", "ТОВАРНАЯ НАКЛАДНАЯ", true },
+				{"Отображаение названия отчета", "ТОВАРНАЯ НАКЛАДНАЯ", true },
 //				{"Корректно отображается шапка таблицы", "Поз. Штрих-код Название Ед. изм В уп. Кол-во Цена Сумма", true },
 				//TODO: разобраться с транспортом юридического лица в магазин
 //				{"В документе содержится информация (адрес) Грузопоотправителя", shopJuristicAdress, true },
-				{"В документе содержится ИНН Грузополучателя ", "ИНН " + counterpartInn, true }, 
-				{"В документе содержится КПП Грузополучателя ", "КПП " + counterpartKpp, true },
-				{"В документе содержится Грузополучатель и его адрес ", counterpartName+ ", " + counterpartAdress, true },
+				{"ИНН Грузополучателя ", "ИНН " + counterpartInn, true }, 
+				{"КПП Грузополучателя ", "КПП " + counterpartKpp, true },
+				{"Грузополучатель и его адрес ", counterpartName+ ", " + counterpartAdress, true },
 				{"Содержит имя товара, разрешенного к печати", allowPrintName, true },
 				{"Не содержит товар, запрещенный к печати", denyPrintName, false },
-				{"Строка \"Всего по накладной\" расчитана верно", denyPrintSumTotalInvoice, true },
+				{"Строка \"Всего по накладной\"", denyPrintSumTotalInvoice, true },
 		};
 	}
 	

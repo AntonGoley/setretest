@@ -36,7 +36,7 @@ public class  ReportConfigPage extends AbstractPage{
 		switchWindow(false);
 		
 		if (ifFirstReport) {
-			log.info("Ожидание первой загрузки отчета");
+			log.info("Ожидание первой загрузки HTML отчета");
 			DisinsectorTools.delay(20000);
 			ifFirstReport = false;
 		}

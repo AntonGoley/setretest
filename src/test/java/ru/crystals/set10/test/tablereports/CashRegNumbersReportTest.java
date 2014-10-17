@@ -32,6 +32,7 @@ public class CashRegNumbersReportTest extends AbstractReportTest{
 	private String eklzNum  = "ek" + prefix;
 	private String fiscalDate  = DisinsectorTools.getDate("dd.MM.yyyy", date);
 	
+	
 	@DataProvider (name = "CashData")
 	public Object[][] cashData(){
 		return new Object[][] {
@@ -44,7 +45,12 @@ public class CashRegNumbersReportTest extends AbstractReportTest{
 	
 	@BeforeClass
 	public void navigateCashRegNumsReport() throws Exception {
-		setCashVO();
+		// добавить данные для всех 5 касс
+		for (int i=1; i<=5; i++) {
+			setCashVO(i);
+			fiscalDate  = DisinsectorTools.getDate("dd.MM.yyyy", date - (86400000 * 10));
+		}	
+		
 		cashNumbersConfigPage =  navigateToReportConfig(
 				Config.RETAIL_URL, 
 				Config.MANAGER,
@@ -91,9 +97,9 @@ public class CashRegNumbersReportTest extends AbstractReportTest{
 		Assert.assertTrue(fileSize > 0, "Файл отчета сохранился некорректно");
 	}
 	
-	private void setCashVO() throws Exception{
+	private void setCashVO(int cashNumber) throws Exception{
 		CashVO cashVo = new CashVO();
-			cashVo.setNumber(1);
+			cashVo.setNumber(cashNumber);
 			cashVo.setShopNumber(Integer.valueOf(Config.SHOP_NUMBER));
 			cashVo.setEklzNum(eklzNum);
 			cashVo.setFactoryNum(factoryNum);

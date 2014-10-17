@@ -25,17 +25,17 @@ public class AccompanyingGoodsBillContentTest extends AccompanyingDocumentsBasic
 				 * 	- проверку номера документа
 				 * 	- данные отправителя
 				 */
-				{"Отображается название отчета", "СЧЕТ-ФАКТУРА", true },
+				{"Отображаение названия отчета", "СЧЕТ-ФАКТУРА", true },
 //				{"Корректно отображается шапка таблицы", "Поз. Штрих-код Название Ед. изм В уп. Кол-во Цена Сумма", true },
 				{"Содержит имя товара, разрешенного к печати", allowPrintName, true },
 				{"Не содержит товар, запрещенный к печати", denyPrintName, false },
-				{"Строка \"Всего к оплате\" расчитана верно", denyPrintSumTotalGoodsBill, true },
-				{"В документе содержится Грузополучатель и его адрес ", counterpartName+ ", " + counterpartAdress, true },
+				{"Строка \"Всего к оплате\" ", denyPrintSumTotalGoodsBill, true },
+				{"Грузополучатель и его адрес ", counterpartName+ ", " + counterpartAdress, true },
 				//TODO: разобраться с транспортом юридического лица в магазин
 //				{"В документе содержится Грузопоотправитель и его адрес ", shopJuristicName + ", " + shopJuristicAdress, true },
 //				{"В документе содержится ИНН/КПП продавца ", shopJuristicINN + "/" + shopJuristicKPP, true }, 
-				{"В документе содержится ИНН/КПП покупателя ", counterpartInn + "/" + counterpartKpp, true }, 
-				{"В документе содержится адресс покупателя ", counterpartAdress, true }
+				{"ИНН/КПП покупателя ", counterpartInn + "/" + counterpartKpp, true }, 
+				{"Адресс покупателя ", counterpartAdress, true }
 		};
 	}
 	

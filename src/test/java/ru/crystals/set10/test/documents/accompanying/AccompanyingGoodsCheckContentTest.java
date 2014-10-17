@@ -26,12 +26,12 @@ public class AccompanyingGoodsCheckContentTest extends AccompanyingDocumentsBasi
 				 * 	- проверку номера
 				 * 	- inn магазина
 				 */
-				{"Отображается название отчета", "Товарный чек", true },
-				{"Корректно отображается шапка таблицы", "Поз. Штрих-код Название Ед. изм В уп. Кол-во Цена Сумма", true },
+				{"Отображаение названия отчета", "Товарный чек", true },
+				{"Отображение шапки таблицы", "Поз. Штрих-код Название Ед. изм В уп. Кол-во Цена Сумма", true },
 				{"Содержит fullName товара, разрешенного к печати", allowPrintFullName, true },
 				{"Не содержит товар, запрещенный к печати", denyPrintFullName, false },
-				{"Сумма прописью указана верно", denyPrintSumTotalInWords, true },
-				{"Строка Итого расчитана верно", denyPrintSumTotal, true }
+				{"Сумма прописью ", denyPrintSumTotalInWords, true },
+				{"Строка Итого", denyPrintSumTotal, true }
 //				{"В документе содержится информация о продавце: графа ИНН", "ИНН " + Config.SHOP_INN, true }, 
 //				{"В документе содержится информация о продавце: графа \"От кого\"", "От кого: " + Config.SHOP_NAME, true }
 		};

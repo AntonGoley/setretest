@@ -108,7 +108,7 @@ public class SetTopologyTest extends AbstractTest{
 	
 	private void addCash(){
 		getDriver().navigate().refresh();
-		DisinsectorTools.delay(3000);
+		DisinsectorTools.delay(2000);
 		salesPage = new SalesPage(getDriver());
 		shopPage = salesPage.navigateMenu(SALES_MENU_SHOPS, "0", ShopPage.class);
 		shopPreferences = shopPage.openShopPreferences(Config.SHOP_NAME);
