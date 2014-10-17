@@ -45,8 +45,8 @@ public class CashRegNumbersReportTest extends AbstractReportTest{
 	
 	@BeforeClass
 	public void navigateCashRegNumsReport() throws Exception {
-		// добавить данные для всех 5 касс
-		for (int i=1; i<=5; i++) {
+		// добавить данные для всех 1 касс
+		for (int i=1; i<=1; i++) {
 			setCashVO(i);
 			fiscalDate  = DisinsectorTools.getDate("dd.MM.yyyy", date - (86400000 * 10));
 		}	
