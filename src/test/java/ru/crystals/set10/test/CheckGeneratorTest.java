@@ -27,11 +27,11 @@ public class CheckGeneratorTest {
 		for (int i=1; i<=Integer.valueOf(Config.CHECK_COUNT); i++) {
 			PurchaseEntity pe = (PurchaseEntity) cashEmulator.nextPurchase();
 			returnPositions.put(1L, 1L * 1000);
-			//cashEmulator.nextRefundPositions(pe, returnPositions , false);
-			cashEmulator.nextRefundAll(pe, false);
+			cashEmulator.nextRefundPositions(pe, returnPositions , false);
+//			cashEmulator.nextRefundAll(pe, false);
 			
 		}	
 		//cashEmulator.nextWithdrawal();
-		//cashEmulator.nextZReport();
+		cashEmulator.nextZReport();
 	}
 }
