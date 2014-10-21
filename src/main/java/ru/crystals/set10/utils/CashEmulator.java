@@ -89,7 +89,7 @@ public class CashEmulator {
 	}
 	
 	
-	public int getCurrentShiftNum(int cashNumber) {
+	private int getCurrentShiftNum(int cashNumber) {
 		// TODO: привести в порядок
 		String date = getDate("yyyy-MM-dd", System.currentTimeMillis() - yesterday);
 		shiftNum = db.queryForInt(DB_RETAIL_OPERDAY, String.format(SQL_MAX_SHIFT_NUM, cashNumber, shopNumber, date, date));
@@ -104,7 +104,7 @@ public class CashEmulator {
 		return shiftNum;
 	}
 	
-	public int getNextCheckNum(int cashNumber, int shiftNumber) {
+	private int getNextCheckNum(int cashNumber, int shiftNumber) {
 		// TODO: привести в порядок
 		String date = getDate("yyyy-MM-dd", System.currentTimeMillis() - yesterday);
 		checkNumber = db.queryForInt(DB_RETAIL_OPERDAY, String.format(SQL_CHECK_NUM, cashNumber, shiftNumber, shopNumber, date, date));
@@ -114,7 +114,7 @@ public class CashEmulator {
 	/*
 	 * сумма продаж за смену
 	 */
-	public int getShiftSumChecks() {
+	private int getShiftSumChecks() {
 		String date = getDate("yyyy-MM-dd", System.currentTimeMillis() - yesterday);
 		return db.queryForInt(DB_RETAIL_OPERDAY, String.format(SQL_GET_SHIFT_FINAL_SUM, String.valueOf("true"), cashNumber, shiftNum, shopNumber, date, date));
 	}
@@ -122,7 +122,7 @@ public class CashEmulator {
 	/*
 	 * сумма возвратов за смену 
 	 */
-	public int getShiftSumChecksRefund() {
+	private int getShiftSumChecksRefund() {
 		String date = getDate("yyyy-MM-dd", System.currentTimeMillis() - yesterday);
 		return db.queryForInt(DB_RETAIL_OPERDAY, String.format(SQL_GET_SHIFT_FINAL_SUM, String.valueOf("false"), cashNumber, shiftNum, shopNumber, date, date));
 	}
@@ -214,100 +214,7 @@ public class CashEmulator {
 	}
 	
 	/*
-	 * Сгенерить чек со свободным набором позиций
-	 */
-	public DocumentEntity nextPurchase() {
-
-	    if (shift == null || nextShift || ifShiftClosed(cashNumber, shiftNum)) {
-	      shift = nextShift(null);
-	      nextShift = false;
-	    }
-	    
-	    int idx = (int)random(peList.size() - 2) + 1;
-	    DocumentEntity de = (DocumentEntity)peList.get(idx);
-	    Date d = new Date(System.currentTimeMillis() - yesterday);
-	    de.setDateCommit(d);
-	    de.setShift(shift);
-	    de.setNumber((long) checkNumber++);
-	    de.setSession(shift.getSessionStart());
-	    de.setId(System.currentTimeMillis());
-	    if ((de instanceof PurchaseEntity)) {
-	    	PurchaseEntity pe = (PurchaseEntity)de;
-	      for (PositionEntity pos : pe.getPositions()) {
-	        pos.setDateTime(d);
-	      }
-	    }  
-	    sendDocument(de);
-	    logCheckEntities((PurchaseEntity) de);
-	    ifCheckInRetail((PurchaseEntity) de);
-	    return de;
-	}
-	
-	/*
-	 * Сгенерить чек с заданным набором позиций
-	 */
-	public DocumentEntity nextPurchase(PurchaseEntity purchase) {
-
-	    if (shift == null || nextShift || ifShiftClosed(cashNumber, shiftNum)) {
-	      shift = nextShift(null);
-	      nextShift = false;
-	    }
-	    
-	    DocumentEntity de = (DocumentEntity)purchase;
-	    
-	    Date d = new Date(System.currentTimeMillis() - yesterday);
-	    de.setDateCommit(d);
-	    de.setShift(shift);
-	    de.setNumber((long) checkNumber++);
-	    de.setSession(shift.getSessionStart());
-	    de.setId(System.currentTimeMillis());
-	    if ((de instanceof PurchaseEntity)) {
-	    	PurchaseEntity pe = (PurchaseEntity)de;
-	      for (PositionEntity pos : pe.getPositions()) {
-	        pos.setDateTime(d);
-	      }
-	    }  
-	    sendDocument(de);
-	    logCheckEntities((PurchaseEntity) de);
-	    ifCheckInRetail((PurchaseEntity) de);
-	    return de;
-	}
-	
-	/*
-	 * сгенерить чек возврата
-	 */
-	public DocumentEntity nextRefundCheck(
-				PurchaseEntity superPurchase, 
-				PositionEntity returnEntity, 
-				long qnty,
-				// произвольный возврат
-				boolean arbitraryReturn) {
-		
-	    if (shift == null) {
-	      shift = nextShift(null);
-	    }
-	    
-	    DocumentEntity de = refundCheck(superPurchase, returnEntity, qnty, arbitraryReturn);
-	    Date d = new Date(System.currentTimeMillis() - yesterday);
-	    de.setDateCommit(d);
-	    de.setShift(shift);
-	    de.setNumber((long) checkNumber++);
-	    de.setSession(shift.getSessionStart());
-	    de.setId(System.currentTimeMillis());
-	    if ((de instanceof PurchaseEntity)) {
-	    	PurchaseEntity pe = (PurchaseEntity)de;
-	      for (PositionEntity pos : pe.getPositions()) {
-	        pos.setDateTime(d);
-	      }
-	    }  
-	    sendDocument(de);
-	    logCheckEntities((PurchaseEntity) de);
-	    ifCheckInRetail((PurchaseEntity) de);
-	    return de;
-	}
-	
-	/*
-	 * закрытие текущей смены
+	 * закрыть текущую смену
 	 */
 	public DocumentEntity nextZReport(){
 		if (shift == null) {
@@ -345,6 +252,174 @@ public class CashEmulator {
 	    return rse;
 	}
 	
+	/*
+	 * Сгенерить чек с рандомным набором позиций
+	 */
+	public DocumentEntity nextPurchase() {
+
+	    if (shift == null || nextShift || ifShiftClosed(cashNumber, shiftNum)) {
+	      shift = nextShift(null);
+	      nextShift = false;
+	    }
+	    
+	    int idx = (int)random(peList.size() - 2) + 1;
+	    return completeAndSendPurchase((DocumentEntity)peList.get(idx));
+	    
+	}
+	
+	/*
+	 * Сгенерить чек с определенным набором позиций
+	 */
+	public DocumentEntity nextPurchase(PurchaseEntity purchase) {
+
+	    if (shift == null || nextShift || ifShiftClosed(cashNumber, shiftNum)) {
+	      shift = nextShift(null);
+	      nextShift = false;
+	    }
+
+	    return completeAndSendPurchase((DocumentEntity)purchase);
+	}
+	
+	/*
+	 * сгенерить возврат позиций в чеке
+	 */
+	public DocumentEntity nextRefundPositions(
+				PurchaseEntity superPurchase, 
+				/*
+				 * @param1 - номер позиции
+				 * @param2 - возвращаемое количество
+				 */
+				HashMap<Long, Long> returnPositions,
+				// произвольный возврат
+				boolean arbitraryReturn) {
+		
+	    if (shift == null) {
+	      shift = nextShift(null);
+	    }
+	    
+	    DocumentEntity de = refundCheck(superPurchase, returnPositions, arbitraryReturn);
+	    return completeAndSendPurchase(de);
+	}
+	
+	/*
+	 * Вернуть весь чек 
+	 */
+	public DocumentEntity nextRefundAll(
+				PurchaseEntity superPurchase, 
+				// произвольный возврат
+				boolean arbitraryReturn) 
+	{
+
+		if (shift == null) {
+		  shift = nextShift(null);
+		}
+		
+		HashMap<Long, Long> returnPositions = new HashMap<Long, Long>();
+		
+		for (int i=0; i<superPurchase.getPositions().size(); i++){
+			PositionEntity pe = superPurchase.getPositions().get(i);
+			returnPositions.put(pe.getNumber(), pe.getQnty());
+		}
+		
+		DocumentEntity de = refundCheck(superPurchase, returnPositions, arbitraryReturn);
+		return completeAndSendPurchase(de);
+	}
+	
+	/*
+     * заполнить возврат
+     */
+	public static DocumentEntity refundCheck( 
+						PurchaseEntity superPurchase, 
+						/*
+						 * из superPurchase:
+						 * @param1 - номер позиции
+						 * @param2 - возвращаемое количество
+						 */
+						HashMap<Long, Long> returnPositions, 
+						// является ли чек возврата произвольным (т.е не привязан к чеку продажи)
+						boolean arbitraryReturn){
+		
+		 long summ = 0L;
+		 long refundCheckPosition = 0;
+		 Long returnQnty = 0L;
+		 List<PositionEntity> positions = new ArrayList<PositionEntity>(returnPositions.size());
+		 
+		 PurchaseEntity returnPe = new PurchaseEntity();
+		 returnPe.setCheckStatus(CheckStatus.Registered);
+		 returnPe.setOperationType(Boolean.valueOf(true));
+		 
+		 for(Long checkPositionNumber:returnPositions.keySet()){
+			 PositionEntity position =  new PositionEntity();
+			 PositionEntity superPurchasePosition = null;
+			 
+			 /*
+			  * берем позизию из superPurchase, 
+			  * номер которой соответствует checkPositionNumber
+			  */
+			 List<PositionEntity> superPurchasePositions = superPurchase.getPositions();
+			 for (int i=0; i<superPurchasePositions.size(); i++){
+				 if (superPurchasePositions.get(i).getNumber() == checkPositionNumber) {
+					 superPurchasePosition = superPurchasePositions.get(i);
+				 }
+			 }
+			 returnQnty =  returnPositions.get(checkPositionNumber);
+			 position.setProduct(superPurchasePosition.getProduct());
+			 position.setNumber(++refundCheckPosition);
+			 position.setNumberInOriginal(checkPositionNumber);
+			 position.setPriceEnd(superPurchasePosition.getPriceEnd());
+			 position.setDateTime(new Date(System.currentTimeMillis()));
+			 position.setQnty(returnQnty);
+			 position.setSum(Long.valueOf(returnQnty * position.getPriceEnd().longValue()));
+			 position.setDeleted(Boolean.valueOf(false));
+			 position.setSuccessProcessed(true);
+			 position.setNumberInOriginal(superPurchasePosition.getNumber());
+			 
+			 summ += position.getSum().longValue();
+			 positions.add(position);
+		 }
+		 
+	     returnPe.setFiscalDocNum("test; refund" + String.valueOf(System.currentTimeMillis()));
+	     returnPe.setPositions(positions);
+	     returnPe.setReturn();
+	     
+	     List<PaymentEntity> paymentEntityList = new ArrayList<PaymentEntity>(1);
+	      CashPaymentEntity payE = new CashPaymentEntity();
+	      payE.setDateCreate(new Date(System.currentTimeMillis()));
+	      payE.setDateCommit(new Date(System.currentTimeMillis()));
+	      payE.setSumPay(Long.valueOf(summ));
+	      payE.setPaymentType("CashPaymentEntity");
+	      payE.setCurrency("RUB");
+	
+	      paymentEntityList.add(payE);
+	      returnPe.setPayments(paymentEntityList);
+	      returnPe.setDiscountValueTotal(Long.valueOf(0L));
+	      returnPe.setCheckSumEnd(Long.valueOf(summ));
+	      returnPe.setCheckSumStart(Long.valueOf(summ));
+	      
+	      // смотрим если произвольный возврат 
+	      if (!arbitraryReturn)
+	    	  returnPe.setSuperPurchase(superPurchase);
+	      return returnPe;
+	}
+	
+	private DocumentEntity completeAndSendPurchase(DocumentEntity de){
+		Date d = new Date(System.currentTimeMillis() - yesterday);
+	    de.setDateCommit(d);
+	    de.setShift(shift);
+	    de.setNumber((long) checkNumber++);
+	    de.setSession(shift.getSessionStart());
+	    de.setId(System.currentTimeMillis());
+	    if ((de instanceof PurchaseEntity)) {
+	    	PurchaseEntity pe = (PurchaseEntity)de;
+	      for (PositionEntity pos : pe.getPositions()) {
+	        pos.setDateTime(d);
+	      }
+	    }  
+	    sendDocument(de);
+	    logCheckEntities((PurchaseEntity) de);
+	    ifCheckInRetail((PurchaseEntity) de);
+	    return de;
+	}
 	
     private ShiftEntity nextShift(SessionEntity session) {
       SessionEntity sess = session != null ? session : nextSession();
@@ -376,83 +451,12 @@ public class CashEmulator {
       return se;
     }
 	
-//	public static void addPe(){
-	//	ProductEntity pe = new ProductEntity();
-	//    pe.setItem("284406_KG");
-	//    try {
-	//		pe.setLastImportTime(sdf.parse("2014-08-08 12:34:52.069".substring(1, "2014-08-08 12:34:52.069".length() - 1)));
-	//	} catch (ParseException e) {
-	//		// TODO Auto-generated catch block
-	//		e.printStackTrace();
-	//	}
-	//    MeasureEntity me = new MeasureEntity();
-	//    me.setCode("1");
-	//    me.setName("1");
-	//    pe.setMeasure(me);
-	//    pe.setName("");
-	//    pe.setNds(Float.valueOf(18.0F));
-	//    pe.setNdsClass("NDS");
-	//    BarcodeEntity be = new BarcodeEntity();
-	//    be.setBarCode("1268044977064");
-	//    pe.setBarCode(be);
-	//    catalogGoods.add(pe);
-//}
-	
-    /*
-     * заполнить возврата
-     */
-	public static DocumentEntity refundCheck( 
-						PurchaseEntity superPurchase, 
-						PositionEntity returnPosition, 
-						long returnQnty,
-						// является ли чек возврата произвольным (т.е не привязан к чеку продажи)
-						boolean arbitraryReturn){
-		
-		 long summ = 0L; 
-		 List<PositionEntity> positions = new ArrayList<PositionEntity>(1);
-		 
-		 PurchaseEntity returnPe = new PurchaseEntity();
-		 returnPe.setCheckStatus(CheckStatus.Registered);
-		 returnPe.setOperationType(Boolean.valueOf(true));
-		 
-		 PositionEntity position =  new PositionEntity();
-		 position.setProduct(returnPosition.getProduct());
-		 position.setNumber((long)1);
-		 position.setPriceEnd(returnPosition.getPriceEnd());
-		 position.setDateTime(new Date(System.currentTimeMillis()));
-		 position.setQnty(returnQnty * 1000L);
-		 position.setSum(Long.valueOf(returnQnty * position.getPriceEnd().longValue()));
-		 position.setDeleted(Boolean.valueOf(false));
-		 position.setSuccessProcessed(true);
-		 position.setNumberInOriginal(returnPosition.getNumber());
-		 
-		 summ += position.getSum().longValue();
-		 positions.add(position);
-	     returnPe.setFiscalDocNum("test; refund" + String.valueOf(System.currentTimeMillis()));
-	     returnPe.setPositions(positions);
-	     returnPe.setReturn();
-	     
-	     List<PaymentEntity> paymentEntityList = new ArrayList<PaymentEntity>(1);
-	      CashPaymentEntity payE = new CashPaymentEntity();
-	      payE.setDateCreate(new Date(System.currentTimeMillis()));
-	      payE.setDateCommit(new Date(System.currentTimeMillis()));
-	      payE.setSumPay(Long.valueOf(summ));
-	      payE.setPaymentType("CashPaymentEntity");
-	      payE.setCurrency("RUB");
-	
-	      paymentEntityList.add(payE);
-	      returnPe.setPayments(paymentEntityList);
-	      returnPe.setDiscountValueTotal(Long.valueOf(0L));
-	      returnPe.setCheckSumEnd(Long.valueOf(summ));
-	      returnPe.setCheckSumStart(Long.valueOf(summ));
-	      
-	      // смотрим если произвольный возврат 
-	      if (!arbitraryReturn)
-	    	  returnPe.setSuperPurchase(superPurchase);
-	      return returnPe;
+	public void useNextShift(){
+		nextShift = true;
+		checkNumber = 1;
 	}
 	
-	public void logCheckEntities(PurchaseEntity pe){
+	private void logCheckEntities(PurchaseEntity pe){
 		Iterator<PositionEntity> i = pe.getPositions().iterator();
 		PositionEntity  poe;
 		log.info("Номер смены: " + pe.getShift());
@@ -466,7 +470,7 @@ public class CashEmulator {
 	/*
 	 *  проверить, что чек покупки зарегистрирован в od_purchase (ищем по fiscaldocnum)
 	 */
-	public boolean ifCheckInRetail(DocumentEntity purchase){
+	private boolean ifCheckInRetail(DocumentEntity purchase){
 	    String fiscalDocNum =   purchase.getFiscalDocNum();
 	    String dbRequest = "";
 	    if (purchase instanceof PurchaseEntity) {
@@ -492,16 +496,11 @@ public class CashEmulator {
 		return false;
 	}
 	
-	public void useNextShift(){
-		nextShift = true;
-		checkNumber = 1;
-	}
-	
-	public static long random(int max) {
+	private static long random(int max) {
 	    return Math.round(Math.random() * max);
 	}
 	
-	public  String getDate(String format, long date) {
+	private  String getDate(String format, long date) {
 		SimpleDateFormat dateFormat = new SimpleDateFormat(format);
 		return dateFormat.format(date);
 	}

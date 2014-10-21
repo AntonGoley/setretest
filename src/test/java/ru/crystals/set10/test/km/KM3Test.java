@@ -2,6 +2,8 @@ package ru.crystals.set10.test.km;
 
 
 
+import java.util.HashMap;
+
 import junit.framework.Assert;
 
 import org.testng.annotations.BeforeClass;
@@ -26,6 +28,8 @@ public class KM3Test extends AbstractTest{
 	
 	private static String SQL_CLEAN_KM3 = "delete from od_km3";
 	private static String SQL_CLEAN_KM3_ROW = "delete from od_km3_row";
+	private HashMap<Long, Long>  returnPositions = new HashMap<Long, Long>(); 
+	
 	
 	@DataProvider (name = "Поля КМ3")
 	public static Object[][] km3Fields(){
@@ -52,7 +56,8 @@ public class KM3Test extends AbstractTest{
 	@Test( description = "SRL-2. Если в систему пришел первый возвратный чек, создается форма КМ3")
 	public void testKM3CreatesAfter1stRefund(){
 		int km3Tablerows = km3.getKmCountOnPage(LOCATOR_KM3_TABLE);
-		cashEmulator.nextRefundCheck(check, check.getPositions().get(0), (long) 1, true);
+		returnPositions.put(1L, 1L * 1000);
+		cashEmulator.nextRefundPositions(check, returnPositions, true);
 		km3.switchToKm(LOCATOR_KM6).switchToKm(LOCATOR_KM3);
 		km3 = new Km3Page(getDriver());
 		Assert.assertEquals("Не появилась форма КМ3", km3Tablerows + 1, km3.getKmCountOnPage(LOCATOR_KM3_TABLE));

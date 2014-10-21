@@ -36,6 +36,8 @@ public class RefundChecksReportTest extends AbstractReportTest{
 	PurchaseEntity refundCheck;
 	HashMap<String, String> purchaseEntityData;
 	
+	private HashMap<Long, Long>  returnPositions = new HashMap<Long, Long>(); 
+	
 	// TODO: добавить проверку дат и бар кода 
 	/*
 	 * Датапровайдер, описывающий колонки таблицы
@@ -130,7 +132,8 @@ public class RefundChecksReportTest extends AbstractReportTest{
 	private HTMLRepotResultPage sendRefundCheck(boolean refundCheckType){
 		PurchaseEntity pe = (PurchaseEntity) cashEmulator.nextPurchase();
 		PositionEntity pos = pe.getPositions().get(0);
-		refundCheck = (PurchaseEntity) cashEmulator.nextRefundCheck(pe, pos, pos.getQnty(), refundCheckType);
+		returnPositions.put(1L, pos.getQnty());
+		refundCheck = (PurchaseEntity) cashEmulator.nextRefundPositions(pe, returnPositions, refundCheckType);
 		
 		setPurchaseEntityData(refundCheck);
 		getDriver().navigate().refresh();
