@@ -286,7 +286,7 @@ public class CashEmulator {
 	    if (shift == null) {
 	      shift = nextShift(null);
 	    }
-
+	    
 	    DocumentEntity de = refundCheck(superPurchase, returnEntity, qnty, arbitraryReturn);
 	    Date d = new Date(System.currentTimeMillis() - yesterday);
 	    de.setDateCommit(d);
