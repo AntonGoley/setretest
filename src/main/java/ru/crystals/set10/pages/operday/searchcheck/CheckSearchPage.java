@@ -42,7 +42,7 @@ public class  CheckSearchPage extends OperDayPage{
 		return new CheckSearchPage(getDriver());
 	}
 	
-	public CheckContentPage selectCheck (String checkId){
+	public CheckContentPage selectFirstCheck(){
 		doFlexProperty(getDriver(), ID_OPERDAYSWF, SEARCH_RESULTS_GRID, new String[] {"selectedIndex", "1" } );
 		doFlexMouseDown(getDriver(), ID_OPERDAYSWF, BUTTON_GO_TO_CHECK);
 		return new CheckContentPage(getDriver());

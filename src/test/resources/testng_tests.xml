@@ -30,6 +30,7 @@
 	  		<class name="ru.crystals.set10.test.tablereports.AdverstingTableReportTest"/>
 	  		<class name="ru.crystals.set10.test.tablereports.PLUinWeightReportTest"/>
 	  		<class name="ru.crystals.set10.test.tablereports.CashRegNumbersReportTest"/>
+	  		<class name="ru.crystals.set10.test.tablereports.WrongAdverstingPriceTest"/>
 		</classes>	 
   	</test>	
   	<test name="КМ3, КМ6 и отчет по возвратам" >

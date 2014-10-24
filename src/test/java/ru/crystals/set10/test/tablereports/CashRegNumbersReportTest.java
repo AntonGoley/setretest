@@ -30,7 +30,7 @@ public class CashRegNumbersReportTest extends AbstractReportTest{
 	private String factoryNum = "fact" + prefix;
 	private String fiscalNum  = "fisc" + prefix;
 	private String eklzNum  = "ek" + prefix;
-	private String fiscalDate  = DisinsectorTools.getDate("dd.MM.yyyy", date);
+	private String fiscalDate  = DisinsectorTools.getDate("dd.MM.yyyy", date - 86400*100*100 );
 	
 	
 	@DataProvider (name = "CashData")
@@ -46,7 +46,7 @@ public class CashRegNumbersReportTest extends AbstractReportTest{
 	@BeforeClass
 	public void navigateCashRegNumsReport() throws Exception {
 		// добавить данные для всех 1 касс
-		for (int i=1; i<=1; i++) {
+		for (int i=1; i<=5; i++) {
 			setCashVO(i);
 			fiscalDate  = DisinsectorTools.getDate("dd.MM.yyyy", date);
 		}	

@@ -96,7 +96,7 @@ public class AccompanyingDocumentsBasicTest extends AbstractTest{
 		searchCheck = mainPage.openOperDay().openCheckSearch();
 		
  		searchCheck.setCheckNumber(predefindCheckNumber).doSearch();
- 		checkContent = searchCheck.selectCheck(predefindCheckNumber);
+ 		checkContent = searchCheck.selectFirstCheck();
 	}	
 	
 	/*
@@ -135,7 +135,7 @@ public class AccompanyingDocumentsBasicTest extends AbstractTest{
 			denyPrintPosition.setSum(Long.valueOf(20021));
 			denyPrintPosition = completePositionEntity(denyPrintPosition);
 			positions.add(denyPrintPosition);
-	
+		
         pe.setFiscalDocNum("test;" + String.valueOf(System.currentTimeMillis()));
 		pe.setCheckStatus(CheckStatus.Registered);
 	    pe.setOperationType(Boolean.valueOf(true));

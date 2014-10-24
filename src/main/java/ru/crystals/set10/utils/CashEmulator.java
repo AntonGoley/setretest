@@ -444,7 +444,8 @@ public class CashEmulator {
       ue.setFirstName(String.format("Cashier_%s", String.valueOf(cashNumber) + "_first_name"));
       ue.setLastName(String.format("Cashier_%s", String.valueOf(cashNumber) + "_last_name"));
       ue.setMiddleName(String.format("Cashier_%s", String.valueOf(cashNumber) + "_middle_name"));
-      ue.setTabNum(String.valueOf(cashNumber));
+      // Сейчас, при настройке заводим только одного кассира с номером 1
+      ue.setTabNum(String.valueOf(1L));
       ue.setSessions(new ArrayList<SessionEntity>());
       ue.getSessions().add(se);
       se.setUser(ue);

@@ -26,9 +26,10 @@ public class  TableReportPage extends AbstractPage{
 	public static final String REPORT_NAME_GOOD_ON_TK = "Отчет по товару на ТК"; 
 	public static final String REPORT_NAME_PRICE_CHECKER = "Отчёт по обращениям к прайсчекерам по всем ТК"; 
 	public static final String REPORT_NAME_PLU_ON_WEIGHT = "Отчёт по количеству PLU в весах на ТК";
-	public static final String REPORT_NAME_REFUND_CHECKS= "Отчёт по возвратам";
-	public static final String REPORT_NAME_MRC_PRICE= "Прейскурант на табачные изделия";
-	public static final String REPORT_NAME_CASH_REGNUMBERS= "Отчёт по регистрационным номерам касс";
+	public static final String REPORT_NAME_REFUND_CHECKS = "Отчёт по возвратам";
+	public static final String REPORT_NAME_MRC_PRICE = "Прейскурант на табачные изделия";
+	public static final String REPORT_NAME_CASH_REGNUMBERS = "Отчёт по регистрационным номерам касс";
+	public static final String REPORT_NAME_WRONG_ADVERSTING_PRICE = "Некорректная акционная цена";
 	
 	
 	public TableReportPage(WebDriver driver) {

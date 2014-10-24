@@ -8,11 +8,19 @@ import static ru.crystals.set10.utils.FlexMediator.*;
 
 
 public class  CheckContentPage extends OperDayPage{
-	
+	/*
+	 * Локаторы для сопроводительных документов
+	 */
 	public static final String LINK_NOMENCLATURE = "label=номенклатуру чека";
 	public static final String LINK_GOODS_CHECK = "label=товарный чек";
 	public static final String LINK_INVOICE = "label=товарную накладную";
 	public static final String LINK_GOODS_BILL = "label=счет-фактуру";
+	
+	/*
+	 * Локаторы для остальных ссылок
+	 */
+	public static final String LINK_REFUND_FORM = "label=Форма возврата";
+	
 	
 	/*
 	 * Поля модального окна контрагента.
@@ -53,4 +61,10 @@ public class  CheckContentPage extends OperDayPage{
 		clickElement(getDriver(), ID_OPERDAYSWF , BUTTON_OK);
 		return getReportText();
 	}
+	
+	public RefundRequestPage openRefundForm(){
+		clickElement(getDriver(), ID_OPERDAYSWF, LINK_REFUND_FORM);
+		return new RefundRequestPage(getDriver());
+	}
+	
 }

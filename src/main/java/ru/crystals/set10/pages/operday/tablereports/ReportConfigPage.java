@@ -40,11 +40,12 @@ public class  ReportConfigPage extends AbstractPage{
 			DisinsectorTools.delay(20000);
 			ifFirstReport = false;
 		}
-		
 		return new HTMLRepotResultPage(getDriver());
 	}
 	
-	// for excel and pdf reports
+	/*
+	 * сохранение отчетов в формате pdf/xls
+	 */
 	public File saveReportFile(String reportType, String path, String pattern){
 		
 		if (DisinsectorTools.fileFilter(path, pattern).length != 0) {

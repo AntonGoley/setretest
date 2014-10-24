@@ -60,7 +60,8 @@ public class GoodsParser {
 	      pe.setCheckStatus(CheckStatus.Registered);
 	      pe.setOperationType(Boolean.valueOf(true));
 	      List<PositionEntity> positions = new ArrayList<PositionEntity>(100);
-	      int end = (int)random(20) + 3;
+	      // в чеке не меньше 5 товаров
+	      int end = (int)random(20) + 5;
 	      long qnt = 0L;
 	      long summ = 0L;
 	      for (int i = 1; i < end; i++) {
