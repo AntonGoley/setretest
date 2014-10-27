@@ -181,7 +181,7 @@ public class CashEmulator {
 	    wdr.setDateCommit(d);
 	    
 		sendDocument(wdr);
-		
+		log.info("Выполнить изъятие..");
 		ifCheckInRetail(wdr);
 		return wdr;
 	}
@@ -208,7 +208,7 @@ public class CashEmulator {
 	    intr.setDateCommit(d);
 
 		sendDocument(intr);
-		
+		log.info("Выполнить внесение..");
 		ifCheckInRetail(intr);
 		return intr;
 	}
@@ -247,6 +247,7 @@ public class CashEmulator {
 	    rse.setIncresentTotalFinish(200L);
 	    
 	    sendDocument(rse);
+	    log.info("Отправить Z отчет..");
 	    ifCheckInRetail((ReportShiftEntity) rse);
 	    nextShift = true;
 	    return rse;
@@ -286,8 +287,8 @@ public class CashEmulator {
 	public DocumentEntity nextRefundPositions(
 				PurchaseEntity superPurchase, 
 				/*
-				 * @param1 - номер позиции
-				 * @param2 - возвращаемое количество
+				 * @key - номер позиции
+				 * @value - возвращаемое количество
 				 */
 				HashMap<Long, Long> returnPositions,
 				// произвольный возврат
@@ -298,6 +299,7 @@ public class CashEmulator {
 	    }
 	    
 	    DocumentEntity de = refundCheck(superPurchase, returnPositions, arbitraryReturn);
+	    log.info("Выполнить возврат...");
 	    return completeAndSendPurchase(de);
 	}
 	
@@ -322,6 +324,7 @@ public class CashEmulator {
 		}
 		
 		DocumentEntity de = refundCheck(superPurchase, returnPositions, arbitraryReturn);
+		log.info("Выполнить возврат всего чека..");
 		return completeAndSendPurchase(de);
 	}
 	
