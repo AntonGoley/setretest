@@ -17,6 +17,7 @@ import ru.crystals.set10.pages.sales.preferences.goodstypes.alcohol.AlcoholRestr
 import ru.crystals.set10.pages.sales.preferences.goodstypes.alcohol.AlcoholTabsRestrictionsPage;
 import ru.crystals.set10.pages.sales.preferences.goodstypes.alcohol.AlcoholPage.AlcoholTabs;
 import ru.crystals.set10.test.dataproviders.SpiritRistrictionsDataprovider;
+import ru.crystals.set10.utils.DisinsectorTools;
 import ru.crystals.set10.utils.SoapRequestSender;
 import static ru.crystals.set10.pages.basic.SalesPage.*;
 
@@ -51,7 +52,7 @@ public class SpiritRestrictionsToSAPTest extends AbstractTest{
 		alcoholRestrictionPage.setPersentAlco(percentValue);
 		alcoholRestrictionPage.setRestrictionName(name);
 		alcoholRestrictionPage.backToRestrictionsTab();
-		validateTrue(String.format(xpath, name));
+		Assert.assertTrue(validateResult(String.format(xpath, name)));
 	}
 	
 	//@Test (description = "SRL-163. Выгрузка в SAP отчета по алкогольным ограничениям. Период действия", 
@@ -61,7 +62,7 @@ public class SpiritRestrictionsToSAPTest extends AbstractTest{
 		alcoholRestrictionPage.setDate(period);
 		alcoholRestrictionPage.setRestrictionName(name);
 		alcoholRestrictionPage.backToRestrictionsTab();
-		validateTrue(String.format(xpath, name, dateToValidate));
+		validateResult(String.format(xpath, name, dateToValidate));
 	}
 	
 	@Test (description = "SRL-163. Выгрузка в SAP отчета по алкогольным ограничениям. Время действия", 
@@ -71,16 +72,24 @@ public class SpiritRestrictionsToSAPTest extends AbstractTest{
 		alcoholRestrictionPage.setTime(fromTime.split(":"), toTime.split(":"));
 		alcoholRestrictionPage.setRestrictionName(name);
 		alcoholRestrictionPage.backToRestrictionsTab();
-		validateTrue(String.format(xpath, name, timeToValidate));
+		validateResult(String.format(xpath, name, timeToValidate));
 	}
 	
 	
-	private void validateTrue(String xpath){
+	private boolean validateResult(String xpath){
+		boolean result = false;
+		long delay = 0;
 		log.info("Проверка ограничения:" + xpath);
 		SoapRequestSender soapValidate = new  SoapRequestSender();
 		soapValidate.setSoapServiceIP(Config.CENTRUM_HOST);
-		soapValidate.getAlcoRestrictions();
-		Assert.assertTrue("Неверное значение поля ", soapValidate.assertSOAPResponseXpath(xpath));
+		while (delay < 15) {
+			DisinsectorTools.delay(1000);
+			delay=+1;
+			soapValidate.getAlcoRestrictions();	
+			result =  soapValidate.assertSOAPResponseXpath(xpath);
+			if (result) return true;
+		}	
+		return false;
 	}
 
 }
