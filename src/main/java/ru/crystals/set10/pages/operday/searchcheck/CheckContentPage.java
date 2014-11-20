@@ -31,7 +31,7 @@ public class  CheckContentPage extends OperDayPage{
 	public static final String INPUT_INN = "inn";
 	public static final String INPUT_KPP = "kpp";
 	public static final String INPUT_JURISTIC_ADRESS = "address";
-	public static final String BUTTON_OK = "id:spinnerPanel/label:OK";
+	public static final String BUTTON_PRINT = "label=Печать";
 	
 	public CheckContentPage(WebDriver driver) {
 		super(driver, false);
@@ -58,7 +58,7 @@ public class  CheckContentPage extends OperDayPage{
 		typeText(getDriver(), ID_OPERDAYSWF , INPUT_INN, inn);
 		typeText(getDriver(), ID_OPERDAYSWF , INPUT_KPP, kpp);
 		typeText(getDriver(), ID_OPERDAYSWF , INPUT_JURISTIC_ADRESS, juristicAdress);
-		clickElement(getDriver(), ID_OPERDAYSWF , BUTTON_OK);
+		clickElement(getDriver(), ID_OPERDAYSWF , BUTTON_PRINT);
 		return getReportText();
 	}
 	
