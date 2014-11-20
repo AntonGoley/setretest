@@ -1,4 +1,4 @@
-package ru.crystals.set10.test.configuration;
+ package ru.crystals.set10.test.configuration;
 
 
 import org.testng.annotations.Test;
@@ -41,8 +41,16 @@ public class SetTopologyTest extends AbstractTest{
 		DisinsectorTools.delay(5000);
 		salesPage = mainPage.openSales();
 		addRegionAndCity();
-		addShop(false);
-		addCash();
+		// добавить реальный магазин
+		addShop(Config.SHOP_NAME, Config.SHOP_NUMBER, false);
+		addJuristicPerson();
+		// добавить виртуальный магазин
+		addShop(Config.VIRTUAL_SHOP_NAME, Config.VIRTUAL_SHOP_NUMBER, true);
+		addVirtualShopJuristicPerson();
+		// добавить кассы в реальный и виртуальный магазины
+		addCash(Config.SHOP_NAME);
+		addCash(Config.VIRTUAL_SHOP_NAME);
+		// создать кассира 
 		addCashier();
 		sendGoods();
 	}
@@ -83,18 +91,21 @@ public class SetTopologyTest extends AbstractTest{
 		topologyPage = cityPage.goBack().goBack();
 	}
 	
-	private void addShop(boolean shopUseOwnServer) {
+	private void addShop(String shopName, String shopNumber, boolean useOwnServer) {
 		salesPage = new SalesPage(getDriver());
 		shopPage = salesPage.navigateMenu(SALES_MENU_SHOPS, "0", ShopPage.class);
 		shopPreferences = shopPage.addShop();
-		shopPreferences.setName("Shop" + Config.SHOP_NUMBER).
-						setShopNumber(Config.SHOP_NUMBER).
-						ifShopUseOwnServer(shopUseOwnServer);
-		juristicPerson = shopPreferences.addJuristicPerson();
-		addJuristicPerson();
+		shopPreferences.setName(shopName).
+						setShopNumber(shopNumber).
+						ifShopUseOwnServer(useOwnServer);
+		shopPreferences.goBack();
+		// после нажатия Назад, ждем, чтобы сохранился магазин
+		DisinsectorTools.delay(500);
 	}
 	
 	private void addJuristicPerson(){
+		openShopPreferences(Config.SHOP_NAME);
+		juristicPerson = shopPreferences.addJuristicPerson();
 		juristicPerson.setName(Config.SHOP_NAME)
 						.setAdress(Config.SHOP_ADRESS)
 						.setPhone(Config.SHOP_PHONE)
@@ -106,12 +117,31 @@ public class SetTopologyTest extends AbstractTest{
 						
 	}
 	
-	private void addCash(){
+	private void addVirtualShopJuristicPerson(){
+		openShopPreferences(Config.VIRTUAL_SHOP_NAME);
+		juristicPerson = shopPreferences.addJuristicPerson();
+		juristicPerson.setName(Config.VIRTUAL_SHOP_NAME)
+						.setAdress(Config.VIRTUAL_SHOP_ADRESS)
+						.setPhone(Config.VIRTUAL_SHOP_PHONE)
+						.setINN(Config.VIRTUAL_SHOP_INN)
+						.setKPP(Config.VIRTUAL_SHOP_KPP)
+						.setOKPO(Config.VIRTUAL_SHOP_OKPO)
+						.setOKDP(Config.VIRTUAL_SHOP_OKDP);
+		juristicPerson.goBack().goBack();
+						
+	}
+	
+	
+	private void openShopPreferences(String shopName){
 		getDriver().navigate().refresh();
 		DisinsectorTools.delay(2000);
 		salesPage = new SalesPage(getDriver());
 		shopPage = salesPage.navigateMenu(SALES_MENU_SHOPS, "0", ShopPage.class);
-		shopPreferences = shopPage.openShopPreferences(Config.SHOP_NAME);
+		shopPreferences = shopPage.openShopPreferences(shopName);
+	}
+	
+	private void addCash(String shopName){
+		openShopPreferences(shopName);
 		shopPreferences.addCashes(5);
 		shopPreferences.goBack();
 	}

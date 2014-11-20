@@ -38,6 +38,18 @@ public class Config {
     public static String SHOP_OKDP;
     
     /*
+     * Настройки юридического виртуального магазина
+     */
+    public static  String VIRTUAL_SHOP_NUMBER;
+    public static String VIRTUAL_SHOP_NAME;
+    public static String VIRTUAL_SHOP_ADRESS;
+    public static String VIRTUAL_SHOP_PHONE;
+    public static String VIRTUAL_SHOP_INN;
+    public static String VIRTUAL_SHOP_KPP;
+    public static String VIRTUAL_SHOP_OKPO;
+    public static String VIRTUAL_SHOP_OKDP;
+    
+    /*
      * Пользователь manager
      */
     public static  String MANAGER;
@@ -135,6 +147,17 @@ public class Config {
         CENTRUM_URL = "http://" + CENTRUM_HOST + ":" + props.getProperty("port");
         RETAIL_URL = "http://" + RETAIL_HOST + ":" + props.getProperty("port");
         
+        /*
+         * Виртуальный Магазин
+         */
+        VIRTUAL_SHOP_NUMBER = props.getProperty("virtual.shop.number");
+        VIRTUAL_SHOP_NAME = "VirualMagazin " + VIRTUAL_SHOP_NUMBER;
+        VIRTUAL_SHOP_ADRESS = props.getProperty("virtual.shop.adress");
+        VIRTUAL_SHOP_PHONE = props.getProperty("virtual.shop.phone");
+        VIRTUAL_SHOP_INN = props.getProperty("virtual.shop.inn");
+        VIRTUAL_SHOP_KPP = props.getProperty("virtual.shop.kpp");
+        VIRTUAL_SHOP_OKPO = props.getProperty("virtual.shop.okpo");
+        VIRTUAL_SHOP_OKDP = props.getProperty("virtual.shop.okdp");
         
         log.info("Centrum url:   " + CENTRUM_URL);
         log.info("Retail url:   " + RETAIL_URL);
