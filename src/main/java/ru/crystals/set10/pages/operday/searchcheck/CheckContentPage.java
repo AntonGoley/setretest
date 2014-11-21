@@ -3,6 +3,8 @@ package ru.crystals.set10.pages.operday.searchcheck;
 
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+
+import ru.crystals.set10.pages.basic.AbstractPage;
 import ru.crystals.set10.pages.operday.OperDayPage;
 import static ru.crystals.set10.utils.FlexMediator.*;
 
@@ -20,7 +22,7 @@ public class  CheckContentPage extends OperDayPage{
 	 * Локаторы для остальных ссылок
 	 */
 	public static final String LINK_REFUND_FORM = "label=Форма возврата";
-	
+	public static final String LINK_PAYMENT_TRANSACTIONS = "label=Транзакции оплаты";
 	
 	/*
 	 * Поля модального окна контрагента.
@@ -65,6 +67,11 @@ public class  CheckContentPage extends OperDayPage{
 	public RefundRequestPage openRefundForm(){
 		clickElement(getDriver(), ID_OPERDAYSWF, LINK_REFUND_FORM);
 		return new RefundRequestPage(getDriver());
+	}
+	
+	public PaymentTransactionsPage openPaymentTransactionsForm(){
+		clickElement(getDriver(), ID_OPERDAYSWF, LINK_PAYMENT_TRANSACTIONS);
+		return new PaymentTransactionsPage(getDriver());
 	}
 	
 }

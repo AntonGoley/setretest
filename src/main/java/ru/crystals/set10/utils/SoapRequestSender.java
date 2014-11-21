@@ -11,6 +11,8 @@ import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Date;
+import java.util.HashMap;
+
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -146,6 +148,23 @@ public class SoapRequestSender {
 		this.service = ERP_INTEGRATION_GOOSERVICE; 
 		this.method = METHOD_GOODS_WITHTI;
 		sendSOAPRequest();
+	}
+	
+	public HashMap<String, String> sendGoods(String request, HashMap<String, String> params){
+		ti = generateTI();
+		params.put("ti", ti);
+		this.soapRequest = String.format(soapRequestGoods, encodeBase64(processRequestParams(request, params)), ti);
+		this.service = ERP_INTEGRATION_GOOSERVICE; 
+		this.method = METHOD_GOODS_WITHTI;
+		sendSOAPRequest();
+		return params;
+	}
+	
+	private String processRequestParams(String request, HashMap<String, String> params){
+		for (String param:params.keySet()){
+			request = request.replace(param, params.get(param));
+		}
+		return request;
 	}
 	
 	public void sendAdversting(String request, String ti){

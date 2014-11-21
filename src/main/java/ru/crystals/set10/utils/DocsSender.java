@@ -46,7 +46,7 @@ public class DocsSender {
 		 httpFileTransport.setUrl("http://" + serverIP + ":8091");
 
 		
-		log.info("Послать чек на ip: " + serverIP);
+		log.info("Послать документ на ip: " + serverIP);
 		try {
             TransferObject tObject;
                 tObject = new TransferObject(Utils.serialize(object), type);
@@ -61,7 +61,7 @@ public class DocsSender {
                 oos.writeObject(tObject);
                 oos.close();
                 
-               log.info("response message = " + connect.getResponseMessage());
+               //log.info("response message = " + connect.getResponseMessage());
                
 //               if (HttpURLConnection.HTTP_CREATED == connect.getResponseCode()) {
 //                   //documentSetStatus((DocumentEntity) object, SentToServerStatus.WAIT_ACKNOWLEDGEMENT, docName);
@@ -77,16 +77,17 @@ public class DocsSender {
 //                   }
 //               }
                
-                // сетим в базу опердня (od_inbound_files) новый чек, который подложен в nginx для обработки
+                // сетим в базу опердня (od_inbound_files) запись о новом документа, который подложен в nginx для обработки
                 if (connect.getResponseMessage().equals("Created")){
-                	log.info("DocName: " + docName);
+                	log.info("Имя документа: " + docName);
                 	new DbAdapter().updateDb(DbAdapter.DB_RETAIL_OPERDAY, 
                 			String.format("INSERT INTO od_inbound_files( id, cash_number, shop_number, documents_count, file_path, status) " +
                 				"VALUES (%s, %s, %s, 1, '%s', 0)", od_purchase_id++ + 7, cashNumber, shopNumber, docName));
                 }
                 
         } catch (Exception e) {
-        	log.error("Send document error: ", e);
+        	log.error("Ошибка отправки документа: ", e);
+        	e.printStackTrace();
         }
         return null;
     }

@@ -1,6 +1,8 @@
 package ru.crystals.set10.test.tablereports;
 
 
+import java.util.HashMap;
+
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
@@ -24,6 +26,9 @@ public class AdverstingTableReportTest extends AbstractReportTest {
 	String ti = soapSender.generateTI();
 	String erpCode = "47" + ti;
 	String barCode = "78" + ti;
+	
+	HashMap<String, String> requestParams;
+	
 	
 	@BeforeClass
 	public void navigateToAdverstingReport() {

@@ -20,6 +20,7 @@ import ru.crystals.pos.check.SessionEntity;
 import ru.crystals.pos.check.ShiftEntity;
 import ru.crystals.pos.check.UserEntity;
 import ru.crystals.pos.check.WithdrawalEntity;
+import ru.crystals.pos.payments.BankCardPaymentEntity;
 import ru.crystals.pos.payments.CashPaymentEntity;
 import ru.crystals.pos.payments.PaymentEntity;
 import ru.crystals.transport.DataTypesEnum;
@@ -311,7 +312,8 @@ public class CashEmulator {
 				// произвольный возврат
 				boolean arbitraryReturn) 
 	{
-
+		
+		DocumentEntity de = new PurchaseEntity();
 		if (shift == null) {
 		  shift = nextShift(null);
 		}
@@ -323,7 +325,7 @@ public class CashEmulator {
 			returnPositions.put(pe.getNumber(), pe.getQnty());
 		}
 		
-		DocumentEntity de = refundCheck(superPurchase, returnPositions, arbitraryReturn);
+		de = refundCheck(superPurchase, returnPositions, arbitraryReturn);
 		log.info("Выполнить возврат всего чека..");
 		return completeAndSendPurchase(de);
 	}
@@ -335,8 +337,8 @@ public class CashEmulator {
 						PurchaseEntity superPurchase, 
 						/*
 						 * из superPurchase:
-						 * @param1 - номер позиции
-						 * @param2 - возвращаемое количество
+						 * @key - номер позиции
+						 * @value - возвращаемое количество
 						 */
 						HashMap<Long, Long> returnPositions, 
 						// является ли чек возврата произвольным (т.е не привязан к чеку продажи)
@@ -372,7 +374,7 @@ public class CashEmulator {
 			 position.setPriceEnd(superPurchasePosition.getPriceEnd());
 			 position.setDateTime(new Date(System.currentTimeMillis()));
 			 position.setQnty(returnQnty);
-			 position.setSum(Long.valueOf(returnQnty * position.getPriceEnd().longValue()));
+			 position.setSum(Long.valueOf(returnQnty/1000 * position.getPriceEnd().longValue()));
 			 position.setDeleted(Boolean.valueOf(false));
 			 position.setSuccessProcessed(true);
 			 position.setNumberInOriginal(superPurchasePosition.getNumber());

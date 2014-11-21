@@ -1,0 +1,23 @@
+package ru.crystals.set10.pages.operday.searchcheck;
+
+
+import org.openqa.selenium.*;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import ru.crystals.set10.pages.operday.OperDayPage;
+import static ru.crystals.set10.utils.FlexMediator.*;
+
+
+public class  PaymentTransactionsPage extends OperDayPage{
+	
+	public static final String BUTTON_PRINT_REQUEST = "label=Распечатать заявление";
+	
+	public PaymentTransactionsPage(WebDriver driver) {
+		super(driver, false);
+		getWait().until(ExpectedConditions.visibilityOfElementLocated(By.id(ID_OPERDAYSWF)));
+	}
+	
+	public boolean validateData(String locatorText){
+		return (boolean) waitForElementVisible(getDriver(), ID_OPERDAYSWF, String.format("text=%s", locatorText));
+	}
+	
+}

@@ -35,6 +35,7 @@ public class AbstractTest {
     private static ChromeDriverService service;
     protected static String chromeDownloadPath = null;
     protected static CashEmulator cashEmulator = CashEmulator.getCashEmulator(Config.RETAIL_HOST, Integer.valueOf(Config.SHOP_NUMBER), Integer.valueOf(Config.CASH_NUMBER));
+    protected static CashEmulator cashEmulatorVirtualShop = CashEmulator.getCashEmulator(Config.CENTRUM_HOST, Integer.valueOf(Config.VIRTUAL_SHOP_NUMBER), Integer.valueOf(Config.CASH_NUMBER));
     protected static DbAdapter dbAdapter = new DbAdapter();
     
     public WebDriver getDriver() {

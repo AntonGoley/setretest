@@ -51,7 +51,17 @@ public class FlexMediator {
 		// doFlexWaitForElement falls if no delay before execution
 		sleep(500);
 		ecxecute(driver, String.format("document.getElementById('%s').doFlexWaitForElement('%s', '15')", swfSrc, flexId));
-		ecxecute(driver, String.format("document.getElementById('%s').doFlexWaitForElement('%s', '15')", swfSrc, flexId));
+		//ecxecute(driver, String.format("document.getElementById('%s').doFlexWaitForElement('%s', '15')", swfSrc, flexId));
+	}
+	
+	public static boolean waitForElementVisible(WebDriver driver, String swfSrc, String flexId) {
+		String result = "";
+		//TODO
+		// doFlexWaitForElement falls if no delay before execution
+		sleep(500);
+		result = ecxecuteAndReturnString(driver, String.format("return document.getElementById('%s').doFlexWaitForElementVisible('%s', '15')", swfSrc, flexId));
+		if ( result.equals("true")) return true;
+		else return false;
 	}
 	 
 	/*
@@ -85,7 +95,6 @@ public class FlexMediator {
 		JavascriptExecutor js = (JavascriptExecutor) driver;
 		return (String) js.executeScript(command);
 	}
-	
 	
 	private static void ecxecute(WebDriver driver, String command) {
 		JavascriptExecutor js = (JavascriptExecutor) driver;

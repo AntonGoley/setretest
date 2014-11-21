@@ -1,0 +1,60 @@
+<goods-catalog>
+	<good marking-of-the-good="${marking-of-the-good}_ST" transaction-id="0000000166699742">
+		<shop-indices/>
+		<name>Шампунь HEAD&amp;SHOULDERS ОснУх2в1П/Пер400</name>
+		<bar-code code="${barcode}">
+			<count>1</count>
+			<default-code>true</default-code>
+		</bar-code>
+		<product-type>ProductPieceEntity</product-type>
+		<vat>18</vat>
+		<group id="${barcode}">
+			<name>Группа ${barcode}</name>
+			<parent-group id="${barcode}1">
+				<name>Группа ${barcode}1</name>
+			</parent-group>
+		</group>
+		<measure-type id="1">
+			<name>шт.</name>
+		</measure-type>
+		<country id="RO"/>
+		<manufacturer id="0000101921">
+			<name>ООО "Проктер энд Гэмбл Дистрибьютор</name>
+		</manufacturer>
+		<delete-from-cash>false</delete-from-cash>
+		<erp-code>286572</erp-code>
+		<is-child-product>0</is-child-product>
+		<fullname>Шампунь HEAD&amp;SHOULDERS Осн.уход 2в1 п/перхоти (Румыния) 400мл</fullname>
+		<plugin-property key="precision" value="1"/>
+		<plugin-property key="deny-print-to-documents" value="false"/>
+		<plugin-property key="amount-in-package" value="1"/>
+		<price-entry price="${price_2}" currency="RUB">
+			<shop-indices>2</shop-indices>
+			<begin-date>1900-01-01T00:00:00</begin-date>
+			<end-date>2070-12-31T23:59:00</end-date>
+			<number>2</number>
+			<department number="1">
+				<name>Отдел 1</name>
+			</department>
+		</price-entry>
+		<price-entry price="${price_1}" currency="RUB">
+			<shop-indices>2</shop-indices>
+			<begin-date>2014-04-01T03:00:00</begin-date>
+			<end-date>2070-12-31T23:59:00</end-date>
+			<number>1</number>
+			<department number="1">
+				<name>Отдел 1</name>
+			</department>
+		</price-entry>
+		<price-entry price="${price_4}" currency="RUB">
+			<shop-indices>2</shop-indices>
+			<begin-date>2014-04-01T03:00:00</begin-date>
+			<end-date>2070-12-31T23:59:00</end-date>
+			<number>3</number>
+			<department number="1">
+				<name>Отдел 1</name>
+			</department>
+			<identifier>${adversting_identifier}</identifier>
+		</price-entry>
+	</good>
+</goods-catalog>	

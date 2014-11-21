@@ -19,6 +19,7 @@ import ru.crystals.pos.check.DocumentEntity;
 import ru.crystals.pos.check.InsertType;
 import ru.crystals.pos.check.PositionEntity;
 import ru.crystals.pos.check.PurchaseEntity;
+import ru.crystals.pos.payments.BankCardPaymentEntity;
 import ru.crystals.pos.payments.CashPaymentEntity;
 import ru.crystals.pos.payments.PaymentEntity;
 import ru.crystals.set10.config.Config;
@@ -91,13 +92,22 @@ public class GoodsParser {
 	      pe.setPositions(positions);
 	      List<PaymentEntity> paymentEntityList = new ArrayList<PaymentEntity>(1);
 	      CashPaymentEntity payE = new CashPaymentEntity();
-	      payE.setDateCreate(new Date(System.currentTimeMillis()));
-	      payE.setDateCommit(new Date(System.currentTimeMillis()));
-	      payE.setSumPay(Long.valueOf(summ));
-	      //payE.setChange(Long.valueOf(10000L));
-	      payE.setPaymentType("CashPaymentEntity");
-	      payE.setCurrency("RUB");
+		      payE.setDateCreate(new Date(System.currentTimeMillis()));
+		      payE.setDateCommit(new Date(System.currentTimeMillis()));
+		      payE.setSumPay(Long.valueOf(summ));
+		      payE.setChange(Long.valueOf(random(1000) * 11L));
+		      payE.setPaymentType("CashPaymentEntity");
+		      payE.setCurrency("RUB");
+	      
+//		  BankCardPaymentEntity payBank = new BankCardPaymentEntity();
+//			  payBank.setDateCreate(new Date(System.currentTimeMillis()));
+//			  payBank.setDateCommit(new Date(System.currentTimeMillis()));
+//			  payBank.setSumPay(Long.valueOf(summ));
+//			  payBank.setPaymentType("BankCardPaymentEntity");
+//			  payBank.setCurrency("RUB");
+	      
 	      paymentEntityList.add(payE);
+//	      paymentEntityList.add(payBank);
 	      pe.setPayments(paymentEntityList);
 	      pe.setDiscountValueTotal(Long.valueOf(0L));
 	      pe.setCheckSumEnd(Long.valueOf(summ));

@@ -92,7 +92,7 @@ public class AccompanyingDocumentsBasicTest extends AbstractTest{
 			predefindCheckNumber = String.valueOf(pe.getNumber());
 		}
 		
-		mainPage = new LoginPage(getDriver(),  Config.RETAIL_URL).doLogin(Config.MANAGER, Config.MANAGER_PASSWORD);
+		mainPage = new LoginPage(getDriver(), Config.RETAIL_URL).doLogin(Config.MANAGER, Config.MANAGER_PASSWORD);
 		searchCheck = mainPage.openOperDay().openCheckSearch();
 		
  		searchCheck.setCheckNumber(predefindCheckNumber).doSearch();
