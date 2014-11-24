@@ -51,7 +51,8 @@ public class FlexMediator {
 		// doFlexWaitForElement falls if no delay before execution
 		sleep(500);
 		ecxecute(driver, String.format("document.getElementById('%s').doFlexWaitForElement('%s', '15')", swfSrc, flexId));
-		//ecxecute(driver, String.format("document.getElementById('%s').doFlexWaitForElement('%s', '15')", swfSrc, flexId));
+		// TODO: магическое дублирование ожидание элемента - разобраться и убрать!
+		ecxecute(driver, String.format("document.getElementById('%s').doFlexWaitForElement('%s', '15')", swfSrc, flexId));
 	}
 	
 	public static boolean waitForElementVisible(WebDriver driver, String swfSrc, String flexId) {
