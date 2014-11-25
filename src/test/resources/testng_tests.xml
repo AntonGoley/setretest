@@ -17,7 +17,7 @@
  </listeners>
 	<test name="Сопроводительные документы" >
 	  	<classes>
-<!-- 	  		<class name="ru.crystals.set10.test.BankTransactionInCheckTest"/> -->
+	  		<class name="ru.crystals.set10.test.BankTransactionInCheckTest"/>
 	  		<class name="ru.crystals.set10.test.documents.accompanying.AccompanyingInvoiceContentTest"/>
 		  	<class name="ru.crystals.set10.test.documents.accompanying.AccompanyingNomenclatureContentTest"/>
 		  	<class name="ru.crystals.set10.test.documents.accompanying.AccompanyingGoodsCheckContentTest"/>
