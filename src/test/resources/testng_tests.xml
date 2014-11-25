@@ -21,7 +21,7 @@
 		  	<class name="ru.crystals.set10.test.documents.accompanying.AccompanyingNomenclatureContentTest"/>
 		  	<class name="ru.crystals.set10.test.documents.accompanying.AccompanyingGoodsCheckContentTest"/>
 		  	<class name="ru.crystals.set10.test.documents.accompanying.AccompanyingGoodsBillContentTest"/>
-		  	<class name="ru.crystals.set10.test.BankTransactionInCheckTest"/>
+<!-- 		  	<class name="ru.crystals.set10.test.BankTransactionInCheckTest"/> -->
 		</classes>	 
   	</test>	
 	<test name="Табличные отчеты">
