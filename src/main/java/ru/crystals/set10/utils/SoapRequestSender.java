@@ -133,6 +133,7 @@ public class SoapRequestSender {
 		this.soapRequest = soapGetAlcoRestrictions;
 		this.service = SERVICE_ALCO_RESTRICTIONS; 
 		this.method = METHOD_ALCO_RESTRICTIONS;
+		log.info("Выгрузить алкогольные ограничения. SOAP request: \n" + this.soapRequest);
 		sendSOAPRequest();
 	}
 	
@@ -140,6 +141,7 @@ public class SoapRequestSender {
 		this.soapRequest = String.format(getProductInfoForShuttle, mac, barcode);
 		this.service = SERVICE_PRICE_CHECKER; 
 		this.method = METHOD_PRICECHECKER_SHUTTLE;
+		log.info("Отправить запрос с парайс чекера. SOAP request: \n" + this.soapRequest);
 		sendSOAPRequest();
 	}
 	
@@ -147,15 +149,17 @@ public class SoapRequestSender {
 		this.soapRequest = String.format(soapRequestGoods, encodeBase64(request), ti);
 		this.service = ERP_INTEGRATION_GOOSERVICE; 
 		this.method = METHOD_GOODS_WITHTI;
+		log.info("Отправить товары. SOAP request: \n" + this.soapRequest);
 		sendSOAPRequest();
 	}
 	
 	public HashMap<String, String> sendGoods(String request, HashMap<String, String> params){
 		ti = generateTI();
-		params.put("ti", ti);
 		this.soapRequest = String.format(soapRequestGoods, encodeBase64(processRequestParams(request, params)), ti);
 		this.service = ERP_INTEGRATION_GOOSERVICE; 
 		this.method = METHOD_GOODS_WITHTI;
+		params.put("ti", ti);
+		log.info("Отправить товары. SOAP request: \n" + this.soapRequest);
 		sendSOAPRequest();
 		return params;
 	}
@@ -171,6 +175,7 @@ public class SoapRequestSender {
 		this.soapRequest = String.format(soapRequestAdversting, encodeBase64(request), ti);
 		this.service = ERP_INTEGRATION_ADVERTSING_ACTIONS; 
 		this.method = METHOD_ACTIONS_WITHTI;
+		log.info("Отправить рекламный акции. SOAP request: \n" + this.soapRequest);
 		sendSOAPRequest();
 	}
 	
@@ -178,17 +183,17 @@ public class SoapRequestSender {
 		this.soapRequest = String.format(soapGetFeedBack, ti);
 		this.service = ERP_INTEGRATION_FEDDBACK; 
 		this.method = METHOD_ACTIONS_WITHTI;
+		//log.info("Отправить товары. SOAP request: \n" + this.soapRequest);
 		sendSOAPRequest();
 	}
 	
-	public void sendSOAPRequest(){
-		
+	private void sendSOAPRequest(){
 		URL resourceURL;
 		HttpURLConnection con = null;
 		String result = "";
 		String serviceUrl ="http://" + this.soapServiceIP + ":" + Config.DEFAULT_PORT; 
 		
-		log.info("Send SOAP request: " + this.soapRequest);
+		//log.info("Send SOAP request: " + this.soapRequest);
 
 		try {
 			resourceURL = new URL(serviceUrl + this.service);
@@ -235,7 +240,7 @@ public class SoapRequestSender {
 				
 		}
 		this.response = result;
-		log.info("SOAP RESPONSE: " + this.response);
+		//log.info("SOAP RESPONSE: " + this.response);
 	}
 	
 	
@@ -273,12 +278,15 @@ public class SoapRequestSender {
 	public boolean assertSOAPResponse(String expectedResult, String ti){
 		int timeout = 0;
 		getFeedBack(ti);
+		log.info("Ожидаемое значение в SOAP response: " + expectedResult + " ; ti = " + ti); 
 		try {
 		while (timeout <=20) {
-			if (this.response.contains(expectedResult)) return true;
-				Thread.sleep(1000);
-				timeout +=1;
-				sendSOAPRequest();
+			if (this.response.contains(expectedResult)){ 
+				return true;
+			}
+			Thread.sleep(1000);
+			timeout +=1;
+			sendSOAPRequest();
 		}
 		} catch (InterruptedException e) {
 			e.printStackTrace();

@@ -7,8 +7,10 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import ru.crystals.pos.check.CheckStatus;
 import ru.crystals.pos.check.DocumentEntity;
 import ru.crystals.pos.check.IntroductionEntity;
@@ -23,6 +25,7 @@ import ru.crystals.pos.check.WithdrawalEntity;
 import ru.crystals.pos.payments.BankCardPaymentEntity;
 import ru.crystals.pos.payments.CashPaymentEntity;
 import ru.crystals.pos.payments.PaymentEntity;
+import ru.crystals.pos.payments.PaymentTransactionEntity;
 import ru.crystals.transport.DataTypesEnum;
 import static ru.crystals.set10.utils.DbAdapter.*;
 import static ru.crystals.set10.utils.GoodsParser.*;
@@ -414,11 +417,28 @@ public class CashEmulator {
 	    de.setNumber((long) checkNumber++);
 	    de.setSession(shift.getSessionStart());
 	    de.setId(System.currentTimeMillis());
+	    
 	    if ((de instanceof PurchaseEntity)) {
 	    	PurchaseEntity pe = (PurchaseEntity)de;
 	      for (PositionEntity pos : pe.getPositions()) {
 	        pos.setDateTime(d);
 	      }
+	      
+	      /*
+	       * Добавить данные о номере магазина, смены, кассы в транзакции оплаты чека
+	       */
+		    List<PaymentTransactionEntity> purchaseTransactions = new ArrayList<PaymentTransactionEntity>();
+		    
+		    Iterator<PaymentTransactionEntity> iterator = pe.getTransactions().iterator();
+		    while (iterator.hasNext()){
+		    	PaymentTransactionEntity pTransaction = iterator.next();
+			    	pTransaction.setCashNum(shift.getCashNum());
+			    	pTransaction.setShopIndex(shift.getShopIndex());
+			    	pTransaction.setNumShift(shift.getNumShift());
+			    	purchaseTransactions.add(pTransaction);
+		    }
+		    pe.setTransactions(purchaseTransactions);	      
+	      
 	    }  
 	    sendDocument(de);
 	    logCheckEntities((PurchaseEntity) de);
@@ -498,7 +518,7 @@ public class CashEmulator {
     			return true;
     		}	
     	}
-    	log.info(String.format("Check transport timeout! No check found with number:  %s ", purchase.getNumber()));
+    	log.info(String.format("Check transport timeout! No check found with number:  %s and fiscalDocNum: %s ", purchase.getNumber(), fiscalDocNum));
 		return false;
 	}
 	
