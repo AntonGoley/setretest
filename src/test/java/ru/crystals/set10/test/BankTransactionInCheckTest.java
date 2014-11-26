@@ -16,8 +16,10 @@ import ru.crystals.pos.bank.datastruct.AuthorizationData;
 import ru.crystals.pos.bank.datastruct.BankCard;
 import ru.crystals.pos.check.PurchaseEntity;
 import ru.crystals.pos.payments.BankCardPaymentEntity;
+import ru.crystals.pos.payments.BankCardPaymentTransactionEntity;
 import ru.crystals.pos.payments.CashPaymentEntity;
 import ru.crystals.pos.payments.PaymentEntity;
+import ru.crystals.pos.payments.PaymentTransactionEntity;
 import ru.crystals.set10.config.Config;
 import ru.crystals.set10.pages.basic.LoginPage;
 import ru.crystals.set10.pages.basic.MainPage;
@@ -113,11 +115,6 @@ public class BankTransactionInCheckTest extends AbstractTest{
 	    long originalSumm = originalPayment.getSumPay();
 	    
 	    /*
-	     * Создаем 2 оплаты: наличные + банковская карта
-	     */
-	    List<PaymentEntity> paymentEntityList = new ArrayList<PaymentEntity>(2);
-	    
-	    /*
 	     * Оплата наличными: меняем сумму оплаты originalSumm/2
 	     */
 	    CashPaymentEntity payE = new CashPaymentEntity();
@@ -129,7 +126,7 @@ public class BankTransactionInCheckTest extends AbstractTest{
 	      payE.setCurrency("RUB");
 	    
 	    /*
-	     * Оплата банковской карты  
+	     * Оплата банковской картой  Сбербанк
 	     */
 	    BankCardPaymentEntity payBank = new BankCardPaymentEntity();
 		  payBank.setDateCreate(new Date(System.currentTimeMillis()));
@@ -140,7 +137,7 @@ public class BankTransactionInCheckTest extends AbstractTest{
 		  payBank.setCurrency("RUB");
 		 
 		 /*
-		  * Отклоненная транзакция 
+		  * Отклоненная транзакция Сбербанк
 		  */
 	 	AuthorizationData authDataDenied = new  AuthorizationData();
 		 	authDataDenied.setAmount(Long.valueOf(originalSumm - originalSumm/2));
@@ -158,21 +155,21 @@ public class BankTransactionInCheckTest extends AbstractTest{
 		 	authDataDenied.setAuthCode(inValidAuthorization);
 		 	authDataDenied.setMessage(inValidMessage);
 		 	authDataDenied.setResponseCode(inValidRsponseCode);
-		 	//authDataDenied.setResultCode(1L);
+		 	authDataDenied.setResultCode(1L);
 		 	authDataDenied.setTerminalId("MM489301");
 			 	List<List<String>> slips_ = new ArrayList<List<String>>();
 			 		List<String> slip_ = new ArrayList<String>();
-			 		slip_.add("Простой слип");
+			 		slip_.add("Простой слип \n отклоненной транзакции");
 			 		slips_.add(slip_);
 			 	authDataDenied.setSlips(slips_);	
 		  
 		 /*
-		  * Успешная транзакция 
+		  * Успешная транзакция Сбербанк
 		  */
 		 AuthorizationData authData = new  AuthorizationData();
 		 	authData.setAmount(Long.valueOf(originalSumm - originalSumm/2));
 		 	authData.setCurrencyCode("RUB");
-		 	authData.setDate(new Date(System.currentTimeMillis()));
+		 	authData.setDate(new Date(System.currentTimeMillis() + 120*1000));
 		 	authData.setHostTransId(System.currentTimeMillis());
 		 	authData.setCashTransId(System.currentTimeMillis() + 1);
 		 	/*
@@ -185,29 +182,39 @@ public class BankTransactionInCheckTest extends AbstractTest{
 		 	authData.setAuthCode(validAuthorization);
 		 	authData.setMessage(validMessage);
 		 	authData.setResponseCode(validRsponseCode);
-		 	//authData.setResultCode(1L);
+		 	authData.setResultCode(1L);
 		 	authData.setTerminalId("MM489301");
 		 	List<List<String>> slips = new ArrayList<List<String>>();
 		 		List<String> slip = new ArrayList<String>();
-		 		slip.add("Простой слип");
+		 		slip.add("Простой слип \n успешной транзакции");
 		 		slips.add(slip);
 		 	authData.setSlips(slips);
 		 
-		 /*
-		  * Добавляем успешную транзакцию в оплату и в чек
-		  */
-		 payBank.addTransactionData(authData);	
-
-		 paymentEntityList.add(payE);
-		 paymentEntityList.add(payBank);
-		 peWithBankTransactions.setPayments(paymentEntityList);
-		 
-		/*
-		 * добавляем отклоненную транзакцию только в чек	
-		 */
-		payBank.addTransactionData(authDataDenied);	
 		
-		peWithBankTransactions.setTransactions(payBank.getTransactions());
+		BankCardPaymentTransactionEntity canceledBankTransaction = new  BankCardPaymentTransactionEntity(authDataDenied);
+		BankCardPaymentTransactionEntity successBankTransaction = new  BankCardPaymentTransactionEntity(authData);
+		
+		List<PaymentTransactionEntity> allTransactions = new ArrayList<PaymentTransactionEntity>();
+		allTransactions.add(canceledBankTransaction);
+		allTransactions.add(successBankTransaction);
+		
+		List<PaymentTransactionEntity> successTransactions = new ArrayList<PaymentTransactionEntity>();
+		successTransactions.add(successBankTransaction);
+		/*
+		 * связываем успешную транзакцию с оплатой (банковской картой) и с чеком
+		 * отмененная транзакция добавляется только в чек	
+		*/
+		payBank.setTransactions(successTransactions);
+
+		/*
+		 * Создаем 2 оплаты: наличные + банковская карта и добавляем в чек
+		*/
+		List<PaymentEntity> paymentEntityList = new ArrayList<PaymentEntity>(2);
+		paymentEntityList.add(payE);
+		paymentEntityList.add(payBank);
+		peWithBankTransactions.setPayments(paymentEntityList);
+		
+		peWithBankTransactions.setTransactions(allTransactions);
 		return peWithBankTransactions;
 	}
 	
