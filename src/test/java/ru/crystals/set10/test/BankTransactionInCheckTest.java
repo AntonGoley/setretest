@@ -1,6 +1,9 @@
 package ru.crystals.set10.test;
 
+import static ru.crystals.set10.pages.operday.tablereports.ReportConfigPage.EXCELREPORT;
 import static ru.crystals.set10.utils.GoodsParser.peList;
+
+
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -23,6 +26,7 @@ import ru.crystals.pos.payments.PaymentTransactionEntity;
 import ru.crystals.set10.config.Config;
 import ru.crystals.set10.pages.basic.LoginPage;
 import ru.crystals.set10.pages.basic.MainPage;
+import ru.crystals.set10.pages.operday.OperDayPage;
 import ru.crystals.set10.pages.operday.searchcheck.CheckContentPage;
 import ru.crystals.set10.pages.operday.searchcheck.CheckSearchPage;
 import ru.crystals.set10.pages.operday.searchcheck.PaymentTransactionsPage;
@@ -101,6 +105,16 @@ public class BankTransactionInCheckTest extends AbstractTest{
 			dataProvider = "inValidBankTransaction")
 	public void testInvalidBankTransactionExist(String field, String fieldValue){
 		Assert.assertTrue("Не отображается значения поля для банковской транзакции", paymentTransactions.validateData(fieldValue));
+	}
+	
+	
+	@Test(description = "SRTE-75. Выгрузка банковских транзакций в excel")
+	public void saveExcelBankTransactionTest(){
+		long fileSize = 0;
+		String reportNamePattern = "TransactionHistory*.xls*";
+		fileSize =  paymentTransactions.saveExcel(chromeDownloadPath, reportNamePattern).length();
+		log.info("Размер сохраненного файла: " + reportNamePattern + " равен " +  fileSize);
+		Assert.assertTrue("Файл отчета сохранился некорректно", fileSize > 0);
 	}
 	
 	

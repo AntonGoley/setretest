@@ -75,17 +75,24 @@ public class DisinsectorTools {
 	// Удалить все файлы отчетов (*.xls; *.pdf) из папки загрузок хрома
 	public  void removeOldDownloadedReports(String chromeDownloadPath){
 		GenericExtFilter xlsFilter = new GenericExtFilter(".xls");
+		GenericExtFilter xlsxFilter = new GenericExtFilter(".xlsx");
 		GenericExtFilter pdfFilter = new GenericExtFilter(".pdf");
 		
 		File dir = new File(chromeDownloadPath);
 		String[] xlsReportFileName = dir.list(xlsFilter);
+		String[] xlsxReportFileName = dir.list(xlsxFilter);
 		String[] pdfReportFileName = dir.list(pdfFilter);
+		
 		
 		for (String filePath:xlsReportFileName) {
 			new File(chromeDownloadPath + "/" + filePath).delete();
 		}
 		
 		for (String filePath:pdfReportFileName) {
+			new File(chromeDownloadPath + "/" + filePath).delete();
+		}
+		
+		for (String filePath:xlsxReportFileName) {
 			new File(chromeDownloadPath + "/" + filePath).delete();
 		}
 	}
