@@ -40,7 +40,7 @@
 		</classes>	 
   	</test>
   	
-  	<test name="Оплата банковской карторй" >
+  	<test name="Оплата банковской картой" >
 	  	<classes>
 			<class name="ru.crystals.set10.test.BankTransactionInCheckTest"/>
 		</classes>	 

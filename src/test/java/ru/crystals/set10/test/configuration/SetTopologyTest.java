@@ -111,7 +111,7 @@ public class SetTopologyTest extends AbstractTest{
 	}
 	
 	
-	@Test
+	@Test (enabled = false)
 	public void addEasyComTest(){
 		mainPage = new LoginPage(getDriver(), Config.RETAIL_URL).doLogin(Config.MANAGER, Config.MANAGER_PASSWORD);
 		salesPage = mainPage.openSales();
