@@ -46,15 +46,5 @@
 				<name>Отдел 1</name>
 			</department>
 		</price-entry>
-		<price-entry price="${price_3}" currency="RUB">
-			<shop-indices>2</shop-indices>
-			<begin-date>2014-04-01T03:00:00</begin-date>
-			<end-date>2070-12-31T23:59:00</end-date>
-			<number>3</number>
-			<department number="1">
-				<name>Отдел 1</name>
-			</department>
-			<identifier>${adversting_identifier}</identifier>
-		</price-entry>
 	</good>
 </goods-catalog>	

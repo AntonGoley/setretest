@@ -13,6 +13,7 @@ public class SalesPage extends AbstractPage{
 	static final String LOCATOR_MENUITEM = "topList";
 	
 	public static final String SALES_MENU_SHOPS = "text=Магазины";
+	public static final String SALES_MENU_SHOP_PREFERENCES= "text=Настройки магазина";
 	public static final String SALES_MENU_TOPOLOGY = "text=Топология";
 	public static final String SALES_MENU_EQUIPMENT = "text=Оборудование";
 	public static final String SALES_MENU_EXTERNAL_SYSTEMS  = "text=Внешние системы";

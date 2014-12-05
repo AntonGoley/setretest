@@ -92,7 +92,6 @@ public class AdverstingTableReportTest extends AbstractReportTest {
 	private void sendData() {
 		goodRequest = DisinsectorTools.getFileContentAsString("good.txt");
 		soapSender.sendGoods(String.format(goodRequest, erpCode, barCode),ti);
-		soapSender.assertSOAPResponse("status-message=\"correct\"", ti);
 	}
 	
 	@DataProvider (name = "Доступные форматы для скачивания")

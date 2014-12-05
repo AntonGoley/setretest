@@ -11,6 +11,11 @@ public class FlexMediator {
 		waitForElement(driver, swfSrc, flexId);
 		ecxecute(driver, String.format("document.getElementById('%s').doFlexClick('%s', '')", swfSrc, flexId));	
 	}
+	
+	public static void clickElement(WebDriver driver, String swfSrc, String flexId, String arg) {
+		waitForElement(driver, swfSrc, flexId);
+		ecxecute(driver, String.format("document.getElementById('%s').doFlexClick('%s', '%s')", swfSrc, flexId, arg));	
+	}
 
 	public static void typeText(WebDriver driver, String swfSrc, String flexId, String text) {
 		waitForElement(driver, swfSrc, flexId);
@@ -52,7 +57,7 @@ public class FlexMediator {
 		sleep(500);
 		ecxecute(driver, String.format("document.getElementById('%s').doFlexWaitForElement('%s', '15')", swfSrc, flexId));
 		// TODO: магическое дублирование ожидание элемента - разобраться и убрать!
-		ecxecute(driver, String.format("document.getElementById('%s').doFlexWaitForElement('%s', '15')", swfSrc, flexId));
+		ecxecute(driver, String.format("document.getElementById('%s').doFlexWaitForElementVisible('%s', '15')", swfSrc, flexId));
 	}
 	
 	public static boolean waitForElementVisible(WebDriver driver, String swfSrc, String flexId) {

@@ -19,11 +19,11 @@ public class AbstractReportTest extends AbstractTest{
 			String user,
 			String password,
 			Class<T> reportConfig,
-			int tabIndex,
+			String tabName,
 			String reportType) {
 		mainPage = new LoginPage(getDriver(), hostUrl).doLogin(user, password);
 		tableReportsPage = mainPage.openOperDay().openTableReports();
-		return tableReportsPage.openReportConfigPage(reportConfig, tabIndex, reportType);
+		return tableReportsPage.openReportConfigPage(reportConfig, tabName, reportType);
 	}	
 	
 	public void doHTMLReport(ReportConfigPage reportConfigPage, boolean closeReport){

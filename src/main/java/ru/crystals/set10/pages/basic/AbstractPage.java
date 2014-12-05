@@ -1,13 +1,19 @@
 package ru.crystals.set10.pages.basic;
 
+import static ru.crystals.set10.utils.FlexMediator.clickElement;
+import static ru.crystals.set10.utils.FlexMediator.doFlexMouseDown;
+
+import java.io.File;
 import java.util.Iterator;
 import java.util.Set;
+
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
 import ru.crystals.set10.utils.DisinsectorTools;
 
 
@@ -60,4 +66,5 @@ public abstract class  AbstractPage {
 		    }
 		}
 	}
+	
 }

@@ -11,7 +11,8 @@ import static ru.crystals.set10.utils.FlexMediator.*;
 
 public class  CashesPage extends OperDayPage{
 	
-	private final String LOCATOR_TAB = "tabBar";
+	private static final String LOCATOR_TAB = "shiftsNavigator";
+	public static final String TAB_ACTS = "Акты";
 	
 	public CashesPage(WebDriver driver) {
 		super(driver, false);
@@ -19,7 +20,7 @@ public class  CashesPage extends OperDayPage{
 	}
 	
 	public Km3Page openKmPage(){
-		doFlexProperty(getDriver(), ID_OPERDAYSWF, LOCATOR_TAB, new String[]{"selectedIndex", "3"});
+		clickElement(getDriver(), ID_OPERDAYSWF, LOCATOR_TAB, TAB_ACTS);
 		return new Km3Page(getDriver());
 	}
 	

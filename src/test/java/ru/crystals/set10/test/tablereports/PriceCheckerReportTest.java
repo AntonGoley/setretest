@@ -77,7 +77,6 @@ public class PriceCheckerReportTest extends AbstractReportTest{
 	private void sendGoodData() {
 		String goodRequest = DisinsectorTools.getFileContentAsString("good.txt");
 		soapSender.sendGoods(String.format(goodRequest, erpCode, barCode),ti);
-		soapSender.assertSOAPResponse("status-message=\"correct\"", ti);
 	}
 	
 	private void sendPriceCheckerData(){

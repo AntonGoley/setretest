@@ -95,7 +95,6 @@ public class GoodOnTKReportTest extends AbstractReportTest{
 		log.info("Загрузить товар с erpCode = " + erpCode + ", barCode = " + barCode);
 		goodRequest = DisinsectorTools.getFileContentAsString("good.txt");
 		soapSender.sendGoods(String.format(goodRequest, erpCode, barCode),ti);
-		soapSender.assertSOAPResponse("status-message=\"correct\"", ti);
 	}
 	
 	private void sendAdverstingForGood() {

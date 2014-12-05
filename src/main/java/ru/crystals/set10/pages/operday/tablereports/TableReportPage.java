@@ -12,14 +12,14 @@ import static ru.crystals.set10.utils.FlexMediator.*;
 
 public class  TableReportPage extends AbstractPage{
 	
-	static final String ID_OPERDAYSWF = "OperDay";
-	static final String ID_TABBAR = "name=tabBar";
+	public static final String ID_OPERDAYSWF = "OperDay";
+	static final String ID_TABBAR = "shiftsNavigator";
 	static final String REPORT_LOCATOR = "label=";
 	
 	
-	public static final int TAB_ADVERSTING = 0;
-	public static final int TAB_FINANCIAL = 1;
-	public static final int TAB_OTHER = 2;
+	public static final String TAB_ADVERSTING = "Рекламные";
+	public static final String TAB_FINANCIAL = "Финансовые";
+	public static final String TAB_OTHER = "Прочее";
 	
 	
 	public static final String REPORT_NAME_ADVERSTING = "Отчет по товарам в рекламных акциях"; 
@@ -37,15 +37,10 @@ public class  TableReportPage extends AbstractPage{
 		getWait().until(ExpectedConditions.visibilityOfElementLocated(By.id(ID_OPERDAYSWF)));
 	}
 	
-	public <T> T openReportConfigPage(Class<T> report, int tabIndex, String reportName) {
-		selectTab(tabIndex);
+	public <T> T openReportConfigPage(Class<T> report, String tabName, String reportName) {
+		clickElement(getDriver(), ID_OPERDAYSWF, ID_TABBAR, tabName);
 		clickElement(getDriver(), ID_OPERDAYSWF, REPORT_LOCATOR + reportName);
 		return PageFactory.initElements(getDriver(), report);
-	}
-	
-	public TableReportPage selectTab(int tabIndex){
-		doFlexProperty(getDriver(), ID_OPERDAYSWF, ID_TABBAR, new String[]{"selectedIndex", String.valueOf(tabIndex)});
-		return this;
 	}
 	
 }

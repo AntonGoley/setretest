@@ -1,15 +1,18 @@
 package ru.crystals.set10.pages.sales.preferences;
 
 import static ru.crystals.set10.utils.FlexMediator.doFlexProperty;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+
 import ru.crystals.set10.pages.basic.AbstractPage;
+import ru.crystals.set10.pages.basic.SalesPage;
 
 
-public class SalesPreferencesPage extends AbstractPage{
+public class SalesPreferencesPage extends SalesPage{
 	
-	static final String ID_SALESSWF = "Sales";
+	
 	static final String LOCATOR_TABBAR= "toggleBur";
 	
 	
@@ -20,7 +23,7 @@ public class SalesPreferencesPage extends AbstractPage{
 	
 	//TODO replace with factory
 	public SalesGoodsTypesAndPaymentsTabPage  navigateTab(SalesPreferencesPageTabs salesPreferencesTab) {
-		doFlexProperty(getDriver(), ID_SALESSWF, LOCATOR_TABBAR, new String[] {"selectedIndex", String.valueOf(salesPreferencesTab.ordinal()) });
+		doFlexProperty(getDriver(), ID_SALESSWF, LOCATOR_TABBAR, new String[] {"selectedIndex", String.valueOf(salesPreferencesTab.ordinal())});
 		return new SalesGoodsTypesAndPaymentsTabPage(getDriver());
 	}
 

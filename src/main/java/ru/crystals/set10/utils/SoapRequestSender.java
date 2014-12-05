@@ -151,8 +151,12 @@ public class SoapRequestSender {
 		this.method = METHOD_GOODS_WITHTI;
 		log.info("Отправить товары. SOAP request: \n" + this.soapRequest);
 		sendSOAPRequest();
+		assertSOAPResponse(RETURN_MESSAGE_CORRECT, ti);
 	}
 	
+	/*
+	 * Метод посылает товары, и ждет ответа status="3" (товары успешно импортировались)
+	 */
 	public HashMap<String, String> sendGoods(String request, HashMap<String, String> params){
 		ti = generateTI();
 		this.soapRequest = String.format(soapRequestGoods, encodeBase64(processRequestParams(request, params)), ti);
@@ -161,6 +165,7 @@ public class SoapRequestSender {
 		params.put("ti", ti);
 		log.info("Отправить товары. SOAP request: \n" + this.soapRequest);
 		sendSOAPRequest();
+		assertSOAPResponse(RETURN_MESSAGE_CORRECT, ti);
 		return params;
 	}
 	
@@ -192,8 +197,6 @@ public class SoapRequestSender {
 		HttpURLConnection con = null;
 		String result = "";
 		String serviceUrl ="http://" + this.soapServiceIP + ":" + Config.DEFAULT_PORT; 
-		
-		//log.info("Send SOAP request: " + this.soapRequest);
 
 		try {
 			resourceURL = new URL(serviceUrl + this.service);

@@ -7,18 +7,22 @@ import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Test;
+
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.concurrent.TimeUnit;
+
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeDriverService;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.annotations.BeforeMethod;
+
 import ru.crystals.set10.config.*;
 import ru.crystals.set10.pages.basic.*;
 import ru.crystals.set10.utils.CashEmulator;
@@ -55,7 +59,6 @@ public class AbstractTest {
     @BeforeClass (alwaysRun = true)
     public void setupWebDriver() throws IOException {
 	    
-    	
     	ChromeOptions options = new ChromeOptions();
     	options.addArguments("start-maximized");
     	//options.addArguments("--always-authorize-plugins");

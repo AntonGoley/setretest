@@ -9,8 +9,8 @@ import static ru.crystals.set10.utils.FlexMediator.*;
 
 public class  Km3Page extends OperDayPage{
 	
-	public static final String LOCATOR_KM3 = "1";
-	public static final String LOCATOR_KM6 = "0";
+	public static final String LOCATOR_KM3 = "КМ-3";
+	public static final String LOCATOR_KM6 = "КМ-6";
 	private static final String NAVIGATOR_KM_TYTE = "tabNav";
 	private static final String LOCATOR_PRINTALL_CHECKBOX = "selectedAllCheckBox";
 	private static final String LOCATOR_PRINTALL_BUTTON  = "label=Распечатать выбранные";
@@ -26,7 +26,7 @@ public class  Km3Page extends OperDayPage{
 	}
 	
 	public Km3Page switchToKm(String kmType){
-		doFlexProperty(getDriver(), ID_OPERDAYSWF, NAVIGATOR_KM_TYTE, new String[]{"selectedIndex", kmType});
+		clickElement(getDriver(), ID_OPERDAYSWF, NAVIGATOR_KM_TYTE, kmType);
 		return new Km3Page(getDriver());
 	}
 	

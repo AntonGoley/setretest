@@ -79,7 +79,6 @@ public class MRCPriceReportWithLekondsTest extends AbstractReportTest{
 				.replace(since_date, dateStart)
 				.replace(till_date, dateEnd)
 				, soapRequestSender.generateTI());
-		soapRequestSender.assertSOAPResponse(RETURN_MESSAGE_CORRECT, soapRequestSender.getTI());
 		return mrc_good_name;
 	}
 	

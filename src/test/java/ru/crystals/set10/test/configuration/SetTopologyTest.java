@@ -1,11 +1,17 @@
  package ru.crystals.set10.test.configuration;
 
 
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+
 import ru.crystals.set10.config.Config;
 import ru.crystals.set10.pages.basic.*;
 import ru.crystals.set10.pages.sales.cashiers.CashiersMainPage;
 import ru.crystals.set10.pages.sales.cashiers.CashierConfigPage;
+import ru.crystals.set10.pages.sales.equipment.EquipmentPage;
+import ru.crystals.set10.pages.sales.equipment.NewEquipmentPage;
 import ru.crystals.set10.pages.sales.shops.JuristicPersonPage;
 import ru.crystals.set10.pages.sales.shops.ShopPage;
 import ru.crystals.set10.pages.sales.shops.ShopPreferencesPage;
@@ -29,31 +35,92 @@ public class SetTopologyTest extends AbstractTest{
 	ShopPreferencesPage shopPreferences;
 	JuristicPersonPage juristicPerson;
 	CashierConfigPage cashierConfig;
+	NewEquipmentPage  newEqupment;
+	
+	
+	@BeforeClass
+	public void doLogin(){
+		// таймаут для певрого запуска
+		DisinsectorTools.delay(3000);
+		mainPage = new LoginPage(getDriver(), Config.CENTRUM_URL).doLogin(Config.MANAGER, Config.MANAGER_PASSWORD);
+		// таймаут для певрого запуска
+		DisinsectorTools.delay(3000);
+		salesPage = mainPage.openSales();		
+	}
 	
 	@Test (	priority = 1,
 			groups = "Config",
 			description = "Настроить топологию: создать регион, город, магазин, юридическое лицо, добавить кассы, создать кассира")
 	public void setTopology() {
-		// таймауты для певрого запуска
-		DisinsectorTools.delay(3000);
-		mainPage = new LoginPage(getDriver(), Config.CENTRUM_URL).doLogin(Config.MANAGER, Config.MANAGER_PASSWORD);
-		// таймаут для певрого запуска
-		DisinsectorTools.delay(5000);
-		salesPage = mainPage.openSales();
 		addRegionAndCity();
-		// добавить реальный магазин
-		addShop(Config.SHOP_NAME, Config.SHOP_NUMBER, false);
-		addJuristicPerson();
-		// добавить виртуальный магазин
-		addShop(Config.VIRTUAL_SHOP_NAME, Config.VIRTUAL_SHOP_NUMBER, true);
-		addVirtualShopJuristicPerson();
-		// добавить кассы в реальный и виртуальный магазины
-		addCash(Config.SHOP_NAME);
-		addCash(Config.VIRTUAL_SHOP_NAME);
-		// создать кассира 
-		addCashier();
-		sendGoods();
 	}
+	
+	
+	@DataProvider(name="shops")
+	public Object[][] shops() {
+		return new Object[][]{
+				{Config.SHOP_NAME, Config.SHOP_NUMBER, false},
+				{Config.VIRTUAL_SHOP_NAME, Config.VIRTUAL_SHOP_NUMBER, true}
+		};
+	}
+	
+	@Test (dataProvider = "shops",
+			priority = 2)
+	public void addShopsTest(String shopName, String shopNumber, boolean isVirtual){
+		addShop(shopName, shopNumber, isVirtual);
+	}
+	
+	@DataProvider(name="juristicPerson")
+	public Object[][] juristicPerson() {
+		return new Object[][]{
+				{Config.SHOP_NAME, Config.SHOP_ADRESS, Config.SHOP_PHONE, Config.SHOP_INN, Config.SHOP_KPP, Config.SHOP_OKPO, Config.SHOP_OKDP},
+				{Config.VIRTUAL_SHOP_NAME, Config.VIRTUAL_SHOP_ADRESS, Config.VIRTUAL_SHOP_PHONE, Config.VIRTUAL_SHOP_INN, Config.VIRTUAL_SHOP_KPP, Config.VIRTUAL_SHOP_OKPO, Config.VIRTUAL_SHOP_OKDP}
+		};
+	}
+	
+	@Test (dataProvider = "juristicPerson",
+			priority = 3)
+	public void addJuristicPersonTest( 
+			String shopName, 
+			String shopAdress, 
+			String shopPhone, 
+			String shopInn, 
+			String shopKpp,
+			String shopOkpo,
+			String shopOkdp ){
+		addJuristicPerson(shopName, shopAdress, shopPhone, shopInn, shopKpp, shopOkpo, shopOkdp);
+	}
+	
+	@DataProvider(name="cashes")
+	public Object[][] cash() {
+		return new Object[][]{
+				{Config.SHOP_NAME},
+				{Config.VIRTUAL_SHOP_NAME}
+		};
+	}
+	
+	@Test (dataProvider = "cashes",
+			priority = 4)
+	public void addCashesTest(String shopName){
+		addCash(shopName);
+	}
+	
+	@Test ( priority = 5)
+	public void addCashierTest(){
+		addCashier();
+	}
+	
+	
+	@Test
+	public void addEasyComTest(){
+		mainPage = new LoginPage(getDriver(), Config.RETAIL_URL).doLogin(Config.MANAGER, Config.MANAGER_PASSWORD);
+		salesPage = mainPage.openSales();
+		newEqupment = salesPage.navigateMenu(SALES_MENU_EQUIPMENT, "1", EquipmentPage.class)
+			.addNewEquipment();
+		newEqupment.addEquipment("EasyCom", "3", "EasyCom")
+			.ifEqupmentOnPage("EasyCom");
+	}
+	
 	
 	@Test (	
 			description = "Добавить права пользователю manager на центруме"
@@ -103,34 +170,25 @@ public class SetTopologyTest extends AbstractTest{
 		DisinsectorTools.delay(500);
 	}
 	
-	private void addJuristicPerson(){
-		openShopPreferences(Config.SHOP_NAME);
+	private void addJuristicPerson(
+			String shopName, 
+			String shopAdress, 
+			String shopPhone, 
+			String shopInn, 
+			String shopKpp,
+			String shopOkpo,
+			String shopOkdp) {
+		openShopPreferences(shopName);
 		juristicPerson = shopPreferences.addJuristicPerson();
-		juristicPerson.setName(Config.SHOP_NAME)
-						.setAdress(Config.SHOP_ADRESS)
-						.setPhone(Config.SHOP_PHONE)
-						.setINN(Config.SHOP_INN)
-						.setKPP(Config.SHOP_KPP)
-						.setOKPO(Config.SHOP_OKPO)
-						.setOKDP(Config.SHOP_OKDP);
+		juristicPerson.setName(shopName)
+						.setAdress(shopAdress)
+						.setPhone(shopPhone)
+						.setINN(shopInn)
+						.setKPP(shopKpp)
+						.setOKPO(shopOkpo)
+						.setOKDP(shopOkdp);
 		juristicPerson.goBack().goBack();
-						
 	}
-	
-	private void addVirtualShopJuristicPerson(){
-		openShopPreferences(Config.VIRTUAL_SHOP_NAME);
-		juristicPerson = shopPreferences.addJuristicPerson();
-		juristicPerson.setName(Config.VIRTUAL_SHOP_NAME)
-						.setAdress(Config.VIRTUAL_SHOP_ADRESS)
-						.setPhone(Config.VIRTUAL_SHOP_PHONE)
-						.setINN(Config.VIRTUAL_SHOP_INN)
-						.setKPP(Config.VIRTUAL_SHOP_KPP)
-						.setOKPO(Config.VIRTUAL_SHOP_OKPO)
-						.setOKDP(Config.VIRTUAL_SHOP_OKDP);
-		juristicPerson.goBack().goBack();
-						
-	}
-	
 	
 	private void openShopPreferences(String shopName){
 		getDriver().navigate().refresh();
@@ -160,6 +218,7 @@ public class SetTopologyTest extends AbstractTest{
 				Config.CASHIER_ADMIN_ROLE);
 	}
 	
+	@AfterClass
 	private void sendGoods(){
 		SoapRequestSender soapSender  = new SoapRequestSender();
 		soapSender.sendGoodsToStartTesting(Config.CENTRUM_HOST, "goods.txt");

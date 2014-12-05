@@ -128,7 +128,6 @@ public class MRCPriceReportTest extends AbstractReportTest{
 				.replace(mrcNameDataFilePattern, mrc_good_name)
 				.replace(price, mrc_price)
 				, soapRequestSender.generateTI());
-		soapRequestSender.assertSOAPResponse(RETURN_MESSAGE_CORRECT, soapRequestSender.getTI());
 		return mrc_good_name;
 	}
 	

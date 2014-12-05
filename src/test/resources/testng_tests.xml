@@ -33,6 +33,13 @@
 	  		<class name="ru.crystals.set10.test.tablereports.WrongAdverstingPriceTest"/>
 		</classes>	 
   	</test>	
+  	
+  	<test name="Поля карточки товара" >
+	  	<classes>
+			<class name="ru.crystals.set10.test.GoodsAdditionalFieldsTest"/>
+		</classes>	 
+  	</test>
+  	
   	<test name="Оплата банковской карторй" >
 	  	<classes>
 			<class name="ru.crystals.set10.test.BankTransactionInCheckTest"/>

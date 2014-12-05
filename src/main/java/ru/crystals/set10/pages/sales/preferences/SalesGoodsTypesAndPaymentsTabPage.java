@@ -3,15 +3,13 @@ package ru.crystals.set10.pages.sales.preferences;
 import static ru.crystals.set10.utils.FlexMediator.*;
 
 import org.openqa.selenium.*;
+import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-
-import ru.crystals.set10.pages.basic.AbstractPage;
-import ru.crystals.set10.pages.sales.preferences.goodstypes.alcohol.AlcoholPage;
+import ru.crystals.set10.pages.basic.SalesPage;
 
 
-public class SalesGoodsTypesAndPaymentsTabPage extends AbstractPage{
+public class SalesGoodsTypesAndPaymentsTabPage extends SalesPage{
 	
-	static final String ID_SALESSWF = "Sales";
 	static final String LOCATOR_PRODUCT_TYPE_LIST = "productTypeList";
 	static final String LOCATOR_PRODUCT_PREFERENCES_BUTTON = "label=Настройки";
 	
@@ -21,12 +19,11 @@ public class SalesGoodsTypesAndPaymentsTabPage extends AbstractPage{
 		getWait().until(ExpectedConditions.visibilityOfElementLocated(By.id(ID_SALESSWF)));
 	}
 	
-	// TODO: rewrite to Abstract factory
-	public AlcoholPage selectProductTypeItem(ProductTypeItems productTypeItem) {
+	public <T> T selectProductTypeItem(ProductTypeItems productTypeItem, Class<T> page) {
 		doFlexProperty(getDriver(), ID_SALESSWF, LOCATOR_PRODUCT_TYPE_LIST, new String[] {"selectedIndex", String.valueOf(productTypeItem.ordinal()) });
 		waitForProperty(getDriver(), ID_SALESSWF, LOCATOR_PRODUCT_PREFERENCES_BUTTON, new String[] {"enabled", "true"});
 		clickElement(getDriver(), ID_SALESSWF, LOCATOR_PRODUCT_PREFERENCES_BUTTON);
-		return new AlcoholPage(getDriver());
+		return PageFactory.initElements(getDriver(), page);
 	}
 	
 	public enum ProductTypeItems {
