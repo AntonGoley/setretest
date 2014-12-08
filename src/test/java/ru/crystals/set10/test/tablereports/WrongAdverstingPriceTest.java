@@ -2,20 +2,13 @@ package ru.crystals.set10.test.tablereports;
 
 import java.util.Date;
 import java.util.HashMap;
-
-import org.testng.Assert;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-
 import ru.crystals.set10.config.Config;
 import ru.crystals.set10.pages.operday.tablereports.WrongAdverstingPriveConfigPage;
-import ru.crystals.set10.test.dataproviders.TableReportsDataprovider;
 import ru.crystals.set10.utils.DisinsectorTools;
 import ru.crystals.set10.utils.SoapRequestSender;
 import static ru.crystals.set10.pages.operday.tablereports.TableReportPage.*;
-import static ru.crystals.set10.pages.operday.tablereports.ReportConfigPage.*;
 
 
 public class WrongAdverstingPriceTest extends AbstractReportTest{

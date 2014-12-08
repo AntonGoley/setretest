@@ -11,7 +11,6 @@ import ru.crystals.set10.test.dataproviders.TableReportsDataprovider;
 import ru.crystals.set10.utils.DisinsectorTools;
 import ru.crystals.set10.utils.SoapRequestSender;
 import static ru.crystals.set10.pages.operday.tablereports.TableReportPage.*;
-import static ru.crystals.set10.utils.SoapRequestSender.RETURN_MESSAGE_CORRECT;
 
 public class MRCPriceReportTest extends AbstractReportTest{
 	

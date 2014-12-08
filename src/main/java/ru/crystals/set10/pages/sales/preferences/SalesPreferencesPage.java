@@ -5,8 +5,6 @@ import static ru.crystals.set10.utils.FlexMediator.doFlexProperty;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-
-import ru.crystals.set10.pages.basic.AbstractPage;
 import ru.crystals.set10.pages.basic.SalesPage;
 
 

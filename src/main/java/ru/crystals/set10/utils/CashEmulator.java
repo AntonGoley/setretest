@@ -22,7 +22,6 @@ import ru.crystals.pos.check.SessionEntity;
 import ru.crystals.pos.check.ShiftEntity;
 import ru.crystals.pos.check.UserEntity;
 import ru.crystals.pos.check.WithdrawalEntity;
-import ru.crystals.pos.payments.BankCardPaymentEntity;
 import ru.crystals.pos.payments.CashPaymentEntity;
 import ru.crystals.pos.payments.PaymentEntity;
 import ru.crystals.pos.payments.PaymentTransactionEntity;

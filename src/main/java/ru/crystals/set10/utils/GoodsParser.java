@@ -19,7 +19,6 @@ import ru.crystals.pos.check.DocumentEntity;
 import ru.crystals.pos.check.InsertType;
 import ru.crystals.pos.check.PositionEntity;
 import ru.crystals.pos.check.PurchaseEntity;
-import ru.crystals.pos.payments.BankCardPaymentEntity;
 import ru.crystals.pos.payments.CashPaymentEntity;
 import ru.crystals.pos.payments.PaymentEntity;
 import ru.crystals.set10.config.Config;
