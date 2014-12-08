@@ -110,7 +110,7 @@ public class BankTransactionInCheckTest extends AbstractTest{
 	
 	@Test(description = "SRTE-75. Выгрузка банковских транзакций в excel")
 	public void saveExcelBankTransactionTest(){
-		long fileSize = 0;
+		long fileSize = 6500;
 		String reportNamePattern = "TransactionHistory*.xls*";
 		fileSize =  paymentTransactions.saveExcel(chromeDownloadPath, reportNamePattern).length();
 		log.info("Размер сохраненного файла: " + reportNamePattern + " равен " +  fileSize);
@@ -163,6 +163,7 @@ public class BankTransactionInCheckTest extends AbstractTest{
 			 			card.setCardNumber("240899******0123");
 			 			card.setCardType("VISA");
 			 			card.setExpiryDate(new Date(System.currentTimeMillis() + 365*24*3600*1000));
+			 			
 		 	authDataDenied.setCard(card);		
 		 	authDataDenied.setStatus(false);
 		 	authDataDenied.setBankid("Сбербанк");
