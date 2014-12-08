@@ -20,7 +20,7 @@ public class  HTMLRepotResultPage extends AbstractPage{
 	}
 	
 	private void setReportResults(){
-		getWait().until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.xpath("//table")));
+		getWait().until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath("//table")));
 		List<WebElement> tableValues = getDriver().findElements(By.xpath(".//span"));
 		for (WebElement tableColl:tableValues) {
 			this.reportResults.add(tableColl.getText() );
