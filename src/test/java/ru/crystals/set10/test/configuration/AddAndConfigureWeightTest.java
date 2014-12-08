@@ -19,6 +19,7 @@ import ru.crystals.set10.utils.DisinsectorTools;
 import static ru.crystals.set10.pages.basic.SalesPage.*;
 import static ru.crystals.set10.pages.sales.shops.RetailShopInfoTabPage.*;
 import static ru.crystals.set10.pages.sales.preferences.goodstypes.weight.WeightGoodPage.*;
+import static ru.crystals.set10.pages.sales.equipment.NewEquipmentPage.*;
 
 public class AddAndConfigureWeightTest extends AbstractTest{
 	

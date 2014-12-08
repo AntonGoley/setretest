@@ -188,7 +188,6 @@ public class SoapRequestSender {
 		this.soapRequest = String.format(soapGetFeedBack, ti);
 		this.service = ERP_INTEGRATION_FEDDBACK; 
 		this.method = METHOD_ACTIONS_WITHTI;
-		//log.info("Отправить товары. SOAP request: \n" + this.soapRequest);
 		sendSOAPRequest();
 	}
 	

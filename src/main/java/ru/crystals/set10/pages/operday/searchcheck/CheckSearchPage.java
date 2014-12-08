@@ -11,8 +11,18 @@ import static ru.crystals.set10.utils.FlexMediator.*;
 public class  CheckSearchPage extends OperDayPage{
 	
 
-	// id кнопки "Найти", если выделен таб "по данным чека"
-	static final String BUTTON_SEARCH = "findCheckByCheckDataButton";
+	// id кнопки "Найти чеки"
+	static final String BUTTON_SEARCH = "findChecksButton";
+	static final String OPEN_FILTER = "expandButton";
+	static final String APPLY_FILTER = "applyFilterButton";
+	
+	static final String FILTER = "categorySelector";
+	
+	
+	
+	public static final String FILTER_VALUE_CHECK_NUMBER = "№ чека";
+	
+	
 	static final String INPUT_CHECK_NUMBER = "checkNumberInput";
 	static final String BUTTON_GO_TO_CHECK = "label=Перейти к чеку";
 	// tab выбора условия поиска: по номеру карты, по штрихкоду и т.е 
@@ -36,11 +46,27 @@ public class  CheckSearchPage extends OperDayPage{
 		return new CheckSearchPage(getDriver());
 	}
 	
+	//TODO: new search form
 	public CheckSearchPage setCheckNumber(String checkNumber){
-		doFlexProperty(getDriver(), ID_OPERDAYSWF, SEARCH_TAB, new String[] {"selectedIndex", INDEX_CHECKDATA_LINK } );
-		typeText(getDriver(), ID_OPERDAYSWF, INPUT_CHECK_NUMBER, checkNumber);
+//		doFlexProperty(getDriver(), ID_OPERDAYSWF, SEARCH_TAB, new String[] {"selectedIndex", INDEX_CHECKDATA_LINK } );
+//		typeText(getDriver(), ID_OPERDAYSWF, INPUT_CHECK_NUMBER, checkNumber);
+//		return new CheckSearchPage(getDriver());
+		return setFilter(FILTER_VALUE_CHECK_NUMBER, checkNumber);
+	}
+	
+	
+	//TODO:test
+	public CheckSearchPage setFilter(String filter, String filterValue){
+		clickElement(getDriver(), ID_OPERDAYSWF,  OPEN_FILTER);
+		
+		selectElement(getDriver(), ID_OPERDAYSWF, FILTER, filter);
+		
+		typeText(getDriver(), ID_OPERDAYSWF, "id:conditionContent/id:textInput", filterValue);
+		
+		clickElement(getDriver(), ID_OPERDAYSWF, APPLY_FILTER);
 		return new CheckSearchPage(getDriver());
 	}
+	
 	
 	public CheckContentPage selectFirstCheck(){
 		doFlexProperty(getDriver(), ID_OPERDAYSWF, SEARCH_RESULTS_GRID, new String[] {"selectedIndex", "1" } );

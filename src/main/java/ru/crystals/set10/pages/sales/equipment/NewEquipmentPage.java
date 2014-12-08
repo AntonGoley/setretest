@@ -12,7 +12,9 @@ public class NewEquipmentPage extends SalesPage {
 	static final String LOCATOR_EQUPMENT_GROUP_TABLE = "list1";
 	static final String SELECT_EQUPMENT_GROUP = "id:list1/text:%s";
 	static final String LOCATOR_EQUPMENT_ITEM_TABLE = "list2";
-
+	
+	public static final String TAB_CASHIES = "Кассы";
+	public static final String TAB_SCALES = "Весы";
 	
 	
 	public NewEquipmentPage(WebDriver driver) {
