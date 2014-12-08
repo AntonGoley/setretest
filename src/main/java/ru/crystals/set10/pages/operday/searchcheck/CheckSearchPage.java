@@ -21,6 +21,8 @@ public class  CheckSearchPage extends OperDayPage{
 	
 	
 	public static final String FILTER_VALUE_CHECK_NUMBER = "№ чека";
+	public static final String FILTER_VALUE_SHIFT_NUMBER = "№ смены";
+	public static final String FILTER_VALUE_CASH_NUMBER = "№ кассы";
 	
 	
 	static final String INPUT_CHECK_NUMBER = "checkNumberInput";
@@ -29,11 +31,7 @@ public class  CheckSearchPage extends OperDayPage{
 	static final String SEARCH_TAB = "tabNav";
 	
 	static final String SEARCH_RESULTS_GRID = "adg";
-	
-	static final String INDEX_CARDNUMBER_LINK = "0";
-	static final String INDEX_BARCODE_LINK = "1";
-	static final String INDEX_CHECKDATA_LINK = "2";
-	static final String INDEX_GOODDATA_LINK= "3";
+
 	
 	
 	public CheckSearchPage(WebDriver driver) {
@@ -55,7 +53,7 @@ public class  CheckSearchPage extends OperDayPage{
 	}
 	
 	
-	//TODO:test
+	//TODO:test 
 	public CheckSearchPage setFilter(String filter, String filterValue){
 		clickElement(getDriver(), ID_OPERDAYSWF,  OPEN_FILTER);
 		
