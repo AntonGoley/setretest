@@ -34,7 +34,7 @@ public class DocsSender {
 		this.shopNumber = shopNumber;
 		this.cashNumber = cashNumber;
 		od_purchase_id = new DbAdapter().queryForInt(DbAdapter.DB_RETAIL_OPERDAY,
-						"select max(id) from od_inbound_files");
+						"select max(id) from od_inbound_files") + 7;
 //		HttpClient client = new HttpClient();
 //        client.setUrl("http://" + serverIP + ":8090/SET-OperDay-Web/OperDayTransportServlet");
 //        cashTransportManager = client.find(CashTransportBeanRemote.class, "java:app/SET-OperDay/SET/OperDay/CashTransportBean!ru.crystals.operday.transport.CashTransportBeanRemote");
@@ -82,7 +82,7 @@ public class DocsSender {
                 	log.info("Имя документа: " + docName);
                 	new DbAdapter().updateDb(DbAdapter.DB_RETAIL_OPERDAY, 
                 			String.format("INSERT INTO od_inbound_files( id, cash_number, shop_number, documents_count, file_path, status) " +
-                				"VALUES (%s, %s, %s, 1, '%s', 0)", od_purchase_id++ + 7, cashNumber, shopNumber, docName));
+                				"VALUES (%s, %s, %s, 1, '%s', 0)", od_purchase_id++, cashNumber, shopNumber, docName));
                 }
                 
         } catch (Exception e) {
