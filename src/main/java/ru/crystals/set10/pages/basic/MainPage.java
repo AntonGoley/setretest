@@ -49,7 +49,7 @@ public class MainPage extends AbstractPage{
 		//выбрать элемент
 		doFlexProperty(getDriver(), ID_MAINPAGESWF, ID_SEARCH_GOOD, new String[] {"selectedIndex", "0"});
 		clickElement(getDriver(), ID_MAINPAGESWF, LOCATOR_SELECT_RESULT);
-		//switchWindow(false);
+		switchWindow(false);
 		return new ProductCardPage(getDriver());
 	}
 	
