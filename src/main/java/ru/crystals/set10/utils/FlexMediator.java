@@ -1,11 +1,16 @@
 package ru.crystals.set10.utils;
 
+import org.apache.log4j.Logger;
+import org.eclipse.jetty.util.log.Log;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
+
+import ru.crystals.set10.test.AbstractTest;
 
 
 public class FlexMediator {
 	
+	protected static final Logger log = Logger.getLogger(FlexMediator.class);
 	
 	public static void clickElement(WebDriver driver, String swfSrc, String flexId) {
 		waitForElement(driver, swfSrc, flexId);
@@ -54,10 +59,11 @@ public class FlexMediator {
 	public static void waitForElement(WebDriver driver, String swfSrc, String flexId) {
 		//TODO
 		// doFlexWaitForElement falls if no delay before execution
-		sleep(500);
-		ecxecute(driver, String.format("document.getElementById('%s').doFlexWaitForElement('%s', '15')", swfSrc, flexId));
+		//sleep(500);
+		
+		ecxecute(driver, String.format("document.getElementById('%s').doFlexWaitForElement('%s', '10000')", swfSrc, flexId));
 		// TODO: магическое дублирование ожидание элемента - разобраться и убрать!
-		ecxecute(driver, String.format("document.getElementById('%s').doFlexWaitForElement('%s', '15')", swfSrc, flexId));
+		//ecxecute(driver, String.format("document.getElementById('%s').doFlexWaitForElement('%s', '15')", swfSrc, flexId));
 	}
 	
 	public static boolean waitForElementVisible(WebDriver driver, String swfSrc, String flexId) {
