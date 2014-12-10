@@ -16,7 +16,9 @@ public class ShopPreferencesPage extends AbstractPage {
 	static final String LOCATOR_SHOP_NAME_INPUT = "shopNameTI";
 	static final String LOCATOR_VIRTUAL_CHECKBOX = "virtualShopCB";
 	static final String LOCATOR_BACK_BUTTON = "label=К магазинам";
+	//addCashB
 	static final String LOCATOR_ADD_CASH_TO_SHOP_BUTTON = "addCashB";
+	static final String LOCATOR_TABS = "shopSettingsTabNav";
 	static final String LOCATOR_CASHES_TAB = "shopSettingsTabNav";
 	static final String LOCATOR_CASHES_COUNT_INPUT = "amountPole";
 	static final String LOCATOR_ADD_JURISTIC_PERSON_BUTTON = "addLegalEntityButton";
@@ -47,7 +49,8 @@ public class ShopPreferencesPage extends AbstractPage {
 	
 	public ShopPreferencesPage addCashes(int cashCount){
 		int totalCashesBefore;
-		doFlexProperty(getDriver(), ID_SALESSWF, LOCATOR_CASHES_TAB, new String[] {"selectedIndex", "1"});
+		//TODO: вынести Кассы в элемент
+		clickElement(getDriver(), ID_SALESSWF, LOCATOR_TABS, "Кассы");
 		typeText(getDriver(), ID_SALESSWF, LOCATOR_CASHES_COUNT_INPUT, String.valueOf(cashCount));
 		totalCashesBefore = getTotalCashesInShop();
 		clickElement(getDriver(), ID_SALESSWF, LOCATOR_ADD_CASH_TO_SHOP_BUTTON);
