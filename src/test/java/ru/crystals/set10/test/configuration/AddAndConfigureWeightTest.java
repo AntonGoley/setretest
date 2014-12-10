@@ -10,7 +10,6 @@ import ru.crystals.set10.pages.sales.equipment.EquipmentPage;
 import ru.crystals.set10.pages.sales.equipment.NewEquipmentPage;
 import ru.crystals.set10.pages.sales.preferences.SalesGoodsTypesAndPaymentsTabPage.ProductTypeItems;
 import ru.crystals.set10.pages.sales.preferences.SalesPreferencesPage;
-import ru.crystals.set10.pages.sales.preferences.SalesPreferencesPage.SalesPreferencesPageTabs;
 import ru.crystals.set10.pages.sales.preferences.goodstypes.weight.WeightGoodPage;
 import ru.crystals.set10.pages.sales.shops.RetailShopInfoTabPage;
 import ru.crystals.set10.pages.sales.shops.RetailShopWeightTabPage;
@@ -19,6 +18,7 @@ import ru.crystals.set10.utils.DisinsectorTools;
 import static ru.crystals.set10.pages.basic.SalesPage.*;
 import static ru.crystals.set10.pages.sales.shops.RetailShopInfoTabPage.*;
 import static ru.crystals.set10.pages.sales.preferences.goodstypes.weight.WeightGoodPage.*;
+import static ru.crystals.set10.pages.sales.preferences.SalesPreferencesPage.*;
 
 public class AddAndConfigureWeightTest extends AbstractTest{
 	
@@ -60,7 +60,7 @@ public class AddAndConfigureWeightTest extends AbstractTest{
 	public void bindBarCodeForWeightGoodTest(){
 		weightGood = salesPage
 				.navigateMenu(SALES_MENU_PREFERENCES, "10", SalesPreferencesPage.class)
-				.navigateTab(SalesPreferencesPageTabs.GOODS_TYPES_AND_PAYSMENTS)
+				.navigateTab(TAB_TYPES_GOODS_PAYMENTS)
 				.selectProductTypeItem(ProductTypeItems.WEIGHT_GOOD, WeightGoodPage.class);
 		weightGood
 			.setGoodAction(ACTION_FASOVKA)
