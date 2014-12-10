@@ -1,11 +1,8 @@
 package ru.crystals.set10.utils;
 
 import org.apache.log4j.Logger;
-import org.eclipse.jetty.util.log.Log;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
-
-import ru.crystals.set10.test.AbstractTest;
 
 
 public class FlexMediator {
