@@ -4,6 +4,7 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
+import ru.crystals.set10.utils.DisinsectorTools;
 import static ru.crystals.set10.utils.FlexMediator.*;
 
 
@@ -34,6 +35,8 @@ public class SalesPage extends AbstractPage{
 	}
 	
 	public <T> T navigateMenu(String menuItem, String menuItemPosition, Class<T> page){
+		//TODO: убрать, когда будет нормальный выбор из меню
+		DisinsectorTools.delay(2000);
 		doFlexProperty(getDriver(), ID_SALESSWF, LOCATOR_MENUITEM, new String[] {"selectedIndex", menuItemPosition});
 		clickElement(getDriver(), ID_SALESSWF, menuItem);
 		return PageFactory.initElements(getDriver(), page);
