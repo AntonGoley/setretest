@@ -15,6 +15,11 @@
 <listeners>
     <listener class-name="org.uncommons.reportng.HTMLReporter" />
  </listeners>
+ 	<test name="Выгрузка в SAP алкогольных ограничений" >
+	  	<classes>
+	  		<class name="ru.crystals.set10.test.SpiritRestrictionsToSAPTest"/>
+		</classes>	 
+  	</test>	
 	<test name="Сопроводительные документы" >
 	  	<classes>
 	  		<class name="ru.crystals.set10.test.documents.accompanying.AccompanyingInvoiceContentTest"/>
@@ -58,9 +63,5 @@
 		  	<class name="ru.crystals.set10.test.tablereports.MRCPriceReportWithLekondsTest"/>
 		</classes>	 
   	</test>	
-		<test name="Выгрузка в SAP алкогольных ограничений" >
-	  	<classes>
-	  		<class name="ru.crystals.set10.test.SpiritRestrictionsToSAPTest"/>
-		</classes>	 
-  	</test>	 
+ 
 </suite> 
