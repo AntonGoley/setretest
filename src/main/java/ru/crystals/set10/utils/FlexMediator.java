@@ -57,11 +57,11 @@ public class FlexMediator {
 		//TODO
 		// doFlexWaitForElement falls if no delay before execution
 		//sleep(500);
-		
+		DisinsectorTools.delay(200);
 		ecxecute(driver, String.format("document.getElementById('%s').doFlexWaitForElement('%s', '10000')", swfSrc, flexId));
 		// TODO: магическое дублирование ожидание элемента - разобраться и убрать!
 		//ecxecute(driver, String.format("document.getElementById('%s').doFlexWaitForElement('%s', '15')", swfSrc, flexId));
-		DisinsectorTools.delay(100);
+		
 	}
 	
 	public static boolean waitForElementVisible(WebDriver driver, String swfSrc, String flexId) {
