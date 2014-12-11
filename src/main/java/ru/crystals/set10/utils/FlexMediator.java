@@ -56,7 +56,7 @@ public class FlexMediator {
 	public static void waitForElement(WebDriver driver, String swfSrc, String flexId) {
 		DisinsectorTools.delay(200);
 		ecxecute(driver, String.format("document.getElementById('%s').doFlexWaitForElement('%s', '10000')", swfSrc, flexId));
-		//ecxecute(driver, String.format("document.getElementById('%s').doFlexWaitForElementVisible('%s', '10000')", swfSrc, flexId));
+		ecxecute(driver, String.format("document.getElementById('%s').doFlexWaitForElementVisible('%s', '10000')", swfSrc, flexId));
 	}
 	
 	public static void waitForElementWisible_(WebDriver driver, String swfSrc, String flexId) {
@@ -82,11 +82,11 @@ public class FlexMediator {
 		int timeout = 0;
 		// TODO: заменить параметром
 		while (timeout < 15000 ){
-			sleep(1000);
 			result = (String) ecxecuteAndReturnString(driver, String.format("return document.getElementById('%s').getFlexProperty('%s', '%s')", swfSrc, flexId, args[0]));
 			if (result.equals(args[1])) {
 				return true;
 			}	
+			sleep(1000);
 			timeout+=1000;
 		}	
 		return false;

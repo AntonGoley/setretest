@@ -10,8 +10,8 @@
 		- тесты, запущенные после конфигурации и зависящие от скорости импорта 
 		данных мд Центрумом и Ретейлом запускать не в первую очередь 
 	 -->
-
-<suite name="Отчеты и сопроводительные документы" preserve-order="true" configfailurepolicy="continue" parallel="tests" thread-count="1">
+<!-- <suite name="Отчеты и сопроводительные документы" preserve-order="true" configfailurepolicy="continue" parallel="tests" thread-count="1">-->
+<suite name="Отчеты и сопроводительные документы" preserve-order="true" configfailurepolicy="continue">
 <listeners>
     <listener class-name="org.uncommons.reportng.HTMLReporter" />
  </listeners>

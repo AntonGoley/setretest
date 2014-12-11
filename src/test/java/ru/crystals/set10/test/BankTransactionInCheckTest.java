@@ -113,7 +113,7 @@ public class BankTransactionInCheckTest extends AbstractTest{
 		String reportNamePattern = "TransactionHistory*.xls*";
 		fileSize =  paymentTransactions.saveExcel(chromeDownloadPath, reportNamePattern).length();
 		log.info("Размер сохраненного файла: " + reportNamePattern + " равен " +  fileSize);
-		Assert.assertTrue("Файл отчета сохранился некорректно", fileSize > 6500);
+		Assert.assertTrue("Файл отчета сохранился некорректно", fileSize > 6400);
 	}
 	
 	

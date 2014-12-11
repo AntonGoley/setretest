@@ -11,23 +11,34 @@ import static ru.crystals.set10.utils.FlexMediator.*;
 public class  CheckSearchPage extends OperDayPage{
 	
 
-	// id кнопки "Найти чеки"
 	static final String BUTTON_SEARCH = "findChecksButton";
-	static final String OPEN_FILTER = "expandButton";
-	static final String APPLY_FILTER = "applyFilterButton";
-	
-	static final String FILTER = "categorySelector";
-	
+	static final String FILTER_OPEN = "expandButton";
+	static final String SEARCH_RESULT = "searchResultLabel";
+
 	
 	
-	public static final String FILTER_VALUE_CHECK_NUMBER = "№ чека";
-	public static final String FILTER_VALUE_SHIFT_NUMBER = "№ смены";
-	public static final String FILTER_VALUE_CASH_NUMBER = "№ кассы";
+	static final String FILTER_CATEGORY = "categorySelector";
+	
+	// типы фильтров
+	public static final String FILTER_CATEGORY_CHECK_NUMBER = "Номер чека";
+	public static final String FILTER_CATEGORY_SHIFT_NUMBER = "Смена";
+	public static final String FILTER_CATEGORY_CASH_NUMBER = "Касса";
+	public static final String FILTER_CATEGORY_SHOP_NUMBER = "Номер магазина";
+	public static final String FILTER_CATEGORY_GOOD_BAR_CODE = "Штрих-код товара";
+	
+	
+	// элементы окна множественного выбора
+	private static final String FILTER_MULTI_TEXT_OPEN_INPUT = "toogleButton";
+	private static final String FILTER_MULTI_TEXT_INPUT = "valuesTextInput";
+	private static final String FILTER_MULTI_TEXT_APPLY_BUTTON = "applyButton";
+	
+	// элементы окна текстового поля
+	private static final String FILTER_TEXT_FIELD = "textInput";
 	
 	
 	static final String INPUT_CHECK_NUMBER = "checkNumberInput";
 	static final String BUTTON_GO_TO_CHECK = "label=Перейти к чеку";
-	// tab выбора условия поиска: по номеру карты, по штрихкоду и т.е 
+	// tab выбора условия поиска: по номеру карты, по штрихкоду и т.д 
 	static final String SEARCH_TAB = "tabNav";
 	
 	static final String SEARCH_RESULTS_GRID = "adg";
@@ -44,27 +55,64 @@ public class  CheckSearchPage extends OperDayPage{
 		return new CheckSearchPage(getDriver());
 	}
 	
-	//TODO: new search form
-	public CheckSearchPage setCheckNumber(String checkNumber){
-//		doFlexProperty(getDriver(), ID_OPERDAYSWF, SEARCH_TAB, new String[] {"selectedIndex", INDEX_CHECKDATA_LINK } );
-//		typeText(getDriver(), ID_OPERDAYSWF, INPUT_CHECK_NUMBER, checkNumber);
-//		return new CheckSearchPage(getDriver());
-		return setFilter(FILTER_VALUE_CHECK_NUMBER, checkNumber);
+	
+	public int getSearchResultCount(){
+		try {
+			waitForElement(getDriver(), ID_OPERDAYSWF, SEARCH_RESULT);
+		} catch (Exception e) {
+			log.info("По данному запросу чеков не найдено");
+			return 0;
+		}
+		
+		String[] result = getElementProperty(getDriver(), ID_OPERDAYSWF, SEARCH_RESULT, "text").split(" ");
+		// строка длины 6
+		log.info("Результат поиска: " + result[0] + " " + result[1] + " " + result[2] + " " + result[3] + " " + result[4] + " " + result[5]);
+		return Integer.valueOf(result[3]);
 	}
 	
 	
-	//TODO:test 
-	public CheckSearchPage setFilter(String filter, String filterValue){
-		clickElement(getDriver(), ID_OPERDAYSWF,  OPEN_FILTER);
+	//TODO: new search form
+	public CheckSearchPage setCheckNumber(String checkNumber){
+		return setFilterText(FILTER_CATEGORY_CHECK_NUMBER, checkNumber);
+	}
+
+	public CheckSearchPage setFilterMultiText(String filter, String filterValue){
 		
-		selectElement(getDriver(), ID_OPERDAYSWF, FILTER, filter);
+		// открыть фильтр и задать категорию
+		ifSearchFiltersOpen();
+		selectElement(getDriver(), ID_OPERDAYSWF, FILTER_CATEGORY, filter);
+
+		//Открыть и заполнить множественный выбор
+		clickElement(getDriver(), ID_OPERDAYSWF,  FILTER_MULTI_TEXT_OPEN_INPUT);
+		typeText(getDriver(), ID_OPERDAYSWF, FILTER_MULTI_TEXT_INPUT, filterValue);
+		clickElement(getDriver(), ID_OPERDAYSWF,  FILTER_MULTI_TEXT_APPLY_BUTTON);
 		
-		typeText(getDriver(), ID_OPERDAYSWF, "id:conditionContent/id:textInput", filterValue);
-		
-		clickElement(getDriver(), ID_OPERDAYSWF, APPLY_FILTER);
+		log.info("Задать условие поиска: " + filter + "; Значение: " + filterValue);
 		return new CheckSearchPage(getDriver());
 	}
 	
+	public CheckSearchPage setFilterText(String filter, String filterValue){
+		ifSearchFiltersOpen();
+		selectElement(getDriver(), ID_OPERDAYSWF, FILTER_CATEGORY, filter);
+
+		//Открыть и заполнить множественный выбор
+		typeText(getDriver(), ID_OPERDAYSWF, FILTER_TEXT_FIELD, filterValue);
+		
+		log.info("Задать условие поиска: " + filter + "; Значение: " + filterValue);
+		return new CheckSearchPage(getDriver());
+	}
+	
+	
+	private void ifSearchFiltersOpen(){
+		/*
+		 * Проверка, открыто ли окно фильтра
+		 * если нет, открыть его
+		 */
+		if ( !getElementProperty(getDriver(), ID_OPERDAYSWF, "name=filtersContainerPopup", "isPopUp").equals("true")){
+			log.info(getElementProperty(getDriver(), ID_OPERDAYSWF, "name=filtersContainerPopup", "isPopUp"));
+			clickElement(getDriver(), ID_OPERDAYSWF,  FILTER_OPEN);
+		};
+	}
 	
 	public CheckContentPage selectFirstCheck(){
 		doFlexProperty(getDriver(), ID_OPERDAYSWF, SEARCH_RESULTS_GRID, new String[] {"selectedIndex", "1" } );

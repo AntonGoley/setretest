@@ -89,7 +89,7 @@ public class WrongAdverstingPriceTest extends AbstractReportTest{
 		};
 	}
 	
-	@Test (	description = "SRTE-67. Проверить условие попадания рекламной цены в отчет на ТК",
+	@Test (	enabled = false, description = "SRTE-67. Проверить условие попадания рекламной цены в отчет на ТК",
 			dataProvider = "Цены"
 			)
 	public void testAdverstingPrice(String description, String request, HashMap<String, String> params){
