@@ -25,6 +25,7 @@ public class  CheckSearchPage extends OperDayPage{
 	public static final String FILTER_CATEGORY_CASH_NUMBER = "Касса";
 	public static final String FILTER_CATEGORY_SHOP_NUMBER = "Номер магазина";
 	public static final String FILTER_CATEGORY_GOOD_BAR_CODE = "Штрих-код товара";
+	public static final String FILTER_CATEGORY_CHECK_BAR_CODE = "Штрих-код чека";
 	
 	
 	// элементы окна множественного выбора
@@ -55,11 +56,14 @@ public class  CheckSearchPage extends OperDayPage{
 		return new CheckSearchPage(getDriver());
 	}
 	
+	public CheckSearchPage openFilter(){
+		clickElement(getDriver(), ID_OPERDAYSWF,  FILTER_OPEN);
+		return new CheckSearchPage(getDriver());
+	}
 	
 	public int getSearchResultCount(){
-		try {
-			waitForElement(getDriver(), ID_OPERDAYSWF, SEARCH_RESULT);
-		} catch (Exception e) {
+		
+		if (! waitForProperty(getDriver(), ID_OPERDAYSWF, SEARCH_RESULT, new String[]{"visible", "true"})) {
 			log.info("По данному запросу чеков не найдено");
 			return 0;
 		}
@@ -73,6 +77,7 @@ public class  CheckSearchPage extends OperDayPage{
 	
 	//TODO: new search form
 	public CheckSearchPage setCheckNumber(String checkNumber){
+		clickElement(getDriver(), ID_OPERDAYSWF,  FILTER_OPEN);
 		return setFilterText(FILTER_CATEGORY_CHECK_NUMBER, checkNumber);
 	}
 
