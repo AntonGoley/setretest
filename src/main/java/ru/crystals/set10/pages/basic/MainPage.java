@@ -27,7 +27,8 @@ public class MainPage extends AbstractPage{
 		super(driver);
 		getWait().until(ExpectedConditions.visibilityOfElementLocated(By.id(ID_MAINPAGESWF)));
 		//TODO:remove wait
-		DisinsectorTools.delay(2000);
+		//DisinsectorTools.delay(2000);
+		waitForProperty(getDriver(), ID_MAINPAGESWF, ID_SALESBUTTON, new String[]{"visible", "true"});	
 	}
 	
 	public OperDayPage openOperDay() {
@@ -43,13 +44,14 @@ public class MainPage extends AbstractPage{
 	}
 	
 	public ProductCardPage findGood(String good){
-		waitForElementWisible_(getDriver(), ID_MAINPAGESWF, ID_OPERDAYBUTTON);		
 		typeText(getDriver(), ID_MAINPAGESWF, ID_SEARCH_GOOD, good);
 		waitForElement(getDriver(), ID_MAINPAGESWF, LOCATOR_SUGGEST_CODE);
+		waitForProperty(getDriver(), ID_MAINPAGESWF, LOCATOR_SUGGEST_CODE, new String[]{"visible", "true"});
+		
 		//выбрать элемент
 		doFlexProperty(getDriver(), ID_MAINPAGESWF, ID_SEARCH_GOOD, new String[] {"selectedIndex", "0"});
 		clickElement(getDriver(), ID_MAINPAGESWF, LOCATOR_SELECT_RESULT);
-		switchWindow(false);
+		switchWindow(true);
 		return new ProductCardPage(getDriver());
 	}
 	
