@@ -180,7 +180,7 @@ public class SoapRequestSender {
 		this.soapRequest = String.format(soapRequestAdversting, encodeBase64(request), ti);
 		this.service = ERP_INTEGRATION_ADVERTSING_ACTIONS; 
 		this.method = METHOD_ACTIONS_WITHTI;
-		log.info("Отправить рекламный акции. SOAP request: \n" + this.soapRequest);
+		log.info("Отправить рекламную акцию. SOAP request: \n" + this.soapRequest);
 		sendSOAPRequest();
 	}
 	

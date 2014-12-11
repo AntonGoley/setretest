@@ -27,14 +27,14 @@ public class GoodOnTKReportTest extends AbstractReportTest{
 	@BeforeClass
 	public void navigateToGoodOnTKReports() {
 		goodOnTKConfig =  navigateToReportConfig(
-				Config.RETAIL_URL, 
+				Config.CENTRUM_URL, 
 				Config.MANAGER,
 				Config.MANAGER_PASSWORD,
 				GoodsOnTKConfigPage.class, 
 				TAB_OTHER, 
 				REPORT_NAME_GOOD_ON_TK);
 		
-		soapSender.setSoapServiceIP(Config.RETAIL_HOST);
+		soapSender.setSoapServiceIP(Config.CENTRUM_HOST);
 		
 		// послать товар и акцию
 		sendGoodData();
