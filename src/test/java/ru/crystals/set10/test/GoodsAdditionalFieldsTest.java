@@ -2,24 +2,22 @@ package ru.crystals.set10.test;
 
 import java.util.Date;
 import java.util.HashMap;
-
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-
 import ru.crystals.set10.config.Config;
 import ru.crystals.set10.pages.basic.LoginPage;
 import ru.crystals.set10.pages.basic.MainPage;
 import ru.crystals.set10.pages.operday.tablereports.WrongAdverstingPriveConfigPage;
 import ru.crystals.set10.product.ProductCardPage;
-import ru.crystals.set10.product.ProductCardPage.ProductTabs;
 import ru.crystals.set10.product.ProductAdditionalInfoTabPage;
 import ru.crystals.set10.product.ProductMainInfoTabPage;
 import ru.crystals.set10.utils.DisinsectorTools;
 import ru.crystals.set10.utils.SoapRequestSender;
 import static ru.crystals.set10.product.ProductAdditionalInfoTabPage.*;
 import static ru.crystals.set10.product.ProductMainInfoTabPage.*;
+
 
 public class GoodsAdditionalFieldsTest extends AbstractTest{
 	
@@ -78,7 +76,7 @@ public class GoodsAdditionalFieldsTest extends AbstractTest{
 			dataProvider = "Поля весового товара"
 			)
 	public void testWeightProperties(String description, String flexId, String expectedValue){
-		productAdditionalInfo = product.selectTab(ProductTabs.TAB_ADDITION_INFO, ProductAdditionalInfoTabPage.class);
+		productAdditionalInfo = product.selectTab(TAB_ADDITION_INFO, ProductAdditionalInfoTabPage.class);
 		log.info(description);
 		Assert.assertEquals(productAdditionalInfo.getTextFieldValue(flexId), expectedValue, 
 				String.format("Неверное значение поля %s в карточке товара", description));
@@ -88,7 +86,7 @@ public class GoodsAdditionalFieldsTest extends AbstractTest{
 	@Test (	description = "SRTE-110. Поле в карточке весового товара Тип сертификации. Проверить что отображаются все типы сертификации, если указано знаение 15"
 			)
 	public void testGoodSTProperties(){
-		productMainInfo = product.selectTab(ProductTabs.TAB_MAIN_INFO, ProductMainInfoTabPage.class);
+		productMainInfo = product.selectTab(TAB_MAIN_INFO, ProductMainInfoTabPage.class);
 		//CERTIFICATION_TYPE_OBLIGATE
 		Assert.assertTrue(productMainInfo.ifCertificationTypeVisible(CERTIFICATION_TYPE_OBLIGATE), "Не отображается обязательная сертификация");
 		Assert.assertTrue(productMainInfo.ifCertificationTypeVisible(CERTIFICATION_TYPE_FREE), "Не отображается добровольная сертификация");

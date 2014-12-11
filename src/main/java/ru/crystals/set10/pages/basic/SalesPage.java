@@ -36,7 +36,7 @@ public class SalesPage extends AbstractPage{
 	
 	public <T> T navigateMenu(String menuItem, String menuItemPosition, Class<T> page){
 		//TODO: убрать, когда будет нормальный выбор из меню
-		DisinsectorTools.delay(2000);
+		DisinsectorTools.delay(1000);
 		doFlexProperty(getDriver(), ID_SALESSWF, LOCATOR_MENUITEM, new String[] {"selectedIndex", menuItemPosition});
 		clickElement(getDriver(), ID_SALESSWF, menuItem);
 		return PageFactory.initElements(getDriver(), page);

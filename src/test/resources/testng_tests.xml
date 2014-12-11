@@ -61,5 +61,9 @@
 		  	<class name="ru.crystals.set10.test.tablereports.MRCPriceReportWithLekondsTest"/>
 		</classes>	 
   	</test>	
- 
+ 	<test name="Поиск чека" >
+	  	<classes>
+			<class name="ru.crystals.set10.test.SearchCheckTest"/>
+		</classes>	 
+  	</test>
 </suite> 

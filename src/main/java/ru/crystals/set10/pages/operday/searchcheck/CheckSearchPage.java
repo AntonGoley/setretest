@@ -26,7 +26,13 @@ public class  CheckSearchPage extends OperDayPage{
 	public static final String FILTER_CATEGORY_SHOP_NUMBER = "Номер магазина";
 	public static final String FILTER_CATEGORY_GOOD_BAR_CODE = "Штрих-код товара";
 	public static final String FILTER_CATEGORY_CHECK_BAR_CODE = "Штрих-код чека";
+	// Типы чека
+	public static final String FILTER_CATEGORY_CHECK_TYPE = "Тип чека";
+	public static final String FILTER_CATEGORY_CHECK_TYPE_REFUND = "Чек возврата";
+	public static final String FILTER_CATEGORY_CHECK_TYPE_SALE = "Чек продажи";
 	
+	//Типы оплат
+	public static final String FILTER_CATEGORY_PAY_TYPE = "Тип оплаты";
 	
 	// элементы окна множественного выбора
 	private static final String FILTER_MULTI_TEXT_OPEN_INPUT = "toogleButton";

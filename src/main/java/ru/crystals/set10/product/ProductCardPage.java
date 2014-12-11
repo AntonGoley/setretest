@@ -1,6 +1,6 @@
 package ru.crystals.set10.product;
 
-import static ru.crystals.set10.utils.FlexMediator.doFlexProperty;
+import static ru.crystals.set10.utils.FlexMediator.*;
 import static ru.crystals.set10.utils.FlexMediator.getElementProperty;
 
 import org.openqa.selenium.By;
@@ -15,6 +15,10 @@ public class ProductCardPage extends AbstractPage{
 	static final String ID_PRODUCTSWF = "Products";
 	static final String TAB_LOCATOR = "details";
 	
+
+	public static final String TAB_MAIN_INFO = "Общая информация";
+	public static final String TAB_ADDITION_INFO = "Дополнительная информация";
+	public static final String TAB_BAR_CODES = "Штриховые коды";
 	
 	public ProductCardPage(WebDriver driver) {
 		super(driver);
@@ -22,21 +26,14 @@ public class ProductCardPage extends AbstractPage{
 		getWait().until(ExpectedConditions.visibilityOfElementLocated(By.id(ID_PRODUCTSWF)));
 	}
 	
-	public <T> T selectTab(ProductTabs tabIndex, Class<T> tab) {
-		doFlexProperty(getDriver(), ID_PRODUCTSWF, TAB_LOCATOR, new String[] {"selectedIndex", String.valueOf(tabIndex.ordinal())});
+	public <T> T selectTab(String tabName, Class<T> tab) {
+		clickElement(getDriver(), ID_PRODUCTSWF, TAB_LOCATOR, tabName);
+		//doFlexProperty(getDriver(), ID_PRODUCTSWF, TAB_LOCATOR, new String[] {"selectedIndex", String.valueOf(tabIndex.ordinal())});
 		return PageFactory.initElements(getDriver(), tab);
 	}
 	
 	public String getTextFieldValue(String field){
 		return getElementProperty(getDriver(), ID_PRODUCTSWF, field, "text");
 	}
-	
-	 public enum ProductTabs {
-		 TAB_PRODUCT_POLICY,
-		 TAB_RESTRICTION,
-		 TAB_MAIN_INFO,
-		 TAB_ADDITION_INFO,
-		 TAB_BAR_CODES
-		
-	}
+
 }

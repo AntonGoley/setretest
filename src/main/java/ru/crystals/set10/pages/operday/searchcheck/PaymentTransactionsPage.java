@@ -22,7 +22,8 @@ public class  PaymentTransactionsPage extends OperDayPage{
 	}
 	
 	public boolean validateData(String locatorText){
-		return (boolean) waitForElementVisible(getDriver(), ID_OPERDAYSWF, String.format("text=%s", locatorText));
+		return (boolean) waitForProperty(getDriver(), ID_OPERDAYSWF, String.format("text=%s", locatorText), new String[]{"visible", "true"});
+		//return (boolean) waitForElementVisible(getDriver(), ID_OPERDAYSWF, String.format("text=%s", locatorText));
 	}
 	
 	public File saveExcel(String chromeDownloadPath, String reportNamePattern ){
