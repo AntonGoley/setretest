@@ -48,12 +48,13 @@ public class AdverstingTableReportTest extends AbstractReportTest {
 			dataProvider = "Шапка отчета Рекламные акции", dataProviderClass = TableReportsDataprovider.class)
 	public void testAdverstingHTMLReportTableHead(String fieldName){
 		log.info("Проверить название/наличие поля: " + fieldName);
-		Assert.assertTrue(this.htmlReportResults.containsValue(fieldName), "Неверное значение поля в шапке отчета: " + fieldName);
+		Assert.assertTrue(htmlReportResults.containsValue(fieldName), "Неверное значение поля в шапке отчета: " + fieldName);
 	}
 	
 	@Test(description = "SRL-182. Проверить, что генерируется пустой отчет, если на товар не заведена рекламная акция")
 	public void testEmptyAdverstingHTMLReport() {
-		Assert.assertTrue(this.htmlReportResults.getReportSize() < 20, "Сгененированный отчет не пустой");
+		log.info("Количество полей в отчете порекламным акциям " +  htmlReportResults.getReportSize());
+		Assert.assertTrue(htmlReportResults.getReportSize() < 20, "Сгененированный отчет не пустой");
 	}	
 	
 	@Test (dependsOnMethods = "testEmptyAdverstingHTMLReport",
