@@ -53,7 +53,7 @@ public class AdverstingTableReportTest extends AbstractReportTest {
 	
 	@Test(description = "SRL-182. Проверить, что генерируется пустой отчет, если на товар не заведена рекламная акция")
 	public void testEmptyAdverstingHTMLReport() {
-		Assert.assertTrue(this.htmlReportResults.getReportSize() == 17, "Сгененированный отчет не пустой");
+		Assert.assertTrue(this.htmlReportResults.getReportSize() < 20, "Сгененированный отчет не пустой");
 	}	
 	
 	@Test (dependsOnMethods = "testEmptyAdverstingHTMLReport",
