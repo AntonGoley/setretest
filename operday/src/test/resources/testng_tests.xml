@@ -35,9 +35,9 @@
   	</test>	
 	<test name="Табличные отчеты">
 	  	<classes>
+	  		<class name="ru.crystals.set10.test.tablereports.AdverstingTableReportTest"/>
 	  		<class name="ru.crystals.set10.test.tablereports.GoodOnTKReportTest"/>
 	  		<class name="ru.crystals.set10.test.tablereports.PriceCheckerReportTest"/>
-	  		<class name="ru.crystals.set10.test.tablereports.AdverstingTableReportTest"/>
 	  		<class name="ru.crystals.set10.test.tablereports.PLUinWeightReportTest"/>
 	  		<class name="ru.crystals.set10.test.tablereports.CashRegNumbersReportTest"/>
 	  		<class name="ru.crystals.set10.test.tablereports.WrongAdverstingPriceTest"/>
