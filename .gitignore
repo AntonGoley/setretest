@@ -1,5 +1,6 @@
 .git
 .settings
+.metadata
 target
 test-output
 .project

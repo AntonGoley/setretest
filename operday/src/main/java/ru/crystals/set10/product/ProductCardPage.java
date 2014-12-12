@@ -1,8 +1,6 @@
 package ru.crystals.set10.product;
 
 import static ru.crystals.set10.utils.FlexMediator.*;
-import static ru.crystals.set10.utils.FlexMediator.getElementProperty;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;

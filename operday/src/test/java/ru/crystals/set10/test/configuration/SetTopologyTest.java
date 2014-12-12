@@ -42,6 +42,9 @@ public class SetTopologyTest extends AbstractTest{
 	public void doLogin(){
 		// таймаут для певрого запуска
 		DisinsectorTools.delay(3000);
+		setUpPrevilegesCentrum();
+		setUpPrevilegesRetail();
+		
 		mainPage = new LoginPage(getDriver(), Config.CENTRUM_URL).doLogin(Config.MANAGER, Config.MANAGER_PASSWORD);
 		// таймаут для певрого запуска
 		DisinsectorTools.delay(3000);
@@ -122,11 +125,11 @@ public class SetTopologyTest extends AbstractTest{
 	}
 	
 	
-	@Test (	
-			description = "Добавить права пользователю manager на центруме"
-			)
+//	@Test (	
+//			description = "Добавить права пользователю manager на центруме"
+//			)
 	public void setUpPrevilegesCentrum(){
-		// Добавить роль админа пользователю Config.MANAGER на центруме
+		log.info("Добавить права пользователю manager на центруме");
 		dbAdapter.updateDb(DbAdapter.DB_CENTRUM_SET , String.format("update users_server_user_users_server_user_role " + 
 				"set roles_id = '10' " +
 				"where serveruserentities_id = (select id from users_server_user where login = '%s')", Config.MANAGER));
@@ -134,11 +137,12 @@ public class SetTopologyTest extends AbstractTest{
 				"set firstname = '%s', lastname='%s', middlename='%s' ", Config.MANAGER_NAME, Config.MANAGER_LASTNAME, Config.MANAGER_MIDDLENAME ));
 	}	
 
-	@Test (	
-			description = "Добавить все роли пользователю manager на ретейле"
-			 )
+//	@Test (	
+//			description = "Добавить все роли пользователю manager на ретейле"
+//			 )
 	public void setUpPrevilegesRetail(){
 		//Добавить все роли на ритейле
+		log.info("Добавить все роли пользователю manager на ретейле");
 		dbAdapter.updateDb(DbAdapter.DB_RETAIL_SET, "delete from users_server_user_users_server_user_role");
 		
 		for (int i=1; i<=7; i++) {
