@@ -1,0 +1,56 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.smartbear.samples</groupId>
+    <artifactId>soapui-maven2-plugin</artifactId>
+    <packaging>jar</packaging>
+    <version>1.0-SNAPSHOT</version>
+    <name>Maven 2 SoapUI test</name>
+    <url>http://maven.apache.org</url>
+    <pluginRepositories>
+        <pluginRepository>
+            <id>SmartBearPluginRepository</id>
+            <url>http://www.soapui.org/repository/maven2/</url>
+        </pluginRepository>
+    </pluginRepositories>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>com.smartbear.soapui</groupId>
+                <artifactId>soapui-pro-maven-plugin</artifactId>
+                <version>4.6.1</version>
+                 <executions>
+<execution>
+			<id>ERPintegraton</id>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>test</goal>
+                        </goals>
+                        <configuration>
+	                        <projectFile>${basedir}/ERPIntegration-soapui-project.xml</projectFile>
+				<outputFolder>ERP integraton-reports</outputFolder> 	 			    	
+				<junitReport>true</junitReport>
+				<printReport>false</printReport>
+
+                           <projectProperties>
+                                <value>retailHost=${retail}</value>
+				<value>centrumHost=${centrum}</value>
+                            </projectProperties>
+                        </configuration>
+                    </execution>
+                </executions> 
+            </plugin>
+         	<plugin>
+		<groupId>org.apache.maven.plugins</groupId>
+		<artifactId>maven-surefire-report-plugin</artifactId>
+		<configuration>
+		<outputDirectory>target/site/soapui</outputDirectory>
+		<reportsDirectories>
+		<reportsDirectories>target/soapui/</reportsDirectories>
+		</reportsDirectories>
+		</configuration>
+	</plugin>	
+        </plugins>
+
+    </build>
+</project>

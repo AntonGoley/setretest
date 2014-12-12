@@ -1,0 +1,62 @@
+	<goods-catalog>
+	<good marking-of-the-good="${marking-of-the-good}_KG" transaction-id="0000000166869724">
+		<shop-indices/>
+		<name>Весовой товар ${name} с/к пресс вес</name>
+		<bar-code code="28${barcode}" do-not-send-to-scales="false">
+			<count>1</count>
+			<default-code>true</default-code>
+		</bar-code>
+		<bar-code code="29${barcode}" do-not-send-to-scales="false">
+			<count>1</count>
+			<default-code>false</default-code>
+		</bar-code>
+		<product-type>ProductWeightEntity</product-type>
+		<vat>10</vat>
+		<group id="${barcode}">
+			<name>Группа ${barcode}</name>
+			<parent-group id="${barcode}1">
+				<name>Группа ${barcode}</name>
+			</parent-group>
+		</group>
+		<measure-type id="2">
+			<name>кг.</name>
+		</measure-type>
+		<country id="RU"/>
+		<manufacturer id="0000103164">
+			<name>ОАО "ЧМПЗ"</name>
+		</manufacturer>
+		<delete-from-cash>false</delete-from-cash>
+		<erp-code>011423</erp-code>
+		<is-child-product>0</is-child-product>
+		 <certification-type>${certification-type}</certification-type>
+		<fullname>Весовой товар ${name} пресс вес (Россия) 1кг</fullname>
+		<plugin-property key="precision" value="0.001"/>
+		<plugin-property key="deny-print-to-documents" value="false"/>
+		<plugin-property key="name-on-scale-screen" value="Весовой товар ${name} Богород"/>
+		<plugin-property key="description-on-scale-screen" value=" всеовая (Казахстан)"/>
+		<plugin-property key="composition" value="Состав: говядина, баранина, свинина"/>
+		<plugin-property key="food-value" value=" фасовано ООО Лента по ТУ 9213-017-71385386-12, белки- 21г, жиры- 48, 516 Ккал"/>
+		<plugin-property key="storage-conditions" value="от+2 до+8С и отн. вл. не более 85%  ТУ 9213- 013-11510767"/>
+		<plugin-property key="good-for-hours" value="108"/>
+		 <plugin-property key="producer" value="${producer}"/>
+		<plugin-property key="button-on-scale" value="${button-on-scale}"/>
+		<price-entry price="429.99" currency="RUB">
+			<shop-indices>2103</shop-indices>
+			<begin-date>1900-01-01T00:00:00</begin-date>
+			<end-date>2070-12-31T23:59:00</end-date>
+			<number>2</number>
+			<department number="1">
+				<name>Отдел 1</name>
+			</department>
+		</price-entry>
+		<price-entry price="451.49" currency="RUB">
+			<shop-indices>2</shop-indices>
+			<begin-date>2014-04-02T03:00:00</begin-date>
+			<end-date>2070-12-31T23:59:00</end-date>
+			<number>1</number>
+			<department number="1">
+				<name>Отдел 1</name>
+			</department>
+		</price-entry>
+	</good>
+	</goods-catalog>
