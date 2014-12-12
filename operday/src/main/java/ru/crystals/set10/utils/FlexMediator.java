@@ -14,6 +14,9 @@ public class FlexMediator {
 		ecxecute(driver, String.format("document.getElementById('%s').doFlexClick('%s', '')", swfSrc, flexId));	
 	}
 	
+	/*
+	 * Клик по табу и др. элементам, где передаются аргументы
+	 */
 	public static void clickElement(WebDriver driver, String swfSrc, String flexId, String arg) {
 		waitForElement(driver, swfSrc, flexId);
 		ecxecute(driver, String.format("document.getElementById('%s').doFlexClick('%s', '%s')", swfSrc, flexId, arg));	
@@ -52,37 +55,23 @@ public class FlexMediator {
 		ecxecute(driver, String.format("document.getElementById('%s').doFlexProperty('%s', '%s', '%s')", swfSrc, flexId, args[0], args[1]));	
 	}
 	
-	
 	public static void waitForElement(WebDriver driver, String swfSrc, String flexId) {
 		DisinsectorTools.delay(200);
 		ecxecute(driver, String.format("document.getElementById('%s').doFlexWaitForElement('%s', '10000')", swfSrc, flexId));
-		//ecxecute(driver, String.format("document.getElementById('%s').doFlexWaitForElementVisible('%s', '10000')", swfSrc, flexId));
-		waitForProperty(driver, swfSrc, flexId, new String[]{"visible", "true"});
-		
+		waitForElementVisible(driver, swfSrc, flexId);
 	}
-	
-	public static void waitForElementWisible_(WebDriver driver, String swfSrc, String flexId) {
-		DisinsectorTools.delay(200);
-		ecxecute(driver, String.format("document.getElementById('%s').doFlexWaitForElementVisible('%s', '10000')", swfSrc, flexId));
-	}
-	
+
 	public static boolean waitForElementVisible(WebDriver driver, String swfSrc, String flexId) {
-		String result = "";
-		//TODO
-		// doFlexWaitForElement falls if no delay before execution
-		sleep(500);
-		result = ecxecuteAndReturnString(driver, String.format("return document.getElementById('%s').doFlexWaitForElementVisible('%s', '15')", swfSrc, flexId));
-		if ( result.equals("true")) return true;
-		else return false;
+		return waitForProperty(driver, swfSrc, flexId, new String[]{"visible", "true"});
 	}
 	 
 	/*
 	 * args - [property expectedValue] 
+	 * ожидание 15 сек
 	 */
 	public static boolean waitForProperty(WebDriver driver, String swfSrc, String flexId, String[] args) {
 		String result;
 		int timeout = 0;
-		// TODO: заменить параметром
 		while (timeout < 15000 ){
 			result = (String) ecxecuteAndReturnString(driver, String.format("return document.getElementById('%s').getFlexProperty('%s', '%s')", swfSrc, flexId, args[0]));
 			if (result.equals(args[1])) {
@@ -98,7 +87,6 @@ public class FlexMediator {
 		try {
 			Thread.sleep(1000);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

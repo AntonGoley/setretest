@@ -22,7 +22,7 @@ public class AccompanyingGoodsCheckContentTest extends AccompanyingDocumentsBasi
 	private static Object[][] reportData(){
 		return new Object[][] {
 				/*
-				 * TODO: добавить:
+				 * TODO: добавить в тест:
 				 * 	- проверку номера
 				 * 	- inn магазина
 				 */

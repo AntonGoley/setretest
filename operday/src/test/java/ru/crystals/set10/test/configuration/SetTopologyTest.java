@@ -207,6 +207,7 @@ public class SetTopologyTest extends AbstractTest{
 		DisinsectorTools.delay(1000);
 		openShopPreferences(shopName);
 		shopPreferences.addCashes(5);
+		DisinsectorTools.delay(1000);
 		shopPreferences.goBack();
 	}
 	

@@ -69,7 +69,7 @@ public class  CheckSearchPage extends OperDayPage{
 	
 	public int getSearchResultCount(){
 		
-		if (! waitForProperty(getDriver(), ID_OPERDAYSWF, SEARCH_RESULT, new String[]{"visible", "true"})) {
+		if (! waitForElementVisible(getDriver(), ID_OPERDAYSWF, SEARCH_RESULT)) {
 			log.info("По данному запросу чеков не найдено");
 			return 0;
 		}
@@ -130,23 +130,5 @@ public class  CheckSearchPage extends OperDayPage{
 		doFlexMouseDown(getDriver(), ID_OPERDAYSWF, BUTTON_GO_TO_CHECK);
 		return new CheckContentPage(getDriver());
 	}
-	
-	public boolean isCheckInOperDay(String checkNumber){
-		long timeoutCount = 0;
-		
-		DisinsectorTools.delay(5000);
-		doSearch();
-		while (timeoutCount <= 3 ){
-			try {
-				waitForElement(getDriver(), ID_OPERDAYSWF, "text=" + checkNumber);
-				return true;
-			} catch (Exception e) {
-				log.info("Чек с номером % не найден. ");
-				timeoutCount++;
-			}
-		}	
-		return false;
-	}
-	
 	
 }

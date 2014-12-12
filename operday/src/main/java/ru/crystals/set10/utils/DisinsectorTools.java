@@ -42,10 +42,8 @@ public class DisinsectorTools {
 	
 		result = (String) clipboard.getData(DataFlavor.stringFlavor);
 		} catch (UnsupportedFlavorException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		log.info("Report text contains: \n" + result);

@@ -25,6 +25,9 @@ public class NewEquipmentPage extends SalesPage {
 	
 	public EquipmentPage addEquipment(String equpmentGroup, String equpmentGroupIndex, String equpmentItem){
 		//выделить и выбрать группу оборудования
+		
+		// TODO: replace with click
+		//clickElement(getDriver(), ID_SALESSWF, String.format(SELECT_EQUPMENT_GROUP, equpmentGroup), "");
 		doFlexProperty(getDriver(), ID_SALESSWF,  LOCATOR_EQUPMENT_GROUP_TABLE, new String[]{"selectedIndex", equpmentGroupIndex});
 		clickElement(getDriver(), ID_SALESSWF, String.format(SELECT_EQUPMENT_GROUP, equpmentGroup));
 		
