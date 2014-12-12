@@ -19,7 +19,7 @@ public class ShopPreferencesPage extends AbstractPage {
 	//addCashB
 	static final String LOCATOR_ADD_CASH_TO_SHOP_BUTTON = "addCashB";
 	static final String LOCATOR_TABS = "shopSettingsTabNav";
-	static final String LOCATOR_CASHES_TAB = "shopSettingsTabNav";
+	static final String LOCATOR_CASHES_TAB = "Кассы";
 	static final String LOCATOR_CASHES_COUNT_INPUT = "amountPole";
 	static final String LOCATOR_ADD_JURISTIC_PERSON_BUTTON = "addLegalEntityButton";
 	static final String LOCATOR_CASHES_TOTAL = "id:shopCashesTab/id:pagination";
@@ -50,14 +50,15 @@ public class ShopPreferencesPage extends AbstractPage {
 	public ShopPreferencesPage addCashes(int cashCount){
 		int totalCashesBefore;
 		//TODO: вынести Кассы в элемент
-		clickElement(getDriver(), ID_SALESSWF, LOCATOR_TABS, "Кассы");
+		clickElement(getDriver(), ID_SALESSWF, LOCATOR_TABS, LOCATOR_CASHES_TAB);
 		typeText(getDriver(), ID_SALESSWF, LOCATOR_CASHES_COUNT_INPUT, String.valueOf(cashCount));
 		totalCashesBefore = getTotalCashesInShop();
 		clickElement(getDriver(), ID_SALESSWF, LOCATOR_ADD_CASH_TO_SHOP_BUTTON);
 		/*
 		 *  ждем пока счетчик касс увеличится на cashCount
 		 */
-		waitForElement(getDriver(), ID_SALESSWF, String.format("numberOfItems=%s", String.valueOf(totalCashesBefore + cashCount)));
+		//waitForElement(getDriver(), ID_SALESSWF, String.format("numberOfItems=%s", String.valueOf(totalCashesBefore + cashCount)));
+		waitForProperty(getDriver(), ID_SALESSWF, LOCATOR_CASHES_TOTAL, new String[]{"numberOfItems", String.valueOf(totalCashesBefore + cashCount)});
 		log.info("Добавить кассы:" + cashCount );
 		return this;
 	}

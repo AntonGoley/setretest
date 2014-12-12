@@ -192,20 +192,23 @@ public class SetTopologyTest extends AbstractTest{
 	
 	private void openShopPreferences(String shopName){
 		getDriver().navigate().refresh();
-		DisinsectorTools.delay(2000);
+		DisinsectorTools.delay(1000);
 		salesPage = new SalesPage(getDriver());
 		shopPage = salesPage.navigateMenu(SALES_MENU_SHOPS, "0", ShopPage.class);
 		shopPreferences = shopPage.openShopPreferences(shopName);
 	}
 	
 	private void addCash(String shopName){
+		getDriver().navigate().refresh();
+		DisinsectorTools.delay(1000);
 		openShopPreferences(shopName);
 		shopPreferences.addCashes(5);
 		shopPreferences.goBack();
 	}
 	
 	private void addCashier(){
-		salesPage = new SalesPage(getDriver());
+		getDriver().navigate().refresh();
+		DisinsectorTools.delay(1000);
 		cashierConfig = salesPage
 				.navigateMenu(SALES_MENU_CASHIERS, "5", CashiersMainPage.class)
 				.addCashier();
