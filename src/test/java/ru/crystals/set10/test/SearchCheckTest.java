@@ -87,11 +87,12 @@ public class SearchCheckTest extends AbstractTest{
 	
 	@Test (description = "SRTE-71. Поиск чека на ТК по штрих коду товара")
 	public void testSearchCheckByGoodBarCode(){
- 		searchCheck.setFilterMultiText(FILTER_CATEGORY_GOOD_BAR_CODE, String.valueOf(barcode)).doSearch();
+		String searchBarcode = barcode;
+ 		searchCheck.setFilterMultiText(FILTER_CATEGORY_GOOD_BAR_CODE, String.valueOf(searchBarcode)).doSearch();
  		searchResult = searchCheck.getSearchResultCount();
  		sendCheck();
  		
-		searchCheck.setFilterMultiText(FILTER_CATEGORY_GOOD_BAR_CODE, String.valueOf(barcode)).doSearch();
+		searchCheck.setFilterMultiText(FILTER_CATEGORY_GOOD_BAR_CODE, String.valueOf(searchBarcode)).doSearch();
 		Assert.assertEquals("", searchResult + 1, searchCheck.getSearchResultCount());
 	}
 	

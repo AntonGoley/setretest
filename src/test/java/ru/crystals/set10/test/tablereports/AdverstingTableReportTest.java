@@ -53,7 +53,7 @@ public class AdverstingTableReportTest extends AbstractReportTest {
 	
 	@Test(description = "SRL-182. Проверить, что генерируется пустой отчет, если на товар не заведена рекламная акция")
 	public void testEmptyAdverstingHTMLReport() {
-		log.info("Количество полей в отчете порекламным акциям " +  htmlReportResults.getReportSize());
+		log.info("Количество полей в отчете по рекламным акциям " +  htmlReportResults.getReportSize());
 		Assert.assertTrue(htmlReportResults.getReportSize() < 20, "Сгененированный отчет не пустой");
 	}	
 	
