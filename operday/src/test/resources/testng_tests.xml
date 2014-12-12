@@ -43,24 +43,24 @@
 <!-- 	  		<class name="ru.crystals.set10.test.tablereports.WrongAdverstingPriceTest"/> -->
 <!-- 		</classes>	  -->
 <!--   	</test>	 -->
-<!--   	<test name="Оплата банковской картой" > -->
-<!-- 	  	<classes> -->
-<!-- 			<class name="ru.crystals.set10.test.BankTransactionInCheckTest"/> -->
-<!-- 		</classes>	  -->
-<!--   	</test> -->
+  	<test name="Оплата банковской картой" >
+	  	<classes>
+			<class name="ru.crystals.set10.test.BankTransactionInCheckTest"/>
+		</classes>	 
+  	</test>
   	
-<!--   	<test name="КМ3, КМ6 и отчет по возвратам" > -->
-<!-- 	  	<classes> -->
-<!-- 	  		<class name="ru.crystals.set10.test.km.KM3Test"/> -->
-<!-- 	  		<class name="ru.crystals.set10.test.tablereports.RefundChecksReportTest"/> -->
-<!-- 		</classes>	  -->
-<!--   	</test> -->
-<!-- 	<test name="Прейскурант на табачные изделия" > -->
-<!-- 	  	<classes> -->
-<!-- 		  	<class name="ru.crystals.set10.test.tablereports.MRCPriceReportTest"/> -->
-<!-- 		  	<class name="ru.crystals.set10.test.tablereports.MRCPriceReportWithLekondsTest"/> -->
-<!-- 		</classes>	  -->
-<!--   	</test>	 -->
+  	<test name="КМ3, КМ6 и отчет по возвратам" >
+	  	<classes>
+	  		<class name="ru.crystals.set10.test.km.KM3Test"/>
+	  		<class name="ru.crystals.set10.test.tablereports.RefundChecksReportTest"/>
+		</classes>	 
+  	</test>
+	<test name="Прейскурант на табачные изделия" >
+	  	<classes>
+		  	<class name="ru.crystals.set10.test.tablereports.MRCPriceReportTest"/>
+		  	<class name="ru.crystals.set10.test.tablereports.MRCPriceReportWithLekondsTest"/>
+		</classes>	 
+  	</test>	
  	<test name="Поиск чека" >
 	  	<classes>
 			<class name="ru.crystals.set10.test.SearchCheckTest"/>
