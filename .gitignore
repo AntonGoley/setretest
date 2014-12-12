@@ -1,0 +1,8 @@
+.git
+.settings
+target
+test-output
+.project
+.classpath
+*.log
+ERP integraton-reports
