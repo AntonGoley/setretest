@@ -6,9 +6,12 @@ import java.io.Serializable;
 import java.net.MalformedURLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import ru.crystals.commons.amf.io.Utils;
+import ru.crystals.httpclient.HttpClient;
 //import java.net.HttpURLConnection;
 //import ru.crystals.httpclient.HttpClient;
 //import ru.crystals.pos.check.DocumentEntity;
@@ -26,18 +29,18 @@ public class DocsSender {
 	private String serverIP;
 	private int shopNumber;
 	private int cashNumber;
-	private static int od_purchase_id;
+//	private static int od_purchase_id;
 	CashTransportBeanRemote cashTransportManager;
 
 	public DocsSender(String serverIP, int shopNumber, int cashNumber) {
 		this.serverIP = serverIP;
 		this.shopNumber = shopNumber;
 		this.cashNumber = cashNumber;
-		od_purchase_id = new DbAdapter().queryForInt(DbAdapter.DB_RETAIL_OPERDAY,
-						"select max(id) from od_inbound_files") + 7;
-//		HttpClient client = new HttpClient();
-//        client.setUrl("http://" + serverIP + ":8090/SET-OperDay-Web/OperDayTransportServlet");
-//        cashTransportManager = client.find(CashTransportBeanRemote.class, "java:app/SET-OperDay/SET/OperDay/CashTransportBean!ru.crystals.operday.transport.CashTransportBeanRemote");
+//		od_purchase_id = new DbAdapter().queryForInt(DbAdapter.DB_RETAIL_OPERDAY,
+//						"select max(id) from od_inbound_files") + 7;
+		HttpClient client = new HttpClient();
+        client.setUrl("http://" + serverIP + ":8090/SET-OperDay-Web/OperDayTransportServlet");
+        cashTransportManager = client.find(CashTransportBeanRemote.class, "java:app/SET-OperDay/SET/OperDay/CashTransportBean!ru.crystals.operday.transport.CashTransportBeanRemote");
 	}
 
 	
@@ -60,8 +63,8 @@ public class DocsSender {
                 ObjectOutputStream oos = new ObjectOutputStream(connect.getOutputStream());
                 oos.writeObject(tObject);
                 oos.close();
-                
-               //log.info("response message = " + connect.getResponseMessage());
+               
+               log.info("response message = " + connect.getResponseMessage());
                
 //               if (HttpURLConnection.HTTP_CREATED == connect.getResponseCode()) {
 //                   //documentSetStatus((DocumentEntity) object, SentToServerStatus.WAIT_ACKNOWLEDGEMENT, docName);
@@ -77,12 +80,12 @@ public class DocsSender {
 //                   }
 //               }
                
-                // сетим в базу опердня (od_inbound_files) запись о новом документа, который подложен в nginx для обработки
                 if (connect.getResponseMessage().equals("Created")){
                 	log.info("Имя документа: " + docName);
-                	new DbAdapter().updateDb(DbAdapter.DB_RETAIL_OPERDAY, 
-                			String.format("INSERT INTO od_inbound_files( id, cash_number, shop_number, documents_count, file_path, status) " +
-                				"VALUES (%s, %s, %s, 1, '%s', 0)", od_purchase_id++, cashNumber, shopNumber, docName));
+                	cashTransportManager.registerDocument(docName , shopNumber, cashNumber, 1);
+//                	new DbAdapter().updateDb(DbAdapter.DB_RETAIL_OPERDAY, 
+//                			String.format("INSERT INTO od_inbound_files( id, cash_number, shop_number, documents_count, file_path, status) " +
+//                				"VALUES (%s, %s, %s, 1, '%s', 0)", od_purchase_id++, cashNumber, shopNumber, docName));
                 }
                 
         } catch (Exception e) {

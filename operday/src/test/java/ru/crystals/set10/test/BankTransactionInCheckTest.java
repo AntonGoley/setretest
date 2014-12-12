@@ -110,10 +110,10 @@ public class BankTransactionInCheckTest extends AbstractTest{
 	@Test(description = "SRTE-75. Выгрузка банковских транзакций в excel")
 	public void saveExcelBankTransactionTest(){
 		long fileSize = 0;
-		String reportNamePattern = "TransactionHistory*.xls*";
+		String reportNamePattern = "TransactionHistory_*.xls";
 		fileSize =  paymentTransactions.saveExcel(chromeDownloadPath, reportNamePattern).length();
 		log.info("Размер сохраненного файла: " + reportNamePattern + " равен " +  fileSize);
-		Assert.assertTrue("Файл отчета сохранился некорректно", fileSize > 6400);
+		Assert.assertTrue("Файл отчета сохранился некорректно", fileSize > 6300);
 	}
 	
 	

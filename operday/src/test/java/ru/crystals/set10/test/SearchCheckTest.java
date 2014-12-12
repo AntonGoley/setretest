@@ -102,7 +102,7 @@ public class SearchCheckTest extends AbstractTest{
 		Assert.assertEquals("", 1, searchCheck.getSearchResultCount());
 	}
 	
-	@Test (description = "SRTE-71. Поиск чека на ТК по типу чека Возвратные")
+	@Test (enabled = false, description = "SRTE-71. Поиск чека на ТК по типу чека Возвратные")
 	public void testSearchCheckByTypeRefund(){
 		searchCheck.setFilterText(FILTER_CATEGORY_CHECK_BAR_CODE, String.valueOf(generateCheckBarCode())).doSearch();
 		Assert.assertEquals("", 1, searchCheck.getSearchResultCount());
