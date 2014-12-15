@@ -13,9 +13,9 @@ public class  CheckSearchPage extends OperDayPage{
 
 	static final String BUTTON_SEARCH = "findChecksButton";
 	static final String FILTER_OPEN = "expandButton";
-	static final String SEARCH_RESULT = "searchResultLabel";
-
 	
+	// результат поиска
+	static final String SEARCH_RESULT = "searchResultLabel";
 	
 	static final String FILTER_CATEGORY = "categorySelector";
 	
@@ -73,7 +73,13 @@ public class  CheckSearchPage extends OperDayPage{
 			log.info("По данному запросу чеков не найдено");
 			return 0;
 		}
-		
+		/*
+		 * TODO: 
+		 * убрать задержку
+		 * сделать тесты таким образом, чтобы всегда возвращался рез-т, отличный от предыдущего
+		 * оставить задержку для тестов, где необходимо проверит, что рез-т не изменился 
+		 */
+		DisinsectorTools.delay(2000);
 		String[] result = getElementProperty(getDriver(), ID_OPERDAYSWF, SEARCH_RESULT, "text").split(" ");
 		// строка длины 6
 		log.info("Результат поиска: " + result[0] + " " + result[1] + " " + result[2] + " " + result[3] + " " + result[4] + " " + result[5]);
