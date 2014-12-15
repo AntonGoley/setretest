@@ -77,8 +77,8 @@ public class FlexMediator {
 			if (result.equals(args[1])) {
 				return true;
 			}	
-			sleep(500);
-			timeout+=500;
+			sleep(200);
+			timeout+=200;
 		}	
 		return false;
 	}

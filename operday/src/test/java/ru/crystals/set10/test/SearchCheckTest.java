@@ -61,7 +61,7 @@ public class SearchCheckTest extends AbstractTest{
  		searchResult = searchCheck.getSearchResultCount();
  		sendCheck();
  		
-		searchCheck.setFilterText(FILTER_CATEGORY_CASH_NUMBER, String.valueOf(cashNumber)).doSearch();
+		searchCheck.doSearch();
 		Assert.assertEquals("", searchResult + 1, searchCheck.getSearchResultCount());
 	}
 	
@@ -71,7 +71,7 @@ public class SearchCheckTest extends AbstractTest{
  		searchResult = searchCheck.getSearchResultCount();
  		sendCheck();
  		
-		searchCheck.setFilterText(FILTER_CATEGORY_SHIFT_NUMBER, String.valueOf(shiftNumber)).doSearch();
+		searchCheck.doSearch();
 		Assert.assertEquals("", searchResult + 1, searchCheck.getSearchResultCount());
 	}
 	
@@ -81,7 +81,7 @@ public class SearchCheckTest extends AbstractTest{
  		searchResult = searchCheck.getSearchResultCount();
  		sendCheck();
  		
-		searchCheck.setFilterText(FILTER_CATEGORY_SHOP_NUMBER, String.valueOf(shopNumber)).doSearch();
+		searchCheck.doSearch();
 		Assert.assertEquals("", searchResult + 1, searchCheck.getSearchResultCount());
 	}
 	
@@ -90,9 +90,9 @@ public class SearchCheckTest extends AbstractTest{
 		String searchBarcode = barcode;
  		searchCheck.setFilterMultiText(FILTER_CATEGORY_GOOD_BAR_CODE, String.valueOf(searchBarcode)).doSearch();
  		searchResult = searchCheck.getSearchResultCount();
- 		sendCheck();
+ 		sendRefundCheck();
  		
-		searchCheck.setFilterMultiText(FILTER_CATEGORY_GOOD_BAR_CODE, String.valueOf(searchBarcode)).doSearch();
+		searchCheck.doSearch();
 		Assert.assertEquals("", searchResult + 1, searchCheck.getSearchResultCount());
 	}
 	
@@ -102,7 +102,7 @@ public class SearchCheckTest extends AbstractTest{
 		Assert.assertEquals("", 1, searchCheck.getSearchResultCount());
 	}
 	
-	@Test (description = "SRTE-71. Поиск чека на ТК по типу чека Возвратные")
+	@Test (enabled = false, description = "SRTE-71. Поиск чека на ТК по типу чека Возвратные")
 	public void testSearchCheckByTypeRefund(){
 		searchCheck.setFilterSelect(FILTER_CATEGORY_CHECK_TYPE, FILTER_CATEGORY_CHECK_TYPE_REFUND);
 		Assert.assertEquals("", 1, searchCheck.getSearchResultCount());
