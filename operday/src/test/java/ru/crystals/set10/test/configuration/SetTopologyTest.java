@@ -203,8 +203,6 @@ public class SetTopologyTest extends AbstractTest{
 	}
 	
 	private void addCash(String shopName){
-		getDriver().navigate().refresh();
-		DisinsectorTools.delay(1000);
 		openShopPreferences(shopName);
 		shopPreferences.addCashes(5);
 		DisinsectorTools.delay(1000);

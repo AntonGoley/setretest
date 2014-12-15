@@ -34,7 +34,7 @@ public class SearchCheckTest extends AbstractTest{
 	static long cashNumber = 0;
 	static long checkBarcode = 0;
 	static int searchResult = 0;
-	String barcode = ""; 
+	static String barcode = ""; 
 	
 	@BeforeClass
 	public void openSearchPage() {
@@ -102,9 +102,9 @@ public class SearchCheckTest extends AbstractTest{
 		Assert.assertEquals("", 1, searchCheck.getSearchResultCount());
 	}
 	
-	@Test (enabled = false, description = "SRTE-71. Поиск чека на ТК по типу чека Возвратные")
+	@Test (description = "SRTE-71. Поиск чека на ТК по типу чека Возвратные")
 	public void testSearchCheckByTypeRefund(){
-		searchCheck.setFilterText(FILTER_CATEGORY_CHECK_BAR_CODE, String.valueOf(generateCheckBarCode())).doSearch();
+		searchCheck.setFilterSelect(FILTER_CATEGORY_CHECK_TYPE, FILTER_CATEGORY_CHECK_TYPE_REFUND);
 		Assert.assertEquals("", 1, searchCheck.getSearchResultCount());
 	}
 	
@@ -128,15 +128,25 @@ public class SearchCheckTest extends AbstractTest{
 		return result.toString();
 	}
 	
-	private void sendCheck(){
+	private static void sendCheck(){
 		// Сгенерим чек продажи
 		purchase = (PurchaseEntity) cashEmulatorSearchCheck.nextPurchase();
-		// Из чека продажи берем основные параметры чека
+		setCheckData();
+	}
+	
+	private static void sendRefundCheck(){
+		PurchaseEntity superPurchase = new PurchaseEntity();
+		superPurchase = purchase;
+		// Сгенерим чек продажи
+		purchase = (PurchaseEntity) cashEmulatorSearchCheck.nextRefundAll(superPurchase, false);
+		setCheckData();
+	}
+	
+	private static void setCheckData(){
 		checkNumber = purchase.getNumber();
 		shiftNumber = purchase.getShift().getNumShift();
 		shopNumber = purchase.getShift().getShopIndex();
 		cashNumber = purchase.getShift().getCashNum();
 		barcode = purchase.getPositions().get(0).getBarCode();
 	}
-
 }

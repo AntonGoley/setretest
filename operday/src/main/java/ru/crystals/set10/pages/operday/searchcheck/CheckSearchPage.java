@@ -119,6 +119,17 @@ public class  CheckSearchPage extends OperDayPage{
 		return new CheckSearchPage(getDriver());
 	}
 	
+	public CheckSearchPage setFilterSelect(String filter, String filterValue){
+		ifSearchFiltersOpen();
+		selectElement(getDriver(), ID_OPERDAYSWF, FILTER_CATEGORY, filter);
+		
+		selectElement(getDriver(), ID_OPERDAYSWF, FILTER_TEXT_FIELD, filterValue);
+		
+		log.info("Задать условие поиска: " + filter + "; Значение: " + filterValue);
+		return new CheckSearchPage(getDriver());
+	}
+	
+	
 	
 	private void ifSearchFiltersOpen(){
 		/*

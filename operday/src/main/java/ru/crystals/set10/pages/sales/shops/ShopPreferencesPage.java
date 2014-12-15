@@ -6,6 +6,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import ru.crystals.set10.pages.basic.AbstractPage;
 import ru.crystals.set10.pages.basic.BasicElements;
+import ru.crystals.set10.utils.DisinsectorTools;
 import static ru.crystals.set10.pages.basic.BasicElements.*;
 import static ru.crystals.set10.utils.FlexMediator.*;
 
@@ -51,6 +52,7 @@ public class ShopPreferencesPage extends AbstractPage {
 		int totalCashesBefore;
 		//TODO: вынести Кассы в элемент
 		clickElement(getDriver(), ID_SALESSWF, LOCATOR_TABS, LOCATOR_CASHES_TAB);
+		DisinsectorTools.delay(1500);
 		typeText(getDriver(), ID_SALESSWF, LOCATOR_CASHES_COUNT_INPUT, String.valueOf(cashCount));
 		totalCashesBefore = getTotalCashesInShop();
 		clickElement(getDriver(), ID_SALESSWF, LOCATOR_ADD_CASH_TO_SHOP_BUTTON);
