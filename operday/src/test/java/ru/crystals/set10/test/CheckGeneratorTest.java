@@ -3,7 +3,9 @@ package ru.crystals.set10.test;
 import java.util.HashMap;
 
 import org.apache.log4j.Logger;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+
 import ru.crystals.set10.config.*;
 import ru.crystals.pos.check.PositionEntity;
 import ru.crystals.pos.check.PurchaseEntity;
@@ -15,20 +17,23 @@ public class CheckGeneratorTest {
 	CashEmulator cashEmulator;
 	HashMap<Long, Long>  returnPositions = new HashMap<Long, Long>(); 
 	
+	@BeforeClass
+	public void setupCash(){
+		cashEmulator = CashEmulator.getCashEmulator(Config.RETAIL_HOST, Integer.valueOf(Config.SHOP_NUMBER), Integer.valueOf(Config.CASH_NUMBER));
+	}
 	
 	@Test (	
 			description = "Сгенерить чеки продажи и чеки возврата и закрыть смену")
 	public void testSendReturnCheck(){
-		cashEmulator = CashEmulator.getCashEmulator(Config.RETAIL_HOST, Integer.valueOf(Config.SHOP_NUMBER), Integer.valueOf(Config.CASH_NUMBER));
 		
 		log.info("Send checks to " + Config.SHOP_NUMBER);
 		
 		cashEmulator.nextIntroduction();
 		for (int i=1; i<=Integer.valueOf(Config.CHECK_COUNT); i++) {
 			PurchaseEntity pe = (PurchaseEntity) cashEmulator.nextPurchase();
-		//	returnPositions.put(1L, 1L * 1000);
+			returnPositions.put(1L, 1L * 1000);
 			cashEmulator.nextRefundPositions(pe, returnPositions , false);
-			cashEmulator.nextRefundAll(pe, false);
+		//	cashEmulator.nextRefundAll(pe, false);
 		}	
 		cashEmulator.nextWithdrawal();
 		cashEmulator.nextZReport();

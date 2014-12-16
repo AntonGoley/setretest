@@ -11,25 +11,10 @@
 		данных мд Центрумом и Ретейлом запускать не в первую очередь 
 	 -->
 <!-- <suite name="Отчеты и сопроводительные документы" preserve-order="true" configfailurepolicy="continue" parallel="tests" thread-count="1">-->
-<suite name="Отчеты и сопроводительные документы" preserve-order="true" configfailurepolicy="continue">
+<suite name="Отчеты, сопроводительные документы, поиск чеков" preserve-order="true" configfailurepolicy="continue">
 <listeners>
     <listener class-name="org.uncommons.reportng.HTMLReporter" />
  </listeners>
- 	<test name="Поля карточки товара" >
-	  	<classes>
-			<class name="ru.crystals.set10.test.GoodsAdditionalFieldsTest"/>
-		</classes>	 
-  	</test>
-  	<test name="Поиск чека" >
-	  	<classes>
-			<class name="ru.crystals.set10.test.SearchCheckTest"/>
-		</classes>	 
-  	</test>
- 	<test name="Выгрузка в SAP алкогольных ограничений" >
-	  	<classes>
-	  		<class name="ru.crystals.set10.test.SpiritRestrictionsToSAPTest"/>
-		</classes>	 
-  	</test>	
 	<test name="Сопроводительные документы" >
 	  	<classes>
 	  		<class name="ru.crystals.set10.test.documents.accompanying.AccompanyingInvoiceContentTest"/>
@@ -64,6 +49,21 @@
 	  	<classes>
 		  	<class name="ru.crystals.set10.test.tablereports.MRCPriceReportTest"/>
 		  	<class name="ru.crystals.set10.test.tablereports.MRCPriceReportWithLekondsTest"/>
+		</classes>	 
+  	</test>	
+  	<test name="Поля карточки товара" >
+	  	<classes>
+			<class name="ru.crystals.set10.test.GoodsAdditionalFieldsTest"/>
+		</classes>	 
+  	</test>
+  	<test name="Поиск чека" >
+	  	<classes>
+			<class name="ru.crystals.set10.test.SearchCheckTest"/>
+		</classes>	 
+  	</test>
+  	<test name="Выгрузка в SAP алкогольных ограничений" >
+	  	<classes>
+	  		<class name="ru.crystals.set10.test.SpiritRestrictionsToSAPTest"/>
 		</classes>	 
   	</test>	
 </suite> 

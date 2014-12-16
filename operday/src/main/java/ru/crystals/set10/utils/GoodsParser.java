@@ -54,7 +54,7 @@ public class GoodsParser {
 	
 	private static void generateChecks() {
 	    //long reportId = 1L;
-	    while (peList.size() < 30) {
+	    while (peList.size() < 100) {
 	      PurchaseEntity pe = new PurchaseEntity();	
 	      
 	      pe.setCheckStatus(CheckStatus.Registered);
@@ -93,10 +93,11 @@ public class GoodsParser {
 	      CashPaymentEntity payE = new CashPaymentEntity();
 		      payE.setDateCreate(new Date(System.currentTimeMillis()));
 		      payE.setDateCommit(new Date(System.currentTimeMillis()));
-		      payE.setSumPay(Long.valueOf(summ));
 		      payE.setChange(Long.valueOf(random(1000) * 11L));
+		      payE.setSumPay(summ + payE.getChange());
 		      payE.setPaymentType("CashPaymentEntity");
 		      payE.setCurrency("RUB");
+		      
 	      
 //		  BankCardPaymentEntity payBank = new BankCardPaymentEntity();
 //			  payBank.setDateCreate(new Date(System.currentTimeMillis()));
