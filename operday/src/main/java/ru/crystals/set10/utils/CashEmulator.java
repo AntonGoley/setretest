@@ -272,7 +272,7 @@ public class CashEmulator {
 	}
 	
 	/*
-	 * Сгенерить чек с определенным набором позиций
+	 * Отрпавить существующий чек
 	 */
 	public DocumentEntity nextPurchase(PurchaseEntity purchase) {
 
@@ -507,13 +507,14 @@ public class CashEmulator {
 	    }  else if (purchase instanceof IntroductionEntity) {
 	    	dbRequest = SQL_GET_INTRODUCTION_BY_FISCALDOCNUM;
 	    }
-    	// ждем в течение минуты
+    	// ждем в течение 30 секунд
 	    int timeOut = 60;
     	int tryCount = 0;
     	while (tryCount < timeOut) {
     		tryCount++;
-    		DisinsectorTools.delay(1000);
+    		DisinsectorTools.delay(500);
     		if (db.queryForInt(DB_RETAIL_OPERDAY, String.format(dbRequest, fiscalDocNum)) == 1) {
+    			log.info(String.format("Чек зарегистрирован в операционном дне; fiscalDocNum: %s ", fiscalDocNum));
     			return true;
     		}	
     	}

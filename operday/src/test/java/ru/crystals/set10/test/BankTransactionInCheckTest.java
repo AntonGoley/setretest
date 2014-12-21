@@ -1,6 +1,6 @@
 package ru.crystals.set10.test;
 
-//import static ru.crystals.set10.pages.operday.tablereports.ReportConfigPage.EXCELREPORT;
+
 import static ru.crystals.set10.utils.GoodsParser.peList;
 
 
@@ -219,6 +219,8 @@ public class BankTransactionInCheckTest extends AbstractTest{
 		 * отмененная транзакция добавляется только в чек	
 		*/
 		payBank.setTransactions(successTransactions);
+		payBank.setCardNumber("240899******0123");
+		payBank.setAuthorizationData(authData);
 
 		/*
 		 * Создаем 2 оплаты: наличные + банковская карта и добавляем в чек

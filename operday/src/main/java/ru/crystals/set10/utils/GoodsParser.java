@@ -1,16 +1,13 @@
 package ru.crystals.set10.utils;
 
 import static ru.crystals.set10.utils.DbAdapter.DB_RETAIL_SET;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
-
 import ru.crystals.pos.catalog.BarcodeEntity;
 import ru.crystals.pos.catalog.MeasureEntity;
 import ru.crystals.pos.catalog.ProductEntity;
@@ -27,9 +24,17 @@ public class GoodsParser {
 	
 	private static final Logger log = LoggerFactory.getLogger(GoodsParser.class);
 	
-	public static ArrayList<ProductEntity> catalogGoods = new ArrayList<ProductEntity>();
+	public static List<ProductEntity> catalogGoods = new ArrayList<ProductEntity>();
 	public static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-DD hh:mm:ss");
-	public static ArrayList<DocumentEntity> peList = new ArrayList<DocumentEntity>();
+	/*
+	 * Список чеков с оплатой наличными
+	 */
+	public static List<DocumentEntity> peList = new ArrayList<DocumentEntity>();
+	/*
+	 * Список чеков БЕЗ оплат
+	 */
+	public static List<DocumentEntity> peListWithoutPayments = new ArrayList<DocumentEntity>();
+	
 	
 	private static DbAdapter db = new  DbAdapter();
 	private static final String SQL_GOODS_COUNT = "select count(*) from un_cg_product";
@@ -44,17 +49,21 @@ public class GoodsParser {
 	static
 	  {
 		// проверить, есть ли товары в set_operday, и если нет, импортировать через ERP импорт
-		if ((db.queryForInt(DB_RETAIL_SET, SQL_GOODS_COUNT)) < 10 ) {
+		if ((db.queryForInt(DB_RETAIL_SET, SQL_GOODS_COUNT)) < 30 ) {
 			SoapRequestSender soapSender  = new SoapRequestSender();
 			soapSender.sendGoodsToStartTesting(Config.RETAIL_HOST, "goods.txt");
 		}
 		catalogGoods = parsePurchasesFromDB(db.queryForRowSet(DB_RETAIL_SET, SQL_GOODS));
-	    generateChecks();
+		peList.addAll(generateChecks_(true));
+		peListWithoutPayments.addAll(generateChecks_(false));
 	  }
 	
-	private static void generateChecks() {
-	    //long reportId = 1L;
-	    while (peList.size() < 100) {
+	private static List<DocumentEntity> generateChecks_(boolean generatePayments) {
+	    /*
+	     * result list
+	     */
+		List<DocumentEntity> list = new ArrayList<DocumentEntity>();
+	    while (list.size() < 100) {
 	      PurchaseEntity pe = new PurchaseEntity();	
 	      
 	      pe.setCheckStatus(CheckStatus.Registered);
@@ -89,50 +98,31 @@ public class GoodsParser {
 		        pe.setFiscalDocNum("test;" + String.valueOf(System.currentTimeMillis()));
 	      }
 	      pe.setPositions(positions);
-	      List<PaymentEntity> paymentEntityList = new ArrayList<PaymentEntity>(1);
-	      CashPaymentEntity payE = new CashPaymentEntity();
-		      payE.setDateCreate(new Date(System.currentTimeMillis()));
-		      payE.setDateCommit(new Date(System.currentTimeMillis()));
-		      payE.setChange(Long.valueOf(random(1000) * 11L));
-		      payE.setSumPay(summ + payE.getChange());
-		      payE.setPaymentType("CashPaymentEntity");
-		      payE.setCurrency("RUB");
-		      
-	      
-//		  BankCardPaymentEntity payBank = new BankCardPaymentEntity();
-//			  payBank.setDateCreate(new Date(System.currentTimeMillis()));
-//			  payBank.setDateCommit(new Date(System.currentTimeMillis()));
-//			  payBank.setSumPay(Long.valueOf(summ));
-//			  payBank.setPaymentType("BankCardPaymentEntity");
-//			  payBank.setCurrency("RUB");
-	      
-	      paymentEntityList.add(payE);
-//	      paymentEntityList.add(payBank);
-	      pe.setPayments(paymentEntityList);
 	      pe.setDiscountValueTotal(Long.valueOf(0L));
 	      pe.setCheckSumEnd(Long.valueOf(summ));
 	      pe.setCheckSumStart(Long.valueOf(summ));
 	      
-	      peList.add(pe);
+	      /*
+	       * Добавить оплаты, если необходимо
+	       */
+	      if (generatePayments) {
+		      List<PaymentEntity> paymentEntityList = new ArrayList<PaymentEntity>(1);
+		      CashPaymentEntity payE = new CashPaymentEntity();
+			      payE.setDateCreate(new Date(System.currentTimeMillis()));
+			      payE.setDateCommit(new Date(System.currentTimeMillis()));
+			      payE.setChange(Long.valueOf(random(1000) * 11L));
+			      payE.setSumPay(summ + payE.getChange());
+			      payE.setPaymentType("CashPaymentEntity");
+			      payE.setCurrency("RUB");
+		      
+		      paymentEntityList.add(payE);
+		      pe.setPayments(paymentEntityList);
+	      }   
+	      list.add(pe);
 	    }
-	    
-//	    ReportShiftEntity rse = new ReportShiftEntity();
-//	    rse.setReportZ(true);
-//	    rse.setSumPurchaseFiscal(Long.valueOf(34650L));
-//	    rse.setCountPurchase(Long.valueOf(1L));
-//	    rse.setSumCashEnd(Long.valueOf(2851771786L));
-//	    rse.setFiscalDocNum("1707:2465");
-//
-//	    rse.setId(Long.valueOf(reportId++));
-//
-//	    ReportPaymentTypeEntity reportPaymentTypeEntity = new ReportPaymentTypeEntity(rse.getId().longValue(), "CashPaymentEntity", 'P');
-//	    reportPaymentTypeEntity.setPSumm(34650L);
-//	    List listRPTE = new ArrayList();
-//	    listRPTE.add(reportPaymentTypeEntity);
-//	    rse.setPaymentsTypesList(listRPTE);
-//	    peList.add(rse);
-	  }
-
+	    return list;
+	 }
+	
 	public static ArrayList<ProductEntity> parsePurchasesFromDB(SqlRowSet goods) {
 		ArrayList<ProductEntity> result = new ArrayList<ProductEntity>();
 		try {
@@ -156,6 +146,14 @@ public class GoodsParser {
 	    }
 		return result;
 	}	
+	
+	/*
+	 * Чек без оплаты
+	 */
+	public static PurchaseEntity getPurchaseWithoutPayments(){
+		int idx = (int)random(peListWithoutPayments.size() - 2) + 1;
+	    return (PurchaseEntity) peListWithoutPayments.get(idx);
+	}
 	
 	public static long random(int max) {
 	    return Math.round(Math.random() * max);

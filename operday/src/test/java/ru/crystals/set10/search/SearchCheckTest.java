@@ -1,4 +1,4 @@
-package ru.crystals.set10.test;
+package ru.crystals.set10.search;
 
 
 import junit.framework.Assert;
@@ -6,43 +6,17 @@ import junit.framework.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import ru.crystals.pos.check.PurchaseEntity;
-import ru.crystals.set10.config.Config;
-import ru.crystals.set10.pages.basic.LoginPage;
-import ru.crystals.set10.pages.basic.MainPage;
-import ru.crystals.set10.pages.operday.searchcheck.CheckContentPage;
-import ru.crystals.set10.pages.operday.searchcheck.CheckSearchPage;
 import static ru.crystals.set10.pages.operday.searchcheck.CheckSearchPage.*;
-import ru.crystals.set10.pages.operday.searchcheck.PaymentTransactionsPage;
-import ru.crystals.set10.pages.operday.tablereports.ReportConfigPage;
 import ru.crystals.set10.utils.DisinsectorTools;
 
 
-public class SearchCheckTest extends AbstractTest{
-	
-	MainPage mainPage;
-	CheckSearchPage searchCheck;
-	ReportConfigPage RefundChecksConfigPage;
-	PurchaseEntity pe;
-	CheckContentPage checkContent;
-	PaymentTransactionsPage paymentTransactions;
-	
-	static PurchaseEntity purchase;
-	static long checkNumber = 0;
-	static long shiftNumber = 0;
-	static long shopNumber = 0;
-	static long cashNumber = 0;
-	static long checkBarcode = 0;
-	static int searchResult = 0;
-	static String barcode = ""; 
+public class SearchCheckTest extends SearchCheckAbstractTest{
 	
 	@BeforeClass
-	public void openSearchPage() {
-		cashEmulatorSearchCheck.useNextShift();
+	public void send1stCheck(){
+		super.openSearchPage();
 		sendCheck();
-		mainPage = new LoginPage(getDriver(), Config.RETAIL_URL).doLogin(Config.MANAGER, Config.MANAGER_PASSWORD);
-		searchCheck = mainPage.openOperDay().openCheckSearch().openFilter();
-	}	
+	}
 	
 	@Test (description = "SRTE-71. Поиск чека на ТК по номеру чека")
 	public void testSearchCheckByNumber(){
@@ -126,27 +100,5 @@ public class SearchCheckTest extends AbstractTest{
 		result.append(date).append(".");
 		result.append(String.valueOf(check).replaceFirst("^.", String.valueOf((long)Math.floor(check/1000) - 1)));
 		return result.toString();
-	}
-	
-	private static void sendCheck(){
-		// Сгенерим чек продажи
-		purchase = (PurchaseEntity) cashEmulatorSearchCheck.nextPurchase();
-		setCheckData();
-	}
-	
-	private static void sendRefundCheck(){
-		PurchaseEntity superPurchase = new PurchaseEntity();
-		superPurchase = purchase;
-		// Сгенерим чек продажи
-		purchase = (PurchaseEntity) cashEmulatorSearchCheck.nextRefundAll(superPurchase, false);
-		setCheckData();
-	}
-	
-	private static void setCheckData(){
-		checkNumber = purchase.getNumber();
-		shiftNumber = purchase.getShift().getNumShift();
-		shopNumber = purchase.getShift().getShopIndex();
-		cashNumber = purchase.getShift().getCashNum();
-		barcode = purchase.getPositions().get(0).getBarCode();
 	}
 }
