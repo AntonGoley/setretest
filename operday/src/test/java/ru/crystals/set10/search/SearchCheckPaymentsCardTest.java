@@ -11,7 +11,7 @@ import ru.crystals.pos.check.PurchaseEntity;
 import ru.crystals.set10.utils.CashEmulatorPayments;
 
 
-public class SearchChekPaymentsCardTest extends SearchCheckAbstractTest{
+public class SearchCheckPaymentsCardTest extends SearchCheckAbstractTest{
 	
 	long checkNumber;
 	PurchaseEntity purchase1;
