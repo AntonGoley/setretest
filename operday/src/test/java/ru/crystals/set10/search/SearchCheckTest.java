@@ -2,7 +2,9 @@ package ru.crystals.set10.search;
 
 
 import org.testng.Assert;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+
 import static ru.crystals.set10.pages.operday.searchcheck.CheckSearchPage.*;
 import ru.crystals.set10.utils.DisinsectorTools;
 
@@ -10,8 +12,12 @@ import ru.crystals.set10.utils.DisinsectorTools;
 public class SearchCheckTest extends SearchCheckAbstractTest{
 	
 	
-	@Test ( priority = 1, 
-			description = "SRTE-71. Поиск чека на ТК по номеру чека")
+	@BeforeClass
+	public void send1stCheck(){
+		sendCheck();
+	}
+	
+	@Test ( description = "SRTE-71. Поиск чека на ТК по номеру чека")
 	public void testSearchCheckByNumber(){
 		// Найдем чек продажи с номером checkNumber + 1 (номер следующего чека продажи, который будет отправлен после)
  		searchCheck.setFilterMultiText(FILTER_CATEGORY_CHECK_NUMBER, String.valueOf(checkNumber + 1)).doSearch();
