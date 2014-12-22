@@ -23,8 +23,14 @@ public class CashEmulatorPayments {
 	 * Чек без оплаты
 	 */
 	public PurchaseEntity getPurchaseWithoutPayments(){
+		PurchaseEntity result;
 		int idx = (int)random(peListWithoutPayments.size() - 2) + 1;
-	    return (PurchaseEntity) peListWithoutPayments.get(idx);
+		result = (PurchaseEntity) peListWithoutPayments.get(idx);
+		/*
+		 *  Удаление чека из списка, для предотвращения добавления одному чеку нескольких оплат
+		 */
+		peListWithoutPayments.remove(idx);
+	    return result;
 	}
 	
 	/*
@@ -62,7 +68,7 @@ public class CashEmulatorPayments {
 	}
 	
 	/*
-	 * Оплата наличными
+	 * Оплата бонусной картой
 	 */
 	public PurchaseEntity setBonusCardPayment(PurchaseEntity purchase, Long sum, String cardNumber){
 		BonusCardPaymentEntity bonusCardPayment = new BonusCardPaymentEntity();

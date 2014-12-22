@@ -30,6 +30,7 @@ public class GoodsParser {
 	 * Список чеков с оплатой наличными
 	 */
 	public static List<DocumentEntity> peList = new ArrayList<DocumentEntity>();
+	
 	/*
 	 * Список чеков БЕЗ оплат
 	 */
@@ -54,11 +55,11 @@ public class GoodsParser {
 			soapSender.sendGoodsToStartTesting(Config.RETAIL_HOST, "goods.txt");
 		}
 		catalogGoods = parsePurchasesFromDB(db.queryForRowSet(DB_RETAIL_SET, SQL_GOODS));
-		peList.addAll(generateChecks_(true));
-		peListWithoutPayments.addAll(generateChecks_(false));
+		peList.addAll(generateChecks(true));
+		peListWithoutPayments.addAll(generateChecks(false));
 	  }
 	
-	private static List<DocumentEntity> generateChecks_(boolean generatePayments) {
+	private static List<DocumentEntity> generateChecks(boolean generatePayments) {
 	    /*
 	     * result list
 	     */
@@ -146,14 +147,6 @@ public class GoodsParser {
 	    }
 		return result;
 	}	
-	
-	/*
-	 * Чек без оплаты
-	 */
-	public static PurchaseEntity getPurchaseWithoutPayments(){
-		int idx = (int)random(peListWithoutPayments.size() - 2) + 1;
-	    return (PurchaseEntity) peListWithoutPayments.get(idx);
-	}
 	
 	public static long random(int max) {
 	    return Math.round(Math.random() * max);

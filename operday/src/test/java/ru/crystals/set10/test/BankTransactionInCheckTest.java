@@ -50,6 +50,7 @@ public class BankTransactionInCheckTest extends AbstractTest{
 	String validAuthorization = String.valueOf(System.currentTimeMillis());
 	String validMessage = "ОДОБРЕНО";
 	String validRsponseCode = "076";
+	String bankCardNumber = "240899******0123";
 	
 	@DataProvider (name = "validBankTransaction")
 	public Object[][] setValidTransactionData(){
@@ -148,6 +149,8 @@ public class BankTransactionInCheckTest extends AbstractTest{
 		  payBank.setBankid("Сбербанк");
 		  payBank.setSumPay(originalSumm - originalSumm/2);
 		  payBank.setCurrency("RUB");
+		  payBank.setCardNumber(bankCardNumber);
+		  
 		 
 		 /*
 		  * Отклоненная транзакция Сбербанк
@@ -159,7 +162,7 @@ public class BankTransactionInCheckTest extends AbstractTest{
 		 	authDataDenied.setHostTransId(System.currentTimeMillis());
 		 	authDataDenied.setCashTransId(System.currentTimeMillis() + 1);
 			 		BankCard card = new BankCard();
-			 			card.setCardNumber("240899******0123");
+			 			card.setCardNumber(bankCardNumber);
 			 			card.setCardType("VISA");
 			 			card.setExpiryDate(new Date(System.currentTimeMillis() + 365*24*3600*1000));
 			 			
@@ -198,6 +201,7 @@ public class BankTransactionInCheckTest extends AbstractTest{
 		 	authData.setResponseCode(validRsponseCode);
 		 	authData.setResultCode(1L);
 		 	authData.setTerminalId("MM489301");
+		 	authData.setOperationCode(555666L);
 		 	List<List<String>> slips = new ArrayList<List<String>>();
 		 		List<String> slip = new ArrayList<String>();
 		 		slip.add("Простой слип \n успешной транзакции");

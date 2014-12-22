@@ -47,6 +47,11 @@ public class FlexMediator {
 		ecxecute(driver, String.format("document.getElementById('%s').doFlexSelect('%s', '%s')", swfSrc, flexId, element));	
 	}
 	
+	public static String getSelectedElement(WebDriver driver, String swfSrc, String flexId) {
+		waitForElement(driver, swfSrc, flexId);
+		return ecxecuteAndReturnString(driver, String.format("return document.getElementById('%s').getFlexSelection('%s', '')", swfSrc, flexId));	
+	}
+	
 	/*
 	 * args - [property value] 
 	 */

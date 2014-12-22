@@ -111,8 +111,11 @@ public class  CheckSearchPage extends OperDayPage{
 		
 		// открыть фильтр и задать категорию
 		ifSearchFiltersOpen();
-		selectElement(getDriver(), ID_OPERDAYSWF, FILTER_CATEGORY, filter);
-
+		
+		if (!getSelectedElement(getDriver(), ID_OPERDAYSWF, FILTER_CATEGORY).equals(filter)){
+			selectElement(getDriver(), ID_OPERDAYSWF, FILTER_CATEGORY, filter);
+		}
+		
 		//Открыть и заполнить множественный выбор
 		clickElement(getDriver(), ID_OPERDAYSWF,  FILTER_MULTI_TEXT_OPEN_INPUT);
 		typeText(getDriver(), ID_OPERDAYSWF, FILTER_MULTI_TEXT_INPUT, filterValue);

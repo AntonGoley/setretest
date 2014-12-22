@@ -6,11 +6,9 @@ import junit.framework.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-
 import ru.crystals.pos.bank.datastruct.BankCard;
 import ru.crystals.pos.check.PurchaseEntity;
 import ru.crystals.set10.utils.CashEmulatorPayments;
-import ru.crystals.set10.utils.GoodsParser;
 
 
 public class SearchChekPaymentsCardTest extends SearchCheckAbstractTest{
@@ -36,7 +34,6 @@ public class SearchChekPaymentsCardTest extends SearchCheckAbstractTest{
 		// берем 8 символов из возвращаемых миллисекунд и подставляем в номер карты
 		String prefix = String.valueOf(System.currentTimeMillis()).substring(5);
 		bankCardNumber = String.format("1234****%s", prefix);
-		purchase1 = GoodsParser.getPurchaseWithoutPayments();
 		purchase1 = payments.getPurchaseWithoutPayments();
 		BankCard card = payments.setBankCardData(bankCardNumber, "Maestro");
 		purchase1 = payments.setBankCardPayment(purchase1, purchase1.getCheckSumEnd(), card);
@@ -45,14 +42,13 @@ public class SearchChekPaymentsCardTest extends SearchCheckAbstractTest{
 		 * Оплата бонусной картой	
 		 */
 		bonusCardNumber =String.valueOf(System.currentTimeMillis());
-		purchase2 = GoodsParser.getPurchaseWithoutPayments();
+		purchase2 = payments.getPurchaseWithoutPayments();
 		purchase2 = payments.setBonusCardPayment(purchase2, purchase2.getCheckSumEnd(), bonusCardNumber);
 
 		/*
 		 * Оплата подарочной картой	
 		 */
-		giftCardNumber =String.valueOf(System.currentTimeMillis());
-		purchase3 = GoodsParser.getPurchaseWithoutPayments();
+		giftCardNumber =String.valueOf(System.currentTimeMillis() + 99);
 		purchase3 = payments.getPurchaseWithoutPayments();
 		long cashSum = purchase3.getCheckSumEnd() - purchase3.getCheckSumEnd()/2;
 		purchase3 = payments.setCashPayment(purchase3, cashSum);
@@ -63,7 +59,6 @@ public class SearchChekPaymentsCardTest extends SearchCheckAbstractTest{
 		 */
 		String prefixChild = String.valueOf(System.currentTimeMillis()).substring(5);
 		childCardNumber = String.format("5678****%s", prefixChild);
-		purchase4 = GoodsParser.getPurchaseWithoutPayments();
 		purchase4 = payments.getPurchaseWithoutPayments();
 		long cashSum4 = purchase4.getCheckSumEnd() - purchase4.getCheckSumEnd()/2;
 		purchase4 = payments.setCashPayment(purchase4, cashSum4);
