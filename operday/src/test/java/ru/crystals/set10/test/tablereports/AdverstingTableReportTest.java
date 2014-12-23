@@ -70,7 +70,7 @@ public class AdverstingTableReportTest extends AbstractReportTest {
 		Assert.assertTrue(htmlReportResults.containsValue(erpCode), "Отсутствует ERP код в отчете");
 	}
 	
-	@Test(	dependsOnMethods = "testGoodInReport",
+	@Test(	dependsOnMethods = "testGoodInAdverstingReport",
 			description = "SRL-182. Если не задан код товара (поле ERP код пустое) выводятся все рекламные акции на ТК")
 	public void testReportAllActionsIfNoParameters() {
 		String expectedErpCode = erpCode;
