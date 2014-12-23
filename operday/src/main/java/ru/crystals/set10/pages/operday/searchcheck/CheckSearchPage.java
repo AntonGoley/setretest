@@ -66,6 +66,7 @@ public class  CheckSearchPage extends OperDayPage{
 	
 	public CheckSearchPage doSearch(){
 		clickElement(getDriver(), ID_OPERDAYSWF, BUTTON_SEARCH);
+		log.info("Выполнить поиск!");
 		return new CheckSearchPage(getDriver());
 	}
 	

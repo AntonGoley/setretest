@@ -4,6 +4,7 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+
 import ru.crystals.set10.config.Config;
 import ru.crystals.set10.pages.operday.tablereports.ReportConfigPage;
 import ru.crystals.set10.pages.operday.tablereports.GoodsOnTKConfigPage;
@@ -65,7 +66,7 @@ public class GoodOnTKReportTest extends AbstractReportTest{
 			)
 	public void testGoodOnTKSaveFormats(String reportFormat, String reportNamePattern){
 		long fileSize = 0;
-		fileSize =  goodOnTKConfig.saveReportFile(reportFormat, chromeDownloadPath, reportNamePattern).length();
+		fileSize =  goodOnTKConfig.exportFileData(chromeDownloadPath, reportNamePattern, goodOnTKConfig, reportFormat).length();
 		log.info("Размер сохраненного файла: " + reportNamePattern + " равен " +  fileSize);
 		Assert.assertTrue(fileSize > 0, "Файл отчета сохранился некорректно");
 	}

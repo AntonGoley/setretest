@@ -2,19 +2,13 @@ package ru.crystals.set10.test;
 
 
 import static ru.crystals.set10.utils.GoodsParser.peList;
-
-
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
 import junit.framework.Assert;
-
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-
 import ru.crystals.pos.bank.datastruct.AuthorizationData;
 import ru.crystals.pos.bank.datastruct.BankCard;
 import ru.crystals.pos.check.PurchaseEntity;
@@ -30,9 +24,9 @@ import ru.crystals.set10.pages.operday.searchcheck.CheckContentPage;
 import ru.crystals.set10.pages.operday.searchcheck.CheckSearchPage;
 import ru.crystals.set10.pages.operday.searchcheck.PaymentTransactionsPage;
 import ru.crystals.set10.pages.operday.tablereports.ReportConfigPage;
+import static ru.crystals.set10.pages.operday.searchcheck.PaymentTransactionsPage.LINK_SAVE_EXCEL;
 
-
-public class BankTransactionInCheckTest extends AbstractTest{
+public class BankTransactionInCheckTest extends AbstractTest {
 	
 	MainPage mainPage;
 	CheckSearchPage searchCheck;
@@ -112,7 +106,7 @@ public class BankTransactionInCheckTest extends AbstractTest{
 	public void saveExcelBankTransactionTest(){
 		long fileSize = 0;
 		String reportNamePattern = "TransactionHistory_*.xls";
-		fileSize =  paymentTransactions.saveExcel(chromeDownloadPath, reportNamePattern).length();
+		fileSize =  paymentTransactions.exportFileData(chromeDownloadPath, reportNamePattern, paymentTransactions, LINK_SAVE_EXCEL).length();
 		log.info("Размер сохраненного файла: " + reportNamePattern + " равен " +  fileSize);
 		Assert.assertTrue("Файл отчета сохранился некорректно", fileSize > 6300);
 	}
@@ -146,7 +140,7 @@ public class BankTransactionInCheckTest extends AbstractTest{
 		  payBank.setDateCreate(new Date(System.currentTimeMillis()));
 		  payBank.setDateCommit(new Date(System.currentTimeMillis()));
 		  payBank.setPaymentType("BankCardPaymentEntity");
-		  payBank.setBankid("Сбербанк");
+		  payBank.setBankid("SwedBank");
 		  payBank.setSumPay(originalSumm - originalSumm/2);
 		  payBank.setCurrency("RUB");
 		  payBank.setCardNumber(bankCardNumber);
@@ -168,7 +162,7 @@ public class BankTransactionInCheckTest extends AbstractTest{
 			 			
 		 	authDataDenied.setCard(card);		
 		 	authDataDenied.setStatus(false);
-		 	authDataDenied.setBankid("Сбербанк");
+		 	authDataDenied.setBankid("SwedBank");
 		 	authDataDenied.setAuthCode(inValidAuthorization);
 		 	authDataDenied.setMessage(inValidMessage);
 		 	authDataDenied.setResponseCode(inValidRsponseCode);
@@ -195,7 +189,7 @@ public class BankTransactionInCheckTest extends AbstractTest{
 		 	 */
 		 	authData.setCard(card);		
 		 	authData.setStatus(true);
-		 	authData.setBankid("Сбербанк");
+		 	authData.setBankid("SwedBank");
 		 	authData.setAuthCode(validAuthorization);
 		 	authData.setMessage(validMessage);
 		 	authData.setResponseCode(validRsponseCode);

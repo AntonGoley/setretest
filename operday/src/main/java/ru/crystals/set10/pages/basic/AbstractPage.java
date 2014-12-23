@@ -1,7 +1,9 @@
 package ru.crystals.set10.pages.basic;
 
+import java.io.File;
 import java.util.Iterator;
 import java.util.Set;
+
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -59,6 +61,18 @@ public abstract class  AbstractPage {
 		         getDriver().manage().window().maximize();
 		    }
 		}
+	}
+	
+	public File exportFileData(String chromeDownloadPath, String reportNamePattern, SaveFile data, String fileType){
+		if (DisinsectorTools.fileFilter(chromeDownloadPath, reportNamePattern).length != 0) {
+			log.info(String.format("Предыдущие файлы отчетов %s не удалены перед выполнением теста", reportNamePattern));
+			return new File("");
+		}
+		
+		//clickElement(getDriver(), ID_OPERDAYSWF, LINK_SAVE_EXCEL);
+		data.saveFile(fileType);
+		
+		return DisinsectorTools.getDownloadedFile(chromeDownloadPath, reportNamePattern);
 	}
 	
 }

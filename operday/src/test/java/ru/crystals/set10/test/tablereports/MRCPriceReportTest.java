@@ -11,6 +11,7 @@ import ru.crystals.set10.test.dataproviders.TableReportsDataprovider;
 import ru.crystals.set10.utils.DisinsectorTools;
 import ru.crystals.set10.utils.SoapRequestSender;
 import static ru.crystals.set10.pages.operday.tablereports.TableReportPage.*;
+import static ru.crystals.set10.pages.operday.tablereports.ReportConfigPage.EXCELREPORT;
 
 public class MRCPriceReportTest extends AbstractReportTest{
 	
@@ -46,7 +47,7 @@ public class MRCPriceReportTest extends AbstractReportTest{
 	public void testMRCReportSaveXls(){
 		long fileSize = 0;
 		String reportNamePattern = "TobaccoPrice*.xls";
-		fileSize =  MRCConfigPage.saveReportFile(ReportConfigPage.EXCELREPORT, chromeDownloadPath, reportNamePattern).length();
+		fileSize =  MRCConfigPage.exportFileData(chromeDownloadPath, reportNamePattern, MRCConfigPage, EXCELREPORT).length();
 		log.info("Размер сохраненного файла: " + reportNamePattern + " равен " +  fileSize);
 		Assert.assertTrue(fileSize > 0, "Файл отчета сохранился некорректно");
 	}

@@ -60,7 +60,7 @@ public class AdverstingTableReportTest extends AbstractReportTest {
 	@Test (dependsOnMethods = "testEmptyAdverstingHTMLReport",
 			description = "SRL-182. Проверить, наличие товара в отчете, если на него заведена рекламная акция, действующая сегодня", 
 			alwaysRun = true)
-	public void testGoodInReport(){
+	public void testGoodInAdverstingReport(){
 		// завести рекламную акцию на товар с erpCode
 		ti = soapSender.generateTI();
 		adverstingRequest = DisinsectorTools.getFileContentAsString("adversting.txt");
@@ -83,9 +83,9 @@ public class AdverstingTableReportTest extends AbstractReportTest {
 	@Test (	description = "SRL-182. Проверить, что \"Отчет по товарам в Рекламных акциях\" доступен для скачивания в формате pdf/xls",
 			dataProvider = "Доступные форматы для скачивания"
 			)
-	public void testGoodOnTKSaveFormats(String reportFormat, String reportNamePattern){
+	public void testAdverstingSaveFormats(String reportFormat, String reportNamePattern){
 		long fileSize = 0;
-		fileSize =  adverstingConfigPage.saveReportFile(reportFormat, chromeDownloadPath, reportNamePattern).length();
+		fileSize =  adverstingConfigPage.exportFileData(chromeDownloadPath, reportNamePattern, adverstingConfigPage, reportFormat).length();
 		log.info("Размер сохраненного файла: " + reportNamePattern + " равен " +  fileSize);
 		Assert.assertTrue(fileSize > 0, "Файл отчета сохранился некорректно");
 	}

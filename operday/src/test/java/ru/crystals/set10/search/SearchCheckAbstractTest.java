@@ -1,6 +1,7 @@
 package ru.crystals.set10.search;
 
 import org.testng.annotations.BeforeClass;
+
 import ru.crystals.pos.check.PurchaseEntity;
 import ru.crystals.set10.config.Config;
 import ru.crystals.set10.pages.basic.LoginPage;
@@ -10,6 +11,7 @@ import ru.crystals.set10.pages.operday.searchcheck.CheckSearchPage;
 import ru.crystals.set10.pages.operday.searchcheck.PaymentTransactionsPage;
 import ru.crystals.set10.pages.operday.tablereports.ReportConfigPage;
 import ru.crystals.set10.test.AbstractTest;
+import ru.crystals.set10.utils.DisinsectorTools;
 
 
 public class SearchCheckAbstractTest extends AbstractTest{
@@ -43,9 +45,10 @@ public class SearchCheckAbstractTest extends AbstractTest{
 		setCheckData();
 	}
 	
-	protected static void sendCheck(PurchaseEntity purchase){
+	protected static void sendCheck(PurchaseEntity pe){
 		// Сгенерим чек продажи
-		purchase = (PurchaseEntity) cashEmulatorSearchCheck.nextPurchase(purchase);
+		purchase = (PurchaseEntity) cashEmulatorSearchCheck.nextPurchase(pe);
+		setCheckData();
 	}
 	
 	protected static void sendRefundCheck(){
@@ -62,5 +65,10 @@ public class SearchCheckAbstractTest extends AbstractTest{
 		shopNumber = purchase.getShift().getShopIndex();
 		cashNumber = purchase.getShift().getCashNum();
 		barcode = purchase.getPositions().get(0).getBarCode();
+		/*
+		 * Задержка, после отправки чека, т.к в системе не все сущности 
+		 * успевают обновиться до нажатия кнопки поиск.
+		 */
+		DisinsectorTools.delay(1000);
 	}
 }

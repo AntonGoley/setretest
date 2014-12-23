@@ -40,7 +40,7 @@ public class PLUinWeightReportTest extends AbstractReportTest{
 			)
 	public void testPLUReportSaveFormats(String reportFormat, String reportNamePattern){
 		long fileSize = 0;
-		fileSize =  PLUConfigPage.saveReportFile(reportFormat, chromeDownloadPath, reportNamePattern).length();
+		fileSize =  PLUConfigPage.exportFileData(chromeDownloadPath, reportNamePattern, PLUConfigPage, reportFormat).length();
 		log.info("Размер сохраненного файла: " + reportNamePattern + " равен " +  fileSize);
 		Assert.assertTrue(fileSize > 0, "Файл отчета сохранился некорректно");
 	}

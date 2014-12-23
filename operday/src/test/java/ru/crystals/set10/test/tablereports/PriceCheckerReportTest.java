@@ -6,6 +6,7 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+
 import ru.crystals.set10.config.Config;
 import ru.crystals.set10.pages.operday.tablereports.PriceCheckerConfigPage;
 import ru.crystals.set10.test.dataproviders.TableReportsDataprovider;
@@ -62,7 +63,7 @@ public class PriceCheckerReportTest extends AbstractReportTest{
 			dataProvider = "Доступные форматы для скачивания")
 	public void testPricechekerSaveFormats(String reportFormat, String reportNamePattern){
 		long fileSize = 0;
-		fileSize =  priceCheckerConfig.saveReportFile(reportFormat, chromeDownloadPath, reportNamePattern).length();
+		fileSize =  priceCheckerConfig.exportFileData(chromeDownloadPath, reportNamePattern, priceCheckerConfig, EXCELREPORT).length();
 		log.info("Размер сохраненного файла: " + reportNamePattern + " равен " +  fileSize);
 		Assert.assertTrue(fileSize > 0, "Файл отчета сохранился некорректно");
 	}

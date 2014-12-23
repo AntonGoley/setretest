@@ -81,7 +81,7 @@ public class CashRegNumbersReportTest extends AbstractReportTest{
 	public void testCashRegReportSaveXls(){
 		long fileSize = 0;
 		String reportNamePattern = "CashRegNumber*.xls";
-		fileSize =  cashNumbersConfigPage.saveReportFile(EXCELREPORT, chromeDownloadPath, reportNamePattern).length();
+		fileSize =  cashNumbersConfigPage.exportFileData(chromeDownloadPath, reportNamePattern, cashNumbersConfigPage, EXCELREPORT).length();
 		log.info("Размер сохраненного файла: " + reportNamePattern + " равен " +  fileSize);
 		Assert.assertTrue(fileSize > 0, "Файл отчета сохранился некорректно");
 	}
@@ -92,7 +92,7 @@ public class CashRegNumbersReportTest extends AbstractReportTest{
 	public void testCashRegReportSavePdf(){
 		long fileSize = 0;
 		String reportNamePattern = "CashRegNumber*.pdf";
-		fileSize =  cashNumbersConfigPage.saveReportFile(PDFREPORT, chromeDownloadPath, reportNamePattern).length();
+		fileSize =  cashNumbersConfigPage.exportFileData(chromeDownloadPath, reportNamePattern, cashNumbersConfigPage, PDFREPORT).length();
 		log.info("Размер сохраненного файла: " + reportNamePattern + " равен " +  fileSize);
 		Assert.assertTrue(fileSize > 0, "Файл отчета сохранился некорректно");
 	}

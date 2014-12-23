@@ -79,7 +79,7 @@ public class SearchCheckPaymentsCardTest extends SearchCheckAbstractTest{
 	
 	@Test (description = "SRTE-73. Поиск чеков по карте оплаты (SRTE-74. SRTE-76)",
 			dataProvider = "Карты оплаты")
-	public void testSearchByBankCardNumber(String filter, String cardNumber, PurchaseEntity purchase){
+	public void testSearchByPayCardNumber(String filter, String cardNumber, PurchaseEntity purchase){
  		/*
  		 *  поиск чека с номером карты, которого еще нет в системе
  		 */
@@ -88,9 +88,8 @@ public class SearchCheckPaymentsCardTest extends SearchCheckAbstractTest{
  		/*
  		 * Отправить чек purchase с оплатой по карте cardNumber
  		 */
- 		cashEmulator.nextPurchase(purchase);
+ 		sendCheck(purchase);
  		searchCheck.doSearch();
 		Assert.assertEquals("", searchResult + 1, searchCheck.getSearchResultCount());
 	}
-	
 }

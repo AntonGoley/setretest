@@ -1,8 +1,12 @@
 package ru.crystals.set10.pages.operday;
 
+import java.io.File;
+
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+
 import ru.crystals.set10.pages.basic.AbstractPage;
+import ru.crystals.set10.pages.basic.SaveFile;
 import ru.crystals.set10.pages.operday.cashes.CashesPage;
 import ru.crystals.set10.pages.operday.searchcheck.CheckSearchPage;
 import ru.crystals.set10.pages.operday.tablereports.TableReportPage;
@@ -16,6 +20,7 @@ public class OperDayPage extends AbstractPage{
 	static final String LOCATOR_TABLEREPORTS = "label=Табличные отчеты";
 	static final String LOCATOR_SEARCH_CHECK = "label=Поиск чеков";
 	static final String LOCATOR_SEARCH_CAHSES= "label=Кассы";
+	protected String LINK_SAVE_EXCEL;
 	
 	/* 
 	 * Флаг, что документ(форма КМ, сопроводительный документ) еще не загружался
@@ -63,6 +68,17 @@ public class OperDayPage extends AbstractPage{
 			reportText = DisinsectorTools.getConsoleOutput(getDriver());
 			switchWindow(true);
 			return reportText;
-		}
+	}
 	
+//	public File exportFileData(String chromeDownloadPath, String reportNamePattern, SaveFile saveLInk, String fileType){
+//		if (DisinsectorTools.fileFilter(chromeDownloadPath, reportNamePattern).length != 0) {
+//			log.info(String.format("Предыдущие файлы отчетов %s не удалены перед выполнением теста", reportNamePattern));
+//			return new File("");
+//		}
+//		
+//		//clickElement(getDriver(), ID_OPERDAYSWF, LINK_SAVE_EXCEL);
+//		saveLInk.saveFile(fileType);
+//		
+//		return DisinsectorTools.getDownloadedFile(chromeDownloadPath, reportNamePattern);
+//	}
 }
