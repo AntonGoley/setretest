@@ -6,8 +6,11 @@ import junit.framework.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+
 import ru.crystals.pos.bank.datastruct.BankCard;
 import ru.crystals.pos.check.PurchaseEntity;
+import ru.crystals.pos.payments.BankCardPaymentEntity;
+import ru.crystals.pos.payments.ChildrenCardPaymentEntity;
 import ru.crystals.set10.utils.CashEmulatorPayments;
 
 
@@ -36,7 +39,7 @@ public class SearchCheckPaymentsCardTest extends SearchCheckAbstractTest{
 		bankCardNumber = String.format("1234****%s", prefix);
 		purchase1 = payments.getPurchaseWithoutPayments();
 		BankCard card = payments.setBankCardData(bankCardNumber, "Maestro");
-		purchase1 = payments.setBankCardPayment(purchase1, purchase1.getCheckSumEnd(), card);
+		purchase1 = payments.setBankCardPayment(BankCardPaymentEntity.class, purchase1, purchase1.getCheckSumEnd(), card);
 		
 		/*
 		 * Оплата бонусной картой	
@@ -63,7 +66,7 @@ public class SearchCheckPaymentsCardTest extends SearchCheckAbstractTest{
 		long cashSum4 = purchase4.getCheckSumEnd() - purchase4.getCheckSumEnd()/2;
 		purchase4 = payments.setCashPayment(purchase4, cashSum4);
 		BankCard childrenCard = payments.setBankCardData(childCardNumber, "VISA");
-		purchase4 = payments.setChildCardPayment(purchase4, purchase4.getCheckSumEnd() - cashSum4, childrenCard);
+		purchase4 = payments.setBankCardPayment(ChildrenCardPaymentEntity.class, purchase4, purchase4.getCheckSumEnd() - cashSum4, childrenCard);
 
 	}	
 	

@@ -11,7 +11,6 @@ import ru.crystals.pos.payments.BankCardPaymentEntity;
 import ru.crystals.pos.payments.BankCardPaymentTransactionEntity;
 import ru.crystals.pos.payments.BonusCardPaymentEntity;
 import ru.crystals.pos.payments.CashPaymentEntity;
-import ru.crystals.pos.payments.ChildrenCardPaymentEntity;
 import ru.crystals.pos.payments.GiftCardPaymentEntity;
 import ru.crystals.pos.payments.PaymentEntity;
 import ru.crystals.pos.payments.PaymentTransactionEntity;
@@ -44,10 +43,11 @@ public class CashEmulatorPayments {
 	}
 
 	/*
-	 * Добавить банковскую транзакцию
+	 * Добавить банковскую транзакцию для детской или банковской карты
 	 */
-	private List<PaymentTransactionEntity> addPaymentTransaction(PurchaseEntity purchase, AuthorizationData authData ){
+	private List<PaymentTransactionEntity> addPaymentTransaction(Class<? extends BankCardPaymentEntity> paymentType, PurchaseEntity purchase, AuthorizationData authData ){
 		PaymentTransactionEntity bankTransaction = new  BankCardPaymentTransactionEntity(authData);
+		bankTransaction.setDiscriminator(paymentType.getSimpleName());
 		List<PaymentTransactionEntity> purchasePaymenTransactions = new ArrayList<PaymentTransactionEntity>();
 		purchasePaymenTransactions.add(bankTransaction);
 		return purchasePaymenTransactions;
@@ -84,43 +84,29 @@ public class CashEmulatorPayments {
 	}
 	
 	/*
-	 * Оплата банковской картой
+	 * Оплата банковской/детской картой
 	 */
-	public PurchaseEntity setBankCardPayment(PurchaseEntity purchase, Long sum, BankCard card) {
+	public PurchaseEntity setBankCardPayment(Class<? extends BankCardPaymentEntity> cardType, PurchaseEntity purchase, Long sum, BankCard card) {
 		
-		BankCardPaymentEntity bankCardPayment = new BankCardPaymentEntity();
+		BankCardPaymentEntity bankCardPayment = null;
+		try {
+			bankCardPayment = cardType.newInstance();
+		} catch (InstantiationException e) {
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		}
 		AuthorizationData authData = setAuthorizationData(sum, card);
 		bankCardPayment.setDateCreate(new Date(System.currentTimeMillis()));
 		bankCardPayment.setDateCommit(new Date(System.currentTimeMillis()));
-		bankCardPayment.setPaymentType("BankCardPaymentEntity");
+		bankCardPayment.setPaymentType(cardType.getSimpleName());
 		bankCardPayment.setSumPay(sum);
 		bankCardPayment.setCurrency("RUB");
 		bankCardPayment.setCardNumber(card.getCardNumber());
-		//bankCardPayment.setNumber(System.currentTimeMillis() + random(10000));
 		bankCardPayment.setAuthCode(String.valueOf(random(1000) + 100L));
 		bankCardPayment.setAuthorizationData(authData);
 		purchase = addPayments(purchase, bankCardPayment);
-		purchase.setTransactions(addPaymentTransaction(purchase, authData));
-		return purchase;
-	}
-	
-	/*
-	 * Оплата детской картой
-	 */
-	public PurchaseEntity setChildCardPayment(PurchaseEntity purchase, Long sum, BankCard card) {
-		ChildrenCardPaymentEntity childCardPayment = new ChildrenCardPaymentEntity();
-		AuthorizationData authData = setAuthorizationData(sum, card);
-		childCardPayment.setDateCreate(new Date(System.currentTimeMillis()));
-		childCardPayment.setDateCommit(new Date(System.currentTimeMillis()));
-		childCardPayment.setPaymentType("ChildrenCardPaymentEntity");
-		childCardPayment.setSumPay(sum);
-		childCardPayment.setCurrency("RUB");
-		childCardPayment.setCardNumber(card.getCardNumber());
-		//bankCardPayment.setNumber(System.currentTimeMillis() + random(10000));
-		childCardPayment.setAuthCode(String.valueOf(random(1000) + 100L));
-		childCardPayment.setAuthorizationData(authData);
-		purchase = addPayments(purchase, childCardPayment);
-		purchase.setTransactions(addPaymentTransaction(purchase, authData));
+		purchase.setTransactions(addPaymentTransaction(cardType, purchase, authData));
 		return purchase;
 	}
 	
@@ -155,12 +141,13 @@ public class CashEmulatorPayments {
 	/*
 	 * Успешная транзакция
 	 */
-	private AuthorizationData setAuthorizationData(long sum, BankCard card){
-		String validAuthorization = String.valueOf(System.currentTimeMillis());
-		String validMessage = "ОДОБРЕНО";
-		String validRsponseCode = "076";
+	public AuthorizationData setAuthorizationData(long sum, BankCard card){
+		String authorizationCode = String.valueOf(System.currentTimeMillis());
+		String message = "ОДОБРЕНО";
+		String responseCode = "076";
 		String terminalID = "MM489301";
 		String bankID = "Сбербанк";
+		long resultCode = 123L;
 		
 		AuthorizationData authData = new  AuthorizationData();
 	 	authData.setAmount(Long.valueOf(sum));
@@ -172,12 +159,11 @@ public class CashEmulatorPayments {
 	 	authData.setCard(card);		
 	 	authData.setStatus(true);
 	 	authData.setBankid(bankID);
-	 	authData.setAuthCode(validAuthorization);
-	 	authData.setMessage(validMessage);
-	 	authData.setResponseCode(validRsponseCode);
-	 	authData.setResultCode(1L);
+	 	authData.setAuthCode(authorizationCode);
+	 	authData.setMessage(message);
+	 	authData.setResponseCode(responseCode);
+	 	authData.setResultCode(resultCode);
 	 	authData.setTerminalId(terminalID);
-	 	authData.setAuthCode("100500");
 	 	List<List<String>> slips = new ArrayList<List<String>>();
 	 		List<String> slip = new ArrayList<String>();
 	 		slip.add("Простой слип \n транзакции");
