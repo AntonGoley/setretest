@@ -27,6 +27,8 @@ public class SearchCheckPaymentsCardTest extends SearchCheckAbstractTest{
 	PurchaseEntity purchase6;
 	PurchaseEntity purchase7;
 	PurchaseEntity purchase8;
+	PurchaseEntity purchase9;
+	PurchaseEntity purchase10;
 	
 	String childCardNumber;
 	String giftCardNumber;
@@ -94,6 +96,8 @@ public class SearchCheckPaymentsCardTest extends SearchCheckAbstractTest{
 		purchase6 = payments.getPurchaseWithoutPayments();
 		purchase7 = payments.getPurchaseWithoutPayments();
 		purchase8 = payments.getPurchaseWithoutPayments();
+		purchase9 = payments.getPurchaseWithoutPayments();
+		purchase10 = payments.getPurchaseWithoutPayments();
 		
 		//возьмем карту из оплаты банковской карты
 		
@@ -117,13 +121,13 @@ public class SearchCheckPaymentsCardTest extends SearchCheckAbstractTest{
 		purchase8 = payments.setBankCardPayment(BankCardPaymentEntity.class, purchase8, purchase8.getCheckSumEnd(), card, authData);
 		purchase8 = payments.setCashPayment(purchase8, purchase8.getCheckSumEnd());
 		
-//		//провека поиска по номеру банковской карты в отклоненной транзакции
-//		purchase9 = payments.setBankCardPayment(BankCardPaymentEntity.class, purchase9, purchase9.getCheckSumEnd(), card, authData);
-//		purchase9 = payments.setCashPayment(purchase9, purchase9.getCheckSumEnd());
-//		
-//		//провека поиска по номеру банковской карты в отклоненной транзакции
-//		purchase9 = payments.setBankCardPayment(BankCardPaymentEntity.class, purchase9, purchase9.getCheckSumEnd(), card, authData);
-//		purchase9 = payments.setCashPayment(purchase9, purchase9.getCheckSumEnd());
+		//провека поиска по номеру банковской карты в отклоненной транзакции
+		purchase9 = payments.setBankCardPayment(BankCardPaymentEntity.class, purchase9, purchase9.getCheckSumEnd(), card, authData);
+		purchase9 = payments.setCashPayment(purchase9, purchase9.getCheckSumEnd());
+		
+		//провека поиска по номеру десткой карты в отклоненной транзакции
+		purchase10 = payments.setBankCardPayment(ChildrenCardPaymentEntity.class, purchase10, purchase10.getCheckSumEnd(), childrenCard, authData);
+		purchase10 = payments.setCashPayment(purchase10, purchase10.getCheckSumEnd());
 		
 	}	
 	
@@ -149,8 +153,8 @@ public class SearchCheckPaymentsCardTest extends SearchCheckAbstractTest{
 	@DataProvider (name = "Карты оплаты. Отклоненные транзакции")
 	public Object[][] setCardPaymentsDataWithRefusedTransactions(){
 		return new Object[][]{
-				{FILTER_CATEGORY_BANK_CARD_NUMBER, bankCardNumber, purchase1},
-				{FILTER_CATEGORY_BONUS_CARD_NUMBER, bonusCardNumber, purchase2},
+				{FILTER_CATEGORY_BANK_CARD_NUMBER, bankCardNumber, purchase9},
+				{FILTER_CATEGORY_CHILD_CARD_NUMBER, childCardNumber, purchase10},
 		};
 	}
 	
@@ -187,22 +191,21 @@ public class SearchCheckPaymentsCardTest extends SearchCheckAbstractTest{
 		Assert.assertEquals("", searchResult + 1, searchCheck.getSearchResultCount());
 	}
 	
-//	@Test (description = "SRTE-73. Поиск чека по карте оплаты в отклоненных транзакциях (SRTE-74. SRTE-76)",
-//			dataProvider = "Карты оплаты. Отклоненные транзакции")
-//	public void testSearchByPayCardNumberWithRefusedTransaction(String filter, String cardNumber, PurchaseEntity purchase){
-// 		/*
-// 		 *  поиск чека с номером карты, которого еще нет в системе
-// 		 */
-//		searchCheck.setFilterText(filter, String.valueOf(cardNumber)).doSearch();
-// 		searchResult = searchCheck.getSearchResultCount();
-// 		/*
-// 		 * Отправить чек purchase с оплатой по карте cardNumber
-// 		 */
-// 		sendCheck(purchase);
-// 		searchCheck.doSearch();
-//		Assert.assertEquals("", searchResult + 1, searchCheck.getSearchResultCount());
-//	}
-	
+	@Test (description = "SRTE-73. Поиск чека по карте оплаты в отклоненных транзакциях",
+			dataProvider = "Карты оплаты. Отклоненные транзакции")
+	public void testSearchByPayCardNumberWithRefusedTransaction(String filter, String cardNumber, PurchaseEntity purchase){
+ 		/*
+ 		 *  поиск чека с номером карты, которого еще нет в системе
+ 		 */
+		searchCheck.setFilterText(filter, String.valueOf(cardNumber)).doSearch();
+ 		searchResult = searchCheck.getSearchResultCount();
+ 		/*
+ 		 * Отправить чек purchase с оплатой по карте cardNumber
+ 		 */
+ 		sendCheck(purchase);
+ 		searchCheck.doSearch();
+		Assert.assertEquals("", searchResult + 1, searchCheck.getSearchResultCount());
+	}
 	
 	/*
 	 * Отдельным тестом, т.к тип параметра long
