@@ -33,12 +33,16 @@ public class  CheckSearchPage extends OperDayPage{
 	
 	//Типы оплат
 	public static final String FILTER_CATEGORY_PAY_TYPE = "Тип оплаты";
-	
-	//Номер карты оплаты
+
 	public static final String FILTER_CATEGORY_BANK_CARD_NUMBER = "Номер банковской карты";
 	public static final String FILTER_CATEGORY_CHILD_CARD_NUMBER = "Номер детской карты";
 	public static final String FILTER_CATEGORY_GIFT_CARD_NUMBER = "Номер подарочной карты";
 	public static final String FILTER_CATEGORY_BONUS_CARD_NUMBER = "Номер бонусной карты";
+	
+	public static final String FILTER_CATEGORY_SERVER_RESPONSE_CODE = "Код ответа процессингового центра";
+	public static final String FILTER_CATEGORY_TERMINAL_NUMBER = "Номер терминала";
+	public static final String FILTER_CATEGORY_BANK_RESPONSE_CODE = "Код ответа сервера";
+	public static final String FILTER_CATEGORY_AUTHORIZATION_CODE = "Код авторизации";
 	
 	
 	// элементы окна множественного выбора

@@ -148,4 +148,8 @@ public class DisinsectorTools {
 		SimpleDateFormat dateFormat = new SimpleDateFormat(format);
 		return dateFormat.format(date);
 	}
+	
+	public static long random(int max) {
+	    return Math.round(Math.random() * max);
+	}
 }
