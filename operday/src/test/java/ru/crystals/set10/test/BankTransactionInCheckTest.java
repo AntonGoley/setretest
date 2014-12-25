@@ -65,7 +65,7 @@ public class BankTransactionInCheckTest extends AbstractTest {
 				{"Код ответа", inValidResponseCode},
 				{"Код банка", inValidBankId},
 				{"Номер карты", inValidBankCardNumber},
-				{"Код ответа сервера", inValidResultCode},
+				{"Код ответа сервера", String.valueOf(inValidResultCode)},
 		};
 	}
 	
@@ -77,7 +77,7 @@ public class BankTransactionInCheckTest extends AbstractTest {
 				{"Код ответа", validResponseCode},
 				{"Код банка", validBankId},
 				{"Номер карты", validBankCardNumber},
-				{"Код ответа сервера", validResultCode}
+				{"Код ответа сервера", String.valueOf(validResultCode)}
 		};
 	}
 	
@@ -109,7 +109,6 @@ public class BankTransactionInCheckTest extends AbstractTest {
 	public void testInvalidBankTransactionExist(String field, String fieldValue){
 		Assert.assertTrue(paymentTransactions.validateData(fieldValue), "Не отображается значения поля для банковской транзакции");
 	}
-	
 	
 	@Test(description = "SRTE-75. Выгрузка банковских транзакций в excel")
 	public void saveExcelBankTransactionTest(){

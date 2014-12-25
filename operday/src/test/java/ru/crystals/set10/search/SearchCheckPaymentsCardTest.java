@@ -137,6 +137,7 @@ public class SearchCheckPaymentsCardTest extends SearchCheckAbstractTest{
 				{FILTER_CATEGORY_AUTHORIZATION_CODE, authorizationCode, purchase5},
 				{FILTER_CATEGORY_TERMINAL_NUMBER, terminalNumber, purchase6},
 				{FILTER_CATEGORY_SERVER_RESPONSE_CODE, responseCode, purchase7},
+				{FILTER_CATEGORY_BANK_RESPONSE_CODE, String.valueOf(resultCode), purchase8},
 		};
 	}
 	
@@ -178,9 +179,7 @@ public class SearchCheckPaymentsCardTest extends SearchCheckAbstractTest{
 	@Test (description = "SRTE-73. Поиск чека по карте оплаты. В чеке содержится только 1 транзакция оплаты со статусом true (SRTE-74. SRTE-76)",
 			dataProvider = "Карты оплаты")
 	public void testSearchByPayCardNumber(String filter, String cardNumber, PurchaseEntity purchase){
- 		/*
- 		 *  поиск чека с номером карты, которого еще нет в системе
- 		 */
+
 		searchCheck.setFilterText(filter, String.valueOf(cardNumber)).doSearch();
  		searchResult = searchCheck.getSearchResultCount();
  		/*
@@ -191,37 +190,16 @@ public class SearchCheckPaymentsCardTest extends SearchCheckAbstractTest{
 		Assert.assertEquals("", searchResult + 1, searchCheck.getSearchResultCount());
 	}
 	
-	@Test (description = "SRTE-73. Поиск чека по карте оплаты в отклоненных транзакциях",
+	@Test (description = "SRTE-73. Поиск чека по банковской/детской карте в отклоненных транзакциях",
 			dataProvider = "Карты оплаты. Отклоненные транзакции")
 	public void testSearchByPayCardNumberWithRefusedTransaction(String filter, String cardNumber, PurchaseEntity purchase){
- 		/*
- 		 *  поиск чека с номером карты, которого еще нет в системе
- 		 */
+
 		searchCheck.setFilterText(filter, String.valueOf(cardNumber)).doSearch();
  		searchResult = searchCheck.getSearchResultCount();
  		/*
  		 * Отправить чек purchase с оплатой по карте cardNumber
  		 */
  		sendCheck(purchase);
- 		searchCheck.doSearch();
-		Assert.assertEquals("", searchResult + 1, searchCheck.getSearchResultCount());
-	}
-	
-	/*
-	 * Отдельным тестом, т.к тип параметра long
-	 */
-	@Test (description = "Поиск чекa по коду ответа банка")
-	public void testSearchByBankResponseCode(){
- 		/*
- 		 *  поиск чека с заданным условием
- 		 *  и фиксирование результата поиска
- 		 */
-		searchCheck.setFilterText(FILTER_CATEGORY_BANK_RESPONSE_CODE, String.valueOf(resultCode)).doSearch();
- 		searchResult = searchCheck.getSearchResultCount();
- 		/*
- 		 * Отправить чек purchase с оплатой по карте cardNumber
- 		 */
- 		sendCheck(purchase8);
  		searchCheck.doSearch();
 		Assert.assertEquals("", searchResult + 1, searchCheck.getSearchResultCount());
 	}
