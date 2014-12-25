@@ -3,7 +3,9 @@ package ru.crystals.set10.pages.sales.cashiers;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+
 import ru.crystals.set10.pages.basic.SalesPage;
+import ru.crystals.set10.utils.DisinsectorTools;
 import static ru.crystals.set10.utils.FlexMediator.*;
 
 public class CashierConfigPage extends SalesPage{
@@ -37,6 +39,7 @@ public class CashierConfigPage extends SalesPage{
 		typeText(getDriver(), ID_SALESSWF, LOCATOR_PASSWORD, password);
 		selectElement(getDriver(), ID_SALESSWF, LOCATOR_ROLE, role);
 		clickElement(getDriver(), ID_SALESSWF, LOCATOR_BACK_TO_CASHIERS_LIST);
+		DisinsectorTools.delay(1000);
 		log.info("Добавить нового кассира");
 		return new CashiersMainPage(getDriver());
 	}
