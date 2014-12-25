@@ -1,8 +1,8 @@
 package ru.crystals.set10.search;
 
 import static ru.crystals.set10.pages.operday.searchcheck.CheckSearchPage.*;
-import junit.framework.Assert;
 
+import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -173,7 +173,7 @@ public class SearchCheckPaymentsCardTest extends SearchCheckAbstractTest{
  		 */
  		sendCheck(purchase);
  		searchCheck.doSearch();
-		Assert.assertEquals("", searchResult + 1, searchCheck.getSearchResultCount());
+		Assert.assertEquals(searchCheck.getExpectedResultCount(searchResult + 1), searchResult + 1, "");
 	}
 	
 	@Test (description = "SRTE-73. Поиск чека по карте оплаты. В чеке содержится только 1 транзакция оплаты со статусом true (SRTE-74. SRTE-76)",
@@ -187,7 +187,7 @@ public class SearchCheckPaymentsCardTest extends SearchCheckAbstractTest{
  		 */
  		sendCheck(purchase);
  		searchCheck.doSearch();
-		Assert.assertEquals("", searchResult + 1, searchCheck.getSearchResultCount());
+ 		Assert.assertEquals(searchCheck.getExpectedResultCount(searchResult + 1), searchResult + 1, "");
 	}
 	
 	@Test (description = "SRTE-73. Поиск чека по банковской/детской карте в отклоненных транзакциях",
@@ -201,6 +201,6 @@ public class SearchCheckPaymentsCardTest extends SearchCheckAbstractTest{
  		 */
  		sendCheck(purchase);
  		searchCheck.doSearch();
-		Assert.assertEquals("", searchResult + 1, searchCheck.getSearchResultCount());
+ 		Assert.assertEquals(searchCheck.getExpectedResultCount(searchResult + 1), searchResult + 1, "");
 	}
 }

@@ -4,7 +4,6 @@ package ru.crystals.set10.search;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-
 import static ru.crystals.set10.pages.operday.searchcheck.CheckSearchPage.*;
 import ru.crystals.set10.utils.DisinsectorTools;
 
@@ -24,7 +23,7 @@ public class SearchCheckTest extends SearchCheckAbstractTest{
  		searchResult = searchCheck.getSearchResultCount();
  		sendCheck();
  		searchCheck.doSearch();
- 		Assert.assertEquals(searchCheck.getSearchResultCount(), searchResult + 1, "");
+ 		Assert.assertEquals(searchCheck.getExpectedResultCount(searchResult + 1), searchResult + 1, "");
 	}
 	
 	@Test (description = "SRTE-71. Поиск чека на ТК по номеру кассы")
@@ -34,7 +33,7 @@ public class SearchCheckTest extends SearchCheckAbstractTest{
  		sendCheck();
  		
 		searchCheck.doSearch();
-		Assert.assertEquals(searchCheck.getSearchResultCount(), searchResult + 1, "");
+		Assert.assertEquals(searchCheck.getExpectedResultCount(searchResult + 1), searchResult + 1, "");
 	}
 	
 	@Test (description = "SRTE-71. Поиск чека на ТК по номеру смены")
@@ -44,7 +43,7 @@ public class SearchCheckTest extends SearchCheckAbstractTest{
  		sendCheck();
  		
 		searchCheck.doSearch();
-		Assert.assertEquals(searchCheck.getSearchResultCount(), searchResult + 1, "");
+		Assert.assertEquals(searchCheck.getExpectedResultCount(searchResult + 1), searchResult + 1, "");
 	}
 	
 	@Test (enabled = false, description = "SRTE-71. Поиск чека на ТК по номеру магазина")
@@ -54,7 +53,7 @@ public class SearchCheckTest extends SearchCheckAbstractTest{
  		sendCheck();
  		
 		searchCheck.doSearch();
-		Assert.assertEquals(searchCheck.getSearchResultCount(), searchResult + 1, "");
+		Assert.assertEquals(searchCheck.getExpectedResultCount(searchResult + 1), searchResult + 1, "");
 	}
 	
 	@Test (description = "SRTE-71. Поиск чека на ТК по штрих коду товара")
@@ -65,7 +64,7 @@ public class SearchCheckTest extends SearchCheckAbstractTest{
  		sendRefundCheck();
  		
 		searchCheck.doSearch();
-		Assert.assertEquals(searchCheck.getSearchResultCount(), searchResult + 1, "");
+		Assert.assertEquals(searchCheck.getExpectedResultCount(searchResult + 1), searchResult + 1, "");
 	}
 	
 	@Test (description = "SRTE-71. Поиск чека на ТК по штрих коду чека")
@@ -77,7 +76,7 @@ public class SearchCheckTest extends SearchCheckAbstractTest{
 	@Test (enabled = false, description = "SRTE-71. Поиск чека на ТК по типу чека Возвратные")
 	public void testSearchCheckByTypeRefund(){
 		searchCheck.setFilterSelect(FILTER_CATEGORY_CHECK_TYPE, FILTER_CATEGORY_CHECK_TYPE_REFUND);
-		Assert.assertEquals(searchCheck.getSearchResultCount(), 1, "");
+		Assert.assertEquals(searchCheck.getExpectedResultCount(1), 1, "");
 	}
 	
 	

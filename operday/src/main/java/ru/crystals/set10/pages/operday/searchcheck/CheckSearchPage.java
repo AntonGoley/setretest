@@ -62,7 +62,6 @@ public class  CheckSearchPage extends OperDayPage{
 	static final String SEARCH_RESULTS_GRID = "adg";
 
 	
-	
 	public CheckSearchPage(WebDriver driver) {
 		super(driver, false);
 		getWait().until(ExpectedConditions.visibilityOfElementLocated(By.id(ID_OPERDAYSWF)));
@@ -85,26 +84,38 @@ public class  CheckSearchPage extends OperDayPage{
 			log.info("По данному запросу чеков не найдено");
 			return 0;
 		}
-		/*
-		 * TODO: 
-		 * убрать задержку
-		 * сделать тесты таким образом, чтобы всегда возвращался рез-т, отличный от предыдущего
-		 * оставить задержку для тестов(в самих тестах), где необходимо проверит, что рез-т не изменился 
-		 */
-		DisinsectorTools.delay(2000);
+		
+		//DisinsectorTools.delay(500);
 		String[] result = getElementProperty(getDriver(), ID_OPERDAYSWF, SEARCH_RESULT, "text").split(" ");
 		
 		if (result.length<6){
 			log.info("По данному запросу чеков не найдено");
-			//log.info("Ошибка отображаения результатов поиска!");
 			return 0;
 		}
+
 		// строка длины 6
-		
 		log.info("Результат поиска: " + result[0] + " " + result[1] + " " + result[2] + " " + result[3] + " " + result[4] + " " + result[5]);
 		return Integer.valueOf(result[3]);
 	}
 	
+	/*
+	 * Метод нажимает кнопку поиск, до тех пор, пока в рез-х поиска не 
+	 * появится значение @expectedResult
+	 */
+	public int getExpectedResultCount(int expectedResult){
+		int result = getSearchResultCount();	
+		long delay = 1000;
+		long timeout = 0;
+		while (timeout < delay * 10) {
+			if(result == expectedResult) {
+				break;
+			};
+			DisinsectorTools.delay(delay);
+			doSearch();
+			result = getSearchResultCount();
+		};	
+		return result;
+	}
 	
 	//TODO: new search form
 	public CheckSearchPage setCheckNumber(String checkNumber){
@@ -150,8 +161,6 @@ public class  CheckSearchPage extends OperDayPage{
 		log.info("Задать условие поиска: " + filter + "; Значение: " + filterValue);
 		return new CheckSearchPage(getDriver());
 	}
-	
-	
 	
 	private void ifSearchFiltersOpen(){
 		/*
