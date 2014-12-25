@@ -18,6 +18,7 @@ public class  CheckSearchPage extends OperDayPage{
 	static final String SEARCH_RESULT = "searchResultLabel";
 	
 	static final String FILTER_CATEGORY = "categorySelector";
+	static final String FILTER_SELECT_FIELD = "comboBox";
 	
 	// типы фильтров
 	public static final String FILTER_CATEGORY_CHECK_NUMBER = "Номер чека";
@@ -43,6 +44,7 @@ public class  CheckSearchPage extends OperDayPage{
 	public static final String FILTER_CATEGORY_TERMINAL_NUMBER = "Номер терминала";
 	public static final String FILTER_CATEGORY_BANK_RESPONSE_CODE = "Код ответа сервера";
 	public static final String FILTER_CATEGORY_AUTHORIZATION_CODE = "Код авторизации";
+	public static final String FILTER_CATEGORY_BANK_ID = "Код банка";
 	
 	
 	// элементы окна множественного выбора
@@ -124,7 +126,6 @@ public class  CheckSearchPage extends OperDayPage{
 	}
 
 	public CheckSearchPage setFilterMultiText(String filter, String filterValue){
-		
 		// открыть фильтр и задать категорию
 		ifSearchFiltersOpen();
 		
@@ -156,7 +157,7 @@ public class  CheckSearchPage extends OperDayPage{
 		ifSearchFiltersOpen();
 		selectElement(getDriver(), ID_OPERDAYSWF, FILTER_CATEGORY, filter);
 		
-		selectElement(getDriver(), ID_OPERDAYSWF, FILTER_TEXT_FIELD, filterValue);
+		selectElement(getDriver(), ID_OPERDAYSWF, FILTER_SELECT_FIELD, filterValue);
 		
 		log.info("Задать условие поиска: " + filter + "; Значение: " + filterValue);
 		return new CheckSearchPage(getDriver());

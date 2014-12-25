@@ -12,6 +12,8 @@ import ru.crystals.set10.pages.sales.cashiers.CashiersMainPage;
 import ru.crystals.set10.pages.sales.cashiers.CashierConfigPage;
 import ru.crystals.set10.pages.sales.equipment.EquipmentPage;
 import ru.crystals.set10.pages.sales.equipment.NewEquipmentPage;
+import ru.crystals.set10.pages.sales.externalsystems.ExternalSystemsBankTabPage;
+import ru.crystals.set10.pages.sales.externalsystems.NewBankPage;
 import ru.crystals.set10.pages.sales.shops.JuristicPersonPage;
 import ru.crystals.set10.pages.sales.shops.ShopPage;
 import ru.crystals.set10.pages.sales.shops.ShopPreferencesPage;
@@ -36,6 +38,8 @@ public class SetTopologyTest extends AbstractTest{
 	JuristicPersonPage juristicPerson;
 	CashierConfigPage cashierConfig;
 	NewEquipmentPage  newEqupment;
+	ExternalSystemsBankTabPage bankTab;
+	NewBankPage newBankPage;
 	
 	
 	@BeforeClass
@@ -113,6 +117,11 @@ public class SetTopologyTest extends AbstractTest{
 		addCashier();
 	}
 	
+	@Test ( priority = 6)
+	public void addBankTest(){
+		addBank(Config.BANK_NAME_1);
+		addBank(Config.BANK_NAME_2);
+	}
 	
 	@Test (enabled = false)
 	public void addEasyComTest(){
@@ -222,6 +231,15 @@ public class SetTopologyTest extends AbstractTest{
 				Config.CASHIER_ADMIN_TAB_NUM,
 				Config.CASHIER_ADMIN_PASSWORD, 
 				Config.CASHIER_ADMIN_ROLE);
+	}
+	
+	private void addBank(String bankName){
+		getDriver().navigate().refresh();
+		DisinsectorTools.delay(1000);
+		bankTab = salesPage
+				.navigateMenu(SALES_MENU_EXTERNAL_SYSTEMS, "3", ExternalSystemsBankTabPage.class);
+		newBankPage = bankTab.addNewBank();
+		newBankPage.addBank(bankName);
 	}
 	
 	@AfterClass

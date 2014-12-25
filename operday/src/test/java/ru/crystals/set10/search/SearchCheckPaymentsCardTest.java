@@ -12,6 +12,7 @@ import ru.crystals.pos.bank.datastruct.BankCard;
 import ru.crystals.pos.check.PurchaseEntity;
 import ru.crystals.pos.payments.BankCardPaymentEntity;
 import ru.crystals.pos.payments.ChildrenCardPaymentEntity;
+import ru.crystals.set10.config.Config;
 import ru.crystals.set10.utils.CashEmulatorPayments;
 import ru.crystals.set10.utils.DisinsectorTools;
 
@@ -29,6 +30,7 @@ public class SearchCheckPaymentsCardTest extends SearchCheckAbstractTest{
 	PurchaseEntity purchase8;
 	PurchaseEntity purchase9;
 	PurchaseEntity purchase10;
+	PurchaseEntity purchase11;
 	
 	String childCardNumber;
 	String giftCardNumber;
@@ -37,6 +39,7 @@ public class SearchCheckPaymentsCardTest extends SearchCheckAbstractTest{
 	String responseCode = String.valueOf(System.currentTimeMillis()).substring(4) + 11;
 	long resultCode = DisinsectorTools.random(100) + 100;
 	String authorizationCode = String.valueOf(System.currentTimeMillis());
+	String bankId = Config.BANK_NAME_1;
 	
 	String terminalNumber = "MM" + String.valueOf(System.currentTimeMillis()).substring(5);
 	
@@ -98,6 +101,7 @@ public class SearchCheckPaymentsCardTest extends SearchCheckAbstractTest{
 		purchase8 = payments.getPurchaseWithoutPayments();
 		purchase9 = payments.getPurchaseWithoutPayments();
 		purchase10 = payments.getPurchaseWithoutPayments();
+		purchase11 = payments.getPurchaseWithoutPayments();
 		
 		//возьмем карту из оплаты банковской карты
 		
@@ -128,6 +132,11 @@ public class SearchCheckPaymentsCardTest extends SearchCheckAbstractTest{
 		//провека поиска по номеру десткой карты в отклоненной транзакции
 		purchase10 = payments.setBankCardPayment(ChildrenCardPaymentEntity.class, purchase10, purchase10.getCheckSumEnd(), childrenCard, authData);
 		purchase10 = payments.setCashPayment(purchase10, purchase10.getCheckSumEnd());
+		
+		//провека кода банка (название банка)
+		authData.setBankid(bankId);
+		purchase11 = payments.setBankCardPayment(BankCardPaymentEntity.class, purchase11, purchase11.getCheckSumEnd(), card, authData);
+		purchase11 = payments.setCashPayment(purchase11, purchase11.getCheckSumEnd());
 		
 	}	
 	
@@ -203,4 +212,17 @@ public class SearchCheckPaymentsCardTest extends SearchCheckAbstractTest{
  		searchCheck.doSearch();
  		Assert.assertEquals(searchCheck.getExpectedResultCount(searchResult + 1), searchResult + 1, "");
 	}
+	
+	@Test (description = "SRTE-73. Поиск чека по коду банка")
+	public void testSearchByBankId(){
+		searchCheck.setFilterSelect(FILTER_CATEGORY_BANK_ID, bankId).doSearch();
+ 		searchResult = searchCheck.getSearchResultCount();
+ 		/*
+ 		 * Отправить чек purchase с оплатой по карте cardNumber
+ 		 */
+ 		sendCheck(purchase11);
+ 		searchCheck.doSearch();
+ 		Assert.assertEquals(searchCheck.getExpectedResultCount(searchResult + 1), searchResult + 1, "");
+	}
+	
 }

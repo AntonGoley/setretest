@@ -69,6 +69,11 @@ public class Config {
     public static  String CASHIER_ADMIN_PASSWORD;
     public static  String CASHIER_ADMIN_ROLE;
     
+    /*
+     * Внешние системы
+     */
+    public static  String BANK_NAME_1;
+    public static  String BANK_NAME_2;
     
     private static Properties props;
 
@@ -158,6 +163,12 @@ public class Config {
         VIRTUAL_SHOP_KPP = props.getProperty("virtual.shop.kpp");
         VIRTUAL_SHOP_OKPO = props.getProperty("virtual.shop.okpo");
         VIRTUAL_SHOP_OKDP = props.getProperty("virtual.shop.okdp");
+        
+        /*
+         * Внешние системы
+         */
+        BANK_NAME_1 = props.getProperty("externalsystem.bank.name1"); 
+        BANK_NAME_2 = props.getProperty("externalsystem.bank.name2");
         
         log.info("Centrum url:   " + CENTRUM_URL);
         log.info("Retail url:   " + RETAIL_URL);
