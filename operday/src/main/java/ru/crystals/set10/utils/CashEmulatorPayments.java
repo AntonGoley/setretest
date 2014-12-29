@@ -132,6 +132,7 @@ public class CashEmulatorPayments {
 		giftCardPayment.setPaymentType("GiftCardPaymentEntity");
 		giftCardPayment.setSumPay(sum);
 		giftCardPayment.setCurrency("RUB");
+		giftCardPayment.setAmount(1000L);
 		//giftCardPayment.setNumber(cardNumber);
 		giftCardPayment.setCardNumber(cardNumber);
 		giftCardPayment.setAmount(sum);
