@@ -1,5 +1,5 @@
 <goods-catalog>
-	<product-sales-allowing transaction-id="0000000038665678" marking-of-the-good="2002025">
+	<product-sales-allowing transaction-id="0000000038665678" marking-of-the-good="200205">
 		<since-date>${since_date}</since-date>
 		<till-date>${till_date}</till-date>
 	</product-sales-allowing>

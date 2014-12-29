@@ -14,8 +14,9 @@ public class CashierConfigPage extends SalesPage{
 	static final String LOCATOR_FIRSTNAME = "firstName";
 	static final String LOCATOR_MIDDLENAME = "middleName";
 	static final String LOCATOR_TABNUMBER = "table_number";
-	static final String LOCATOR_PASSWORD= "userPass";
-	static final String LOCATOR_ROLE= "roleSelector";
+	static final String LOCATOR_PASSWORD = "userPass";
+	static final String LOCATOR_ROLE = "roleSelector";
+	static final String LOCATOR_SHOP_NUMBER_ALL = "allShopsCheckBox";
 	
 	static final String LOCATOR_BACK_TO_CASHIERS_LIST= "label=К списку кассиров";
 	
@@ -38,6 +39,7 @@ public class CashierConfigPage extends SalesPage{
 		typeText(getDriver(), ID_SALESSWF, LOCATOR_TABNUMBER, tabNumber);
 		typeText(getDriver(), ID_SALESSWF, LOCATOR_PASSWORD, password);
 		selectElement(getDriver(), ID_SALESSWF, LOCATOR_ROLE, role);
+		checkBoxValue(getDriver(), ID_SALESSWF, LOCATOR_SHOP_NUMBER_ALL, true);
 		clickElement(getDriver(), ID_SALESSWF, LOCATOR_BACK_TO_CASHIERS_LIST);
 		DisinsectorTools.delay(1000);
 		log.info("Добавить нового кассира");

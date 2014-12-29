@@ -51,7 +51,7 @@ public class SetTopologyTest extends AbstractTest{
 		
 		mainPage = new LoginPage(getDriver(), Config.CENTRUM_URL).doLogin(Config.MANAGER, Config.MANAGER_PASSWORD);
 		// таймаут для певрого запуска
-		DisinsectorTools.delay(3000);
+		DisinsectorTools.delay(1000);
 		salesPage = mainPage.openSales();		
 	}
 	
@@ -124,7 +124,7 @@ public class SetTopologyTest extends AbstractTest{
 	}
 	
 	@Test (enabled = false)
-	public void addEasyComTest(){
+	public void addVirtualScalesTest(){
 		mainPage = new LoginPage(getDriver(), Config.RETAIL_URL).doLogin(Config.MANAGER, Config.MANAGER_PASSWORD);
 		salesPage = mainPage.openSales();
 		newEqupment = salesPage.navigateMenu(SALES_MENU_EQUIPMENT, "1", EquipmentPage.class)

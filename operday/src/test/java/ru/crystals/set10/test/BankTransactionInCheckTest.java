@@ -87,12 +87,12 @@ public class BankTransactionInCheckTest extends AbstractTest {
 		 *  послать чек, в котором присутствует отклоненная и пройденная банковские транзакции
 		 *  и открыть его
 		 */
-		checkNumber = cashEmulator.nextPurchase(setPayments()).getNumber();
+		//checkNumber = cashEmulator.nextPurchase(setPayments()).getNumber();
 		
 		mainPage = new LoginPage(getDriver(), Config.RETAIL_URL).doLogin(Config.MANAGER, Config.MANAGER_PASSWORD);
 		searchCheck = mainPage.openOperDay().openCheckSearch();
 		
- 		searchCheck.setCheckNumber(String.valueOf(checkNumber)).doSearch();
+ 		searchCheck.setCheckNumber((PurchaseEntity)cashEmulator.nextPurchase(setPayments())).doSearch();
  		checkContent = searchCheck.selectFirstCheck();
  		paymentTransactions = checkContent.openPaymentTransactionsForm();
  		

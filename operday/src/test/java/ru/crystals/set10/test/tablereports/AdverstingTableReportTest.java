@@ -122,7 +122,11 @@ public class AdverstingTableReportTest extends AbstractReportTest {
 	}
 
 	private void doReport(){
-		adverstingConfigPage.setGoodIDs(erpCode);
+		if (!erpCode.equals("")){
+			adverstingConfigPage.setGoodIDs(erpCode);
+		} else {
+			adverstingConfigPage.clearGoodField();
+		}
 		doHTMLReport(adverstingConfigPage, true);
 	}
 	

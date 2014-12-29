@@ -22,7 +22,7 @@ public class SalesPreferencesPage extends SalesPage{
 	
 	//TODO replace with factory
 	public SalesGoodsTypesAndPaymentsTabPage  navigateTab(String salesPreferencesTab) {
-		clickElement(getDriver(), ID_SALESSWF, LOCATOR_TABBAR, TAB_TYPES_GOODS_PAYMENTS);
+		clickElement(getDriver(), ID_SALESSWF, LOCATOR_TABBAR, salesPreferencesTab);
 		return new SalesGoodsTypesAndPaymentsTabPage(getDriver());
 	}
 	

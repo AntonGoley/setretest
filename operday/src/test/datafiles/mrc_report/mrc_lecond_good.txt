@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <goods-catalog>
-	<good marking-of-the-good="2002025">
+	<good marking-of-the-good="200205">
 		<name>${name}</name>
 		<bar-code code="4601018100414">
 		<price-entry price="43">

@@ -37,22 +37,22 @@ public class AddAndConfigureWeightTest extends AbstractTest{
 		salesPage = mainPage.openSales();		
 	}
 	
-	@Test (description = "Добавление весов EasyCom (как оборудования) на магазин", 
+	@Test (description = "Добавление виртуальных весов (как оборудования) на магазин", 
 			priority = 1)
-	public void addEasyComTest(){
+	public void addVirtualScalesTest(){
 		newEqupment = salesPage.navigateMenu(SALES_MENU_EQUIPMENT, "1", EquipmentPage.class)
 			.addNewEquipment();
-		newEqupment.addEquipment("EasyCom", "3", "EasyCom")
-			.ifEqupmentOnPage("EasyCom");
+		newEqupment.addEquipment("VirtualScales", "4", "VirtualScales")
+			.ifEqupmentOnPage("VirtualScales");
 	}
 	
-	@Test (description = "Привязка весов EasyCom к шаблону в магазине", 
+	@Test (description = "Привязка виртуальных весов к шаблону в магазине", 
 			priority = 2)
-	public void bindEasyComTest(){
+	public void bindVirtualScalesTest(){
 		shopWeightTab = salesPage.navigateMenu(SALES_MENU_SHOP_PREFERENCES, "0", RetailShopInfoTabPage.class)
 				.navigateTab(TAB_WEIGHT, RetailShopWeightTabPage.class);
-		shopWeightTab.bindWeight("Прилавочные", "EasyCom");
-		shopWeightTab.ifWeightBinded("EasyCom");
+		shopWeightTab.bindWeight("Фасовочные", "VirtualScales");
+		shopWeightTab.ifWeightBinded("VirtualScales");
 	}
 	
 	@Test (description = "Насткройка генерации штрихкодов для весового товара (Типы товаров и оплат)", 

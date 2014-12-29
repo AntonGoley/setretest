@@ -35,8 +35,10 @@ public class SpiritRestrictionsToSAPTest extends AbstractTest{
 	public void goToAlcoholRestrictions() {
 		mainPage = new LoginPage(getDriver(), Config.CENTRUM_URL).doLogin(Config.MANAGER, Config.MANAGER_PASSWORD);
 		salesPage = mainPage.openSales();
-		alcoholPage = salesPage.navigateMenu(SALES_MENU_MODULES_PREFERENCES, "11", SalesPreferencesPage.class).navigateTab(TAB_TYPES_GOODS_PAYMENTS).
-				selectProductTypeItem(ProductTypeItems.ALCOHOL, AlcoholPage.class);
+		alcoholPage = salesPage
+				.navigateMenu(SALES_MENU_MODULES_PREFERENCES, "11", SalesPreferencesPage.class)
+				.navigateTab(TAB_TYPES_GOODS_PAYMENTS)
+				.selectProductTypeItem(ProductTypeItems.ALCOHOL, AlcoholPage.class);
 		alcoholRestrictionTab = alcoholPage.selectAlcoholTab(AlcoholTabs.ALCOHOL_RESTRICTIONS);
 	}
 	

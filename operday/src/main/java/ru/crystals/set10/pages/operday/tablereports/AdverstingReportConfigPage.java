@@ -31,4 +31,8 @@ public class  AdverstingReportConfigPage extends ReportConfigPage{
 		log.info("Код товара для просмотра рекламных акций:" + goodIDs);
 	}
 	
+	public void clearGoodField(){
+		typeText(getDriver(), ID_OPERDAYSWF, LOCATOR_SETGOOD, "");
+	}
+	
 }

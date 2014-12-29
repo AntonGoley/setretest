@@ -2,6 +2,7 @@ package ru.crystals.set10.utils;
 
 import org.apache.log4j.Logger;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 
 
@@ -63,7 +64,10 @@ public class FlexMediator {
 	public static void waitForElement(WebDriver driver, String swfSrc, String flexId) {
 		DisinsectorTools.delay(200);
 		ecxecute(driver, String.format("document.getElementById('%s').doFlexWaitForElement('%s', '10000')", swfSrc, flexId));
-		waitForElementVisible(driver, swfSrc, flexId);
+		if (!waitForElementVisible(driver, swfSrc, flexId)){
+			throw new NoSuchElementException("Не найден элемент: " + flexId);
+
+		};
 	}
 
 	public static boolean waitForElementVisible(WebDriver driver, String swfSrc, String flexId) {

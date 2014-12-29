@@ -3,6 +3,9 @@ package ru.crystals.set10.pages.operday.searchcheck;
 
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+
+import ru.crystals.pos.check.PurchaseEntity;
+import ru.crystals.pos.check.ShiftEntity;
 import ru.crystals.set10.pages.operday.OperDayPage;
 import ru.crystals.set10.utils.DisinsectorTools;
 import static ru.crystals.set10.utils.FlexMediator.*;
@@ -120,9 +123,9 @@ public class  CheckSearchPage extends OperDayPage{
 	}
 	
 	//TODO: new search form
-	public CheckSearchPage setCheckNumber(String checkNumber){
+	public CheckSearchPage setCheckNumber(PurchaseEntity purchase){
 		clickElement(getDriver(), ID_OPERDAYSWF,  FILTER_OPEN);
-		return setFilterText(FILTER_CATEGORY_CHECK_NUMBER, checkNumber);
+		return setFilterText(FILTER_CATEGORY_CHECK_BAR_CODE, getCheckBarcode(purchase));
 	}
 
 	public CheckSearchPage setFilterMultiText(String filter, String filterValue){
@@ -180,4 +183,22 @@ public class  CheckSearchPage extends OperDayPage{
 		return new CheckContentPage(getDriver());
 	}
 	
+	protected static String getCheckBarcode(PurchaseEntity purchase){
+		
+			int cash = (int)(100 + purchase.getShift().getCashNum());
+			int shift = (int)(1000 + purchase.getShift().getNumShift());
+			String date = DisinsectorTools.getDate("ddMMyy", purchase.getDateCommit().getTime());
+			int check = (int)(1000 + purchase.getNumber() );
+			
+			StringBuffer result = new StringBuffer();
+			/*
+			 * Формат чека ccc.ssss.dddddd.nnnn
+			 * ccc - касса, ssss - смена, dddddd - дата, nnnn - номер чека
+			 */
+			result.append(String.valueOf(cash).replaceFirst("^.", String.valueOf((long)Math.floor(cash/100) - 1))).append(".");
+			result.append(String.valueOf(shift).replaceFirst("^.", String.valueOf((long)Math.floor(shift/1000) - 1))).append(".");
+			result.append(date).append(".");
+			result.append(String.valueOf(check).replaceFirst("^.", String.valueOf((long)Math.floor(check/1000) - 1)));
+			return result.toString();
+	}
 }
