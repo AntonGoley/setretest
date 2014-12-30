@@ -29,11 +29,9 @@ public class AccompanyingDocumentsBasicTest extends AbstractTest{
 	CheckSearchPage searchCheck;
 	ReportConfigPage RefundChecksConfigPage;
 	HTMLRepotResultPage htmlReportResults;
-	PurchaseEntity pe;
 	CheckContentPage checkContent;
-
-	private static String predefindCheckNumber = "0";
 	
+	protected static PurchaseEntity pe;
 	/*
 	 * Данные для заполнения контрагента
 	 */
@@ -82,18 +80,17 @@ public class AccompanyingDocumentsBasicTest extends AbstractTest{
 			"on barc.product_marking = pr.markingofthegood " + 
 			"where pr.markingofthegood in (%s)";
 	
-	
 	public void navigateToCheckSearchPage() {
-		/*
-		 *  Сгенерим только один чек для всех тестов на сопроводительные документы
-		 */
-		if ( predefindCheckNumber.equals("0")) {
-			pe = (PurchaseEntity) cashEmulator.nextPurchase(generatePredefinedCheck());
-			predefindCheckNumber = String.valueOf(pe.getNumber());
-		}
 		
 		mainPage = new LoginPage(getDriver(), Config.RETAIL_URL).doLogin(Config.MANAGER, Config.MANAGER_PASSWORD);
 		searchCheck = mainPage.openOperDay().openCheckSearch();
+		
+		/*
+		 *  Сгенерим только один чек для всех тестов на сопроводительные документы
+		 */
+		if ( pe == null) {
+			pe = (PurchaseEntity) cashEmulator.nextPurchase(generatePredefinedCheck());
+		}
 		
  		searchCheck.setCheckNumber(pe).doSearch();
  		checkContent = searchCheck.selectFirstCheck();

@@ -3,9 +3,7 @@ package ru.crystals.set10.pages.operday.searchcheck;
 
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-
 import ru.crystals.pos.check.PurchaseEntity;
-import ru.crystals.pos.check.ShiftEntity;
 import ru.crystals.set10.pages.operday.OperDayPage;
 import ru.crystals.set10.utils.DisinsectorTools;
 import static ru.crystals.set10.utils.FlexMediator.*;
@@ -116,6 +114,7 @@ public class  CheckSearchPage extends OperDayPage{
 				break;
 			};
 			DisinsectorTools.delay(delay);
+			
 			doSearch();
 			result = getSearchResultCount();
 		};	

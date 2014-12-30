@@ -213,7 +213,7 @@ public class SearchCheckPaymentsCardTest extends SearchCheckAbstractTest{
  		Assert.assertEquals(searchCheck.getExpectedResultCount(searchResult + 1), searchResult + 1, "");
 	}
 	
-	@Test (description = "SRTE-73. Поиск чека по коду банка")
+	@Test (enabled = false, description = "SRTE-73. Поиск чека по коду банка")
 	public void testSearchByBankId(){
 		searchCheck.setFilterSelect(FILTER_CATEGORY_BANK_ID, bankId).doSearch();
  		searchResult = searchCheck.getSearchResultCount();
