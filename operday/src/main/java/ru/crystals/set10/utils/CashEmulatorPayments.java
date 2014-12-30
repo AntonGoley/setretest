@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import ru.crystals.cards.common.CardTypes;
 import ru.crystals.pos.bank.datastruct.AuthorizationData;
 import ru.crystals.pos.bank.datastruct.BankCard;
+import ru.crystals.pos.check.PurchaseCardsEntity;
 import ru.crystals.pos.check.PurchaseEntity;
 import ru.crystals.pos.payments.BankCardPaymentEntity;
 import ru.crystals.pos.payments.BankCardPaymentTransactionEntity;
@@ -139,6 +141,21 @@ public class CashEmulatorPayments {
 		addPayments(purchase, giftCardPayment);
 		return purchase;
 	}
+	
+	/*
+	 * Скидочная внутренняя карта
+	 */
+	public PurchaseEntity setDiscountCard(PurchaseEntity purchase, String cardNumber){
+
+		PurchaseCardsEntity card = new PurchaseCardsEntity();
+		card.setNumber(cardNumber);
+		card.setType(CardTypes.InternalCard);
+
+		purchase.addCard(card);
+		
+		return purchase;
+	}
+	
 	
 	/*
 	 *	Генерим новую банковскую карту 

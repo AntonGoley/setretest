@@ -30,11 +30,13 @@ public class SearchCheckAbstractTest extends AbstractTest{
 	static long cashNumber = 0;
 	static long checkBarcode = 0;
 	static int searchResult = 0;
-	static String barcode = ""; 
+	
+	static {
+		cashEmulatorSearchCheck.useNextShift();
+	}
 	
 	@BeforeClass
 	public void openSearchPage() {
-		cashEmulatorSearchCheck.useNextShift();
 		mainPage = new LoginPage(getDriver(), Config.RETAIL_URL).doLogin(Config.MANAGER, Config.MANAGER_PASSWORD);
 		searchCheck = mainPage.openOperDay().openCheckSearch().openFilter();
 	}	
@@ -51,6 +53,9 @@ public class SearchCheckAbstractTest extends AbstractTest{
 		setCheckData();
 	}
 	
+	/*
+	 * Возвращаем весь чек
+	 */
 	protected static void sendRefundCheck(){
 		PurchaseEntity superPurchase = new PurchaseEntity();
 		superPurchase = purchase;
@@ -64,7 +69,6 @@ public class SearchCheckAbstractTest extends AbstractTest{
 		shiftNumber = purchase.getShift().getNumShift();
 		shopNumber = purchase.getShift().getShopIndex();
 		cashNumber = purchase.getShift().getCashNum();
-		barcode = purchase.getPositions().get(0).getBarCode();
 		/*
 		 * Задержка, после отправки чека, т.к в системе не все сущности 
 		 * успевают обновиться до нажатия кнопки поиск.

@@ -21,13 +21,17 @@ public class  CheckSearchPage extends OperDayPage{
 	static final String FILTER_CATEGORY = "categorySelector";
 	static final String FILTER_SELECT_FIELD = "comboBox";
 	
-	// типы фильтров
+	// группа "По чеку"
 	public static final String FILTER_CATEGORY_CHECK_NUMBER = "Номер чека";
 	public static final String FILTER_CATEGORY_SHIFT_NUMBER = "Смена";
 	public static final String FILTER_CATEGORY_CASH_NUMBER = "Касса";
 	public static final String FILTER_CATEGORY_SHOP_NUMBER = "Номер магазина";
 	public static final String FILTER_CATEGORY_GOOD_BAR_CODE = "Штрих-код товара";
+	public static final String FILTER_CATEGORY_GOOD_CODE = "Код товара";
 	public static final String FILTER_CATEGORY_CHECK_BAR_CODE = "Штрих-код чека";
+	
+	public static final String FILTER_CATEGORY_DISCOUNT_CARD_NUMBER = "Номер скидочной карты";
+	
 	// Типы чека
 	public static final String FILTER_CATEGORY_CHECK_TYPE = "Тип чека";
 	public static final String FILTER_CATEGORY_CHECK_TYPE_REFUND = "Чек возврата";

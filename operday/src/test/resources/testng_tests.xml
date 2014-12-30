@@ -60,6 +60,7 @@
 	  	<classes>
 			<class name="ru.crystals.set10.search.SearchCheckByCheckTypeGroupTest"/>
 			<class name="ru.crystals.set10.search.SearchCheckByPaymentGroupTest"/>
+			<class name="ru.crystals.set10.search.SearchCheckByOtherGroupsTest"/>
 		</classes>	 
   	</test>
   	<test name="Выгрузка в SAP алкогольных ограничений" >
