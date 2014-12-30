@@ -7,7 +7,7 @@ import org.testng.annotations.Test;
 import static ru.crystals.set10.pages.operday.searchcheck.CheckSearchPage.*;
 
 
-public class SearchCheckTest extends SearchCheckAbstractTest{
+public class SearchCheckByCheckTypeGroupTest extends SearchCheckAbstractTest{
 	
 	@BeforeClass
 	public void send1stCheck(){

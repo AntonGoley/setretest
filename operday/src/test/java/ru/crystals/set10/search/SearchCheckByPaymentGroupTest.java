@@ -17,7 +17,7 @@ import ru.crystals.set10.utils.CashEmulatorPayments;
 import ru.crystals.set10.utils.DisinsectorTools;
 
 
-public class SearchCheckPaymentsCardTest extends SearchCheckAbstractTest{
+public class SearchCheckByPaymentGroupTest extends SearchCheckAbstractTest{
 	
 	long checkNumber;
 	PurchaseEntity purchase1;

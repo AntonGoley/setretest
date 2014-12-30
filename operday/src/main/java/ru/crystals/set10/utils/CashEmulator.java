@@ -76,7 +76,7 @@ public class CashEmulator {
 	    shiftNum = getCurrentShiftNum(cashNumber);
 	    checkNumber =  getNextCheckNum(cashNumber, shiftNum);
 	    docSender = new DocsSender(serverIP, shopNumber, cashNumber);
-	    log.info("Создан cashEmulator: " + cashNumber +  "; ShiftNum = " + shiftNum + "; NextCheckNumber = " + checkNumber);
+	    log.info("Создан cashEmulator: " + cashNumber +  "; ShopNum = " + shopNum + "; ShiftNum = " + shiftNum + "; NextCheckNumber = " + checkNumber);
 	} 
 	
 	/*
@@ -133,7 +133,7 @@ public class CashEmulator {
 	private boolean ifShiftClosed(int cashNumber, int shiftNumber) {
 		// TODO: привести в порядок
 		String date = getDate("yyyy-MM-dd", System.currentTimeMillis() - yesterday);
-		int querryResult;
+		int querryResult = 0;
 		querryResult = db.queryForInt(DB_RETAIL_OPERDAY, String.format(SQL_SHIFT_STATUS, shiftNumber, cashNumber, shopNumber, date, date)); 
 		if ((int) querryResult == 0) { 
 			return false;
@@ -261,7 +261,8 @@ public class CashEmulator {
 	 */
 	public DocumentEntity nextPurchase() {
 
-	    if (shift == null || nextShift || ifShiftClosed(cashNumber, shiftNum)) {
+	//    if (shift == null || nextShift || ifShiftClosed(cashNumber, shiftNum)) {
+	   	 if (shift == null || nextShift) {	
 	      shift = nextShift(null);
 	      nextShift = false;
 	    }
@@ -276,7 +277,8 @@ public class CashEmulator {
 	 */
 	public DocumentEntity nextPurchase(PurchaseEntity purchase) {
 
-	    if (shift == null || nextShift || ifShiftClosed(cashNumber, shiftNum)) {
+	    //if (shift == null || nextShift || ifShiftClosed(cashNumber, shiftNum)) {
+	    if (shift == null || nextShift) {	
 	      shift = nextShift(null);
 	      nextShift = false;
 	    }
