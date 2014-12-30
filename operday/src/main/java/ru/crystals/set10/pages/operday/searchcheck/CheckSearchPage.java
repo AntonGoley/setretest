@@ -118,7 +118,7 @@ public class  CheckSearchPage extends OperDayPage{
 				break;
 			};
 			DisinsectorTools.delay(delay);
-			
+			timeout=+delay;
 			doSearch();
 			result = getSearchResultCount();
 		};	
