@@ -182,7 +182,7 @@ public class  CheckSearchPage extends OperDayPage{
 		return new CheckContentPage(getDriver());
 	}
 	
-	protected static String getCheckBarcode(PurchaseEntity purchase){
+	public String getCheckBarcode(PurchaseEntity purchase){
 		
 			int cash = (int)(100 + purchase.getShift().getCashNum());
 			int shift = (int)(1000 + purchase.getShift().getNumShift());

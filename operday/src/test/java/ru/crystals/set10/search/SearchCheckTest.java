@@ -5,11 +5,9 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import static ru.crystals.set10.pages.operday.searchcheck.CheckSearchPage.*;
-import ru.crystals.set10.utils.DisinsectorTools;
 
 
 public class SearchCheckTest extends SearchCheckAbstractTest{
-	
 	
 	@BeforeClass
 	public void send1stCheck(){
@@ -69,7 +67,7 @@ public class SearchCheckTest extends SearchCheckAbstractTest{
 	
 	@Test (description = "SRTE-71. Поиск чека на ТК по штрих коду чека")
 	public void testSearchCheckByCheckBarCode(){
-		searchCheck.setFilterMultiText(FILTER_CATEGORY_CHECK_BAR_CODE, String.valueOf(generateCheckBarCode())).doSearch();
+		searchCheck.setFilterMultiText(FILTER_CATEGORY_CHECK_BAR_CODE, searchCheck.getCheckBarcode(purchase)).doSearch();
 		Assert.assertEquals(searchCheck.getExpectedResultCount(1), 1, "");
 	}
 	
@@ -79,23 +77,4 @@ public class SearchCheckTest extends SearchCheckAbstractTest{
 		Assert.assertEquals(searchCheck.getExpectedResultCount(1), 1, "");
 	}
 	
-	
-	
-	private String generateCheckBarCode(){
-		int cash = 100 + (int)cashNumber;
-		int shift = 1000 + (int)shiftNumber;
-		String date = DisinsectorTools.getDate("ddMMyy", purchase.getDateCommit().getTime());
-		int check = 1000 + (int)checkNumber;
-		
-		StringBuffer result = new StringBuffer();
-		/*
-		 * Формат чека ccc.ssss.dddddd.nnnn
-		 * ccc - касса, ssss - смена, dddddd - дата, nnnn - номер чека
-		 */
-		result.append(String.valueOf(cash).replaceFirst("^.", String.valueOf((long)Math.floor(cash/100) - 1))).append(".");
-		result.append(String.valueOf(shift).replaceFirst("^.", String.valueOf((long)Math.floor(shift/1000) - 1))).append(".");
-		result.append(date).append(".");
-		result.append(String.valueOf(check).replaceFirst("^.", String.valueOf((long)Math.floor(check/1000) - 1)));
-		return result.toString();
-	}
 }
