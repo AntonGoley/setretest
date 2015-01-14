@@ -58,9 +58,9 @@
   	</test>
   	<test name="Поиск чека" >
 	  	<classes>
-			<class name="ru.crystals.set10.search.SearchCheckByCheckTypeGroupTest"/>
-			<class name="ru.crystals.set10.search.SearchCheckByPaymentGroupTest"/>
-			<class name="ru.crystals.set10.search.SearchCheckByOtherGroupsTest"/>
+			<class name="ru.crystals.set10.test.search.SearchCheckByCheckTypeGroupTest"/>
+			<class name="ru.crystals.set10.test.search.SearchCheckByPaymentGroupTest"/>
+			<class name="ru.crystals.set10.test.search.SearchCheckByOtherGroupsTest"/>
 		</classes>	 
   	</test>
   	<test name="Выгрузка в SAP алкогольных ограничений" >
