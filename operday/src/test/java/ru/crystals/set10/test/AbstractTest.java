@@ -27,6 +27,7 @@ import ru.crystals.set10.pages.basic.*;
 import ru.crystals.set10.utils.CashEmulator;
 import ru.crystals.set10.utils.DbAdapter;
 import ru.crystals.set10.utils.DisinsectorTools;
+import ru.crystals.set10.utils.VirtualScalesReader;
 
 
 public class AbstractTest {
@@ -50,6 +51,11 @@ public class AbstractTest {
     
     @BeforeSuite
     public void setService() throws IOException {
+    	
+//    	String scalesUrl = "http://172.16.2.103:8091/scales_emulator/plu-to-scale.xml";
+//    	VirtualScalesReader vScales = new VirtualScalesReader(scalesUrl);
+//    	vScales.readVirtualScales();
+    	
     	service = new ChromeDriverService.Builder()
         .usingDriverExecutable(new File(Config.PATH_TO_DRIVER))
         .usingAnyFreePort()

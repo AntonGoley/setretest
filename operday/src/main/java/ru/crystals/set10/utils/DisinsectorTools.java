@@ -152,4 +152,6 @@ public class DisinsectorTools {
 	public static long random(int max) {
 	    return Math.round(Math.random() * max);
 	}
+	
+	
 }

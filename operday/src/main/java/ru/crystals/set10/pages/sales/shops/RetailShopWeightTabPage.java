@@ -12,7 +12,7 @@ public class RetailShopWeightTabPage extends SalesPage{
 	
 	static final String LOCATOR_WEIGHT_PATTERN = "groupSalesSelector";
 	static final String LOCATOR_WEIGHT_MODEL = "displaySelector";
-	static final String BUTTON_ADD_TO_SHOP = "id:shopAddScalesTab/id:addButtonScales";
+	static final String BUTTON_ADD_TO_SHOP = "addScalesButton";
 	static final String LOCATOR_WEIGHT_ITEM = "className:DeviceRowRenderer/text:%s";
 	static final String TABLE_WEIGHT_ITEMS = "templateTableScales";
 	

@@ -180,6 +180,11 @@
 				<version>3.0</version>
 			</dependency>
 			<dependency>
+			<groupId>com.thoughtworks.xstream</groupId>
+			<artifactId>xstream</artifactId>
+			<version>1.4.7</version>
+		</dependency>
+			<dependency>
 					<groupId>com.adobe.blazeds</groupId>
 					<artifactId>blazeds-core</artifactId>
 					<version>3.2.0.3978</version>
@@ -244,6 +249,20 @@
 			     <scope>system</scope>
 			     <version>1.0</version>
 			     <systemPath>${basedir}/libs/paymentsGiftCardEntity.jar</systemPath>
+  			 </dependency>
+  			 <dependency>
+			     <groupId>SET-Scales-Tech.jar</groupId>
+			     <artifactId>SET-Scales-Tech.jar</artifactId>
+			     <scope>system</scope>
+			     <version>1.0</version>
+			     <systemPath>${basedir}/libs/SET-Scales-Tech.jar</systemPath>
+  			 </dependency>
+  			 <dependency>
+			     <groupId>SET-Scales-Products-Exporter-API.jar</groupId>
+			     <artifactId>SET-Scales-Products-Exporter-API.jar</artifactId>
+			     <scope>system</scope>
+			     <version>1.0</version>
+			     <systemPath>${basedir}/libs/SET-Scales-Products-Exporter-API.jar</systemPath>
   			 </dependency>
   			 <dependency>
 			     <groupId>reportng-1.10</groupId>

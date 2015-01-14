@@ -1,4 +1,4 @@
-package ru.crystals.set10.search;
+package ru.crystals.set10.test.search;
 
 
 import org.testng.Assert;
@@ -59,7 +59,7 @@ public class SearchCheckByCheckTypeGroupTest extends SearchCheckAbstractTest{
 		Assert.assertEquals(searchCheck.getExpectedResultCount(1), 1, "");
 	}
 	
-	@Test (description = "SRTE-71. Поиск чека на ТК по табельному номеру кассира")
+	@Test (enabled = false, description = "SRTE-71. Поиск чека на ТК по табельному номеру кассира")
 	public void testSearchCheckByCashierTabNum(){
 		searchCheck.setFilterMultiText(FILTER_CATEGORY_CHECK_BAR_CODE, searchCheck.getCheckBarcode(purchase)).doSearch();
 		Assert.assertEquals(searchCheck.getExpectedResultCount(1), 1, "");

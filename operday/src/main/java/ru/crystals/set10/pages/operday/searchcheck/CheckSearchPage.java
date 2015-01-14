@@ -113,12 +113,12 @@ public class  CheckSearchPage extends OperDayPage{
 		int result = getSearchResultCount();	
 		long delay = 1000;
 		long timeout = 0;
-		while (timeout < delay * 10) {
+		while (timeout < (delay * 10)) {
 			if(result == expectedResult) {
 				break;
 			};
 			DisinsectorTools.delay(delay);
-			timeout=+delay;
+			timeout += delay;
 			doSearch();
 			result = getSearchResultCount();
 		};	

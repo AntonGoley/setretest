@@ -1,6 +1,7 @@
  package ru.crystals.set10.test.configuration;
 
 
+import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -14,7 +15,6 @@ import ru.crystals.set10.pages.sales.preferences.goodstypes.weight.WeightGoodPag
 import ru.crystals.set10.pages.sales.shops.RetailShopInfoTabPage;
 import ru.crystals.set10.pages.sales.shops.RetailShopWeightTabPage;
 import ru.crystals.set10.test.AbstractTest;
-import ru.crystals.set10.utils.DisinsectorTools;
 import static ru.crystals.set10.pages.basic.SalesPage.*;
 import static ru.crystals.set10.pages.sales.shops.RetailShopInfoTabPage.*;
 import static ru.crystals.set10.pages.sales.preferences.goodstypes.weight.WeightGoodPage.*;
@@ -32,14 +32,13 @@ public class AddAndConfigureWeightTest extends AbstractTest{
 	@BeforeClass
 	public void doLogin(){
 		mainPage = new LoginPage(getDriver(), Config.RETAIL_URL).doLogin(Config.MANAGER, Config.MANAGER_PASSWORD);
-		// таймаут для певрого запуска
-		DisinsectorTools.delay(3000);
 		salesPage = mainPage.openSales();		
 	}
 	
 	@Test (description = "Добавление виртуальных весов (как оборудования) на магазин", 
 			priority = 1)
 	public void addVirtualScalesTest(){
+		//TODO: добавить проверку
 		newEqupment = salesPage.navigateMenu(SALES_MENU_EQUIPMENT, "1", EquipmentPage.class)
 			.addNewEquipment();
 		newEqupment.addEquipment("VirtualScales", "4", "VirtualScales")
@@ -49,13 +48,18 @@ public class AddAndConfigureWeightTest extends AbstractTest{
 	@Test (description = "Привязка виртуальных весов к шаблону в магазине", 
 			priority = 2)
 	public void bindVirtualScalesTest(){
+		int  totalScalesBefore;
 		shopWeightTab = salesPage.navigateMenu(SALES_MENU_SHOP_PREFERENCES, "0", RetailShopInfoTabPage.class)
 				.navigateTab(TAB_WEIGHT, RetailShopWeightTabPage.class);
+		
+		totalScalesBefore = shopWeightTab.getBindedWeightsCount();
+		
 		shopWeightTab.bindWeight("Фасовочные", "VirtualScales");
 		shopWeightTab.ifWeightBinded("VirtualScales");
+		Assert.assertTrue(shopWeightTab.getBindedWeightsCount() > totalScalesBefore, "Весы не добавлены в магазин");
 	}
 	
-	@Test (description = "Насткройка генерации штрихкодов для весового товара (Типы товаров и оплат)", 
+	@Test (enabled = false, description = "Насткройка генерации штрихкодов для весового товара (Типы товаров и оплат)", 
 			priority = 3)
 	public void bindBarCodeForWeightGoodTest(){
 		weightGood = salesPage

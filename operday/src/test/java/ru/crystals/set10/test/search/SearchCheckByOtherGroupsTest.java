@@ -1,4 +1,4 @@
-package ru.crystals.set10.search;
+package ru.crystals.set10.test.search;
 
 
 import org.testng.Assert;
