@@ -126,7 +126,7 @@ public class  CheckSearchPage extends OperDayPage{
 	}
 	
 	//TODO: new search form
-	public CheckSearchPage setCheckNumber(PurchaseEntity purchase){
+	public CheckSearchPage setCheckBarcode(PurchaseEntity purchase){
 		clickElement(getDriver(), ID_OPERDAYSWF,  FILTER_OPEN);
 		return setFilterText(FILTER_CATEGORY_CHECK_BAR_CODE, getCheckBarcode(purchase));
 	}
@@ -204,4 +204,6 @@ public class  CheckSearchPage extends OperDayPage{
 			result.append(String.valueOf(check).replaceFirst("^.", String.valueOf((long)Math.floor(check/1000) - 1)));
 			return result.toString();
 	}
+	
+	
 }

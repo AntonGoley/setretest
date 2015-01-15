@@ -92,7 +92,7 @@ public class BankTransactionInCheckTest extends AbstractTest {
 		mainPage = new LoginPage(getDriver(), Config.RETAIL_URL).doLogin(Config.MANAGER, Config.MANAGER_PASSWORD);
 		searchCheck = mainPage.openOperDay().openCheckSearch();
 		
- 		searchCheck.setCheckNumber((PurchaseEntity)cashEmulator.nextPurchase(setPayments())).doSearch();
+ 		searchCheck.setCheckBarcode((PurchaseEntity)cashEmulator.nextPurchase(setPayments())).doSearch();
  		checkContent = searchCheck.selectFirstCheck();
  		paymentTransactions = checkContent.openPaymentTransactionsForm();
  		

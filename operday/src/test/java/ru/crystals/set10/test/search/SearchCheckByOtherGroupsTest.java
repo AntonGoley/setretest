@@ -16,6 +16,14 @@ public class SearchCheckByOtherGroupsTest extends SearchCheckAbstractTest{
 	public void testSearchCheckByGoodBarCode(){
 		sendCheck();
 		String searchBarcode = purchase.getPositions().get(0).getBarCode();
+		/*
+		 * убедиться, что чек в системе
+		 */
+		searchCheck.setCheckBarcode(purchase).doSearch();
+		searchCheck.getExpectedResultCount(1);
+		/*
+		 * проверить, сколько чеков в системе, где есть штрих код searchBarcode
+		 */
  		searchCheck.setFilterMultiText(FILTER_CATEGORY_GOOD_BAR_CODE, String.valueOf(searchBarcode)).doSearch();
  		searchResult = searchCheck.getSearchResultCount();
  		sendRefundCheck();
@@ -28,6 +36,14 @@ public class SearchCheckByOtherGroupsTest extends SearchCheckAbstractTest{
 	public void testSearchCheckByGoodCode(){
 		sendCheck();
 		String goodCode = purchase.getPositions().get(0).getItem();
+		/*
+		 * убедиться, что чек в системе
+		 */
+		searchCheck.setCheckBarcode(purchase).doSearch();
+		searchCheck.getExpectedResultCount(1);
+		/*
+		 * проверить, сколько чеков в системе, где есть штрих код searchBarcode
+		 */
  		searchCheck.setFilterMultiText(FILTER_CATEGORY_GOOD_CODE, String.valueOf(goodCode)).doSearch();
  		searchResult = searchCheck.getSearchResultCount();
  		sendRefundCheck();

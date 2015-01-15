@@ -36,7 +36,7 @@ public class RefundRequestTest extends AbstractTest{
 		checkContent = new LoginPage(getDriver(), Config.RETAIL_URL).
 				openOperDay(Config.MANAGER, Config.MANAGER_PASSWORD)
 				.openCheckSearch()
-				.setCheckNumber(check)
+				.setCheckBarcode(check)
 				.doSearch()
 				.selectFirstCheck();
 	}
