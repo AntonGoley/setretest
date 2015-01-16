@@ -20,6 +20,7 @@ public class WeightGoodPage extends SalesPage{
 	public static final String PLU_GENERATION_ERP = "ERP";
 	public static final String PLU_GENERATION_GOOD_CODE = "CodeEqual";
 	public static final String PLU_GENERATION_BAR_CODE = "BarCodeEqual";
+	public static final String BACK_BUTTON = "label=К типам товаров и оплат";
 
 	public static String ACTION_UCENKA = "Уценка";
 	public static String ACTION_FASOVKA = "Фасовка";
@@ -36,19 +37,28 @@ public class WeightGoodPage extends SalesPage{
 	
 	public WeightGoodPage setPrefix(String prefix){
 		selectElement(getDriver(), ID_SALESSWF,  SELECT_PREFIX, prefix);
+		log.info("Префикс для генерации баркода весовоготовара: " + prefix);
 		return this;
 	}
 	
 	
 	public WeightGoodPage setPLUGeneration(String PLUGeneration){
 		checkBoxValue(getDriver(), ID_SALESSWF, PLUGeneration, true);
+		log.info("Способ генерации PLU: " + PLUGeneration);
 		return this;
 	}
 	
-	public void addGoodAction(){
+	public WeightGoodPage addGoodAction(){
 		clickElement(getDriver(), ID_SALESSWF, BUTTON_ADD_GOOD_ACTION);
 		//TODO: дождаться появления в списке
 		DisinsectorTools.delay(1000);
+		return this;
+	}
+	
+	public SalesPage goBack(){
+		clickElement(getDriver(), ID_SALESSWF, BACK_BUTTON);
+		DisinsectorTools.delay(1000);
+		return new SalesPage(getDriver());
 	}
 	
 }

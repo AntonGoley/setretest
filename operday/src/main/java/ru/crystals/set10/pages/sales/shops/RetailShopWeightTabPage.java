@@ -14,7 +14,7 @@ public class RetailShopWeightTabPage extends SalesPage{
 	static final String LOCATOR_WEIGHT_MODEL = "displaySelector";
 	static final String BUTTON_ADD_TO_SHOP = "addScalesButton";
 	static final String LOCATOR_WEIGHT_ITEM = "className:DeviceRowRenderer/text:%s";
-	static final String TABLE_WEIGHT_ITEMS = "templateTableScales";
+	static final String TABLE_WEIGHT_ITEMS = "scalesListFlexTable";
 	
 	static final String TAB_LOCATOR = "tabBar";
 	
@@ -35,9 +35,9 @@ public class RetailShopWeightTabPage extends SalesPage{
 		return Integer.valueOf(result);
 	}
 	
-	public boolean ifWeightBinded(String weightModel){
-		return waitForElementVisible(getDriver(), ID_SALESSWF, String.format(LOCATOR_WEIGHT_ITEM, weightModel));
-	}
+//	public boolean ifWeightBinded(String weightModel){
+//		return waitForElementVisible(getDriver(), ID_SALESSWF, String.format(LOCATOR_WEIGHT_ITEM, weightModel));
+//	}
 	
 	
 }

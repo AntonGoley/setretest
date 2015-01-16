@@ -7,12 +7,10 @@ import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Test;
-
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.concurrent.TimeUnit;
-
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -21,13 +19,11 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.annotations.BeforeMethod;
-
 import ru.crystals.set10.config.*;
 import ru.crystals.set10.pages.basic.*;
 import ru.crystals.set10.utils.CashEmulator;
 import ru.crystals.set10.utils.DbAdapter;
 import ru.crystals.set10.utils.DisinsectorTools;
-import ru.crystals.set10.utils.VirtualScalesReader;
 
 
 public class AbstractTest {
@@ -51,10 +47,6 @@ public class AbstractTest {
     
     @BeforeSuite
     public void setService() throws IOException {
-    	
-    	String scalesUrl = "http://172.16.2.103:8091/scales_emulator/plu-to-scale.xml";
-    	VirtualScalesReader vScales = new VirtualScalesReader(scalesUrl);
-    	vScales.readVirtualScales();
     	
     	service = new ChromeDriverService.Builder()
         .usingDriverExecutable(new File(Config.PATH_TO_DRIVER))

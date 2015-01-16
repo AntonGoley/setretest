@@ -42,7 +42,7 @@ public class SearchCheckByOtherGroupsTest extends SearchCheckAbstractTest{
 		searchCheck.setCheckBarcode(purchase).doSearch();
 		searchCheck.getExpectedResultCount(1);
 		/*
-		 * проверить, сколько чеков в системе, где есть штрих код searchBarcode
+		 * проверить, сколько чеков в системе, где есть  код товара goodCode
 		 */
  		searchCheck.setFilterMultiText(FILTER_CATEGORY_GOOD_CODE, String.valueOf(goodCode)).doSearch();
  		searchResult = searchCheck.getSearchResultCount();
@@ -54,10 +54,15 @@ public class SearchCheckByOtherGroupsTest extends SearchCheckAbstractTest{
 	
 	@Test (description = "SRTE-71. Поиск чека по номеру скидочной карты")
 	public void testSearchCheckByDiscountCardNumber(){
+		/*
+		 * сгенерить номер скидочной карты
+		 */
 		String discountCardNumber = String.valueOf(System.currentTimeMillis());
 		searchCheck.setFilterMultiText(FILTER_CATEGORY_DISCOUNT_CARD_NUMBER, String.valueOf(discountCardNumber)).doSearch();
 		searchResult = searchCheck.getSearchResultCount();
-		
+		/*
+		 * Добавить карту к чеку
+		 */
 		purchase = payments.getPurchaseWithoutPayments();
 		purchase = payments.setCashPayment(purchase, purchase.getCheckSumEnd());
 		purchase = payments.setDiscountCard(purchase, discountCardNumber);

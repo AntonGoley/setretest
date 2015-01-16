@@ -25,6 +25,8 @@ public class Config {
     public static  String CHECK_COUNT;
     public static String CASH_NUMBER;
     public static String NEXT_SHIFT;
+    public static String VIRTUAL_WEIGHT_PATH;
+    public static String WEIGHT_BARCODE_PREFIX;
     
     /*
      * Настройки юридического лица для магазина
@@ -119,6 +121,7 @@ public class Config {
         /*
          * параметры, которые хранятся только в проперти файле  testng.properties
          */
+
     	/*
     	 *  Пользователь manager
     	 */
@@ -177,6 +180,13 @@ public class Config {
         log.info("Base port:   " + DEFAULT_PORT);
         log.info("DB username:   " + DB_USER);
         log.info("DB password:   " + DB_PASSWORD);
+        
+        /*
+         * Виртуальные весы
+         */
+        VIRTUAL_WEIGHT_PATH = "http://" + RETAIL_HOST + ":" + props.getProperty("nginx.port") + props.getProperty("virtualweight.path");
+        WEIGHT_BARCODE_PREFIX = props.getProperty("weight.barcodeprefix");
+        log.info("Path to virtual scales:   " + VIRTUAL_WEIGHT_PATH);
     }
     
 }

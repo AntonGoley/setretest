@@ -11,9 +11,8 @@ import ru.crystals.set10.pages.basic.SalesPage;
 public class SalesPreferencesPage extends SalesPage{
 	
 	
-	static final String LOCATOR_TABBAR= "toggleBur";
-	public static final String TAB_TYPES_GOODS_PAYMENTS = "Типы товаров и оплат";
-	
+	static final String LOCATOR_TABBAR= "id:firstScreen/id:toggleBur";
+	public static final String TAB_TYPES_GOODS_PAYMENTS = "4";
 	
 	public SalesPreferencesPage(WebDriver driver) {
 		super(driver);
@@ -22,7 +21,12 @@ public class SalesPreferencesPage extends SalesPage{
 	
 	//TODO replace with factory
 	public SalesGoodsTypesAndPaymentsTabPage  navigateTab(String salesPreferencesTab) {
-		clickElement(getDriver(), ID_SALESSWF, LOCATOR_TABBAR, salesPreferencesTab);
+		//clickElement(getDriver(), ID_SALESSWF, LOCATOR_TABBAR, salesPreferencesTab);
+		/*
+		 * Ждем, что загрузились все вкладки
+		 */
+		waitForProperty(getDriver(), ID_SALESSWF, LOCATOR_TABBAR, new String[]{"numChildren","5"});
+		doFlexProperty(getDriver(), ID_SALESSWF, LOCATOR_TABBAR, new String[]{"selectedIndex", salesPreferencesTab});
 		return new SalesGoodsTypesAndPaymentsTabPage(getDriver());
 	}
 	

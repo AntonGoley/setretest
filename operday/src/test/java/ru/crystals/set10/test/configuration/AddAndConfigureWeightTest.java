@@ -15,10 +15,10 @@ import ru.crystals.set10.pages.sales.preferences.goodstypes.weight.WeightGoodPag
 import ru.crystals.set10.pages.sales.shops.RetailShopInfoTabPage;
 import ru.crystals.set10.pages.sales.shops.RetailShopWeightTabPage;
 import ru.crystals.set10.test.AbstractTest;
-import static ru.crystals.set10.pages.basic.SalesPage.*;
 import static ru.crystals.set10.pages.sales.shops.RetailShopInfoTabPage.*;
 import static ru.crystals.set10.pages.sales.preferences.goodstypes.weight.WeightGoodPage.*;
-import static ru.crystals.set10.pages.sales.preferences.SalesPreferencesPage.*;
+import static ru.crystals.set10.pages.sales.preferences.SalesPreferencesPage.TAB_TYPES_GOODS_PAYMENTS;
+import static ru.crystals.set10.config.Config.WEIGHT_BARCODE_PREFIX;
 
 public class AddAndConfigureWeightTest extends AbstractTest{
 	
@@ -41,7 +41,7 @@ public class AddAndConfigureWeightTest extends AbstractTest{
 		//TODO: добавить проверку
 		newEqupment = salesPage.navigateMenu(SALES_MENU_EQUIPMENT, "1", EquipmentPage.class)
 			.addNewEquipment();
-		newEqupment.addEquipment("VirtualScales", "4", "VirtualScales")
+		newEqupment.addEquipment("VirtualScales", "7", "VirtualScales")
 			.ifEqupmentOnPage("VirtualScales");
 	}
 	
@@ -55,11 +55,12 @@ public class AddAndConfigureWeightTest extends AbstractTest{
 		totalScalesBefore = shopWeightTab.getBindedWeightsCount();
 		
 		shopWeightTab.bindWeight("Фасовочные", "VirtualScales");
-		shopWeightTab.ifWeightBinded("VirtualScales");
+		
+		
 		Assert.assertTrue(shopWeightTab.getBindedWeightsCount() > totalScalesBefore, "Весы не добавлены в магазин");
 	}
 	
-	@Test (enabled = false, description = "Насткройка генерации штрихкодов для весового товара (Типы товаров и оплат)", 
+	@Test (description = "Насткройка генерации штрихкодов для весового товара (Типы товаров и оплат)", 
 			priority = 3)
 	public void bindBarCodeForWeightGoodTest(){
 		weightGood = salesPage
@@ -68,9 +69,10 @@ public class AddAndConfigureWeightTest extends AbstractTest{
 				.selectProductTypeItem(ProductTypeItems.WEIGHT_GOOD, WeightGoodPage.class);
 		weightGood
 			.setGoodAction(ACTION_FASOVKA)
-			.setPrefix("29")
+			.setPrefix(WEIGHT_BARCODE_PREFIX)
 			.setPLUGeneration(PLU_GENERATION_ERP)
-			.addGoodAction();
+			.addGoodAction()
+			.goBack();
 	}
 	
 	
