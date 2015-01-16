@@ -1,12 +1,8 @@
 package ru.crystals.set10.pages.operday;
 
-import java.io.File;
-
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-
 import ru.crystals.set10.pages.basic.AbstractPage;
-import ru.crystals.set10.pages.basic.SaveFile;
 import ru.crystals.set10.pages.operday.cashes.CashesPage;
 import ru.crystals.set10.pages.operday.searchcheck.CheckSearchPage;
 import ru.crystals.set10.pages.operday.tablereports.TableReportPage;

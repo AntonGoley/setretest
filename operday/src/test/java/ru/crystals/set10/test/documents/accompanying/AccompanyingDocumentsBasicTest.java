@@ -92,7 +92,7 @@ public class AccompanyingDocumentsBasicTest extends AbstractTest{
 			pe = (PurchaseEntity) cashEmulator.nextPurchase(generatePredefinedCheck());
 		}
 		
- 		searchCheck.setCheckBarcode(pe).doSearch();
+ 		searchCheck.openFilter().setCheckBarcode(pe).doSearch();
  		checkContent = searchCheck.selectFirstCheck();
 	}	
 	

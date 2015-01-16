@@ -6,6 +6,7 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+
 import ru.crystals.httpclient.HttpClient;
 import ru.crystals.set10.config.Config;
 import ru.crystals.set10.pages.operday.tablereports.ReportConfigPage;
@@ -24,17 +25,17 @@ public class CashRegNumbersReportTest extends AbstractReportTest{
 	ReportConfigPage cashNumbersConfigPage;
 	
 	long date = new Date().getTime();
-	String prefix = String.valueOf(date);
 	
-	//factoryNum_141234
-	private String factoryNum = "fact" + prefix;
-	private String fiscalNum  = "fisc" + prefix;
-	private String eklzNum  = "ek" + prefix;
-	private String fiscalDate  = DisinsectorTools.getDate("dd.MM.yyyy", date - 86400*100*100 );
-	
-	
+	private String factoryNum;
+	private String fiscalNum;
+	private String eklzNum;
+	private String fiscalDate;
+
+	/*
+	 * Дата провайдер для валидации одной из касс
+	 */
 	@DataProvider (name = "CashData")
-	public Object[][] cashData(){
+	public Object[][] cashData() throws Exception{
 		return new Object[][] {
 				{"Поле: Заводской номер", factoryNum},
 				{"Поле: Регистрационный номер", fiscalNum},
@@ -45,10 +46,12 @@ public class CashRegNumbersReportTest extends AbstractReportTest{
 	
 	@BeforeClass
 	public void navigateCashRegNumsReport() throws Exception {
-		// добавить данные для всех 1 касс
+		/*
+		 * Отправить данные по кассам на сервер
+		 */
 		for (int i=1; i<=5; i++) {
+			setCashData(date - 86400*100*100*i);
 			setCashVO(i);
-			fiscalDate  = DisinsectorTools.getDate("dd.MM.yyyy", date);
 		}	
 		
 		cashNumbersConfigPage =  navigateToReportConfig(
@@ -110,10 +113,17 @@ public class CashRegNumbersReportTest extends AbstractReportTest{
 		httpConnect.setUrl("http://" + Config.RETAIL_HOST + ":8090" + GLOBAL_SERVLET_PATH);
 		cashManager = httpConnect.find(CashManagerRemote.class, CashManagerRemote.SERVER_EJB_NAME);
 		cashManager.updateCashParams(cashVo, true);
-		log.info(String.format("Отправлена информация по кассе 1 на сервер: заводской номер - %s, рег. номер - %s, номер ЭКЛЗ - %s, дата фискализации - %s", 
-				factoryNum, fiscalNum, eklzNum, fiscalDate )  );
+		log.info(String.format("Отправлена информация по кассе %s на сервер: заводской номер - %s, рег. номер - %s, номер ЭКЛЗ - %s, дата фискализации - %s", 
+				cashNumber, factoryNum, fiscalNum, eklzNum, fiscalDate )  );
 	}
 	
+	private void setCashData(long date){
+		String prefix = String.valueOf(date);
+		factoryNum = "fact" + prefix;
+		fiscalNum  = "fisc" + prefix;
+		eklzNum  = "ek" + prefix;
+		fiscalDate  = DisinsectorTools.getDate("dd.MM.yyyy", date);
+	}
 }
 
 

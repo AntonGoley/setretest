@@ -125,9 +125,8 @@ public class  CheckSearchPage extends OperDayPage{
 		return result;
 	}
 	
-	//TODO: new search form
 	public CheckSearchPage setCheckBarcode(PurchaseEntity purchase){
-		clickElement(getDriver(), ID_OPERDAYSWF,  FILTER_OPEN);
+		//clickElement(getDriver(), ID_OPERDAYSWF,  FILTER_OPEN);
 		return setFilterText(FILTER_CATEGORY_CHECK_BAR_CODE, getCheckBarcode(purchase));
 	}
 
