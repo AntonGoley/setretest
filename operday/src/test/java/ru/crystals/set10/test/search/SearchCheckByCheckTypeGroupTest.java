@@ -12,6 +12,11 @@ public class SearchCheckByCheckTypeGroupTest extends SearchCheckAbstractTest{
 	@BeforeClass
 	public void send1stCheck(){
 		sendCheck();
+		/*
+		 * убедиться, что чек в системе
+		 */
+		searchCheck.setCheckBarcode(purchase).doSearch();
+		searchCheck.getExpectedResultCount(1);
 	}
 	
 	@Test ( enabled = false, description = "SRTE-71. Поиск чека на ТК по типу чека")
