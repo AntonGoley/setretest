@@ -100,6 +100,9 @@ public class CashRegNumbersReportTest extends AbstractReportTest{
 		Assert.assertTrue(fileSize > 0, "Файл отчета сохранился некорректно");
 	}
 	
+	/*
+	 * Отправляет на сервер данные кассы (эмуляция вызова кассой сервера)
+	 */
 	private void setCashVO(int cashNumber) throws Exception{
 		CashVO cashVo = new CashVO();
 			cashVo.setNumber(cashNumber);
@@ -117,6 +120,10 @@ public class CashRegNumbersReportTest extends AbstractReportTest{
 				cashNumber, factoryNum, fiscalNum, eklzNum, fiscalDate )  );
 	}
 	
+	
+	/*
+	 * Метод задает данные кассы: фискальный номер, заводской номер, дату фискализации
+	 */
 	private void setCashData(long date){
 		String prefix = String.valueOf(date);
 		factoryNum = "fact" + prefix;

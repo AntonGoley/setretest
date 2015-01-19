@@ -1,3 +1,10 @@
+<!--
+${marking-of-the-good}
+${name}
+${barcode}
+${producer}
+${button-on-scale}
+-->
 	<goods-catalog>
 	<good marking-of-the-good="${marking-of-the-good}_KG" transaction-id="0000000166869724">
 		<shop-indices/>

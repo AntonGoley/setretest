@@ -7,6 +7,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import static ru.crystals.set10.utils.FlexMediator.*;
 import ru.crystals.set10.pages.basic.SalesPage;
+import ru.crystals.set10.utils.DisinsectorTools;
 
 public class RetailShopWeightTabPage extends SalesPage{
 	
@@ -24,14 +25,29 @@ public class RetailShopWeightTabPage extends SalesPage{
 	}
 	
 	public void bindWeight(String weightPattern, String weightModel){
+		int weightBefore = getBindedWeightsCount();
+		long timeout = 100;
 		selectElement(getDriver(), ID_SALESSWF, LOCATOR_WEIGHT_PATTERN, weightPattern);
 		selectElement(getDriver(), ID_SALESSWF, LOCATOR_WEIGHT_MODEL, weightModel);
 		clickElement(getDriver(), ID_SALESSWF, BUTTON_ADD_TO_SHOP);
+		/*
+		 * Ждем, пока весы не добавятся в таблицу
+		 */
+		while (getBindedWeightsCount() <= weightBefore) {
+			DisinsectorTools.delay(timeout);
+			timeout += timeout;
+			if (timeout > 10000) {
+				log.info("Весы не добавлены в магазин!!!");
+				break;
+			}
+		}
+		
 	}
 	
 	public int getBindedWeightsCount(){
 		String result;
 		result = getElementProperty(getDriver(), ID_SALESSWF, TABLE_WEIGHT_ITEMS, "length");
+		log.info("Всего привязано весов: " + result);
 		return Integer.valueOf(result);
 	}
 	

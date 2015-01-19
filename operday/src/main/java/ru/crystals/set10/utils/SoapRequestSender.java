@@ -27,7 +27,7 @@ import org.xml.sax.SAXException;
 import ru.crystals.set10.config.Config;
 
 
-public class SoapRequestSender {
+public class SoapRequestSender{
 	protected static final Logger log = Logger.getLogger(SoapRequestSender.class);
 	
     public static final String ERP_INTEGRATION_GOOSERVICE = "/SET-ERPIntegration/SET/WSGoodsCatalogImport";

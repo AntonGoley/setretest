@@ -55,13 +55,19 @@ public class VirtualScalesReader {
 		return result;
 	}
 	
+	
+	public void getLinkByLPUNumber(String pluNumber){
+		
+	}
+	
+	
 	public void clearVScalesFileData(){
 		try {
 			connection = (HttpURLConnection) virtualScales.openConnection();
 			connection.setDoOutput(true);
 			connection.setRequestMethod("DELETE");
 			connection.connect();
-			connection.getResponseCode();
+			log.info(connection.getResponseCode());
 			connection.disconnect();
 			
 			log.info("Файл " + VIRTUAL_WEIGHT_PATH + " удален!");
