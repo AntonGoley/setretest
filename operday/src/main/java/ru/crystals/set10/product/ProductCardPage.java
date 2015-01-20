@@ -11,7 +11,7 @@ import ru.crystals.set10.pages.basic.AbstractPage;
 public class ProductCardPage extends AbstractPage{
 
 	static final String ID_PRODUCTSWF = "Products";
-	static final String TAB_LOCATOR = "details";
+	static final String TAB_LOCATOR = "id:details/className:Tab;label:";
 	
 
 	public static final String TAB_MAIN_INFO = "Общая информация";
@@ -25,7 +25,7 @@ public class ProductCardPage extends AbstractPage{
 	}
 	
 	public <T> T selectTab(String tabName, Class<T> tab) {
-		clickElement(getDriver(), ID_PRODUCTSWF, TAB_LOCATOR, tabName);
+		clickElement(getDriver(), ID_PRODUCTSWF, TAB_LOCATOR + tabName);
 		//doFlexProperty(getDriver(), ID_PRODUCTSWF, TAB_LOCATOR, new String[] {"selectedIndex", String.valueOf(tabIndex.ordinal())});
 		return PageFactory.initElements(getDriver(), tab);
 	}

@@ -4,6 +4,8 @@ package ru.crystals.set10.pages.operday.searchcheck;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import ru.crystals.set10.pages.operday.OperDayPage;
+import ru.crystals.set10.utils.DisinsectorTools;
+
 import static ru.crystals.set10.utils.FlexMediator.*;
 
 
@@ -51,10 +53,11 @@ public class  CheckContentPage extends OperDayPage{
 			String kpp,
 			String juristicAdress)
 	{	
-		doFlexMouseDown(getDriver(), ID_OPERDAYSWF, docType);
+		//doFlexMouseDown(getDriver(), ID_OPERDAYSWF, docType);
 		clickElement(getDriver(), ID_OPERDAYSWF, docType);
+		DisinsectorTools.delay(200);
 		// Заполнить данные контрагента
-		typeText(getDriver(), ID_OPERDAYSWF , INPUT_JURISTIC_NAME, name);
+		typeText(getDriver(), ID_OPERDAYSWF, INPUT_JURISTIC_NAME, name);
 		typeText(getDriver(), ID_OPERDAYSWF , INPUT_INN, inn);
 		typeText(getDriver(), ID_OPERDAYSWF , INPUT_KPP, kpp);
 		typeText(getDriver(), ID_OPERDAYSWF , INPUT_JURISTIC_ADRESS, juristicAdress);
