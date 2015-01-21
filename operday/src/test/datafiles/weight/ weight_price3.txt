@@ -69,4 +69,5 @@ ${do-not-send-to-scales}
 			</department>
 		</price-entry>
 	</good>
+	
 	</goods-catalog>
