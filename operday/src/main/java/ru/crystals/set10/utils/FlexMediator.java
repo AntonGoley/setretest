@@ -106,10 +106,12 @@ public class FlexMediator {
 	}
 	
 	private static void ecxecute(WebDriver driver, String command) {
-		JavascriptExecutor js = (JavascriptExecutor) driver;
-		js.executeScript(command);
+		String result;
+;		JavascriptExecutor js = (JavascriptExecutor) driver;
+		result = (String)js.executeScript(command);
+		if (result!=null) {
+			log.info(result);
+		};
 	}
-	
-	
 	
 }

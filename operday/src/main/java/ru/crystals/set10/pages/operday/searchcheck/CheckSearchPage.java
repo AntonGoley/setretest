@@ -133,7 +133,9 @@ public class  CheckSearchPage extends OperDayPage{
 	public CheckSearchPage setFilterMultiText(String filter, String filterValue){
 		// открыть фильтр и задать категорию
 		ifSearchFiltersOpen();
-		
+		/*
+		 * если выбираем уже выбранный фильтр, то происходит удаление фильтра - обход этого поведения
+		 */
 		if (!getSelectedElement(getDriver(), ID_OPERDAYSWF, FILTER_CATEGORY).equals(filter)){
 			selectElement(getDriver(), ID_OPERDAYSWF, FILTER_CATEGORY, filter);
 		}
@@ -149,6 +151,8 @@ public class  CheckSearchPage extends OperDayPage{
 	
 	public CheckSearchPage setFilterText(String filter, String filterValue){
 		ifSearchFiltersOpen();
+		
+		
 		selectElement(getDriver(), ID_OPERDAYSWF, FILTER_CATEGORY, filter);
 
 		//Открыть и заполнить множественный выбор
@@ -160,6 +164,7 @@ public class  CheckSearchPage extends OperDayPage{
 	
 	public CheckSearchPage setFilterSelect(String filter, String filterValue){
 		ifSearchFiltersOpen();
+		
 		selectElement(getDriver(), ID_OPERDAYSWF, FILTER_CATEGORY, filter);
 		
 		selectElement(getDriver(), ID_OPERDAYSWF, FILTER_SELECT_FIELD, filterValue);

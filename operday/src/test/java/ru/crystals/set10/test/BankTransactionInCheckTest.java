@@ -87,8 +87,6 @@ public class BankTransactionInCheckTest extends AbstractTest {
 		 *  послать чек, в котором присутствует отклоненная и пройденная банковские транзакции
 		 *  и открыть его
 		 */
-		//checkNumber = cashEmulator.nextPurchase(setPayments()).getNumber();
-		
 		mainPage = new LoginPage(getDriver(), Config.RETAIL_URL).doLogin(Config.MANAGER, Config.MANAGER_PASSWORD);
 		searchCheck = mainPage.openOperDay().openCheckSearch();
 		
@@ -148,7 +146,7 @@ public class BankTransactionInCheckTest extends AbstractTest {
 		 * Задержка м/д генерацией отклоненной и одобренной транзакциями 
 		 */
 		DisinsectorTools.delay(500);
-		BankCard card = payments.setBankCardData(validBankCardNumber, "Maestro");
+		BankCard card = payments.setBankCardData(validBankCardNumber, "Visa");
 		purchase = payments.setBankCardPayment(BankCardPaymentEntity.class, purchase, purchase.getCheckSumEnd(), card, authData);	
 		
 		return purchase;

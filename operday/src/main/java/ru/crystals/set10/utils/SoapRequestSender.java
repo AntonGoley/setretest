@@ -163,7 +163,12 @@ public class SoapRequestSender{
 		this.service = ERP_INTEGRATION_GOOSERVICE; 
 		this.method = METHOD_GOODS_WITHTI;
 		params.put("ti", ti);
-		log.info("Отправить товары. SOAP request: \n" + this.soapRequest);
+		log.info("Отправить товары. SOAP request: \n" + this.soapRequest); 
+		log.info("Параметры товара: "); 
+		for (String key:params.keySet()){
+			log.info(key + " = " + params.get(key));
+		}
+		
 		sendSOAPRequest();
 		assertSOAPResponse(RETURN_MESSAGE_CORRECT, ti);
 		return params;
@@ -171,7 +176,9 @@ public class SoapRequestSender{
 	
 	private String processRequestParams(String request, HashMap<String, String> params){
 		for (String param:params.keySet()){
-			request = request.replace(param, params.get(param));
+			if (!param.equals("ti")) {
+				request = request.replace(param, params.get(param));
+			}	
 		}
 		return request;
 	}
@@ -281,19 +288,17 @@ public class SoapRequestSender{
 		int timeout = 0;
 		getFeedBack(ti);
 		log.info("Ожидаемое значение в SOAP response: " + expectedResult + " ; ti = " + ti); 
-		try {
+
 		while (timeout <=20) {
 			if (this.response.contains(expectedResult)){ 
 				return true;
 			}
-			Thread.sleep(1000);
+			DisinsectorTools.delay(1000);
 			timeout +=1;
 			sendSOAPRequest();
 		}
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-			log.info("Пакет с ti " + ti + "не содержит " + expectedResult);
-		}
+
+		log.info("Пакет с ti " + ti + "не содержит " + expectedResult);
 		return false;
 	}
 	
