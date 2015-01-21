@@ -13,8 +13,8 @@ import static ru.crystals.set10.utils.FlexMediator.*;
 public class  TableReportPage extends AbstractPage{
 	
 	public static final String ID_OPERDAYSWF = "OperDay";
-	static final String ID_TAB_OTHER_LOCATOR = "id:shiftsNavigator/label:Прочее;className:Tab";
-	static final String REPORT_LOCATOR = "label=";
+	static final String ID_TAB_LOCATOR = "id:shiftsNavigator/className:Tab;label:";
+	static final String REPORT_LOCATOR = "label:";
 	
 	
 	public static final String TAB_ADVERSTING = "Рекламные";
@@ -37,8 +37,8 @@ public class  TableReportPage extends AbstractPage{
 		getWait().until(ExpectedConditions.visibilityOfElementLocated(By.id(ID_OPERDAYSWF)));
 	}
 	
-	public <T> T openReportConfigPage(Class<T> report, String reportName) {
-		clickElement(getDriver(), ID_OPERDAYSWF, ID_TAB_OTHER_LOCATOR);
+	public <T> T openReportConfigPage(Class<T> report, String tabName, String reportName) {
+		clickElement(getDriver(), ID_OPERDAYSWF, ID_TAB_LOCATOR + tabName);
 		clickElement(getDriver(), ID_OPERDAYSWF, REPORT_LOCATOR + reportName);
 		return PageFactory.initElements(getDriver(), report);
 	}

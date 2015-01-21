@@ -39,7 +39,7 @@ public class AddAndConfigureWeightTest extends AbstractTest{
 			priority = 1)
 	public void addVirtualScalesTest(){
 		//TODO: добавить проверку
-		newEqupment = salesPage.navigateMenu(SALES_MENU_EQUIPMENT, "1", EquipmentPage.class)
+		newEqupment = salesPage.navigateMenu(1, EquipmentPage.class)
 			.addNewEquipment();
 		newEqupment.addEquipment("VirtualScales", "7", "VirtualScales")
 			.ifEqupmentOnPage("VirtualScales");
@@ -49,7 +49,7 @@ public class AddAndConfigureWeightTest extends AbstractTest{
 			priority = 2)
 	public void bindVirtualScalesTest(){
 		int  totalScalesBefore;
-		shopWeightTab = salesPage.navigateMenu(SALES_MENU_SHOP_PREFERENCES, "0", RetailShopInfoTabPage.class)
+		shopWeightTab = salesPage.navigateMenu(0, RetailShopInfoTabPage.class)
 				.navigateTab(TAB_WEIGHT, RetailShopWeightTabPage.class);
 		
 		totalScalesBefore = shopWeightTab.getBindedWeightsCount();
@@ -64,7 +64,7 @@ public class AddAndConfigureWeightTest extends AbstractTest{
 			priority = 3)
 	public void bindBarCodeForWeightGoodTest(){
 		weightGood = salesPage
-				.navigateMenu(SALES_MENU_PREFERENCES, "10", SalesPreferencesPage.class)
+				.navigateMenu(10, SalesPreferencesPage.class)
 				.navigateTab(TAB_TYPES_GOODS_PAYMENTS)
 				.selectProductTypeItem(ProductTypeItems.WEIGHT_GOOD, WeightGoodPage.class);
 		weightGood

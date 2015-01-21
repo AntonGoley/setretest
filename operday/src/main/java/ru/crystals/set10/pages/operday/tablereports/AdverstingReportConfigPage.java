@@ -13,7 +13,7 @@ public class  AdverstingReportConfigPage extends ReportConfigPage{
 	static final String LOCATOR_SETSHOP= "id:shopSearchWidget/id:searchTextBox";
 	static final String LOCATOR_SETGOOD= "id:goodSearchWidget/id:searchTextBox";
 	public static final String LOCATOR_ALERT_YES = "title=YES";
-	public static final String LOCATOR_SUGGEST_CODE = "codeLabel";
+	public static final String LOCATOR_SUGGEST_CODE = "id:codeLabel;visible:true|0";
 	
 	
 	public AdverstingReportConfigPage(WebDriver driver) {

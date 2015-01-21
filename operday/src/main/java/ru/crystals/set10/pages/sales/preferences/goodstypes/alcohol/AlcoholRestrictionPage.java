@@ -18,10 +18,10 @@ public class AlcoholRestrictionPage extends AbstractPage{
 	static final String LOCATOR_INPUT_DATEPERIOD= "name=dateRange";
 	// Действует весь день
 	static final String LOCATOR_CHECKBOX_ISALLDAY = "isAllDay";
-	static final String LOCATOR_INPUT_FROMHOUR = "forInput/hourText";
-	static final String LOCATOR_INPUT_FROMMINUTE  = "forInput/minuteText"; 
-	static final String LOCATOR_INPUT_UNTILHOUR = "untilInput/hourText";
-	static final String LOCATOR_INPUT_UNTILMINUTE = "untilInput/minuteText";
+	static final String LOCATOR_INPUT_FROMHOUR = "id:forInput/id:hourText";
+	static final String LOCATOR_INPUT_FROMMINUTE  = "id:forInput/id:minuteText";
+	static final String LOCATOR_INPUT_UNTILHOUR = "id:untilInput/id:hourText";
+	static final String LOCATOR_INPUT_UNTILMINUTE = "id:untilInput/id:minuteText";
 	// Процент содержания алкоголя
 	static final String LOCATOR_CHECKBOX_ISANYPRESENT = "isAnyPersent";
 	static final String LOCATOR_INPUT_ALKOVOL= "alcoVolInput";
