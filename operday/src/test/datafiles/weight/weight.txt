@@ -35,7 +35,7 @@ ${do-not-send-to-scales}
 			<name>ОАО "ЧМПЗ"</name>
 		</manufacturer>
 		<delete-from-cash>${delete-from-cash}</delete-from-cash>
-		<erp-code>011423</erp-code>
+		<erp-code>${erp-code}</erp-code>
 		<is-child-product>0</is-child-product>
 		 <certification-type>14</certification-type>
 		<fullname>${name} пресс вес (Россия) 1кг</fullname>

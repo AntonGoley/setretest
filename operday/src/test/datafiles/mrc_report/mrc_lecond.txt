@@ -1,3 +1,5 @@
+
+<!-- Значение marking-of-the-good="200205" завязано на товаре в файлах good_mrc -->
 <goods-catalog>
 	<product-sales-allowing transaction-id="0000000038665678" marking-of-the-good="200205">
 		<since-date>${since_date}</since-date>

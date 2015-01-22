@@ -22,8 +22,13 @@ public class VirtualScalesReader {
 	
 	private static final Logger log = Logger.getLogger(VirtualScalesReader.class);
 	private URL virtualScales;
-	HttpURLConnection  connection;
 	
+	public static final int FILE_EXIST_RESPONSE = 200;
+	public static final int FILE_DELETED_RESPONSE = 404;
+	
+	HttpURLConnection  connection;
+	StringBuffer vScalesFileContent = new StringBuffer();
+
 	public VirtualScalesReader(){
 		try {
 			virtualScales = new URL(VIRTUAL_WEIGHT_PATH);
@@ -34,20 +39,22 @@ public class VirtualScalesReader {
 	
 	
 	public String getPluActionType(String pluNumber){
-		long timeout = 0;	
+		long timeout = 0;
+		vScalesFileContent.setLength(0);
 		while (timeout < 60000) {	
 			Iterator<LinkToPluType> iterator = readVirtualScales(); 
-			
 			LinkToPluType linkToPlu;
 			while (iterator.hasNext()){
 				linkToPlu = iterator.next();
 				if (linkToPlu.getPlu().getNumber() == Integer.valueOf(pluNumber)){
+					log.info(vScalesFileContent);
 					return linkToPlu.getActionType();
 				}
 			}
 			timeout+=500;
 		}	
 		log.info("PLU " + pluNumber + " не найден в заданиях на загрузку/выгрузку");
+		log.info(vScalesFileContent);
 		return "";
 	}
 	
@@ -58,7 +65,7 @@ public class VirtualScalesReader {
 		/*
 		 * Проверить, что файл весов существует 
 		 */
-		if (!getExpectedFileStatus(200)) {
+		if (!getExpectedFileStatus(FILE_EXIST_RESPONSE)) {
 			try {
 				throw new Exception("Файл весов не найден!!!");
 			} catch (Exception e) {
@@ -75,11 +82,14 @@ public class VirtualScalesReader {
             unmarchaller = context.createUnmarshaller();
             links = (Links)unmarchaller.unmarshal(virtualScales);
             
+            /*
+             * Читаме файл виртуальных весов и записываем содержимое в 
+             * vScalesFileContent
+             */
             BufferedReader br = new BufferedReader(new InputStreamReader(virtualScales.openStream()));
-            
             String fileContent;
             while ((fileContent = br.readLine())!=null) {
-            	log.info(fileContent);
+            	vScalesFileContent.append(fileContent);
             }
             
             result = links.getLinkToPlu().iterator();
@@ -103,7 +113,7 @@ public class VirtualScalesReader {
 	 * 404 - удален
 	 * 200 - существует
 	 */
-	private boolean getExpectedFileStatus(int responseCode){
+	public boolean getExpectedFileStatus(int responseCode){
 		boolean result =  false;
 		long timeout = 0 ;
 		long delay = 1000;
@@ -142,7 +152,7 @@ public class VirtualScalesReader {
 			/*
 			 * Проверит, что файл весов удален
 			 */
-			getExpectedFileStatus(404);
+			getExpectedFileStatus(FILE_DELETED_RESPONSE);
 			
 			log.info("Файл " + VIRTUAL_WEIGHT_PATH + " удален!");
 		} catch (IOException e) {

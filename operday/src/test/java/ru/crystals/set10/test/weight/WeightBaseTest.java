@@ -53,7 +53,7 @@ public class WeightBaseTest extends WeightAbstractTest {
 		weightGood_1 = soapSender.sendGoods(DisinsectorTools.getFileContentAsString(WEIGHT_GOOD_FILE), weightGood_1);
 
 		Assert.assertEquals(scales.getPluActionType(weightGood_1.get(PLU_NUMBER_PARAM)), 
-				ACTION_TYPE_CLEAR, "Товар не загружен в весы");
+				ACTION_TYPE_CLEAR, "Товар не выгружен из весов");
 	}
 	
 	@Test (description = "Весовой товар выгружается из весов, если у баркода поле <delete-from-cash> true",
@@ -64,7 +64,7 @@ public class WeightBaseTest extends WeightAbstractTest {
 		weightGood_2 = soapSender.sendGoods(DisinsectorTools.getFileContentAsString(WEIGHT_GOOD_FILE), weightGood_2);
 
 		Assert.assertEquals(scales.getPluActionType(weightGood_2.get(PLU_NUMBER_PARAM)), 
-				ACTION_TYPE_CLEAR, "Товар не загружен в весы");
+				ACTION_TYPE_CLEAR, "Товар не выгружен из весов");
 	}
 	
 	
