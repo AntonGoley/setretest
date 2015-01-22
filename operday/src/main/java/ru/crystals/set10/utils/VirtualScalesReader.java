@@ -89,7 +89,7 @@ public class VirtualScalesReader {
             BufferedReader br = new BufferedReader(new InputStreamReader(virtualScales.openStream()));
             String fileContent;
             while ((fileContent = br.readLine())!=null) {
-            	vScalesFileContent.append(fileContent);
+            	vScalesFileContent.append(fileContent).append("\n");
             }
             
             result = links.getLinkToPlu().iterator();
