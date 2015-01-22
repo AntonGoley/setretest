@@ -47,22 +47,47 @@ public class CashEmulatorPayments {
 	/*
 	 * Добавить банковскую транзакцию для детской или банковской карты
 	 */
-	private List<PaymentTransactionEntity> addPaymentTransaction(Class<? extends BankCardPaymentEntity> paymentType, PurchaseEntity purchase, AuthorizationData authData ){
-		List<PaymentTransactionEntity> purchasePaymenTransactions = new ArrayList<PaymentTransactionEntity>();
+	private List<PaymentTransactionEntity> addPaymentTransaction(
+			Class<? extends BankCardPaymentEntity> paymentType, 
+			PurchaseEntity purchase, 
+			AuthorizationData authData,
+			PaymentEntity pe)
+	{
+		List<PaymentTransactionEntity> paymenTransactions = new ArrayList<PaymentTransactionEntity>();
+		paymenTransactions.addAll(purchase.getTransactions());
+		
+//		/*
+//		 * Берем существующие транзакции
+//		 */
+//		Iterator<PaymentTransactionEntity> i = purchase.getTransactions().iterator();
+//		PaymentTransactionEntity ptr;
+//		while (i.hasNext()){
+//			ptr = i.next();
+//			paymenTransactions.add(ptr);
+//		}
+		
 		/*
-		 * Берем существующие транзакции
+		 * Создаем новую банковскую транзакцию и привязываем ее к оплате,
+		 * если она положительная
 		 */
-		Iterator<PaymentTransactionEntity> i = purchase.getTransactions().iterator();
-		while (i.hasNext()){
-			purchasePaymenTransactions.add(i.next());
+		PaymentTransactionEntity bankTransaction;
+		if (authData.isStatus()){
+			bankTransaction = new  BankCardPaymentTransactionEntity(pe, authData);
+			List<PaymentTransactionEntity> paymenTransactionsValid = new ArrayList<PaymentTransactionEntity>();
+			paymenTransactionsValid.add(bankTransaction);
+			pe.setTransactions(paymenTransactionsValid);
+			
+		} else {
+			bankTransaction = new  BankCardPaymentTransactionEntity(authData);
 		}
-		/*
-		 * Создаем новую банковскую транзакцию
-		 */
-		PaymentTransactionEntity bankTransaction = new  BankCardPaymentTransactionEntity(authData);
 		bankTransaction.setDiscriminator(paymentType.getSimpleName());
-		purchasePaymenTransactions.add(bankTransaction);
-		return purchasePaymenTransactions;
+		/*
+		 * Привязываем транзакцию к оплате
+		 */
+		bankTransaction.setPurchase(purchase);
+		
+		paymenTransactions.add(bankTransaction);
+		return paymenTransactions;
 	}
 	
 	/*
@@ -98,9 +123,16 @@ public class CashEmulatorPayments {
 	/*
 	 * Оплата банковской/детской картой
 	 */
-	public PurchaseEntity setBankCardPayment(Class<? extends BankCardPaymentEntity> cardType, PurchaseEntity purchase, Long sum, BankCard card, AuthorizationData basicAuthData) {
+	public PurchaseEntity setBankCardPayment(
+			Class<? extends BankCardPaymentEntity> cardType, 
+			PurchaseEntity purchase, 
+			Long sum, 
+			BankCard card, 
+			AuthorizationData basicAuthData) 
+	{
 		
 		BankCardPaymentEntity bankCardPayment = null;
+		
 		try {
 			bankCardPayment = cardType.newInstance();
 		} catch (InstantiationException e) {
@@ -116,10 +148,11 @@ public class CashEmulatorPayments {
 		bankCardPayment.setCurrency("RUB");
 		bankCardPayment.setCardNumber(card.getCardNumber());
 		bankCardPayment.setAuthCode(String.valueOf(random(1000) + 100L));
-		purchase.setTransactions(addPaymentTransaction(cardType, purchase, authData));
+		purchase.setTransactions(addPaymentTransaction(cardType, purchase, authData, (PaymentEntity)bankCardPayment));
 		if (authData.isStatus()){
 			bankCardPayment.setAuthorizationData(authData);
 			purchase = addPayments(purchase, bankCardPayment);
+			
 		}	
 		return purchase;
 	}

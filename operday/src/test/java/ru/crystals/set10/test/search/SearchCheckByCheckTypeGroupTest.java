@@ -60,7 +60,7 @@ public class SearchCheckByCheckTypeGroupTest extends SearchCheckAbstractTest{
 	
 	@Test (description = "SRTE-71. Поиск чека на ТК по штрих коду чека")
 	public void testSearchCheckByCheckBarCode(){
-		searchCheck.setFilterMultiText(FILTER_CATEGORY_CHECK_BAR_CODE, searchCheck.getCheckBarcode(purchase)).doSearch();
+		searchCheck.setFilterText(FILTER_CATEGORY_CHECK_BAR_CODE, searchCheck.getCheckBarcode(purchase)).doSearch();
 		Assert.assertEquals(searchCheck.getExpectedResultCount(1), 1, "");
 	}
 	

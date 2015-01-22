@@ -123,7 +123,7 @@ public class AbstractTest {
     public void setChromeDownloadPath() {
 		driver.get("chrome://settings");
 		driver.get("chrome://settings-frame");
-		driver.findElement(By.xpath(".//button[@id='advanced-settings-expander']")).click();
+		driver.findElement(By.xpath(".//a[@id='advanced-settings-expander']")).click();
 		chromeDownloadPath = driver.findElement(By.xpath(".//input[@id='downloadLocationPath']")).getAttribute("value");
 		log.info("Chrome download path: " + chromeDownloadPath);
 		new DisinsectorTools().removeOldDownloadedReports(getChromeDownloadPath());

@@ -95,6 +95,7 @@ public class Config {
         
         // TODO: разрулить запуск с разных ос
         PATH_TO_DRIVER = "target/classes/chromedriver_win.exe";
+        System.setProperty("webdriver.chrome.logfile", "target/classes/chromedriver.log");
 //        PATH_TO_DRIVER = "target/test-classes/chromedriver";
         
         

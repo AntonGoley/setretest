@@ -185,7 +185,7 @@ public class SearchCheckByPaymentGroupTest extends SearchCheckAbstractTest{
 		Assert.assertEquals(searchCheck.getExpectedResultCount(searchResult + 1), searchResult + 1, "");
 	}
 	
-	@Test (description = "SRTE-73. Поиск чека по карте оплаты. В чеке содержится только 1 транзакция оплаты со статусом true (SRTE-74. SRTE-76)",
+	@Test (description = "SRTE-76 (SRTE-73, SRTE-74). Поиск чека по карте оплаты. В чеке содержится только 1 транзакция оплаты со статусом true",
 			dataProvider = "Карты оплаты")
 	public void testSearchByPayCardNumber(String filter, String cardNumber, PurchaseEntity purchase){
 
