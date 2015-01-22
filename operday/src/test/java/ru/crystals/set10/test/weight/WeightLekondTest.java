@@ -20,7 +20,6 @@ public class WeightLekondTest extends WeightAbstractTest {
 	
 	SoapRequestSender soapSender = new SoapRequestSender();
 
-
 	@BeforeClass
 	public void initData(){
 		soapSender.setSoapServiceIP(Config.RETAIL_HOST);
@@ -31,7 +30,7 @@ public class WeightLekondTest extends WeightAbstractTest {
 		scales.clearVScalesFileData();
 	}
 	
-	@Test (description = "SRTE-119. Весовой товар выгружается из весов, если загружен леконд запрещающий продажу товара (вчера)")
+	@Test (description = "SRTE-119. Весовой товар выгружается из весов, если загружен леконд запрещающий продажу товара (время продажи закончилось вчера)")
 	public void testGoodUnloadIfLecondBanSales(){
 		/*
 		 * Отправить товар и проверить, что он прогрузился в весы
@@ -152,4 +151,49 @@ public class WeightLekondTest extends WeightAbstractTest {
 				ACTION_TYPE_LOAD, "Товар 1 не выгружен в весы");
 	}
 	
+	@Test (description = "SRTE-119. Весовой товар не выгружается на весы, если леконд разрешает продажу товара через 2 часа")
+	public void testGoodNotLoadedIfLecondallowSalesInFuture(){
+		/*
+		 * Сгенерить товар, который отправим после леконда
+		 */
+		HashMap<String, String> weightGood = new HashMap<String, String>();
+		weightGood = generateGoodData();
+		
+		long now = System.currentTimeMillis(); 
+		/*
+		 * срок действия леконда истек
+		 */
+		HashMap<String, String> lecondData = new HashMap<String, String>();
+		lecondData = generateLecondData(
+				DisinsectorTools.getDate(LECOND_DATE_FORMAT, now - 2*day ), 
+				DisinsectorTools.getDate(LECOND_DATE_FORMAT, now - day ), 
+				weightGood);
+		/*
+		 * Отправляем леконд , затем товар
+		 */
+		soapSender.sendGoods(DisinsectorTools.getFileContentAsString(WEIGHT_LECOND_FILE), lecondData);
+		weightGood = soapSender.sendGoods(DisinsectorTools.getFileContentAsString(WEIGHT_GOOD_FILE), weightGood);
+		
+		/*
+		 * Сгенерить новый леконд, разрешающий продажу через 2 часа
+		 */
+		HashMap<String, String> newLecondData = new HashMap<String, String>();
+		newLecondData = generateLecondData(
+				DisinsectorTools.getDate(LECOND_DATE_FORMAT, now + day/12 ), 
+				DisinsectorTools.getDate(LECOND_DATE_FORMAT, now + day ), 
+				weightGood);
+		soapSender.sendGoods(DisinsectorTools.getFileContentAsString(WEIGHT_LECOND_FILE), newLecondData);
+		
+		DisinsectorTools.delay(60000);
+		Assert.assertTrue(scales.getExpectedFileStatus(VirtualScalesReader.FILE_DELETED_RESPONSE),  "Товар не должен быть выгружен в весы");
+	}
+	
+	/*
+	 * Подумать, как синхронизировать время сервера (получить время сервера)
+	 */
+	@Test (description = "SRTE-119. Весовой товар загружается на весы при наступлении времени начала продажи, заданное в леконде",
+			enabled = false)
+	public void testGoodLoadedIfLecondStartTimeIsOn(){
+		
+	}
 }
