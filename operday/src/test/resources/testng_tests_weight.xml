@@ -7,6 +7,7 @@
 	 <test name="Весовой модуль" >
 	<classes>
 			<class name="ru.crystals.set10.test.weight.WeightBaseTest"/>
+			<class name="ru.crystals.set10.test.weight.WeightLekondTest"/>
 	</classes>
 	</test>
 </suite> 
