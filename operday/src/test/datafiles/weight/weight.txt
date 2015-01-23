@@ -50,19 +50,19 @@ ${do-not-send-to-scales}
 		<plugin-property key="plu-number" value="${plu-number}"/>
 		 <plugin-property key="producer" value="ООО севкав"/>
 		<plugin-property key="button-on-scale" value="10"/>
-		<price-entry price="429.99" currency="RUB">
+		<price-entry price="${price2}" currency="RUB">
 			<shop-indices>2</shop-indices>
-			<begin-date>1900-01-01T00:00:00</begin-date>
-			<end-date>2070-12-31T23:59:00</end-date>
+			<begin-date>${price2_begin_date}</begin-date>
+			<end-date>${price2_end_date}</end-date>
 			<number>2</number>
 			<department number="1">
 				<name>Отдел 1</name>
 			</department>
 		</price-entry>
-		<price-entry price="451.49" currency="RUB">
+		<price-entry price="${price1}" currency="RUB">
 			<shop-indices>2</shop-indices>
-			<begin-date>2014-04-02T03:00:00</begin-date>
-			<end-date>2070-12-31T23:59:00</end-date>
+			<begin-date>${price1_begin_date}</begin-date>
+			<end-date>${price2_end_date}</end-date>
 			<number>1</number>
 			<department number="1">
 				<name>Отдел 1</name>

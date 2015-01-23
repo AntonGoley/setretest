@@ -15,9 +15,6 @@ import ru.crystals.set10.utils.VirtualScalesReader;
 
 public class WeightLekondTest extends WeightAbstractTest { 
 	
-	private long day = 86400*100*24;
-	private static final String LECOND_DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss";
-	
 	SoapRequestSender soapSender = new SoapRequestSender();
 
 	@BeforeClass
@@ -187,6 +184,55 @@ public class WeightLekondTest extends WeightAbstractTest {
 		DisinsectorTools.delay(60000);
 		Assert.assertTrue(scales.getExpectedFileStatus(VirtualScalesReader.FILE_DELETED_RESPONSE),  "Товар не должен быть выгружен в весы");
 	}
+	
+	
+	@Test (description = "SRTE-119. Весовой товар загружается на весы при загрузке нового леконда, если до наст. момента товар был выгружен лекондом, запрещающим продажу его продажу ")
+	public void testGoodLoadedIfLecondallowSalesReplacingOldLecond(){
+		/*
+		 * Сгенерить товар, который отправим на весы
+		 */
+		HashMap<String, String> weightGood = new HashMap<String, String>();
+		weightGood = generateGoodData();
+		
+		weightGood = soapSender.sendGoods(DisinsectorTools.getFileContentAsString(WEIGHT_GOOD_FILE), weightGood);
+		
+		/*
+		 * Джем, что товар загрузился в весы
+		 *
+		 */
+		Assert.assertEquals(scales.getPluActionType(weightGood.get(PLU_NUMBER_PARAM)), 
+				ACTION_TYPE_LOAD, "Товар 1 не выгружен в весы");
+		
+		scales.clearVScalesFileData();
+		/*
+		 * Загрузить леконд, запрещающий продажу товара
+		 */
+		long now = System.currentTimeMillis(); 
+		HashMap<String, String> lecondData = new HashMap<String, String>();
+		lecondData = generateLecondData(
+				DisinsectorTools.getDate(LECOND_DATE_FORMAT, now - 2*day ), 
+				DisinsectorTools.getDate(LECOND_DATE_FORMAT, now - day ), 
+				weightGood);
+		
+		soapSender.sendGoods(DisinsectorTools.getFileContentAsString(WEIGHT_LECOND_FILE), lecondData);
+		Assert.assertEquals(scales.getPluActionType(weightGood.get(PLU_NUMBER_PARAM)), 
+				ACTION_TYPE_CLEAR, "Товар 1 не удалился из весов");
+		scales.clearVScalesFileData();
+		
+		/*
+		 * Отправляем леконд разрешающий продажу
+		 */
+		HashMap<String, String> newLecondData = new HashMap<String, String>();
+		newLecondData = generateLecondData(
+				DisinsectorTools.getDate(LECOND_DATE_FORMAT, now - 2*day ), 
+				DisinsectorTools.getDate(LECOND_DATE_FORMAT, now + 2*day ), 
+				weightGood);
+		
+		soapSender.sendGoods(DisinsectorTools.getFileContentAsString(WEIGHT_LECOND_FILE), newLecondData);
+		Assert.assertEquals(scales.getPluActionType(weightGood.get(PLU_NUMBER_PARAM)), 
+				ACTION_TYPE_LOAD, "Товар 1 не выгружен в весы");
+	}
+	
 	
 	/*
 	 * Подумать, как синхронизировать время сервера (получить время сервера)

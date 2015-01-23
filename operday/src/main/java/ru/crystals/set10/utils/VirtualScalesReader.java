@@ -16,6 +16,8 @@ import org.apache.log4j.Logger;
 
 import ru.crystals.scales.tech.core.scales.virtual.xml.LinkToPluType;
 import ru.crystals.scales.tech.core.scales.virtual.xml.Links;
+import ru.crystals.set10.test.weight.LinkToPluProcessor;
+import ru.crystals.set10.test.weight.WeightAbstractTest;
 import static ru.crystals.set10.config.Config.VIRTUAL_WEIGHT_PATH;
 
 public class VirtualScalesReader {
@@ -37,7 +39,6 @@ public class VirtualScalesReader {
 		}
 	}
 	
-	
 	public String getPluActionType(String pluNumber){
 		long timeout = 0;
 		vScalesFileContent.setLength(0);
@@ -58,6 +59,36 @@ public class VirtualScalesReader {
 		return "";
 	}
 	
+	
+	public String getPluPriceValue(String pluNumber, String priceNumber, String expectedValue){
+		String result = "";
+		long timeout = 0;
+		vScalesFileContent.setLength(0);
+		while (timeout < 60000) {	
+			Iterator<LinkToPluType> iterator = readVirtualScales(); 
+			LinkToPluType linkToPlu;
+			while (iterator.hasNext()){
+				linkToPlu = iterator.next();
+				
+				if (linkToPlu.getPlu().getNumber() == Integer.valueOf(pluNumber)){
+					switch (priceNumber) {
+						case  "price1" : result = String.valueOf(linkToPlu.getPlu().getPrice());
+							break;
+						case  "price2" : result = String.valueOf(linkToPlu.getPlu().getExPrice());		
+							break;
+					}
+					if (result.equals(expectedValue)){
+						log.info(vScalesFileContent);
+						return result;
+					};
+				}
+			}
+			timeout+=500;
+		}	
+		log.info("PLU " + pluNumber + " не найден в заданиях на загрузку/выгрузку");
+		log.info(vScalesFileContent);
+		return result;
+	}
 	
 	public Iterator<LinkToPluType> readVirtualScales(){
 		Iterator<LinkToPluType> result = null;
@@ -137,7 +168,7 @@ public class VirtualScalesReader {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		log.info("Время ожидания обновления файла виртуальных весов" + timeout);
+		log.info("Время ожидания обновления файла виртуальных весов: " + timeout);
 		return result;
 	}
 	
