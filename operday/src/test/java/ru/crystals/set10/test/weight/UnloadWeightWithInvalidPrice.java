@@ -14,7 +14,7 @@ public class UnloadWeightWithInvalidPrice extends WeightAbstractTest {
 	
 	
 	SoapRequestSender soapSender = new SoapRequestSender();
-	LinkToPluProcessor processor;
+	
 	
 	@BeforeClass
 	public void initData(){
