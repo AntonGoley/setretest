@@ -1,16 +1,11 @@
 package ru.crystals.set10.test.weight;
 
-import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.util.HashMap;
-import java.util.Iterator;
 
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-
-import ru.crystals.scales.tech.core.scales.virtual.xml.LinkToPluType;
 import ru.crystals.set10.config.Config;
 import ru.crystals.set10.utils.DisinsectorTools;
 import ru.crystals.set10.utils.SoapRequestSender;

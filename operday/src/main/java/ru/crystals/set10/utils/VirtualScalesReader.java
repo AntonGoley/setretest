@@ -16,8 +16,6 @@ import org.apache.log4j.Logger;
 
 import ru.crystals.scales.tech.core.scales.virtual.xml.LinkToPluType;
 import ru.crystals.scales.tech.core.scales.virtual.xml.Links;
-import ru.crystals.set10.test.weight.LinkToPluProcessor;
-import ru.crystals.set10.test.weight.WeightAbstractTest;
 import static ru.crystals.set10.config.Config.VIRTUAL_WEIGHT_PATH;
 
 public class VirtualScalesReader {
