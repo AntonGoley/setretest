@@ -8,7 +8,7 @@ import static ru.crystals.set10.utils.FlexMediator.*;
 
 public class CashiersMainPage extends SalesPage{
 	
-	static final String LOCATOR_ADD_NEW_CASHIER = "label=Добавить нового кассира";
+	static final String LOCATOR_ADD_NEW_CASHIER = "label:Добавить нового кассира";
 	
 	public CashiersMainPage(WebDriver driver) {
 		super(driver);

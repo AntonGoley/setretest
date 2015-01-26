@@ -9,10 +9,10 @@ import static ru.crystals.set10.utils.FlexMediator.*;
 
 public class NewBankPage extends SalesPage {
 	
-	static final String BUTTON_BACK = "buttonBack";
-	static final String LOCATOR_BANK_FILTER = "id:bankAddView/id:filter";
+	static final String BUTTON_BACK = "id:buttonBack";
+	static final String LOCATOR_BANK_FILTER = "id:bankAddView/id:filter;className:FilterField";
 	static final String LOCATOR_BANK_TABLE = "id:bankAddView/id:bankTable";
-	static final String BUTTON_REGISTER_BANK= "label=Зарегистрировать новый банк";
+	static final String BUTTON_REGISTER_BANK= "label:Зарегистрировать новый банк";
 	
 	public NewBankPage(WebDriver driver) {
 		super(driver);

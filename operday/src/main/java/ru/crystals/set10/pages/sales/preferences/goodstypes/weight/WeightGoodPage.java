@@ -12,15 +12,15 @@ import ru.crystals.set10.utils.DisinsectorTools;
 public class WeightGoodPage extends SalesPage{
 	
 	
-	static final String SELECT_GOOD_ACTION = "productActionList";
-	static final String SELECT_PREFIX = "prefixesCombo";
+	static final String SELECT_GOOD_ACTION = "id:productActionList";
+	static final String SELECT_PREFIX = "id:prefixesCombo";
 	
-	static final String BUTTON_ADD_GOOD_ACTION= "label=Добавить действие с товаром";
+	static final String BUTTON_ADD_GOOD_ACTION= "label:Добавить действие с товаром";
 	
-	public static final String PLU_GENERATION_ERP = "ERP";
-	public static final String PLU_GENERATION_GOOD_CODE = "CodeEqual";
-	public static final String PLU_GENERATION_BAR_CODE = "BarCodeEqual";
-	public static final String BACK_BUTTON = "label=К типам товаров и оплат";
+	public static final String PLU_GENERATION_ERP = "id:ERP";
+	public static final String PLU_GENERATION_GOOD_CODE = "id:CodeEqual";
+	public static final String PLU_GENERATION_BAR_CODE = "id:BarCodeEqual";
+	public static final String BACK_BUTTON = "label:К типам товаров и оплат";
 
 	public static String ACTION_UCENKA = "Уценка";
 	public static String ACTION_FASOVKA = "Фасовка";

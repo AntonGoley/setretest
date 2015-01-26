@@ -12,10 +12,10 @@ import ru.crystals.set10.utils.DisinsectorTools;
 
 public class ShopPage extends SalesPage{
 	
-	static final String LOCATOR_ADD_SHOP_BUTTON = "addShopB";
-	static final String LOCATOR_CITY_NAME_INPUT = "cityNameTI";
-	static final String LOCATOR_SHOPS_DATAGRID = "dataGrid";
-	static final String LOCATOR_BUTTON_PREFERENCES = "editShopB";
+	static final String LOCATOR_ADD_SHOP_BUTTON = "id:addShopB";
+	static final String LOCATOR_CITY_NAME_INPUT = "id:cityNameTI";
+	static final String LOCATOR_SHOPS_DATAGRID = "id:dataGrid";
+	static final String LOCATOR_BUTTON_PREFERENCES = "id:editShopB";
 	static final String LOCATOR_SHOP_FILTER = "filterField";
 	
 	

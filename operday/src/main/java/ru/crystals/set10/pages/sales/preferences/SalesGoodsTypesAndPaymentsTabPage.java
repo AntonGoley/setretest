@@ -10,8 +10,8 @@ import ru.crystals.set10.pages.basic.SalesPage;
 
 public class SalesGoodsTypesAndPaymentsTabPage extends SalesPage{
 	
-	static final String LOCATOR_PRODUCT_TYPE_LIST = "productTypeList";
-	static final String LOCATOR_PRODUCT_PREFERENCES_BUTTON = "setSelectedProductTypeBtn";
+	static final String LOCATOR_PRODUCT_TYPE_LIST = "id:productTypeList";
+	static final String LOCATOR_PRODUCT_PREFERENCES_BUTTON = "id:setSelectedProductTypeBtn";
 	
 	
 	public SalesGoodsTypesAndPaymentsTabPage(WebDriver driver) {

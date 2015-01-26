@@ -13,9 +13,9 @@ import ru.crystals.set10.pages.basic.BasicElements;
 public class RegionPage extends AbstractPage{
 	
 	static final String ID_SALESSWF = "Sales";
-	static final String LOCATOR_REGION_NAME_INPUT = "regionNameTI";
-	static final String LOCATOR_ADD_CITY_BUTTON = "label=Добавить город";
-	static final String LOCATOR_BACK_BUTTON = "label=К регионам";
+	static final String LOCATOR_REGION_NAME_INPUT = "id:regionNameTI";
+	static final String LOCATOR_ADD_CITY_BUTTON = "label:Добавить город";
+	static final String LOCATOR_BACK_BUTTON = "label:К регионам";
 	
 	
 	public RegionPage(WebDriver driver) {

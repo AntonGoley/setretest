@@ -14,7 +14,7 @@ public class MainPage extends AbstractPage{
 	static final String OPERDAYBUTTON_LOCATOR = "id:operDayButton;className:BigButton";
 	static final String ID_MAINPAGESWF = "RetailX";
 	
-	static final String ID_STARTFORM = "startForm";
+	//static final String ID_STARTFORM = "startForm";
 
 	
 	static final String ID_SEARCH_GOOD = "searchParam";

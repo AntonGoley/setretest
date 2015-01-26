@@ -11,7 +11,7 @@ import static ru.crystals.set10.utils.FlexMediator.*;
 public class SalesPage extends AbstractPage{
 	
 	protected static final String ID_SALESSWF = "Sales";
-	static final String LOCATOR_MENUITEM = "topList";
+	static final String LOCATOR_MENUITEM = "id:topList";
 
 	public static final String MENU_ELEMENT_LOCATOR = "className:ElementMenuRenderer|";
 

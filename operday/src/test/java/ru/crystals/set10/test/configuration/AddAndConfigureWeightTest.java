@@ -24,9 +24,13 @@ public class AddAndConfigureWeightTest extends AbstractTest{
 	
 	MainPage mainPage;
 	SalesPage salesPage;
+	EquipmentPage equipmentPage;
 	NewEquipmentPage  newEqupment;
 	WeightGoodPage weightGood;
 	RetailShopWeightTabPage shopWeightTab;
+	
+	String scalesGroup =  "VirtualScales";
+	String scalesItem =  "VirtualScales"; 
 	
 	
 	@BeforeClass
@@ -38,11 +42,14 @@ public class AddAndConfigureWeightTest extends AbstractTest{
 	@Test (description = "Добавление виртуальных весов (как оборудования) на магазин", 
 			priority = 1)
 	public void addVirtualScalesTest(){
-		//TODO: добавить проверку
-		newEqupment = salesPage.navigateMenu(1, EquipmentPage.class)
-			.addNewEquipment();
-		newEqupment.addEquipment("VirtualScales", "7", "VirtualScales")
-			.ifEqupmentOnPage("VirtualScales");
+		equipmentPage = salesPage.navigateMenu(1, EquipmentPage.class);
+		
+		newEqupment = equipmentPage.addNewEquipment();
+		equipmentPage = newEqupment.addEquipment(scalesGroup, scalesItem);
+		
+		Assert.assertTrue(equipmentPage.getEqupmentTypeCount(scalesItem) > 0, 
+				"Новые весы " + scalesItem + " не добавлены в обородувание");
+		
 	}
 	
 	@Test (description = "Привязка виртуальных весов к шаблону в магазине", 

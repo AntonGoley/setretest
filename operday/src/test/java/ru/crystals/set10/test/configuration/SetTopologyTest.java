@@ -5,12 +5,10 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-
 import ru.crystals.set10.config.Config;
 import ru.crystals.set10.pages.basic.*;
 import ru.crystals.set10.pages.sales.cashiers.CashiersMainPage;
 import ru.crystals.set10.pages.sales.cashiers.CashierConfigPage;
-import ru.crystals.set10.pages.sales.equipment.EquipmentPage;
 import ru.crystals.set10.pages.sales.equipment.NewEquipmentPage;
 import ru.crystals.set10.pages.sales.externalsystems.ExternalSystemsBankTabPage;
 import ru.crystals.set10.pages.sales.externalsystems.NewBankPage;
@@ -24,7 +22,7 @@ import ru.crystals.set10.test.AbstractTest;
 import ru.crystals.set10.utils.DbAdapter;
 import ru.crystals.set10.utils.DisinsectorTools;
 import ru.crystals.set10.utils.SoapRequestSender;
-import static ru.crystals.set10.pages.basic.SalesPage.*;
+
 
 public class SetTopologyTest extends AbstractTest{
 	
@@ -121,16 +119,6 @@ public class SetTopologyTest extends AbstractTest{
 	public void addBankTest(){
 		addBank(Config.BANK_NAME_1);
 		addBank(Config.BANK_NAME_2);
-	}
-	
-	@Test (enabled = false)
-	public void addVirtualScalesTest(){
-		mainPage = new LoginPage(getDriver(), Config.RETAIL_URL).doLogin(Config.MANAGER, Config.MANAGER_PASSWORD);
-		salesPage = mainPage.openSales();
-		newEqupment = salesPage.navigateMenu(1, EquipmentPage.class)
-			.addNewEquipment();
-		newEqupment.addEquipment("EasyCom", "3", "EasyCom")
-			.ifEqupmentOnPage("EasyCom");
 	}
 	
 	

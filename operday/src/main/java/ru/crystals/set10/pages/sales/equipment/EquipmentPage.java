@@ -8,8 +8,9 @@ import static ru.crystals.set10.utils.FlexMediator.*;
 
 public class EquipmentPage extends SalesPage{
 	
-	static final String BUTTON_NEW_EQUIPMENT = "label=Добавить оборудование";
-	static final String LOCATOR_EQUIPMENT_ITEM = "className:DeviceRowRenderer/text:%s";
+	static final String BUTTON_NEW_EQUIPMENT = "label:Добавить оборудование";
+	static final String LOCATOR_EQUIPMENT_ITEM = "className:DeviceRowRenderer/id:subContainer/className:UITextField;text:%s";
+	static final String LOCATOR_TABLE = "id:templateTable/className:ListBaseContentHolder|1";
 	
 	public EquipmentPage(WebDriver driver) {
 		super(driver);
@@ -21,7 +22,12 @@ public class EquipmentPage extends SalesPage{
 		return new NewEquipmentPage(getDriver());
 	}
 	
-	public boolean ifEqupmentOnPage(String equipmentItemName){
-		return waitForElementVisible(getDriver(), ID_SALESSWF, String.format(LOCATOR_EQUIPMENT_ITEM, equipmentItemName));
+	public int getEqupmentTypeCount(String equipmentItemName){
+		waitForElementVisible(getDriver(), ID_SALESSWF, LOCATOR_TABLE);
+		return getElementsNum(getDriver(), ID_SALESSWF, String.format(LOCATOR_EQUIPMENT_ITEM, equipmentItemName));
 	}
+	
+	
+	
+	
 }

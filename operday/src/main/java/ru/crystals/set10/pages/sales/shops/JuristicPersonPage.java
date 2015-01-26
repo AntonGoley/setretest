@@ -11,15 +11,15 @@ import static ru.crystals.set10.utils.FlexMediator.*;
 
 public class JuristicPersonPage extends AbstractPage {
 	
-	static final String LOCATOR_INPUT_NAME = "juristicPersonName";
-	static final String LOCATOR_INPUT_ADRESS = "physicalAddress";
-	static final String LOCATOR_INPUT_PHONE = "telephoneNumber";
+	static final String LOCATOR_INPUT_NAME = "id:juristicPersonName";
+	static final String LOCATOR_INPUT_ADRESS = "id:physicalAddress";
+	static final String LOCATOR_INPUT_PHONE = "id:telephoneNumber";
 	
-	static final String LOCATOR_INPUT_INN = "inn";
-	static final String LOCATOR_INPUT_KPP = "kpp";
-	static final String LOCATOR_INPUT_OKPO = "okpo";
-	static final String LOCATOR_INPUT_OKDP = "okdp";
-	static final String LOCATOR_BACK_BUTTON = "label=К настройкам магазина";
+	static final String LOCATOR_INPUT_INN = "id:inn";
+	static final String LOCATOR_INPUT_KPP = "id:kpp";
+	static final String LOCATOR_INPUT_OKPO = "id:okpo";
+	static final String LOCATOR_INPUT_OKDP = "id:okdp";
+	static final String LOCATOR_BACK_BUTTON = "label:К настройкам магазина";
 	
 	public JuristicPersonPage(WebDriver driver) {
 		super(driver);

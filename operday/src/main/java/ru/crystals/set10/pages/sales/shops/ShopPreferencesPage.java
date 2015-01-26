@@ -13,15 +13,15 @@ import static ru.crystals.set10.utils.FlexMediator.*;
 
 public class ShopPreferencesPage extends AbstractPage {
 	
-	static final String LOCATOR_SHOP_NUMBER_INPUT = "shopNumberTI";
-	static final String LOCATOR_SHOP_NAME_INPUT = "shopNameTI";
-	static final String LOCATOR_VIRTUAL_CHECKBOX = "virtualShopCB";
-	static final String LOCATOR_BACK_BUTTON = "label=К магазинам";
+	static final String LOCATOR_SHOP_NUMBER_INPUT = "id:shopNumberTI";
+	static final String LOCATOR_SHOP_NAME_INPUT = "id:shopNameTI";
+	static final String LOCATOR_VIRTUAL_CHECKBOX = "id:virtualShopCB";
+	static final String LOCATOR_BACK_BUTTON = "label:К магазинам";
 	//addCashB
-	static final String LOCATOR_ADD_CASH_TO_SHOP_BUTTON = "addCashB";
-	static final String LOCATOR_TABS = "id:shopSettingsTabNav;label:Кассы";
-	static final String LOCATOR_CASHES_COUNT_INPUT = "amountPole";
-	static final String LOCATOR_ADD_JURISTIC_PERSON_BUTTON = "addLegalEntityButton";
+	static final String LOCATOR_ADD_CASH_TO_SHOP_BUTTON = "id:addCashB";
+	static final String LOCATOR_TABS = "id:shopSettingsTabNav/label:Кассы|0";
+	static final String LOCATOR_CASHES_COUNT_INPUT = "id:amountPole";
+	static final String LOCATOR_ADD_JURISTIC_PERSON_BUTTON = "id:addLegalEntityButton";
 	static final String LOCATOR_CASHES_TOTAL = "id:shopCashesTab/id:pagination";
 
 	

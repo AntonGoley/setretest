@@ -45,6 +45,11 @@ public class FlexMediator {
 		return ecxecuteAndReturnString(driver, String.format("return document.getElementById('%s').getFlexSelection('%s', '')", swfSrc, flexId));	
 	}
 	
+	public static int getElementsNum(WebDriver driver, String swfSrc, String flexId){
+		return  Integer.valueOf(
+				ecxecuteAndReturnString(driver, String.format("return document.getElementById('%s').getElementsNum('%s')", swfSrc, flexId)));
+	}
+	
 	/*
 	 * args - [property value] 
 	 */
@@ -54,7 +59,7 @@ public class FlexMediator {
 	}
 	
 	public static void waitForElement(WebDriver driver, String swfSrc, String flexId) {
-		//DisinsectorTools.delay(200);
+		DisinsectorTools.delay(100);
 		int timeout = 0;
 		String result = "false";
 		while (timeout < 10000 ){
@@ -73,7 +78,9 @@ public class FlexMediator {
 
 		};
 	}
-
+	
+	
+	
 	public static boolean waitForElementVisible(WebDriver driver, String swfSrc, String flexId) {
 		return waitForProperty(driver, swfSrc, flexId, new String[]{"visible", "true"});
 	}

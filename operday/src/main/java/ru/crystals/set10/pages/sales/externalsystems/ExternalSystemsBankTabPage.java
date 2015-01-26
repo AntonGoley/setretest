@@ -8,7 +8,7 @@ import static ru.crystals.set10.utils.FlexMediator.*;
 
 public class ExternalSystemsBankTabPage extends SalesPage{
 	
-	static final String BUTTON_NEW_BANK = "label=Добавить банк";
+	static final String BUTTON_NEW_BANK = "label:Добавить банк";
 	
 	
 	public ExternalSystemsBankTabPage(WebDriver driver) {

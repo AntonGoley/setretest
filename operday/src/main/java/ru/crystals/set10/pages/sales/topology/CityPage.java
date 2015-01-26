@@ -11,8 +11,8 @@ import ru.crystals.set10.pages.basic.SalesPage;
 
 public class CityPage extends SalesPage{
 	
-	static final String LOCATOR_CITY_NAME_INPUT = "cityNameTI";
-	static final String LOCATOR_BACK_BUTTON = "label=К городам";
+	static final String LOCATOR_CITY_NAME_INPUT = "id:cityNameTI";
+	static final String LOCATOR_BACK_BUTTON = "label:К городам";
 	
 	
 	public CityPage(WebDriver driver) {
