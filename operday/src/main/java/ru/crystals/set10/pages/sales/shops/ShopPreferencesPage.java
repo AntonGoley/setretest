@@ -19,8 +19,7 @@ public class ShopPreferencesPage extends AbstractPage {
 	static final String LOCATOR_BACK_BUTTON = "label=К магазинам";
 	//addCashB
 	static final String LOCATOR_ADD_CASH_TO_SHOP_BUTTON = "addCashB";
-	static final String LOCATOR_TABS = "shopSettingsTabNav";
-	static final String LOCATOR_CASHES_TAB = "Кассы";
+	static final String LOCATOR_TABS = "id:shopSettingsTabNav;label:Кассы";
 	static final String LOCATOR_CASHES_COUNT_INPUT = "amountPole";
 	static final String LOCATOR_ADD_JURISTIC_PERSON_BUTTON = "addLegalEntityButton";
 	static final String LOCATOR_CASHES_TOTAL = "id:shopCashesTab/id:pagination";
@@ -51,7 +50,7 @@ public class ShopPreferencesPage extends AbstractPage {
 	public ShopPreferencesPage addCashes(int cashCount){
 		int totalCashesBefore;
 		//TODO: вынести Кассы в элемент
-		clickElement(getDriver(), ID_SALESSWF, LOCATOR_TABS, LOCATOR_CASHES_TAB);
+		clickElement(getDriver(), ID_SALESSWF, LOCATOR_TABS);
 		DisinsectorTools.delay(1500);
 		typeText(getDriver(), ID_SALESSWF, LOCATOR_CASHES_COUNT_INPUT, String.valueOf(cashCount));
 		totalCashesBefore = getTotalCashesInShop();

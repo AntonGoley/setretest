@@ -7,20 +7,12 @@ import org.openqa.selenium.WebDriver;
 
 
 public class FlexMediator {
-	
+
 	protected static final Logger log = Logger.getLogger(FlexMediator.class);
 	
 	public static void clickElement(WebDriver driver, String swfSrc, String flexId) {
 		waitForElement(driver, swfSrc, flexId);
-		ecxecute(driver, String.format("document.getElementById('%s').doFlexClick('%s', '')", swfSrc, flexId));	
-	}
-	
-	/*
-	 * Клик по табу и др. элементам, где передаются аргументы
-	 */
-	public static void clickElement(WebDriver driver, String swfSrc, String flexId, String arg) {
-		waitForElement(driver, swfSrc, flexId);
-		ecxecute(driver, String.format("document.getElementById('%s').doFlexClick('%s', '%s')", swfSrc, flexId, arg));	
+		ecxecute(driver, String.format("document.getElementById('%s').doFlexClick('%s')", swfSrc, flexId));
 	}
 
 	public static void typeText(WebDriver driver, String swfSrc, String flexId, String text) {
@@ -30,7 +22,7 @@ public class FlexMediator {
 	
 	public static void doFlexMouseDown(WebDriver driver, String swfSrc, String flexId) {
 		waitForElement(driver, swfSrc, flexId);
-		ecxecute(driver, String.format("document.getElementById('%s').doFlexMouseDown('%s', '')", swfSrc, flexId));	
+		ecxecute(driver, String.format("document.getElementById('%s').doFlexMouseDown('%s')", swfSrc, flexId));
 	}
 	
 	public static void checkBoxValue(WebDriver driver, String swfSrc, String flexId, boolean checkBoxValue) {
@@ -62,8 +54,20 @@ public class FlexMediator {
 	}
 	
 	public static void waitForElement(WebDriver driver, String swfSrc, String flexId) {
-		DisinsectorTools.delay(200);
-		ecxecute(driver, String.format("document.getElementById('%s').doFlexWaitForElement('%s', '10000')", swfSrc, flexId));
+		//DisinsectorTools.delay(200);
+		int timeout = 0;
+		String result = "false";
+		while (timeout < 10000 ){
+			result = (String) ecxecuteAndReturnString(driver, String.format("return document.getElementById('%s').findElement('%s')", swfSrc, flexId));
+			if (result.equals("true")) {
+				break;
+			}
+			sleep(200);
+			timeout+=200;
+		}
+		if (!result.equals("true")) {
+			throw new NoSuchElementException("Не найден элемент: " + flexId);
+		}
 		if (!waitForElementVisible(driver, swfSrc, flexId)){
 			throw new NoSuchElementException("Не найден элемент: " + flexId);
 
@@ -83,7 +87,7 @@ public class FlexMediator {
 		int timeout = 0;
 		while (timeout < 15000 ){
 			result = (String) ecxecuteAndReturnString(driver, String.format("return document.getElementById('%s').getFlexProperty('%s', '%s')", swfSrc, flexId, args[0]));
-			if (result.equals(args[1])) {
+			if (result != null && result.equals(args[1])) {
 				return true;
 			}	
 			sleep(200);

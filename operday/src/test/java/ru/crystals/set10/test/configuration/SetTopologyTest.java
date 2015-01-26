@@ -127,7 +127,7 @@ public class SetTopologyTest extends AbstractTest{
 	public void addVirtualScalesTest(){
 		mainPage = new LoginPage(getDriver(), Config.RETAIL_URL).doLogin(Config.MANAGER, Config.MANAGER_PASSWORD);
 		salesPage = mainPage.openSales();
-		newEqupment = salesPage.navigateMenu(SALES_MENU_EQUIPMENT, "1", EquipmentPage.class)
+		newEqupment = salesPage.navigateMenu(1, EquipmentPage.class)
 			.addNewEquipment();
 		newEqupment.addEquipment("EasyCom", "3", "EasyCom")
 			.ifEqupmentOnPage("EasyCom");
@@ -164,7 +164,7 @@ public class SetTopologyTest extends AbstractTest{
 	}
 	
 	private void addRegionAndCity() {
-		topologyPage = salesPage.navigateMenu(SALES_MENU_TOPOLOGY, "1", TopologyPage.class);
+		topologyPage = salesPage.navigateMenu(1, TopologyPage.class);
 		regionPage = topologyPage.addRegion().setRegionName("TestRegion");
 		cityPage = regionPage.addCity();
 		cityPage.setCityName("TestCity");
@@ -173,7 +173,7 @@ public class SetTopologyTest extends AbstractTest{
 	
 	private void addShop(String shopName, String shopNumber, boolean useOwnServer) {
 		salesPage = new SalesPage(getDriver());
-		shopPage = salesPage.navigateMenu(SALES_MENU_SHOPS, "0", ShopPage.class);
+		shopPage = salesPage.navigateMenu(0, ShopPage.class);
 		shopPreferences = shopPage.addShop();
 		shopPreferences.setName(shopName).
 						setShopNumber(shopNumber).
@@ -207,7 +207,7 @@ public class SetTopologyTest extends AbstractTest{
 		getDriver().navigate().refresh();
 		DisinsectorTools.delay(1000);
 		salesPage = new SalesPage(getDriver());
-		shopPage = salesPage.navigateMenu(SALES_MENU_SHOPS, "0", ShopPage.class);
+		shopPage = salesPage.navigateMenu(0, ShopPage.class);
 		shopPreferences = shopPage.openShopPreferences(shopName);
 	}
 	
@@ -222,7 +222,7 @@ public class SetTopologyTest extends AbstractTest{
 		getDriver().navigate().refresh();
 		DisinsectorTools.delay(1000);
 		cashierConfig = salesPage
-				.navigateMenu(SALES_MENU_CASHIERS, "5", CashiersMainPage.class)
+				.navigateMenu(5, CashiersMainPage.class)
 				.addCashier();
 		cashierConfig.addNewCashier(
 				Config.CASHIER_ADMIN_NAME,
@@ -237,7 +237,7 @@ public class SetTopologyTest extends AbstractTest{
 		getDriver().navigate().refresh();
 		DisinsectorTools.delay(1000);
 		bankTab = salesPage
-				.navigateMenu(SALES_MENU_EXTERNAL_SYSTEMS, "3", ExternalSystemsBankTabPage.class);
+				.navigateMenu(3, ExternalSystemsBankTabPage.class);
 		newBankPage = bankTab.addNewBank();
 		newBankPage.addBank(bankName);
 	}

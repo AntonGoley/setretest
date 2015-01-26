@@ -19,7 +19,7 @@ public class  PaymentTransactionsPage extends OperDayPage implements SaveFile{
 	}
 	
 	public boolean validateData(String locatorText){
-		return (boolean) waitForElementVisible(getDriver(), ID_OPERDAYSWF, String.format("text=%s", locatorText));
+		return (boolean) waitForElementVisible(getDriver(), ID_OPERDAYSWF, locatorText);
 		//return (boolean) waitForElementVisible(getDriver(), ID_OPERDAYSWF, String.format("text=%s", locatorText));
 	}
 	

@@ -22,7 +22,9 @@ import ru.crystals.set10.utils.DisinsectorTools;
 import static ru.crystals.set10.pages.operday.searchcheck.PaymentTransactionsPage.LINK_SAVE_EXCEL;
 
 public class BankTransactionInCheckTest extends AbstractTest {
-	
+
+	public static final String LABEL_CLASS_LOCATOR = "className:Label";
+
 	MainPage mainPage;
 	CheckSearchPage searchCheck;
 	ReportConfigPage RefundChecksConfigPage;
@@ -60,27 +62,27 @@ public class BankTransactionInCheckTest extends AbstractTest {
 	@DataProvider (name = "inValidBankTransaction")
 	public Object[][] setInValidTransactionData(){
 		return new Object[][]{
-				{"Код авторизации", inValidAuthorizationCode},
-				{"Сообщение", inValidMessage},
-				{"Код ответа", inValidResponseCode},
-				{"Код банка", inValidBankId},
-				{"Номер карты", inValidBankCardNumber},
-				{"Код ответа сервера", String.valueOf(inValidResultCode)},
+				{"Код авторизации", getTransactionElementLabelLocator("authorizationCodeRow", inValidAuthorizationCode)},
+				{"Сообщение", getTransactionElementLabelLocator("messageRow", inValidMessage)},
+				{"Код ответа", getTransactionElementLabelLocator("bankResponseCodeRow", inValidResponseCode)},
+				{"Код банка", getTransactionElementLabelLocator("bankRow", inValidBankId)},
+				{"Номер карты", getTransactionElementLabelLocator("cardRow", inValidBankCardNumber)},
+				{"Код ответа сервера", getTransactionElementLabelLocator("serverResponseCodeRow", String.valueOf(inValidResultCode))},
 		};
 	}
 	
 	@DataProvider (name = "validBankTransaction")
 	public Object[][] setValidTransactionData(){
 		return new Object[][]{
-				{"Код авторизации", validAuthorizationCode},
-				{"Сообщение", validMessage},
-				{"Код ответа", validResponseCode},
-				{"Код банка", validBankId},
-				{"Номер карты", validBankCardNumber},
-				{"Код ответа сервера", String.valueOf(validResultCode)}
+				{"Код авторизации", getTransactionElementLabelLocator("authorizationCodeRow", validAuthorizationCode)},
+				{"Сообщение", getTransactionElementLabelLocator("messageRow", validMessage)},
+				{"Код ответа", getTransactionElementLabelLocator("bankResponseCodeRow", validResponseCode)},
+				{"Код банка", getTransactionElementLabelLocator("bankRow", validBankId)},
+				{"Номер карты", getTransactionElementLabelLocator("cardRow", validBankCardNumber)},
+				{"Код ответа сервера", getTransactionElementLabelLocator("serverResponseCodeRow", String.valueOf(validResultCode))}
 		};
 	}
-	
+
 	@BeforeClass
 	public void prepareData() {
 		/*
@@ -150,6 +152,10 @@ public class BankTransactionInCheckTest extends AbstractTest {
 		purchase = payments.setBankCardPayment(BankCardPaymentEntity.class, purchase, purchase.getCheckSumEnd(), card, authData);	
 		
 		return purchase;
+	}
+
+	private String getTransactionElementLabelLocator(String parentID, String text) {
+		return "id:" + parentID + "/text:" + text + ";" + LABEL_CLASS_LOCATOR;
 	}
 	
 }
