@@ -13,9 +13,9 @@ import static ru.crystals.set10.utils.FlexMediator.*;
 public class OperDayPage extends AbstractPage{
 	
 	protected static final String ID_OPERDAYSWF = "OperDay";
-	static final String LOCATOR_TABLEREPORTS = "label=Табличные отчеты";
-	static final String LOCATOR_SEARCH_CHECK = "label=Поиск чеков";
-	static final String LOCATOR_SEARCH_CAHSES= "label=Кассы";
+	static final String LOCATOR_TABLEREPORTS = "label:Табличные отчеты";
+	static final String LOCATOR_SEARCH_CHECK = "label:Поиск чеков";
+	static final String LOCATOR_SEARCH_CAHSES= "label:Кассы";
 	protected String LINK_SAVE_EXCEL;
 	
 	/* 

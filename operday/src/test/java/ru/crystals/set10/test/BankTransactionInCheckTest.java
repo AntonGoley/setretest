@@ -22,9 +22,7 @@ import ru.crystals.set10.utils.DisinsectorTools;
 import static ru.crystals.set10.pages.operday.searchcheck.PaymentTransactionsPage.LINK_SAVE_EXCEL;
 
 public class BankTransactionInCheckTest extends AbstractTest {
-
-	public static final String LABEL_CLASS_LOCATOR = "className:Label";
-
+	
 	MainPage mainPage;
 	CheckSearchPage searchCheck;
 	ReportConfigPage RefundChecksConfigPage;
@@ -62,24 +60,26 @@ public class BankTransactionInCheckTest extends AbstractTest {
 	@DataProvider (name = "inValidBankTransaction")
 	public Object[][] setInValidTransactionData(){
 		return new Object[][]{
-				{"Код авторизации", getTransactionElementLabelLocator("authorizationCodeRow", inValidAuthorizationCode)},
-				{"Сообщение", getTransactionElementLabelLocator("messageRow", inValidMessage)},
-				{"Код ответа", getTransactionElementLabelLocator("bankResponseCodeRow", inValidResponseCode)},
-				{"Код банка", getTransactionElementLabelLocator("bankRow", inValidBankId)},
-				{"Номер карты", getTransactionElementLabelLocator("cardRow", inValidBankCardNumber)},
-				{"Код ответа сервера", getTransactionElementLabelLocator("serverResponseCodeRow", String.valueOf(inValidResultCode))},
+				{"Код авторизации", PaymentTransactionsPage.LOCATOR_AUTHORIZATION_CODE, inValidAuthorizationCode},
+				{"Сообщение", PaymentTransactionsPage.LOCATOR_MESSAGE, inValidMessage},
+				{"Код ответа банка", PaymentTransactionsPage.LOCATOR_BANK_RESPONSE_CODE, inValidResponseCode},
+				{"Банк", PaymentTransactionsPage.LOCATOR_BANK_ID, inValidBankId},
+				{"Карта", PaymentTransactionsPage.LOCATOR_CARD_NUMBER, inValidBankCardNumber},
+				{"Код ответа сервера", PaymentTransactionsPage.LOCATOR_SERVER_RESPONSE_CODE, String.valueOf(inValidResultCode)},
+				{"Терминал", PaymentTransactionsPage.LOCATOR_TERMINAL, terminalId},
 		};
 	}
 	
 	@DataProvider (name = "validBankTransaction")
 	public Object[][] setValidTransactionData(){
 		return new Object[][]{
-				{"Код авторизации", getTransactionElementLabelLocator("authorizationCodeRow", validAuthorizationCode)},
-				{"Сообщение", getTransactionElementLabelLocator("messageRow", validMessage)},
-				{"Код ответа", getTransactionElementLabelLocator("bankResponseCodeRow", validResponseCode)},
-				{"Код банка", getTransactionElementLabelLocator("bankRow", validBankId)},
-				{"Номер карты", getTransactionElementLabelLocator("cardRow", validBankCardNumber)},
-				{"Код ответа сервера", getTransactionElementLabelLocator("serverResponseCodeRow", String.valueOf(validResultCode))}
+				{"Код авторизации", PaymentTransactionsPage.LOCATOR_AUTHORIZATION_CODE, validAuthorizationCode},
+				{"Сообщение", PaymentTransactionsPage.LOCATOR_MESSAGE, validMessage},
+				{"Код ответа банка", PaymentTransactionsPage.LOCATOR_BANK_RESPONSE_CODE, validResponseCode},
+				{"Банк", PaymentTransactionsPage.LOCATOR_BANK_ID, validBankId},
+				{"Карта", PaymentTransactionsPage.LOCATOR_CARD_NUMBER, validBankCardNumber},
+				{"Код ответа сервера", PaymentTransactionsPage.LOCATOR_SERVER_RESPONSE_CODE, String.valueOf(validResultCode)},
+				{"Терминал", PaymentTransactionsPage.LOCATOR_TERMINAL, terminalId},
 		};
 	}
 
@@ -100,14 +100,18 @@ public class BankTransactionInCheckTest extends AbstractTest {
 	
 	@Test (description = "SRTE-75. Просмотр в чеке информации о успешной банковской транзакции",
 			dataProvider = "validBankTransaction")
-	public void testValidBankTransactionExist(String field, String fieldValue){
-		Assert.assertTrue(paymentTransactions.validateData(fieldValue), "Не отображается значения поля для банковской транзакции");
+	public void testValidBankTransactionExist(String fieldName, String fieldLocator, String fieldValue){
+		Assert.assertEquals(paymentTransactions.getTransactionElementValue(fieldLocator, 2), 
+				fieldName + ":" + fieldValue,
+				"Не отображается/неверное значение поля для положительной банковской транзакции");
 	}
 	
 	@Test (description = "SRTE-75. Просмотр в чеке информации о отклоненной банковской транзакции",
 			dataProvider = "inValidBankTransaction")
-	public void testInvalidBankTransactionExist(String field, String fieldValue){
-		Assert.assertTrue(paymentTransactions.validateData(fieldValue), "Не отображается значения поля для банковской транзакции");
+	public void testInvalidBankTransactionExist(String fieldName, String fieldLocator, String fieldValue){
+		Assert.assertEquals(paymentTransactions.getTransactionElementValue(fieldLocator, 1), 
+				fieldName + ":" + fieldValue,
+				"Не отображается/неверное значение поля для отклоненной банковской транзакции");
 	}
 	
 	@Test(description = "SRTE-75. Выгрузка банковских транзакций в excel")
@@ -151,11 +155,11 @@ public class BankTransactionInCheckTest extends AbstractTest {
 		BankCard card = payments.setBankCardData(validBankCardNumber, "Visa");
 		purchase = payments.setBankCardPayment(BankCardPaymentEntity.class, purchase, purchase.getCheckSumEnd(), card, authData);	
 		
+//		DisinsectorTools.delay(500);
+//		BankCard card2 = payments.setBankCardData(validBankCardNumber, "MasterCard");
+//		purchase = payments.setBankCardPayment(BankCardPaymentEntity.class, purchase, purchase.getCheckSumEnd() - purchase.getCheckSumEnd()/2, card2, authData);
+		
 		return purchase;
-	}
-
-	private String getTransactionElementLabelLocator(String parentID, String text) {
-		return "id:" + parentID + "/text:" + text + ";" + LABEL_CLASS_LOCATOR;
 	}
 	
 }
