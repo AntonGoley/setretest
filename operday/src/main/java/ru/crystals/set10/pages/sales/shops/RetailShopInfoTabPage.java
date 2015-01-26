@@ -11,7 +11,7 @@ import ru.crystals.set10.pages.basic.SalesPage;
 
 public class RetailShopInfoTabPage extends SalesPage{
 	
-	static final String TAB_LOCATOR = "toggleBur";
+	static final String TAB_LOCATOR = "id:mainVBox/id:toggleBur";
 	
 	public static final String TAB_INFORMATION = "0";
 	public static final String TAB_CASHES = "1";
@@ -24,6 +24,7 @@ public class RetailShopInfoTabPage extends SalesPage{
 	}
 	
 	public <T> T navigateTab(String tabIndex, Class<T> tab){
+		waitForProperty(getDriver(), ID_SALESSWF, TAB_LOCATOR, new String[]{"numChildren","4"});
 		doFlexProperty(getDriver(), ID_SALESSWF, TAB_LOCATOR, new String[] {"selectedIndex", tabIndex});
 		return PageFactory.initElements(getDriver(), tab);
 	}

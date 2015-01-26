@@ -55,6 +55,7 @@ public class AddAndConfigureWeightTest extends AbstractTest{
 	@Test (description = "Привязка виртуальных весов к шаблону в магазине", 
 			priority = 2)
 	public void bindVirtualScalesTest(){
+		
 		int  totalScalesBefore;
 		shopWeightTab = salesPage.navigateMenu(0, RetailShopInfoTabPage.class)
 				.navigateTab(TAB_WEIGHT, RetailShopWeightTabPage.class);

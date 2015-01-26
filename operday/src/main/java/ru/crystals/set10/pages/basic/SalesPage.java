@@ -26,7 +26,6 @@ public class SalesPage extends AbstractPage{
 		//TODO: убрать, когда будет нормальный выбор из меню
 		DisinsectorTools.delay(1000);
 		// + 1 из-за hiddenObject, размещенного в начале
-		//Sales0.mainDisplay.mainContainer.stack.listView.HBox48.leftMenu.menuStack.vs_work.menu.content.topList.ListBaseContentHolder98.hiddenItem
 		doFlexMouseDown(getDriver(), ID_SALESSWF, MENU_ELEMENT_LOCATOR + Integer.toString(menuItemPosition + 1));
 		clickElement(getDriver(), ID_SALESSWF, MENU_ELEMENT_LOCATOR + Integer.toString(menuItemPosition + 1));
 		DisinsectorTools.delay(1000);
