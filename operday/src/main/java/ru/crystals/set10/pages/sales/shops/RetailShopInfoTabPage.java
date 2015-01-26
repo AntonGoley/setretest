@@ -11,7 +11,7 @@ import ru.crystals.set10.pages.basic.SalesPage;
 
 public class RetailShopInfoTabPage extends SalesPage{
 	
-	static final String TAB_LOCATOR = "id:mainVBox/id:toggleBur";
+	static final String TAB_LOCATOR = "id:mainVBox/id:toggleBur|0";
 	
 	public static final String TAB_INFORMATION = "0";
 	public static final String TAB_CASHES = "1";
