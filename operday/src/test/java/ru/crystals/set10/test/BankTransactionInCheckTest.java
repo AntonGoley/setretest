@@ -1,6 +1,8 @@
 package ru.crystals.set10.test;
 
 
+import java.math.BigDecimal;
+
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
@@ -33,6 +35,7 @@ public class BankTransactionInCheckTest extends AbstractTest {
 	long checkNumber;
 	String terminalId = "СА43299";
 	
+	private PurchaseEntity purchase;
 	/*
 	 * Поля для валидации отклоненной транзакций
 	 */
@@ -67,6 +70,7 @@ public class BankTransactionInCheckTest extends AbstractTest {
 				{"Карта", PaymentTransactionsPage.LOCATOR_CARD_NUMBER, inValidBankCardNumber},
 				{"Код ответа сервера", PaymentTransactionsPage.LOCATOR_SERVER_RESPONSE_CODE, String.valueOf(inValidResultCode)},
 				{"Терминал", PaymentTransactionsPage.LOCATOR_TERMINAL, terminalId},
+				{"Запрошено", PaymentTransactionsPage.LOCATOR_AMOUNT_REQUESTED, DisinsectorTools.getCheckSum(purchase.getCheckSumEnd())},
 		};
 	}
 	
@@ -80,6 +84,7 @@ public class BankTransactionInCheckTest extends AbstractTest {
 				{"Карта", PaymentTransactionsPage.LOCATOR_CARD_NUMBER, validBankCardNumber},
 				{"Код ответа сервера", PaymentTransactionsPage.LOCATOR_SERVER_RESPONSE_CODE, String.valueOf(validResultCode)},
 				{"Терминал", PaymentTransactionsPage.LOCATOR_TERMINAL, terminalId},
+				{"Запрошено", PaymentTransactionsPage.LOCATOR_AMOUNT_REQUESTED, DisinsectorTools.getCheckSum(purchase.getCheckSumEnd())},
 		};
 	}
 
@@ -92,7 +97,9 @@ public class BankTransactionInCheckTest extends AbstractTest {
 		mainPage = new LoginPage(getDriver(), Config.RETAIL_URL).doLogin(Config.MANAGER, Config.MANAGER_PASSWORD);
 		searchCheck = mainPage.openOperDay().openCheckSearch();
 		
- 		searchCheck.openFilter().setCheckBarcode((PurchaseEntity)cashEmulator.nextPurchase(setPayments())).doSearch();
+		purchase = (PurchaseEntity)cashEmulator.nextPurchase(setPayments());
+		
+		searchCheck.openFilter().setCheckBarcode(purchase).doSearch();
  		checkContent = searchCheck.selectFirstCheck();
  		paymentTransactions = checkContent.openPaymentTransactionsForm();
  		

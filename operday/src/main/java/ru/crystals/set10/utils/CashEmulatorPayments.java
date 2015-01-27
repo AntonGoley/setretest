@@ -2,7 +2,6 @@ package ru.crystals.set10.utils;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 import ru.crystals.cards.common.CardTypes;
 import ru.crystals.pos.bank.datastruct.AuthorizationData;
@@ -55,16 +54,7 @@ public class CashEmulatorPayments {
 	{
 		List<PaymentTransactionEntity> paymenTransactions = new ArrayList<PaymentTransactionEntity>();
 		paymenTransactions.addAll(purchase.getTransactions());
-		
-//		/*
-//		 * Берем существующие транзакции
-//		 */
-//		Iterator<PaymentTransactionEntity> i = purchase.getTransactions().iterator();
-//		PaymentTransactionEntity ptr;
-//		while (i.hasNext()){
-//			ptr = i.next();
-//			paymenTransactions.add(ptr);
-//		}
+
 		
 		/*
 		 * Создаем новую банковскую транзакцию и привязываем ее к оплате,
