@@ -153,11 +153,4 @@ public class DisinsectorTools {
 	public static long random(int max) {
 	    return Math.round(Math.random() * max);
 	}
-	
-	public static String getCheckSum(long sum){
-		BigDecimal result;
-		result = new BigDecimal(new BigInteger(String.valueOf(sum)), 2);
-		return String.valueOf(result);
-	}
-	
 }
