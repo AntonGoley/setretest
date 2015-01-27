@@ -56,7 +56,7 @@ public class WeightBaseTest extends WeightAbstractTest {
 				ACTION_TYPE_CLEAR, "Товар не выгружен из весов");
 	}
 	
-	@Test (description = "Весовой товар выгружается из весов, если у баркода поле delete-from-cash true",
+	@Test (description = "Весовой товар выгружается из весов, если у товара поле delete-from-cash true",
 			dependsOnMethods = "testGoodWeightLoadToScales")
 	public void testGoodWeightUnloadFromScalesIfDeleteFromCache(){
 		scales.clearVScalesFileData();

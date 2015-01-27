@@ -82,8 +82,8 @@ public class WeightLekondTest extends WeightAbstractTest {
 	}
 	
 	
-	@Test (description = "SRTE-119. Весовой товар загружается на весы, если загружен новый леконд (который отменяет действие леконда, загруженного прежде), "
-									+ "разрешающий продажу товара (с сегодня).")
+	@Test (description = "SRTE-119. Весовой товар загружается на весы, если загружен новый леконд, разрешающий продажу товара"
+			+ " (новый леконд отменяет действие леконда, загруженного прежде)")
 	public void testGoodLoadedIfLecondAllowSalesAfterBan(){
 		
 		/*
@@ -124,7 +124,7 @@ public class WeightLekondTest extends WeightAbstractTest {
 
 	}
 	
-	@Test (description = "SRTE-119. Весовой товар выгружается на весы, если загружен леконд разрешающий продажу товара (со вчера на сегодня)")
+	@Test (description = "SRTE-119. Весовой товар выгружается на весы, если загружен леконд разрешающий продажу товара (со вчера до завтра)")
 	public void testGoodLoadedIfLecondallowSales(){
 		/*
 		 * Сгенерить товар, который отправим после леконда
@@ -186,7 +186,8 @@ public class WeightLekondTest extends WeightAbstractTest {
 	}
 	
 	
-	@Test (description = "SRTE-119. Весовой товар загружается на весы при загрузке нового леконда, если до наст. момента товар был выгружен лекондом, запрещающим продажу его продажу ")
+	@Test (description = "SRTE-119. Весовой товар загружается в весы при загрузке нового леконда, разрешающего продажу, если до наст. момента товар был выгружен лекондом, "
+			+ "запрещающим продажу")
 	public void testGoodLoadedIfLecondallowSalesReplacingOldLecond(){
 		/*
 		 * Сгенерить товар, который отправим на весы
