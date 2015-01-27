@@ -1,13 +1,10 @@
 package ru.crystals.set10.test;
 
 
-import java.math.BigDecimal;
-
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-
 import ru.crystals.pos.bank.datastruct.AuthorizationData;
 import ru.crystals.pos.bank.datastruct.BankCard;
 import ru.crystals.pos.check.PurchaseEntity;
@@ -22,6 +19,14 @@ import ru.crystals.set10.pages.operday.tablereports.ReportConfigPage;
 import ru.crystals.set10.utils.CashEmulatorPayments;
 import ru.crystals.set10.utils.DisinsectorTools;
 import static ru.crystals.set10.pages.operday.searchcheck.PaymentTransactionsPage.LINK_SAVE_EXCEL;
+
+/*
+ * TODO: дописать тесты
+ * - проверка слипа
+ * - проверка значка успешной/отклоненной транзакции
+ * - дату
+ * - время
+ */
 
 public class BankTransactionInCheckTest extends AbstractTest {
 	
