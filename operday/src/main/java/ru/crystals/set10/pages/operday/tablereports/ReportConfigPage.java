@@ -1,7 +1,6 @@
 package ru.crystals.set10.pages.operday.tablereports;
 
 
-import java.io.File;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import ru.crystals.set10.pages.basic.AbstractPage;

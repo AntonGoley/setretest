@@ -43,7 +43,7 @@ public class CheckGeneratorTest {
 	
 	
 	@Test (	description = "Сгенерить чеки продажи")
-	public void testSendReturnCheck(){
+	public void testSendChecks(){
 		cashEmulator.nextPurchase(getCashPayment());
 		cashEmulator.nextPurchase(getBankCardPayment(BankCardPaymentEntity.class));
 		cashEmulator.nextPurchase(getBankCardPayment(ChildrenCardPaymentEntity.class));
