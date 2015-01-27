@@ -1,10 +1,11 @@
 package ru.crystals.set10.utils;
 
 
+import static ru.crystals.set10.config.Config.VIRTUAL_WEIGHT_PATH;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.lang.reflect.Method;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Iterator;
@@ -17,8 +18,6 @@ import org.apache.log4j.Logger;
 
 import ru.crystals.scales.tech.core.scales.virtual.xml.LinkToPluType;
 import ru.crystals.scales.tech.core.scales.virtual.xml.Links;
-import ru.crystals.set10.test.weight.PluParserInterface;
-import static ru.crystals.set10.config.Config.VIRTUAL_WEIGHT_PATH;
 
 public class VirtualScalesReader {
 	
@@ -64,35 +63,35 @@ public class VirtualScalesReader {
 	}
 	
 	
-	public String getPluParameterExpectedValue(String pluNumber, PluParserInterface pluParser, String expectedValue){
-		long timeout = 0;
-		vScalesFileContent.setLength(0);
-		Iterator<LinkToPluType> iterator = null ;
-		LinkToPluType linkToPlu;
-		/*
-		 * Проверяем, что файл весов создан
-		 */
-		getExpectedFileStatus(FILE_EXIST_RESPONSE);
-		
-		/*
-		 * Ждем минуту, значение необходимого параметра
-		 */
-		while (timeout < 60000) {	
-			// Перечитываем файл
-			iterator = readVirtualScales(); 
-			while (iterator.hasNext()){
-				linkToPlu = iterator.next();
-				if (linkToPlu.getPlu().getNumber() == Integer.valueOf(pluNumber)){
-						log.info(vScalesFileContent);
-						return pluParser.getParameter(linkToPlu);
-				}
-			}
-			timeout+=500;
-		}	
-		log.info("PLU " + pluNumber + " не найден в заданиях на загрузку/выгрузку");
-		log.info(vScalesFileContent);
-		return "";
-	}
+//	public String getPluParameterExpectedValue(String pluNumber, PluParserInterface pluParser, String expectedValue){
+//		long timeout = 0;
+//		vScalesFileContent.setLength(0);
+//		Iterator<LinkToPluType> iterator = null ;
+//		LinkToPluType linkToPlu;
+//		/*
+//		 * Проверяем, что файл весов создан
+//		 */
+//		getExpectedFileStatus(FILE_EXIST_RESPONSE);
+//		
+//		/*
+//		 * Ждем минуту, значение необходимого параметра
+//		 */
+//		while (timeout < 60000) {	
+//			// Перечитываем файл
+//			iterator = readVirtualScales(); 
+//			while (iterator.hasNext()){
+//				linkToPlu = iterator.next();
+//				if (linkToPlu.getPlu().getNumber() == Integer.valueOf(pluNumber)){
+//						log.info(vScalesFileContent);
+//						return pluParser.getParameter(linkToPlu);
+//				}
+//			}
+//			timeout+=500;
+//		}	
+//		log.info("PLU " + pluNumber + " не найден в заданиях на загрузку/выгрузку");
+//		log.info(vScalesFileContent);
+//		return "";
+//	}
 	
 	
 	
