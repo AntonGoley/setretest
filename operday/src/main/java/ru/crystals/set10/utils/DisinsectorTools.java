@@ -69,28 +69,11 @@ public class DisinsectorTools {
 		return result;
 	}
 	
-	// Удалить все файлы отчетов (*.xls; *.pdf) из папки загрузок хрома
-	public  void removeOldDownloadedReports(String chromeDownloadPath){
-		GenericExtFilter xlsFilter = new GenericExtFilter(".xls");
-		GenericExtFilter xlsxFilter = new GenericExtFilter(".xlsx");
-		GenericExtFilter pdfFilter = new GenericExtFilter(".pdf");
+	public void removeOldReport(String chromeDownloadPath, String filePattern){
+		File[] fileNames = fileFilter(chromeDownloadPath, filePattern);
 		
-		File dir = new File(chromeDownloadPath);
-		String[] xlsReportFileName = dir.list(xlsFilter);
-		String[] xlsxReportFileName = dir.list(xlsxFilter);
-		String[] pdfReportFileName = dir.list(pdfFilter);
-		
-		
-		for (String filePath:xlsReportFileName) {
-			new File(chromeDownloadPath + "/" + filePath).delete();
-		}
-		
-		for (String filePath:pdfReportFileName) {
-			new File(chromeDownloadPath + "/" + filePath).delete();
-		}
-		
-		for (String filePath:xlsxReportFileName) {
-			new File(chromeDownloadPath + "/" + filePath).delete();
+		for (int i=0; i<fileNames.length; i++) {
+			fileNames[i].delete();
 		}
 	}
 	
@@ -112,8 +95,8 @@ public class DisinsectorTools {
 		long waitTime = 0;
 		while (waitTime < 30000) {
 			if (fileFilter(directory, filter).length == 0) {
-				delay(500);
-				waitTime += 500;	
+				delay(200);
+				waitTime += 200;	
 			} else {
 				log.info("Файл отчета загрузился. Примерное время загрузки " + waitTime);
 				return fileFilter(directory, filter)[0];
@@ -121,18 +104,6 @@ public class DisinsectorTools {
 		}
 		log.info(String.format("Файлы, соответсвующие маске %s не найдены!", filter));
 		return new File("");
-	}
-	
-	
-	public class GenericExtFilter implements FilenameFilter {
-		String ext;
-		public GenericExtFilter(String ext) {
-			this.ext = ext;
-		}
- 
-		public boolean accept(File dir, String name) {
-			return (name.endsWith(ext));
-		}
 	}
 
 	public static void delay(long timeOut){

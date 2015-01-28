@@ -33,7 +33,7 @@
 	  		<class name="ru.crystals.set10.test.tablereports.WrongAdverstingPriceTest"/>
 		</classes>	 
   	</test>	
-  	<test name="Оплата банковской картой" >
+  	<test name="Просмотр в чеке информации по банковский транзакций" >
 	  	<classes>
 			<class name="ru.crystals.set10.test.BankTransactionInCheckTest"/>
 		</classes>	 

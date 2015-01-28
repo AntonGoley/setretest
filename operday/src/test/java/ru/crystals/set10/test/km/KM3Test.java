@@ -14,14 +14,14 @@ import ru.crystals.set10.config.Config;
 import ru.crystals.set10.pages.basic.LoginPage;
 import ru.crystals.set10.pages.operday.HTMLRepotResultPage;
 import ru.crystals.set10.pages.operday.OperDayPage;
-import ru.crystals.set10.pages.operday.cashes.Km3Page;
+import ru.crystals.set10.pages.operday.cashes.KmPage;
 import ru.crystals.set10.test.AbstractTest;
 import static ru.crystals.set10.utils.DbAdapter.*;
-import static ru.crystals.set10.pages.operday.cashes.Km3Page.*;
+import static ru.crystals.set10.pages.operday.cashes.KmPage.*;
 
 public class KM3Test extends AbstractTest{
 	
-	Km3Page km3;
+	KmPage km3;
 	OperDayPage operDay;
 	HTMLRepotResultPage htmlReportResults;
 	PurchaseEntity check;
@@ -53,20 +53,20 @@ public class KM3Test extends AbstractTest{
 		
 	}
 	
-	@Test( description = "SRL-2. Если в систему пришел первый возвратный чек, создается форма КМ3")
+	@Test( description = "SRTE-28. Если в систему пришел первый возвратный чек, создается форма КМ3")
 	public void testKM3CreatesAfter1stRefund(){
 		int km3Tablerows = km3.getKmCountOnPage(LOCATOR_KM3_TABLE);
 		returnPositions.put(1L, 1L * 1000);
 		cashEmulator.nextRefundPositions(check, returnPositions, true);
 		km3.switchToKm(LOCATOR_KM6).switchToKm(LOCATOR_KM3);
-		km3 = new Km3Page(getDriver());
+		km3 = new KmPage(getDriver());
 		Assert.assertEquals("Не появилась форма КМ3", km3Tablerows + 1, km3.getKmCountOnPage(LOCATOR_KM3_TABLE));
 	}
 	
 	
 	//TODO: переместить тетст в отдельный класс
 	@Test (	dependsOnMethods ="testKM3CreatesAfter1stRefund",
-			description = "SRL-2. Правильность заполнения формы КМ3 данными",
+			description = "SRTE-28. Правильность заполнения формы КМ3 данными",
 			dataProvider = "Поля КМ3")
 	public void testKM3Data(String fiels, String expectedValue){
 		log.info("Значение поля: " + fiels);

@@ -30,6 +30,9 @@ public class SearchCheckByOtherGroupsTest extends SearchCheckAbstractTest{
  		
 		searchCheck.doSearch();
 		Assert.assertEquals(searchCheck.getExpectedResultCount(searchResult + 1), searchResult + 1, "");
+		
+ 		testExcelExport(LOCATOR_XLS_CHECK_CONTENT, XLS_REPORT_CONTENT_PATTERN);
+ 		testExcelExport(LOCATOR_XLS_CHECK_HEADERS, XLS_REPORT_HEADERS_PATTERN);
 	}
 	
 	@Test (description = "SRTE-71. Поиск чека на ТК по коду товара (артикулу)")
@@ -50,6 +53,9 @@ public class SearchCheckByOtherGroupsTest extends SearchCheckAbstractTest{
  		
 		searchCheck.doSearch();
 		Assert.assertEquals(searchCheck.getExpectedResultCount(searchResult + 1), searchResult + 1, "");
+		
+ 		testExcelExport(LOCATOR_XLS_CHECK_CONTENT, XLS_REPORT_CONTENT_PATTERN);
+ 		testExcelExport(LOCATOR_XLS_CHECK_HEADERS, XLS_REPORT_HEADERS_PATTERN);
 	}
 	
 	@Test (description = "SRTE-71. Поиск чека по номеру скидочной карты")
@@ -70,6 +76,9 @@ public class SearchCheckByOtherGroupsTest extends SearchCheckAbstractTest{
 		
 		searchCheck.doSearch();
 		Assert.assertEquals(searchCheck.getExpectedResultCount(searchResult + 1), searchResult + 1, "");
+		
+ 		testExcelExport(LOCATOR_XLS_CHECK_CONTENT, XLS_REPORT_CONTENT_PATTERN);
+ 		testExcelExport(LOCATOR_XLS_CHECK_HEADERS, XLS_REPORT_HEADERS_PATTERN);
 	}
 	
 	@Test (enabled = false, description = "SRTE-71. Поиск чека на ТК по номеру магазина")

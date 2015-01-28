@@ -18,9 +18,9 @@ public class  CashesPage extends OperDayPage{
 		getWait().until(ExpectedConditions.visibilityOfElementLocated(By.id(ID_OPERDAYSWF)));
 	}
 	
-	public Km3Page openKmPage(){
+	public KmPage openKmPage(){
 		clickElement(getDriver(), ID_OPERDAYSWF, LOCATOR_TAB);
-		return new Km3Page(getDriver());
+		return new KmPage(getDriver());
 	}
 	
 }

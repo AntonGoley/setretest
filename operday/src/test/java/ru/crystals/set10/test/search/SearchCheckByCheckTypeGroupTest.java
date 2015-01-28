@@ -4,6 +4,7 @@ package ru.crystals.set10.test.search;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+
 import static ru.crystals.set10.pages.operday.searchcheck.CheckSearchPage.*;
 
 
@@ -26,6 +27,8 @@ public class SearchCheckByCheckTypeGroupTest extends SearchCheckAbstractTest{
  		sendCheck();
  		searchCheck.doSearch();
  		Assert.assertEquals(searchCheck.getExpectedResultCount(searchResult + 1), searchResult + 1, "");
+ 		testExcelExport(LOCATOR_XLS_CHECK_CONTENT, XLS_REPORT_CONTENT_PATTERN);
+ 		testExcelExport(LOCATOR_XLS_CHECK_HEADERS, XLS_REPORT_HEADERS_PATTERN);
 	}
 	
 	@Test (description = "SRTE-71. Поиск чека на ТК по номеру кассы")
@@ -36,6 +39,8 @@ public class SearchCheckByCheckTypeGroupTest extends SearchCheckAbstractTest{
  		
 		searchCheck.doSearch();
 		Assert.assertEquals(searchCheck.getExpectedResultCount(searchResult + 1), searchResult + 1, "");
+ 		testExcelExport(LOCATOR_XLS_CHECK_CONTENT, XLS_REPORT_CONTENT_PATTERN);
+ 		testExcelExport(LOCATOR_XLS_CHECK_HEADERS, XLS_REPORT_HEADERS_PATTERN);
 	}
 	
 	@Test (description = "SRTE-71. Поиск чека на ТК по номеру смены")
@@ -46,6 +51,8 @@ public class SearchCheckByCheckTypeGroupTest extends SearchCheckAbstractTest{
  		
 		searchCheck.doSearch();
 		Assert.assertEquals(searchCheck.getExpectedResultCount(searchResult + 1), searchResult + 1, "");
+ 		testExcelExport(LOCATOR_XLS_CHECK_CONTENT, XLS_REPORT_CONTENT_PATTERN);
+ 		testExcelExport(LOCATOR_XLS_CHECK_HEADERS, XLS_REPORT_HEADERS_PATTERN);
 	}
 	
 	@Test ( description = "SRTE-71. Поиск чека на ТК по номеру чека")
@@ -56,18 +63,24 @@ public class SearchCheckByCheckTypeGroupTest extends SearchCheckAbstractTest{
  		sendCheck();
  		searchCheck.doSearch();
  		Assert.assertEquals(searchCheck.getExpectedResultCount(searchResult + 1), searchResult + 1, "");
+ 		testExcelExport(LOCATOR_XLS_CHECK_CONTENT, XLS_REPORT_CONTENT_PATTERN);
+ 		testExcelExport(LOCATOR_XLS_CHECK_HEADERS, XLS_REPORT_HEADERS_PATTERN);
 	}
 	
 	@Test (description = "SRTE-71. Поиск чека на ТК по штрих коду чека")
 	public void testSearchCheckByCheckBarCode(){
 		searchCheck.setFilterText(FILTER_CATEGORY_CHECK_BAR_CODE, searchCheck.getCheckBarcode(purchase)).doSearch();
 		Assert.assertEquals(searchCheck.getExpectedResultCount(1), 1, "");
+ 		testExcelExport(LOCATOR_XLS_CHECK_CONTENT, XLS_REPORT_CONTENT_PATTERN);
+ 		testExcelExport(LOCATOR_XLS_CHECK_HEADERS, XLS_REPORT_HEADERS_PATTERN);
 	}
 	
 	@Test (enabled = false, description = "SRTE-71. Поиск чека на ТК по табельному номеру кассира")
 	public void testSearchCheckByCashierTabNum(){
 		searchCheck.setFilterMultiText(FILTER_CATEGORY_CHECK_BAR_CODE, searchCheck.getCheckBarcode(purchase)).doSearch();
 		Assert.assertEquals(searchCheck.getExpectedResultCount(1), 1, "");
+ 		testExcelExport(LOCATOR_XLS_CHECK_CONTENT, XLS_REPORT_CONTENT_PATTERN);
+ 		testExcelExport(LOCATOR_XLS_CHECK_HEADERS, XLS_REPORT_HEADERS_PATTERN);
 	}
 	
 }

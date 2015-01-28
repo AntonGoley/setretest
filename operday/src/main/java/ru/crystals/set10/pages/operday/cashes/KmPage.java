@@ -7,7 +7,7 @@ import ru.crystals.set10.pages.operday.OperDayPage;
 import static ru.crystals.set10.utils.FlexMediator.*;
 
 
-public class  Km3Page extends OperDayPage{
+public class  KmPage extends OperDayPage{
 	
 	public static final String LOCATOR_KM3 = "КМ-3";
 	public static final String LOCATOR_KM6 = "КМ-6";
@@ -20,14 +20,14 @@ public class  Km3Page extends OperDayPage{
 	
 	
 	
-	public Km3Page(WebDriver driver) {
+	public KmPage(WebDriver driver) {
 		super(driver, false);
 		getWait().until(ExpectedConditions.visibilityOfElementLocated(By.id(ID_OPERDAYSWF)));
 	}
 	
-	public Km3Page switchToKm(String kmType){
+	public KmPage switchToKm(String kmType){
 		clickElement(getDriver(), ID_OPERDAYSWF, NAVIGATOR_KM_TYTE + kmType);
-		return new Km3Page(getDriver());
+		return new KmPage(getDriver());
 	}
 	
 	public int getKmCountOnPage(String formType){

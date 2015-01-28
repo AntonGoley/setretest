@@ -1,7 +1,7 @@
 package ru.crystals.set10.test.search;
 
+import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
-
 import ru.crystals.pos.check.PurchaseEntity;
 import ru.crystals.set10.config.Config;
 import ru.crystals.set10.pages.basic.LoginPage;
@@ -74,5 +74,15 @@ public class SearchCheckAbstractTest extends AbstractTest{
 		 * успевают обновиться до нажатия кнопки поиск.
 		 */
 		DisinsectorTools.delay(1000);
+	}
+	
+	public void testExcelExport(String reportLocator, String reportFileNamePattern){
+		long fileSize = 0;
+		fileSize =  searchCheck.exportFileData(chromeDownloadPath, reportFileNamePattern, searchCheck, reportLocator).length();
+		log.info("Размер сохраненного файла: " + reportFileNamePattern + " равен " +  fileSize);
+		new DisinsectorTools().removeOldReport(chromeDownloadPath, reportFileNamePattern);
+		
+		Assert.assertTrue(fileSize > 1000, "Файл отчета " + reportFileNamePattern + " сохранился некорректно");
+		
 	}
 }

@@ -3,21 +3,41 @@ package ru.crystals.set10.pages.operday.searchcheck;
 
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+
 import ru.crystals.pos.check.PurchaseEntity;
+import ru.crystals.set10.pages.basic.SaveFile;
 import ru.crystals.set10.pages.operday.OperDayPage;
 import ru.crystals.set10.utils.DisinsectorTools;
 import static ru.crystals.set10.utils.FlexMediator.*;
 
 
-public class  CheckSearchPage extends OperDayPage{
+public class  CheckSearchPage extends OperDayPage implements SaveFile{
 	
-
+	/*
+	 * Локаторы элементов страницы
+	 */
 	static final String BUTTON_SEARCH = "findChecksButton";
 	static final String FILTER_OPEN = "expandButton";
 	
 	// результат поиска
 	static final String SEARCH_RESULT = "searchResultLabel";
 	
+	public static final String LOCATOR_XLS_CHECK_CONTENT = "label:Позиции чеков";
+	public static final String LOCATOR_XLS_CHECK_HEADERS = "label:Заголовки чеков";
+	public static final String XLS_REPORT_HEADERS_PATTERN = "PurchasePayments*.xlsx";
+	public static final String XLS_REPORT_CONTENT_PATTERN = "PurchasePositions*.xlsx";
+	
+	
+	static final String INPUT_CHECK_NUMBER = "checkNumberInput";
+	static final String BUTTON_GO_TO_CHECK = "label:Перейти к чеку";
+	// tab выбора условия поиска: по номеру карты, по штрихкоду и т.д 
+	static final String SEARCH_TAB = "tabNav";
+	
+	static final String SEARCH_RESULTS_GRID = "adg";
+	
+	/*
+	 * Лоакаторы для фильтров поиска
+	 */
 	static final String FILTER_CATEGORY = "categorySelector";
 	static final String FILTER_SELECT_FIELD = "comboBox";
 	
@@ -51,7 +71,6 @@ public class  CheckSearchPage extends OperDayPage{
 	public static final String FILTER_CATEGORY_AUTHORIZATION_CODE = "Код авторизации";
 	public static final String FILTER_CATEGORY_BANK_ID = "Код банка";
 	
-	
 	// элементы окна множественного выбора
 	private static final String FILTER_MULTI_TEXT_OPEN_INPUT = "toogleButton";
 	private static final String FILTER_MULTI_TEXT_INPUT = "valuesTextInput";
@@ -59,14 +78,6 @@ public class  CheckSearchPage extends OperDayPage{
 	
 	// элементы окна текстового поля
 	private static final String FILTER_TEXT_FIELD = "textInput";
-	
-	
-	static final String INPUT_CHECK_NUMBER = "checkNumberInput";
-	static final String BUTTON_GO_TO_CHECK = "label=Перейти к чеку";
-	// tab выбора условия поиска: по номеру карты, по штрихкоду и т.д 
-	static final String SEARCH_TAB = "tabNav";
-	
-	static final String SEARCH_RESULTS_GRID = "adg";
 
 	
 	public CheckSearchPage(WebDriver driver) {
@@ -209,5 +220,7 @@ public class  CheckSearchPage extends OperDayPage{
 			return result.toString();
 	}
 	
-	
+	public void saveFile(String fileType){
+		clickElement(getDriver(), ID_OPERDAYSWF, fileType);
+	};
 }

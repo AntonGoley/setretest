@@ -26,7 +26,7 @@ import ru.crystals.set10.utils.DbAdapter;
 import ru.crystals.set10.utils.DisinsectorTools;
 
 
-public class AbstractTest {
+public class  AbstractTest{
 	
     protected static final Logger log = Logger.getLogger(AbstractTest.class);
 	
@@ -35,8 +35,13 @@ public class AbstractTest {
     private static ChromeDriverService service;
     protected static String chromeDownloadPath = null;
     protected static CashEmulator cashEmulator = CashEmulator.getCashEmulator(Config.RETAIL_HOST, Integer.valueOf(Config.SHOP_NUMBER), Integer.valueOf(Config.CASH_NUMBER));
-    // эмулятор для поиска чеков
+    /*
+     *  эмулятор для поиска чеков
+     */
     protected static CashEmulator cashEmulatorSearchCheck = CashEmulator.getCashEmulator(Config.RETAIL_HOST, Integer.valueOf(Config.SHOP_NUMBER), Integer.valueOf(Config.CASH_NUMBER) + 1);
+    /*
+     * эмулятор для виртуального магазина
+     */
     protected static CashEmulator cashEmulatorVirtualShop = CashEmulator.getCashEmulator(Config.CENTRUM_HOST, Integer.valueOf(Config.VIRTUAL_SHOP_NUMBER), Integer.valueOf(Config.CASH_NUMBER));
     protected static DbAdapter dbAdapter = new DbAdapter();
     
@@ -60,8 +65,6 @@ public class AbstractTest {
 	    
     	ChromeOptions options = new ChromeOptions();
     	options.addArguments("start-maximized");
-    	//options.addArguments("--always-authorize-plugins");
-    	//options.addArguments("--enable-extensions");
     	
     	DesiredCapabilities capabilities = DesiredCapabilities.chrome();
     	capabilities.setCapability(ChromeOptions.CAPABILITY,  options);
@@ -126,6 +129,11 @@ public class AbstractTest {
 		driver.findElement(By.xpath(".//a[@id='advanced-settings-expander']")).click();
 		chromeDownloadPath = driver.findElement(By.xpath(".//input[@id='downloadLocationPath']")).getAttribute("value");
 		log.info("Chrome download path: " + chromeDownloadPath);
-		new DisinsectorTools().removeOldDownloadedReports(getChromeDownloadPath());
+		DisinsectorTools tools = new DisinsectorTools();
+		tools.removeOldReport(getChromeDownloadPath(), "*.xls");
+		tools.removeOldReport(getChromeDownloadPath(), "*.pdf");
+		tools.removeOldReport(getChromeDownloadPath(), "*.xlsx");
 	}
+    
+   
 }
