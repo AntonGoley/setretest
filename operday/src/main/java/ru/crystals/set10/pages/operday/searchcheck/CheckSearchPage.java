@@ -33,7 +33,7 @@ public class  CheckSearchPage extends OperDayPage implements SaveFile{
 	// tab выбора условия поиска: по номеру карты, по штрихкоду и т.д 
 	static final String SEARCH_TAB = "tabNav";
 	
-	static final String SEARCH_RESULTS_GRID = "adg";
+	static final String SEARCH_RESULTS_GRID = "checksListGrid";
 	
 	/*
 	 * Лоакаторы для фильтров поиска
@@ -197,7 +197,7 @@ public class  CheckSearchPage extends OperDayPage implements SaveFile{
 	
 	public CheckContentPage selectFirstCheck(){
 		doFlexProperty(getDriver(), ID_OPERDAYSWF, SEARCH_RESULTS_GRID, new String[] {"selectedIndex", "1" } );
-		doFlexMouseDown(getDriver(), ID_OPERDAYSWF, BUTTON_GO_TO_CHECK);
+		clickElement(getDriver(), ID_OPERDAYSWF, BUTTON_GO_TO_CHECK);
 		return new CheckContentPage(getDriver());
 	}
 	
