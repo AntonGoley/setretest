@@ -22,6 +22,8 @@ import ru.crystals.set10.test.AbstractTest;
 import ru.crystals.set10.utils.SoapRequestSender;
 import static ru.crystals.set10.utils.DbAdapter.DB_RETAIL_SET;
 import ru.crystals.set10.utils.GoodsParser;
+import static ru.crystals.set10.pages.operday.OperDayPage.SEARCH_CHECK;;
+
 
 public class AccompanyingDocumentsBasicTest extends AbstractTest{
 	
@@ -83,7 +85,7 @@ public class AccompanyingDocumentsBasicTest extends AbstractTest{
 	public void navigateToCheckSearchPage() {
 		
 		mainPage = new LoginPage(getDriver(), Config.RETAIL_URL).doLogin(Config.MANAGER, Config.MANAGER_PASSWORD);
-		searchCheck = mainPage.openOperDay().openCheckSearch();
+		searchCheck = mainPage.openOperDay().navigatePage(CheckSearchPage.class, SEARCH_CHECK);
 		
 		/*
 		 *  Сгенерим только один чек для всех тестов на сопроводительные документы
@@ -92,7 +94,8 @@ public class AccompanyingDocumentsBasicTest extends AbstractTest{
 			pe = (PurchaseEntity) cashEmulator.nextPurchase(generatePredefinedCheck());
 		}
 		
- 		searchCheck.openFilter().setCheckBarcode(pe).doSearch();
+ 		searchCheck.openFilter().setCheckBarcode(pe);
+ 		searchCheck.doSearch();
  		checkContent = searchCheck.selectFirstCheck();
 	}	
 	

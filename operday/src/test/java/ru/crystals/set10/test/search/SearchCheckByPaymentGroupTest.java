@@ -175,7 +175,8 @@ public class SearchCheckByPaymentGroupTest extends SearchCheckAbstractTest{
  		 *  поиск чека с заданным условием
  		 *  и фиксирование результата поиска
  		 */
-		searchCheck.setFilterText(filter, String.valueOf(parameter)).doSearch();
+		searchCheck.setFilterText(filter, String.valueOf(parameter));
+		searchCheck.doSearch();
  		searchResult = searchCheck.getSearchResultCount();
  		/*
  		 * Отправить чек purchase с оплатой по карте cardNumber
@@ -192,7 +193,8 @@ public class SearchCheckByPaymentGroupTest extends SearchCheckAbstractTest{
 			dataProvider = "Карты оплаты")
 	public void testSearchByPayCardNumber(String filter, String cardNumber, PurchaseEntity purchase){
 
-		searchCheck.setFilterText(filter, String.valueOf(cardNumber)).doSearch();
+		searchCheck.setFilterText(filter, String.valueOf(cardNumber));
+		searchCheck.doSearch();
  		searchResult = searchCheck.getSearchResultCount();
  		/*
  		 * Отправить чек purchase с оплатой по карте cardNumber
@@ -209,7 +211,8 @@ public class SearchCheckByPaymentGroupTest extends SearchCheckAbstractTest{
 			dataProvider = "Карты оплаты. Отклоненные транзакции")
 	public void testSearchByPayCardNumberWithRefusedTransaction(String filter, String cardNumber, PurchaseEntity purchase){
 
-		searchCheck.setFilterText(filter, String.valueOf(cardNumber)).doSearch();
+		searchCheck.setFilterText(filter, String.valueOf(cardNumber));
+		searchCheck.doSearch();
  		searchResult = searchCheck.getSearchResultCount();
  		/*
  		 * Отправить чек purchase с оплатой по карте cardNumber
@@ -221,7 +224,8 @@ public class SearchCheckByPaymentGroupTest extends SearchCheckAbstractTest{
 	
 	@Test (enabled = false, description = "SRTE-73. Поиск чека по коду банка")
 	public void testSearchByBankId(){
-		searchCheck.setFilterSelect(FILTER_CATEGORY_BANK_ID, bankId).doSearch();
+		searchCheck.setFilterSelect(FILTER_CATEGORY_BANK_ID, bankId);
+		searchCheck.doSearch();
  		searchResult = searchCheck.getSearchResultCount();
  		/*
  		 * Отправить чек purchase с оплатой по карте cardNumber

@@ -9,7 +9,6 @@ import java.io.File;
 import java.io.FileFilter;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
@@ -24,6 +23,9 @@ import org.openqa.selenium.interactions.Actions;
 public class DisinsectorTools {
 	protected static final Logger log = Logger.getLogger(DisinsectorTools.class);
 	
+	/*
+	 * Копирует в буфер обмена содержание страницы браузера
+	 */
 	public static String getConsoleOutput(WebDriver driver)  {
 		String result = "";
 		try {
@@ -69,7 +71,7 @@ public class DisinsectorTools {
 		return result;
 	}
 	
-	public void removeOldReport(String chromeDownloadPath, String filePattern){
+	public static void removeOldReport(String chromeDownloadPath, String filePattern){
 		File[] fileNames = fileFilter(chromeDownloadPath, filePattern);
 		
 		for (int i=0; i<fileNames.length; i++) {

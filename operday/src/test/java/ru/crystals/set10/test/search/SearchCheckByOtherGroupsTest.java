@@ -19,12 +19,15 @@ public class SearchCheckByOtherGroupsTest extends SearchCheckAbstractTest{
 		/*
 		 * убедиться, что чек в системе
 		 */
-		searchCheck.setCheckBarcode(purchase).doSearch();
+		searchCheck.setCheckBarcode(purchase);
+		searchCheck.doSearch();
 		searchCheck.getExpectedResultCount(1);
 		/*
 		 * проверить, сколько чеков в системе, где есть штрих код searchBarcode
 		 */
- 		searchCheck.setFilterMultiText(FILTER_CATEGORY_GOOD_BAR_CODE, String.valueOf(searchBarcode)).doSearch();
+ 		searchCheck.setFilterMultiText(FILTER_CATEGORY_GOOD_BAR_CODE, String.valueOf(searchBarcode));
+ 		searchCheck.doSearch();
+ 		
  		searchResult = searchCheck.getSearchResultCount();
  		sendRefundCheck();
  		
@@ -42,12 +45,15 @@ public class SearchCheckByOtherGroupsTest extends SearchCheckAbstractTest{
 		/*
 		 * убедиться, что чек в системе
 		 */
-		searchCheck.setCheckBarcode(purchase).doSearch();
+		searchCheck.setCheckBarcode(purchase);
+		searchCheck.doSearch();
 		searchCheck.getExpectedResultCount(1);
 		/*
 		 * проверить, сколько чеков в системе, где есть  код товара goodCode
 		 */
- 		searchCheck.setFilterMultiText(FILTER_CATEGORY_GOOD_CODE, String.valueOf(goodCode)).doSearch();
+ 		searchCheck.setFilterMultiText(FILTER_CATEGORY_GOOD_CODE, String.valueOf(goodCode));
+ 		searchCheck.doSearch();
+ 		
  		searchResult = searchCheck.getSearchResultCount();
  		sendRefundCheck();
  		
@@ -64,7 +70,8 @@ public class SearchCheckByOtherGroupsTest extends SearchCheckAbstractTest{
 		 * сгенерить номер скидочной карты
 		 */
 		String discountCardNumber = String.valueOf(System.currentTimeMillis());
-		searchCheck.setFilterMultiText(FILTER_CATEGORY_DISCOUNT_CARD_NUMBER, String.valueOf(discountCardNumber)).doSearch();
+		searchCheck.setFilterMultiText(FILTER_CATEGORY_DISCOUNT_CARD_NUMBER, String.valueOf(discountCardNumber));
+		searchCheck.doSearch();
 		searchResult = searchCheck.getSearchResultCount();
 		/*
 		 * Добавить карту к чеку
@@ -83,7 +90,8 @@ public class SearchCheckByOtherGroupsTest extends SearchCheckAbstractTest{
 	
 	@Test (enabled = false, description = "SRTE-71. Поиск чека на ТК по номеру магазина")
 	public void testSearchCheckByShopNumber(){
- 		searchCheck.setFilterText(FILTER_CATEGORY_SHOP_NUMBER, String.valueOf(shopNumber)).doSearch();
+ 		searchCheck.setFilterText(FILTER_CATEGORY_SHOP_NUMBER, String.valueOf(shopNumber));
+ 		searchCheck.doSearch();
  		searchResult = searchCheck.getSearchResultCount();
  		sendCheck();
  		

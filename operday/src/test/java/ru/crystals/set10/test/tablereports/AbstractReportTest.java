@@ -7,6 +7,7 @@ import ru.crystals.set10.pages.operday.tablereports.ReportConfigPage;
 import ru.crystals.set10.pages.operday.tablereports.TableReportPage;
 import ru.crystals.set10.test.AbstractTest;
 import static ru.crystals.set10.pages.operday.tablereports.ReportConfigPage.HTMLREPORT;
+import static ru.crystals.set10.pages.operday.OperDayPage.TABLEREPORTS;
 
 public class AbstractReportTest extends AbstractTest{
 	LoginPage loginPage;
@@ -22,7 +23,7 @@ public class AbstractReportTest extends AbstractTest{
 			String tabName,
 			String reportType) {
 		mainPage = new LoginPage(getDriver(), hostUrl).doLogin(user, password);
-		tableReportsPage = mainPage.openOperDay().openTableReports();
+		tableReportsPage = mainPage.openOperDay().navigatePage(TableReportPage.class, TABLEREPORTS);
 		return tableReportsPage.openReportConfigPage(reportConfig, tabName, reportType);
 	}	
 	

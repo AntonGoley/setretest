@@ -58,7 +58,7 @@ public class CashEmulatorPayments {
 		
 		/*
 		 * Создаем новую банковскую транзакцию и привязываем ее к оплате,
-		 * если она положительная
+		 * если она валидная
 		 */
 		PaymentTransactionEntity bankTransaction;
 		if (authData.isStatus()){
@@ -121,6 +121,11 @@ public class CashEmulatorPayments {
 			AuthorizationData basicAuthData) 
 	{
 		
+		/*
+		 * Задержка, на случай, если генерим несколько транзакций в чеке
+		 * иначе, они могут быть сгенерены с одним временем
+		 */
+		DisinsectorTools.delay(99);
 		BankCardPaymentEntity bankCardPayment = null;
 		
 		try {
@@ -130,7 +135,7 @@ public class CashEmulatorPayments {
 		} catch (IllegalAccessException e) {
 			e.printStackTrace();
 		}
-		AuthorizationData authData = setAuthorizationData(sum, card, basicAuthData);
+		AuthorizationData authData = generateAuthorizationData(sum, card, basicAuthData);
 		bankCardPayment.setDateCreate(new Date(System.currentTimeMillis()));
 		bankCardPayment.setDateCommit(new Date(System.currentTimeMillis()));
 		bankCardPayment.setPaymentType(cardType.getSimpleName());
@@ -194,7 +199,7 @@ public class CashEmulatorPayments {
 	/*
 	 * Данные авторизации
 	 */
-	private AuthorizationData setAuthorizationData(long sum, BankCard card, AuthorizationData authBasicData){
+	private AuthorizationData generateAuthorizationData(long sum, BankCard card, AuthorizationData authBasicData){
 		
 		/*
 		 * По умолчанию статус true 

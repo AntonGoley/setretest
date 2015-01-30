@@ -1,23 +1,29 @@
 package ru.crystals.set10.test.search;
 
+import static ru.crystals.set10.pages.operday.OperDayPage.SEARCH_CASHES;
+
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
+
 import ru.crystals.pos.check.PurchaseEntity;
 import ru.crystals.set10.config.Config;
 import ru.crystals.set10.pages.basic.LoginPage;
 import ru.crystals.set10.pages.basic.MainPage;
+import ru.crystals.set10.pages.operday.cashes.CashesPage;
 import ru.crystals.set10.pages.operday.searchcheck.CheckContentPage;
 import ru.crystals.set10.pages.operday.searchcheck.CheckSearchPage;
 import ru.crystals.set10.pages.operday.searchcheck.PaymentTransactionsPage;
 import ru.crystals.set10.pages.operday.tablereports.ReportConfigPage;
 import ru.crystals.set10.test.AbstractTest;
 import ru.crystals.set10.utils.DisinsectorTools;
+import static ru.crystals.set10.pages.operday.OperDayPage.SEARCH_CHECK;;
 
 
 public class SearchCheckAbstractTest extends AbstractTest{
 	
 	MainPage mainPage;
 	CheckSearchPage searchCheck;
+	
 	ReportConfigPage RefundChecksConfigPage;
 	PurchaseEntity pe;
 	CheckContentPage checkContent;
@@ -38,7 +44,8 @@ public class SearchCheckAbstractTest extends AbstractTest{
 	@BeforeClass
 	public void openSearchPage() {
 		mainPage = new LoginPage(getDriver(), Config.RETAIL_URL).doLogin(Config.MANAGER, Config.MANAGER_PASSWORD);
-		searchCheck = mainPage.openOperDay().openCheckSearch().openFilter();
+		searchCheck = mainPage.openOperDay().navigatePage(CheckSearchPage.class, SEARCH_CHECK);
+		searchCheck.openFilter();
 	}	
 	
 	protected static void sendCheck(){
@@ -78,9 +85,10 @@ public class SearchCheckAbstractTest extends AbstractTest{
 	
 	public void testExcelExport(String reportLocator, String reportFileNamePattern){
 		long fileSize = 0;
+		log.info("Проверить сохранение файла результатов поиска " + reportFileNamePattern);
 		fileSize =  searchCheck.exportFileData(chromeDownloadPath, reportFileNamePattern, searchCheck, reportLocator).length();
 		log.info("Размер сохраненного файла: " + reportFileNamePattern + " равен " +  fileSize);
-		new DisinsectorTools().removeOldReport(chromeDownloadPath, reportFileNamePattern);
+		DisinsectorTools.removeOldReport(chromeDownloadPath, reportFileNamePattern);
 		
 		Assert.assertTrue(fileSize > 1000, "Файл отчета " + reportFileNamePattern + " сохранился некорректно");
 		

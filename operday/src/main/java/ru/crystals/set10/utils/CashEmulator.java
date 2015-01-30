@@ -287,6 +287,20 @@ public class CashEmulator {
 	}
 	
 	/*
+	 * Отрпавить аннулированый чек
+	 */
+	public DocumentEntity nextCancelledPurchase(PurchaseEntity purchase) {
+
+	    //if (shift == null || nextShift || ifShiftClosed(cashNumber, shiftNum)) {
+	    if (shift == null || nextShift) {	
+	      shift = nextShift(null);
+	      nextShift = false;
+	    }
+	    purchase.setCheckStatus(CheckStatus.Cancelled);
+	    return completeAndSendPurchase((DocumentEntity)purchase);
+	}
+	
+	/*
 	 * сгенерить возврат позиций в чеке
 	 */
 	public DocumentEntity nextRefundPositions(
@@ -328,8 +342,8 @@ public class CashEmulator {
 			PositionEntity pe = superPurchase.getPositions().get(i);
 			returnPositions.put(pe.getNumber(), pe.getQnty());
 		}
-		
 		de = refundCheck(superPurchase, returnPositions, arbitraryReturn);
+		 
 		log.info("Выполнить возврат всего чека..");
 		return completeAndSendPurchase(de);
 	}
@@ -337,7 +351,7 @@ public class CashEmulator {
 	/*
      * заполнить возврат
      */
-	public static DocumentEntity refundCheck( 
+	private static DocumentEntity refundCheck( 
 						PurchaseEntity superPurchase, 
 						/*
 						 * из superPurchase:
@@ -428,7 +442,7 @@ public class CashEmulator {
 	      /*
 	       * Добавить данные о номере магазина, смены, кассы в транзакции оплаты чека
 	       */
-		    List<PaymentTransactionEntity> purchaseTransactions = new ArrayList<PaymentTransactionEntity>();
+		    List<PaymentTransactionEntity> paymentTransactions = new ArrayList<PaymentTransactionEntity>();
 		    
 		    Iterator<PaymentTransactionEntity> iterator = pe.getTransactions().iterator();
 		    while (iterator.hasNext()){
@@ -436,9 +450,9 @@ public class CashEmulator {
 			    	pTransaction.setCashNum(shift.getCashNum());
 			    	pTransaction.setShopIndex(shift.getShopIndex());
 			    	pTransaction.setNumShift(shift.getNumShift());
-			    	purchaseTransactions.add(pTransaction);
+			    	paymentTransactions.add(pTransaction);
 		    }
-		    pe.setTransactions(purchaseTransactions);	      
+		    pe.setTransactions(paymentTransactions);	      
 	      
 	    }  
 	    sendDocument(de);

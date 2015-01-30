@@ -129,11 +129,15 @@ public class  AbstractTest{
 		driver.findElement(By.xpath(".//a[@id='advanced-settings-expander']")).click();
 		chromeDownloadPath = driver.findElement(By.xpath(".//input[@id='downloadLocationPath']")).getAttribute("value");
 		log.info("Chrome download path: " + chromeDownloadPath);
-		DisinsectorTools tools = new DisinsectorTools();
-		tools.removeOldReport(getChromeDownloadPath(), "*.xls");
-		tools.removeOldReport(getChromeDownloadPath(), "*.pdf");
-		tools.removeOldReport(getChromeDownloadPath(), "*.xlsx");
 	}
-    
    
+    /*
+     * Удаление всех возможных старых файлов отчетов
+     */
+   private void clearDownloadDir(){
+	   DisinsectorTools.removeOldReport(getChromeDownloadPath(), "*.xls");
+	   DisinsectorTools.removeOldReport(getChromeDownloadPath(), "*.pdf");
+	   DisinsectorTools.removeOldReport(getChromeDownloadPath(), "*.xlsx"); 
+   }
+    
 }

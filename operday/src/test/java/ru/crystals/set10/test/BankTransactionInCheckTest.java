@@ -19,6 +19,7 @@ import ru.crystals.set10.pages.operday.tablereports.ReportConfigPage;
 import ru.crystals.set10.utils.CashEmulatorPayments;
 import ru.crystals.set10.utils.DisinsectorTools;
 import static ru.crystals.set10.pages.operday.searchcheck.PaymentTransactionsPage.LINK_SAVE_EXCEL;
+import static ru.crystals.set10.pages.operday.OperDayPage.SEARCH_CHECK;
 
 /*
  * TODO: дописать тесты
@@ -100,11 +101,12 @@ public class BankTransactionInCheckTest extends AbstractTest {
 		 *  и открыть его
 		 */
 		mainPage = new LoginPage(getDriver(), Config.RETAIL_URL).doLogin(Config.MANAGER, Config.MANAGER_PASSWORD);
-		searchCheck = mainPage.openOperDay().openCheckSearch();
+		searchCheck = mainPage.openOperDay().navigatePage(CheckSearchPage.class, SEARCH_CHECK);
 		
 		purchase = (PurchaseEntity)cashEmulator.nextPurchase(setPayments());
 		
-		searchCheck.openFilter().setCheckBarcode(purchase).doSearch();
+		searchCheck.openFilter().setCheckBarcode(purchase);
+		searchCheck.doSearch();
  		checkContent = searchCheck.selectFirstCheck();
  		paymentTransactions = checkContent.openPaymentTransactionsForm();
  		

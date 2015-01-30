@@ -44,12 +44,17 @@ public class CheckGeneratorTest {
 	
 	@Test (	description = "Сгенерить чеки продажи")
 	public void testSendChecks(){
-		cashEmulator.nextPurchase(getCashPayment());
-		cashEmulator.nextPurchase(getBankCardPayment(BankCardPaymentEntity.class));
-		cashEmulator.nextPurchase(getBankCardPayment(ChildrenCardPaymentEntity.class));
-		cashEmulator.nextPurchase(getBonusCardPayment());
-		cashEmulator.nextPurchase(getGiftCardPayment());
-		cashEmulator.nextPurchase(getDiscountCardPayment());
+		p1 = (PurchaseEntity) cashEmulator.nextPurchase(getCashPayment());
+//		cashEmulator.nextRefundAll(p1, false);
+		p1 = (PurchaseEntity) cashEmulator.nextPurchase(getBankCardPayment(BankCardPaymentEntity.class));
+//		cashEmulator.nextRefundAll(p1, false);
+		p1 = (PurchaseEntity) cashEmulator.nextPurchase(getBankCardPayment(ChildrenCardPaymentEntity.class));
+//		cashEmulator.nextRefundAll(p1, false);
+		p1 = (PurchaseEntity) cashEmulator.nextPurchase(getBonusCardPayment());
+//		cashEmulator.nextRefundAll(p1, false);
+		p1 = (PurchaseEntity) cashEmulator.nextPurchase(getGiftCardPayment());
+//		cashEmulator.nextRefundAll(p1, false);
+		p1 = (PurchaseEntity) cashEmulator.nextPurchase(getDiscountCardPayment());
 		log.info("Выполнить возврать последнего чека");
 		cashEmulator.nextRefundAll(p1, false);
 	}
@@ -69,11 +74,13 @@ public class CheckGeneratorTest {
 		BankCard bankCard = payments.setBankCardData(validBankCardNumber, "VISA");
 		BankCard invalidBankCard = payments.setBankCardData(invalidBankCardNumber, "Maestro");
 		
-		p1 = payments.setBankCardPayment(cardType, p1, p1.getCheckSumEnd()/2, invalidBankCard, getAuthDataWithFalse());
-		p1 = payments.setBankCardPayment(cardType, p1, p1.getCheckSumEnd()/2, bankCard, null);
+		p1 = payments.setBankCardPayment(cardType, p1, p1.getCheckSumEnd()/3, invalidBankCard, getAuthDataWithFalse());
+		p1 = payments.setBankCardPayment(cardType, p1, p1.getCheckSumEnd()/6, bankCard, null);
+		p1 = payments.setBankCardPayment(cardType, p1, p1.getCheckSumEnd()/3 - p1.getCheckSumEnd()/6, bankCard, null);
+		p1 = payments.setBankCardPayment(cardType, p1, p1.getCheckSumEnd()/3 - p1.getCheckSumEnd()/6, invalidBankCard, null);
+		
 		p1 = payments.setCashPayment(p1, p1.getCheckSumEnd() - p1.getCheckSumEnd()/2);
 		return p1;
-		
 	}
 	
 	private PurchaseEntity getBonusCardPayment(){

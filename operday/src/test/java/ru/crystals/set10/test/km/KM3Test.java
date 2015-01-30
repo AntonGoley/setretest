@@ -9,15 +9,18 @@ import junit.framework.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+
 import ru.crystals.pos.check.PurchaseEntity;
 import ru.crystals.set10.config.Config;
 import ru.crystals.set10.pages.basic.LoginPage;
 import ru.crystals.set10.pages.operday.HTMLRepotResultPage;
 import ru.crystals.set10.pages.operday.OperDayPage;
+import ru.crystals.set10.pages.operday.cashes.CashesPage;
 import ru.crystals.set10.pages.operday.cashes.KmPage;
 import ru.crystals.set10.test.AbstractTest;
 import static ru.crystals.set10.utils.DbAdapter.*;
 import static ru.crystals.set10.pages.operday.cashes.KmPage.*;
+import static ru.crystals.set10.pages.operday.OperDayPage.SEARCH_CASHES;
 
 public class KM3Test extends AbstractTest{
 	
@@ -45,7 +48,7 @@ public class KM3Test extends AbstractTest{
 		
 		km3 = new LoginPage(getDriver(), Config.RETAIL_URL).
 				openOperDay(Config.MANAGER, Config.MANAGER_PASSWORD)
-				.openCashes()
+				.navigatePage(CashesPage.class, SEARCH_CASHES)
 				.openKmPage()
 				.switchToKm(LOCATOR_KM3);
 		

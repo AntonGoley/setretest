@@ -63,14 +63,14 @@ public abstract class  AbstractPage {
 		}
 	}
 	
-	public File exportFileData(String chromeDownloadPath, String reportNamePattern, SaveFile data, String fileType){
+	public File exportFileData(String chromeDownloadPath, String reportNamePattern, SaveFile save, String fileType){
 		if (DisinsectorTools.fileFilter(chromeDownloadPath, reportNamePattern).length != 0) {
 			log.info(String.format("Предыдущие файлы отчетов %s не удалены перед выполнением теста", reportNamePattern));
 			return new File("");
 		}
 		
 		//clickElement(getDriver(), ID_OPERDAYSWF, LINK_SAVE_EXCEL);
-		data.saveFile(fileType);
+		save.saveFile(fileType);
 		
 		return DisinsectorTools.getDownloadedFile(chromeDownloadPath, reportNamePattern);
 	}

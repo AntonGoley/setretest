@@ -29,23 +29,23 @@ public class RefundRequestTest extends AbstractTest{
 //		};
 //	}
 	
-	@BeforeClass
-	public void prepareData(){
-		
-		check = (PurchaseEntity) cashEmulator.nextPurchase();
-		checkContent = new LoginPage(getDriver(), Config.RETAIL_URL).
-				openOperDay(Config.MANAGER, Config.MANAGER_PASSWORD)
-				.openCheckSearch()
-				.openFilter()
-				.setCheckBarcode(check)
-				.doSearch()
-				.selectFirstCheck();
-	}
-	
-	@Test( description = "SRL-78. ")
-	public void testRefundRequestOpen(){
-		
-	}
+//	@BeforeClass
+//	public void prepareData(){
+//		
+//		check = (PurchaseEntity) cashEmulator.nextPurchase();
+//		checkContent = new LoginPage(getDriver(), Config.RETAIL_URL).
+//				openOperDay(Config.MANAGER, Config.MANAGER_PASSWORD)
+//				.openCheckSearch()
+//				.openFilter()
+//				.setCheckBarcode(check)
+//				.doSearch()
+//				.selectFirstCheck();
+//	}
+//	
+//	@Test( description = "SRL-78. ")
+//	public void testRefundRequestOpen(){
+//		
+//	}
 	
 //	@Test( description = "SRL-2. Если форма КМ3 распечатана, следующий возвратный чек попадает в новую форму КМ3")
 //	public void testNewKM3CreatesIfcurrentPrinted(){
