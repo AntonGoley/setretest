@@ -45,7 +45,7 @@ public class SearchCheckByPaymentGroupTest extends SearchCheckAbstractTest{
 	
 	@BeforeClass
 	public void prepareData() {
-		
+		searchCheck.openFilter();
 		CashEmulatorPayments payments = new CashEmulatorPayments();
 		
 		/*

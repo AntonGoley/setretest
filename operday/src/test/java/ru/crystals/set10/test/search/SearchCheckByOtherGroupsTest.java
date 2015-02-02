@@ -2,6 +2,7 @@ package ru.crystals.set10.test.search;
 
 
 import org.testng.Assert;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import ru.crystals.set10.utils.CashEmulatorPayments;
@@ -11,6 +12,11 @@ import static ru.crystals.set10.pages.operday.searchcheck.CheckSearchPage.*;
 public class SearchCheckByOtherGroupsTest extends SearchCheckAbstractTest{
 	
 	CashEmulatorPayments payments = new CashEmulatorPayments();
+	
+	@BeforeClass
+	public void openFilter(){
+		searchCheck.openFilter();
+	}
 	
 	@Test (description = "SRTE-71. Поиск чека на ТК по штрих коду товара")
 	public void testSearchCheckByGoodBarCode(){

@@ -30,6 +30,7 @@ public class CheckGeneratorTest {
 	@BeforeClass
 	public void setupCash(){
 		cashEmulator = CashEmulator.getCashEmulator(Config.RETAIL_HOST, Integer.valueOf(Config.SHOP_NUMBER), Integer.valueOf(Config.CASH_NUMBER));
+		//cashEmulator = CashEmulator.getCashEmulator(Config.CENTRUM_HOST, Integer.valueOf(2105), Integer.valueOf(Config.CASH_NUMBER));
 		cashEmulator.nextIntroduction();
 	}
 	
@@ -41,12 +42,12 @@ public class CheckGeneratorTest {
 		cashEmulator.nextZReport();
 	}
 	
-	
 	@Test (	description = "Сгенерить чеки продажи")
 	public void testSendChecks(){
 		p1 = (PurchaseEntity) cashEmulator.nextPurchase(getCashPayment());
 //		cashEmulator.nextRefundAll(p1, false);
 		p1 = (PurchaseEntity) cashEmulator.nextPurchase(getBankCardPayment(BankCardPaymentEntity.class));
+		cashEmulator.nextRefundAll(p1, false);
 //		cashEmulator.nextRefundAll(p1, false);
 		p1 = (PurchaseEntity) cashEmulator.nextPurchase(getBankCardPayment(ChildrenCardPaymentEntity.class));
 //		cashEmulator.nextRefundAll(p1, false);

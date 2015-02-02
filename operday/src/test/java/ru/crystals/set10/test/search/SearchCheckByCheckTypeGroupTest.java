@@ -12,6 +12,7 @@ public class SearchCheckByCheckTypeGroupTest extends SearchCheckAbstractTest{
 	
 	@BeforeClass
 	public void send1stCheck(){
+		searchCheck.openFilter();
 		sendCheck();
 		/*
 		 * убедиться, что чек в системе

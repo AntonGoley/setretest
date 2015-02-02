@@ -110,7 +110,14 @@ public class SearchFormPopUp extends OperDayPage {
 	public SearchFormPopUp setFilterText(String filter, String filterValue){
 		ifSearchFiltersOpen();
 		
-		selectElement(getDriver(), ID_OPERDAYSWF, FILTER_CATEGORY, filter);
+		/*
+		 * если выбираем уже выбранный фильтр, то происходит удаление фильтра - обход этого поведения
+		 */
+		if (!getSelectedElement(getDriver(), ID_OPERDAYSWF, FILTER_CATEGORY).equals(filter)){
+			selectElement(getDriver(), ID_OPERDAYSWF, FILTER_CATEGORY, filter);
+		}
+		
+		//selectElement(getDriver(), ID_OPERDAYSWF, FILTER_CATEGORY, filter);
 
 		//Открыть и заполнить множественный выбор
 		typeText(getDriver(), ID_OPERDAYSWF, FILTER_TEXT_FIELD, filterValue);

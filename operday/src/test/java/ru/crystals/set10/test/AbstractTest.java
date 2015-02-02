@@ -45,6 +45,8 @@ public class  AbstractTest{
     protected static CashEmulator cashEmulatorVirtualShop = CashEmulator.getCashEmulator(Config.CENTRUM_HOST, Integer.valueOf(Config.VIRTUAL_SHOP_NUMBER), Integer.valueOf(Config.CASH_NUMBER));
     protected static DbAdapter dbAdapter = new DbAdapter();
     
+    private static boolean firstRun = true;
+    
     public WebDriver getDriver() {
         return driver;
     }
@@ -73,8 +75,11 @@ public class  AbstractTest{
     	
     	driver.manage().timeouts().implicitlyWait(IMPLICIT_WAIT, TimeUnit.SECONDS);
     	driver.manage().deleteAllCookies();
-    	chromeDownloadPath = getChromeDownloadPath();
     	
+    	if (firstRun){
+    		chromeDownloadPath = getChromeDownloadPath();
+    		clearDownloadDir();
+    	}	
 	}
     
     @BeforeMethod(alwaysRun = true)
@@ -135,6 +140,7 @@ public class  AbstractTest{
      * Удаление всех возможных старых файлов отчетов
      */
    private void clearDownloadDir(){
+	   firstRun = false;
 	   DisinsectorTools.removeOldReport(getChromeDownloadPath(), "*.xls");
 	   DisinsectorTools.removeOldReport(getChromeDownloadPath(), "*.pdf");
 	   DisinsectorTools.removeOldReport(getChromeDownloadPath(), "*.xlsx"); 

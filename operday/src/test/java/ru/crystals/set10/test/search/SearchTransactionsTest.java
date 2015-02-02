@@ -6,7 +6,8 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-
+import ru.crystals.pos.bank.datastruct.BankCard;
+import ru.crystals.pos.payments.BankCardPaymentEntity;
 import ru.crystals.set10.pages.operday.searchcheck.TransactionSearchPage;
 import ru.crystals.set10.utils.CashEmulatorPayments;
 import static ru.crystals.set10.pages.operday.searchcheck.CheckSearchPage.*;
@@ -21,8 +22,16 @@ public class SearchTransactionsTest extends SearchCheckAbstractTest{
 	@BeforeClass
 	public void navigateToTransactionsPage(){
 		transactions = searchCheck.navigatePage(TransactionSearchPage.class, SEARCH_TRANSACTIONS);
+		transactions.openFilter();
+		
 		purchase = payments.getPurchaseWithoutPayments();
-		//TODO:добавить транзакцию
+		
+		String prefix = String.valueOf(System.currentTimeMillis()).substring(5);
+		String bankCardNumber = String.format("1234****%s", prefix);
+		
+		BankCard card = payments.setBankCardData(bankCardNumber, "VISA");
+		purchase = payments.setBankCardPayment(BankCardPaymentEntity.class, purchase, purchase.getCheckSumEnd()/2, card, null);
+		sendCheck(purchase);
 		
 		/*
 		 * убедиться, что чек в системе
@@ -30,6 +39,16 @@ public class SearchTransactionsTest extends SearchCheckAbstractTest{
 		transactions.setCheckBarcode(purchase);
 		transactions.doSearch();
 		transactions.getExpectedResultCount(1);
+	}
+	
+	@BeforeMethod
+	public void resetSearch(){
+		/*
+		 * Сбрасываем рез-т поиска, указывая баркод чека,
+		 * которого нет в системе
+		 */
+		transactions.setFilterText(FILTER_CATEGORY_CHECK_BAR_CODE, "000");
+		transactions.getExpectedResultCount(0);
 	}
 	
 	@DataProvider(name = "Положительная транзакция в чеке")	
@@ -40,26 +59,16 @@ public class SearchTransactionsTest extends SearchCheckAbstractTest{
 		};
 	};
 	
-	@BeforeMethod
-	public void resetSearch(){
-		/*
-		 * Сбрасываем рез-т поиска, указывая баркод чека,
-		 * которого нет в системе
-		 */
-		transactions.setFilterMultiText(FILTER_CATEGORY_CHECK_BAR_CODE, "000");
-		transactions.getExpectedResultCount(0);
-	}
-	
-	@Test (description = "SRTE-79. Поиск чека, содержащего положительную транзакцию")
+	@Test (description = "SRTE-79. Поиск чека, содержащего положительную транзакцию", 
+			dataProvider = "Положительная транзакция в чеке")
 	public void testSearchTransactions(String field, String filterLocator , String filterValue){
 
 		transactions.setFilterMultiText(filterLocator, filterValue);
 		transactions.doSearch();
  		
  		searchResult = searchCheck.getSearchResultCount();
- 		sendRefundCheck();
  		
- 		transactions.doSearch();
+ 		
 		Assert.assertEquals(searchCheck.getExpectedResultCount(searchResult + 1), searchResult + 1, "");
 		
  		testExcelExport(LOCATOR_XLS_CHECK_CONTENT, XLS_REPORT_CONTENT_PATTERN);
@@ -67,7 +76,5 @@ public class SearchTransactionsTest extends SearchCheckAbstractTest{
  		
  		
 	}
-	
-	
 	
 }

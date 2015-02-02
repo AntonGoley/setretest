@@ -13,7 +13,7 @@ public class  TransactionSearchPage extends CheckSearchPage {
 	/*
 	 * Локаторы элементов страницы
 	 */
-	static final String BUTTON_SEARCH = "findChecksButton";
+	static final String BUTTON_SEARCH = "label:Найти транзакции";
 	static final String FILTER_OPEN = "expandButton";
 	
 	// результат поиска
@@ -45,9 +45,6 @@ public class  TransactionSearchPage extends CheckSearchPage {
 	public void getFieldValue(){
 		
 	}
-	
-	
-	
 	
 	/*
 	 * Метод нажимает кнопку поиск, до тех пор, пока в рез-х поиска не 

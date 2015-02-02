@@ -25,6 +25,7 @@ import ru.crystals.pos.check.WithdrawalEntity;
 import ru.crystals.pos.payments.CashPaymentEntity;
 import ru.crystals.pos.payments.PaymentEntity;
 import ru.crystals.pos.payments.PaymentTransactionEntity;
+import ru.crystals.set10.config.Config;
 import ru.crystals.transport.DataTypesEnum;
 import static ru.crystals.set10.utils.DbAdapter.*;
 import static ru.crystals.set10.utils.GoodsParser.*;
@@ -38,6 +39,7 @@ public class CashEmulator {
 	private  int shiftNum;
 	private  int shopNumber = -1;
 	private  ShiftEntity shift;
+	private String db_operday;
 	
 	public  boolean nextShift = false;
 	public  long yesterday = Long.valueOf("-0"); //(86400000 * 130); ("-11232000000")
@@ -55,7 +57,7 @@ public class CashEmulator {
 		
 	private static final String SQL_MAX_SHIFT_NUM = "select max(numshift) from od_shift as od_s join od_purchase as od_p on od_p.id_shift = od_s.id where cashnum = %s  and shopindex = %s and shiftcreate >= '%s 00:00:00' and shiftcreate < '%s 23:59:59.999'";
 														
-	private static final String SQL_SHIFT_STATUS = "select state from od_shift where numshift = %s and cashnum = %s and shopindex = %s and shiftcreate >= '%s 00:00:00' and shiftcreate < '%s 23:59:59.999'";
+	private static final String SQL_SHIFT_STATUS = "select distinct(state) from od_shift where numshift = %s and cashnum = %s and shopindex = %s and shiftcreate >= '%s 00:00:00' and shiftcreate < '%s 23:59:59.999'";
 	
 	private static final String SQL_CHECK_NUM = "select max(numberfield) from od_shift as od_s join od_purchase as od_p on od_p.id_shift = od_s.id where cashnum = %s and numshift = %s and shopindex = %s and shiftcreate >= '%s 00:00:00' and shiftcreate < '%s 23:59:59.999'";
 	
@@ -73,10 +75,21 @@ public class CashEmulator {
 	private CashEmulator(String serverIP, int shopNum, int cashNum) {
 	    cashNumber = cashNum;
 	    shopNumber = shopNum;
+	    /*
+	     * Если индекс магазина не Ритейл, то
+	     * это виртуальный магазин (смотрим в бд центрума)
+	     */
+	    if (String.valueOf(shopNumber).equals(Config.SHOP_NUMBER)) {
+	    	db_operday = DB_RETAIL_OPERDAY;
+	    } else {
+	    	db_operday = DB_CENTRUM_OPERDAY;
+	    }
+	    
 	    shiftNum = getCurrentShiftNum(cashNumber);
 	    checkNumber =  getNextCheckNum(cashNumber, shiftNum);
 	    docSender = new DocsSender(serverIP, shopNumber, cashNumber);
 	    log.info("Создан cashEmulator: " + cashNumber +  "; ShopNum = " + shopNum + "; ShiftNum = " + shiftNum + "; NextCheckNumber = " + checkNumber);
+	    
 	} 
 	
 	/*
@@ -95,7 +108,7 @@ public class CashEmulator {
 	private int getCurrentShiftNum(int cashNumber) {
 		// TODO: привести в порядок
 		String date = getDate("yyyy-MM-dd", System.currentTimeMillis() - yesterday);
-		shiftNum = db.queryForInt(DB_RETAIL_OPERDAY, String.format(SQL_MAX_SHIFT_NUM, cashNumber, shopNumber, date, date));
+		shiftNum = db.queryForInt(db_operday, String.format(SQL_MAX_SHIFT_NUM, cashNumber, shopNumber, date, date));
 		if (shiftNum == 0) {
 			shiftNum = 1;
 		} else {
@@ -110,7 +123,7 @@ public class CashEmulator {
 	private int getNextCheckNum(int cashNumber, int shiftNumber) {
 		// TODO: привести в порядок
 		String date = getDate("yyyy-MM-dd", System.currentTimeMillis() - yesterday);
-		checkNumber = db.queryForInt(DB_RETAIL_OPERDAY, String.format(SQL_CHECK_NUM, cashNumber, shiftNumber, shopNumber, date, date));
+		checkNumber = db.queryForInt(db_operday, String.format(SQL_CHECK_NUM, cashNumber, shiftNumber, shopNumber, date, date));
 		return ++checkNumber;
 	}
 	
@@ -119,7 +132,7 @@ public class CashEmulator {
 	 */
 	private int getShiftSumChecks() {
 		String date = getDate("yyyy-MM-dd", System.currentTimeMillis() - yesterday);
-		return db.queryForInt(DB_RETAIL_OPERDAY, String.format(SQL_GET_SHIFT_FINAL_SUM, String.valueOf("true"), cashNumber, shiftNum, shopNumber, date, date));
+		return db.queryForInt(db_operday, String.format(SQL_GET_SHIFT_FINAL_SUM, String.valueOf("true"), cashNumber, shiftNum, shopNumber, date, date));
 	}
 	
 	/*
@@ -127,14 +140,14 @@ public class CashEmulator {
 	 */
 	private int getShiftSumChecksRefund() {
 		String date = getDate("yyyy-MM-dd", System.currentTimeMillis() - yesterday);
-		return db.queryForInt(DB_RETAIL_OPERDAY, String.format(SQL_GET_SHIFT_FINAL_SUM, String.valueOf("false"), cashNumber, shiftNum, shopNumber, date, date));
+		return db.queryForInt(db_operday, String.format(SQL_GET_SHIFT_FINAL_SUM, String.valueOf("false"), cashNumber, shiftNum, shopNumber, date, date));
 	}
 
 	private boolean ifShiftClosed(int cashNumber, int shiftNumber) {
 		// TODO: привести в порядок
 		String date = getDate("yyyy-MM-dd", System.currentTimeMillis() - yesterday);
 		int querryResult = 0;
-		querryResult = db.queryForInt(DB_RETAIL_OPERDAY, String.format(SQL_SHIFT_STATUS, shiftNumber, cashNumber, shopNumber, date, date)); 
+		querryResult = db.queryForInt(db_operday, String.format(SQL_SHIFT_STATUS, shiftNumber, cashNumber, shopNumber, date, date)); 
 		if ((int) querryResult == 0) { 
 			return false;
 		} else {
@@ -514,6 +527,7 @@ public class CashEmulator {
 	private boolean ifCheckInRetail(DocumentEntity purchase){
 	    String fiscalDocNum =   purchase.getFiscalDocNum();
 	    String dbRequest = "";
+	    
 	    if (purchase instanceof PurchaseEntity) {
 	    	dbRequest = SQL_GET_CHECK_BY_FISCALDOCNUM;
 	    } else if (purchase instanceof ReportShiftEntity) {
@@ -523,13 +537,14 @@ public class CashEmulator {
 	    }  else if (purchase instanceof IntroductionEntity) {
 	    	dbRequest = SQL_GET_INTRODUCTION_BY_FISCALDOCNUM;
 	    }
+	    
     	// ждем в течение 30 секунд
 	    int timeOut = 60;
     	int tryCount = 0;
     	while (tryCount < timeOut) {
     		tryCount++;
     		DisinsectorTools.delay(500);
-    		if (db.queryForInt(DB_RETAIL_OPERDAY, String.format(dbRequest, fiscalDocNum)) == 1) {
+    		if (db.queryForInt(db_operday, String.format(dbRequest, fiscalDocNum)) == 1) {
     			log.info(String.format("Чек зарегистрирован в операционном дне; fiscalDocNum: %s ", fiscalDocNum));
     			return true;
     		}	

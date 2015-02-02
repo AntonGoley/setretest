@@ -1,15 +1,11 @@
 package ru.crystals.set10.test.search;
 
-import static ru.crystals.set10.pages.operday.OperDayPage.SEARCH_CASHES;
-
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
-
 import ru.crystals.pos.check.PurchaseEntity;
 import ru.crystals.set10.config.Config;
 import ru.crystals.set10.pages.basic.LoginPage;
 import ru.crystals.set10.pages.basic.MainPage;
-import ru.crystals.set10.pages.operday.cashes.CashesPage;
 import ru.crystals.set10.pages.operday.searchcheck.CheckContentPage;
 import ru.crystals.set10.pages.operday.searchcheck.CheckSearchPage;
 import ru.crystals.set10.pages.operday.searchcheck.PaymentTransactionsPage;
@@ -41,11 +37,15 @@ public class SearchCheckAbstractTest extends AbstractTest{
 		cashEmulatorSearchCheck.useNextShift();
 	}
 	
+	/*
+	 *  Переход на страницу поиска
+	 *  выполняется для всех классов, наследованных от SearchCheckAbstractTest
+	 *  все тесты должны выполняться последовательно в одном потоке
+	 */
 	@BeforeClass
 	public void openSearchPage() {
 		mainPage = new LoginPage(getDriver(), Config.RETAIL_URL).doLogin(Config.MANAGER, Config.MANAGER_PASSWORD);
 		searchCheck = mainPage.openOperDay().navigatePage(CheckSearchPage.class, SEARCH_CHECK);
-		searchCheck.openFilter();
 	}	
 	
 	protected static void sendCheck(){
