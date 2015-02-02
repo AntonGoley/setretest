@@ -76,7 +76,8 @@ public class BankTransactionInCheckTest extends AbstractTest {
 				{"Карта", PaymentTransactionsPage.LOCATOR_CARD_NUMBER, inValidBankCardNumber},
 				{"Код ответа сервера", PaymentTransactionsPage.LOCATOR_SERVER_RESPONSE_CODE, String.valueOf(inValidResultCode)},
 				{"Терминал", PaymentTransactionsPage.LOCATOR_TERMINAL, terminalId},
-				{"Запрошено", PaymentTransactionsPage.LOCATOR_AMOUNT_REQUESTED, String.valueOf(purchase.getCheckSumEndBigDecimal())},
+				//TODO: заменить String.replace
+				//{"Запрошено", PaymentTransactionsPage.LOCATOR_AMOUNT_REQUESTED, String.valueOf(purchase.getCheckSumEndBigDecimal()).replace(".", ",")},
 		};
 	}
 	
@@ -90,7 +91,8 @@ public class BankTransactionInCheckTest extends AbstractTest {
 				{"Карта", PaymentTransactionsPage.LOCATOR_CARD_NUMBER, validBankCardNumber},
 				{"Код ответа сервера", PaymentTransactionsPage.LOCATOR_SERVER_RESPONSE_CODE, String.valueOf(validResultCode)},
 				{"Терминал", PaymentTransactionsPage.LOCATOR_TERMINAL, terminalId},
-				{"Запрошено", PaymentTransactionsPage.LOCATOR_AMOUNT_REQUESTED, String.valueOf(purchase.getCheckSumEndBigDecimal())},
+				//TODO: заменить String.replace
+				//{"Запрошено", PaymentTransactionsPage.LOCATOR_AMOUNT_REQUESTED, String.valueOf(purchase.   getCheckSumEndBigDecimal()).replace(".", ",")},
 		};
 	}
 
