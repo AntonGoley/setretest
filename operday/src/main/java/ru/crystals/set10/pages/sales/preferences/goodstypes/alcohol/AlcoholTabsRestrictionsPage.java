@@ -19,7 +19,6 @@ public class AlcoholTabsRestrictionsPage extends AbstractPage{
 		getWait().until(ExpectedConditions.visibilityOfElementLocated(By.id(ID_SALESSWF)));
 	}
 	
-	
 	public AlcoholRestrictionPage addNewRestriction(){
 		clickElement(getDriver(), ID_SALESSWF, LOCATOR_NEW_RESTRICTION_BUTTON);
 		return new AlcoholRestrictionPage(getDriver());

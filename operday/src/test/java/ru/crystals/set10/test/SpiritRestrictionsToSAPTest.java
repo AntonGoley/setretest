@@ -1,9 +1,10 @@
 package ru.crystals.set10.test;
 
-import junit.framework.Assert;
+import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+
 import ru.crystals.set10.config.Config;
 import ru.crystals.set10.pages.basic.LoginPage;
 import ru.crystals.set10.pages.basic.MainPage;
@@ -18,7 +19,6 @@ import ru.crystals.set10.pages.sales.preferences.goodstypes.alcohol.AlcoholPage.
 import ru.crystals.set10.test.dataproviders.SpiritRistrictionsDataprovider;
 import ru.crystals.set10.utils.DisinsectorTools;
 import ru.crystals.set10.utils.SoapRequestSender;
-import static ru.crystals.set10.pages.basic.SalesPage.*;
 import static ru.crystals.set10.pages.sales.preferences.SalesPreferencesPage.*;
 
 public class SpiritRestrictionsToSAPTest extends AbstractTest{
@@ -30,6 +30,16 @@ public class SpiritRestrictionsToSAPTest extends AbstractTest{
 	AlcoholTabsRestrictionsPage alcoholRestrictionTab;
 	AlcoholRestrictionPage alcoholRestrictionPage;
 	SoapRequestSender soapSender  = new SoapRequestSender();
+	
+	
+	protected static final String DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss";
+	/*
+	 * Дефолтовые значения периода,
+	 * за который выбираем ограничения
+	 */
+	String periodFrom = DisinsectorTools.getDate(DATE_FORMAT, System.currentTimeMillis() - 60*60*24*100);
+	String periodTill = DisinsectorTools.getDate(DATE_FORMAT, System.currentTimeMillis() + 60*60*24*100);
+	
 	
 	@BeforeClass
 	public void goToAlcoholRestrictions() {
@@ -54,7 +64,7 @@ public class SpiritRestrictionsToSAPTest extends AbstractTest{
 		alcoholRestrictionPage.setPersentAlco(percentValue);
 		alcoholRestrictionPage.setRestrictionName(name);
 		alcoholRestrictionPage.backToRestrictionsTab();
-		Assert.assertTrue(validateResult(String.format(xpath, name)));
+		Assert.assertTrue(validateResult(String.format(xpath, name), periodFrom, periodTill));
 	}
 	
 	//@Test (description = "SRL-163. Выгрузка в SAP отчета по алкогольным ограничениям. Период действия", 
@@ -64,7 +74,7 @@ public class SpiritRestrictionsToSAPTest extends AbstractTest{
 		alcoholRestrictionPage.setDate(period);
 		alcoholRestrictionPage.setRestrictionName(name);
 		alcoholRestrictionPage.backToRestrictionsTab();
-		validateResult(String.format(xpath, name, dateToValidate));
+		validateResult(String.format(xpath, name, dateToValidate), periodFrom, periodTill);
 	}
 	
 	@Test (description = "SRL-163. Выгрузка в SAP отчета по алкогольным ограничениям. Время действия", 
@@ -74,11 +84,11 @@ public class SpiritRestrictionsToSAPTest extends AbstractTest{
 		alcoholRestrictionPage.setTime(fromTime.split(":"), toTime.split(":"));
 		alcoholRestrictionPage.setRestrictionName(name);
 		alcoholRestrictionPage.backToRestrictionsTab();
-		validateResult(String.format(xpath, name, timeToValidate));
+		validateResult(String.format(xpath, name, timeToValidate), periodFrom, periodTill);
 	}
 	
 	
-	private boolean validateResult(String xpath){
+	private boolean validateResult(String xpath, String from, String till){
 		boolean result = false;
 		long delay = 0;
 		log.info("Проверка ограничения:" + xpath);
@@ -87,7 +97,7 @@ public class SpiritRestrictionsToSAPTest extends AbstractTest{
 		while (delay < 15) {
 			DisinsectorTools.delay(1000);
 			delay=+1;
-			soapValidate.getAlcoRestrictions();	
+			soapValidate.getAlcoRestrictions(from, till);	
 			result =  soapValidate.assertSOAPResponseXpath(xpath);
 			if (result) return true;
 		}	

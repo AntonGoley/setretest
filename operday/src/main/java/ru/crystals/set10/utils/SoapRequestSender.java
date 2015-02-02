@@ -85,7 +85,10 @@ public class SoapRequestSender{
 	private static String soapGetAlcoRestrictions = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:erp=\"http://erpiservice.alcohol.crystals.ru/\">" +
 		"<soapenv:Header/>" +
 		"<soapenv:Body>" +
-		"<erp:getSpiritRestrictions/>" +
+		 "<erp:getSpiritRestrictions>" +
+        	"<from>%s</from>" +
+        	"<till>%s</till>" +
+        "</erp:getSpiritRestrictions>" +
 		"</soapenv:Body>" +
 		"</soapenv:Envelope>";
 	
@@ -128,9 +131,9 @@ public class SoapRequestSender{
 		return this.ti;
 	}
 	
-	public void getAlcoRestrictions(){
+	public void getAlcoRestrictions(String from, String till){
 		DisinsectorTools.delay(1000);
-		this.soapRequest = soapGetAlcoRestrictions;
+		this.soapRequest = String.format(soapGetAlcoRestrictions, from, till);
 		this.service = SERVICE_ALCO_RESTRICTIONS; 
 		this.method = METHOD_ALCO_RESTRICTIONS;
 		log.info("Выгрузить алкогольные ограничения. SOAP request: \n" + this.soapRequest);
