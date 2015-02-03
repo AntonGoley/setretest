@@ -75,10 +75,8 @@ public class CheckGeneratorTest {
 		BankCard bankCard = payments.setBankCardData(validBankCardNumber, "VISA");
 		BankCard invalidBankCard = payments.setBankCardData(invalidBankCardNumber, "Maestro");
 		
-		p1 = payments.setBankCardPayment(cardType, p1, p1.getCheckSumEnd()/3, invalidBankCard, getAuthDataWithFalse());
-		p1 = payments.setBankCardPayment(cardType, p1, p1.getCheckSumEnd()/6, bankCard, null);
-		p1 = payments.setBankCardPayment(cardType, p1, p1.getCheckSumEnd()/3 - p1.getCheckSumEnd()/6, bankCard, null);
-		p1 = payments.setBankCardPayment(cardType, p1, p1.getCheckSumEnd()/3 - p1.getCheckSumEnd()/6, invalidBankCard, null);
+		p1 = payments.setBankCardPayment(cardType, p1, p1.getCheckSumEnd()/2, invalidBankCard, getAuthDataWithFalse());
+		p1 = payments.setBankCardPayment(cardType, p1, p1.getCheckSumEnd()/2, bankCard, null);
 		
 		p1 = payments.setCashPayment(p1, p1.getCheckSumEnd() - p1.getCheckSumEnd()/2);
 		return p1;
@@ -100,7 +98,7 @@ public class CheckGeneratorTest {
 		p1 = payments.getPurchaseWithoutPayments();
 		
 		String giftCardNumber =String.valueOf(System.currentTimeMillis() + 99);
-		p1 = payments.setGiftCardPayment(p1, p1.getCheckSumEnd() - p1.getCheckSumEnd()/2, giftCardNumber);
+		p1 = payments.setGiftCardPayment(p1, p1.getCheckSumEnd()/2, giftCardNumber);
 		p1 = payments.setCashPayment(p1, p1.getCheckSumEnd() - p1.getCheckSumEnd()/2);
 		return p1;
 	}
