@@ -23,6 +23,7 @@ public class MainPage extends AbstractPage{
 	
 	public MainPage(WebDriver driver) {
 		super(driver);
+		isSWFReady();
 		getWait().until(ExpectedConditions.visibilityOfElementLocated(By.id(ID_MAINPAGESWF)));
 		waitForElementVisible(getDriver(), ID_MAINPAGESWF, SALESBUTTON_LOCATOR);
 	}

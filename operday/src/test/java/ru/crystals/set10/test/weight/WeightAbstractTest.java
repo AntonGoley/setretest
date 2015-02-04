@@ -80,7 +80,7 @@ public class WeightAbstractTest extends AbstractTest{
 		/*
 		 * Задержка, на случай, если подряд генерим много товаров
 		 */
-		DisinsectorTools.delay(10);
+		DisinsectorTools.delay(9);
 		return weightGood;
 	}
 	

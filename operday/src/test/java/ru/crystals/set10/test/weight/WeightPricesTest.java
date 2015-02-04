@@ -35,10 +35,9 @@ SoapRequestSender soapSender = new SoapRequestSender();
 		scales.clearVScalesFileData();
 	}
 	
-	@Test
+	
+	@Test()
 	public void testUnloadPriceIfPriceBanSelling(){
-		
-		
 		
 		Assert.assertEquals(scales.getPluActionType(weightGood.get(PLU_NUMBER_PARAM)), 
 				ACTION_TYPE_LOAD, "Товар не загрузился в весы");

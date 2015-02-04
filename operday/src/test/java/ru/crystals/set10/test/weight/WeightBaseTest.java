@@ -28,7 +28,7 @@ public class WeightBaseTest extends WeightAbstractTest {
 		
 		scales.clearVScalesFileData();
 		/*
-		 * Прогружаем 2 товара для проверки выгрузки из весов
+		 * Прогружаем 2 товара для проверки загрузки/выгрузки из весов
 		 */
 		weightGood_1 = soapSender.sendGoods(DisinsectorTools.getFileContentAsString(WEIGHT_GOOD_FILE), weightGood_1);
 		weightGood_2 = soapSender.sendGoods(DisinsectorTools.getFileContentAsString(WEIGHT_GOOD_FILE), weightGood_2);

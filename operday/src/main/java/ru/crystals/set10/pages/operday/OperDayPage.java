@@ -24,6 +24,7 @@ public class OperDayPage extends AbstractPage{
 	
 	public OperDayPage(WebDriver driver, boolean switchWindow) {
 		super(driver);
+		isSWFReady();
 		switchWindow(switchWindow);
 		getWait().until(ExpectedConditions.visibilityOfElementLocated(By.id(ID_OPERDAYSWF)));
 	}

@@ -19,6 +19,7 @@ public class SalesPage extends AbstractPage{
 	public SalesPage(WebDriver driver) {
 		super(driver);
 		//switchWindow(true);
+		isSWFReady();
 		getWait().until(ExpectedConditions.visibilityOfElementLocated(By.id(ID_SALESSWF)));
 	}
 	
