@@ -40,7 +40,7 @@ public class GoodsParser {
 	private static DbAdapter db = new  DbAdapter();
 	private static final String SQL_GOODS_COUNT = "select count(*) from un_cg_product";
 	private static final String SQL_GOODS = 
-			"SELECT  markingofthegood, barc.code as barcode, pr.name as name, lastimporttime, measure_code, vat " +
+			"SELECT  markingofthegood, barc.code as barcode, pr.name as name, lastimporttime, measure_code, vat, plugin_class_name " +
 			"FROM  un_cg_product pr " +
 			"JOIN " +
 			"un_cg_barcode barc " +
@@ -76,7 +76,8 @@ public class GoodsParser {
 	      long summ = 0L;
 	      for (int i = 1; i < end; i++) {
 	        PositionEntity pos = new PositionEntity();
-	        pos.setProduct((ProductEntity)catalogGoods.get((int)(Math.random() * catalogGoods.size() - 1.0D)));
+	        ProductEntity product = catalogGoods.get((int)(Math.random() * catalogGoods.size() - 1.0D));
+	        pos.setProduct(product);
 	        pos.setNumber(Long.valueOf(i));
 	        if (i == 0) {
 	        	qnt = (long) 1.235;
@@ -94,6 +95,7 @@ public class GoodsParser {
 		        pos.setDeleted(Boolean.valueOf(false));
 		        pos.setSuccessProcessed(true);
 		        pos.setDateTime(new Date(System.currentTimeMillis()));
+		        
 	
 		        positions.add(pos);
 		        pe.setFiscalDocNum("test;" + String.valueOf(System.currentTimeMillis()));
@@ -137,6 +139,7 @@ public class GoodsParser {
 	        pe.setName(goods.getString("name"));
 	        pe.setNds(Float.valueOf(18.0F));
 	        pe.setNdsClass("NDS");
+	        pe.setDiscriminator(goods.getString("plugin_class_name"));
 	        BarcodeEntity be = new BarcodeEntity();
 	        be.setBarCode(goods.getString("barcode"));
 	        pe.setBarCode(be);

@@ -22,15 +22,17 @@ public class CheckGeneratorTest {
 	
 	protected static final Logger log = Logger.getLogger(CheckGeneratorTest.class);
 	CashEmulator cashEmulator;
+	CashEmulator cashEmulator2104;
 	HashMap<Long, Long>  returnPositions = new HashMap<Long, Long>(); 
 	
 	CashEmulatorPayments payments = new CashEmulatorPayments();
 	PurchaseEntity p1;
+	PurchaseEntity p2;
 	
 	@BeforeClass
 	public void setupCash(){
 		cashEmulator = CashEmulator.getCashEmulator(Config.RETAIL_HOST, Integer.valueOf(Config.SHOP_NUMBER), Integer.valueOf(Config.CASH_NUMBER));
-		//cashEmulator = CashEmulator.getCashEmulator(Config.CENTRUM_HOST, Integer.valueOf(2105), Integer.valueOf(Config.CASH_NUMBER));
+		cashEmulator2104 = CashEmulator.getCashEmulator(Config.CENTRUM_HOST, Integer.valueOf(2104), Integer.valueOf(Config.CASH_NUMBER));
 		cashEmulator.nextIntroduction();
 	}
 	
@@ -39,31 +41,42 @@ public class CheckGeneratorTest {
 		log.info("Выполнить изъятие..");
 		cashEmulator.nextWithdrawal();
 		log.info("Снять z отчет..");
-		cashEmulator.nextZReport();
+//		cashEmulator.nextZReport();
 	}
 	
 	@Test (	description = "Сгенерить чеки продажи")
 	public void testSendChecks(){
+//		cashEmulator.nextCancelledPurchase(getCashPayment());
 		p1 = (PurchaseEntity) cashEmulator.nextPurchase(getCashPayment());
+//		p2 = (PurchaseEntity) cashEmulator2104.nextPurchase(getCashPayment());
+		
 //		cashEmulator.nextRefundAll(p1, false);
 		p1 = (PurchaseEntity) cashEmulator.nextPurchase(getBankCardPayment(BankCardPaymentEntity.class));
+//		p2 = (PurchaseEntity) cashEmulator2104.nextPurchase(getBankCardPayment(BankCardPaymentEntity.class));
 		cashEmulator.nextRefundAll(p1, false);
+//		cashEmulator2104.nextRefundAll(p2, false);
 //		cashEmulator.nextRefundAll(p1, false);
 		p1 = (PurchaseEntity) cashEmulator.nextPurchase(getBankCardPayment(ChildrenCardPaymentEntity.class));
+//		p2 = (PurchaseEntity) cashEmulator2104.nextPurchase(getBankCardPayment(ChildrenCardPaymentEntity.class));
+////		cashEmulator.nextRefundAll(p1, false);
+//		p1 = (PurchaseEntity) cashEmulator.nextPurchase(getBonusCardPayment());
+//		p2 = (PurchaseEntity) cashEmulator2104.nextPurchase(getBonusCardPayment());
+////		cashEmulator.nextRefundAll(p1, false);
+//		p1 = (PurchaseEntity) cashEmulator.nextPurchase(getGiftCardPayment());
+//		p2 = (PurchaseEntity) cashEmulator2104.nextPurchase(getGiftCardPayment());
+////		cashEmulator.nextRefundAll(p1, false);
+//		p1 = (PurchaseEntity) cashEmulator.nextPurchase(getDiscountCardPayment());
+//		p2 = (PurchaseEntity) cashEmulator2104.nextPurchase(getDiscountCardPayment());
+//		log.info("Выполнить возврать последнего чека");
 //		cashEmulator.nextRefundAll(p1, false);
-		p1 = (PurchaseEntity) cashEmulator.nextPurchase(getBonusCardPayment());
-//		cashEmulator.nextRefundAll(p1, false);
-		p1 = (PurchaseEntity) cashEmulator.nextPurchase(getGiftCardPayment());
-//		cashEmulator.nextRefundAll(p1, false);
-		p1 = (PurchaseEntity) cashEmulator.nextPurchase(getDiscountCardPayment());
-		log.info("Выполнить возврать последнего чека");
-		cashEmulator.nextRefundAll(p1, false);
+//		cashEmulator2104.nextRefundAll(p2, false);
 	}
 	
 	
 	private PurchaseEntity getBankCardPayment(Class<? extends BankCardPaymentEntity> cardType){
 		log.info("Чек с оплатой банковской/детской картой..");
-		p1 = payments.getPurchaseWithoutPayments();
+		PurchaseEntity p;
+		p = payments.getPurchaseWithoutPayments();
 		
 		String prefix = String.valueOf(System.currentTimeMillis()).substring(5);
 		DisinsectorTools.delay(99);
@@ -75,48 +88,53 @@ public class CheckGeneratorTest {
 		BankCard bankCard = payments.setBankCardData(validBankCardNumber, "VISA");
 		BankCard invalidBankCard = payments.setBankCardData(invalidBankCardNumber, "Maestro");
 		
-		p1 = payments.setBankCardPayment(cardType, p1, p1.getCheckSumEnd()/2, invalidBankCard, getAuthDataWithFalse());
-		p1 = payments.setBankCardPayment(cardType, p1, p1.getCheckSumEnd()/2, bankCard, null);
+		p = payments.setBankCardPayment(cardType, p, p.getCheckSumEnd()/4, invalidBankCard, getAuthDataWithFalse());
+		p = payments.setBankCardPayment(cardType, p, p.getCheckSumEnd()/4, bankCard, null);
+		p = payments.setBankCardPayment(cardType, p, p.getCheckSumEnd()/2, bankCard, null);
 		
-		p1 = payments.setCashPayment(p1, p1.getCheckSumEnd() - p1.getCheckSumEnd()/2);
-		return p1;
+		p = payments.setCashPayment(p, p.getCheckSumEnd() - p.getCheckSumEnd()/4 -  p.getCheckSumEnd()/2);
+		return p;
 	}
 	
 	private PurchaseEntity getBonusCardPayment(){
 		log.info("Чек с оплатой бонусной картой..");
-		p1 = payments.getPurchaseWithoutPayments();
+		PurchaseEntity p;
+		p = payments.getPurchaseWithoutPayments();
 
 		String bonusCardNumber =String.valueOf(System.currentTimeMillis());
-		p1 = payments.setBonusCardPayment(p1, p1.getCheckSumEnd()/2, String.valueOf(bonusCardNumber));
-		p1 = payments.setCashPayment(p1, p1.getCheckSumEnd() - p1.getCheckSumEnd()/2);
-		return p1;
+		p = payments.setBonusCardPayment(p, p.getCheckSumEnd()/2, String.valueOf(bonusCardNumber));
+		p = payments.setCashPayment(p, p.getCheckSumEnd() - p.getCheckSumEnd()/2);
+		return p;
 		
 	}
 	
 	private PurchaseEntity getGiftCardPayment(){
 		log.info("Чек с оплатой подарочной картой..");
-		p1 = payments.getPurchaseWithoutPayments();
+		PurchaseEntity p;
+		p = payments.getPurchaseWithoutPayments();
 		
 		String giftCardNumber =String.valueOf(System.currentTimeMillis() + 99);
-		p1 = payments.setGiftCardPayment(p1, p1.getCheckSumEnd()/2, giftCardNumber);
-		p1 = payments.setCashPayment(p1, p1.getCheckSumEnd() - p1.getCheckSumEnd()/2);
-		return p1;
+		p = payments.setGiftCardPayment(p, p.getCheckSumEnd()/2, giftCardNumber);
+		p = payments.setCashPayment(p, p.getCheckSumEnd() - p.getCheckSumEnd()/2);
+		return p;
 	}
 	
 	private PurchaseEntity getCashPayment(){
 		log.info("Чек с оплатой наличными..");
-		p1 = payments.getPurchaseWithoutPayments();
-		p1 = payments.setCashPayment(p1, p1.getCheckSumEnd());
-		return p1;
+		PurchaseEntity p;
+		p = payments.getPurchaseWithoutPayments();
+		p = payments.setCashPayment(p, p.getCheckSumEnd());
+		return p;
 	}
 	
 	private PurchaseEntity getDiscountCardPayment(){
 		log.info("Чек с оплатой дисконтной картой..");
 		String discountCardNumber = String.valueOf(System.currentTimeMillis());
-		p1 = payments.getPurchaseWithoutPayments();
-		p1 = payments.setCashPayment(p1, p1.getCheckSumEnd());
-		p1 = payments.setDiscountCard(p1, discountCardNumber);
-		return p1;
+		PurchaseEntity p;
+		p = payments.getPurchaseWithoutPayments();
+		p = payments.setCashPayment(p, p.getCheckSumEnd());
+		p = payments.setDiscountCard(p, discountCardNumber);
+		return p;
 	}
 	
 	
@@ -149,7 +167,7 @@ public class CheckGeneratorTest {
 		authData.setStatus(false);
 		authData.setBankid("ВТБ");
 		authData.setAuthCode(String.valueOf(System.currentTimeMillis()));
-		authData.setMessage("ОДОБРЕНО");
+		authData.setMessage("ОТКЛОНЕНО");
 		authData.setResponseCode("587");
 		authData.setTerminalId("AA854380");
 		authData.setResultCode(354L);

@@ -42,7 +42,7 @@ public class CashEmulator {
 	private String db_operday;
 	
 	public  boolean nextShift = false;
-	public  long yesterday = Long.valueOf("-0"); //(86400000 * 130); ("-11232000000")
+	public  long yesterday = Long.valueOf("0"); //(86400000 * 130); ("-11232000000")
 	
 	/*
 	 * Список созданных в тестах касс
@@ -69,7 +69,7 @@ public class CashEmulator {
 	
 	private static  String SQL_GET_INTRODUCTION_BY_FISCALDOCNUM = "select count(*) from od_introduction where fiscaldocnum = '%s' ";	
 	
-	private static  String SQL_GET_SHIFT_FINAL_SUM = "select sum(checksumstart) from od_purchase where operationtype = %s  and " +
+	private static  String SQL_GET_SHIFT_FINAL_SUM = "select sum(checksumstart) from od_purchase where operationtype = %s  and checkstatus=0 and " +
 													"id_shift = (select id from od_shift where cashnum=%s and numshift=%s and shopindex = %s and shiftcreate >= '%s 00:00:00' and shiftcreate < '%s 23:59:59.999')";
 	
 	private CashEmulator(String serverIP, int shopNum, int cashNum) {
@@ -92,6 +92,9 @@ public class CashEmulator {
 	    
 	} 
 	
+	public CashEmulator() {
+	}
+
 	/*
 	 * Смотрим, есть ли созданный эмулятор (ip + номер магазина + номер кассы)
 	 * если нет, создаем его
@@ -561,5 +564,9 @@ public class CashEmulator {
 		SimpleDateFormat dateFormat = new SimpleDateFormat(format);
 		return dateFormat.format(date);
 	}
+	
+//	public void setYesterday(long yesterday){
+//		this.yesterday = yesterday;
+//	}
 	
 }
