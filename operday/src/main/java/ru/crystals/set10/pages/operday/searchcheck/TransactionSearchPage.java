@@ -19,8 +19,7 @@ public class  TransactionSearchPage extends CheckSearchPage {
 	// результат поиска
 	static final String SEARCH_RESULT = "searchResultLabel";
 	
-	public static final String LOCATOR_XLS_TRANSACTIONS = "label:Позиции чеков";
-
+	public static final String LOCATOR_XLS_TRANSACTIONS = "label:Транзакции в Excel";
 	public static final String XLS_REPORT_TRANSACTIONS = "TransactionHistory*.xlsx";
 	
 	static final String INPUT_CHECK_NUMBER = "checkNumberInput";

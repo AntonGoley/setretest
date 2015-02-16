@@ -61,6 +61,12 @@ public class SearchFormPopUp extends OperDayPage {
 	public static final String FILTER_CATEGORY_AUTHORIZATION_CODE = "Код авторизации";
 	public static final String FILTER_CATEGORY_BANK_ID = "Код банка";
 	
+	// суммы
+	public static final String FILTER_CATEGORY_CHECK_AMOUN = "Сумма чека";
+	public static final String FILTER_CATEGORY_PAYMENT_AMOUN = "Сумма оплаты";
+	public static final String FILTER_SELECT_COMPARISION = "comparisonTypeComboBox";
+	
+	
 	// элементы окна множественного выбора
 	private static final String FILTER_MULTI_TEXT_OPEN_INPUT = "toogleButton";
 	private static final String FILTER_MULTI_TEXT_INPUT = "valuesTextInput";
@@ -79,10 +85,7 @@ public class SearchFormPopUp extends OperDayPage {
 		clickElement(getDriver(), ID_OPERDAYSWF,  FILTER_OPEN);
 		return new SearchFormPopUp(getDriver());
 	}
-	
-//	public void doSearch(){
-//		log.info("Выполнить поиск!");
-//	}
+
 	
 	public SearchFormPopUp setCheckBarcode(PurchaseEntity purchase){
 		return setFilterText(FILTER_CATEGORY_CHECK_BAR_CODE, getCheckBarcode(purchase));

@@ -7,7 +7,7 @@ import ru.crystals.set10.utils.DisinsectorTools;
 import static ru.crystals.set10.utils.FlexMediator.*;
 
 
-public class  CheckSearchPage extends SearchFormPopUp implements SaveFile{
+public class  CheckSearchPage extends SearchFormPopUp implements SaveFile {
 	
 	/*
 	 * Локаторы элементов страницы

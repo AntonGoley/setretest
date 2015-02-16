@@ -75,7 +75,7 @@ public class AccompanyingDocumentsBasicTest extends AbstractTest{
 	static final String denyPrintSumTotalGoodsBill = "Всего к оплате 80,16 Х 20,04 100,20";
 	
 	private static final String SQL_GOODS = 
-			"SELECT  markingofthegood, barc.code as barcode, pr.name as name, fullname, lastimporttime, measure_code, vat " +
+			"SELECT  markingofthegood, barc.code as barcode, pr.name as name, fullname, lastimporttime, measure_code, vat, plugin_class_name " +
 			"FROM  un_cg_product pr " +
 			"JOIN " +
 			"un_cg_barcode barc " +

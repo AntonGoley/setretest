@@ -114,6 +114,13 @@
 		</classes>	 
   	</test>
   	
+  	<!-- ТРАНЗАКЦИЙ ОПЛАТЫ --> 		
+  	<test name="Поиск чека" >
+	  	<classes>
+			<class name="ru.crystals.set10.test.search.SearchTransactionsTest"/>
+		</classes>	 
+  	</test>
+  	
    <!-- АЛКОГОЛЬНЫЕ ОГРАНИЧЕНИЯ --> 	  	
   	<test name="Выгрузка в SAP алкогольных ограничений" >
 	  	<classes>
