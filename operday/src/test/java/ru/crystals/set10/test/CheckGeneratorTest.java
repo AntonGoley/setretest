@@ -22,7 +22,7 @@ public class CheckGeneratorTest {
 	
 	protected static final Logger log = Logger.getLogger(CheckGeneratorTest.class);
 	CashEmulator cashEmulator;
-	CashEmulator cashEmulator2104;
+	CashEmulator cashEmulatorVirtual;
 	HashMap<Long, Long>  returnPositions = new HashMap<Long, Long>(); 
 	
 	CashEmulatorPayments payments = new CashEmulatorPayments();
@@ -32,44 +32,32 @@ public class CheckGeneratorTest {
 	@BeforeClass
 	public void setupCash(){
 		cashEmulator = CashEmulator.getCashEmulator(Config.RETAIL_HOST, Integer.valueOf(Config.SHOP_NUMBER), Integer.valueOf(Config.CASH_NUMBER));
-		cashEmulator2104 = CashEmulator.getCashEmulator(Config.CENTRUM_HOST, Integer.valueOf(2104), Integer.valueOf(Config.CASH_NUMBER));
 		cashEmulator.nextIntroduction();
 	}
 	
 	@AfterClass
 	public void sendZreport(){
-		log.info("Выполнить изъятие..");
 		cashEmulator.nextWithdrawal();
-		log.info("Снять z отчет..");
-//		cashEmulator.nextZReport();
+		cashEmulator.nextZReport();
 	}
 	
-	@Test (	description = "Сгенерить чеки продажи")
+	@Test (description = "Сгенерить чеки продажи")
 	public void testSendChecks(){
-//		cashEmulator.nextCancelledPurchase(getCashPayment());
-		p1 = (PurchaseEntity) cashEmulator.nextPurchase(getCashPayment());
-//		p2 = (PurchaseEntity) cashEmulator2104.nextPurchase(getCashPayment());
+
+		p1 = getBankCardPayment(BankCardPaymentEntity.class);
+		cashEmulator.nextCancelledPurchase(p1);
 		
-//		cashEmulator.nextRefundAll(p1, false);
-		p1 = (PurchaseEntity) cashEmulator.nextPurchase(getBankCardPayment(BankCardPaymentEntity.class));
-//		p2 = (PurchaseEntity) cashEmulator2104.nextPurchase(getBankCardPayment(BankCardPaymentEntity.class));
+		p1 = (PurchaseEntity) cashEmulator.nextPurchase(getCashPayment());
 		cashEmulator.nextRefundAll(p1, false);
-//		cashEmulator2104.nextRefundAll(p2, false);
-//		cashEmulator.nextRefundAll(p1, false);
+
+		p1 = (PurchaseEntity) cashEmulator.nextPurchase(getBankCardPayment(BankCardPaymentEntity.class));
+
 		p1 = (PurchaseEntity) cashEmulator.nextPurchase(getBankCardPayment(ChildrenCardPaymentEntity.class));
-//		p2 = (PurchaseEntity) cashEmulator2104.nextPurchase(getBankCardPayment(ChildrenCardPaymentEntity.class));
-////		cashEmulator.nextRefundAll(p1, false);
-//		p1 = (PurchaseEntity) cashEmulator.nextPurchase(getBonusCardPayment());
-//		p2 = (PurchaseEntity) cashEmulator2104.nextPurchase(getBonusCardPayment());
-////		cashEmulator.nextRefundAll(p1, false);
-//		p1 = (PurchaseEntity) cashEmulator.nextPurchase(getGiftCardPayment());
-//		p2 = (PurchaseEntity) cashEmulator2104.nextPurchase(getGiftCardPayment());
-////		cashEmulator.nextRefundAll(p1, false);
-//		p1 = (PurchaseEntity) cashEmulator.nextPurchase(getDiscountCardPayment());
-//		p2 = (PurchaseEntity) cashEmulator2104.nextPurchase(getDiscountCardPayment());
-//		log.info("Выполнить возврать последнего чека");
-//		cashEmulator.nextRefundAll(p1, false);
-//		cashEmulator2104.nextRefundAll(p2, false);
+		
+		p1 = (PurchaseEntity) cashEmulator.nextPurchase(getBonusCardPayment());
+		p1 = (PurchaseEntity) cashEmulator.nextPurchase(getGiftCardPayment());
+		p1 = (PurchaseEntity) cashEmulator.nextPurchase(getDiscountCardPayment());
+		
 	}
 	
 	
