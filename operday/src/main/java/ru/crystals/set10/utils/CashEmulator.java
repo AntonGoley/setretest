@@ -7,10 +7,9 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
+import ru.crystals.discount.processing.entity.LoyTransactionEntity;
 import ru.crystals.pos.check.CheckStatus;
 import ru.crystals.pos.check.DocumentEntity;
 import ru.crystals.pos.check.IntroductionEntity;
@@ -52,6 +51,7 @@ public class CashEmulator {
 	private int reportId = 1;
 	
 	private DocsSender docSender;
+	private LoySender loySender;
 	
 	private static DbAdapter db = new  DbAdapter();
 		
@@ -88,12 +88,10 @@ public class CashEmulator {
 	    shiftNum = getCurrentShiftNum(cashNumber);
 	    checkNumber =  getNextCheckNum(cashNumber, shiftNum);
 	    docSender = new DocsSender(serverIP, shopNumber, cashNumber);
+	    loySender = new LoySender(serverIP, shopNumber, cashNumber);
 	    log.info("Создан cashEmulator: " + cashNumber +  "; ShopNum = " + shopNum + "; ShiftNum = " + shiftNum + "; NextCheckNumber = " + checkNumber);
 	    
 	} 
-	
-	public CashEmulator() {
-	}
 
 	/*
 	 * Смотрим, есть ли созданный эмулятор (ip + номер магазина + номер кассы)
@@ -272,6 +270,25 @@ public class CashEmulator {
 	    return rse;
 	}
 	
+	
+	/*
+	 * Сгенерить чек с рандомным набором позиций,
+	 * заполнить данные о смене
+	 * и не отправлять на сервер
+	 */
+	public PurchaseEntity nextPurchaseWithoutSending() {
+
+	   	 if (shift == null || nextShift) {	
+	      shift = nextShift(null);
+	      nextShift = false;
+	    }
+	   	 
+	   	log.info("Сгенерить чек для транзакций лояльности"); 
+	   	int idx = (int)random(peList.size() - 2) + 1;
+	    return (PurchaseEntity)completeDocument(peList.get(idx));
+	    
+	}
+	
 	/*
 	 * Сгенерить чек с рандомным набором позиций
 	 */
@@ -282,8 +299,8 @@ public class CashEmulator {
 	      shift = nextShift(null);
 	      nextShift = false;
 	    }
-	    
-	    int idx = (int)random(peList.size() - 2) + 1;
+
+	   	int idx = (int)random(peList.size() - 2) + 1;
 	    return completeAndSendPurchase((DocumentEntity)peList.get(idx));
 	    
 	}
@@ -291,14 +308,15 @@ public class CashEmulator {
 	/*
 	 * Отрпавить существующий чек
 	 */
-	public DocumentEntity nextPurchase(PurchaseEntity purchase) {
+	public DocumentEntity nextPurchase(DocumentEntity purchase) {
 
 	    //if (shift == null || nextShift || ifShiftClosed(cashNumber, shiftNum)) {
 	    if (shift == null || nextShift) {	
 	      shift = nextShift(null);
 	      nextShift = false;
 	    }
-
+	    
+	    log.info("Отправить аннулированый чек..");
 	    return completeAndSendPurchase((DocumentEntity)purchase);
 	}
 	
@@ -441,8 +459,24 @@ public class CashEmulator {
 	      return returnPe;
 	}
 	
+	public void sendLoy(LoyTransactionEntity loy, PurchaseEntity pe){
+		pe.setDiscountValueTotal(loy.getDiscountValueTotal());
+		loySender.sendLoyTransaction(loy, pe);
+	}
+	
 	private DocumentEntity completeAndSendPurchase(DocumentEntity de){
+		de = completeDocument(de);
+		sendDocument(de);
+		return de;
+	}
+	
+	/*
+	 * В документ добваляется информация о смене;
+	 * в транзакции оплаты добавляется информация о смене
+	 */
+	private DocumentEntity completeDocument(DocumentEntity de){
 		Date d = new Date(System.currentTimeMillis() - yesterday);
+		//Date d = new Date(System.currentTimeMillis());
 	    de.setDateCommit(d);
 	    de.setShift(shift);
 	    de.setNumber((long) checkNumber++);
@@ -468,13 +502,19 @@ public class CashEmulator {
 			    	pTransaction.setNumShift(shift.getNumShift());
 			    	paymentTransactions.add(pTransaction);
 		    }
-		    pe.setTransactions(paymentTransactions);	      
-	      
+		    pe.setTransactions(paymentTransactions);
 	    }  
-	    sendDocument(de);
-	    logCheckEntities((PurchaseEntity) de);
-	    ifCheckInRetail((PurchaseEntity) de);
 	    return de;
+	}
+	
+	/*
+	 * Метод используется для отправки чеков с заполненной информацией о скидках
+	 */
+	public DocumentEntity sendPurchase(PurchaseEntity de){
+		 sendDocument(de);
+		 logCheckEntities((PurchaseEntity) de);
+		 ifCheckInRetail((PurchaseEntity) de);
+		 return de;
 	}
 	
     private ShiftEntity nextShift(SessionEntity session) {
@@ -568,5 +608,10 @@ public class CashEmulator {
 //	public void setYesterday(long yesterday){
 //		this.yesterday = yesterday;
 //	}
+	
+	public ShiftEntity getShift(){
+		return this.shift;
+	}
+	
 	
 }

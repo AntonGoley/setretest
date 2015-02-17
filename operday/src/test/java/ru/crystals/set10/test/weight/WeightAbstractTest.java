@@ -52,7 +52,7 @@ public class WeightAbstractTest extends AbstractTest{
 	protected static String ACTION_TYPE_CLEAR = "ClearPLU";
 	protected static String ACTION_TYPE_LOAD = "LoadPLU";
 	
-	protected static int plu = 1;
+	protected static int plu = 3;
 	
 	protected HashMap<String, String> generateGoodData(){
 		HashMap<String, String> weightGood = new HashMap<String, String>();	
