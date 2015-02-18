@@ -15,57 +15,15 @@ import ru.crystals.pos.check.PurchaseEntity;
 import ru.crystals.set10.pages.operday.OperDayPage;
 import ru.crystals.set10.utils.DisinsectorTools;
 
+
+/*
+ * Окно фильтра поиска
+ */
 public class SearchFormPopUp extends OperDayPage {
-
+	
 	/*
-	 * Локаторы элементов страницы
+	 * ЛОКАТОРЫ
 	 */
-	static final String FILTER_OPEN = "expandButton";
-	
-	// результат поиска
-	static final String SEARCH_RESULT = "searchResultLabel";
-
-	/*
-	 * Лоакаторы для фильтров поиска
-	 */
-	static final String FILTER_CATEGORY = "categorySelector";
-	static final String FILTER_SELECT_FIELD = "comboBox";
-	
-	// группа "По чеку"
-	public static final String FILTER_CATEGORY_CHECK_NUMBER = "Номер чека";
-	public static final String FILTER_CATEGORY_SHIFT_NUMBER = "Смена";
-	public static final String FILTER_CATEGORY_CASH_NUMBER = "Касса";
-	public static final String FILTER_CATEGORY_SHOP_NUMBER = "Номер магазина";
-	public static final String FILTER_CATEGORY_GOOD_BAR_CODE = "Штрих-код товара";
-	public static final String FILTER_CATEGORY_GOOD_CODE = "Код товара";
-	public static final String FILTER_CATEGORY_CHECK_BAR_CODE = "Штрих-код чека";
-	
-	public static final String FILTER_CATEGORY_DISCOUNT_CARD_NUMBER = "Номер скидочной карты";
-	
-	// Типы чека
-	public static final String FILTER_CATEGORY_CHECK_TYPE = "Тип чека";
-	public static final String FILTER_CATEGORY_CHECK_TYPE_REFUND = "Чек возврата";
-	public static final String FILTER_CATEGORY_CHECK_TYPE_SALE = "Чек продажи";
-	
-	//Типы оплат
-	public static final String FILTER_CATEGORY_PAY_TYPE = "Тип оплаты";
-
-	public static final String FILTER_CATEGORY_BANK_CARD_NUMBER = "Номер банковской карты";
-	public static final String FILTER_CATEGORY_CHILD_CARD_NUMBER = "Номер детской карты";
-	public static final String FILTER_CATEGORY_GIFT_CARD_NUMBER = "Номер подарочной карты";
-	public static final String FILTER_CATEGORY_BONUS_CARD_NUMBER = "Номер бонусной карты";
-	
-	public static final String FILTER_CATEGORY_SERVER_RESPONSE_CODE = "Код ответа процессингового центра";
-	public static final String FILTER_CATEGORY_TERMINAL_NUMBER = "Номер терминала";
-	public static final String FILTER_CATEGORY_BANK_RESPONSE_CODE = "Код ответа сервера";
-	public static final String FILTER_CATEGORY_AUTHORIZATION_CODE = "Код авторизации";
-	public static final String FILTER_CATEGORY_BANK_ID = "Код банка";
-	
-	// суммы
-	public static final String FILTER_CATEGORY_CHECK_AMOUN = "Сумма чека";
-	public static final String FILTER_CATEGORY_PAYMENT_AMOUN = "Сумма оплаты";
-	public static final String FILTER_SELECT_COMPARISION = "comparisonTypeComboBox";
-	
 	
 	// элементы окна множественного выбора
 	private static final String FILTER_MULTI_TEXT_OPEN_INPUT = "toogleButton";
@@ -75,6 +33,68 @@ public class SearchFormPopUp extends OperDayPage {
 	// элементы окна текстового поля
 	private static final String FILTER_TEXT_FIELD = "textInput";
 	
+	//Выбор категории поиска
+	static final String FILTER_CATEGORY = "categorySelector";
+	
+	//Выпадающие списки
+	static final String FILTER_SELECT_FIELD = "comboBox";
+	public static final String FILTER_SELECT_COMPARISION = "comparisonTypeComboBox";
+	
+	//Открытие фильтра
+	static final String FILTER_OPEN = "expandButton";
+	
+	//Результат поиска внизу страницы
+	static final String SEARCH_RESULT = "searchResultLabel";
+	
+	static final String SPINNER = "id:spinner";
+	
+	/*
+	 * КАТЕГОРИИ ПОИСКА
+	 */
+	
+	// группа "По чеку"
+	public static final String FILTER_CATEGORY_CHECK_TYPE = "Тип чека";
+	// Типы чека
+	public static final String FILTER_CATEGORY_CHECK_TYPE_REFUND = "Чек возврата";
+	public static final String FILTER_CATEGORY_CHECK_TYPE_SALE = "Чек продажи";
+	public static final String FILTER_CATEGORY_CHECK_TYPE_CANCEL = "Аннулированный чек";
+	public static final String FILTER_CATEGORY_SUM_CHECK = "Сумма чека";
+	public static final String FILTER_CATEGORY_CASH_NUMBER = "Касса";
+	public static final String FILTER_CATEGORY_SHIFT_NUMBER = "Смена";
+	public static final String FILTER_CATEGORY_CHECK_NUMBER = "Номер чека";
+	public static final String FILTER_CATEGORY_CASHIER_TABNUM = "Табельный номер кассира";
+	public static final String FILTER_CATEGORY_CHECK_BAR_CODE = "Штрих-код чека";
+	//Centrum
+	public static final String FILTER_CATEGORY_SHOP_NUMBER = "Номер магазина";
+	
+	//Оплаты
+	public static final String FILTER_CATEGORY_PAY_TYPE = "Тип оплаты";
+	public static final String FILTER_CATEGORY_SUM_PAYMENT= "Сумма оплаты";
+	public static final String FILTER_CATEGORY_BANK_CARD_NUMBER = "Номер банковской карты";
+	public static final String FILTER_CATEGORY_BONUS_CARD_NUMBER = "Номер бонусной карты";
+	public static final String FILTER_CATEGORY_CHILD_CARD_NUMBER = "Номер детской карты";
+	public static final String FILTER_CATEGORY_GIFT_CARD_NUMBER = "Номер подарочной карты";
+	public static final String FILTER_CATEGORY_BANK_ID = "Код банка";
+	public static final String FILTER_CATEGORY_TERMINAL_NUMBER = "Номер терминала";
+	public static final String FILTER_CATEGORY_AUTHORIZATION_CODE = "Код авторизации";
+	public static final String FILTER_CATEGORY_SERVER_RESPONSE_CODE = "Код ответа процессингового центра";
+	public static final String FILTER_CATEGORY_BANK_RESPONSE_CODE = "Код ответа сервера";
+	
+	//Скидки
+	public static final String FILTER_CATEGORY_DISCOUNT_CARD_NUMBER = "Номер скидочной карты";
+	public static final String FILTER_CATEGORY_SUM_DISCOUNT_CHECK = "Сумма скидки на чек";
+	public static final String FILTER_CATEGORY_SUM_DISCOUNT_POSITION = "Сумма скидки на позицию";
+	
+	//Позиции
+	public static final String FILTER_CATEGORY_GOOD_TYPE = "Тип товара";
+	public static final String FILTER_CATEGORY_SUM_POSITION = "Сумма позиции";
+	public static final String FILTER_CATEGORY_GOOD_CODE = "Код товара";
+	public static final String FILTER_CATEGORY_GOOD_BAR_CODE = "Штрих-код товара";
+	
+	//выпадающий списко сравнения
+	public static final String FILTER_CATEGORY_SELECT_EQUALS = "=";
+	public static final String FILTER_CATEGORY_SELECT_SMALLER = "<";
+	public static final String FILTER_CATEGORY_SELECT_GREATER = ">";
 	
 	public SearchFormPopUp(WebDriver driver) {
 		super(driver, false);
@@ -92,14 +112,7 @@ public class SearchFormPopUp extends OperDayPage {
 	}
 
 	public SearchFormPopUp setFilterMultiText(String filter, String filterValue){
-		// открыть фильтр и задать категорию
-		ifSearchFiltersOpen();
-		/*
-		 * если выбираем уже выбранный фильтр, то происходит удаление фильтра - обход этого поведения
-		 */
-		if (!getSelectedElement(getDriver(), ID_OPERDAYSWF, FILTER_CATEGORY).equals(filter)){
-			selectElement(getDriver(), ID_OPERDAYSWF, FILTER_CATEGORY, filter);
-		}
+		ifSearchFiltersOpen(filter);
 		
 		//Открыть и заполнить множественный выбор
 		clickElement(getDriver(), ID_OPERDAYSWF,  FILTER_MULTI_TEXT_OPEN_INPUT);
@@ -111,16 +124,7 @@ public class SearchFormPopUp extends OperDayPage {
 	}
 	
 	public SearchFormPopUp setFilterText(String filter, String filterValue){
-		ifSearchFiltersOpen();
-		
-		/*
-		 * если выбираем уже выбранный фильтр, то происходит удаление фильтра - обход этого поведения
-		 */
-		if (!getSelectedElement(getDriver(), ID_OPERDAYSWF, FILTER_CATEGORY).equals(filter)){
-			selectElement(getDriver(), ID_OPERDAYSWF, FILTER_CATEGORY, filter);
-		}
-		
-		//selectElement(getDriver(), ID_OPERDAYSWF, FILTER_CATEGORY, filter);
+		ifSearchFiltersOpen(filter);
 
 		//Открыть и заполнить множественный выбор
 		typeText(getDriver(), ID_OPERDAYSWF, FILTER_TEXT_FIELD, filterValue);
@@ -130,9 +134,7 @@ public class SearchFormPopUp extends OperDayPage {
 	}
 	
 	public SearchFormPopUp setFilterSelect(String filter, String filterValue){
-		ifSearchFiltersOpen();
-		
-		selectElement(getDriver(), ID_OPERDAYSWF, FILTER_CATEGORY, filter);
+		ifSearchFiltersOpen(filter);
 		
 		selectElement(getDriver(), ID_OPERDAYSWF, FILTER_SELECT_FIELD, filterValue);
 		
@@ -140,14 +142,22 @@ public class SearchFormPopUp extends OperDayPage {
 		return new SearchFormPopUp(getDriver());
 	}
 	
-	public int getSearchResultCount(){
+	public SearchFormPopUp setFilterSelectSum(String filter, String clause, String filterValue){
+		ifSearchFiltersOpen(filter);
 		
+		typeText(getDriver(), ID_OPERDAYSWF, FILTER_TEXT_FIELD, filterValue);
+		
+		selectElement(getDriver(), ID_OPERDAYSWF, FILTER_SELECT_COMPARISION, clause);
+		log.info("Задать условие поиска: " + filter + "; Значение: " + clause + " " + filterValue);
+		return new SearchFormPopUp(getDriver());
+	}
+	
+	public int getSearchResultCount(){
 		if (! waitForElementVisible(getDriver(), ID_OPERDAYSWF, SEARCH_RESULT)) {
 			log.info("По данному запросу чеков не найдено");
 			return 0;
 		}
 		
-		//DisinsectorTools.delay(500);
 		String[] result = getElementProperty(getDriver(), ID_OPERDAYSWF, SEARCH_RESULT, "text").split(" ");
 		
 		if (result.length<6){
@@ -160,7 +170,11 @@ public class SearchFormPopUp extends OperDayPage {
 		return Integer.valueOf(result[3]);
 	}
 	
-	private void ifSearchFiltersOpen(){
+	/*
+	 * Метод проверяет, открыто ли окно фильтра (pop-up)
+	 * и задает категорию поиска
+	 */
+	private void ifSearchFiltersOpen(String filter){
 		/*
 		 * Проверка, открыто ли окно фильтра
 		 * если нет, открыть его
@@ -169,6 +183,13 @@ public class SearchFormPopUp extends OperDayPage {
 			log.info(getElementProperty(getDriver(), ID_OPERDAYSWF, "name=filtersContainerPopup", "isPopUp"));
 			clickElement(getDriver(), ID_OPERDAYSWF,  FILTER_OPEN);
 		};
+		
+		/*
+		 * если выбираем уже выбранный фильтр, то происходит удаление фильтра - обход этого поведения
+		 */
+		if (!getSelectedElement(getDriver(), ID_OPERDAYSWF, FILTER_CATEGORY).equals(filter)){
+			selectElement(getDriver(), ID_OPERDAYSWF, FILTER_CATEGORY, filter);
+		}
 	}
 	
 	public void saveFile(String fileType){

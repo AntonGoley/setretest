@@ -99,6 +99,19 @@ public class SearchTransactionsTest extends SearchCheckAbstractTest{
 		};
 	};
 	
+	@DataProvider(name = "Поиск транзакций по суммам")	
+	public Object[][] transactionsSum(){
+		return new Object[][]{
+				{"Поиск транзакции по сумме оплаты отклоненной транзакции", FILTER_CATEGORY_SERVER_RESPONSE_CODE},
+				{"Поиск транзакции по сумме оплаты положительной транзакции"},
+				{"Поиск транзакции по сумме чека"},
+				{"Поиск транзакции по сумме позиции"},
+		};
+	};
+	
+	
+	
+	
 	@Test (description = "SRTE-79. Поиск транзакций оплаты по основным параметрам", 
 			dataProvider = "Количество найденных транзакций")
 	public void testSearchTransactions(String field, String filterLocator , String filterValue, int transactionsCount){

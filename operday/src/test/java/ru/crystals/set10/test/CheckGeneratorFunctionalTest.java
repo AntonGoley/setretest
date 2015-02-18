@@ -47,7 +47,7 @@ public class CheckGeneratorFunctionalTest {
 	//	cashEmulatorVirtual.nextZReport();
 	}
 	
-	@Test (	enabled = false, description = "Сгенерить чеки продажи")
+	@Test (	description = "Сгенерить чеки продажи")
 	public void testSendChecks(){
 		for(int i=0; i<1; i++) {
 	//		cashEmulator.nextCancelledPurchase(getCashPayment());
@@ -55,12 +55,12 @@ public class CheckGeneratorFunctionalTest {
 			p1 = (PurchaseEntity) cashEmulator.nextPurchase(getCashPayment());
 			//p2 = (PurchaseEntity) cashEmulator2104.nextPurchase(getCashPayment());
 			
-			cashEmulator.nextRefundAll(p1, false);
+//			cashEmulator.nextRefundAll(p1, false);
 			p1 = (PurchaseEntity) cashEmulator.nextPurchase(getBankCardPayment(BankCardPaymentEntity.class));
 //			p2 = (PurchaseEntity) cashEmulatorVirtual.nextPurchase(getBankCardPayment(BankCardPaymentEntity.class));
 			cashEmulator.nextRefundAll(p1, false);
 	//		cashEmulatorVirtual.nextRefundAll(p2, false);
-	//		p1 = (PurchaseEntity) cashEmulator.nextPurchase(getBankCardPayment(ChildrenCardPaymentEntity.class));
+			p1 = (PurchaseEntity) cashEmulator.nextPurchase(getBankCardPayment(ChildrenCardPaymentEntity.class));
 	//		p2 = (PurchaseEntity) cashEmulator2104.nextPurchase(getBankCardPayment(ChildrenCardPaymentEntity.class));
 	////		cashEmulator.nextRefundAll(p1, false);
 	//		p1 = (PurchaseEntity) cashEmulator.nextPurchase(getBonusCardPayment());
@@ -77,7 +77,7 @@ public class CheckGeneratorFunctionalTest {
 		}
 	}
 	
-	@Test
+	@Test (enabled = false)
 	public void canceledChecks(){
 		p1 = getBankCardPayment(BankCardPaymentEntity.class);
 		cashEmulator.nextCancelledPurchase(p1);

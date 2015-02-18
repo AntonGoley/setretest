@@ -1,7 +1,9 @@
 package ru.crystals.set10.utils;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+
 import ru.crystals.discount.processing.entity.LoyAdvActionInPurchaseEntity;
 import ru.crystals.discount.processing.entity.LoyDiscountPositionEntity;
 import ru.crystals.discount.processing.entity.LoyTransactionEntity;
@@ -14,7 +16,22 @@ import ru.crystals.pos.check.SentToServerStatus;
 public class CashEmulatorDiscounts {
 	
 	
+	/*
+	 * Расчитать скидки для определенного количество позиций начиная с первой
+	 * @isDiscountPurchase = true, если скидка на позицию, false - скидка на чек
+	 */
+	public LoyTransactionEntity addDiscountForPosition(PurchaseEntity purchase, int discountFirstPositions, boolean isDiscountPurchase){
+		return addDiscount(purchase, discountFirstPositions, isDiscountPurchase);
+	}
+	
+	/*
+	 * Расчитать скидки для половины позиций чека (скидку на чек)
+	 */
 	public LoyTransactionEntity addDiscount(PurchaseEntity purchase){
+		return addDiscount(purchase, purchase.getPositions().size()/2, false);
+	}
+	
+	private LoyTransactionEntity addDiscount(PurchaseEntity purchase, int discountFirstPositions, boolean isDiscountPurchase){
 		
 		LoyTransactionEntity loyTransaction = new LoyTransactionEntity();
 		loyTransaction.setCashNumber(purchase.getShift().getCashNum());
@@ -37,7 +54,7 @@ public class CashEmulatorDiscounts {
 		
 		List<LoyDiscountPositionEntity> discounts = new ArrayList<LoyDiscountPositionEntity>();
 		long sumDiscount = 0;
-		for (int i=0; i<purchase.getPositions().size()/2; i++) {
+		for (int i=0; i<discountFirstPositions; i++) {
 			LoyDiscountPositionEntity discountPosition = new LoyDiscountPositionEntity();
 			PositionEntity firstPosition = purchase.getPositions().get(i);
 			
@@ -57,11 +74,16 @@ public class CashEmulatorDiscounts {
 			
 			discountPosition.setAdvAction(loyAdvAction);
 			discounts.add(discountPosition);
+
+			// скидка на чек, или на позиции
+			discountPosition.setDiscountPurchase(isDiscountPurchase);
+			
 			sumDiscount = sumDiscount + firstPosition.getPriceEnd()/10;
 		}
 		
 		loyTransaction.setDiscountValueTotal(sumDiscount);
 		loyTransaction.setDiscountPositions(discounts);
+
 		
 		return loyTransaction;
 	}

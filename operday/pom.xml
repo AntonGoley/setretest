@@ -265,11 +265,18 @@
 			     <systemPath>${basedir}/libs/SET-Scales-Products-Exporter-API.jar</systemPath>
   			 </dependency>
   			  <dependency>
-			     <groupId>SET-LoyalStructures.jarr</groupId>
+			     <groupId>SET-LoyalStructures.jar</groupId>
 			     <artifactId>SET-LoyalStructures.jar</artifactId>
 			     <scope>system</scope>
 			     <version>1.0</version>
 			     <systemPath>${basedir}/libs/SET-LoyalStructures.jar</systemPath>
+  			 </dependency>
+  			  <dependency>
+			     <groupId>SET-OperDay.jar</groupId>
+			     <artifactId>SET-OperDay.jar</artifactId>
+			     <scope>system</scope>
+			     <version>1.0</version>
+			     <systemPath>${basedir}/libs/SET-OperDay.jar</systemPath>
   			 </dependency>
   			 <dependency>
 			     <groupId>reportng-1.10</groupId>

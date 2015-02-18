@@ -3,6 +3,7 @@ package ru.crystals.set10.utils;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
 import ru.crystals.cards.common.CardTypes;
 import ru.crystals.pos.bank.datastruct.AuthorizationData;
 import ru.crystals.pos.bank.datastruct.BankCard;
@@ -87,8 +88,9 @@ public class CashEmulatorPayments {
 		CashPaymentEntity cashPayment = new CashPaymentEntity();
 		cashPayment.setDateCreate(new Date(System.currentTimeMillis()));
 		cashPayment.setDateCommit(new Date(System.currentTimeMillis()));
-		cashPayment.setChange(Long.valueOf(random(1000) * 11L));
-		cashPayment.setSumPay(sum + cashPayment.getChange());
+		//cashPayment.setChange(Long.valueOf(random(1000) * 11L));
+		//cashPayment.setSumPay(sum + cashPayment.getChange());
+		cashPayment.setSumPay(sum);
 		cashPayment.setPaymentType("CashPaymentEntity");
 		cashPayment.setCurrency("RUB");
 	    return addPayments(purchase, cashPayment);
@@ -184,9 +186,8 @@ public class CashEmulatorPayments {
 		return purchase;
 	}
 	
-	
 	/*
-	 *	Генерим новую банковскую карту 
+	 *	Генерим новую банковскую карту c заданным номером и типом карты
 	 */
 	public BankCard setBankCardData(String numberMasked, String cardType){
 		BankCard card = new BankCard();
@@ -194,6 +195,15 @@ public class CashEmulatorPayments {
 			card.setCardType(cardType);
 			card.setExpiryDate(new Date(System.currentTimeMillis() + 365*24*3600*1000));
 		return card;
+	}
+	
+	/*
+	 * Сгеренирить банковскую карту VISA
+	 */
+	public BankCard generateCardData(String cardType){
+		String prefix = String.valueOf(System.currentTimeMillis()).substring(5);
+		String cardNumber = String.format("1234****%s", prefix);
+		return setBankCardData(cardNumber, cardType);
 	}
 	
 	/*

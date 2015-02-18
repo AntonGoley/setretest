@@ -30,7 +30,7 @@ public class LoyalExportTest {
 	@BeforeClass
 	public void setupCash(){
 		cashEmulator = CashEmulator.getCashEmulator(Config.RETAIL_HOST, Integer.valueOf(Config.SHOP_NUMBER), Integer.valueOf(Config.CASH_NUMBER) + 2);
-		cashEmulatorVirtualShop = CashEmulator.getCashEmulator(Config.CENTRUM_HOST, Integer.valueOf(Config.VIRTUAL_SHOP_NUMBER), Integer.valueOf(Config.CASH_NUMBER));
+		//cashEmulatorVirtualShop = CashEmulator.getCashEmulator(Config.CENTRUM_HOST, Integer.valueOf(Config.VIRTUAL_SHOP_NUMBER), Integer.valueOf(Config.CASH_NUMBER));
 		/*
 		 * Очистить таблицы в SAP эмуляторе
 		 */
@@ -43,8 +43,8 @@ public class LoyalExportTest {
 		LoyTransactionEntity loyTransaction = new LoyTransactionEntity();
 		
 		for (int i = 0; i < 1; i++) {
-			p1 = (PurchaseEntity) cashEmulator.nextPurchaseWithoutSending();
-			loyTransaction = payments.addDiscount(p1);
+			p1 = cashEmulator.nextPurchaseWithoutSending();
+			loyTransaction = payments.addDiscountForPosition(p1, 2, true);
 			p1.setDiscountValueTotal(loyTransaction.getDiscountValueTotal());
 			
 			cashEmulator.sendPurchase(p1);

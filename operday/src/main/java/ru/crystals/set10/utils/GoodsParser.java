@@ -46,7 +46,6 @@ public class GoodsParser {
 			"un_cg_barcode barc " +
 			"on barc.product_marking = pr.markingofthegood";
 	
-	
 	static
 	  {
 		// проверить, есть ли товары в set_operday, и если нет, импортировать через ERP импорт
@@ -60,9 +59,7 @@ public class GoodsParser {
 	  }
 	
 	private static List<DocumentEntity> generateChecks(boolean generatePayments) {
-	    /*
-	     * result list
-	     */
+
 		List<DocumentEntity> list = new ArrayList<DocumentEntity>();
 	    while (list.size() < 100) {
 	      PurchaseEntity pe = new PurchaseEntity();	
@@ -79,30 +76,25 @@ public class GoodsParser {
 	        ProductEntity product = catalogGoods.get((int)(Math.random() * catalogGoods.size() - 1.0D));
 	        pos.setProduct(product);
 	        pos.setNumber(Long.valueOf(i));
-	        if (i == 0) {
-	        	qnt = (long) 1.235;
-	        } else {
-	        	qnt = random(5) + 1L;
-	        }
-		        pos.setQnty(Long.valueOf(qnt * 1000L));
-		        
-		        long price = Long.valueOf(random(1000) * 17L);
-		        pos.setPriceStart(price);
-		        pos.setPriceEnd(price);
-		        pos.setSum(Long.valueOf(qnt * pos.getPriceEnd().longValue()));
-		        summ += pos.getSum().longValue();
-		        pos.setNdsSum(Long.valueOf(Math.round(pos.getSum().longValue() * 0.2D)));
-		        pos.setInsertType(InsertType.Hand);
-		        pos.setCalculateDiscount(Boolean.valueOf(true));
-		        pos.setSumDiscount(Long.valueOf(0L));
-		        pos.setDeleted(Boolean.valueOf(false));
-		        pos.setSuccessProcessed(true);
-		        pos.setDateTime(new Date(System.currentTimeMillis()));
-		        
-	
-		        positions.add(pos);
-		        pe.setFiscalDocNum("test;" + String.valueOf(System.currentTimeMillis()));
+
+	        qnt = random(5) + 1L;
+	        pos.setQnty(Long.valueOf(qnt * 1000L));
+	        
+	        long price = Long.valueOf(random(1000) * 17L);
+	        pos.setPriceStart(price);
+	        pos.setPriceEnd(price);
+	        pos.setSum(Long.valueOf(qnt * pos.getPriceEnd().longValue()));
+	        summ += pos.getSum().longValue();
+	        pos.setNdsSum(Long.valueOf(Math.round(pos.getSum().longValue() * 0.2D)));
+	        pos.setInsertType(InsertType.Hand);
+	        pos.setCalculateDiscount(Boolean.valueOf(true));
+	        pos.setSumDiscount(Long.valueOf(0L));
+	        pos.setDeleted(Boolean.valueOf(false));
+	        pos.setSuccessProcessed(true);
+	        pos.setDateTime(new Date(System.currentTimeMillis()));
+	        positions.add(pos);
 	      }
+	      pe.setFiscalDocNum("test;" + String.valueOf(System.currentTimeMillis()));
 	      pe.setPositions(positions);
 	      pe.setDiscountValueTotal(Long.valueOf(0L));
 	      pe.setCheckSumEnd(Long.valueOf(summ));
@@ -127,7 +119,62 @@ public class GoodsParser {
 	      list.add(pe);
 	    }
 	    return list;
-	 }
+	}
+	
+	/*
+	 * Сгенерить чек с заданным числом позиций с оплатой наличными
+	 */
+	public static PurchaseEntity generatePurchaseWithPositions(int positionsNumber){
+		PurchaseEntity pe = new PurchaseEntity();	
+		pe.setCheckStatus(CheckStatus.Registered);
+	    pe.setOperationType(Boolean.valueOf(true));
+	    List<PositionEntity> positions = new ArrayList<PositionEntity>(positionsNumber);
+	      long qnt = 0L;
+	      long summ = 0L;
+	      for (int i = 1; i <= positionsNumber; i++) {
+	        PositionEntity pos = new PositionEntity();
+	        ProductEntity product = catalogGoods.get((int)(Math.random() * catalogGoods.size() - 1.0D));
+	        pos.setProduct(product);
+	        pos.setNumber(Long.valueOf(i));
+
+	        qnt = random(5) + 1L;
+	        pos.setQnty(Long.valueOf(qnt * 1000L));
+	        
+	        long price = Long.valueOf(random(1000) * 17L);
+	        pos.setPriceStart(price);
+	        pos.setPriceEnd(price);
+	        pos.setSum(Long.valueOf(qnt * pos.getPriceEnd().longValue()));
+	        summ += pos.getSum().longValue();
+	        pos.setNdsSum(Long.valueOf(Math.round(pos.getSum().longValue() * 0.2D)));
+	        pos.setInsertType(InsertType.Hand);
+	        pos.setCalculateDiscount(Boolean.valueOf(true));
+	        pos.setSumDiscount(Long.valueOf(0L));
+	        pos.setDeleted(Boolean.valueOf(false));
+	        pos.setSuccessProcessed(true);
+	        pos.setDateTime(new Date(System.currentTimeMillis()));
+	        positions.add(pos);
+	      }
+	      pe.setFiscalDocNum("test;" + String.valueOf(System.currentTimeMillis()));
+	      pe.setPositions(positions);
+	      pe.setDiscountValueTotal(Long.valueOf(0L));
+	      pe.setCheckSumEnd(Long.valueOf(summ));
+	      pe.setCheckSumStart(Long.valueOf(summ));
+	      
+	      List<PaymentEntity> paymentEntityList = new ArrayList<PaymentEntity>(1);
+	      CashPaymentEntity payE = new CashPaymentEntity();
+		      payE.setDateCreate(new Date(System.currentTimeMillis()));
+		      payE.setDateCommit(new Date(System.currentTimeMillis()));
+		      payE.setChange(Long.valueOf(random(1000) * 11L));
+		      payE.setSumPay(summ + payE.getChange());
+		      payE.setPaymentType("CashPaymentEntity");
+		      payE.setCurrency("RUB");
+	      
+	      paymentEntityList.add(payE);
+	      pe.setPayments(paymentEntityList);
+	      return pe;
+	}
+	
+
 	
 	public static ArrayList<ProductEntity> parsePurchasesFromDB(SqlRowSet goods) {
 		ArrayList<ProductEntity> result = new ArrayList<ProductEntity>();

@@ -286,7 +286,39 @@ public class CashEmulator {
 	   	log.info("Сгенерить чек для транзакций лояльности"); 
 	   	int idx = (int)random(peList.size() - 2) + 1;
 	    return (PurchaseEntity)completeDocument(peList.get(idx));
-	    
+	}
+	
+	/*
+	 * Сгенерить чек с рандомным набором позиций,
+	 * заполнить данные о смене
+	 * и не отправлять на сервер
+	 */
+	public PurchaseEntity nextRefundAllWithoutSending(
+			PurchaseEntity superPurchase, 
+			// произвольный возврат
+			boolean arbitraryReturn) {
+
+		if (shift == null) {
+		  shift = nextShift(null);
+		}
+		
+		HashMap<Long, Long> returnPositions = new HashMap<Long, Long>();
+		
+		for (int i=0; i<superPurchase.getPositions().size(); i++){
+			PositionEntity pe = superPurchase.getPositions().get(i);
+			returnPositions.put(pe.getNumber(), pe.getQnty());
+		}
+		return  (PurchaseEntity)refundCheck(superPurchase, returnPositions, arbitraryReturn);
+	}
+	
+	public PurchaseEntity nextCancelledPurchaseWithoutSending(PurchaseEntity purchase) {
+
+	    if (shift == null || nextShift) {	
+	      shift = nextShift(null);
+	      nextShift = false;
+	    }
+	    purchase.setCheckStatus(CheckStatus.Cancelled);
+	    return  purchase;
 	}
 	
 	/*
@@ -301,7 +333,8 @@ public class CashEmulator {
 	    }
 
 	   	int idx = (int)random(peList.size() - 2) + 1;
-	    return completeAndSendPurchase((DocumentEntity)peList.get(idx));
+	   	log.info("Отправить  чек..");
+	   	return completeAndSendPurchase((DocumentEntity)peList.get(idx));
 	    
 	}
 	
@@ -316,7 +349,7 @@ public class CashEmulator {
 	      nextShift = false;
 	    }
 	    
-	    log.info("Отправить аннулированый чек..");
+	    log.info("Отправить  чек..");
 	    return completeAndSendPurchase((DocumentEntity)purchase);
 	}
 	
@@ -324,14 +357,8 @@ public class CashEmulator {
 	 * Отрпавить аннулированый чек
 	 */
 	public DocumentEntity nextCancelledPurchase(PurchaseEntity purchase) {
-
-	    //if (shift == null || nextShift || ifShiftClosed(cashNumber, shiftNum)) {
-	    if (shift == null || nextShift) {	
-	      shift = nextShift(null);
-	      nextShift = false;
-	    }
-	    purchase.setCheckStatus(CheckStatus.Cancelled);
-	    return completeAndSendPurchase((DocumentEntity)purchase);
+		log.info("Отправить аннулированный чек..");
+	    return (DocumentEntity)completeAndSendPurchase(nextCancelledPurchaseWithoutSending(purchase));
 	}
 	
 	/*
@@ -364,20 +391,8 @@ public class CashEmulator {
 				// произвольный возврат
 				boolean arbitraryReturn) 
 	{
-		
-		DocumentEntity de = new PurchaseEntity();
-		if (shift == null) {
-		  shift = nextShift(null);
-		}
-		
-		HashMap<Long, Long> returnPositions = new HashMap<Long, Long>();
-		
-		for (int i=0; i<superPurchase.getPositions().size(); i++){
-			PositionEntity pe = superPurchase.getPositions().get(i);
-			returnPositions.put(pe.getNumber(), pe.getQnty());
-		}
-		de = refundCheck(superPurchase, returnPositions, arbitraryReturn);
-		 
+		DocumentEntity de = 
+				(DocumentEntity) nextRefundAllWithoutSending(superPurchase, arbitraryReturn);
 		log.info("Выполнить возврат всего чека..");
 		return completeAndSendPurchase(de);
 	}
@@ -475,8 +490,8 @@ public class CashEmulator {
 	 * в транзакции оплаты добавляется информация о смене
 	 */
 	private DocumentEntity completeDocument(DocumentEntity de){
-		Date d = new Date(System.currentTimeMillis() - yesterday);
-		//Date d = new Date(System.currentTimeMillis());
+		//Date d = new Date(System.currentTimeMillis() - yesterday);
+		Date d = new Date(System.currentTimeMillis());
 	    de.setDateCommit(d);
 	    de.setShift(shift);
 	    de.setNumber((long) checkNumber++);

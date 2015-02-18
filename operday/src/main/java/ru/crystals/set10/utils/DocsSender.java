@@ -48,7 +48,7 @@ public class DocsSender {
 		} else {
 			db = DbAdapter.DB_CENTRUM_OPERDAY;
 		}
-//		
+		
 //			od_purchase_id = new DbAdapter().queryForInt(db,
 //					"select max(id) from od_inbound_files") + 7;
 	

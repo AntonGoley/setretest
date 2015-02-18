@@ -3,12 +3,18 @@ package ru.crystals.set10.test.search;
 
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-
+import ru.crystals.pos.check.PurchaseEntity;
 import static ru.crystals.set10.pages.operday.searchcheck.CheckSearchPage.*;
 
 
 public class SearchCheckByCheckTypeGroupTest extends SearchCheckAbstractTest{
+	
+	private PurchaseEntity p1;
+	private PurchaseEntity p1refund;
+	private PurchaseEntity p1cancel;
+	
 	
 	@BeforeClass
 	public void send1stCheck(){
@@ -22,16 +28,42 @@ public class SearchCheckByCheckTypeGroupTest extends SearchCheckAbstractTest{
 		searchCheck.getExpectedResultCount(1);
 	}
 	
-	@Test ( enabled = false, description = "SRTE-71. Поиск чека на ТК по типу чека")
-	public void testSearchCheckByType(){
- 		searchCheck.setFilterMultiText(FILTER_CATEGORY_CHECK_NUMBER, String.valueOf(checkNumber + 1));
+	@DataProvider(name = "Тип чека")	
+	public Object[][] checkType(){
+		p1 = cashEmulatorSearchCheck.nextPurchaseWithoutSending();
+		p1refund = cashEmulatorSearchCheck.nextRefundAllWithoutSending(purchase, false);
+		p1cancel = cashEmulatorSearchCheck.nextCancelledPurchaseWithoutSending(cashEmulatorSearchCheck.nextPurchaseWithoutSending());
+		return new Object[][]{
+				{"Чек продажи",  FILTER_CATEGORY_CHECK_TYPE_SALE, p1},
+				{"Чек возврата",  FILTER_CATEGORY_CHECK_TYPE_REFUND, p1refund},
+				{"Аннулированый чек",  FILTER_CATEGORY_CHECK_TYPE_CANCEL, p1cancel},
+		};
+	};
+	
+	@DataProvider(name = "Суммы")	
+	public Object[][] paySum(){
+		p1 = cashEmulatorSearchCheck.nextPurchaseWithoutSending();
+		
+		
+		return new Object[][]{
+				{"Сумма чека = ",  FILTER_CATEGORY_SUM_CHECK, p1},
+				{"Сумма чека <",  FILTER_CATEGORY_CHECK_TYPE_REFUND, p1refund},
+				{"Сумма чека >",  FILTER_CATEGORY_CHECK_TYPE_CANCEL, p1cancel},
+		};
+	};
+	
+	
+	@Test (description = "SRTE-71. Поиск чека на ТК по типу чека", 
+			dataProvider = "Тип чека")
+	public void testSearchCheckByType(String category, String filterName, PurchaseEntity p){
+ 		searchCheck.setFilterSelect(FILTER_CATEGORY_CHECK_TYPE, filterName);
  		searchCheck.doSearch();
- 		
  		searchResult = searchCheck.getSearchResultCount();
- 		sendCheck();
+ 		
+ 		sendCheck(p);
  		searchCheck.doSearch();
  		
- 		Assert.assertEquals(searchCheck.getExpectedResultCount(searchResult + 1), searchResult + 1, "");
+ 		Assert.assertEquals(searchCheck.getExpectedResultCount(searchResult + 1), searchResult + 1, "Неверный результат поиска по условию: " + category);
  		testExcelExport(LOCATOR_XLS_CHECK_CONTENT, XLS_REPORT_CONTENT_PATTERN);
  		testExcelExport(LOCATOR_XLS_CHECK_HEADERS, XLS_REPORT_HEADERS_PATTERN);
 	}
