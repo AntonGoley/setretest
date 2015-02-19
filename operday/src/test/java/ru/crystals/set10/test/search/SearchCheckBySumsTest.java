@@ -127,6 +127,7 @@ public class SearchCheckBySumsTest extends SearchCheckAbstractTest{
 		/*
 		 * Определить, сколько зарегистрировано чеков, с суммой sum, до отправки чека p1 
 		 */
+		log.info("Проверка поиска по фильтру " + filter);
  		expectedCountEquals = getResults(filter, FILTER_CATEGORY_SELECT_EQUALS, convertSum(sum));
  		expectedCountGreater = getResults(filter, FILTER_CATEGORY_SELECT_GREATER, convertSum(sum));
  		expectedCountGreater_100 = getResults(filter, FILTER_CATEGORY_SELECT_GREATER, convertSum(sum - 100));
