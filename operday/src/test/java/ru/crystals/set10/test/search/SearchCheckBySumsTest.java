@@ -136,14 +136,6 @@ public class SearchCheckBySumsTest extends SearchCheckAbstractTest{
  		sendCheck(p1);
  		
  		/*
- 		 * Проверить "="
- 		 */
- 		searchCheck.setFilterSelectSum(filter, FILTER_CATEGORY_SELECT_EQUALS, convertSum(sum));
- 		searchCheck.doSearch();
- 		Assert.assertEquals(searchCheck.getExpectedResultCount(expectedCountEquals + 1), expectedCountEquals + 1, 
- 				"Чек не попал в результат поиска, если условие поиска = " + filter + " = " + convertSum(sum));
- 		
- 		/*
  		 *  Чек НЕ попадает в результат поиска, если условие поиска > сумма чека  
  		 */
  		searchCheck.setFilterSelectSum(filter, FILTER_CATEGORY_SELECT_GREATER, convertSum(sum));
@@ -174,6 +166,14 @@ public class SearchCheckBySumsTest extends SearchCheckAbstractTest{
  		searchCheck.doSearch();
  		Assert.assertEquals(searchCheck.getExpectedResultCount(expectedCountSmaller), expectedCountSmaller, 
  				"Чек не должен попадать в результат поиска, если условие поиска "  + filter + " < " + convertSum(sum));
+ 		
+ 		/*
+ 		 * Проверить "="
+ 		 */
+ 		searchCheck.setFilterSelectSum(filter, FILTER_CATEGORY_SELECT_EQUALS, convertSum(sum));
+ 		searchCheck.doSearch();
+ 		Assert.assertEquals(searchCheck.getExpectedResultCount(expectedCountEquals + 1), expectedCountEquals + 1, 
+ 				"Чек не попал в результат поиска, если условие поиска = " + filter + " = " + convertSum(sum));
  		
  		testExcelExport(LOCATOR_XLS_CHECK_CONTENT, XLS_REPORT_CONTENT_PATTERN);
  		testExcelExport(LOCATOR_XLS_CHECK_HEADERS, XLS_REPORT_HEADERS_PATTERN);
