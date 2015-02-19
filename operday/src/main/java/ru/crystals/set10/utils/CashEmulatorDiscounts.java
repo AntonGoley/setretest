@@ -1,9 +1,7 @@
 package ru.crystals.set10.utils;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-
 import ru.crystals.discount.processing.entity.LoyAdvActionInPurchaseEntity;
 import ru.crystals.discount.processing.entity.LoyDiscountPositionEntity;
 import ru.crystals.discount.processing.entity.LoyTransactionEntity;

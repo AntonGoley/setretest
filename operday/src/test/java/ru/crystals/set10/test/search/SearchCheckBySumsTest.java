@@ -127,7 +127,7 @@ public class SearchCheckBySumsTest extends SearchCheckAbstractTest{
 	};
 	
 	@Test (description = "SRTE-131. Поиск чека на ТК по суммам", 
-			dataProvider = "Суммы")
+			dataProvider = "Суммы" )
 	public void testSearchCheckBySum(String filter, long sum, PurchaseEntity p1){
 		/*
 		 * Определить, сколько зарегистрировано чеков, с суммой sum, до отправки чека p1 
@@ -143,53 +143,47 @@ public class SearchCheckBySumsTest extends SearchCheckAbstractTest{
  		/*
  		 *  Чек НЕ попадает в результат поиска, если условие поиска > сумма чека  
  		 */
- 		searchCheck.setFilterSelectSum(filter, FILTER_CATEGORY_SELECT_GREATER, convertSum(sum));
- 		searchCheck.doSearch();
- 		Assert.assertEquals(searchCheck.getExpectedResultCount(expectedCountGreater), expectedCountGreater, 
- 				"Чек не должен попадать результат поиска, если условие поиска " +  filter + " > " + convertSum(sum));
- 		
+ 		verifyResult(filter, FILTER_CATEGORY_SELECT_GREATER, convertSum(sum), expectedCountGreater + 1, 
+ 				"Чек не должен попадать результат поиска, если условие поиска ");
+
  		/*
  		 *  Чек попадает в результат поиска, если условие поиска > (сумма - 100 копеек) 
  		 */
- 		searchCheck.setFilterSelectSum(filter, FILTER_CATEGORY_SELECT_GREATER, convertSum(sum - 100));
- 		searchCheck.doSearch();
- 		Assert.assertEquals(searchCheck.getExpectedResultCount(expectedCountGreater_100 + 1), expectedCountGreater_100 + 1, 
- 				"Чек НЕ попал в результат поиска, если условие поиска (сумма - 100копеек)" +  filter + " > " + convertSum(sum - 100));
+ 		
+ 		verifyResult(filter, FILTER_CATEGORY_SELECT_GREATER, convertSum(sum - 100), expectedCountGreater_100 + 1, 
+ 				"Чек НЕ попал в результат поиска, если условие поиска (сумма - 100копеек)");
  		
  		/*
  		 *  Чек НЕ попадает в результат поиска, если условие поиска < сумма чека  
  		 */
- 		searchCheck.setFilterSelectSum(filter, FILTER_CATEGORY_SELECT_SMALLER, convertSum(sum));
- 		searchCheck.doSearch();
- 		Assert.assertEquals(searchCheck.getExpectedResultCount(expectedCountSmaller), expectedCountSmaller, 
- 				"Чек не должен попадать в результат поиска, если условие поиска "  + filter + " < " + convertSum(sum));
+ 		verifyResult(filter, FILTER_CATEGORY_SELECT_SMALLER, convertSum(sum), expectedCountSmaller, 
+ 				"Чек не должен попадать в результат поиска, если условие поиска ");
  		
  		/*
  		 *  Чек попадает в результат поиска, если условие поиска < (сумма+ 100копеек) 
  		 */
- 		searchCheck.setFilterSelectSum(filter, FILTER_CATEGORY_SELECT_SMALLER, convertSum(sum + 100));
- 		searchCheck.doSearch();
- 		Assert.assertEquals(searchCheck.getExpectedResultCount(expectedCountSmaller_100 + 1), expectedCountSmaller_100 + 1, 
- 				"Чек НЕ попал в результат поиска, если условие поиска (сумма + 100копеек)"  + filter + " < " + convertSum(sum + 100));
+ 		verifyResult(filter, FILTER_CATEGORY_SELECT_SMALLER, convertSum(sum + 100), expectedCountSmaller_100 + 1, 
+ 				"Чек НЕ попал в результат поиска, если условие поиска (сумма + 100копеек) ");
  		
  		/*
  		 * Проверить "="
  		 */
- 		searchCheck.setFilterSelectSum(filter, FILTER_CATEGORY_SELECT_EQUALS, convertSum(sum));
- 		searchCheck.doSearch();
- 		Assert.assertEquals(searchCheck.getExpectedResultCount(expectedCountEquals + 1), expectedCountEquals + 1, 
- 				"Чек не попал в результат поиска, если условие поиска = " + filter + " = " + convertSum(sum));
+ 		verifyResult(filter, FILTER_CATEGORY_SELECT_EQUALS, convertSum(sum), expectedCountEquals + 1, 
+ 				"Чек не попал в результат поиска, если условие поиска = ");
  		
  		testExcelExport(LOCATOR_XLS_CHECK_CONTENT, XLS_REPORT_CONTENT_PATTERN);
  		testExcelExport(LOCATOR_XLS_CHECK_HEADERS, XLS_REPORT_HEADERS_PATTERN);
 	}
 	
-	
-	private void verifyResult(String filter, String condition, long sum, String message){
-		searchCheck.setFilterSelectSum(filter, condition, convertSum(sum));
- 		searchCheck.doSearch();
- 		Assert.assertEquals(searchCheck.getExpectedResultCount(expectedCountEquals + 1), expectedCountEquals + 1, 
- 				"Чек не попал в результат поиска, если условие поиска = " + filter + " = " + convertSum(sum));
+	private void verifyResult(String filter, String condition, String sumConverted, int expectedResult, String message){
+		try{
+			searchCheck.setFilterSelectSum(filter, condition, sumConverted);
+	 		searchCheck.doSearch();
+	 		Assert.assertEquals(searchCheck.getExpectedResultCount(expectedResult), expectedResult, 
+	 				message + filter + " = " + sumConverted);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	private int getResults(String filterName, String filterClause, String filterValue){

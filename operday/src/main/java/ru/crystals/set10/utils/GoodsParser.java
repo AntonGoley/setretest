@@ -121,7 +121,7 @@ public class GoodsParser {
 	    return list;
 	}
 	
-	/*
+	/*TODO: вынести метод формирование чека в отдельный метод
 	 * Сгенерить чек с заданным числом позиций с оплатой наличными
 	 */
 	public static PurchaseEntity generatePurchaseWithPositions(int positionsNumber){
