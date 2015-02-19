@@ -79,6 +79,9 @@ public class CashEmulatorDiscounts {
 			discountPosition.setDiscountPurchase(isDiscountPurchase);
 			
 			sumDiscount = sumDiscount + firstPosition.getPriceEnd()/10;
+			
+			//purchase.getPositions().get(0).setSumDiscount(sumDiscount);
+			
 		}
 		
 		loyTransaction.setDiscountValueTotal(sumDiscount);

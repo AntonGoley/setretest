@@ -482,6 +482,8 @@ public class CashEmulator {
 	private DocumentEntity completeAndSendPurchase(DocumentEntity de){
 		de = completeDocument(de);
 		sendDocument(de);
+		logCheckEntities((PurchaseEntity) de);
+		ifCheckInRetail((PurchaseEntity) de);
 		return de;
 	}
 	

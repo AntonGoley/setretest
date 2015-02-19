@@ -1,6 +1,9 @@
 package ru.crystals.set10.test.search;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
@@ -9,10 +12,12 @@ import org.testng.annotations.Test;
 
 import ru.crystals.discount.processing.entity.LoyTransactionEntity;
 import ru.crystals.operday.util.FormatHelper;
+import ru.crystals.pos.check.PositionEntity;
 import ru.crystals.pos.check.PurchaseEntity;
 import ru.crystals.pos.payments.BankCardPaymentEntity;
 import ru.crystals.set10.utils.CashEmulatorDiscounts;
 import ru.crystals.set10.utils.CashEmulatorPayments;
+import ru.crystals.set10.utils.DisinsectorTools;
 import ru.crystals.set10.utils.GoodsParser;
 import static ru.crystals.set10.pages.operday.searchcheck.CheckSearchPage.*;
 import static ru.crystals.set10.pages.operday.searchcheck.SearchFormPopUp.FILTER_CATEGORY_CHECK_BAR_CODE;
@@ -33,11 +38,15 @@ public class SearchCheckBySumsTest extends SearchCheckAbstractTest{
 	
 	private int expectedCountEquals = 0;
 	private int expectedCountGreater = 0;
+	private int expectedCountGreater_100 = 0;
 	private int expectedCountSmaller = 0;
+	private int expectedCountSmaller_100 = 0;
 	
 	CashEmulatorPayments payments = new CashEmulatorPayments();
 	LoyTransactionEntity loyTransaction = new LoyTransactionEntity();
 	CashEmulatorDiscounts discountEmulator = new CashEmulatorDiscounts();
+	
+	long sumDiscount;
 	
 	@BeforeClass
 	public void send1stCheck(){
@@ -78,6 +87,17 @@ public class SearchCheckBySumsTest extends SearchCheckAbstractTest{
 //		cashEmulator.sendLoy(loyTransaction, p5);
 //		p5.setDiscountValueTotal(loyTransaction.getDiscountValueTotal());
 		
+		/*TODO:
+		 * Разобраться и генерить через транзакцию лояльности
+		 */
+		sumDiscount = DisinsectorTools.random(10000) + 15023L;
+		p5 = GoodsParser.generatePurchaseWithPositions(1);
+		PositionEntity position = p5.getPositions().get(0);
+		position.setSumDiscount(sumDiscount);
+		List<PositionEntity> positions = new ArrayList<PositionEntity>();
+		positions.add(position);
+		p5.setPositions(positions);
+		
 	}
 	
 	@BeforeMethod
@@ -97,7 +117,7 @@ public class SearchCheckBySumsTest extends SearchCheckAbstractTest{
 				{FILTER_CATEGORY_SUM_PAYMENT, p2.getCheckSumEnd()/2, p2},
 				{FILTER_CATEGORY_SUM_POSITION, p3.getPositions().get(0).getSum(), p3},
 				{FILTER_CATEGORY_SUM_DISCOUNT_CHECK, p4.getDiscountValueTotal(), p4},
-//				{FILTER_CATEGORY_SUM_DISCOUNT_POSITION, p5.getDiscountValueTotal(), p5},
+				{FILTER_CATEGORY_SUM_DISCOUNT_POSITION, sumDiscount, p5},
 		};
 	};
 	
@@ -109,7 +129,9 @@ public class SearchCheckBySumsTest extends SearchCheckAbstractTest{
 		 */
  		expectedCountEquals = getResults(filter, FILTER_CATEGORY_SELECT_EQUALS, convertSum(sum));
  		expectedCountGreater = getResults(filter, FILTER_CATEGORY_SELECT_GREATER, convertSum(sum));
+ 		expectedCountGreater_100 = getResults(filter, FILTER_CATEGORY_SELECT_GREATER, convertSum(sum - 100));
  		expectedCountSmaller = getResults(filter, FILTER_CATEGORY_SELECT_SMALLER, convertSum(sum));
+ 		expectedCountSmaller_100 = getResults(filter, FILTER_CATEGORY_SELECT_SMALLER, convertSum(sum + 100));
  		
  		sendCheck(p1);
  		
@@ -134,7 +156,7 @@ public class SearchCheckBySumsTest extends SearchCheckAbstractTest{
  		 */
  		searchCheck.setFilterSelectSum(filter, FILTER_CATEGORY_SELECT_GREATER, convertSum(sum - 100));
  		searchCheck.doSearch();
- 		Assert.assertEquals(searchCheck.getExpectedResultCount(expectedCountGreater + 1), expectedCountGreater + 1, 
+ 		Assert.assertEquals(searchCheck.getExpectedResultCount(expectedCountGreater_100 + 1), expectedCountGreater_100 + 1, 
  				"Чек НЕ попал в результат поиска, если условие поиска (сумма - 100копеек)" +  filter + " > " + convertSum(sum - 100));
  		
  		/*
@@ -142,7 +164,7 @@ public class SearchCheckBySumsTest extends SearchCheckAbstractTest{
  		 */
  		searchCheck.setFilterSelectSum(filter, FILTER_CATEGORY_SELECT_SMALLER, convertSum(sum + 100));
  		searchCheck.doSearch();
- 		Assert.assertEquals(searchCheck.getExpectedResultCount(expectedCountSmaller + 1), expectedCountSmaller + 1, 
+ 		Assert.assertEquals(searchCheck.getExpectedResultCount(expectedCountSmaller_100 + 1), expectedCountSmaller_100 + 1, 
  				"Чек НЕ попал в результат поиска, если условие поиска (сумма + 100копеек)"  + filter + " < " + convertSum(sum + 100));
  		
  		/*
