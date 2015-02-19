@@ -20,7 +20,7 @@
   <!-- ПОИСК ЧЕКА --> 		
   	<test name="Поиск чека" >
 	  	<classes>
-	  		<class name="ru.crystals.set10.test.search.SearchCheckBySumsTest"/>
+<!-- 	  		<class name="ru.crystals.set10.test.search.SearchCheckBySumsTest"/> -->
 			<class name="ru.crystals.set10.test.search.SearchCheckByCheckTypeGroupTest"/>
 			<class name="ru.crystals.set10.test.search.SearchCheckByPaymentGroupTest"/>
 			<class name="ru.crystals.set10.test.search.SearchCheckByOtherGroupsTest"/>
