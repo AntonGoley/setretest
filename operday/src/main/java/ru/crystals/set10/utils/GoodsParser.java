@@ -174,10 +174,9 @@ public class GoodsParser {
 	      return pe;
 	}
 	
-
-	
 	public static ArrayList<ProductEntity> parsePurchasesFromDB(SqlRowSet goods) {
 		ArrayList<ProductEntity> result = new ArrayList<ProductEntity>();
+		String discriminator[];
 		try {
 	      while (goods.next()) {
 	        ProductEntity pe = new ProductEntity();
@@ -189,7 +188,10 @@ public class GoodsParser {
 	        pe.setName(goods.getString("name"));
 	        pe.setNds(Float.valueOf(18.0F));
 	        pe.setNdsClass("NDS");
-	        pe.setDiscriminator(goods.getString("plugin_class_name"));
+	        // В поле дискриминатор берем только название класса без "Billet"
+	        discriminator = goods.getString("plugin_class_name").split("\\.");
+	        pe.setDiscriminator(discriminator[discriminator.length - 1].replace("Billet", ""));
+	        
 	        BarcodeEntity be = new BarcodeEntity();
 	        be.setBarCode(goods.getString("barcode"));
 	        pe.setBarCode(be);

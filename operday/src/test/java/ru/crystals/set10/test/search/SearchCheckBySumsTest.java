@@ -52,25 +52,27 @@ public class SearchCheckBySumsTest extends SearchCheckAbstractTest{
 	public void send1stCheck(){
 		/*
 		 * Чек продажи с оплатой наличными
+		 * для поиска по сумме чека
 		 */
 		searchCheck.openFilter();
 		p1 = cashEmulatorSearchCheck.nextPurchaseWithoutSending();
 		
 		/*
-		 * Чек продажи с оплатой наличными
-		 * и оплатой банковской картой
+		 * Чек продажи с оплатой наличными =  оплатой банковской картой
+		 * для поиска чека по сумме оплаты. Суммы оплаты должны быть равны
 		 */
 		p2 = payments.getPurchaseWithoutPayments();
 		p2 = payments.setBankCardPayment(BankCardPaymentEntity.class, p2, p2.getCheckSumEnd()/2, payments.generateCardData("VISA"), null);
-		p2 = payments.setCashPayment(p2, p2.getCheckSumEnd() - p2.getCheckSumEnd()/2);
+		p2 = payments.setCashPayment(p2, p2.getCheckSumEnd()/2);
 		
 		/*
-		 * Чек продажи с оплатой наличными (поиск суммы позиции)
+		 * Чек продажи с одной позицией для поиска по сумме позиции
 		 */
 		p3 = GoodsParser.generatePurchaseWithPositions(1);
 		
 		/*
-		 * Чек продажи с транзакцией лояльности
+		 * Чек продажи с транзакцией лояльности,
+		 * для поиска по сумме скидки на чек
 		 */
 		p4 =  cashEmulator.nextPurchaseWithoutSending();
 		loyTransaction = discountEmulator.addDiscount(p4);
@@ -89,6 +91,9 @@ public class SearchCheckBySumsTest extends SearchCheckAbstractTest{
 		
 		/*TODO:
 		 * Разобраться и генерить через транзакцию лояльности
+		 * 
+		 * Чек продажи с 1 позицией со скидкой на эту позицию
+		 * для поиска чека по скидке на позицию 
 		 */
 		sumDiscount = DisinsectorTools.random(10000) + 15023L;
 		p5 = GoodsParser.generatePurchaseWithPositions(1);
@@ -123,11 +128,10 @@ public class SearchCheckBySumsTest extends SearchCheckAbstractTest{
 	
 	@Test (description = "SRTE-131. Поиск чека на ТК по суммам", 
 			dataProvider = "Суммы")
-	public void testSearchCheckByType(String filter, long sum, PurchaseEntity p1){
+	public void testSearchCheckBySum(String filter, long sum, PurchaseEntity p1){
 		/*
 		 * Определить, сколько зарегистрировано чеков, с суммой sum, до отправки чека p1 
 		 */
-		log.info("Проверка поиска по фильтру " + filter);
  		expectedCountEquals = getResults(filter, FILTER_CATEGORY_SELECT_EQUALS, convertSum(sum));
  		expectedCountGreater = getResults(filter, FILTER_CATEGORY_SELECT_GREATER, convertSum(sum));
  		expectedCountGreater_100 = getResults(filter, FILTER_CATEGORY_SELECT_GREATER, convertSum(sum - 100));
@@ -135,7 +139,7 @@ public class SearchCheckBySumsTest extends SearchCheckAbstractTest{
  		expectedCountSmaller_100 = getResults(filter, FILTER_CATEGORY_SELECT_SMALLER, convertSum(sum + 100));
  		
  		sendCheck(p1);
- 		
+ 		log.info("Проверка поиска по фильтру: " + filter);
  		/*
  		 *  Чек НЕ попадает в результат поиска, если условие поиска > сумма чека  
  		 */
@@ -153,20 +157,20 @@ public class SearchCheckBySumsTest extends SearchCheckAbstractTest{
  				"Чек НЕ попал в результат поиска, если условие поиска (сумма - 100копеек)" +  filter + " > " + convertSum(sum - 100));
  		
  		/*
- 		 *  Чек попадает в результат поиска, если условие поиска < (сумма+ 100копеек) 
- 		 */
- 		searchCheck.setFilterSelectSum(filter, FILTER_CATEGORY_SELECT_SMALLER, convertSum(sum + 100));
- 		searchCheck.doSearch();
- 		Assert.assertEquals(searchCheck.getExpectedResultCount(expectedCountSmaller_100 + 1), expectedCountSmaller_100 + 1, 
- 				"Чек НЕ попал в результат поиска, если условие поиска (сумма + 100копеек)"  + filter + " < " + convertSum(sum + 100));
- 		
- 		/*
  		 *  Чек НЕ попадает в результат поиска, если условие поиска < сумма чека  
  		 */
  		searchCheck.setFilterSelectSum(filter, FILTER_CATEGORY_SELECT_SMALLER, convertSum(sum));
  		searchCheck.doSearch();
  		Assert.assertEquals(searchCheck.getExpectedResultCount(expectedCountSmaller), expectedCountSmaller, 
  				"Чек не должен попадать в результат поиска, если условие поиска "  + filter + " < " + convertSum(sum));
+ 		
+ 		/*
+ 		 *  Чек попадает в результат поиска, если условие поиска < (сумма+ 100копеек) 
+ 		 */
+ 		searchCheck.setFilterSelectSum(filter, FILTER_CATEGORY_SELECT_SMALLER, convertSum(sum + 100));
+ 		searchCheck.doSearch();
+ 		Assert.assertEquals(searchCheck.getExpectedResultCount(expectedCountSmaller_100 + 1), expectedCountSmaller_100 + 1, 
+ 				"Чек НЕ попал в результат поиска, если условие поиска (сумма + 100копеек)"  + filter + " < " + convertSum(sum + 100));
  		
  		/*
  		 * Проверить "="
@@ -179,11 +183,22 @@ public class SearchCheckBySumsTest extends SearchCheckAbstractTest{
  		testExcelExport(LOCATOR_XLS_CHECK_CONTENT, XLS_REPORT_CONTENT_PATTERN);
  		testExcelExport(LOCATOR_XLS_CHECK_HEADERS, XLS_REPORT_HEADERS_PATTERN);
 	}
-
-	private int getResults(String filterName, String filterClause, String filterValue){
- 		searchCheck.setFilterSelectSum(filterName, filterClause, filterValue);
+	
+	
+	private void verifyResult(String filter, String condition, long sum, String message){
+		searchCheck.setFilterSelectSum(filter, condition, convertSum(sum));
  		searchCheck.doSearch();
- 		return searchCheck.getSearchResultCount();
+ 		Assert.assertEquals(searchCheck.getExpectedResultCount(expectedCountEquals + 1), expectedCountEquals + 1, 
+ 				"Чек не попал в результат поиска, если условие поиска = " + filter + " = " + convertSum(sum));
+	}
+	
+	private int getResults(String filterName, String filterClause, String filterValue){
+ 		int result = 0;
+		searchCheck.setFilterSelectSum(filterName, filterClause, filterValue);
+ 		searchCheck.doSearch();
+ 		result = searchCheck.getSearchResultCount();
+ 		log.info("Найдено " + result + " чеков");
+ 		return result;
 	}
 	
 	private String convertSum(long sum){
