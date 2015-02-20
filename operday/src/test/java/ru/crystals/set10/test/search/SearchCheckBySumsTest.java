@@ -143,7 +143,7 @@ public class SearchCheckBySumsTest extends SearchCheckAbstractTest{
  		/*
  		 *  Чек НЕ попадает в результат поиска, если условие поиска > сумма чека  
  		 */
- 		verifyResult(filter, FILTER_CATEGORY_SELECT_GREATER, convertSum(sum), expectedCountGreater + 1, 
+ 		verifyResult(filter, FILTER_CATEGORY_SELECT_GREATER, convertSum(sum), expectedCountGreater, 
  				"Чек не должен попадать результат поиска, если условие поиска ");
 
  		/*
