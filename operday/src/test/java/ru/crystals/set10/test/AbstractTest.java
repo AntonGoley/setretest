@@ -49,7 +49,7 @@ public class  AbstractTest{
     protected static DbAdapter dbAdapter = new DbAdapter();
     
     private static boolean firstRun = true;
-    private int suiteFiles;
+    private int suiteFiles = 0;
     private int suiteFilesFinished = 0;
     
     
@@ -59,12 +59,14 @@ public class  AbstractTest{
     
     @BeforeSuite
     public void setService() throws IOException {
-    	
-    	service = new ChromeDriverService.Builder()
-        .usingDriverExecutable(Config.DRIVER)
-        .usingAnyFreePort()
-        .build();
-    	service.start();
+    	if (suiteFiles == 0) {
+	    	service = new ChromeDriverService.Builder()
+	        .usingDriverExecutable(Config.DRIVER)
+	        .usingAnyFreePort()
+	        .build();
+	    	service.start();
+    	}	
+    	suiteFiles++;
     }
     
     @BeforeClass (alwaysRun = true)
@@ -115,14 +117,11 @@ public class  AbstractTest{
     }
     
     @AfterSuite
-    public void  closeBrowser(ITestContext  result){
-    	suiteFiles = result.getSuite().getXmlSuite().getSuiteFiles().size();
-    	log.info("Total suites to run " + suiteFiles);
+    public void  closeBrowser(){
     	suiteFilesFinished++; 
     	
-    	log.info("trying to stop service");
-    	suiteFiles = suiteFiles - 1;
     	if(suiteFiles == suiteFilesFinished) {
+    		log.info("trying to stop service");
     		service.stop();
     		log.info("service has stopped successfully");
     	}	

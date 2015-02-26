@@ -23,11 +23,11 @@
 <!-- 	  			<class name="ru.crystals.set10.test.tablereports.PriceCheckerReportTest"/> -->
 <!-- 	  		</classes>	 -->
 <!--   	</test>	 -->
-<!--   	<test name="Отчет по количеству PLU в весах"> -->
-<!-- 	  		<classes>	 -->
-<!-- 	  			<class name="ru.crystals.set10.test.tablereports.PLUinWeightReportTest"/> -->
-<!-- 	  		</classes>	 -->
-<!--   	</test>	 -->
+  	<test name="Отчет по количеству PLU в весах">
+	  		<classes>	
+	  			<class name="ru.crystals.set10.test.tablereports.PLUinWeightReportTest"/>
+	  		</classes>	
+  	</test>	
 <!-- 	<test name="Отчет по регистрационным номерам касс"> -->
 <!-- 	  		<classes>	 -->
 <!-- 	  			<class name="ru.crystals.set10.test.tablereports.CashRegNumbersReportTest"/> -->
