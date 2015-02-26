@@ -49,8 +49,8 @@ public class  AbstractTest{
     protected static DbAdapter dbAdapter = new DbAdapter();
     
     private static boolean firstRun = true;
-    private int suiteFiles = 0;
-    private int suiteFilesFinished = 0;
+    private static int suiteFiles = 0;
+    private static int suiteFilesFinished = 0;
     
     
     public WebDriver getDriver() {
