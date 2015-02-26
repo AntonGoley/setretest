@@ -1,5 +1,6 @@
 package ru.crystals.set10.test;
 
+import org.testng.ITestContext;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
@@ -7,9 +8,11 @@ import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Test;
+
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.concurrent.TimeUnit;
+
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -18,6 +21,7 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.annotations.BeforeMethod;
+
 import ru.crystals.set10.config.*;
 import ru.crystals.set10.pages.basic.*;
 import ru.crystals.set10.utils.CashEmulator;
@@ -111,8 +115,8 @@ public class  AbstractTest{
     }
     
     @AfterSuite
-    public void  closeBrowser(ITestResult result){
-    	suiteFiles = result.getTestContext().getSuite().getXmlSuite().getSuiteFiles().size();
+    public void  closeBrowser(ITestContext  result){
+    	suiteFiles = result.getSuite().getXmlSuite().getSuiteFiles().size();
     	log.info("Total suites to run " + suiteFiles);
     	suiteFilesFinished++; 
     	
