@@ -60,14 +60,14 @@ public class  AbstractTest{
     @BeforeSuite
     public synchronized void setService() throws IOException {
     	if (suiteFiles == 0) {
-    		suiteFiles++;
 	    	service = new ChromeDriverService.Builder()
 	        .usingDriverExecutable(Config.DRIVER)
 	        .usingAnyFreePort()
 	        .build();
 	    	service.start();
 	    	log.info("Старт сервиса управления драйвером");
-    	}	
+    	}
+    	suiteFiles++;
     }
     
     @BeforeClass (alwaysRun = true)
