@@ -120,7 +120,7 @@ public class  AbstractTest{
     @AfterSuite
     public synchronized void  closeBrowser(ITestContext context){
     	suiteFilesFinished++; 
-    	log.info("Выполнение сьюта " + context.getSuite().getName() + " завершено");
+    	log.info("Выполнение сьюта " + context.getSuite().getName().toUpperCase() + " завершено");
     	if(suiteFiles == suiteFilesFinished) {
     		log.info("trying to stop service");
     		service.stop();
