@@ -7,7 +7,6 @@ import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Test;
-import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.concurrent.TimeUnit;
@@ -46,19 +45,23 @@ public class  AbstractTest{
     protected static DbAdapter dbAdapter = new DbAdapter();
     
     private static boolean firstRun = true;
+    private int suiteFiles;
+    
     
     public WebDriver getDriver() {
         return driver;
     }
     
     @BeforeSuite
-    public void setService() throws IOException {
+    public void setService(ITestResult result) throws IOException {
     	
     	service = new ChromeDriverService.Builder()
         .usingDriverExecutable(Config.DRIVER)
         .usingAnyFreePort()
         .build();
     	service.start();
+    	
+    	suiteFiles = result.getTestContext().getSuite().getXmlSuite().getSuiteFiles().size();
     }
     
     @BeforeClass (alwaysRun = true)
@@ -109,9 +112,12 @@ public class  AbstractTest{
     }
     
     @AfterSuite
-    public void  closeBrowser(){
+    public void  closeBrowser(ITestResult result){
     	log.info("trying to stop service");
-    	service.stop();
+    	suiteFiles = suiteFiles - 1;
+    	if(suiteFiles == 0) {
+    		service.stop();
+    	}	
     	log.info("service has stopped successfully");
     }
     
