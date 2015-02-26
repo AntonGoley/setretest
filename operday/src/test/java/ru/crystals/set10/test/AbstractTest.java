@@ -124,8 +124,9 @@ public class  AbstractTest{
     	suiteFiles = suiteFiles - 1;
     	if(suiteFiles == suiteFilesFinished) {
     		service.stop();
+    		log.info("service has stopped successfully");
     	}	
-    	log.info("service has stopped successfully");
+    	
     }
     
     protected LoginPage loginAs(String user, String pwd, String url) {

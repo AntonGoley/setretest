@@ -67,6 +67,9 @@
 	               <encoding>UTF-8</encoding>
 	       			<inputEncoding>UTF-8</inputEncoding>
 	               <outputEncoding>UTF-8</outputEncoding>
+	                <suiteXmlFiles>
+                        <suiteXmlFile>target/test-classes/${suiteXmlFile}</suiteXmlFile>
+                    </suiteXmlFiles>
                </configuration>
            </plugin>
       	</plugins>
