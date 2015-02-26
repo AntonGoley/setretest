@@ -46,6 +46,7 @@ public class  AbstractTest{
     
     private static boolean firstRun = true;
     private int suiteFiles;
+    private int suiteFilesFinished = 0;
     
     
     public WebDriver getDriver() {
@@ -53,15 +54,13 @@ public class  AbstractTest{
     }
     
     @BeforeSuite
-    public void setService(ITestResult result) throws IOException {
+    public void setService() throws IOException {
     	
     	service = new ChromeDriverService.Builder()
         .usingDriverExecutable(Config.DRIVER)
         .usingAnyFreePort()
         .build();
     	service.start();
-    	
-    	suiteFiles = result.getTestContext().getSuite().getXmlSuite().getSuiteFiles().size();
     }
     
     @BeforeClass (alwaysRun = true)
@@ -113,9 +112,13 @@ public class  AbstractTest{
     
     @AfterSuite
     public void  closeBrowser(ITestResult result){
+    	suiteFiles = result.getTestContext().getSuite().getXmlSuite().getSuiteFiles().size();
+    	log.info("Total suites to run " + suiteFiles);
+    	suiteFilesFinished++; 
+    	
     	log.info("trying to stop service");
     	suiteFiles = suiteFiles - 1;
-    	if(suiteFiles == 0) {
+    	if(suiteFiles == suiteFilesFinished) {
     		service.stop();
     	}	
     	log.info("service has stopped successfully");
