@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+
+
+<suite name="Табличные отчеты" preserve-order="true" configfailurepolicy="continue">
+<listeners>
+    <listener class-name="org.uncommons.reportng.HTMLReporter" />
+ </listeners>
+  
+ <!-- ТАБЛИЧНЫЕ ОТЧЕТЫ --> 	
+	<test name="Отчет по рекламным акциям">
+	  		<classes>	
+	  			<class name="ru.crystals.set10.test.tablereports.AdverstingTableReportTest"/>
+	  		</classes>	
+  	</test>	
+  	<test name="Отчет по товару на ТК">
+	  		<classes>	
+	  			<class name="ru.crystals.set10.test.tablereports.GoodOnTKReportTest"/>
+	  		</classes>	
+  	</test>	
+  	<test name="Отчет по прайс чекерам">
+	  		<classes>	
+	  			<class name="ru.crystals.set10.test.tablereports.PriceCheckerReportTest"/>
+	  		</classes>	
+  	</test>	
+  	<test name="Отчет по количеству PLU в весах">
+	  		<classes>	
+	  			<class name="ru.crystals.set10.test.tablereports.PLUinWeightReportTest"/>
+	  		</classes>	
+  	</test>	
+	<test name="Отчет по регистрационным номерам касс">
+	  		<classes>	
+	  			<class name="ru.crystals.set10.test.tablereports.CashRegNumbersReportTest"/>
+	  		</classes>	
+  	</test>	
+	
+	<test name="Прейскурант на табачные изделия" >
+	  	<classes>
+		  	<class name="ru.crystals.set10.test.tablereports.MRCPriceReportTest"/>
+		  	<class name="ru.crystals.set10.test.tablereports.MRCPriceReportWithLekondsTest"/>
+		</classes>	 
+  	</test>	
+ </suite> 	
+<!--   	<test name="Отчет по рекламным акциям"> -->
+<!-- 	  		<classes>	 -->
+<!-- 	  			<class name="ru.crystals.set10.test.tablereports.WrongAdverstingPriceTest"/> -->
+<!-- 	  		</classes>	 -->

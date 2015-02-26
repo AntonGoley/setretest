@@ -90,7 +90,7 @@ public class SearchCheckByPaymentGroupTest extends SearchCheckAbstractTest{
 		authData.setStatus(false);
 		authData.setBankid("ВТБ");
 		authData.setAuthCode(String.valueOf(System.currentTimeMillis()));
-		authData.setMessage("ОДОБРЕНО");
+		authData.setMessage("ОТКЛОНЕНО");
 		authData.setResponseCode("587");
 		authData.setTerminalId("AA854380");
 		authData.setResultCode(354L);

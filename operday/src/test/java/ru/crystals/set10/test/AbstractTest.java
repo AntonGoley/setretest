@@ -51,12 +51,11 @@ public class  AbstractTest{
         return driver;
     }
     
-    
     @BeforeSuite
     public void setService() throws IOException {
     	
     	service = new ChromeDriverService.Builder()
-        .usingDriverExecutable(new File(Config.PATH_TO_DRIVER))
+        .usingDriverExecutable(Config.DRIVER)
         .usingAnyFreePort()
         .build();
     	service.start();

@@ -58,9 +58,9 @@ public class CheckGeneratorFunctionalTest {
 //			cashEmulator.nextRefundAll(p1, false);
 			p1 = (PurchaseEntity) cashEmulator.nextPurchase(getBankCardPayment(BankCardPaymentEntity.class));
 //			p2 = (PurchaseEntity) cashEmulatorVirtual.nextPurchase(getBankCardPayment(BankCardPaymentEntity.class));
-			cashEmulator.nextRefundAll(p1, false);
+//			cashEmulator.nextRefundAll(p1, false);
 	//		cashEmulatorVirtual.nextRefundAll(p2, false);
-			p1 = (PurchaseEntity) cashEmulator.nextPurchase(getBankCardPayment(ChildrenCardPaymentEntity.class));
+//			p1 = (PurchaseEntity) cashEmulator.nextPurchase(getBankCardPayment(ChildrenCardPaymentEntity.class));
 	//		p2 = (PurchaseEntity) cashEmulator2104.nextPurchase(getBankCardPayment(ChildrenCardPaymentEntity.class));
 	////		cashEmulator.nextRefundAll(p1, false);
 	//		p1 = (PurchaseEntity) cashEmulator.nextPurchase(getBonusCardPayment());

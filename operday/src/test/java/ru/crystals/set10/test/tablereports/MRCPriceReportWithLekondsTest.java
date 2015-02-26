@@ -19,12 +19,12 @@ public class MRCPriceReportWithLekondsTest extends AbstractReportTest{
 	String name = "${name}";
 	String since_date = "${since_date}";
 	String till_date = "${till_date}";
-	String lecondRequest = DisinsectorTools.getFileContentAsString("MRC_Report/mrc_lecond.txt");
+	String lecondRequest = DisinsectorTools.getFileContentAsString("mrc_report/mrc_lecond.txt");
 	/*
 	 *  файл товара с marking-of-the-good отличным от marking-of-the-good
 	 *  для других тестов на mrc, чтобы не учитывались леконды при отображении в отчете
 	 */
-	String goodRequest = DisinsectorTools.getFileContentAsString("MRC_Report/mrc_lecond_good.txt"); 
+	String goodRequest = DisinsectorTools.getFileContentAsString("mrc_report/mrc_lecond_good.txt"); 
 	/*
 	 * отсылаем товар, на который будем импортировать леконды
 	 * marking-of-the-good в файлах данных должен совпадать
@@ -54,10 +54,8 @@ public class MRCPriceReportWithLekondsTest extends AbstractReportTest{
 				{getLecondDate(today + oneDay), getLecondDate(today + oneDay*2), false}, 
 				{getLecondDate(today - oneDay), getLecondDate(today + 3600*1000), true},
 				{getLecondDate(today - oneDay), getLecondDate(today + oneDay), true},
-				
 		};
 	}
-	
 	
 	@Test (	description = "SRL-360. В прейскуранте на табачные изделия проверить действие лекондов", 
 			dataProvider = "Даты ограничений")

@@ -1,10 +1,11 @@
 package ru.crystals.set10.config;
 
-import java.io.FileReader;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.Reader;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.Properties;
-
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.LoggerFactory;
 
@@ -15,7 +16,7 @@ public class Config {
 
     public static  String CENTRUM_URL;
     public static  String RETAIL_URL;
-    public static  String PATH_TO_DRIVER;
+    public static  File  DRIVER;
     public static  String CENTRUM_HOST;
     public static  String RETAIL_HOST;
     public static  String SHOP_NUMBER;
@@ -78,26 +79,39 @@ public class Config {
     public static  String BANK_NAME_2;
     
     private static Properties props;
-
+    
+    private static ClassLoader classLoader = Config.class.getClassLoader();
     
     static {
         try (
-        	Reader reader = new FileReader("target/test-classes/testing.properties");
+        		InputStream i = classLoader.getResourceAsStream("testing.properties");
+        		// TODO: разрулить запуск с разных ос и разных драйверов
+        		InputStream iDriver = classLoader.getResourceAsStream("drivers/chromedriver_win.exe");
+        		OutputStream outDriver = new FileOutputStream(new File("driver"));
         	)
-        {	
+       {	
+        	
         	props = new Properties();
-        	props.load(reader);
-            reader.close();
+        	props.load(i);
+        	
+        	int read = 0;
+    		byte[] bytes = new byte[1024];
+     
+    		while ((read = iDriver.read(bytes)) != -1) {
+    			outDriver.write(bytes, 0, read);
+    		} 
+    		DRIVER = new File("driver");
+        	
+    		iDriver.close();
+    		outDriver.close();
+            i.close();
             
         } catch (IOException e) {
             e.printStackTrace();
         }
         
-        // TODO: разрулить запуск с разных ос
-        PATH_TO_DRIVER = "target/classes/chromedriver_win.exe";
-        System.setProperty("webdriver.chrome.logfile", "target/classes/chromedriver.log");
-//        PATH_TO_DRIVER = "target/test-classes/chromedriver";
-        
+        // TODO: разрулить запуск с разных ос и разных драйверов
+        System.setProperty("webdriver.chrome.logfile", "chromedriver.log");
         
         // Берем параметры из коммандной строки (передаваемые при запуске проекта maven)
         CENTRUM_HOST = System.getProperty("testng_centrum_host");

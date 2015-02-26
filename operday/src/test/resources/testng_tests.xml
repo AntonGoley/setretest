@@ -27,7 +27,7 @@
 		</classes>	 
   	</test>
  
- <!-- СОПРОВДИТЕЛЬНЫЕ ДОКУМЕНТЫ -->
+ <!-- СОПРОВОДИТЕЛЬНЫЕ ДОКУМЕНТЫ -->
 	<test name="Сопроводительные документы. Печать товарной накладной" >
 	  	<classes>
 	  		<class name="ru.crystals.set10.test.documents.accompanying.AccompanyingInvoiceContentTest"/>
@@ -78,8 +78,7 @@
 	  			<class name="ru.crystals.set10.test.tablereports.CashRegNumbersReportTest"/>
 	  		</classes>	
   	</test>	
-  	
-  	  <!-- ПРЕЙСКУРАНТ НА ТОБАЧНЫЕ ИЗДЕЛИЯ --> 		
+	
 	<test name="Табличные отчеты. Прейскурант на табачные изделия" >
 	  	<classes>
 		  	<class name="ru.crystals.set10.test.tablereports.MRCPriceReportTest"/>
@@ -117,7 +116,7 @@
 		</classes>	 
   	</test>
   	
-  	<!-- ТРАНЗАКЦИЙ ОПЛАТЫ --> 		
+  	<!-- ПОИСК ТРАНЗАКЦИЙ ОПЛАТЫ --> 		
   	<test name="Поиск транзакций оплаты" >
 	  	<classes>
 			<class name="ru.crystals.set10.test.search.SearchTransactionsTest"/>

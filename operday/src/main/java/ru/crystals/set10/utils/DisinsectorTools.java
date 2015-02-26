@@ -10,8 +10,10 @@ import java.io.FileFilter;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
+
 import org.apache.commons.io.filefilter.WildcardFileFilter;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.Keys;
@@ -54,7 +56,8 @@ public class DisinsectorTools {
 	public static String getFileContentAsString(String filePath) {
 		String result = "";
 		try (
-				InputStreamReader ir =new InputStreamReader(new FileInputStream("target/test-classes/datafiles/" + filePath), "UTF-8");	
+				InputStream input = DisinsectorTools.class.getClassLoader().getResourceAsStream("datafiles/" + filePath);
+				InputStreamReader ir =new InputStreamReader(input, "UTF-8");	
 				BufferedReader br = new BufferedReader(ir);
 		)		
 		{	
