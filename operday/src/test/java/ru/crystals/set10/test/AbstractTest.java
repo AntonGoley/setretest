@@ -52,6 +52,18 @@ public class  AbstractTest{
     private static int suiteFiles = 0;
     private static int suiteFilesFinished = 0;
     
+    static {
+    	service = new ChromeDriverService.Builder()
+        .usingDriverExecutable(Config.DRIVER)
+        .usingAnyFreePort()
+        .build();
+    	try {
+			service.start();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+    	log.info("Старт сервиса управления драйвером");
+    }
     
     public WebDriver getDriver() {
         return driver;
@@ -59,14 +71,14 @@ public class  AbstractTest{
     
     @BeforeSuite
     public synchronized void setService() throws IOException {
-    	if (suiteFiles == 0) {
-	    	service = new ChromeDriverService.Builder()
-	        .usingDriverExecutable(Config.DRIVER)
-	        .usingAnyFreePort()
-	        .build();
-	    	service.start();
-	    	log.info("Старт сервиса управления драйвером");
-    	}
+//    	if (suiteFiles == 0) {
+//	    	service = new ChromeDriverService.Builder()
+//	        .usingDriverExecutable(Config.DRIVER)
+//	        .usingAnyFreePort()
+//	        .build();
+//	    	service.start();
+//	    	log.info("Старт сервиса управления драйвером");
+//    	}
     	suiteFiles++;
     }
     
