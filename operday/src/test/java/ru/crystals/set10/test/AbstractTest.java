@@ -58,15 +58,16 @@ public class  AbstractTest{
     }
     
     @BeforeSuite
-    public void setService() throws IOException {
+    public synchronized void setService() throws IOException {
     	if (suiteFiles == 0) {
+    		suiteFiles++;
 	    	service = new ChromeDriverService.Builder()
 	        .usingDriverExecutable(Config.DRIVER)
 	        .usingAnyFreePort()
 	        .build();
 	    	service.start();
+	    	log.info("Старт сервиса управления драйвером");
     	}	
-    	suiteFiles++;
     }
     
     @BeforeClass (alwaysRun = true)
@@ -117,9 +118,8 @@ public class  AbstractTest{
     }
     
     @AfterSuite
-    public void  closeBrowser(){
+    public synchronized void  closeBrowser(){
     	suiteFilesFinished++; 
-    	
     	if(suiteFiles == suiteFilesFinished) {
     		log.info("trying to stop service");
     		service.stop();
