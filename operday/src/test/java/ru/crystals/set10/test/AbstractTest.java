@@ -71,7 +71,7 @@ public class  AbstractTest{
     }
     
     @BeforeSuite
-    public void setService() throws IOException {
+    public synchronized void setService() throws IOException {
     	suiteFiles++;
     	log.info("Запущено сьютов: "  + suiteFiles);
     }
