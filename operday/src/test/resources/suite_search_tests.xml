@@ -8,15 +8,15 @@
  </listeners>
   
   <!-- ПОИСК ЧЕКА --> 		 
-<!--   	<test name="Поиск чека" > -->
-<!-- 	  	<classes> -->
-<!-- 			<class name="ru.crystals.set10.test.search.SearchCheckByCheckTypeGroupTest"/> -->
-<!-- 			<class name="ru.crystals.set10.test.search.SearchCheckByPaymentGroupTest"/> -->
-<!-- 			<class name="ru.crystals.set10.test.search.SearchCheckByOtherGroupsTest"/> -->
-<!-- 			<class name="ru.crystals.set10.test.search.SearchCheckBySumsTest"/> -->
+  	<test name="Поиск чека" >
+	  	<classes>
+			<class name="ru.crystals.set10.test.search.SearchCheckByCheckTypeGroupTest"/>
+			<class name="ru.crystals.set10.test.search.SearchCheckByPaymentGroupTest"/>
+			<class name="ru.crystals.set10.test.search.SearchCheckByOtherGroupsTest"/>
+			<class name="ru.crystals.set10.test.search.SearchCheckBySumsTest"/>
 			
-<!-- 		</classes>	  -->
-<!--   	</test> -->
+		</classes>	 
+  	</test>
   	
 <!-- ПОИСК ТРАНЗАКЦИИ ОПЛАТЫ --> 		
   	<test name="Поиск транзакций оплаты" >
