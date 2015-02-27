@@ -58,11 +58,12 @@ public class  AbstractTest{
         .usingAnyFreePort()
         .build();
     	try {
+    		log.info("Старт сервиса управления драйвером...");
 			service.start();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-    	log.info("Старт сервиса управления драйвером");
+    	
     }
     
     public WebDriver getDriver() {
@@ -70,16 +71,9 @@ public class  AbstractTest{
     }
     
     @BeforeSuite
-    public synchronized void setService() throws IOException {
-//    	if (suiteFiles == 0) {
-//	    	service = new ChromeDriverService.Builder()
-//	        .usingDriverExecutable(Config.DRIVER)
-//	        .usingAnyFreePort()
-//	        .build();
-//	    	service.start();
-//	    	log.info("Старт сервиса управления драйвером");
-//    	}
+    public void setService() throws IOException {
     	suiteFiles++;
+    	log.info("Запущено сьютов: "  + suiteFiles);
     }
     
     @BeforeClass (alwaysRun = true)
@@ -131,12 +125,13 @@ public class  AbstractTest{
     
     @AfterSuite
     public synchronized void  closeBrowser(ITestContext context){
-    	suiteFilesFinished++; 
+    	suiteFiles--; 
+    	log.info("Сьютов в процессе выполнения: "  + suiteFiles);
     	log.info("Выполнение сьюта " + context.getSuite().getName().toUpperCase() + " завершено");
-    	if(suiteFiles == suiteFilesFinished) {
-    		log.info("trying to stop service");
+    	if(suiteFiles == 0) {
+    		log.info("Остановка  сервиса управления драйвером...");
     		service.stop();
-    		log.info("service has stopped successfully");
+    		log.info("Сервис успешно остановлен");
     	}	
     	
     }
