@@ -49,10 +49,10 @@ public class MRCPriceReportWithLekondsTest extends AbstractReportTest{
 		long oneDay = 60*60*24*1000;
 		
 		return new Object[][]{
-				{getLecondDate(today - 3600*1000), getLecondDate(today + oneDay), true},
+				{getLecondDate(today - 2*3600*1000), getLecondDate(today + oneDay), true},
 				{getLecondDate(today - oneDay*2), getLecondDate(today - oneDay), false},
 				{getLecondDate(today + oneDay), getLecondDate(today + oneDay*2), false}, 
-				{getLecondDate(today - oneDay), getLecondDate(today + 3600*1000), true},
+				{getLecondDate(today - oneDay), getLecondDate(today + 2*3600*1000), true},
 				{getLecondDate(today - oneDay), getLecondDate(today + oneDay), true},
 		};
 	}

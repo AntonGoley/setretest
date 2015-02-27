@@ -50,7 +50,6 @@ public class  AbstractTest{
     
     private static boolean firstRun = true;
     private static int suiteFiles = 0;
-    private static int suiteFilesFinished = 0;
     
     static {
     	service = new ChromeDriverService.Builder()
