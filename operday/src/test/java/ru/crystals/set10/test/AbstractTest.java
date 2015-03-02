@@ -156,6 +156,7 @@ public class  AbstractTest implements IExecutionListener{
 			    .build();
 				log.info("Старт сервиса управления драйвером...");
 				service.start();
+				serviceStatus = true;
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -166,6 +167,7 @@ public class  AbstractTest implements IExecutionListener{
 		if (serviceStatus) {
 			log.info("Остановка  сервиса управления драйвером...");
 			service.stop();
+			serviceStatus = false;
 			log.info("Сервис успешно остановлен"); 
 		}	
 	};
