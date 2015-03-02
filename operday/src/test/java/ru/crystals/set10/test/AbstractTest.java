@@ -1,18 +1,16 @@
 package ru.crystals.set10.test;
 
+import org.testng.IExecutionListener;
 import org.testng.ITestContext;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
-import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeSuite;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
-
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.concurrent.TimeUnit;
-
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -29,7 +27,8 @@ import ru.crystals.set10.utils.DbAdapter;
 import ru.crystals.set10.utils.DisinsectorTools;
 
 
-public class  AbstractTest{
+@Listeners(ru.crystals.set10.test.AbstractTest.class)
+public class  AbstractTest implements IExecutionListener{
 	
     protected static final Logger log = Logger.getLogger(AbstractTest.class);
 	
@@ -37,6 +36,7 @@ public class  AbstractTest{
     private static final int IMPLICIT_WAIT = 15; //sec
     private static ChromeDriverService service;
     protected static String chromeDownloadPath = null;
+
     protected static CashEmulator cashEmulator = CashEmulator.getCashEmulator(Config.RETAIL_HOST, Integer.valueOf(Config.SHOP_NUMBER), Integer.valueOf(Config.CASH_NUMBER));
     /*
      *  эмулятор для поиска чеков
@@ -46,37 +46,20 @@ public class  AbstractTest{
      * эмулятор для виртуального магазина
      */
     protected static CashEmulator cashEmulatorVirtualShop = CashEmulator.getCashEmulator(Config.CENTRUM_HOST, Integer.valueOf(Config.VIRTUAL_SHOP_NUMBER), Integer.valueOf(Config.CASH_NUMBER));
+   
     protected static DbAdapter dbAdapter = new DbAdapter();
     
     private static boolean firstRun = true;
-    private static int suiteFiles = 0;
     
-    static {
-    	service = new ChromeDriverService.Builder()
-        .usingDriverExecutable(Config.DRIVER)
-        .usingAnyFreePort()
-        .build();
-    	try {
-    		log.info("Старт сервиса управления драйвером...");
-			service.start();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-    	
-    }
+    protected static String TARGET_HOST;
+    protected static String TARGET_HOST_URL;
     
     public WebDriver getDriver() {
         return driver;
     }
     
-    @BeforeSuite
-    public synchronized void setService() throws IOException {
-    	suiteFiles++;
-    	log.info("Запущено сьютов: "  + suiteFiles);
-    }
-    
     @BeforeClass (alwaysRun = true)
-    public void setupWebDriver() throws IOException {
+    public void setupWebDriver(ITestContext context) throws IOException {
 	    
     	ChromeOptions options = new ChromeOptions();
     	options.addArguments("start-maximized");
@@ -93,6 +76,16 @@ public class  AbstractTest{
     		chromeDownloadPath = getChromeDownloadPath();
     		clearDownloadDir();
     	}	
+    	
+    	String[] groups = context.getIncludedGroups();
+    	TARGET_HOST = Config.RETAIL_HOST;
+    	TARGET_HOST_URL = Config.RETAIL_URL;
+    	for (int i=0; i<groups.length; i++){
+    		if (groups[i].equals("centrum")){
+    			TARGET_HOST = Config.CENTRUM_HOST;
+    			TARGET_HOST_URL = Config.CENTRUM_URL;
+    		} 
+    	}
 	}
     
     @BeforeMethod(alwaysRun = true)
@@ -115,29 +108,15 @@ public class  AbstractTest{
     }
     
     @AfterClass (alwaysRun = true)
-    public void close() {
+    public void close(ITestContext contx) {
     	driver.close();
     	//service.stop();  
     	// close all windows and quite
     	//driver.quit();
     }
     
-    @AfterSuite
-    public synchronized void  closeBrowser(ITestContext context){
-    	suiteFiles--; 
-    	log.info("Сьютов в процессе выполнения: "  + suiteFiles);
-    	log.info("Выполнение сьюта " + context.getSuite().getName().toUpperCase() + " завершено");
-    	if(suiteFiles == 0) {
-    		log.info("Остановка  сервиса управления драйвером...");
-    		service.stop();
-    		log.info("Сервис успешно остановлен");
-    	}	
-    	
-    }
-    
     protected LoginPage loginAs(String user, String pwd, String url) {
     	return new LoginPage(getDriver(), url);
-    	
     }
     
     private String getChromeDownloadPath(){
@@ -158,11 +137,30 @@ public class  AbstractTest{
     /*
      * Удаление всех возможных старых файлов отчетов
      */
-   private void clearDownloadDir(){
-	   firstRun = false;
-	   DisinsectorTools.removeOldReport(getChromeDownloadPath(), "*.xls");
-	   DisinsectorTools.removeOldReport(getChromeDownloadPath(), "*.pdf");
-	   DisinsectorTools.removeOldReport(getChromeDownloadPath(), "*.xlsx"); 
-   }
+    private void clearDownloadDir(){
+	    firstRun = false;
+	    DisinsectorTools.removeOldReport(getChromeDownloadPath(), "*.xls");
+	    DisinsectorTools.removeOldReport(getChromeDownloadPath(), "*.pdf");
+	    DisinsectorTools.removeOldReport(getChromeDownloadPath(), "*.xlsx"); 
+    }
+
+	public void onExecutionStart(){
+		service = new ChromeDriverService.Builder()
+	    .usingDriverExecutable(Config.DRIVER)
+	    .usingAnyFreePort()
+	    .build();
+		try {
+			log.info("Старт сервиса управления драйвером...");
+			service.start();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	};
+	
+	public void onExecutionFinish(){
+		log.info("Остановка  сервиса управления драйвером...");
+		service.stop();
+		log.info("Сервис успешно остановлен"); 
+	};
     
 }

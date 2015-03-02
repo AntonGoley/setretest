@@ -14,6 +14,7 @@ import ru.crystals.set10.utils.SoapRequestSender;
 import static ru.crystals.set10.pages.operday.tablereports.TableReportPage.*;
 
 
+@Test (groups = {"centrum", "retail"})
 public class GoodOnTKReportTest extends AbstractReportTest{
 
 	GoodsOnTKConfigPage goodOnTKConfig;
@@ -28,14 +29,14 @@ public class GoodOnTKReportTest extends AbstractReportTest{
 	@BeforeClass
 	public void navigateToGoodOnTKReports() {
 		goodOnTKConfig =  navigateToReportConfig(
-				Config.CENTRUM_URL, 
+				TARGET_HOST_URL, 
 				Config.MANAGER,
 				Config.MANAGER_PASSWORD,
 				GoodsOnTKConfigPage.class, 
 				TAB_OTHER, 
 				REPORT_NAME_GOOD_ON_TK);
 		
-		soapSender.setSoapServiceIP(Config.CENTRUM_HOST);
+		soapSender.setSoapServiceIP(TARGET_HOST);
 		
 		// послать товар и акцию
 		sendGoodData();
@@ -72,7 +73,7 @@ public class GoodOnTKReportTest extends AbstractReportTest{
 	}
 	
 	@DataProvider (name = "Данные отчета")
-	public static Object[][] adverstingReportTableHead() {
+	private static Object[][] adverstingReportTableHead() {
 		return new Object[][] {
 		// TODO: Сейчас условие акции такое же как и название акции		
 		{"Название рекламной акции", "test_" + erpCode},
@@ -84,7 +85,7 @@ public class GoodOnTKReportTest extends AbstractReportTest{
 	}
 	
 	@DataProvider (name = "Доступные форматы для скачивания")
-	public static Object[][] reportFormats(){
+	private static Object[][] reportFormats(){
 		return new  Object[][] {
 			{ReportConfigPage.PDFREPORT, "ProductReport_*.pdf"},
 			{ReportConfigPage.EXCELREPORT, "ProductReport_*.xls"}

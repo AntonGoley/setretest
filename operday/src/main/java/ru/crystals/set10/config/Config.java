@@ -14,7 +14,7 @@ public class Config {
 	
 	private final static org.slf4j.Logger log =  LoggerFactory.getLogger(Config.class);
 
-    public static  String CENTRUM_URL;
+	public static String CENTRUM_URL;
     public static  String RETAIL_URL;
     public static  File  DRIVER;
     public static  String CENTRUM_HOST;

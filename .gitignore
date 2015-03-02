@@ -6,4 +6,5 @@ test-output
 .project
 .classpath
 *.log
+driver
 ERP integraton-reports

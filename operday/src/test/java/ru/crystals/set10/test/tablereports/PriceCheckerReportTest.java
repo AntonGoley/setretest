@@ -15,7 +15,7 @@ import ru.crystals.set10.utils.SoapRequestSender;
 import static ru.crystals.set10.pages.operday.tablereports.ReportConfigPage.*;
 import static ru.crystals.set10.pages.operday.tablereports.TableReportPage.*;
 
-
+@Test (groups = "centrum")
 public class PriceCheckerReportTest extends AbstractReportTest{
 
 	PriceCheckerConfigPage priceCheckerConfig;
@@ -29,13 +29,13 @@ public class PriceCheckerReportTest extends AbstractReportTest{
 	@BeforeClass
 	public void navigateToProceCheckerReport() {
 		priceCheckerConfig =  navigateToReportConfig(
-				Config.CENTRUM_URL, 
+				TARGET_HOST, 
 				Config.MANAGER,
 				Config.MANAGER_PASSWORD,
 				PriceCheckerConfigPage.class, 
 				TAB_OTHER, 
 				REPORT_NAME_PRICE_CHECKER);
-		soapSender.setSoapServiceIP(Config.CENTRUM_HOST);
+		soapSender.setSoapServiceIP(TARGET_HOST);
 		// Послать товар, который будет проверен на прайсчекере
 		sendGoodData();
 		// Послать запрос к прайсчекеру

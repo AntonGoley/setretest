@@ -13,6 +13,7 @@ import ru.crystals.set10.utils.SoapRequestSender;
 import static ru.crystals.set10.pages.operday.tablereports.TableReportPage.*;
 import static ru.crystals.set10.pages.operday.tablereports.ReportConfigPage.EXCELREPORT;
 
+@Test(groups = "retail")
 public class MRCPriceReportTest extends AbstractReportTest{
 	
 	ReportConfigPage MRCConfigPage;
@@ -24,7 +25,7 @@ public class MRCPriceReportTest extends AbstractReportTest{
 	@BeforeClass
 	public void navigateToMRCReport() {
 		MRCConfigPage =  navigateToReportConfig(
-				Config.RETAIL_URL, 
+				TARGET_HOST_URL, 
 				Config.MANAGER,
 				Config.MANAGER_PASSWORD,
 				ReportConfigPage.class, 
@@ -42,7 +43,7 @@ public class MRCPriceReportTest extends AbstractReportTest{
 	}
 	
 	@Test ( groups = "MRC_Report_Smoke",
-			description = "SRL-360. Проверить, что \"Прейскурант на тобачные изделия\" доступен для скачивания в формате xls"
+			description = "SRL-360. Проверить, что \"Прейскурант на табачные изделия\" доступен для скачивания в формате xls"
 			)
 	public void testMRCReportSaveXls(){
 		long fileSize = 0;
@@ -123,7 +124,7 @@ public class MRCPriceReportTest extends AbstractReportTest{
 	private String setPriceAndSendRequest(String request, String mrc_price){
 		String mrc_good_name = "Tabaco_" + String.valueOf(new Date().getTime());
 		soapRequestSender = new SoapRequestSender();
-		soapRequestSender.setSoapServiceIP(Config.RETAIL_HOST);
+		soapRequestSender.setSoapServiceIP(TARGET_HOST);
 		soapRequestSender.sendGoods(request
 				.replace(mrcNameDataFilePattern, mrc_good_name)
 				.replace(price, mrc_price)

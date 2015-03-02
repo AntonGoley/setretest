@@ -14,7 +14,7 @@ import ru.crystals.set10.pages.operday.tablereports.ReportConfigPage;
 import ru.crystals.set10.test.dataproviders.TableReportsDataprovider;
 import static ru.crystals.set10.pages.operday.tablereports.TableReportPage.*;
 
-
+@Test(groups = "retail")
 public class RefundChecksReportTest extends AbstractReportTest{
 	
 	static final String FIELD_RETURNCHECK_DATE = "Чек Возврата: Дата";
@@ -65,7 +65,7 @@ public class RefundChecksReportTest extends AbstractReportTest{
 	@BeforeClass
 	public void navigateToRefundReport() {
 		refundChecksConfigPage =  navigateToReportConfig(
-				Config.RETAIL_URL, 
+				TARGET_HOST, 
 				Config.MANAGER,
 				Config.MANAGER_PASSWORD,
 				ReportConfigPage.class, 

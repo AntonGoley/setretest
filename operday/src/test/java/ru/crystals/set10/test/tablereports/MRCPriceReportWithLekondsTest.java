@@ -12,6 +12,7 @@ import ru.crystals.set10.utils.DisinsectorTools;
 import ru.crystals.set10.utils.SoapRequestSender;
 import static ru.crystals.set10.pages.operday.tablereports.TableReportPage.*;
 
+@Test(groups = "retail")
 public class MRCPriceReportWithLekondsTest extends AbstractReportTest{
 	
 	ReportConfigPage MRCConfigPage;
@@ -35,7 +36,7 @@ public class MRCPriceReportWithLekondsTest extends AbstractReportTest{
 	@BeforeClass
 	public void navigateToMRCReport() {
 		MRCConfigPage =  navigateToReportConfig(
-				Config.RETAIL_URL, 
+				TARGET_HOST_URL, 
 				Config.MANAGER,
 				Config.MANAGER_PASSWORD,
 				ReportConfigPage.class, 
@@ -70,7 +71,7 @@ public class MRCPriceReportWithLekondsTest extends AbstractReportTest{
 	private String sendRequest(String request, String dateStart, String dateEnd){
 		String mrc_good_name = "Tabaco_" + String.valueOf(new Date().getTime());
 		soapRequestSender = new SoapRequestSender();
-		soapRequestSender.setSoapServiceIP(Config.RETAIL_HOST);
+		soapRequestSender.setSoapServiceIP(TARGET_HOST);
 		soapRequestSender.sendGoods(request
 				.replace(name, mrc_good_name)
 				.replace(since_date, dateStart)

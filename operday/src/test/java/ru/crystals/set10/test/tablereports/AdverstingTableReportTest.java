@@ -16,6 +16,7 @@ import static ru.crystals.set10.pages.operday.tablereports.TableReportPage.*;
 import static ru.crystals.set10.pages.operday.tablereports.ReportConfigPage.*;
 
 
+@Test (groups = {"centrum"})
 public class AdverstingTableReportTest extends AbstractReportTest {
 	
 	AdverstingReportConfigPage adverstingConfigPage;
@@ -29,17 +30,16 @@ public class AdverstingTableReportTest extends AbstractReportTest {
 	
 	HashMap<String, String> requestParams;
 	
-	
 	@BeforeClass
 	public void navigateToAdverstingReport() {
 		adverstingConfigPage =  navigateToReportConfig(
-				Config.CENTRUM_URL, 
+				TARGET_HOST_URL, 
 				Config.MANAGER,
 				Config.MANAGER_PASSWORD,
 				AdverstingReportConfigPage.class, 
 				TAB_ADVERSTING, 
 				REPORT_NAME_ADVERSTING);
-		soapSender.setSoapServiceIP(Config.CENTRUM_HOST);
+		soapSender.setSoapServiceIP(TARGET_HOST);
 		sendData();
 		doReport();
 	}	
@@ -104,20 +104,20 @@ public class AdverstingTableReportTest extends AbstractReportTest {
 	}
 		
 	
-//	@Test(	dependsOnMethods = "testGoodInReport",
-//			description = "Если не указаны магазины, отчет генерится для всей сети (все магазины)", 
-//			alwaysRun = true) 
+	@Test(	enabled = false, dependsOnMethods = "testGoodInReport",
+			description = "Если не указаны магазины, отчет генерится для всей сети (все магазины)", 
+		alwaysRun = true) 
 	public void testWithEmptyShop(){
 		Assert.assertTrue(htmlReportResults.containsValue(Config.SHOP_NUMBER), "В отчете отсутствует информация по магазину: " + Config.SHOP_NUMBER);
 		Assert.assertTrue(htmlReportResults.containsValue(Config.SHOP_NUMBER), "В отчете отсутствует информация по центруму" + Config.SHOP_NUMBER);
 	}
 	
 	
-	//@Test(description = "Если указан магазин, отчет генерится только для этого магазина")
+	@Test(enabled = false, description = "Если указан магазин, отчет генерится только для этого магазина")
 	public void testParticularShop() {
 	}
 	
-	//@Test(description = "Проверить генерацию отчета для двух ERP кодов, указанных через запятую")
+	@Test(enabled = false, description = "Проверить генерацию отчета для двух ERP кодов, указанных через запятую")
 	public void testTwoERPCodes() {
 	}
 

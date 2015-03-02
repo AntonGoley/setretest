@@ -10,7 +10,7 @@ import ru.crystals.set10.test.dataproviders.TableReportsDataprovider;
 import static ru.crystals.set10.pages.operday.tablereports.TableReportPage.*;
 import static ru.crystals.set10.pages.operday.tablereports.ReportConfigPage.*;
 
-
+@Test(groups = "retail")
 public class PLUinWeightReportTest extends AbstractReportTest{
 	
 	ReportConfigPage PLUConfigPage;
@@ -18,7 +18,7 @@ public class PLUinWeightReportTest extends AbstractReportTest{
 	@BeforeClass
 	public void navigateToPLUReport() {
 		PLUConfigPage =  navigateToReportConfig(
-				Config.RETAIL_URL, 
+				TARGET_HOST, 
 				Config.MANAGER,
 				Config.MANAGER_PASSWORD,
 				ReportConfigPage.class, 
