@@ -50,9 +50,12 @@ public class  AbstractTest implements IExecutionListener{
     protected static DbAdapter dbAdapter = new DbAdapter();
     
     private static boolean firstRun = true;
+    private static boolean serviceStatus = false;
     
     protected static String TARGET_HOST;
     protected static String TARGET_HOST_URL;
+    
+    
     
     public WebDriver getDriver() {
         return driver;
@@ -144,23 +147,27 @@ public class  AbstractTest implements IExecutionListener{
 	    DisinsectorTools.removeOldReport(getChromeDownloadPath(), "*.xlsx"); 
     }
 
-	public void onExecutionStart(){
-		service = new ChromeDriverService.Builder()
-	    .usingDriverExecutable(Config.DRIVER)
-	    .usingAnyFreePort()
-	    .build();
-		try {
-			log.info("Старт сервиса управления драйвером...");
-			service.start();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+	public synchronized void onExecutionStart(){
+		if (!serviceStatus) {
+			try {
+				service = new ChromeDriverService.Builder()
+			    .usingDriverExecutable(Config.DRIVER)
+			    .usingAnyFreePort()
+			    .build();
+				log.info("Старт сервиса управления драйвером...");
+				service.start();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}	
 	};
 	
-	public void onExecutionFinish(){
-		log.info("Остановка  сервиса управления драйвером...");
-		service.stop();
-		log.info("Сервис успешно остановлен"); 
+	public synchronized void onExecutionFinish(){
+		if (serviceStatus) {
+			log.info("Остановка  сервиса управления драйвером...");
+			service.stop();
+			log.info("Сервис успешно остановлен"); 
+		}	
 	};
     
 }
