@@ -29,7 +29,7 @@ public class PriceCheckerReportTest extends AbstractReportTest{
 	@BeforeClass
 	public void navigateToProceCheckerReport() {
 		priceCheckerConfig =  navigateToReportConfig(
-				TARGET_HOST, 
+				TARGET_HOST_URL, 
 				Config.MANAGER,
 				Config.MANAGER_PASSWORD,
 				PriceCheckerConfigPage.class, 
