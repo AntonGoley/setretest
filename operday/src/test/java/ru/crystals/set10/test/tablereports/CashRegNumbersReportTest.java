@@ -91,8 +91,7 @@ public class CashRegNumbersReportTest extends AbstractReportTest{
 		Assert.assertTrue(fileSize > 0, "Файл отчета сохранился некорректно");
 	}
 	
-	@Test ( groups = "CashRegNumbers_Report_Smoke",
-			description = "SRL-137. Проверить, что \"Отчет о регистрационных номерах касс на ТК\" доступен для скачивания в формате pdf"
+	@Test (	description = "SRL-137. Проверить, что \"Отчет о регистрационных номерах касс на ТК\" доступен для скачивания в формате pdf"
 			)
 	public void testCashRegReportSavePdf(){
 		long fileSize = 0;

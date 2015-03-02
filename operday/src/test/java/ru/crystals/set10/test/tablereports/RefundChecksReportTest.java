@@ -65,7 +65,7 @@ public class RefundChecksReportTest extends AbstractReportTest{
 	@BeforeClass
 	public void navigateToRefundReport() {
 		refundChecksConfigPage =  navigateToReportConfig(
-				TARGET_HOST, 
+				TARGET_HOST_URL, 
 				Config.MANAGER,
 				Config.MANAGER_PASSWORD,
 				ReportConfigPage.class, 

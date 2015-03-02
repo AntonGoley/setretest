@@ -26,15 +26,18 @@ public class MRCPriceReportWithLekondsTest extends AbstractReportTest{
 	 *  для других тестов на mrc, чтобы не учитывались леконды при отображении в отчете
 	 */
 	String goodRequest = DisinsectorTools.getFileContentAsString("mrc_report/mrc_lecond_good.txt"); 
-	/*
-	 * отсылаем товар, на который будем импортировать леконды
-	 * marking-of-the-good в файлах данных должен совпадать
-	 */
-	String goodName = sendRequest(goodRequest, "", "");
+
 	private static final String LECOND_DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss";
+	
+	String goodName;
 	
 	@BeforeClass
 	public void navigateToMRCReport() {
+		/*
+		 * отсылаем товар, на который будем импортировать леконды
+		 * marking-of-the-good в файлах данных должен совпадать
+		 */
+		goodName = sendRequest(goodRequest, "", "");
 		MRCConfigPage =  navigateToReportConfig(
 				TARGET_HOST_URL, 
 				Config.MANAGER,
@@ -45,7 +48,7 @@ public class MRCPriceReportWithLekondsTest extends AbstractReportTest{
 	}	
 	
 	@DataProvider (name = "Даты ограничений")
-	public static Object[][] lecondDates(){
+	private static Object[][] lecondDates(){
 		long today = new Date().getTime();
 		long oneDay = 60*60*24*1000;
 		
