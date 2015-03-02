@@ -39,7 +39,7 @@ public class MRCPriceReportWithLekondsTest extends AbstractReportTest{
 		 */
 		goodName = sendRequest(goodRequest, "", "");
 		MRCConfigPage =  navigateToReportConfig(
-				TARGET_HOST_URL, 
+				Config.RETAIL_URL, 
 				Config.MANAGER,
 				Config.MANAGER_PASSWORD,
 				ReportConfigPage.class, 
@@ -74,7 +74,7 @@ public class MRCPriceReportWithLekondsTest extends AbstractReportTest{
 	private String sendRequest(String request, String dateStart, String dateEnd){
 		String mrc_good_name = "Tabaco_" + String.valueOf(new Date().getTime());
 		soapRequestSender = new SoapRequestSender();
-		soapRequestSender.setSoapServiceIP(TARGET_HOST);
+		soapRequestSender.setSoapServiceIP(Config.RETAIL_HOST);
 		soapRequestSender.sendGoods(request
 				.replace(name, mrc_good_name)
 				.replace(since_date, dateStart)

@@ -57,7 +57,7 @@ public class CashRegNumbersReportTest extends AbstractReportTest{
 		}	
 		
 		cashNumbersConfigPage =  navigateToReportConfig(
-				TARGET_HOST_URL, 
+				Config.RETAIL_URL, 
 				Config.MANAGER,
 				Config.MANAGER_PASSWORD,
 				ReportConfigPage.class, 
@@ -114,7 +114,7 @@ public class CashRegNumbersReportTest extends AbstractReportTest{
 			cashVo.setFiscalDate(fiscalDate);
 			cashVo.setHardwareName("Beetle");
 			
-		httpConnect.setUrl("http://" + TARGET_HOST + ":8090" + GLOBAL_SERVLET_PATH);
+		httpConnect.setUrl("http://" + Config.RETAIL_HOST + ":8090" + GLOBAL_SERVLET_PATH);
 		cashManager = httpConnect.find(CashManagerRemote.class, CashManagerRemote.SERVER_EJB_NAME);
 		cashManager.updateCashParams(cashVo, true);
 		log.info(String.format("Отправлена информация по кассе %s на сервер: заводской номер - %s, рег. номер - %s, номер ЭКЛЗ - %s, дата фискализации - %s", 

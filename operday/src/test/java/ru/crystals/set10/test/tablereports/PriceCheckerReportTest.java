@@ -29,13 +29,13 @@ public class PriceCheckerReportTest extends AbstractReportTest{
 	@BeforeClass
 	public void navigateToProceCheckerReport() {
 		priceCheckerConfig =  navigateToReportConfig(
-				TARGET_HOST_URL, 
+				Config.CENTRUM_URL,
 				Config.MANAGER,
 				Config.MANAGER_PASSWORD,
 				PriceCheckerConfigPage.class, 
 				TAB_OTHER, 
 				REPORT_NAME_PRICE_CHECKER);
-		soapSender.setSoapServiceIP(TARGET_HOST);
+		soapSender.setSoapServiceIP(Config.CENTRUM_HOST);
 		// Послать товар, который будет проверен на прайсчекере
 		sendGoodData();
 		// Послать запрос к прайсчекеру

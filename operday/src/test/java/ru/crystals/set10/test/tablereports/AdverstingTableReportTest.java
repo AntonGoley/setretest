@@ -33,13 +33,13 @@ public class AdverstingTableReportTest extends AbstractReportTest {
 	@BeforeClass
 	public void navigateToAdverstingReport() {
 		adverstingConfigPage =  navigateToReportConfig(
-				TARGET_HOST_URL, 
+				Config.CENTRUM_URL, 
 				Config.MANAGER,
 				Config.MANAGER_PASSWORD,
 				AdverstingReportConfigPage.class, 
 				TAB_ADVERSTING, 
 				REPORT_NAME_ADVERSTING);
-		soapSender.setSoapServiceIP(TARGET_HOST);
+		soapSender.setSoapServiceIP(Config.CENTRUM_HOST);
 		sendData();
 		doReport();
 	}	

@@ -18,7 +18,7 @@ public class PLUinWeightReportTest extends AbstractReportTest{
 	@BeforeClass
 	public void navigateToPLUReport() {
 		PLUConfigPage =  navigateToReportConfig(
-				TARGET_HOST_URL, 
+				Config.RETAIL_URL, 
 				Config.MANAGER,
 				Config.MANAGER_PASSWORD,
 				ReportConfigPage.class, 
