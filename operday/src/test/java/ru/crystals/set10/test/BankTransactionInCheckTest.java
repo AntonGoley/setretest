@@ -42,6 +42,9 @@ public class BankTransactionInCheckTest extends AbstractTest {
 	String terminalId = "СА43299";
 	
 	private PurchaseEntity purchase;
+	
+	private long reportSizeNoLessThanBytes = 6000; 
+	
 	/*
 	 * Поля для валидации отклоненной транзакций
 	 */
@@ -136,7 +139,7 @@ public class BankTransactionInCheckTest extends AbstractTest {
 		String reportNamePattern = "TransactionHistory_*.xls";
 		fileSize =  paymentTransactions.exportFileData(chromeDownloadPath, reportNamePattern, paymentTransactions, LINK_SAVE_EXCEL).length();
 		log.info("Размер сохраненного файла: " + reportNamePattern + " равен " +  fileSize);
-		Assert.assertTrue(fileSize > 6300, "Файл отчета сохранился некорректно");
+		Assert.assertTrue(fileSize > reportSizeNoLessThanBytes, "Файл отчета сохранился некорректно");
 	}
 	
 	
@@ -170,10 +173,6 @@ public class BankTransactionInCheckTest extends AbstractTest {
 		DisinsectorTools.delay(500);
 		BankCard card = payments.setBankCardData(validBankCardNumber, "Visa");
 		purchase = payments.setBankCardPayment(BankCardPaymentEntity.class, purchase, purchase.getCheckSumEnd(), card, authData);	
-		
-//		DisinsectorTools.delay(500);
-//		BankCard card2 = payments.setBankCardData(validBankCardNumber, "MasterCard");
-//		purchase = payments.setBankCardPayment(BankCardPaymentEntity.class, purchase, purchase.getCheckSumEnd() - purchase.getCheckSumEnd()/2, card2, authData);
 		
 		return purchase;
 	}

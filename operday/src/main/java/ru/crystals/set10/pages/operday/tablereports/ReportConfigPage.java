@@ -19,7 +19,7 @@ public class  ReportConfigPage extends AbstractPage implements SaveFile {
 	
 	/*
 	 * необходимо немного подождать, при первом формировании отчета 
-	 *  
+	 * т.к генерятся все шаблоны jasper
 	 */
 	static boolean ifFirstReport = true;
 	
@@ -27,7 +27,6 @@ public class  ReportConfigPage extends AbstractPage implements SaveFile {
 		super(driver);
 		getWait().until(ExpectedConditions.visibilityOfElementLocated(By.id(ID_OPERDAYSWF)));
 	}
-	
 	
 	public HTMLRepotResultPage generateReport(String reportType){
 		// doFlexMouseDown чтобы убрать flexSuggest
@@ -42,22 +41,6 @@ public class  ReportConfigPage extends AbstractPage implements SaveFile {
 		}
 		return new HTMLRepotResultPage(getDriver());
 	}
-	
-	/*
-	 * сохранение отчетов в формате pdf/xls
-	 */
-//	public File saveReportFile(String reportType, String path, String pattern){
-//		
-//		if (DisinsectorTools.fileFilter(path, pattern).length != 0) {
-//			log.info(String.format("Предыдущие файлы отчетов %s не удалены перед выполнением теста", pattern));
-//			return new File("");
-//		}
-//		
-//		doFlexMouseDown(getDriver(), ID_OPERDAYSWF, reportType);
-//		clickElement(getDriver(), ID_OPERDAYSWF, reportType);
-//		return DisinsectorTools.getDownloadedFile(path, pattern);
-//	}
-
 
 	@Override
 	public void saveFile(String fileType) {
