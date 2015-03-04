@@ -106,7 +106,8 @@ public class WrongAdverstingPriceTest extends AbstractReportTest{
 	}
 	
 	@Test (	description = "SRTE-67. Проверить названия отчета и название колонок в шапке таблицы отчета \"Некорректная акционная цена\"", 
-			dataProvider = "Некорректная акционная цена", dataProviderClass = TableReportsDataprovider.class)
+			dataProvider = "Некорректная акционная цена", 
+			dataProviderClass = TableReportsDataprovider.class)
 	public void testAdverstingPriceHTMLReportTableHead(String fieldName){
 		log.info(fieldName);
 		Assert.assertTrue(htmlReportResults.containsValue(fieldName), "Неверное значение поля в шапке отчета: " + fieldName);

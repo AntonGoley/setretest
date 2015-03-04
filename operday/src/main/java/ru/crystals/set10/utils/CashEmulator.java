@@ -56,8 +56,8 @@ public class CashEmulator {
 	private static DbAdapter db = new  DbAdapter();
 		
 	private static final String SQL_MAX_SHIFT_NUM = "select max(numshift) from od_shift as od_s join od_purchase as od_p on od_p.id_shift = od_s.id where cashnum = %s  and shopindex = %s and shiftcreate >= '%s 00:00:00' and shiftcreate < '%s 23:59:59.999'";
-														
-	private static final String SQL_SHIFT_STATUS = "select distinct(state) from od_shift where numshift = %s and cashnum = %s and shopindex = %s and shiftcreate >= '%s 00:00:00' and shiftcreate < '%s 23:59:59.999'";
+	
+	//private static final String SQL_SHIFT_STATUS = "select distinct(state) from od_shift where numshift = %s and cashnum = %s and shopindex = %s and shiftcreate >= '%s 00:00:00' and shiftcreate < '%s 23:59:59.999'";
 	
 	private static final String SQL_CHECK_NUM = "select max(numberfield) from od_shift as od_s join od_purchase as od_p on od_p.id_shift = od_s.id where cashnum = %s and numshift = %s and shopindex = %s and shiftcreate >= '%s 00:00:00' and shiftcreate < '%s 23:59:59.999'";
 	
@@ -112,12 +112,8 @@ public class CashEmulator {
 		shiftNum = db.queryForInt(db_operday, String.format(SQL_MAX_SHIFT_NUM, cashNumber, shopNumber, date, date));
 		if (shiftNum == 0) {
 			shiftNum = 1;
-		} else {
-			/* если смена уже создана
-			 * проверяем, закрыта ли она 
-			 */
-			ifShiftClosed(cashNumber, shiftNum);
-		}
+		}	
+		nextShift(null);	
 		return shiftNum;
 	}
 	
@@ -144,18 +140,18 @@ public class CashEmulator {
 		return db.queryForInt(db_operday, String.format(SQL_GET_SHIFT_FINAL_SUM, String.valueOf("false"), cashNumber, shiftNum, shopNumber, date, date));
 	}
 
-	private boolean ifShiftClosed(int cashNumber, int shiftNumber) {
-		// TODO: привести в порядок
-		String date = getDate("yyyy-MM-dd", System.currentTimeMillis() - yesterday);
-		int querryResult = 0;
-		querryResult = db.queryForInt(db_operday, String.format(SQL_SHIFT_STATUS, shiftNumber, cashNumber, shopNumber, date, date)); 
-		if ((int) querryResult == 0) { 
-			return false;
-		} else {
-			useNextShift();
-			return true;
-		}
-	}
+//	private boolean ifShiftClosed(int cashNumber, int shiftNumber) {
+//		// TODO: привести в порядок
+//		String date = getDate("yyyy-MM-dd", System.currentTimeMillis() - yesterday);
+//		int querryResult = 0;
+//		querryResult = db.queryForInt(db_operday, String.format(SQL_SHIFT_STATUS, shiftNumber, cashNumber, shopNumber, date, date)); 
+//		if ((int) querryResult == 0) { 
+//			return false;
+//		} else {
+//			useNextShift();
+//			return true;
+//		}
+//	}
 	
 	protected void sendDocument(Serializable document) {
 		log.info("Try send one document - {}", document);
@@ -176,15 +172,20 @@ public class CashEmulator {
 		docSender.sendObject(type, document);
     }
 	
+	
+	private void openShiftOnFirstDocument(){
+		if (shift.getShiftOpen() == null) {
+			shift.setShiftOpen(new Date(System.currentTimeMillis() - yesterday));
+		}
+	}
+	
 	/*
 	 * выполнить изъятие
 	 */
 	public DocumentEntity nextWithdrawal(){
-		 if (shift == null || nextShift || ifShiftClosed(cashNumber, shiftNum)) {
-		      shift = nextShift(null);
-		      nextShift = false;
-		    }
-		
+
+		openShiftOnFirstDocument();
+		 
 		WithdrawalEntity wdr = new WithdrawalEntity();
 		wdr.setCurrency("RUB");
 		wdr.setWasBefore((long) 0);
@@ -207,10 +208,8 @@ public class CashEmulator {
 	 * выполнить внесение
 	 */
 	public DocumentEntity nextIntroduction(){
-		 if (shift == null || nextShift || ifShiftClosed(cashNumber, shiftNum)) {
-		      shift = nextShift(null);
-		      nextShift = false;
-		    }
+		
+		openShiftOnFirstDocument();
 		
 		IntroductionEntity intr = new IntroductionEntity();
 		intr.setCurrency("RUB");
@@ -234,9 +233,9 @@ public class CashEmulator {
 	 * закрыть текущую смену
 	 */
 	public DocumentEntity nextZReport(){
-		if (shift == null) {
-		      shift = nextShift(null);
-		    }
+		
+		openShiftOnFirstDocument();
+		
 	    ReportShiftEntity rse = new ReportShiftEntity();
 	    rse.setReportZ(true);
 	    rse.setCountPurchase(Long.valueOf(1L));
@@ -266,7 +265,7 @@ public class CashEmulator {
 	    sendDocument(rse);
 	    log.info("Отправить Z отчет..");
 	    ifCheckInRetail((ReportShiftEntity) rse);
-	    nextShift = true;
+	    useNextShift();
 	    return rse;
 	}
 	
@@ -278,11 +277,8 @@ public class CashEmulator {
 	 */
 	public PurchaseEntity nextPurchaseWithoutSending() {
 
-	   	 if (shift == null || nextShift) {	
-	      shift = nextShift(null);
-	      nextShift = false;
-	    }
-	   	 
+		openShiftOnFirstDocument();
+		
 	   	log.info("Сгенерить чек для транзакций лояльности"); 
 	   	int idx = (int)random(peList.size() - 2) + 1;
 	    return (PurchaseEntity)completeDocument(peList.get(idx));
@@ -298,9 +294,7 @@ public class CashEmulator {
 			// произвольный возврат
 			boolean arbitraryReturn) {
 
-		if (shift == null) {
-		  shift = nextShift(null);
-		}
+		openShiftOnFirstDocument();
 		
 		HashMap<Long, Long> returnPositions = new HashMap<Long, Long>();
 		
@@ -312,11 +306,12 @@ public class CashEmulator {
 	}
 	
 	public PurchaseEntity nextCancelledPurchaseWithoutSending(PurchaseEntity purchase) {
-
-	    if (shift == null || nextShift) {	
-	      shift = nextShift(null);
-	      nextShift = false;
-	    }
+		/*
+		 * Уменьшаем нумерацию на 1, т.к будет нарушение последовательности
+		 * нумерации чека (т.к purchase отменен)
+		 */
+		checkNumber--;
+		openShiftOnFirstDocument();
 	    purchase.setCheckStatus(CheckStatus.Cancelled);
 	    return  purchase;
 	}
@@ -325,17 +320,10 @@ public class CashEmulator {
 	 * Сгенерить чек с рандомным набором позиций
 	 */
 	public DocumentEntity nextPurchase() {
-
-	//    if (shift == null || nextShift || ifShiftClosed(cashNumber, shiftNum)) {
-	   	 if (shift == null || nextShift) {	
-	      shift = nextShift(null);
-	      nextShift = false;
-	    }
-
+		openShiftOnFirstDocument();
 	   	int idx = (int)random(peList.size() - 2) + 1;
 	   	log.info("Отправить  чек..");
 	   	return completeAndSendPurchase((DocumentEntity)peList.get(idx));
-	    
 	}
 	
 	/*
@@ -343,12 +331,8 @@ public class CashEmulator {
 	 */
 	public DocumentEntity nextPurchase(DocumentEntity purchase) {
 
-	    //if (shift == null || nextShift || ifShiftClosed(cashNumber, shiftNum)) {
-	    if (shift == null || nextShift) {	
-	      shift = nextShift(null);
-	      nextShift = false;
-	    }
-	    
+		openShiftOnFirstDocument();
+		
 	    log.info("Отправить  чек..");
 	    return completeAndSendPurchase((DocumentEntity)purchase);
 	}
@@ -373,11 +357,8 @@ public class CashEmulator {
 				HashMap<Long, Long> returnPositions,
 				// произвольный возврат
 				boolean arbitraryReturn) {
-		
-	    if (shift == null) {
-	      shift = nextShift(null);
-	    }
-	    
+
+		openShiftOnFirstDocument();
 	    DocumentEntity de = refundCheck(superPurchase, returnPositions, arbitraryReturn);
 	    log.info("Выполнить возврат...");
 	    return completeAndSendPurchase(de);
@@ -536,13 +517,11 @@ public class CashEmulator {
 	
     private ShiftEntity nextShift(SessionEntity session) {
       SessionEntity sess = session != null ? session : nextSession();
-      ShiftEntity shift = new ShiftEntity();
+      shift = new ShiftEntity();
       shift.setFiscalNum("Emulator." + shopNumber + "." + cashNumber);
-      if (nextShift) {
-    	  nextShift = false;
-      }
+
       shift.setNumShift(Long.valueOf(++shiftNum));
-      shift.setShiftOpen(new Date(System.currentTimeMillis() - yesterday));
+      shift.setShiftCreate(new Date(System.currentTimeMillis() - yesterday));
       shift.setCashNum(new Long(cashNumber));
       shift.setShopIndex(Long.valueOf(shopNumber));
       shift.setSessionStart(sess);
@@ -566,8 +545,9 @@ public class CashEmulator {
     }
 	
 	public void useNextShift(){
-		nextShift = true;
+		//nextShift = true;
 		checkNumber = 1;
+		nextShift(null);
 	}
 	
 	private void logCheckEntities(PurchaseEntity pe){
@@ -621,11 +601,7 @@ public class CashEmulator {
 		SimpleDateFormat dateFormat = new SimpleDateFormat(format);
 		return dateFormat.format(date);
 	}
-	
-//	public void setYesterday(long yesterday){
-//		this.yesterday = yesterday;
-//	}
-	
+
 	public ShiftEntity getShift(){
 		return this.shift;
 	}

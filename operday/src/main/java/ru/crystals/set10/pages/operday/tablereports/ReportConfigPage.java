@@ -19,7 +19,7 @@ public class  ReportConfigPage extends AbstractPage implements SaveFile {
 	
 	/*
 	 * необходимо немного подождать, при первом формировании отчета 
-	 * т.к генерятся все шаблоны jasper
+	 * т.к генерятся все шаблоны jasper на сервере
 	 */
 	static boolean ifFirstReport = true;
 	
