@@ -54,6 +54,8 @@ public class  AbstractTest implements IExecutionListener{
     
     protected static String TARGET_HOST;
     protected static String TARGET_HOST_URL;
+    protected static String TARGET_SHOP;
+    
     
     
     
@@ -83,10 +85,12 @@ public class  AbstractTest implements IExecutionListener{
     	String[] groups = context.getIncludedGroups();
     	TARGET_HOST = Config.RETAIL_HOST;
     	TARGET_HOST_URL = Config.RETAIL_URL;
+    	TARGET_SHOP = Config.SHOP_NUMBER;
     	for (int i=0; i<groups.length; i++){
     		if (groups[i].equals("centrum")){
     			TARGET_HOST = Config.CENTRUM_HOST;
     			TARGET_HOST_URL = Config.CENTRUM_URL;
+    			TARGET_SHOP = Config.VIRTUAL_SHOP_NUMBER;
     		} 
     	}
 	}

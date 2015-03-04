@@ -1,6 +1,6 @@
 <goods-catalog>
 	<good marking-of-the-good="${marking-of-the-good}" transaction-id="0000000166699742">
-		<shop-indices/>
+		<shop-indices>${shop}</shop-indices>
 		<name>Good_name ${marking-of-the-good}</name>
 		<bar-code code="${goodgroup}">
 			<count>1</count>

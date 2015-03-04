@@ -18,7 +18,7 @@ import ru.crystals.set10.utils.SoapRequestSender;
 import static ru.crystals.set10.pages.operday.tablereports.ReportConfigPage.EXCELREPORT;
 import static ru.crystals.set10.pages.operday.tablereports.TableReportPage.*;
 
-@Test (groups = {"retail", "centrum"})
+@Test (groups = {"centrum", "retail"})
 public class WrongAdverstingPriceTest extends AbstractReportTest{
 	
 	WrongAdverstingPriveConfigPage reportConfigPage;
@@ -56,6 +56,7 @@ public class WrongAdverstingPriceTest extends AbstractReportTest{
 			price4BiggerThanPrice2.put("${price_2}","99.11");
 			price4BiggerThanPrice2.put("${price_4}","100.10");
 			price4BiggerThanPrice2.put("${adversting_identifier}","Price_4 > price_2");
+			price4BiggerThanPrice2.put("${shop}", TARGET_SHOP);
 			
 		price3BiggerThanPrice1 =  new HashMap<String, String>();
 			price3BiggerThanPrice1.put("${marking-of-the-good}", String.valueOf(marking_prefix - 99) + "_ST");
@@ -64,6 +65,7 @@ public class WrongAdverstingPriceTest extends AbstractReportTest{
 			price3BiggerThanPrice1.put("${price_2}","201.33");
 			price3BiggerThanPrice1.put("${price_3}","204.33");
 			price3BiggerThanPrice1.put("${adversting_identifier}","Price_3 > price_1");	
+			price3BiggerThanPrice1.put("${shop}", TARGET_SHOP);
 			
 		price3BiggerThanPrice2 =  new HashMap<String, String>();
 			price3BiggerThanPrice2.put("${marking-of-the-good}", String.valueOf(marking_prefix - 199) + "_ST");
@@ -71,14 +73,16 @@ public class WrongAdverstingPriceTest extends AbstractReportTest{
 			price3BiggerThanPrice2.put("${price_1}","303.33");
 			price3BiggerThanPrice2.put("${price_2}","301.32");
 			price3BiggerThanPrice2.put("${price_3}","302.33");
-			price3BiggerThanPrice2.put("${adversting_identifier}","Price_3 > price_2");			
+			price3BiggerThanPrice2.put("${adversting_identifier}","Price_3 > price_2");	
+			price3BiggerThanPrice2.put("${shop}", TARGET_SHOP);
 			
 		price2BiggerThanPrice1 =  new HashMap<String, String>();
 			price2BiggerThanPrice1.put("${marking-of-the-good}", String.valueOf(marking_prefix - 299) + "_ST");
 			price2BiggerThanPrice1.put("${goodgroup}",String.valueOf(barcode_prefix - 299));
 			price2BiggerThanPrice1.put("${price_1}","301.33");
 			price2BiggerThanPrice1.put("${price_2}","302.32");
-			price2BiggerThanPrice1.put("${adversting_identifier}","");				
+			price2BiggerThanPrice1.put("${adversting_identifier}","");	
+			price2BiggerThanPrice1.put("${shop}", TARGET_SHOP);
 	}
 	
 	@DataProvider(name = "Цены")
