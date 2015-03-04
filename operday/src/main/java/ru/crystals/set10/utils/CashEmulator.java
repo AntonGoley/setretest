@@ -7,9 +7,12 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import ru.crystals.discount.processing.entity.LoyTransactionEntity;
+import ru.crystals.pos.check.CashOnlineMessage;
 import ru.crystals.pos.check.CheckStatus;
 import ru.crystals.pos.check.DocumentEntity;
 import ru.crystals.pos.check.IntroductionEntity;
@@ -41,7 +44,7 @@ public class CashEmulator {
 	private String db_operday;
 	
 	public  boolean nextShift = false;
-	public  long yesterday = Long.valueOf("0"); //(86400000 * 130); ("-11232000000")
+	public  long yesterday = Long.valueOf("0")*6; //(86400000 * 130); ("-11232000000")
 	
 	/*
 	 * Список созданных в тестах касс
@@ -54,8 +57,9 @@ public class CashEmulator {
 	private LoySender loySender;
 	
 	private static DbAdapter db = new  DbAdapter();
-		
-	private static final String SQL_MAX_SHIFT_NUM = "select max(numshift) from od_shift as od_s join od_purchase as od_p on od_p.id_shift = od_s.id where cashnum = %s  and shopindex = %s and shiftcreate >= '%s 00:00:00' and shiftcreate < '%s 23:59:59.999'";
+	
+	private static final String SQL_MAX_SHIFT_NUM = "select max(numshift) from od_shift as od_s where cashnum = %s  and shopindex = %s and shiftcreate >= '%s 00:00:00' and shiftcreate < '%s 23:59:59.999'";
+	//private static final String SQL_MAX_SHIFT_NUM = "select max(numshift) from od_shift as od_s join od_purchase as od_p on od_p.id_shift = od_s.id where cashnum = %s  and shopindex = %s and shiftcreate >= '%s 00:00:00' and shiftcreate < '%s 23:59:59.999'";
 	
 	//private static final String SQL_SHIFT_STATUS = "select distinct(state) from od_shift where numshift = %s and cashnum = %s and shopindex = %s and shiftcreate >= '%s 00:00:00' and shiftcreate < '%s 23:59:59.999'";
 	
@@ -84,10 +88,9 @@ public class CashEmulator {
 	    } else {
 	    	db_operday = DB_CENTRUM_OPERDAY;
 	    }
-	    
+	    docSender = new DocsSender(serverIP, shopNumber, cashNumber);
 	    shiftNum = getCurrentShiftNum(cashNumber);
 	    checkNumber =  getNextCheckNum(cashNumber, shiftNum);
-	    docSender = new DocsSender(serverIP, shopNumber, cashNumber);
 	    loySender = new LoySender(serverIP, shopNumber, cashNumber);
 	    log.info("Создан cashEmulator: " + cashNumber +  "; ShopNum = " + shopNum + "; ShiftNum = " + shiftNum + "; NextCheckNumber = " + checkNumber);
 	    
@@ -234,20 +237,23 @@ public class CashEmulator {
 	 */
 	public DocumentEntity nextZReport(){
 		
+		//Date dateClose = new Date(System.currentTimeMillis() - yesterday);
+		Date dateClose = new Date(System.currentTimeMillis());
+		
 		openShiftOnFirstDocument();
 		
 	    ReportShiftEntity rse = new ReportShiftEntity();
 	    rse.setReportZ(true);
 	    rse.setCountPurchase(Long.valueOf(1L));
-	    rse.setSumCashEnd(Long.valueOf(2851771786L));
+	    rse.setSumCashEnd(Long.valueOf(285177L));
 	    rse.setFiscalDocNum("testZ;" + String.valueOf(System.currentTimeMillis()));
 	    // сумма чеков продажи за смену в ФР
 	    rse.setSumPurchaseFiscal(Long.valueOf(getShiftSumChecks()));
 	    // сумма возвратов по ФР
 	    rse.setSumReturnFiscal((long) getShiftSumChecksRefund());
-	    shift.setShiftClose(new Date(System.currentTimeMillis() - yesterday));
+	    shift.setShiftClose(dateClose);
 	    rse.setId(Long.valueOf(reportId++));
-	    rse.setDateCommit(new Date(System.currentTimeMillis() - yesterday));
+	    rse.setDateCommit(dateClose);
 
 	    ReportPaymentTypeEntity reportPaymentTypeEntity = new ReportPaymentTypeEntity(rse.getId().longValue(), "CashPaymentEntity", 'P');
 	    //reportPaymentTypeEntity.setPSumm(getShiftSum(false));
@@ -525,6 +531,7 @@ public class CashEmulator {
       shift.setCashNum(new Long(cashNumber));
       shift.setShopIndex(Long.valueOf(shopNumber));
       shift.setSessionStart(sess);
+      sendCashMessage();
       return shift;
     }
     
@@ -606,5 +613,9 @@ public class CashEmulator {
 		return this.shift;
 	}
 	
+	public void sendCashMessage(){
+		CashOnlineMessage message = new CashOnlineMessage();
+		docSender.sendObject(DataTypesEnum.CASHONLINE_TYPE.code, message);
+	}
 	
 }

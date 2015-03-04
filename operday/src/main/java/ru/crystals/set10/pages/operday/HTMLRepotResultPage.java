@@ -73,6 +73,7 @@ public class  HTMLRepotResultPage extends AbstractPage {
 		String cellValue = "";
 		StringBuffer bf = new StringBuffer();
 		for (int i=1; i<=cellsInRow.size(); i++){
+			cellValue = "";
 			/*
 			 * Если есть текст в ячейке, присваиваем значение ячейки переменной cellValue
 			 * 

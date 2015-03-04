@@ -35,6 +35,7 @@ public class CheckGeneratorFunctionalTest {
 		//cashEmulatorVirtual = CashEmulator.getCashEmulator(Config.CENTRUM_HOST, Integer.valueOf(Config.VIRTUAL_SHOP_NUMBER), Integer.valueOf(Config.CASH_NUMBER ));
 		cashEmulator.nextIntroduction();
 		//cashEmulator2104.nextIntroduction();
+		cashEmulator.sendCashMessage();
 	}
 	
 	@AfterClass
@@ -52,16 +53,17 @@ public class CheckGeneratorFunctionalTest {
 		for(int i=0; i<1; i++) {
 	//		cashEmulator.nextCancelledPurchase(getCashPayment()); 
 			
-			p1 = (PurchaseEntity) cashEmulator.nextPurchase(getCashPayment());
+			//p1 = (PurchaseEntity) cashEmulator.nextPurchase(getCashPayment());
 			//p2 = (PurchaseEntity) cashEmulator2104.nextPurchase(getCashPayment());
-			
-			cashEmulator.nextRefundAll(p1, false);
+			//cashEmulator.nextRefundAll(p1, false);
+
 			p1 = (PurchaseEntity) cashEmulator.nextPurchase(getBankCardPayment(BankCardPaymentEntity.class));
 			returnPositions.put(1L,1000L);
-			cashEmulator.nextRefundPositions(p1, returnPositions, false);
+			
+			//cashEmulator.nextRefundPositions(p1, returnPositions, false);
 			
 			
-			cashEmulator.nextCancelledPurchase(cashEmulator.nextPurchaseWithoutSending());
+			//cashEmulator.nextCancelledPurchase(cashEmulator.nextPurchaseWithoutSending());
 			
 //			cashEmulator.nextRefundAll(p1, false);
 	//		cashEmulatorVirtual.nextRefundAll(p2, false);
@@ -113,7 +115,7 @@ public class CheckGeneratorFunctionalTest {
 		
 		p = payments.setBankCardPayment(cardType, p, p.getCheckSumEnd()/4, invalidBankCard, getAuthDataWithFalse());
 		p = payments.setBankCardPayment(cardType, p, p.getCheckSumEnd()/4, bankCard, null);
-		p = payments.setBankCardPayment(cardType, p, p.getCheckSumEnd()/2, bankCard, null);
+		p = payments.setBankCardPayment(cardType, p, p.getCheckSumEnd()/2 , bankCard, null);
 		
 		p = payments.setCashPayment(p, p.getCheckSumEnd() - p.getCheckSumEnd()/4 -  p.getCheckSumEnd()/2);
 		return p;

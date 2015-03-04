@@ -3,11 +3,14 @@ package ru.crystals.set10.test.tablereports;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+
 import ru.crystals.set10.config.Config;
+import ru.crystals.set10.pages.operday.HTMLRepotResultPage;
 import ru.crystals.set10.pages.operday.tablereports.WrongAdverstingPriveConfigPage;
 import ru.crystals.set10.test.dataproviders.TableReportsDataprovider;
 import ru.crystals.set10.utils.DisinsectorTools;
@@ -98,6 +101,7 @@ public class WrongAdverstingPriceTest extends AbstractReportTest{
 		
 		soapSender.sendGoods(request, params);
 		getDriver().navigate().refresh();
+		htmlReportResults = new HTMLRepotResultPage(getDriver());
 		reportRow = htmlReportResults.getLineValuesByCellValue(params.get("${marking-of-the-good}"));
 
 		Assert.assertTrue(reportRow.contains(params.get("${marking-of-the-good}")), "В отчете не отображается значение кода товара");
