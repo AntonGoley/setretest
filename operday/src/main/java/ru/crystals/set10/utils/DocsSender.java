@@ -6,10 +6,8 @@ import java.io.Serializable;
 import java.net.MalformedURLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import ru.crystals.commons.amf.io.Utils;
 import ru.crystals.httpclient.HttpClient;
 import ru.crystals.httpclient.HttpFileConnection;
@@ -19,7 +17,6 @@ import ru.crystals.pos.check.CashOnlineMessage;
 import ru.crystals.pos.check.DocumentEntity;
 import ru.crystals.pos.check.EmptyDocumentEntity;
 import ru.crystals.pos.check.ReportShiftEntity;
-import ru.crystals.set10.config.Config;
 import ru.crystals.transport.TransferObject;
 
 public class DocsSender {
@@ -40,18 +37,18 @@ public class DocsSender {
 	final String defaultExtension = ".ser";
     final String zipExtension = ".zip";
 //    private  int od_purchase_id;
-    String db ="";
+//    String db ="";
     
 	public DocsSender(String serverIP, int shopNumber, int cashNumber) {
 		this.serverIP = serverIP;
 		this.shopNumber = shopNumber;
 		this.cashNumber = cashNumber;
 		
-		if (serverIP.equals(Config.RETAIL_HOST)){
-			db = DbAdapter.DB_RETAIL_OPERDAY;
-		} else {
-			db = DbAdapter.DB_CENTRUM_OPERDAY;
-		}
+//		if (serverIP.equals(Config.RETAIL_HOST)){
+//			db = DbAdapter.DB_RETAIL_OPERDAY;
+//		} else {
+//			db = DbAdapter.DB_CENTRUM_OPERDAY;
+//		}
 		
 //			od_purchase_id = new DbAdapter().queryForInt(db,
 //					"select max(id) from od_inbound_files") + 7;

@@ -37,7 +37,8 @@ public class  AbstractTest implements IExecutionListener{
     private static ChromeDriverService service;
     protected static String chromeDownloadPath = null;
 
-    protected static CashEmulator cashEmulator = CashEmulator.getCashEmulator(Config.RETAIL_HOST, Integer.valueOf(Config.SHOP_NUMBER), Integer.valueOf(Config.CASH_NUMBER));
+    protected static CashEmulator cashEmulator;
+    protected static CashEmulator cashEmulatorRetail = CashEmulator.getCashEmulator(Config.RETAIL_HOST, Integer.valueOf(Config.SHOP_NUMBER), Integer.valueOf(Config.CASH_NUMBER));
     /*
      *  эмулятор для поиска чеков
      */
@@ -55,8 +56,9 @@ public class  AbstractTest implements IExecutionListener{
     protected static String TARGET_HOST;
     protected static String TARGET_HOST_URL;
     protected static String TARGET_SHOP;
-    
-    
+    protected static String DB_SET;
+    protected static String DB_OPERDAY;
+    protected static String DB_LOY;
     
     
     public WebDriver getDriver() {
@@ -86,11 +88,20 @@ public class  AbstractTest implements IExecutionListener{
     	TARGET_HOST = Config.RETAIL_HOST;
     	TARGET_HOST_URL = Config.RETAIL_URL;
     	TARGET_SHOP = Config.SHOP_NUMBER;
+    	DB_SET = DbAdapter.DB_RETAIL_SET;
+    	DB_OPERDAY = DbAdapter.DB_RETAIL_OPERDAY;
+    	DB_LOY = DbAdapter.DB_RETAIL_LOY;
+    	
+    	cashEmulator = cashEmulatorRetail;
     	for (int i=0; i<groups.length; i++){
     		if (groups[i].equals("centrum")){
     			TARGET_HOST = Config.CENTRUM_HOST;
     			TARGET_HOST_URL = Config.CENTRUM_URL;
     			TARGET_SHOP = Config.VIRTUAL_SHOP_NUMBER;
+    	    	DB_SET = DbAdapter.DB_CENTRUM_SET;
+    	    	DB_OPERDAY = DbAdapter.DB_CENTRUM_OPERDAY;
+    	    	DB_LOY = DbAdapter.DB_CENTRUM_LOY;
+    			cashEmulator = cashEmulatorVirtualShop;
     		} 
     	}
 	}

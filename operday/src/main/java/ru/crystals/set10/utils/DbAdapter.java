@@ -22,17 +22,17 @@ public class DbAdapter {
 	private static HashMap<String, JdbcTemplate> connectionPool = new HashMap<String, JdbcTemplate>();
 	
 	public static final String DB_RETAIL_OPERDAY = String.format("jdbc:postgresql://%s:5432/%s", Config.RETAIL_HOST, "set_operday");
-	
 	public static final String DB_RETAIL_LOY = String.format("jdbc:postgresql://%s:5432/%s", Config.RETAIL_HOST, "set_loyal");
-	
 	public static final String DB_RETAIL_SET = String.format("jdbc:postgresql://%s:5432/%s", Config.RETAIL_HOST, "set");
+
 	public static final String DB_CENTRUM_OPERDAY = String.format("jdbc:postgresql://%s:5432/%s", Config.CENTRUM_HOST, "set_operday"); 
 	public static final String DB_CENTRUM_SET = String.format("jdbc:postgresql://%s:5432/%s", Config.CENTRUM_HOST, "set");
+	public static final String DB_CENTRUM_LOY = String.format("jdbc:postgresql://%s:5432/%s", Config.CENTRUM_HOST, "set_loyal");
 	
 	
 	static
 	{	
-		setConnectionPool(new String[] {DB_RETAIL_OPERDAY, DB_CENTRUM_SET, DB_RETAIL_SET, DB_CENTRUM_OPERDAY, DB_RETAIL_LOY});
+		setConnectionPool(new String[] {DB_RETAIL_OPERDAY, DB_CENTRUM_SET, DB_RETAIL_SET, DB_CENTRUM_OPERDAY, DB_RETAIL_LOY, DB_CENTRUM_LOY});
 	}
 	
 	

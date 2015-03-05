@@ -12,7 +12,7 @@ public class SalesPreferencesPage extends SalesPage{
 	
 	
 	static final String LOCATOR_TABBAR= "id:firstScreen/id:toggleBur";
-	public static final String TAB_TYPES_GOODS_PAYMENTS = "4";
+	public static final String TAB_TYPES_GOODS_PAYMENTS = "5";
 	
 	public SalesPreferencesPage(WebDriver driver) {
 		super(driver);

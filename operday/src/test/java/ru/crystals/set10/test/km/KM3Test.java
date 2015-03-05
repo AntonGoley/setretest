@@ -1,15 +1,11 @@
 package ru.crystals.set10.test.km;
 
 
-
 import java.util.HashMap;
-
 import junit.framework.Assert;
-
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-
 import ru.crystals.pos.check.PurchaseEntity;
 import ru.crystals.set10.config.Config;
 import ru.crystals.set10.pages.basic.LoginPage;
@@ -18,10 +14,10 @@ import ru.crystals.set10.pages.operday.OperDayPage;
 import ru.crystals.set10.pages.operday.cashes.CashesPage;
 import ru.crystals.set10.pages.operday.cashes.KmPage;
 import ru.crystals.set10.test.AbstractTest;
-import static ru.crystals.set10.utils.DbAdapter.*;
 import static ru.crystals.set10.pages.operday.cashes.KmPage.*;
 import static ru.crystals.set10.pages.operday.OperDayPage.SEARCH_CASHES;
 
+@Test(groups = {"retail", "centrum"})
 public class KM3Test extends AbstractTest{
 	
 	KmPage km3;
@@ -35,7 +31,7 @@ public class KM3Test extends AbstractTest{
 	
 	
 	@DataProvider (name = "Поля КМ3")
-	public static Object[][] km3Fields(){
+	private static Object[][] km3Fields(){
 		return new Object[][]{
 				{"Название формы", "О ВОЗВРАТЕ ДЕНЕЖНЫХ СУММ ПОКУПАТЕЛЯМ (КЛИЕНТАМ)\nПО НЕИСПОЛЬЗОВАННЫМ КАССОВЫМ ЧЕКАМ"}
 		};
@@ -43,8 +39,8 @@ public class KM3Test extends AbstractTest{
 	
 	@BeforeClass
 	public void prepareData(){
-		dbAdapter.batchUpdateDb(DB_RETAIL_OPERDAY, new String[] {SQL_CLEAN_KM3, SQL_CLEAN_KM3_ROW} );
-		log.info("Записи в таблице od_km3 и в таблице od_km3_row удалены в базе " + DB_RETAIL_OPERDAY);
+		dbAdapter.batchUpdateDb(DB_OPERDAY, new String[] {SQL_CLEAN_KM3, SQL_CLEAN_KM3_ROW} );
+		log.info("Записи в таблице od_km3 и в таблице od_km3_row удалены в базе " + DB_OPERDAY);
 		
 		km3 = new LoginPage(getDriver(), Config.RETAIL_URL).
 				openOperDay(Config.MANAGER, Config.MANAGER_PASSWORD)
@@ -53,7 +49,6 @@ public class KM3Test extends AbstractTest{
 				.switchToKm(LOCATOR_KM3);
 		
 		check = (PurchaseEntity) cashEmulator.nextPurchase();
-		
 	}
 	
 	@Test( description = "SRTE-28. Если в систему пришел первый возвратный чек, создается форма КМ3")

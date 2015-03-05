@@ -43,18 +43,33 @@ public class CheckGeneratorTest {
 	@Test (description = "Сгенерить чеки продажи")
 	public void testSendChecks(){
 
+		// оплата банковской картой и аннулирование чека
 		p1 = getBankCardPayment(BankCardPaymentEntity.class);
 		cashEmulator.nextCancelledPurchase(p1);
 		
+		// оплата наличными
 		p1 = (PurchaseEntity) cashEmulator.nextPurchase(getCashPayment());
+		//возврат всего чека
 		cashEmulator.nextRefundAll(p1, false);
-
+		
+		//оплата банковской картой
 		p1 = (PurchaseEntity) cashEmulator.nextPurchase(getBankCardPayment(BankCardPaymentEntity.class));
-
+		
+		//возвращаем первую позицию в кол-ве 1шт
+		HashMap<Long, Long> returnPositions = new HashMap<Long, Long>();
+		returnPositions.put(1L, 100L);
+		cashEmulator.nextRefundPositions(p1, returnPositions, false);
+		
+		//оплата детской картой
 		p1 = (PurchaseEntity) cashEmulator.nextPurchase(getBankCardPayment(ChildrenCardPaymentEntity.class));
 		
+		//оплата бонусной картой
 		p1 = (PurchaseEntity) cashEmulator.nextPurchase(getBonusCardPayment());
+		
+		//оплата подарочной картой
 		p1 = (PurchaseEntity) cashEmulator.nextPurchase(getGiftCardPayment());
+		
+		//оплата скидочной картой
 		p1 = (PurchaseEntity) cashEmulator.nextPurchase(getDiscountCardPayment());
 		
 	}
