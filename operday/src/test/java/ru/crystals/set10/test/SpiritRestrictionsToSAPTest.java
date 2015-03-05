@@ -47,7 +47,7 @@ public class SpiritRestrictionsToSAPTest extends AbstractTest{
 		mainPage = new LoginPage(getDriver(), TARGET_HOST_URL).doLogin(Config.MANAGER, Config.MANAGER_PASSWORD);
 		salesPage = mainPage.openSales();
 		alcoholPage = salesPage
-				.navigateMenu(11, SalesPreferencesPage.class)
+				.navigateMenu(Config.SALES_PREFERENCES_INDEX, SalesPreferencesPage.class)
 				.navigateTab(TAB_TYPES_GOODS_PAYMENTS)
 				.selectProductTypeItem(ProductTypeItems.ALCOHOL, AlcoholPage.class);
 		alcoholRestrictionTab = alcoholPage.selectAlcoholTab(AlcoholTabs.ALCOHOL_RESTRICTIONS);
@@ -68,9 +68,10 @@ public class SpiritRestrictionsToSAPTest extends AbstractTest{
 		Assert.assertTrue(validateResult(String.format(xpath, name), periodFrom, periodTill));
 	}
 	
-	//@Test (description = "SRL-163. Выгрузка в SAP отчета по алкогольным ограничениям. Период действия", 
-	//		dataProvider = "Период действия", 
-	//		dataProviderClass = SpiritRistrictionsDataprovider.class)
+	@Test ( enabled = false,
+			description = "SRL-163. Выгрузка в SAP отчета по алкогольным ограничениям. Период действия", 
+			dataProvider = "Период действия", 
+			dataProviderClass = SpiritRistrictionsDataprovider.class)
 	public void spiritSAPExportDateRangeTest(String name, String period, String dateToValidate, String xpath) {
 		alcoholRestrictionPage.setDate(period);
 		alcoholRestrictionPage.setRestrictionName(name);
@@ -97,7 +98,7 @@ public class SpiritRestrictionsToSAPTest extends AbstractTest{
 		soapValidate.setSoapServiceIP(TARGET_HOST);
 		while (delay < 15) {
 			DisinsectorTools.delay(1000);
-			delay=+1;
+			delay++;
 			soapValidate.getAlcoRestrictions(from, till);	
 			result =  soapValidate.assertSOAPResponseXpath(xpath);
 			if (result) return true;

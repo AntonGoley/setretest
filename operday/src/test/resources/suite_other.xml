@@ -8,18 +8,18 @@
  </listeners>
  
    <!-- КМ3, КМ6--> 	
-<!--   	<test name="КМ3" > -->
-<!-- 	  	<classes> -->
-<!-- 	  		<class name="ru.crystals.set10.test.km.KM3Test"/> -->
-<!-- 		</classes>	  -->
-<!--   	</test> -->
+  	<test name="КМ3" >
+	  	<classes>
+	  		<class name="ru.crystals.set10.test.km.KM3Test"/>
+		</classes>	 
+  	</test>
   	
 <!--     КАРТОЧКА ТОВАРА  	 -->
-<!--   	<test name="Поля карточки товара" > -->
-<!-- 	  	<classes> -->
-<!-- 			<class name="ru.crystals.set10.test.GoodsAdditionalFieldsTest"/> -->
-<!-- 		</classes>	  -->
-<!--   	</test> -->
+  	<test name="Поля карточки товара" >
+	  	<classes>
+			<class name="ru.crystals.set10.test.GoodsAdditionalFieldsTest"/>
+		</classes>	 
+  	</test>
   	
     <!-- АЛКОГОЛЬНЫЕ ОГРАНИЧЕНИЯ --> 
   	<test name="Выгрузка в SAP алкогольных ограничений" >

@@ -78,6 +78,20 @@ public class Config {
     public static  String BANK_NAME_1;
     public static  String BANK_NAME_2;
     
+    
+    /*
+     * 
+     */
+//    public static String TARGET_HOST;
+//    public static String TARGET_HOST_URL;
+//    public static String TARGET_SHOP;
+    
+    // Управление продажами - Общие настройки
+    public static int SALES_PREFERENCES_INDEX;
+    
+    
+    
+    
     private static Properties props;
     
     private static ClassLoader classLoader = Config.class.getClassLoader();

@@ -25,7 +25,7 @@ public class SalesPreferencesPage extends SalesPage{
 		/*
 		 * Ждем, что загрузились все вкладки
 		 */
-		waitForProperty(getDriver(), ID_SALESSWF, LOCATOR_TABBAR, new String[]{"numChildren","5"});
+		waitForProperty(getDriver(), ID_SALESSWF, LOCATOR_TABBAR, new String[]{"numChildren","6"});
 		doFlexProperty(getDriver(), ID_SALESSWF, LOCATOR_TABBAR, new String[]{"selectedIndex", salesPreferencesTab});
 		return new SalesGoodsTypesAndPaymentsTabPage(getDriver());
 	}

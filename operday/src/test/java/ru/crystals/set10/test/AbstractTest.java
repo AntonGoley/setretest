@@ -91,6 +91,8 @@ public class  AbstractTest implements IExecutionListener{
     	DB_SET = DbAdapter.DB_RETAIL_SET;
     	DB_OPERDAY = DbAdapter.DB_RETAIL_OPERDAY;
     	DB_LOY = DbAdapter.DB_RETAIL_LOY;
+    	
+    	Config.SALES_PREFERENCES_INDEX = 10;
     	cashEmulator = cashEmulatorRetail;
 
     	for (int i=0; i<groups.length; i++){
@@ -101,6 +103,8 @@ public class  AbstractTest implements IExecutionListener{
     	    	DB_SET = DbAdapter.DB_CENTRUM_SET;
     	    	DB_OPERDAY = DbAdapter.DB_CENTRUM_OPERDAY;
     	    	DB_LOY = DbAdapter.DB_CENTRUM_LOY;
+    	    	
+    	    	Config.SALES_PREFERENCES_INDEX = 11;
     			cashEmulator = cashEmulatorVirtualShop;
     		} 
     	}
