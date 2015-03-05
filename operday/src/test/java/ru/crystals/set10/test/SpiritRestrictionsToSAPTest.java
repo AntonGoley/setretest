@@ -21,6 +21,7 @@ import ru.crystals.set10.utils.DisinsectorTools;
 import ru.crystals.set10.utils.SoapRequestSender;
 import static ru.crystals.set10.pages.sales.preferences.SalesPreferencesPage.*;
 
+@Test (groups = {"retail", "centrum"})
 public class SpiritRestrictionsToSAPTest extends AbstractTest{
 	
 	MainPage mainPage;
@@ -43,7 +44,7 @@ public class SpiritRestrictionsToSAPTest extends AbstractTest{
 	
 	@BeforeClass
 	public void goToAlcoholRestrictions() {
-		mainPage = new LoginPage(getDriver(), Config.CENTRUM_URL).doLogin(Config.MANAGER, Config.MANAGER_PASSWORD);
+		mainPage = new LoginPage(getDriver(), TARGET_HOST_URL).doLogin(Config.MANAGER, Config.MANAGER_PASSWORD);
 		salesPage = mainPage.openSales();
 		alcoholPage = salesPage
 				.navigateMenu(11, SalesPreferencesPage.class)
@@ -93,7 +94,7 @@ public class SpiritRestrictionsToSAPTest extends AbstractTest{
 		long delay = 0;
 		log.info("Проверка ограничения:" + xpath);
 		SoapRequestSender soapValidate = new  SoapRequestSender();
-		soapValidate.setSoapServiceIP(Config.CENTRUM_HOST);
+		soapValidate.setSoapServiceIP(TARGET_HOST);
 		while (delay < 15) {
 			DisinsectorTools.delay(1000);
 			delay=+1;

@@ -15,16 +15,16 @@
 <!--   	</test> -->
   	
 <!--     КАРТОЧКА ТОВАРА  	 -->
-  	<test name="Поля карточки товара" >
-	  	<classes>
-			<class name="ru.crystals.set10.test.GoodsAdditionalFieldsTest"/>
-		</classes>	 
-  	</test>
+<!--   	<test name="Поля карточки товара" > -->
+<!-- 	  	<classes> -->
+<!-- 			<class name="ru.crystals.set10.test.GoodsAdditionalFieldsTest"/> -->
+<!-- 		</classes>	  -->
+<!--   	</test> -->
   	
     <!-- АЛКОГОЛЬНЫЕ ОГРАНИЧЕНИЯ --> 
-<!--   	<test name="Выгрузка в SAP алкогольных ограничений" > -->
-<!-- 	  	<classes> -->
-<!-- 	  		<class name="ru.crystals.set10.test.SpiritRestrictionsToSAPTest"/> -->
-<!-- 		</classes>	  -->
-<!--   	</test>	 -->
+  	<test name="Выгрузка в SAP алкогольных ограничений" >
+	  	<classes>
+	  		<class name="ru.crystals.set10.test.SpiritRestrictionsToSAPTest"/>
+		</classes>	 
+  	</test>	
 </suite> 

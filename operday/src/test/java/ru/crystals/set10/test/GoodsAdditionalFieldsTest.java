@@ -68,7 +68,7 @@ public class GoodsAdditionalFieldsTest extends AbstractTest{
 	}	
 	
 	@DataProvider(name = "Поля весового товара")
-	public Object[][] priceData(){
+	private Object[][] priceData(){
 		return new Object[][]{
 				{"Производитель", FIELD_PRODUCER, weightAdditionalFieldsPrice.get(mask_producer)},
 				{"Номер кнопки в весах", FIELD_BUTTON_NUMBER_ON_SCALES,  weightAdditionalFieldsPrice.get(mask_buttonOnScale)}
