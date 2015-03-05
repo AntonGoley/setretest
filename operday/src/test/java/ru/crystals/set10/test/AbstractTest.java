@@ -36,17 +36,22 @@ public class  AbstractTest implements IExecutionListener{
     private static final int IMPLICIT_WAIT = 15; //sec
     private static ChromeDriverService service;
     protected static String chromeDownloadPath = null;
-
+    
+    /*
+     * эмулятор для магазина и виртуального магазина на центруме
+     */
     protected static CashEmulator cashEmulator;
     protected static CashEmulator cashEmulatorRetail = CashEmulator.getCashEmulator(Config.RETAIL_HOST, Integer.valueOf(Config.SHOP_NUMBER), Integer.valueOf(Config.CASH_NUMBER));
+    protected static CashEmulator cashEmulatorVirtualShop = CashEmulator.getCashEmulator(Config.CENTRUM_HOST, Integer.valueOf(Config.VIRTUAL_SHOP_NUMBER), Integer.valueOf(Config.CASH_NUMBER));
+    
     /*
      *  эмулятор для поиска чеков
      */
-    protected static CashEmulator cashEmulatorSearchCheck = CashEmulator.getCashEmulator(Config.RETAIL_HOST, Integer.valueOf(Config.SHOP_NUMBER), Integer.valueOf(Config.CASH_NUMBER) + 1);
-    /*
-     * эмулятор для виртуального магазина
-     */
-    protected static CashEmulator cashEmulatorVirtualShop = CashEmulator.getCashEmulator(Config.CENTRUM_HOST, Integer.valueOf(Config.VIRTUAL_SHOP_NUMBER), Integer.valueOf(Config.CASH_NUMBER));
+    protected static CashEmulator cashEmulatorSearchCheck;
+    protected static CashEmulator cashEmulatorSearchCheckRetail = CashEmulator.getCashEmulator(Config.RETAIL_HOST, Integer.valueOf(Config.SHOP_NUMBER), Integer.valueOf(Config.CASH_NUMBER) + 1);
+    protected static CashEmulator cashEmulatorSearchCheckVirtualShop = CashEmulator.getCashEmulator(Config.CENTRUM_HOST, Integer.valueOf(Config.VIRTUAL_SHOP_NUMBER), Integer.valueOf(Config.CASH_NUMBER) + 1);
+
+    
    
     protected static DbAdapter dbAdapter = new DbAdapter();
     
@@ -94,6 +99,7 @@ public class  AbstractTest implements IExecutionListener{
     	
     	Config.SALES_PREFERENCES_INDEX = 10;
     	cashEmulator = cashEmulatorRetail;
+    	cashEmulatorSearchCheck = cashEmulatorSearchCheckRetail;
 
     	for (int i=0; i<groups.length; i++){
     		if (groups[i].equals("centrum")){
@@ -106,6 +112,7 @@ public class  AbstractTest implements IExecutionListener{
     	    	
     	    	Config.SALES_PREFERENCES_INDEX = 11;
     			cashEmulator = cashEmulatorVirtualShop;
+    			cashEmulatorSearchCheck = cashEmulatorSearchCheckVirtualShop;
     		} 
     	}
 	}

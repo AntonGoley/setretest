@@ -8,7 +8,7 @@ import org.testng.annotations.Test;
 import ru.crystals.pos.check.PurchaseEntity;
 import static ru.crystals.set10.pages.operday.searchcheck.CheckSearchPage.*;
 
-
+@Test (groups={"centrum", "retail"})
 public class SearchCheckByCheckTypeGroupTest extends SearchCheckAbstractTest{
 	
 	private PurchaseEntity p1;
@@ -29,7 +29,7 @@ public class SearchCheckByCheckTypeGroupTest extends SearchCheckAbstractTest{
 	}
 	
 	@DataProvider(name = "Тип чека")	
-	public Object[][] checkType(){
+	private Object[][] checkType(){
 		p1 = cashEmulatorSearchCheck.nextPurchaseWithoutSending();
 		p1refund = cashEmulatorSearchCheck.nextRefundAllWithoutSending(purchase, false);
 		p1cancel = cashEmulatorSearchCheck.nextCancelledPurchaseWithoutSending(cashEmulatorSearchCheck.nextPurchaseWithoutSending());
@@ -41,7 +41,7 @@ public class SearchCheckByCheckTypeGroupTest extends SearchCheckAbstractTest{
 	};
 	
 	@DataProvider(name = "Суммы")	
-	public Object[][] paySum(){
+	private Object[][] paySum(){
 		p1 = cashEmulatorSearchCheck.nextPurchaseWithoutSending();
 		
 		
