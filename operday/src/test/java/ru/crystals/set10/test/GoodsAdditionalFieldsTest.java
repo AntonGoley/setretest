@@ -19,6 +19,7 @@ import static ru.crystals.set10.product.ProductAdditionalInfoTabPage.*;
 import static ru.crystals.set10.product.ProductMainInfoTabPage.*;
 
 
+@Test (groups = {"retail", "centrum"})
 public class GoodsAdditionalFieldsTest extends AbstractTest{
 	
 	MainPage mainPage;
@@ -53,9 +54,8 @@ public class GoodsAdditionalFieldsTest extends AbstractTest{
 	
 	@BeforeClass
 	public void openProductCard() {
-		
 		setInputData();
-		soapSender.setSoapServiceIP(Config.RETAIL_HOST);
+		soapSender.setSoapServiceIP(TARGET_HOST);
 		
 		/*
 		 * Послать весовой товар
@@ -63,7 +63,7 @@ public class GoodsAdditionalFieldsTest extends AbstractTest{
 		request = 	DisinsectorTools.getFileContentAsString("good_additional_fields.txt");
 		weightAdditionalFieldsPrice = soapSender.sendGoods(request, weightAdditionalFieldsPrice);
 		
-		mainPage = new LoginPage(getDriver(), Config.RETAIL_URL).doLogin(Config.MANAGER, Config.MANAGER_PASSWORD);
+		mainPage = new LoginPage(getDriver(), TARGET_HOST_URL).doLogin(Config.MANAGER, Config.MANAGER_PASSWORD);
 		product = mainPage.findGood(weightAdditionalFieldsPrice.get(mask_barcode));
 	}	
 	
