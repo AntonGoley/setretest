@@ -42,7 +42,7 @@ public class KM3Test extends AbstractTest{
 		dbAdapter.batchUpdateDb(DB_OPERDAY, new String[] {SQL_CLEAN_KM3, SQL_CLEAN_KM3_ROW} );
 		log.info("Записи в таблице od_km3 и в таблице od_km3_row удалены в базе " + DB_OPERDAY);
 		
-		km3 = new LoginPage(getDriver(), Config.RETAIL_URL).
+		km3 = new LoginPage(getDriver(), TARGET_HOST_URL).
 				openOperDay(Config.MANAGER, Config.MANAGER_PASSWORD)
 				.navigatePage(CashesPage.class, SEARCH_CASHES)
 				.openKmPage()

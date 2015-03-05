@@ -91,8 +91,8 @@ public class  AbstractTest implements IExecutionListener{
     	DB_SET = DbAdapter.DB_RETAIL_SET;
     	DB_OPERDAY = DbAdapter.DB_RETAIL_OPERDAY;
     	DB_LOY = DbAdapter.DB_RETAIL_LOY;
-    	
     	cashEmulator = cashEmulatorRetail;
+
     	for (int i=0; i<groups.length; i++){
     		if (groups[i].equals("centrum")){
     			TARGET_HOST = Config.CENTRUM_HOST;
