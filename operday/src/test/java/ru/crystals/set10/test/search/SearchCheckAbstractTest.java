@@ -33,9 +33,9 @@ public class SearchCheckAbstractTest extends AbstractTest{
 	static long checkBarcode = 0;
 	static int searchResult = 0;
 	
-	static {
-		cashEmulatorSearchCheck.useNextShift();
-	}
+//	static {
+//		cashEmulatorSearchCheck.useNextShift();
+//	}
 	
 	/*
 	 *  Переход на страницу поиска
