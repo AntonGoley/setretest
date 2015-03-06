@@ -15,6 +15,7 @@ public class SearchCheckByOtherGroupsTest extends SearchCheckAbstractTest{
 	
 	@BeforeClass
 	public void openFilter(){
+		super.openSearchPage();
 		searchCheck.openFilter();
 	}
 	

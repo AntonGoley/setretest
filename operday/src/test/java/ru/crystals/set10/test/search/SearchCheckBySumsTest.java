@@ -54,6 +54,7 @@ public class SearchCheckBySumsTest extends SearchCheckAbstractTest{
 		 * Чек продажи с оплатой наличными
 		 * для поиска по сумме чека
 		 */
+		super.openSearchPage();
 		searchCheck.openFilter();
 		p1 = cashEmulatorSearchCheck.nextPurchaseWithoutSending();
 		

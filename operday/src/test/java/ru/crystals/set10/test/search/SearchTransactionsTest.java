@@ -28,6 +28,7 @@ public class SearchTransactionsTest extends SearchCheckAbstractTest{
 	
 	@BeforeClass
 	public void navigateToTransactionsPage(){
+		super.openSearchPage();
 		transactions = searchCheck.navigatePage(TransactionSearchPage.class, SEARCH_TRANSACTIONS);
 		transactions.openFilter();
 		

@@ -50,8 +50,6 @@ public class  AbstractTest implements IExecutionListener{
     protected static CashEmulator cashEmulatorSearchCheck;
     protected static CashEmulator cashEmulatorSearchCheckRetail = CashEmulator.getCashEmulator(Config.RETAIL_HOST, Integer.valueOf(Config.SHOP_NUMBER), Integer.valueOf(Config.CASH_NUMBER) + 1);
     protected static CashEmulator cashEmulatorSearchCheckVirtualShop = CashEmulator.getCashEmulator(Config.CENTRUM_HOST, Integer.valueOf(Config.VIRTUAL_SHOP_NUMBER), Integer.valueOf(Config.CASH_NUMBER) + 1);
-
-    
    
     protected static DbAdapter dbAdapter = new DbAdapter();
     
@@ -102,7 +100,7 @@ public class  AbstractTest implements IExecutionListener{
     	cashEmulatorSearchCheck = cashEmulatorSearchCheckRetail;
 
     	for (int i=0; i<groups.length; i++){
-    		if (groups[i].equals("centrum")){
+    		if (groups[i].equals("centrums")){
     			TARGET_HOST = Config.CENTRUM_HOST;
     			TARGET_HOST_URL = Config.CENTRUM_URL;
     			TARGET_SHOP = Config.VIRTUAL_SHOP_NUMBER;

@@ -1,7 +1,6 @@
 package ru.crystals.set10.test.search;
 
 import org.testng.Assert;
-import org.testng.annotations.BeforeClass;
 import ru.crystals.pos.check.PurchaseEntity;
 import ru.crystals.set10.config.Config;
 import ru.crystals.set10.pages.basic.LoginPage;
@@ -42,7 +41,7 @@ public class SearchCheckAbstractTest extends AbstractTest{
 	 *  выполняется для всех классов, наследованных от SearchCheckAbstractTest
 	 *  все тесты должны выполняться последовательно в одном потоке
 	 */
-	@BeforeClass
+
 	public void openSearchPage() {
 		mainPage = new LoginPage(getDriver(), TARGET_HOST_URL).doLogin(Config.MANAGER, Config.MANAGER_PASSWORD);
 		searchCheck = mainPage.openOperDay().navigatePage(CheckSearchPage.class, SEARCH_CHECK);
