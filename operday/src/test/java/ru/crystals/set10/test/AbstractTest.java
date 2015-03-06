@@ -100,7 +100,7 @@ public class  AbstractTest implements IExecutionListener{
     	cashEmulatorSearchCheck = cashEmulatorSearchCheckRetail;
 
     	for (int i=0; i<groups.length; i++){
-    		if (groups[i].equals("centrums")){
+    		if (groups[i].equals("centrum")){
     			TARGET_HOST = Config.CENTRUM_HOST;
     			TARGET_HOST_URL = Config.CENTRUM_URL;
     			TARGET_SHOP = Config.VIRTUAL_SHOP_NUMBER;

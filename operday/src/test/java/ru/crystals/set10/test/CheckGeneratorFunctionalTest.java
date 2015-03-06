@@ -35,7 +35,7 @@ public class CheckGeneratorFunctionalTest {
 		//cashEmulatorVirtual = CashEmulator.getCashEmulator(Config.CENTRUM_HOST, Integer.valueOf(Config.VIRTUAL_SHOP_NUMBER), Integer.valueOf(Config.CASH_NUMBER ));
 		cashEmulator.nextIntroduction();
 		//cashEmulator2104.nextIntroduction();
-		cashEmulator.sendCashMessage();
+		//cashEmulator.sendCashMessage();
 	}
 	
 	@AfterClass
