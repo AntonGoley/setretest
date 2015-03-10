@@ -22,7 +22,7 @@ import ru.crystals.set10.utils.GoodsParser;
 import static ru.crystals.set10.pages.operday.searchcheck.CheckSearchPage.*;
 import static ru.crystals.set10.pages.operday.searchcheck.SearchFormPopUp.FILTER_CATEGORY_CHECK_BAR_CODE;
 
-
+@Test (groups={"centrum", "retail"})
 public class SearchCheckBySumsTest extends SearchCheckAbstractTest{
 	
 	// чек для поиска по сумме чека

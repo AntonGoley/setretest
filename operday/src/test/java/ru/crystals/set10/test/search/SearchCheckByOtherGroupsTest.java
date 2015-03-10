@@ -8,7 +8,7 @@ import org.testng.annotations.Test;
 import ru.crystals.set10.utils.CashEmulatorPayments;
 import static ru.crystals.set10.pages.operday.searchcheck.CheckSearchPage.*;
 
-
+@Test (groups={"centrum", "retail"})
 public class SearchCheckByOtherGroupsTest extends SearchCheckAbstractTest{
 	
 	CashEmulatorPayments payments = new CashEmulatorPayments();
