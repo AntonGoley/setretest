@@ -19,7 +19,6 @@ public class WeightBaseTest extends WeightAbstractTest {
 
 	SoapRequestSender soapSender = new SoapRequestSender();
 	
-	
 	@BeforeClass
 	public void initData(){
 		soapSender.setSoapServiceIP(Config.RETAIL_HOST);
@@ -34,8 +33,6 @@ public class WeightBaseTest extends WeightAbstractTest {
 		weightGood_2 = soapSender.sendGoods(DisinsectorTools.getFileContentAsString(WEIGHT_GOOD_FILE), weightGood_2);
 		
 	}
-	
-	//TODO: сделать одновременную загрузку и выгрузку товаров
 	
 	@Test (description = "Весовой товар загружается в весы")
 	public void testGoodWeightLoadToScales(){

@@ -174,7 +174,7 @@ public class VirtualScalesReader {
 	public boolean getExpectedFileStatus(int responseCode){
 		boolean result =  false;
 		long timeout = 0 ;
-		long delay = 1000;
+		long delay = 500;
 		long defaultTimeout = 60000;
 		try {
 			log.info("Ожидание респонс кода для файла виртуальных весов: " + responseCode);
@@ -183,13 +183,12 @@ public class VirtualScalesReader {
 				connection.setDoInput(true);
 				connection.setRequestMethod("GET");
 				
-				
 				DisinsectorTools.delay(delay);
+				timeout +=delay;
 				if (connection.getResponseCode() == responseCode){
 					log.info("Время ожидания обновления файла виртуальных весов: " + timeout);
 					return true;
 				}
-				timeout +=1000;
 				connection.connect();
 			}
 

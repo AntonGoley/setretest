@@ -44,7 +44,7 @@ public class CashEmulator {
 	private String db_operday;
 	
 	public  boolean nextShift = false;
-	public  long yesterday = Long.valueOf("0")*6; //(86400000 * 130); ("-11232000000")
+	public  long yesterday = Long.valueOf("0"); //(86400000 * 130); ("-11232000000")
 	
 	/*
 	 * Список созданных в тестах касс
@@ -479,8 +479,8 @@ public class CashEmulator {
 	 * в транзакции оплаты добавляется информация о смене
 	 */
 	private DocumentEntity completeDocument(DocumentEntity de){
-		//Date d = new Date(System.currentTimeMillis() - yesterday);
-		Date d = new Date(System.currentTimeMillis());
+		Date d = new Date(System.currentTimeMillis() - yesterday);
+		//Date d = new Date(System.currentTimeMillis());
 	    de.setDateCommit(d);
 	    de.setShift(shift);
 	    de.setNumber((long) checkNumber++);

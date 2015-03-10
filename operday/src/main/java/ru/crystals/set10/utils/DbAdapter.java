@@ -74,7 +74,7 @@ public class DbAdapter {
 		connectionPool.get(db).update(sql);	
 	}
 	
-	public void batchUpdateDb(String db, String[] sql){
+	public static void batchUpdateDb(String db, String[] sql){
 		connectionPool.get(db).batchUpdate(sql);	
 	}
 }

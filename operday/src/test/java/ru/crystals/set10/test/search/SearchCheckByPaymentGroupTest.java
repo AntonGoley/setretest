@@ -17,6 +17,7 @@ import ru.crystals.set10.utils.CashEmulatorPayments;
 import ru.crystals.set10.utils.DisinsectorTools;
 
 
+@Test (groups={"centrum", "retail"})
 public class SearchCheckByPaymentGroupTest extends SearchCheckAbstractTest{
 	
 	long checkNumber;
