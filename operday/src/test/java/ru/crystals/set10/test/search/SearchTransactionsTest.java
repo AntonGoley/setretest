@@ -15,6 +15,7 @@ import ru.crystals.set10.utils.DisinsectorTools;
 import static ru.crystals.set10.pages.operday.searchcheck.CheckSearchPage.*;
 import static ru.crystals.set10.pages.operday.searchcheck.TransactionSearchPage.*;
 
+@Test (groups={"centrum", "retail"})
 public class SearchTransactionsTest extends SearchCheckAbstractTest{
 	
 	TransactionSearchPage transactions;
