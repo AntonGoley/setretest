@@ -58,28 +58,46 @@ public class FlexMediator {
 		ecxecute(driver, String.format("document.getElementById('%s').doFlexProperty('%s', '%s', '%s')", swfSrc, flexId, args[0], args[1]));	
 	}
 	
-	public static void waitForElement(WebDriver driver, String swfSrc, String flexId) {
+	//TODO: возможно следуе разделить elementVisible и elementPresent
+	public static void  waitForElement(WebDriver driver, String swfSrc, String flexId) {
+//		DisinsectorTools.delay(100);
+//		int timeout = 0;
+//		String result = "false";
+//		while (timeout < 10000 ){
+//			result = (String) ecxecuteAndReturnString(driver, String.format("return document.getElementById('%s').findElement('%s')", swfSrc, flexId));
+//			if (result.equals("true")) {
+//				break;
+//			}
+//			sleep(200);
+//			timeout+=200;
+//		}
+//		if (!result.equals("true")) {
+//			throw new NoSuchElementException("Не найден элемент: " + flexId);
+//		}
+		
+		if (!waitForElementPresent(driver, swfSrc, flexId)) {
+			throw new NoSuchElementException("Не найден элемент: " + flexId);
+		}
+		
+		if (!waitForElementVisible(driver, swfSrc, flexId)){
+			throw new NoSuchElementException("Не найден элемент: " + flexId);
+		};
+	}
+	
+	public static boolean  waitForElementPresent(WebDriver driver, String swfSrc, String flexId){
 		DisinsectorTools.delay(100);
 		int timeout = 0;
 		String result = "false";
 		while (timeout < 10000 ){
 			result = (String) ecxecuteAndReturnString(driver, String.format("return document.getElementById('%s').findElement('%s')", swfSrc, flexId));
 			if (result.equals("true")) {
-				break;
+				return true;
 			}
 			sleep(200);
 			timeout+=200;
 		}
-		if (!result.equals("true")) {
-			throw new NoSuchElementException("Не найден элемент: " + flexId);
-		}
-		if (!waitForElementVisible(driver, swfSrc, flexId)){
-			throw new NoSuchElementException("Не найден элемент: " + flexId);
-
-		};
+		return false;
 	}
-	
-	
 	
 	public static boolean waitForElementVisible(WebDriver driver, String swfSrc, String flexId) {
 		return waitForProperty(driver, swfSrc, flexId, new String[]{"visible", "true"});

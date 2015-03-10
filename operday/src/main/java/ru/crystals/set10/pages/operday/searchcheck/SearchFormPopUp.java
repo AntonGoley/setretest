@@ -6,11 +6,10 @@ import static ru.crystals.set10.utils.FlexMediator.getSelectedElement;
 import static ru.crystals.set10.utils.FlexMediator.selectElement;
 import static ru.crystals.set10.utils.FlexMediator.typeText;
 import static ru.crystals.set10.utils.FlexMediator.waitForElementVisible;
-
+import static ru.crystals.set10.utils.FlexMediator.waitForElementPresent;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-
 import ru.crystals.pos.check.PurchaseEntity;
 import ru.crystals.set10.pages.operday.OperDayPage;
 import ru.crystals.set10.utils.DisinsectorTools;
@@ -42,6 +41,8 @@ public class SearchFormPopUp extends OperDayPage {
 	
 	//Открытие фильтра
 	static final String FILTER_OPEN = "expandButton";
+	
+	static final String FILTER_ADD_CATEGORY = "addFilterButton";
 	
 	//Результат поиска внизу страницы
 	static final String SEARCH_RESULT = "searchResultLabel";
@@ -91,7 +92,7 @@ public class SearchFormPopUp extends OperDayPage {
 	public static final String FILTER_CATEGORY_GOOD_CODE = "Код товара";
 	public static final String FILTER_CATEGORY_GOOD_BAR_CODE = "Штрих-код товара";
 	
-	//выпадающий списко сравнения
+	//выпадающий список сравнения
 	public static final String FILTER_CATEGORY_SELECT_EQUALS = "=";
 	public static final String FILTER_CATEGORY_SELECT_SMALLER = "<";
 	public static final String FILTER_CATEGORY_SELECT_GREATER = ">";
@@ -182,6 +183,11 @@ public class SearchFormPopUp extends OperDayPage {
 		if ( !getElementProperty(getDriver(), ID_OPERDAYSWF, "name=filtersContainerPopup", "isPopUp").equals("true")){
 			log.info(getElementProperty(getDriver(), ID_OPERDAYSWF, "name=filtersContainerPopup", "isPopUp"));
 			clickElement(getDriver(), ID_OPERDAYSWF,  FILTER_OPEN);
+		};
+		
+		if ( !waitForElementPresent(getDriver(), ID_OPERDAYSWF, FILTER_CATEGORY)){
+			log.info("В фильтре поиска сбросился фильтр по дате!!! ".toUpperCase());
+			clickElement(getDriver(), ID_OPERDAYSWF,  FILTER_ADD_CATEGORY);
 		};
 		
 		/*
