@@ -191,7 +191,7 @@ public class SearchCheckByPaymentGroupTest extends SearchCheckAbstractTest{
  		testExcelExport(LOCATOR_XLS_CHECK_HEADERS, XLS_REPORT_HEADERS_PATTERN);
 	}
 	
-	@Test (description = "SRTE-76 (SRTE-73, SRTE-74). Поиск чека по карте оплаты. В чеке содержится только 1 транзакция оплаты со статусом true",
+	@Test (description = "SRTE-76 (SRTE-73, SRTE-74). Поиск чека по карте оплаты. В чеке содержится только 1 одобренная транзакция оплаты",
 			dataProvider = "Карты оплаты")
 	public void testSearchByPayCardNumber(String filter, String cardNumber, PurchaseEntity purchase){
 
