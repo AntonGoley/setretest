@@ -58,22 +58,7 @@ public class FlexMediator {
 		ecxecute(driver, String.format("document.getElementById('%s').doFlexProperty('%s', '%s', '%s')", swfSrc, flexId, args[0], args[1]));	
 	}
 	
-	//TODO: возможно следуе разделить elementVisible и elementPresent
 	public static void  waitForElement(WebDriver driver, String swfSrc, String flexId) {
-//		DisinsectorTools.delay(100);
-//		int timeout = 0;
-//		String result = "false";
-//		while (timeout < 10000 ){
-//			result = (String) ecxecuteAndReturnString(driver, String.format("return document.getElementById('%s').findElement('%s')", swfSrc, flexId));
-//			if (result.equals("true")) {
-//				break;
-//			}
-//			sleep(200);
-//			timeout+=200;
-//		}
-//		if (!result.equals("true")) {
-//			throw new NoSuchElementException("Не найден элемент: " + flexId);
-//		}
 		
 		if (!waitForElementPresent(driver, swfSrc, flexId)) {
 			throw new NoSuchElementException("Не найден элемент: " + flexId);
@@ -88,7 +73,7 @@ public class FlexMediator {
 		DisinsectorTools.delay(100);
 		int timeout = 0;
 		String result = "false";
-		while (timeout < 3000 ){
+		while (timeout < 15000 ){
 			result = (String) ecxecuteAndReturnString(driver, String.format("return document.getElementById('%s').findElement('%s')", swfSrc, flexId));
 			if (result.equals("true")) {
 				return true;
@@ -110,7 +95,7 @@ public class FlexMediator {
 	public static boolean waitForProperty(WebDriver driver, String swfSrc, String flexId, String[] args) {
 		String result;
 		int timeout = 0;
-		while (timeout < 3000 ){
+		while (timeout < 15000 ){
 			result = (String) ecxecuteAndReturnString(driver, String.format("return document.getElementById('%s').getFlexProperty('%s', '%s')", swfSrc, flexId, args[0]));
 			if (result != null && result.equals(args[1])) {
 				return true;
