@@ -6,7 +6,7 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import static ru.crystals.set10.pages.operday.searchcheck.CheckContentPage.*;
 
-
+@Test (groups={"centrum", "retail"})
 public class AccompanyingGoodsBillContentTest extends AccompanyingDocumentsBasicTest{
 	
 	String reportResult ="";

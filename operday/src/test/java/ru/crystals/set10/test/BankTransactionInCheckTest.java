@@ -70,7 +70,7 @@ public class BankTransactionInCheckTest extends AbstractTest {
 	CashEmulatorPayments payments = new CashEmulatorPayments();
 	
 	@DataProvider (name = "inValidBankTransaction")
-	public Object[][] setInValidTransactionData(){
+	private Object[][] setInValidTransactionData(){
 		return new Object[][]{
 				{"Код авторизации", PaymentTransactionsPage.LOCATOR_AUTHORIZATION_CODE, inValidAuthorizationCode},
 				{"Сообщение", PaymentTransactionsPage.LOCATOR_MESSAGE, inValidMessage},
@@ -85,7 +85,7 @@ public class BankTransactionInCheckTest extends AbstractTest {
 	}
 	
 	@DataProvider (name = "validBankTransaction")
-	public Object[][] setValidTransactionData(){
+	private Object[][] setValidTransactionData(){
 		return new Object[][]{
 				{"Код авторизации", PaymentTransactionsPage.LOCATOR_AUTHORIZATION_CODE, validAuthorizationCode},
 				{"Сообщение", PaymentTransactionsPage.LOCATOR_MESSAGE, validMessage},

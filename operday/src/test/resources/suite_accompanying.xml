@@ -3,11 +3,7 @@
 
 <!--	- необходимо учитывать, что параллельно сьюты тесты не должны конфликтовать 
 		по части тестовых данных 
-		
-		- тесты, запущенные после конфигурации и зависящие от скорости импорта 
-		данных мд Центрумом и Ретейлом запускать не в первую очередь 
 	 -->
-<!-- <suite name="Отчеты, сопроводительные документы, поиск чеков" preserve-order="true" configfailurepolicy="continue" parallel="tests" thread-count="1">-->
 <suite name="Сопроводительные документы" preserve-order="true" configfailurepolicy="continue">
 <listeners>
     <listener class-name="org.uncommons.reportng.HTMLReporter" />
@@ -37,10 +33,4 @@
 		  	<class name="ru.crystals.set10.test.documents.accompanying.AccompanyingGoodsBillContentTest"/>
 		</classes>	 
   	</test>		
-   	
-  	<test name="Просмотр в чеке информации по банковским транзакциям" >
-	  	<classes>
-			<class name="ru.crystals.set10.test.BankTransactionInCheckTest"/>
-		</classes>	 
-  	</test>
 </suite> 
