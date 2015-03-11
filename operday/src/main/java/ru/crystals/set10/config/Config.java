@@ -89,9 +89,6 @@ public class Config {
     // Управление продажами - Общие настройки
     public static int SALES_PREFERENCES_INDEX;
     
-    
-    
-    
     private static Properties props;
     
     private static ClassLoader classLoader = Config.class.getClassLoader();
@@ -131,6 +128,7 @@ public class Config {
         CENTRUM_HOST = System.getProperty("testng_centrum_host");
         RETAIL_HOST = System.getProperty("testng_retail_host");
         SHOP_NUMBER = System.getProperty("testng_shop_number");
+        VIRTUAL_SHOP_NUMBER = System.getProperty("testng_virtual_shop_number");
     	DB_USER = System.getProperty("testng_dbUser");
     	DB_PASSWORD = System.getProperty("testng_dbPassword");
     	CASH_NUMBER = System.getProperty("testng_cash_number");
@@ -141,6 +139,7 @@ public class Config {
     	CENTRUM_HOST = StringUtils.defaultString(CENTRUM_HOST, props.getProperty("centrum.host.ip"));
     	RETAIL_HOST = StringUtils.defaultString(RETAIL_HOST, props.getProperty("retail.host.ip"));
     	SHOP_NUMBER = StringUtils.defaultString(SHOP_NUMBER, props.getProperty("shop.number"));
+    	VIRTUAL_SHOP_NUMBER = StringUtils.defaultString(SHOP_NUMBER, props.getProperty("virtual.shop.number"));
     	DB_USER = StringUtils.defaultString(DB_USER, props.getProperty("db_user"));
     	DB_PASSWORD = StringUtils.defaultString(DB_PASSWORD, props.getProperty("db_password"));
     	CASH_NUMBER = StringUtils.defaultString(CASH_NUMBER, props.getProperty("cash.number"));

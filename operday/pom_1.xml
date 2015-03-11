@@ -70,6 +70,17 @@
 	                <suiteXmlFiles>
                         <suiteXmlFile>target/test-classes/${suiteXmlFile}</suiteXmlFile>
                     </suiteXmlFiles>
+                    <systemPropertyVariables>
+                    	<testng_centrum_host>${centrumHost}</testng_centrum_host>
+                    	<testng_retail_host>${retailHost}</testng_retail_host>
+                    	<testng_shop_number>${shopNumber}</testng_shop_number>
+                    	<testng_virtual_shop_number>${virtualShopNumber}</testng_virtual_shop_number>
+                    	<testng_dbUser>${dbUser}</testng_dbUser>
+                    	<testng_dbPassword>${dbPassword}</testng_dbPassword>
+                    	<testng_check_number>${checkNumber}</testng_check_number>
+                    	<testng_cash_number>${cashNumber}</testng_cash_number>
+                    	<testng_next_shift_number>${nextShift}</testng_next_shift_number>
+               		 </systemPropertyVariables>
                </configuration>
            </plugin>
       	</plugins>
