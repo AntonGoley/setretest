@@ -105,7 +105,7 @@ public class BankTransactionInCheckTest extends AbstractTest {
 		 *  послать чек, в котором присутствует отклоненная и пройденная банковские транзакции
 		 *  и открыть его
 		 */
-		mainPage = new LoginPage(getDriver(), Config.RETAIL_URL).doLogin(Config.MANAGER, Config.MANAGER_PASSWORD);
+		mainPage = new LoginPage(getDriver(), TARGET_HOST_URL).doLogin(Config.MANAGER, Config.MANAGER_PASSWORD);
 		searchCheck = mainPage.openOperDay().navigatePage(CheckSearchPage.class, SEARCH_CHECK);
 		
 		purchase = (PurchaseEntity)cashEmulator.nextPurchase(setPayments());

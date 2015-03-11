@@ -33,7 +33,7 @@ public class AccompanyingDocumentsBasicTest extends AbstractTest{
 	HTMLRepotResultPage htmlReportResults;
 	CheckContentPage checkContent;
 	
-	protected static PurchaseEntity pe;
+	protected static PurchaseEntity purchase;
 	/*
 	 * Данные для заполнения контрагента
 	 */
@@ -84,17 +84,17 @@ public class AccompanyingDocumentsBasicTest extends AbstractTest{
 	
 	public void navigateToCheckSearchPage() {
 		
-		mainPage = new LoginPage(getDriver(), Config.RETAIL_URL).doLogin(Config.MANAGER, Config.MANAGER_PASSWORD);
+		mainPage = new LoginPage(getDriver(), TARGET_HOST_URL).doLogin(Config.MANAGER, Config.MANAGER_PASSWORD);
 		searchCheck = mainPage.openOperDay().navigatePage(CheckSearchPage.class, SEARCH_CHECK);
 		
 		/*
 		 *  Сгенерим только один чек для всех тестов на сопроводительные документы
 		 */
-		if ( pe == null) {
-			pe = (PurchaseEntity) cashEmulator.nextPurchase(generatePredefinedCheck());
+		if ( purchase == null) {
+			purchase = (PurchaseEntity) cashEmulator.nextPurchase(generatePredefinedCheck());
 		}
 		
- 		searchCheck.openFilter().setCheckBarcode(pe);
+ 		searchCheck.openFilter().setCheckBarcode(purchase);
  		searchCheck.doSearch();
  		checkContent = searchCheck.selectFirstCheck();
 	}	
@@ -172,16 +172,14 @@ public class AccompanyingDocumentsBasicTest extends AbstractTest{
 	private static ProductEntity getPurchasePosition(String markingOfTheGood){
 		ArrayList<ProductEntity> result = new ArrayList<ProductEntity>();
 		result = GoodsParser.parsePurchasesFromDB(
-				dbAdapter.queryForRowSet(DB_RETAIL_SET, String.format(SQL_GOODS, "'" + markingOfTheGood + "'")));
+				dbAdapter.queryForRowSet(DB_SET, String.format(SQL_GOODS, "'" + markingOfTheGood + "'")));
 
 		if (result.size() == 0) {
 			SoapRequestSender soapSender  = new SoapRequestSender();
-			soapSender.sendGoodsToStartTesting(Config.RETAIL_HOST, "deny_and_allow_print_goods.txt");
+			soapSender.sendGoodsToStartTesting(TARGET_HOST, "deny_and_allow_print_goods.txt");
 			result = GoodsParser.parsePurchasesFromDB(
-					dbAdapter.queryForRowSet(DB_RETAIL_SET, String.format(SQL_GOODS, "'" + markingOfTheGood + "'")));
+					dbAdapter.queryForRowSet(DB_SET, String.format(SQL_GOODS, "'" + markingOfTheGood + "'")));
 		}
 		return result.get(0);
 	}
-	
-	
 }
