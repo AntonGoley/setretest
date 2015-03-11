@@ -88,6 +88,7 @@ public class CashEmulator {
 	    } else {
 	    	db_operday = DB_CENTRUM_OPERDAY;
 	    }
+	    
 	    docSender = new DocsSender(serverIP, shopNumber, cashNumber);
 	    shiftNum = getCurrentShiftNum(cashNumber);
 	    checkNumber =  getNextCheckNum(cashNumber, shiftNum);
@@ -175,7 +176,9 @@ public class CashEmulator {
 		docSender.sendObject(type, document);
     }
 	
-	
+	/*
+	 * Открытие смены для фискального документа
+	 */
 	private void openShiftOnFirstDocument(){
 		if (shift.getShiftOpen() == null) {
 			shift.setShiftOpen(new Date(System.currentTimeMillis() - yesterday));
@@ -187,7 +190,7 @@ public class CashEmulator {
 	 */
 	public DocumentEntity nextWithdrawal(){
 
-		openShiftOnFirstDocument();
+		//openShiftOnFirstDocument();
 		 
 		WithdrawalEntity wdr = new WithdrawalEntity();
 		wdr.setCurrency("RUB");
@@ -212,7 +215,7 @@ public class CashEmulator {
 	 */
 	public DocumentEntity nextIntroduction(){
 		
-		openShiftOnFirstDocument();
+		//openShiftOnFirstDocument();
 		
 		IntroductionEntity intr = new IntroductionEntity();
 		intr.setCurrency("RUB");
@@ -317,7 +320,7 @@ public class CashEmulator {
 		 * нумерации чека (т.к purchase отменен)
 		 */
 		checkNumber--;
-		openShiftOnFirstDocument();
+		//openShiftOnFirstDocument();
 	    purchase.setCheckStatus(CheckStatus.Cancelled);
 	    return  purchase;
 	}
@@ -525,7 +528,6 @@ public class CashEmulator {
       SessionEntity sess = session != null ? session : nextSession();
       shift = new ShiftEntity();
       shift.setFiscalNum("Emulator." + shopNumber + "." + cashNumber);
-
       shift.setNumShift(Long.valueOf(++shiftNum));
       shift.setShiftCreate(new Date(System.currentTimeMillis() - yesterday));
       shift.setCashNum(new Long(cashNumber));
@@ -607,10 +609,6 @@ public class CashEmulator {
 	private  String getDate(String format, long date) {
 		SimpleDateFormat dateFormat = new SimpleDateFormat(format);
 		return dateFormat.format(date);
-	}
-
-	public ShiftEntity getShift(){
-		return this.shift;
 	}
 	
 	public void sendCashMessage(){

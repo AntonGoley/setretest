@@ -3,7 +3,6 @@ package ru.crystals.set10.test.documents.accompanying;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
 import ru.crystals.pos.catalog.ProductEntity;
 import ru.crystals.pos.check.CheckStatus;
 import ru.crystals.pos.check.InsertType;
@@ -20,7 +19,6 @@ import ru.crystals.set10.pages.operday.searchcheck.CheckSearchPage;
 import ru.crystals.set10.pages.operday.tablereports.ReportConfigPage;
 import ru.crystals.set10.test.AbstractTest;
 import ru.crystals.set10.utils.SoapRequestSender;
-import static ru.crystals.set10.utils.DbAdapter.DB_RETAIL_SET;
 import ru.crystals.set10.utils.GoodsParser;
 import static ru.crystals.set10.pages.operday.OperDayPage.SEARCH_CHECK;;
 

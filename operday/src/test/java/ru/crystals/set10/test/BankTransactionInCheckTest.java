@@ -29,6 +29,7 @@ import static ru.crystals.set10.pages.operday.OperDayPage.SEARCH_CHECK;
  * - время
  */
 
+@Test (groups={"centrum", "retail"})
 public class BankTransactionInCheckTest extends AbstractTest {
 	
 	MainPage mainPage;
