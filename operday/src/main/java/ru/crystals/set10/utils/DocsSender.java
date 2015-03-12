@@ -19,7 +19,7 @@ import ru.crystals.pos.check.EmptyDocumentEntity;
 import ru.crystals.pos.check.ReportShiftEntity;
 import ru.crystals.transport.TransferObject;
 
-public class DocsSender {
+public class  DocsSender {
 	
 	private static final Logger log = LoggerFactory.getLogger(DocsSender.class);
 	

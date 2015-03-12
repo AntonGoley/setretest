@@ -208,6 +208,7 @@ public class Config {
         log.info("Base port:   " + DEFAULT_PORT);
         log.info("DB username:   " + DB_USER);
         log.info("DB password:   " + DB_PASSWORD);
+        log.info("Cash number:   " + CASH_NUMBER);
         
         /*
          * Виртуальные весы
