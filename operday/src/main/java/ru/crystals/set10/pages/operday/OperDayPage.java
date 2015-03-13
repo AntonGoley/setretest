@@ -13,7 +13,7 @@ public class OperDayPage extends AbstractPage{
 	protected static final String ID_OPERDAYSWF = "OperDay";
 	public static final String TABLEREPORTS = "label:Табличные отчеты";
 	public static final String SEARCH_CHECK = "label:Поиск чеков";
-	public static final String SEARCH_CASHES = "label:Кассы";
+	public static final String CASHES = "label:Кассы";
 	public static final String SEARCH_TRANSACTIONS = "label:Поиск транзакций";
 	protected String LINK_SAVE_EXCEL;
 	

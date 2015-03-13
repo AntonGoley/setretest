@@ -3,11 +3,10 @@ package ru.crystals.set10.pages.operday.cashes;
 
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import ru.crystals.set10.pages.operday.OperDayPage;
 import static ru.crystals.set10.utils.FlexMediator.*;
 
 
-public class  KmPage extends OperDayPage{
+public class  KmPage extends CashesPage{
 	
 	public static final String LOCATOR_KM3 = "КМ-3";
 	public static final String LOCATOR_KM6 = "КМ-6";
@@ -21,7 +20,7 @@ public class  KmPage extends OperDayPage{
 	
 	
 	public KmPage(WebDriver driver) {
-		super(driver, false);
+		super(driver);
 		getWait().until(ExpectedConditions.visibilityOfElementLocated(By.id(ID_OPERDAYSWF)));
 	}
 	

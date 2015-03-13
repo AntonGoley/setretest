@@ -15,7 +15,7 @@ import ru.crystals.set10.pages.operday.cashes.CashesPage;
 import ru.crystals.set10.pages.operday.cashes.KmPage;
 import ru.crystals.set10.test.AbstractTest;
 import static ru.crystals.set10.pages.operday.cashes.KmPage.*;
-import static ru.crystals.set10.pages.operday.OperDayPage.SEARCH_CASHES;
+import static ru.crystals.set10.pages.operday.OperDayPage.CASHES;
 
 @Test(groups = {"retail", "centrum"})
 public class KM3Test extends AbstractTest{
@@ -44,8 +44,8 @@ public class KM3Test extends AbstractTest{
 		
 		km3 = new LoginPage(getDriver(), TARGET_HOST_URL).
 				openOperDay(Config.MANAGER, Config.MANAGER_PASSWORD)
-				.navigatePage(CashesPage.class, SEARCH_CASHES)
-				.openKmPage()
+				.navigatePage(CashesPage.class, CASHES)
+				.openTab(KmPage.class, CashesPage.LOCATOR_ACTS_TAB)
 				.switchToKm(LOCATOR_KM3);
 		
 		check = (PurchaseEntity) cashEmulator.nextPurchase();
