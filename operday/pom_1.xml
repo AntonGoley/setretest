@@ -70,52 +70,22 @@
 	                <suiteXmlFiles>
                         <suiteXmlFile>target/test-classes/${suiteXmlFile}</suiteXmlFile>
                     </suiteXmlFiles>
+                    <groups>${groups}</groups>
+                    <property>
+                        <name>listener</name>
+                        <value>org.uncommons.reportng.HTMLReporter</value>
+                    </property>
+                    <systemPropertyVariables>
+                    	<test_centrum_host>${centrumHost}</test_centrum_host>
+                    	<test_retail_host>${retailHost}</test_retail_host>
+                    	<test_shop_number>${shopNumber}</test_shop_number>
+                    	<test_dbUser>${dbUser}</test_dbUser>
+                    	<test_dbPassword>${dbPassword}</test_dbPassword>
+                    	<test_check_number>${checkNumber}</test_check_number>
+                    	<test_cash_number>${cashNumber}</test_cash_number>
+                    	<test_next_shift_number>${nextShift}</test_next_shift_number>
+               		 </systemPropertyVariables>
                </configuration>
-           </plugin>
-           <!-- Устанавливаем системные property -->
-           <plugin>
-           <groupId>org.codehaus.mojo</groupId>
-		    <artifactId>properties-maven-plugin</artifactId>
-		    <version>1.0-alpha-2</version>
-		    <executions>
-		        <execution>
-		        <goals>
-              		<goal>set-system-properties</goal>
-           		</goals>
-		            <configuration>
-		                <properties>
-		                    <property>
-		                        <name>testng_centrum_host</name>
-		                        <value>${centrumHost}</value>
-		                    </property>
-		                    <property>
-		                        <name>testng_retail_host</name>
-		                        <value>${retailHost}</value>
-		                    </property>
-		                    <property>
-		                        <name>testng_shop_number</name>
-		                        <value>${shopNumber}</value>
-		                    </property>
-		                    <property>
-		                        <name>testng_virtual_shop_number</name>
-		                        <value>${virtualShopNumber}</value>
-		                    </property>
-		                    <property>
-		                        <name>testng_dbUser</name>
-		                        <value>${dbUser}</value>
-		                    </property>
-		                    <property>
-		                        <name>testng_dbPassword</name>
-		                        <value>${dbPassword}</value>
-		                    </property>
-		                     <property>
-		                        <name>testng_cash_number</name>
-		                        <value>${cashNumber}</value>
-		                    </property>
-		                </properties>
-		            </configuration>
-		        </execution>
-		   		</executions>
            </plugin>
       	</plugins>
        </build>

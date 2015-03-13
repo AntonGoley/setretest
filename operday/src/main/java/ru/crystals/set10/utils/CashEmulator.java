@@ -42,8 +42,7 @@ public class CashEmulator {
 	private  int shopNumber = -1;
 	private  ShiftEntity shift;
 	private String db_operday;
-	
-	public  boolean nextShift = false;
+
 	public  long yesterday = Long.valueOf("0"); //(86400000 * 130); ("-11232000000")
 	
 	/*
@@ -552,9 +551,28 @@ public class CashEmulator {
       se.setUser(ue);
       return se;
     }
+    
+    public void changeCashUser(long tabnum){
+    	SessionEntity se = new SessionEntity();
+        se.setDateBegin(new Date(System.currentTimeMillis() - yesterday));
+    	
+        UserEntity ue = new UserEntity();
+        ue.setFirstName("Fname");
+        ue.setLastName(String.format("LName_tab%s", String.valueOf(tabnum)));
+        ue.setMiddleName("MName");
+
+        ue.setTabNum(String.valueOf(tabnum));
+        ue.setSessions(new ArrayList<SessionEntity>());
+        ue.getSessions().add(se);
+        se.setUser(ue);
+        //закрываем сессию предыдущего юзера
+        shift.getSessionStart().setDateEnd(new Date(System.currentTimeMillis() - yesterday));
+        shift.setSessionStart(se);
+        sendCashMessage();
+    }
+    
 	
 	public void useNextShift(){
-		//nextShift = true;
 		checkNumber = 1;
 		nextShift(null);
 	}
@@ -613,6 +631,7 @@ public class CashEmulator {
 	
 	public void sendCashMessage(){
 		CashOnlineMessage message = new CashOnlineMessage();
+		message.setUser(shift.getSessionStart().getUser());
 		docSender.sendObject(DataTypesEnum.CASHONLINE_TYPE.code, message);
 	}
 	

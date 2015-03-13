@@ -6,8 +6,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Properties;
+
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.LoggerFactory;
+import org.testng.TestNG;
 
 
 public class Config {
@@ -125,15 +127,15 @@ public class Config {
         System.setProperty("webdriver.chrome.logfile", "chromedriver.log");
         
         // Берем параметры из коммандной строки (передаваемые при запуске проекта maven)
-        CENTRUM_HOST = System.getProperty("testng_centrum_host");
-        RETAIL_HOST = System.getProperty("testng_retail_host");
-        SHOP_NUMBER = System.getProperty("testng_shop_number");
-        VIRTUAL_SHOP_NUMBER = System.getProperty("testng_virtual_shop_number");
-    	DB_USER = System.getProperty("testng_dbUser");
-    	DB_PASSWORD = System.getProperty("testng_dbPassword");
-    	CASH_NUMBER = System.getProperty("testng_cash_number");
-    	CHECK_COUNT = System.getProperty("testng_check_number");
-    	NEXT_SHIFT = System.getProperty("testng_next_shift_number");
+        CENTRUM_HOST = System.getProperty("test_centrum_host");
+        RETAIL_HOST = System.getProperty("test_retail_host");
+        SHOP_NUMBER = System.getProperty("test_shop_number");
+        VIRTUAL_SHOP_NUMBER = System.getProperty("test_virtual_shop_number");
+    	DB_USER = System.getProperty("test_dbUser");
+    	DB_PASSWORD = System.getProperty("test_dbPassword");
+    	CASH_NUMBER = System.getProperty("test_cash_number");
+    	CHECK_COUNT = System.getProperty("test_check_number");
+    	NEXT_SHIFT = System.getProperty("test_next_shift_number");
     	
         // если какие-то параметры не были переданы в коммандной строке, берем значения из проперти файла
     	CENTRUM_HOST = StringUtils.defaultString(CENTRUM_HOST, props.getProperty("centrum.host.ip"));

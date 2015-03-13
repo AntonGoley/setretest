@@ -34,7 +34,9 @@ public class CheckGeneratorFunctionalTest {
 		cashEmulator = CashEmulator.getCashEmulator(Config.RETAIL_HOST, Integer.valueOf(Config.SHOP_NUMBER), Integer.valueOf(String.valueOf(3)));
 		//cashEmulator = CashEmulator.getCashEmulator(Config.CENTRUM_HOST, Integer.valueOf(Config.VIRTUAL_SHOP_NUMBER), Integer.valueOf(Config.CASH_NUMBER ));
 		//cashEmulatorVirtual = CashEmulator.getCashEmulator(Config.CENTRUM_HOST, Integer.valueOf(Config.VIRTUAL_SHOP_NUMBER), Integer.valueOf(Config.CASH_NUMBER ));
-	//	cashEmulator.nextIntroduction();
+		cashEmulator.nextIntroduction();
+		
+		cashEmulator.changeCashUser(2);
 		//cashEmulator2104.nextIntroduction();
 		//cashEmulator.sendCashMessage();
 	}
@@ -44,6 +46,7 @@ public class CheckGeneratorFunctionalTest {
 		log.info("Выполнить изъятие..");
 		cashEmulator.nextWithdrawal();
 		//cashEmulatorVirtual.nextWithdrawal();
+		cashEmulator.changeCashUser(3);
 		log.info("Снять z отчет..");
 		cashEmulator.nextZReport();
 	//	cashEmulatorVirtual.nextZReport();
