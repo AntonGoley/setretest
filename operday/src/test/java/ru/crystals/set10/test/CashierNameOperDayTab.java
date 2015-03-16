@@ -29,7 +29,7 @@ public class CashierNameOperDayTab extends AbstractTest{
 	@BeforeClass
 	public void setup(){
 		//отправляем чек, тем самым открываем смену
-		//cashEmulator.nextPurchase();
+		cashEmulator.nextPurchase();
 		mainPage = new LoginPage(getDriver(), TARGET_HOST_URL).doLogin(Config.MANAGER, Config.MANAGER_PASSWORD);
 		operDayTab = mainPage.openOperDay().navigatePage(CashesPage.class, CASHES).navigatePage(CashOperDayTabPage.class,  LOCATOR_OPERDAY_TAB);
 		cashierName = operDayTab.getCashierNameForLastShift(cashEmulator.getCashNumber());
