@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+
+
+<suite name="Тесты не сгруппированые в сюиты" preserve-order="true" configfailurepolicy="continue">
+<listeners>
+    <listener class-name="org.uncommons.reportng.HTMLReporter" />
+ </listeners>
+ 
+<!-- СМЕНЫ ОПЕРДНЯ --> 	
+  	<test name="Информация о кассире на вкладке Операционный день" >
+	  	<classes>
+	  		<class name="ru.crystals.set10.test.CashierNameOperDayTab"/>
+		</classes>	 
+  	</test>
+  	
+</suite> 

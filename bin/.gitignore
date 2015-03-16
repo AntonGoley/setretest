@@ -1,0 +1,10 @@
+.git
+.settings
+.metadata
+target
+test-output
+.project
+.classpath
+*.log
+driver
+ERP integraton-reports
