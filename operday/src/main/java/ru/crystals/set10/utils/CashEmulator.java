@@ -239,8 +239,8 @@ public class CashEmulator {
 	 */
 	public DocumentEntity nextZReport(){
 		
-		//Date dateClose = new Date(System.currentTimeMillis() - yesterday);
-		Date dateClose = new Date(System.currentTimeMillis());
+		Date dateClose = new Date(System.currentTimeMillis() - yesterday);
+		//Date dateClose = new Date(System.currentTimeMillis());
 		
 		openShiftOnFirstDocument();
 		
@@ -552,14 +552,19 @@ public class CashEmulator {
       return se;
     }
     
-    public void changeCashUser(long tabnum){
+    public String  changeCashUser(long tabnum){
+    	String firstName = "Fname";
+    	String lastName = String.format("LName_tab%s", String.valueOf(tabnum));
+    	String middleName = "MName";
+    	
+    	
     	SessionEntity se = new SessionEntity();
         se.setDateBegin(new Date(System.currentTimeMillis() - yesterday));
     	
         UserEntity ue = new UserEntity();
-        ue.setFirstName("Fname");
-        ue.setLastName(String.format("LName_tab%s", String.valueOf(tabnum)));
-        ue.setMiddleName("MName");
+        ue.setFirstName(firstName);
+        ue.setLastName(lastName);
+        ue.setMiddleName(middleName);
 
         ue.setTabNum(String.valueOf(tabnum));
         ue.setSessions(new ArrayList<SessionEntity>());
@@ -569,6 +574,10 @@ public class CashEmulator {
         shift.getSessionStart().setDateEnd(new Date(System.currentTimeMillis() - yesterday));
         shift.setSessionStart(se);
         sendCashMessage();
+        /*
+         * TODO: в каком формате возвращать кассира?
+         */
+        return lastName;
     }
     
 	
@@ -633,6 +642,10 @@ public class CashEmulator {
 		CashOnlineMessage message = new CashOnlineMessage();
 		message.setUser(shift.getSessionStart().getUser());
 		docSender.sendObject(DataTypesEnum.CASHONLINE_TYPE.code, message);
+	}
+	
+	public int getCashNumber(){
+		return cashNumber;
 	}
 	
 }

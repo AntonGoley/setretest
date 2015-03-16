@@ -6,8 +6,10 @@ import java.io.Serializable;
 import java.net.MalformedURLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import ru.crystals.commons.amf.io.Utils;
 import ru.crystals.httpclient.HttpClient;
 import ru.crystals.httpclient.HttpFileConnection;
@@ -17,6 +19,7 @@ import ru.crystals.pos.check.CashOnlineMessage;
 import ru.crystals.pos.check.DocumentEntity;
 import ru.crystals.pos.check.EmptyDocumentEntity;
 import ru.crystals.pos.check.ReportShiftEntity;
+//import ru.crystals.set10.config.Config;
 import ru.crystals.transport.TransferObject;
 
 public class  DocsSender {
@@ -49,7 +52,7 @@ public class  DocsSender {
 //		} else {
 //			db = DbAdapter.DB_CENTRUM_OPERDAY;
 //		}
-		
+//		
 //			od_purchase_id = new DbAdapter().queryForInt(db,
 //					"select max(id) from od_inbound_files") + 7;
 	
@@ -88,7 +91,7 @@ public class  DocsSender {
                 if (connect.getResponseMessage().equals("Created")){
                 	log.info("Имя документа: " + docName);
                 	cashTransportManager.registerDocument(docName , shopNumber, cashNumber, 1);
-                	
+//                	
 //                	new DbAdapter().updateDb(db, 
 //                			String.format("INSERT INTO od_inbound_files( id, cash_number, shop_number, documents_count, file_path, status) " +
 //                				"VALUES (%s, %s, %s, 1, '%s', 0)", od_purchase_id++, cashNumber, shopNumber, docName));

@@ -9,7 +9,7 @@ import java.util.Properties;
 
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.LoggerFactory;
-import org.testng.TestNG;
+
 
 
 public class Config {
@@ -26,10 +26,17 @@ public class Config {
     public static  String DB_USER;
     public static  String DB_PASSWORD;
     public static  String CHECK_COUNT;
-    public static String CASH_NUMBER;
     public static String NEXT_SHIFT;
     public static String VIRTUAL_WEIGHT_PATH;
     public static String WEIGHT_BARCODE_PREFIX;
+    
+    
+    /*
+     * Кассы
+     */
+    public static String CASH_NUMBER;
+    public static String CASH_NUMBER_SEARCH;
+    public static String CASH_NUMBER_OPERDAY;
     
     /*
      * Настройки юридического лица для магазина
@@ -202,6 +209,12 @@ public class Config {
          */
         BANK_NAME_1 = props.getProperty("externalsystem.bank.name1"); 
         BANK_NAME_2 = props.getProperty("externalsystem.bank.name2");
+        
+        /*
+         * Номера основных касс
+         */
+        CASH_NUMBER_SEARCH = String.valueOf(Integer.valueOf(CASH_NUMBER) + 1);
+        CASH_NUMBER_OPERDAY = String.valueOf(Integer.valueOf(CASH_NUMBER) + 2);
         
         log.info("Centrum url:   " + CENTRUM_URL);
         log.info("Retail url:   " + RETAIL_URL);

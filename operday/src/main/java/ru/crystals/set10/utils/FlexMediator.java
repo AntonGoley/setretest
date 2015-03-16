@@ -30,6 +30,9 @@ public class FlexMediator {
 		ecxecute(driver, String.format("document.getElementById('%s').doFlexCheckBox('%s', '%s')", swfSrc, flexId, checkBoxValue));	
 	}
 	
+	/*
+	 * Вернуть свойство элемента, который представлен на странице и visible
+	 */
 	public static String getElementProperty(WebDriver driver, String swfSrc, String flexId, String propertyName) {
 		waitForElement(driver, swfSrc, flexId);
 		return ecxecuteAndReturnString(driver, String.format("return document.getElementById('%s').getFlexProperty('%s', '%s')", swfSrc, flexId, propertyName));	
@@ -57,6 +60,12 @@ public class FlexMediator {
 		waitForElement(driver, swfSrc, flexId);
 		ecxecute(driver, String.format("document.getElementById('%s').doFlexProperty('%s', '%s', '%s')", swfSrc, flexId, args[0], args[1]));	
 	}
+	
+	public static void scrollTableDown(WebDriver driver, String swfSrc, String flexId){
+		String maxVerticalScrollPosition = getElementProperty(driver, swfSrc, flexId, "maxVerticalScrollPosition"); 
+		doFlexProperty(driver, swfSrc, flexId, new String[]{"verticalScrollPosition", maxVerticalScrollPosition});
+	}
+	
 	
 	public static void  waitForElement(WebDriver driver, String swfSrc, String flexId) {
 		

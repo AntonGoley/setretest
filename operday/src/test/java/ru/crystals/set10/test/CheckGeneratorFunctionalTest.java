@@ -20,7 +20,7 @@ import ru.crystals.set10.utils.DisinsectorTools;
 
 public class CheckGeneratorFunctionalTest {
 	
-	protected static final Logger log = Logger.getLogger(CheckGeneratorFunctionalTest.class);
+
 	CashEmulator cashEmulator;
 	CashEmulator cashEmulatorVirtual;
 	HashMap<Long, Long>  returnPositions = new HashMap<Long, Long>(); 
@@ -31,23 +31,23 @@ public class CheckGeneratorFunctionalTest {
 	
 	@BeforeClass
 	public void setupCash(){
-		cashEmulator = CashEmulator.getCashEmulator(Config.RETAIL_HOST, Integer.valueOf(Config.SHOP_NUMBER), Integer.valueOf(String.valueOf(3)));
+		cashEmulator = CashEmulator.getCashEmulator(Config.RETAIL_HOST, Integer.valueOf(Config.SHOP_NUMBER), Integer.valueOf(String.valueOf(5)));
 		//cashEmulator = CashEmulator.getCashEmulator(Config.CENTRUM_HOST, Integer.valueOf(Config.VIRTUAL_SHOP_NUMBER), Integer.valueOf(Config.CASH_NUMBER ));
 		//cashEmulatorVirtual = CashEmulator.getCashEmulator(Config.CENTRUM_HOST, Integer.valueOf(Config.VIRTUAL_SHOP_NUMBER), Integer.valueOf(Config.CASH_NUMBER ));
 		cashEmulator.nextIntroduction();
 		
-		cashEmulator.changeCashUser(2);
+		//cashEmulator.changeCashUser(2);
 		//cashEmulator2104.nextIntroduction();
 		//cashEmulator.sendCashMessage();
 	}
 	
 	@AfterClass
 	public void sendZreport(){
-		log.info("Выполнить изъятие..");
+		
 		cashEmulator.nextWithdrawal();
 		//cashEmulatorVirtual.nextWithdrawal();
 		cashEmulator.changeCashUser(3);
-		log.info("Снять z отчет..");
+		
 		cashEmulator.nextZReport();
 	//	cashEmulatorVirtual.nextZReport();
 	}
@@ -57,7 +57,7 @@ public class CheckGeneratorFunctionalTest {
 		for(int i=0; i<1; i++) {
 	//		cashEmulator.nextCancelledPurchase(getCashPayment()); 
 			
-			//p1 = (PurchaseEntity) cashEmulator.nextPurchase(getCashPayment());
+			p1 = (PurchaseEntity) cashEmulator.nextPurchase(getCashPayment());
 			//p2 = (PurchaseEntity) cashEmulator2104.nextPurchase(getCashPayment());
 			//cashEmulator.nextRefundAll(p1, false);
 
@@ -103,7 +103,7 @@ public class CheckGeneratorFunctionalTest {
 	
 	
 	private PurchaseEntity getBankCardPayment(Class<? extends BankCardPaymentEntity> cardType){
-		log.info("Чек с оплатой банковской/детской картой..");
+		//log.info("Чек с оплатой банковской/детской картой..");
 		PurchaseEntity p;
 		p = payments.getPurchaseWithoutPayments();
 		
@@ -126,7 +126,7 @@ public class CheckGeneratorFunctionalTest {
 	}
 	
 	private PurchaseEntity getBonusCardPayment(){
-		log.info("Чек с оплатой бонусной картой..");
+		//log.info("Чек с оплатой бонусной картой..");
 		PurchaseEntity p;
 		p = payments.getPurchaseWithoutPayments();
 
@@ -138,7 +138,7 @@ public class CheckGeneratorFunctionalTest {
 	}
 	
 	private PurchaseEntity getGiftCardPayment(){
-		log.info("Чек с оплатой подарочной картой..");
+		//log.info("Чек с оплатой подарочной картой..");
 		PurchaseEntity p;
 		p = payments.getPurchaseWithoutPayments();
 		
@@ -149,7 +149,7 @@ public class CheckGeneratorFunctionalTest {
 	}
 	
 	private PurchaseEntity getCashPayment(){
-		log.info("Чек с оплатой наличными..");
+		//log.info("Чек с оплатой наличными..");
 		PurchaseEntity p;
 		p = payments.getPurchaseWithoutPayments();
 		p = payments.setCashPayment(p, p.getCheckSumEnd());
@@ -157,7 +157,7 @@ public class CheckGeneratorFunctionalTest {
 	}
 	
 	private PurchaseEntity getDiscountCardPayment(){
-		log.info("Чек с оплатой дисконтной картой..");
+		//log.info("Чек с оплатой дисконтной картой..");
 		String discountCardNumber = String.valueOf(System.currentTimeMillis());
 		PurchaseEntity p;
 		p = payments.getPurchaseWithoutPayments();
@@ -171,7 +171,7 @@ public class CheckGeneratorFunctionalTest {
 	public void testSendPartialReturnCheck(){
 		cashEmulator = CashEmulator.getCashEmulator(Config.RETAIL_HOST, Integer.valueOf(Config.SHOP_NUMBER), Integer.valueOf(Config.CASH_NUMBER));
 		
-		log.info("Send checks to " + Config.SHOP_NUMBER);
+		//log.info("Send checks to " + Config.SHOP_NUMBER);
 
 		PurchaseEntity pe = (PurchaseEntity) cashEmulator.nextPurchase();
 		
