@@ -10,6 +10,8 @@ import java.util.Properties;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.LoggerFactory;
 
+import ru.crystals.set10.utils.DisinsectorTools;
+
 
 
 public class Config {
@@ -137,7 +139,7 @@ public class Config {
         CENTRUM_HOST = System.getProperty("test_centrum_host");
         RETAIL_HOST = System.getProperty("test_retail_host");
         SHOP_NUMBER = System.getProperty("test_shop_number");
-        VIRTUAL_SHOP_NUMBER = System.getProperty("test_virtual_shop_number");
+        VIRTUAL_SHOP_NUMBER = System.getProperty("test_virtualshop_number");
     	DB_USER = System.getProperty("test_dbUser");
     	DB_PASSWORD = System.getProperty("test_dbPassword");
     	CASH_NUMBER = System.getProperty("test_cash_number");
@@ -195,7 +197,6 @@ public class Config {
         /*
          * Виртуальный Магазин
          */
-        VIRTUAL_SHOP_NUMBER = props.getProperty("virtual.shop.number");
         VIRTUAL_SHOP_NAME = "VirualMagazin " + VIRTUAL_SHOP_NUMBER;
         VIRTUAL_SHOP_ADRESS = props.getProperty("virtual.shop.adress");
         VIRTUAL_SHOP_PHONE = props.getProperty("virtual.shop.phone");
@@ -226,6 +227,8 @@ public class Config {
         log.info("DB username:   " + DB_USER);
         log.info("DB password:   " + DB_PASSWORD);
         log.info("Cash number:   " + CASH_NUMBER);
+        
+        DisinsectorTools.delay(10000);
         
         /*
          * Виртуальные весы

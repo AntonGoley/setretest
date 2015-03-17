@@ -79,7 +79,7 @@
                     	<test_centrum_host>${centrumHost}</test_centrum_host>
                     	<test_retail_host>${retailHost}</test_retail_host>
                     	<test_shop_number>${shopNumber}</test_shop_number>
-                    	<test_virtual_shop_number>${virtualShopNumber}</test_virtual_shop_number>
+                    	<test_virtualshop_number>${virtualShopNumber}</test_virtualshop_number>
                     	<test_dbUser>${dbUser}</test_dbUser>
                     	<test_dbPassword>${dbPassword}</test_dbPassword>
                     	<test_check_number>${checkNumber}</test_check_number>
