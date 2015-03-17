@@ -20,7 +20,7 @@ import static ru.crystals.set10.pages.sales.preferences.goodstypes.weight.Weight
 import static ru.crystals.set10.pages.sales.preferences.SalesPreferencesPage.TAB_TYPES_GOODS_PAYMENTS;
 import static ru.crystals.set10.config.Config.WEIGHT_BARCODE_PREFIX;
 
-@Test(groups = "config")
+
 public class AddAndConfigureWeightTest extends AbstractTest{
 	
 	MainPage mainPage;

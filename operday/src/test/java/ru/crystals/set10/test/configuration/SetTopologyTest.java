@@ -24,7 +24,7 @@ import ru.crystals.set10.utils.DisinsectorTools;
 import ru.crystals.set10.utils.SoapRequestSender;
 
 
-@Test(groups = "config")
+
 public class SetTopologyTest extends AbstractTest{
 	
 	MainPage mainPage;
