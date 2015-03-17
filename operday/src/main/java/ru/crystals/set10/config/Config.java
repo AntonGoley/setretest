@@ -218,6 +218,8 @@ public class Config {
         
         log.info("Centrum url:   " + CENTRUM_URL);
         log.info("Retail url:   " + RETAIL_URL);
+        log.info("Shop number :   " + SHOP_NUMBER);
+        log.info("Virtual shop number :   " + VIRTUAL_SHOP_NUMBER);
         log.info("Manager login:   " + MANAGER);
         log.info("Manager password:   " + MANAGER_PASSWORD); 
         log.info("Base port:   " + DEFAULT_PORT);
