@@ -24,6 +24,7 @@ import ru.crystals.set10.utils.DisinsectorTools;
 import ru.crystals.set10.utils.SoapRequestSender;
 
 
+@Test(groups = "config")
 public class SetTopologyTest extends AbstractTest{
 	
 	MainPage mainPage;
@@ -125,7 +126,7 @@ public class SetTopologyTest extends AbstractTest{
 //	@Test (	
 //			description = "Добавить права пользователю manager на центруме"
 //			)
-	public void setUpPrevilegesCentrum(){
+	private void setUpPrevilegesCentrum(){
 		log.info("Добавить права пользователю manager на центруме");
 		dbAdapter.updateDb(DbAdapter.DB_CENTRUM_SET , String.format("update users_server_user_users_server_user_role " + 
 				"set roles_id = '10' " +
@@ -137,7 +138,7 @@ public class SetTopologyTest extends AbstractTest{
 //	@Test (	
 //			description = "Добавить все роли пользователю manager на ретейле"
 //			 )
-	public void setUpPrevilegesRetail(){
+	private void setUpPrevilegesRetail(){
 		//Добавить все роли на ритейле
 		log.info("Добавить все роли пользователю manager на ретейле");
 		dbAdapter.updateDb(DbAdapter.DB_RETAIL_SET, "delete from users_server_user_users_server_user_role");
