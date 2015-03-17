@@ -24,6 +24,8 @@ public class ConfigureEnvTest extends AbstractTest{
 			requester.call("topologyEditService", "setCentrumUrl", new Object[]{Config.CENTRUM_HOST}, null);
 			// topologySearchService
 			requester.call("topologySearchService", "isConnectionToCentrum", new Object[]{}, null);
+			
+			requester.call("topologySearchService", "eventNewShop", new Object[]{}, null);
 		} catch (ClientStatusException e) {
 			e.printStackTrace();
 		}
