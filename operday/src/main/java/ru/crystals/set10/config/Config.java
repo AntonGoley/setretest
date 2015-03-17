@@ -148,7 +148,7 @@ public class Config {
     	CENTRUM_HOST = StringUtils.defaultString(CENTRUM_HOST, props.getProperty("centrum.host.ip"));
     	RETAIL_HOST = StringUtils.defaultString(RETAIL_HOST, props.getProperty("retail.host.ip"));
     	SHOP_NUMBER = StringUtils.defaultString(SHOP_NUMBER, props.getProperty("shop.number"));
-    	VIRTUAL_SHOP_NUMBER = StringUtils.defaultString(SHOP_NUMBER, props.getProperty("virtual.shop.number"));
+    	VIRTUAL_SHOP_NUMBER = StringUtils.defaultString(VIRTUAL_SHOP_NUMBER, props.getProperty("virtual.shop.number"));
     	DB_USER = StringUtils.defaultString(DB_USER, props.getProperty("db_user"));
     	DB_PASSWORD = StringUtils.defaultString(DB_PASSWORD, props.getProperty("db_password"));
     	CASH_NUMBER = StringUtils.defaultString(CASH_NUMBER, props.getProperty("cash.number"));

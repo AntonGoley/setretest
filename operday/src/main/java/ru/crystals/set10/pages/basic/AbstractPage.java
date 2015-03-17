@@ -20,6 +20,7 @@ public abstract class  AbstractPage {
 	public static final long DRIVER_WAIT_TIMEOUT = 15; 
 	private WebDriver driver;
 	private WebDriverWait wait;
+	protected static final String SPINNER = "id:spinner";
 
 	public AbstractPage(WebDriver driver) {
 		this.driver = driver;

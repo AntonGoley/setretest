@@ -47,7 +47,7 @@ public class SearchFormPopUp extends OperDayPage {
 	//Результат поиска внизу страницы
 	static final String SEARCH_RESULT = "searchResultLabel";
 	
-	static final String SPINNER = "id:spinner";
+	//static final String SPINNER = "id:spinner";
 	
 	/*
 	 * КАТЕГОРИИ ПОИСКА

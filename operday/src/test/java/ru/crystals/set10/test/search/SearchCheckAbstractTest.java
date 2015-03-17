@@ -89,7 +89,7 @@ public class SearchCheckAbstractTest extends AbstractTest{
 		log.info("Размер сохраненного файла: " + reportFileNamePattern + " равен " +  fileSize);
 		DisinsectorTools.removeOldReport(chromeDownloadPath, reportFileNamePattern);
 		
-		Assert.assertTrue(fileSize > 1000, "Файл отчета " + reportFileNamePattern + " сохранился некорректно");
+		Assert.assertTrue(fileSize > 500, "Файл отчета " + reportFileNamePattern + " сохранился некорректно");
 		
 	}
 }

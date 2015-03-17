@@ -8,7 +8,7 @@ import static ru.crystals.set10.utils.FlexMediator.*;
 
 public class EquipmentPage extends SalesPage{
 	
-	static final String BUTTON_NEW_EQUIPMENT = "label:Добавить оборудование";
+	static final String BUTTON_NEW_EQUIPMENT = "id:addButton;label:Добавить оборудование";
 	static final String LOCATOR_EQUIPMENT_ITEM = "className:DeviceRowRenderer/id:subContainer/className:UITextField;text:%s";
 	static final String LOCATOR_TABLE = "id:templateTable/className:ListBaseContentHolder|1";
 	
