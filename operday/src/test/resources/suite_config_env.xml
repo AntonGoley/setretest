@@ -2,6 +2,9 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="Configuration" preserve-order="true" configfailurepolicy="continue" >
 	 <test name="Configuration" >
+	 <listeners>
+    	<listener class-name="org.uncommons.reportng.HTMLReporter" />
+ 		</listeners>
 	<classes>
 			<class name="ru.crystals.set10.test.configuration.SetTopologyTest" />
 			<class name="ru.crystals.set10.test.configuration.ConfigureEnvTest" />

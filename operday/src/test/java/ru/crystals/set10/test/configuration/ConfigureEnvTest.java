@@ -6,7 +6,7 @@ import ru.crystals.set10.config.Config;
 import ru.crystals.set10.test.AbstractTest;
 import flex.messaging.io.amf.client.exceptions.ClientStatusException;
 
-@Test(groups = "config")
+
 public class ConfigureEnvTest extends AbstractTest{
 	
 	protected static final Logger log = Logger.getLogger(ConfigureEnvTest.class);
