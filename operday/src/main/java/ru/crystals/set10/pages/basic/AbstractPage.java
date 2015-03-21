@@ -17,7 +17,7 @@ import ru.crystals.set10.utils.DisinsectorTools;
 public abstract class  AbstractPage {
 	
 	protected static final Logger log = Logger.getLogger(AbstractPage.class);
-	public static final long DRIVER_WAIT_TIMEOUT = 15; 
+	public static final long DRIVER_WAIT_TIMEOUT = 25; 
 	private WebDriver driver;
 	private WebDriverWait wait;
 	protected static final String SPINNER = "id:spinner";

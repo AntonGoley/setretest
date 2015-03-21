@@ -82,7 +82,7 @@ public class FlexMediator {
 		DisinsectorTools.delay(100);
 		int timeout = 0;
 		String result = "false";
-		while (timeout < 15000 ){
+		while (timeout < 25000 ){
 			result = (String) ecxecuteAndReturnString(driver, String.format("return document.getElementById('%s').findElement('%s')", swfSrc, flexId));
 			if (result.equals("true")) {
 				return true;
