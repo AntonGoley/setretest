@@ -1,12 +1,8 @@
 package ru.crystals.set10.pages.operday.searchcheck;
 
-import static ru.crystals.set10.utils.FlexMediator.clickElement;
-import static ru.crystals.set10.utils.FlexMediator.getElementProperty;
-import static ru.crystals.set10.utils.FlexMediator.getSelectedElement;
-import static ru.crystals.set10.utils.FlexMediator.selectElement;
-import static ru.crystals.set10.utils.FlexMediator.typeText;
-import static ru.crystals.set10.utils.FlexMediator.waitForElementVisible;
-import static ru.crystals.set10.utils.FlexMediator.waitForElementPresent;
+
+import static ru.crystals.set10.utils.FlexMediator.*;
+import java.util.HashMap;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -25,27 +21,29 @@ public class SearchFormPopUp extends OperDayPage {
 	 */
 	
 	// элементы окна множественного выбора
-	private static final String FILTER_MULTI_TEXT_OPEN_INPUT = "toogleButton";
-	private static final String FILTER_MULTI_TEXT_INPUT = "valuesTextInput";
-	private static final String FILTER_MULTI_TEXT_APPLY_BUTTON = "applyButton";
+	private static final String FILTER_MULTI_TEXT_OPEN_INPUT = "id:toogleButton";
+	private static final String FILTER_MULTI_TEXT_INPUT = "id:valuesTextInput";
+	private static final String FILTER_MULTI_TEXT_APPLY_BUTTON = "id:applyButton";
+	private static final String FILTER_ADD_CONDITION = "label:Добавить условие";
+	private static final String FILTER_DELETE_ALL = "label:Удалить все";
 	
 	// элементы окна текстового поля
-	private static final String FILTER_TEXT_FIELD = "textInput";
+	private static final String FILTER_TEXT_FIELD = "id:textInput";
 	
 	//Выбор категории поиска
-	static final String FILTER_CATEGORY = "categorySelector";
+	static final String FILTER_CATEGORY = "id:categorySelector";
 	
 	//Выпадающие списки
-	static final String FILTER_SELECT_FIELD = "comboBox";
-	public static final String FILTER_SELECT_COMPARISION = "comparisonTypeComboBox";
+	static final String FILTER_SELECT_FIELD = "id:comboBox";
+	public static final String FILTER_SELECT_COMPARISION = "id:comparisonTypeComboBox";
 	
 	//Открытие фильтра
-	static final String FILTER_OPEN = "expandButton";
+	static final String FILTER_OPEN = "id:expandButton";
 	
-	static final String FILTER_ADD_CATEGORY = "addFilterButton";
+	static final String FILTER_ADD_CATEGORY = "id:addFilterButton";
 	
 	//Результат поиска внизу страницы
-	static final String SEARCH_RESULT = "searchResultLabel";
+	static final String SEARCH_RESULT = "id:searchResultLabel";
 	
 	//static final String SPINNER = "id:spinner";
 	
@@ -97,6 +95,43 @@ public class SearchFormPopUp extends OperDayPage {
 	public static final String FILTER_CATEGORY_SELECT_SMALLER = "<";
 	public static final String FILTER_CATEGORY_SELECT_GREATER = ">";
 	
+	private static HashMap<String, String> filtersClassNames = new HashMap<String, String>();
+	
+	
+	static {
+		filtersClassNames.put(FILTER_CATEGORY_CHECK_BAR_CODE, "className:CheckBarcodeFilterModule/");
+		filtersClassNames.put(FILTER_CATEGORY_CASH_NUMBER, "className:CashDeckNumbersFilterModule/");
+		filtersClassNames.put(FILTER_CATEGORY_CHECK_TYPE, "className:CheckTypeFilterModule/");
+		filtersClassNames.put(FILTER_CATEGORY_SHIFT_NUMBER, "className:ShiftNumbersFilterModule/");
+		filtersClassNames.put(FILTER_CATEGORY_SHOP_NUMBER, "className:ShopNumbersFilterModule/");
+		filtersClassNames.put(FILTER_CATEGORY_CHECK_NUMBER, "className:CheckNumbersFilterModule/");
+		
+		filtersClassNames.put(FILTER_CATEGORY_GOOD_BAR_CODE, "className:GoodsBarcodesFilterModule/");
+		filtersClassNames.put(FILTER_CATEGORY_GOOD_CODE, "className:GoodsCodesFilterModule/");
+		
+		filtersClassNames.put(FILTER_CATEGORY_DISCOUNT_CARD_NUMBER, "className:DiscountCardNumbersFilterModule/");
+		
+		filtersClassNames.put(FILTER_CATEGORY_AUTHORIZATION_CODE, "className:AuthorizationCodeFilterModule/");
+		filtersClassNames.put(FILTER_CATEGORY_TERMINAL_NUMBER, "className:TerminalNumberFilterModule/");
+		filtersClassNames.put(FILTER_CATEGORY_SERVER_RESPONSE_CODE, "className:ProcessingCenterResultCodeFilterModule/");
+		filtersClassNames.put(FILTER_CATEGORY_BANK_RESPONSE_CODE, "className:ServerResponseCodeFilterModule/");
+		
+		filtersClassNames.put(FILTER_CATEGORY_BANK_CARD_NUMBER, "className:BankCardFilterModule/");
+		filtersClassNames.put(FILTER_CATEGORY_BONUS_CARD_NUMBER, "className:BonusCardFilterModule/");
+		filtersClassNames.put(FILTER_CATEGORY_GIFT_CARD_NUMBER, "className:GiftCardFilterModule/");
+		filtersClassNames.put(FILTER_CATEGORY_CHILD_CARD_NUMBER, "className:ChildCardFilterModule/");
+		
+		
+		filtersClassNames.put(FILTER_CATEGORY_PAY_TYPE, "className:PaymentTypeFilterModule/");
+
+		filtersClassNames.put(FILTER_CATEGORY_SUM_PAYMENT, "className:PaymentSumFilterModule/");
+		filtersClassNames.put(FILTER_CATEGORY_SUM_CHECK, "className:CheckSumFilterModule/");
+		filtersClassNames.put(FILTER_CATEGORY_SUM_POSITION, "className:PositionSumFilterModule/");
+		filtersClassNames.put(FILTER_CATEGORY_SUM_DISCOUNT_CHECK, "className:CheckDiscountSumFilterModule/");
+		filtersClassNames.put(FILTER_CATEGORY_SUM_DISCOUNT_POSITION, "className:PositionDiscountSumFilterModule/");
+	}
+	
+	
 	public SearchFormPopUp(WebDriver driver) {
 		super(driver, false);
 		getWait().until(ExpectedConditions.visibilityOfElementLocated(By.id(ID_OPERDAYSWF)));
@@ -106,7 +141,16 @@ public class SearchFormPopUp extends OperDayPage {
 		clickElement(getDriver(), ID_OPERDAYSWF,  FILTER_OPEN);
 		return new SearchFormPopUp(getDriver());
 	}
-
+	
+	public SearchFormPopUp addFilter(){
+		clickElement(getDriver(), ID_OPERDAYSWF,  FILTER_ADD_CONDITION);
+		return new SearchFormPopUp(getDriver());
+	}
+	
+	public SearchFormPopUp deleteAllFilters(){
+		clickElement(getDriver(), ID_OPERDAYSWF,  FILTER_DELETE_ALL);
+		return new SearchFormPopUp(getDriver());
+	}
 	
 	public SearchFormPopUp setCheckBarcode(PurchaseEntity purchase){
 		return setFilterText(FILTER_CATEGORY_CHECK_BAR_CODE, getCheckBarcode(purchase));
@@ -115,12 +159,12 @@ public class SearchFormPopUp extends OperDayPage {
 	public SearchFormPopUp setFilterMultiText(String filter, String filterValue){
 		ifSearchFiltersOpen(filter);
 		
+		log.info("Задать условие поиска: " + filter + "; Значение: " + filterValue);
 		//Открыть и заполнить множественный выбор
-		clickElement(getDriver(), ID_OPERDAYSWF,  FILTER_MULTI_TEXT_OPEN_INPUT);
+		clickElement(getDriver(), ID_OPERDAYSWF,  filtersClassNames.get(filter) + FILTER_MULTI_TEXT_OPEN_INPUT);
 		typeText(getDriver(), ID_OPERDAYSWF, FILTER_MULTI_TEXT_INPUT, filterValue);
 		clickElement(getDriver(), ID_OPERDAYSWF,  FILTER_MULTI_TEXT_APPLY_BUTTON);
 		
-		log.info("Задать условие поиска: " + filter + "; Значение: " + filterValue);
 		return new SearchFormPopUp(getDriver());
 	}
 	
@@ -128,7 +172,7 @@ public class SearchFormPopUp extends OperDayPage {
 		ifSearchFiltersOpen(filter);
 
 		//Открыть и заполнить множественный выбор
-		typeText(getDriver(), ID_OPERDAYSWF, FILTER_TEXT_FIELD, filterValue);
+		typeText(getDriver(), ID_OPERDAYSWF, filtersClassNames.get(filter) + FILTER_TEXT_FIELD, filterValue);
 		
 		log.info("Задать условие поиска: " + filter + "; Значение: " + filterValue);
 		return new SearchFormPopUp(getDriver());
@@ -137,7 +181,7 @@ public class SearchFormPopUp extends OperDayPage {
 	public SearchFormPopUp setFilterSelect(String filter, String filterValue){
 		ifSearchFiltersOpen(filter);
 		
-		selectElement(getDriver(), ID_OPERDAYSWF, FILTER_SELECT_FIELD, filterValue);
+		selectElement(getDriver(), ID_OPERDAYSWF, filtersClassNames.get(filter) + FILTER_SELECT_FIELD, filterValue);
 		
 		log.info("Задать условие поиска: " + filter + "; Значение: " + filterValue);
 		return new SearchFormPopUp(getDriver());
@@ -146,9 +190,9 @@ public class SearchFormPopUp extends OperDayPage {
 	public SearchFormPopUp setFilterSelectSum(String filter, String clause, String filterValue){
 		ifSearchFiltersOpen(filter);
 		
-		typeText(getDriver(), ID_OPERDAYSWF, FILTER_TEXT_FIELD, filterValue);
+		typeText(getDriver(), ID_OPERDAYSWF, filtersClassNames.get(filter) + FILTER_TEXT_FIELD, filterValue);
 		
-		selectElement(getDriver(), ID_OPERDAYSWF, FILTER_SELECT_COMPARISION, clause);
+		selectElement(getDriver(), ID_OPERDAYSWF, filtersClassNames.get(filter) + FILTER_SELECT_COMPARISION, clause);
 		log.info("Задать условие поиска: " + filter + "; Значение: " + clause + " " + filterValue);
 		return new SearchFormPopUp(getDriver());
 	}
@@ -193,8 +237,9 @@ public class SearchFormPopUp extends OperDayPage {
 		/*
 		 * если выбираем уже выбранный фильтр, то происходит удаление фильтра - обход этого поведения
 		 */
-		if (!getSelectedElement(getDriver(), ID_OPERDAYSWF, FILTER_CATEGORY).equals(filter)){
-			selectElement(getDriver(), ID_OPERDAYSWF, FILTER_CATEGORY, filter);
+
+		if (!getSelectedElement(getDriver(), ID_OPERDAYSWF, FILTER_CATEGORY + "|0").equals(filter)){
+			selectElement(getDriver(), ID_OPERDAYSWF, FILTER_CATEGORY + "|0", filter);
 		}
 	}
 	

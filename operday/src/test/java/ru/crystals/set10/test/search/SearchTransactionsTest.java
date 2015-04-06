@@ -33,6 +33,8 @@ public class SearchTransactionsTest extends SearchCheckAbstractTest{
 		transactions = searchCheck.navigatePage(TransactionSearchPage.class, SEARCH_TRANSACTIONS);
 		transactions.openFilter();
 		
+		resetFiltersAndAdd2New();
+		
 		purchase = payments.getPurchaseWithoutPayments();
 		String prefix = String.valueOf(System.currentTimeMillis()).substring(5);
 		String bankCardNumber = String.format("1234****%s", prefix);

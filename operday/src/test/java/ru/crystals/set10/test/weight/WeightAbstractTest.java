@@ -12,7 +12,7 @@ public class WeightAbstractTest extends AbstractTest{
 	static VirtualScalesReader scales = new VirtualScalesReader();
 	
 	protected String barCodePrefix = Config.WEIGHT_BARCODE_PREFIX;
-	protected String WEIGHT_GOOD_FILE = "/weight/weight.txt";
+	protected String WEIGHT_GOOD_FILE = "weight/weight.txt";
 	protected String WEIGHT_LECOND_FILE = "/lecond.txt";
 	
 	protected long day = 86400*100;

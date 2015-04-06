@@ -4,9 +4,9 @@ package ru.crystals.set10.test.search;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-
 import ru.crystals.set10.utils.CashEmulatorPayments;
 import static ru.crystals.set10.pages.operday.searchcheck.CheckSearchPage.*;
+
 
 @Test (groups={"centrum", "retail"})
 public class SearchCheckByOtherGroupsTest extends SearchCheckAbstractTest{
@@ -17,6 +17,8 @@ public class SearchCheckByOtherGroupsTest extends SearchCheckAbstractTest{
 	public void openFilter(){
 		super.openSearchPage();
 		searchCheck.openFilter();
+		
+		resetFiltersAndAdd2New();
 	}
 	
 	@Test (description = "SRTE-71. Поиск чека на ТК по штрих коду товара")

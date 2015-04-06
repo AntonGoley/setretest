@@ -29,6 +29,7 @@ public class SalesPage extends AbstractPage {
 		// + 1 из-за hiddenObject, размещенного в начале
 		doFlexMouseDown(getDriver(), ID_SALESSWF, MENU_ELEMENT_LOCATOR + Integer.toString(menuItemPosition + 1));
 		clickElement(getDriver(), ID_SALESSWF, MENU_ELEMENT_LOCATOR + Integer.toString(menuItemPosition + 1));
+		log.info("Ожидание спинера..");
 		waitForProperty(getDriver(), ID_SALESSWF, SPINNER, new String[] {"isRunning", "false"});
 		DisinsectorTools.delay(1000);
 		return PageFactory.initElements(getDriver(), page);

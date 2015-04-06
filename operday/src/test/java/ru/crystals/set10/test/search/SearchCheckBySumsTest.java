@@ -56,6 +56,9 @@ public class SearchCheckBySumsTest extends SearchCheckAbstractTest{
 		 */
 		super.openSearchPage();
 		searchCheck.openFilter();
+		
+		resetFiltersAndAdd2New();
+		
 		p1 = cashEmulatorSearchCheck.nextPurchaseWithoutSending();
 		
 		/*

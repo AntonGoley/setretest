@@ -3,8 +3,10 @@ package ru.crystals.set10.test.search;
 
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+
 import ru.crystals.pos.check.PurchaseEntity;
 import static ru.crystals.set10.pages.operday.searchcheck.CheckSearchPage.*;
 
@@ -24,9 +26,17 @@ public class SearchCheckByCheckTypeGroupTest extends SearchCheckAbstractTest{
 		/*
 		 * убедиться, что чек в системе
 		 */
+		
 		searchCheck.setCheckBarcode(purchase);
 		searchCheck.doSearch();
 		searchCheck.getExpectedResultCount(1);
+		
+		resetFiltersAndAdd2New();
+	}
+	
+	@BeforeMethod
+	public void addCashFilter(){
+		searchCheck.setFilterMultiText(FILTER_CATEGORY_CASH_NUMBER, String.valueOf(cashEmulatorSearchCheck.getCashNumber()));
 	}
 	
 	@DataProvider(name = "Тип чека")	
@@ -44,7 +54,6 @@ public class SearchCheckByCheckTypeGroupTest extends SearchCheckAbstractTest{
 	@DataProvider(name = "Суммы")	
 	private Object[][] paySum(){
 		p1 = cashEmulatorSearchCheck.nextPurchaseWithoutSending();
-		
 		
 		return new Object[][]{
 				{"Сумма чека = ",  FILTER_CATEGORY_SUM_CHECK, p1},
@@ -71,7 +80,13 @@ public class SearchCheckByCheckTypeGroupTest extends SearchCheckAbstractTest{
 	
 	@Test (	description = "SRTE-71. Поиск чека на ТК по номеру кассы")
 	public void testSearchCheckByCashNumber(){
- 		searchCheck.setFilterMultiText(FILTER_CATEGORY_CASH_NUMBER, String.valueOf(cashNumber));
+ 		/*
+ 		 * Сбросить фильтр, т.к 
+ 		 */
+		searchCheck.deleteAllFilters();
+		searchCheck.addFilter();
+		
+		searchCheck.setFilterMultiText(FILTER_CATEGORY_CASH_NUMBER, String.valueOf(cashNumber));
  		searchCheck.doSearch();
  		
  		searchResult = searchCheck.getSearchResultCount();
@@ -81,6 +96,8 @@ public class SearchCheckByCheckTypeGroupTest extends SearchCheckAbstractTest{
 		Assert.assertEquals(searchCheck.getExpectedResultCount(searchResult + 1), searchResult + 1, "");
  		testExcelExport(LOCATOR_XLS_CHECK_CONTENT, XLS_REPORT_CONTENT_PATTERN);
  		testExcelExport(LOCATOR_XLS_CHECK_HEADERS, XLS_REPORT_HEADERS_PATTERN);
+ 		
+ 		searchCheck.addFilter();
 	}
 	
 	@Test (
@@ -124,7 +141,7 @@ public class SearchCheckByCheckTypeGroupTest extends SearchCheckAbstractTest{
  		testExcelExport(LOCATOR_XLS_CHECK_HEADERS, XLS_REPORT_HEADERS_PATTERN);
 	}
 	
-	@Test (enabled = false, description = "SRTE-71. Поиск чека на ТК по табельному номеру кассира", groups={"centrum", "retail"})
+	@Test (enabled = false, description = "SRTE-71. Поиск чека на ТК по табельному номеру кассира")
 	public void testSearchCheckByCashierTabNum(){
 		searchCheck.setFilterMultiText(FILTER_CATEGORY_CHECK_BAR_CODE, searchCheck.getCheckBarcode(purchase));
 		searchCheck.doSearch();

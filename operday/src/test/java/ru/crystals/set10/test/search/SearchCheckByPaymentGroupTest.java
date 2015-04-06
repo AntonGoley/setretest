@@ -1,12 +1,10 @@
 package ru.crystals.set10.test.search;
 
 import static ru.crystals.set10.pages.operday.searchcheck.CheckSearchPage.*;
-
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-
 import ru.crystals.pos.bank.datastruct.AuthorizationData;
 import ru.crystals.pos.bank.datastruct.BankCard;
 import ru.crystals.pos.check.PurchaseEntity;
@@ -48,6 +46,9 @@ public class SearchCheckByPaymentGroupTest extends SearchCheckAbstractTest{
 	public void prepareData() {
 		super.openSearchPage();
 		searchCheck.openFilter();
+		
+		resetFiltersAndAdd2New();
+		
 		CashEmulatorPayments payments = new CashEmulatorPayments();
 		
 		/*

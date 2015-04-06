@@ -1,6 +1,7 @@
 package ru.crystals.set10.test.search;
 
 import org.testng.Assert;
+
 import ru.crystals.pos.check.PurchaseEntity;
 import ru.crystals.set10.config.Config;
 import ru.crystals.set10.pages.basic.LoginPage;
@@ -11,7 +12,8 @@ import ru.crystals.set10.pages.operday.searchcheck.PaymentTransactionsPage;
 import ru.crystals.set10.pages.operday.tablereports.ReportConfigPage;
 import ru.crystals.set10.test.AbstractTest;
 import ru.crystals.set10.utils.DisinsectorTools;
-import static ru.crystals.set10.pages.operday.OperDayPage.SEARCH_CHECK;;
+import static ru.crystals.set10.pages.operday.OperDayPage.SEARCH_CHECK;
+import static ru.crystals.set10.pages.operday.searchcheck.SearchFormPopUp.FILTER_CATEGORY_CASH_NUMBER;
 
 
 public class SearchCheckAbstractTest extends AbstractTest{
@@ -92,4 +94,16 @@ public class SearchCheckAbstractTest extends AbstractTest{
 		Assert.assertTrue(fileSize > 500, "Файл отчета " + reportFileNamePattern + " сохранился некорректно");
 		
 	}
+	
+	protected void resetFiltersAndAdd2New(){
+		/*
+		 * Сбросить фильтр и добавить 2 новых, одни из которых Касса
+		 */
+		searchCheck.deleteAllFilters();
+		searchCheck.addFilter();
+		searchCheck.setFilterMultiText(FILTER_CATEGORY_CASH_NUMBER, String.valueOf(cashEmulatorSearchCheck.getCashNumber()));
+		searchCheck.addFilter();
+	}
+	
+	
 }

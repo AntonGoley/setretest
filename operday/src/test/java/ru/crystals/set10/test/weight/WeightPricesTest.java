@@ -25,21 +25,23 @@ SoapRequestSender soapSender = new SoapRequestSender();
 	
 	@BeforeClass
 	public void initData(){
+		scales.clearVScalesFileData();
 		soapSender.setSoapServiceIP(Config.RETAIL_HOST);
 		weightGood = generateGoodData();
+		weightGood.put("${plu-number}", "9");
 		weightGood = soapSender.sendGoods(DisinsectorTools.getFileContentAsString(WEIGHT_GOOD_FILE), weightGood);
 	}
 	
 	@BeforeMethod
 	public void clearScales(){
-		scales.clearVScalesFileData();
+		//scales.clearVScalesFileData();
 	}
 	
 	
 	@Test()
 	public void testUnloadPriceIfPriceBanSelling(){
 		
-		Assert.assertEquals(scales.getPluActionType(weightGood.get(PLU_NUMBER_PARAM)), 
+		Assert.assertEquals(scales.waitPluActionType(weightGood.get(PLU_NUMBER_PARAM), ACTION_TYPE_LOAD), 
 				ACTION_TYPE_LOAD, "Товар не загрузился в весы");
 		
 		

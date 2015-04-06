@@ -62,6 +62,35 @@ public class VirtualScalesReader {
 		return "";
 	}
 	
+	public String waitPluActionType(String pluNumber, String expectedActionType){
+		long timeout = 0;
+		vScalesFileContent.setLength(0);
+		/*
+		 * Проверяем, что файл весов создан
+		 */
+		getExpectedFileStatus(FILE_EXIST_RESPONSE);
+		while (timeout < 60000) {
+			Iterator<LinkToPluType> iterator = readVirtualScales(); 
+			LinkToPluType linkToPlu;
+			while (iterator.hasNext()){
+				linkToPlu = iterator.next();
+				if (linkToPlu.getPlu().getNumber() == Integer.valueOf(pluNumber)){
+					if (linkToPlu.getActionType().equals(expectedActionType)){
+						log.info(vScalesFileContent);
+						return linkToPlu.getActionType();
+					}	
+				}
+			}
+			timeout+=500;
+			DisinsectorTools.delay(500);
+		}	
+		log.info("PLU " + pluNumber + " не найден в заданиях на загрузку/выгрузку");
+		log.info(vScalesFileContent);
+		return "";
+	}
+	
+	
+	
 	
 //	public String getPluParameterExpectedValue(String pluNumber, PluParserInterface pluParser, String expectedValue){
 //		long timeout = 0;
