@@ -16,7 +16,7 @@ import static ru.crystals.set10.pages.operday.OperDayPage.CASHES;
 
 
 @Test(groups = {"retail"})
-public class CashierNameOperDayTab extends AbstractTest{
+public class CashierNameOperDayTabTest extends AbstractTest{
 	
 	CashEmulatorPayments payments = new CashEmulatorPayments();
 	PurchaseEntity p1;
