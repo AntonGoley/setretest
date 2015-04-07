@@ -45,8 +45,11 @@ public abstract class  AbstractPage {
 	}
 	
 	public void switchWindow(Boolean closeMainWindow) {
-
-		DisinsectorTools.delay(2000);
+		
+		if (closeMainWindow){
+			DisinsectorTools.delay(2000);
+		}	
+		
 		String mainWindow = getDriver().getWindowHandle();
 		Set<String> set = getDriver().getWindowHandles();
 		if (closeMainWindow) {
@@ -70,7 +73,6 @@ public abstract class  AbstractPage {
 			return new File("");
 		}
 		
-		//clickElement(getDriver(), ID_OPERDAYSWF, LINK_SAVE_EXCEL);
 		save.saveFile(fileType);
 		
 		return DisinsectorTools.getDownloadedFile(chromeDownloadPath, reportNamePattern);

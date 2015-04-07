@@ -18,7 +18,7 @@ public class OperDayPage extends AbstractPage{
 	protected String LINK_SAVE_EXCEL;
 	
 	/* 
-	 * Флаг, что документ(форма КМ, сопроводительный документ) еще не загружался
+	 * Флаг, что документ(табличный отчет, форма КМ, сопроводительный документ) еще не загружался
 	 */
 	private static boolean ifFirstDocument = true;
 	
