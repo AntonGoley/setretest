@@ -22,12 +22,26 @@ public class OperDayPage extends AbstractPage{
 	 */
 	private static boolean ifFirstDocument = true;
 	
+	/*
+	 * Конструктор используется при открытии
+	 * страницы опердня с разводящего экрана
+	 */
 	public OperDayPage(WebDriver driver, boolean switchWindow) {
 		super(driver);
-		isSWFReady();
 		switchWindow(switchWindow);
+		isSWFReady();
 		getWait().until(ExpectedConditions.visibilityOfElementLocated(By.id(ID_OPERDAYSWF)));
 	}
+	
+	/*
+	 * Конструктор используется наследниками класса OperDayPage
+	 */
+	public OperDayPage(WebDriver driver) {
+		super(driver);
+		isSWFReady();
+		getWait().until(ExpectedConditions.visibilityOfElementLocated(By.id(ID_OPERDAYSWF)));
+	}
+	
 	
 	public <T> T navigatePage(Class<T> page, String linkLocator){
 		clickElement(getDriver(), ID_OPERDAYSWF, linkLocator);
@@ -47,8 +61,7 @@ public class OperDayPage extends AbstractPage{
 			}
 			String reportText = "";
 			getWait().until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.xpath("//embed")));
-			//TODO: убрать задержку
-			DisinsectorTools.delay(2000);
+
 			switchWindow(false);
 			reportText = DisinsectorTools.getConsoleOutput(getDriver());
 			switchWindow(true);

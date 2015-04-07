@@ -36,6 +36,7 @@ public class MainPage extends AbstractPage{
 	public SalesPage openSales() {
 		clickElement(getDriver(), ID_MAINPAGESWF, SALESBUTTON_LOCATOR);
 		// переключаемся на окно продаж т.к родажи открываются в новом окне 
+
 		switchWindow(true);
 		return new SalesPage(getDriver()); 
 	}

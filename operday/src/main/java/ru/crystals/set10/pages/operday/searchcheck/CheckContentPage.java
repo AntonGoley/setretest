@@ -36,7 +36,7 @@ public class  CheckContentPage extends OperDayPage{
 	public static final String BUTTON_PRINT = "label=Печать";
 	
 	public CheckContentPage(WebDriver driver) {
-		super(driver, false);
+		super(driver);
 		getWait().until(ExpectedConditions.visibilityOfElementLocated(By.id(ID_OPERDAYSWF)));
 	}
 	

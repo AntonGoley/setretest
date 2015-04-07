@@ -2,6 +2,7 @@ package ru.crystals.set10.test;
 
 import java.util.Date;
 import java.util.HashMap;
+
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
@@ -9,7 +10,7 @@ import org.testng.annotations.Test;
 import ru.crystals.set10.config.Config;
 import ru.crystals.set10.pages.basic.LoginPage;
 import ru.crystals.set10.pages.basic.MainPage;
-import ru.crystals.set10.pages.operday.tablereports.WrongAdverstingPriveConfigPage;
+import ru.crystals.set10.pages.operday.tablereports.WrongAdverstingPriсeConfigPage;
 import ru.crystals.set10.product.ProductCardPage;
 import ru.crystals.set10.product.ProductAdditionalInfoTabPage;
 import ru.crystals.set10.product.ProductMainInfoTabPage;
@@ -27,7 +28,7 @@ public class GoodsAdditionalFieldsTest extends AbstractTest{
 	ProductMainInfoTabPage productMainInfo;
 	ProductCardPage product;
 	
-	WrongAdverstingPriveConfigPage reportConfigPage;
+	WrongAdverstingPriсeConfigPage reportConfigPage;
 	SoapRequestSender soapSender = new SoapRequestSender();
 	
 	private static String mask_marking_of_the_good = "${marking-of-the-good}";

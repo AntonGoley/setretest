@@ -133,7 +133,7 @@ public class SearchFormPopUp extends OperDayPage {
 	
 	
 	public SearchFormPopUp(WebDriver driver) {
-		super(driver, false);
+		super(driver);
 		getWait().until(ExpectedConditions.visibilityOfElementLocated(By.id(ID_OPERDAYSWF)));
 	}
 	

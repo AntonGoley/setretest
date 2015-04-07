@@ -46,12 +46,21 @@ public abstract class  AbstractPage {
 	
 	public void switchWindow(Boolean closeMainWindow) {
 		
-		if (closeMainWindow){
-			DisinsectorTools.delay(2000);
-		}	
+		Set<String> set = getDriver().getWindowHandles();
+		
+		/*
+		 * Если вызывается метод, то ожидается 
+		 *  больше, чем одно окно
+		 */
+		long timeout = 0;
+		while (timeout < 10000) {
+			if (set.size() > 1) break;
+			timeout+=100;
+			set = getDriver().getWindowHandles();
+		}
 		
 		String mainWindow = getDriver().getWindowHandle();
-		Set<String> set = getDriver().getWindowHandles();
+		
 		if (closeMainWindow) {
 			getDriver().close();
 		}

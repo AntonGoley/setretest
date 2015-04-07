@@ -27,7 +27,7 @@ public class  CashOperDayTabPage extends OperDayPage{
 	Pattern pattern = Pattern.compile(TABLEROW_REGEXP);
 	
 	public CashOperDayTabPage(WebDriver driver) {
-		super(driver, false);
+		super(driver);
 		getWait().until(ExpectedConditions.visibilityOfElementLocated(By.id(ID_OPERDAYSWF)));
 	}
 	

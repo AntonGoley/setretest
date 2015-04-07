@@ -37,10 +37,7 @@ public class  ReportConfigPage extends AbstractPage implements SaveFile {
 			DisinsectorTools.delay(20000);
 			ifFirstReport = false;
 		}
-		/*
-		 * Подождать пока появится поп-ап с отчетом
-		 */
-		DisinsectorTools.delay(2000);
+
 		switchWindow(false);
 		return new HTMLRepotResultPage(getDriver());
 	}

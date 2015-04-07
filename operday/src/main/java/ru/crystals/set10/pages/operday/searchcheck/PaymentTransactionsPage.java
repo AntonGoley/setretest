@@ -30,7 +30,7 @@ public class  PaymentTransactionsPage extends OperDayPage implements SaveFile{
 	
 	
 	public PaymentTransactionsPage(WebDriver driver) {
-		super(driver, false);
+		super(driver);
 		getWait().until(ExpectedConditions.visibilityOfElementLocated(By.id(ID_OPERDAYSWF)));
 	}
 	

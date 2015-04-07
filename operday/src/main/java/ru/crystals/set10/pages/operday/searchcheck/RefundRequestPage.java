@@ -12,7 +12,7 @@ public class  RefundRequestPage extends OperDayPage{
 	public static final String BUTTON_PRINT_REQUEST = "label=Распечатать заявление";
 	
 	public RefundRequestPage(WebDriver driver) {
-		super(driver, false);
+		super(driver);
 		getWait().until(ExpectedConditions.visibilityOfElementLocated(By.id(ID_OPERDAYSWF)));
 	}
 	
