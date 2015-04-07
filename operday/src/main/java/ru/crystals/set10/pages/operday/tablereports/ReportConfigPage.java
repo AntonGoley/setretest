@@ -32,13 +32,16 @@ public class  ReportConfigPage extends AbstractPage implements SaveFile {
 		// doFlexMouseDown чтобы убрать flexSuggest
 		doFlexMouseDown(getDriver(), ID_OPERDAYSWF, reportType);
 		clickElement(getDriver(), ID_OPERDAYSWF, reportType);
-		switchWindow(false);
-		
 		if (ifFirstReport) {
 			log.info("Ожидание первой загрузки HTML отчета");
 			DisinsectorTools.delay(20000);
 			ifFirstReport = false;
 		}
+		/*
+		 * Подождать пока появится поп-ап с отчетом
+		 */
+		DisinsectorTools.delay(2000);
+		switchWindow(false);
 		return new HTMLRepotResultPage(getDriver());
 	}
 

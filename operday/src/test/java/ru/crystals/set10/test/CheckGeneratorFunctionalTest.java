@@ -34,7 +34,7 @@ public class CheckGeneratorFunctionalTest {
 		cashEmulator = CashEmulator.getCashEmulator(Config.RETAIL_HOST, Integer.valueOf(Config.SHOP_NUMBER), Integer.valueOf(String.valueOf(5)));
 		//cashEmulator = CashEmulator.getCashEmulator(Config.CENTRUM_HOST, Integer.valueOf(Config.VIRTUAL_SHOP_NUMBER), Integer.valueOf(Config.CASH_NUMBER ));
 		//cashEmulatorVirtual = CashEmulator.getCashEmulator(Config.CENTRUM_HOST, Integer.valueOf(Config.VIRTUAL_SHOP_NUMBER), Integer.valueOf(Config.CASH_NUMBER ));
-		cashEmulator.nextIntroduction();
+		//cashEmulator.nextIntroduction();
 		
 		//cashEmulator.changeCashUser(2);
 		//cashEmulator2104.nextIntroduction();
@@ -55,7 +55,8 @@ public class CheckGeneratorFunctionalTest {
 	@Test (	description = "Сгенерить чеки продажи")
 	public void testSendChecks(){
 		for(int i=0; i<1; i++) {
-	//		cashEmulator.nextCancelledPurchase(getCashPayment()); 
+			p1 = payments.getPurchaseWithoutPayments();
+			cashEmulator.nextCancelledPurchase(p1); 
 			
 			p1 = (PurchaseEntity) cashEmulator.nextPurchase(getCashPayment());
 			//p2 = (PurchaseEntity) cashEmulator2104.nextPurchase(getCashPayment());
