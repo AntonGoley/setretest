@@ -20,7 +20,7 @@ public class ProductCardPage extends AbstractPage{
 	
 	public ProductCardPage(WebDriver driver) {
 		super(driver);
-		//switchWindow(false);
+		isSWFReady();
 		getWait().until(ExpectedConditions.visibilityOfElementLocated(By.id(ID_PRODUCTSWF)));
 	}
 	

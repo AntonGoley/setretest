@@ -43,7 +43,7 @@ public class CashEmulator {
 	private  ShiftEntity shift;
 	private String db_operday;
 
-	public  long yesterday = Long.valueOf("0"); //(86400000 * 130); ("-11232000000")
+	private long yesterday = Long.valueOf("0"); //(86400000 * 130); ("-11232000000")
 	
 	/*
 	 * Список созданных в тестах касс
@@ -646,6 +646,13 @@ public class CashEmulator {
 	
 	public int getCashNumber(){
 		return cashNumber;
+	}
+	
+	/*
+	 * Установить смещение времени, относительно текущего момента
+	 */
+	public void setTimeOfset(long ofset){
+		this.yesterday = ofset;
 	}
 	
 }

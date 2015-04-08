@@ -5,10 +5,10 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
 
-public class  WrongAdverstingPriсeConfigPage extends ReportConfigPage{
+public class  WrongAdverstingPriceConfigPage extends ReportConfigPage{
 	
 	
-	public WrongAdverstingPriсeConfigPage(WebDriver driver) {
+	public WrongAdverstingPriceConfigPage(WebDriver driver) {
 		super(driver);
 		getWait().until(ExpectedConditions.visibilityOfElementLocated(By.id(ID_OPERDAYSWF)));
 	}

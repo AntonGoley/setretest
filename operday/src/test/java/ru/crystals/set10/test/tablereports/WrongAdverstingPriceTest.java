@@ -8,9 +8,10 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+
 import ru.crystals.set10.config.Config;
 import ru.crystals.set10.pages.operday.HTMLRepotResultPage;
-import ru.crystals.set10.pages.operday.tablereports.WrongAdverstingPriсeConfigPage;
+import ru.crystals.set10.pages.operday.tablereports.WrongAdverstingPriceConfigPage;
 import ru.crystals.set10.test.dataproviders.TableReportsDataprovider;
 import ru.crystals.set10.utils.DisinsectorTools;
 import ru.crystals.set10.utils.SoapRequestSender;
@@ -20,7 +21,7 @@ import static ru.crystals.set10.pages.operday.tablereports.TableReportPage.*;
 @Test (groups = {"centrum", "retail"})
 public class WrongAdverstingPriceTest extends AbstractReportTest{
 	
-	WrongAdverstingPriсeConfigPage reportConfigPage;
+	WrongAdverstingPriceConfigPage reportConfigPage;
 	SoapRequestSender soapSender = new SoapRequestSender();
 	String reportNamePattern = "IncorrectActionPrice*.xls";
 	
@@ -37,7 +38,7 @@ public class WrongAdverstingPriceTest extends AbstractReportTest{
 				TARGET_HOST_URL, 
 				Config.MANAGER,
 				Config.MANAGER_PASSWORD,
-				WrongAdverstingPriсeConfigPage.class, 
+				WrongAdverstingPriceConfigPage.class, 
 				TAB_ADVERSTING, 
 				REPORT_NAME_WRONG_ADVERSTING_PRICE);
 				

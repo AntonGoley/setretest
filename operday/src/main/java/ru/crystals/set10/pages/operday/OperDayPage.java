@@ -60,9 +60,15 @@ public class OperDayPage extends AbstractPage{
 				ifFirstDocument = false;
 			}
 			String reportText = "";
-			getWait().until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.xpath("//embed")));
-
 			switchWindow(false);
+			
+			//TODO: хрупкая конструкция
+			/*
+			 * Задержка перед загрузкой страницы 
+			 */
+			DisinsectorTools.delay(2000);
+			getWait().until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.xpath("//embed")));
+			
 			reportText = DisinsectorTools.getConsoleOutput(getDriver());
 			switchWindow(true);
 			return reportText;

@@ -31,11 +31,10 @@ public class  CashOperDayTabPage extends OperDayPage{
 		getWait().until(ExpectedConditions.visibilityOfElementLocated(By.id(ID_OPERDAYSWF)));
 	}
 	
+	/* 
+	 * определяем элемент родителя по номеру кассы
+	 */
 	private void setLocatorTableRowClassName(long cashNumber){
-		/* определяем элемент родителя по номеру кассы
-		 * 
-		 */
-		
 		Matcher matcher = pattern.matcher(getElementProperty(getDriver(), ID_OPERDAYSWF, String.format(LOCATOR_CASH_NUMBER_VALUE, cashNumber), "parent"));
 		matcher.find();
 		LOCATOR_TABLE_ROW_CLASS_NAME = matcher.group();
