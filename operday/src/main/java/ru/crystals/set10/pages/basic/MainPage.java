@@ -3,8 +3,10 @@ package ru.crystals.set10.pages.basic;
 
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+
 import ru.crystals.set10.pages.operday.OperDayPage;
 import ru.crystals.set10.product.ProductCardPage;
+import ru.crystals.set10.utils.DisinsectorTools;
 import static ru.crystals.set10.utils.FlexMediator.*;
 
 
@@ -46,7 +48,13 @@ public class MainPage extends AbstractPage{
 		
 		//выбрать элемент
 		doFlexProperty(getDriver(), ID_MAINPAGESWF, ID_SEARCH_GOOD, new String[] {"selectedIndex", "0"});
+		
+		/*
+		 * Если без задержек, то открывается страница с ненейденным товаром, хотя товар уже в системе
+		 */
+		DisinsectorTools.delay(2000);
 		clickElement(getDriver(), ID_MAINPAGESWF, LOCATOR_SELECT_RESULT);
+		DisinsectorTools.delay(2000);
 		switchWindow(true);
 		return new ProductCardPage(getDriver());
 	}
