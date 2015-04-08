@@ -158,8 +158,8 @@ public class CashEmulator {
 	
 	protected void sendDocument(Serializable document) {
 		log.info("Try send one document - {}", document);
-		int type;
-		type = DataTypesEnum.PURCHASE_TYPE.code;
+		int type = -1;
+		//type = DataTypesEnum.PURCHASE_TYPE.code;
 		
         if (document instanceof PurchaseEntity) {
             type = DataTypesEnum.PURCHASE_TYPE.code;
