@@ -53,7 +53,7 @@ public class  CheckSearchPage extends SearchFormPopUp implements SaveFile {
 	 */
 	public int getExpectedResultCount(int expectedResult){
 		int result = getSearchResultCount();	
-		long delay = 1000;
+		long delay = 1500;
 		long timeout = 0;
 		while (timeout < (delay * 10)) {
 			if(result == expectedResult) {
