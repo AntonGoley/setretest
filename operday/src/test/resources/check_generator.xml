@@ -3,7 +3,7 @@
 <suite name="GenerateChecks"  configfailurepolicy="continue" >
   	<test name="GenerateChecks">
 	  	<classes>
-	  		<class name="ru.crystals.set10.test.CheckGeneratorTest"/>
+	  		<class name="ru.crystals.set10.test.checkgenerator.CheckGeneratorTest"/>
 		</classes>	 
   	</test>	
 </suite> 

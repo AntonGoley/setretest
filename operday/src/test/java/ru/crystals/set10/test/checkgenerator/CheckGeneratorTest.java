@@ -1,12 +1,11 @@
-package ru.crystals.set10.test;
+package ru.crystals.set10.test.checkgenerator;
 
 import java.util.HashMap;
 
 import org.apache.log4j.Logger;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.AfterClass;
+import org.testng.annotations.AfterGroups;
+import org.testng.annotations.BeforeGroups;
 import org.testng.annotations.Test;
-
 import ru.crystals.set10.config.*;
 import ru.crystals.pos.bank.datastruct.AuthorizationData;
 import ru.crystals.pos.bank.datastruct.BankCard;
@@ -21,27 +20,36 @@ import ru.crystals.set10.utils.DisinsectorTools;
 public class CheckGeneratorTest {
 	
 	protected static final Logger log = Logger.getLogger(CheckGeneratorTest.class);
-	CashEmulator cashEmulator;
-
+	
 	HashMap<Long, Long>  returnPositions = new HashMap<Long, Long>(); 
 	
 	CashEmulatorPayments payments = new CashEmulatorPayments();
 	PurchaseEntity p1;
 		
-	@BeforeClass
-	public void setupCash(){
-		cashEmulator = CashEmulator.getCashEmulator(Config.RETAIL_HOST, Integer.valueOf(Config.SHOP_NUMBER), Integer.valueOf(Config.CASH_NUMBER));
+	CashEmulator cashEmulator = CashEmulator.getCashEmulator(Config.RETAIL_HOST, Integer.valueOf(Config.SHOP_NUMBER), Integer.valueOf(Config.CASH_NUMBER));
+	
+	@BeforeGroups (groups = {"simple_shift", "all_payments"})
+	public void introduction(){
 		cashEmulator.nextIntroduction();
 	}
 	
-	@AfterClass
-	public void sendZreport(){
-		//cashEmulator.nextWithdrawal();
+	@AfterGroups  (groups = {"simple_shift", "all_payments"})
+	public void closeShift(){
+		cashEmulator.nextWithdrawal();
 		cashEmulator.nextZReport();
 	}
 	
-	@Test (description = "Сгенерить чеки продажи")
-	public void testSendChecks(){
+	@Test ( groups = "simple_shift",
+			description = "Сгенерить чеки продажи")
+	public void testSendCheck(){
+		// оплата банковской картой и аннулирование чека
+		p1 = getBankCardPayment(BankCardPaymentEntity.class);
+		cashEmulator.nextPurchase(p1);
+	}
+	
+	@Test ( groups = "all_payments",
+			description = "Сгенерить чеки продажи с различными типами оплат")
+	public void testAllPayments(){
 
 		// оплата банковской картой и аннулирование чека
 		p1 = getBankCardPayment(BankCardPaymentEntity.class);
@@ -73,6 +81,7 @@ public class CheckGeneratorTest {
 		p1 = (PurchaseEntity) cashEmulator.nextPurchase(getDiscountCardPayment());
 		
 	}
+	
 	
 	
 	private PurchaseEntity getBankCardPayment(Class<? extends BankCardPaymentEntity> cardType){

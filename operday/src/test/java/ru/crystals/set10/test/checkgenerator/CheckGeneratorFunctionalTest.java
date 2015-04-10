@@ -1,4 +1,4 @@
-package ru.crystals.set10.test;
+package ru.crystals.set10.test.checkgenerator;
 
 import java.util.HashMap;
 

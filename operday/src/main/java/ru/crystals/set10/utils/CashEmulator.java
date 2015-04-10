@@ -227,6 +227,8 @@ public class CashEmulator {
 	 * закрыть текущую смену
 	 */
 	public DocumentEntity nextZReport(){
+		long sumPurchaseFiscal = Long.valueOf(getShiftSumChecks());
+		long sumReturnFiscal = (long) getShiftSumChecksRefund();
 		
 		Date dateClose = new Date(System.currentTimeMillis() - yesterday);
 		//Date dateClose = new Date(System.currentTimeMillis());
@@ -239,9 +241,12 @@ public class CashEmulator {
 	    rse.setSumCashEnd(Long.valueOf(285177L));
 	    rse.setFiscalDocNum("testZ;" + String.valueOf(System.currentTimeMillis()));
 	    // сумма чеков продажи за смену в ФР
-	    rse.setSumPurchaseFiscal(Long.valueOf(getShiftSumChecks()));
+	    rse.setSumPurchaseFiscal(sumPurchaseFiscal);
 	    // сумма возвратов по ФР
-	    rse.setSumReturnFiscal((long) getShiftSumChecksRefund());
+	    rse.setSumReturnFiscal(sumReturnFiscal);
+	    // Сумма наличных продаж
+	    rse.setSumCashPurchase(sumPurchaseFiscal - sumReturnFiscal);
+	    
 	    shift.setShiftClose(dateClose);
 	    rse.setId(Long.valueOf(reportId++));
 	    rse.setDateCommit(dateClose);
