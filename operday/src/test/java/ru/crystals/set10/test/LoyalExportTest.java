@@ -47,7 +47,7 @@ public class LoyalExportTest {
 			loyTransaction = payments.addDiscountForPosition(p1, 2, true);
 			p1.setDiscountValueTotal(loyTransaction.getDiscountValueTotal());
 			
-			cashEmulator.sendPurchase(p1);
+			cashEmulator.nextPurchase(p1);
 			cashEmulator.sendLoy(loyTransaction, p1);
 			//cashEmulator.nextRefundAll(p1, false);
 			//cashEmulator.nextZReport();

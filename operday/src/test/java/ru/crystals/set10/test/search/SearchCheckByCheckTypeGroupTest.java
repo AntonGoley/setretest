@@ -43,22 +43,11 @@ public class SearchCheckByCheckTypeGroupTest extends SearchCheckAbstractTest{
 	private Object[][] checkType(){
 		p1 = cashEmulatorSearchCheck.nextPurchaseWithoutSending();
 		p1refund = cashEmulatorSearchCheck.nextRefundAllWithoutSending(purchase, false);
-		p1cancel = cashEmulatorSearchCheck.nextCancelledPurchaseWithoutSending(cashEmulatorSearchCheck.nextPurchaseWithoutSending());
+		p1cancel = cashEmulatorSearchCheck.nextCancelledPurchaseWithoutSending();
 		return new Object[][]{
 				{"Чек продажи",  FILTER_CATEGORY_CHECK_TYPE_SALE, p1},
 				{"Чек возврата",  FILTER_CATEGORY_CHECK_TYPE_REFUND, p1refund},
 				{"Аннулированый чек",  FILTER_CATEGORY_CHECK_TYPE_CANCEL, p1cancel},
-		};
-	};
-	
-	@DataProvider(name = "Суммы")	
-	private Object[][] paySum(){
-		p1 = cashEmulatorSearchCheck.nextPurchaseWithoutSending();
-		
-		return new Object[][]{
-				{"Сумма чека = ",  FILTER_CATEGORY_SUM_CHECK, p1},
-				{"Сумма чека <",  FILTER_CATEGORY_CHECK_TYPE_REFUND, p1refund},
-				{"Сумма чека >",  FILTER_CATEGORY_CHECK_TYPE_CANCEL, p1cancel},
 		};
 	};
 	

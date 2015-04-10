@@ -64,7 +64,7 @@ public class  DocsSender {
 	}
 
 	public  void sendObject(int type, Serializable object) {
-		log.info("Послать документ на ip: " + serverIP);
+		log.info("Отправить документ на ip: " + serverIP);
 		try {
 			TransferObject tObject;
 			

@@ -41,7 +41,7 @@ public class CashierNameOperDayTabTest extends AbstractTest{
 		operDayTab = operDayTab.refreshOperdayTab();
 		
 		Assert.assertTrue(operDayTab.getCashierNameForLastShift(cashEmulator.getCashNumber()).contains(surname), 
-				"Неверная фамилия кассира работающего на кассе, после смены польлзователя на открытой смене "); 
+				"Неверная фамилия кассира работающего на кассе, после смены пользователя на открытой смене "); 
 	}
 	
 	@Test (description = "SRTE-117. Отображается фамилия кассира, закрывшего смену", 

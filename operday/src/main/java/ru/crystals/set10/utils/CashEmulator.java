@@ -143,23 +143,10 @@ public class CashEmulator {
 		return db.queryForInt(db_operday, String.format(SQL_GET_SHIFT_FINAL_SUM, String.valueOf("false"), cashNumber, shiftNum, shopNumber, date, date));
 	}
 
-//	private boolean ifShiftClosed(int cashNumber, int shiftNumber) {
-//		// TODO: привести в порядок
-//		String date = getDate("yyyy-MM-dd", System.currentTimeMillis() - yesterday);
-//		int querryResult = 0;
-//		querryResult = db.queryForInt(db_operday, String.format(SQL_SHIFT_STATUS, shiftNumber, cashNumber, shopNumber, date, date)); 
-//		if ((int) querryResult == 0) { 
-//			return false;
-//		} else {
-//			useNextShift();
-//			return true;
-//		}
-//	}
 	
 	protected void sendDocument(Serializable document) {
-		log.info("Try send one document - {}", document);
+		
 		int type = -1;
-		//type = DataTypesEnum.PURCHASE_TYPE.code;
 		
         if (document instanceof PurchaseEntity) {
             type = DataTypesEnum.PURCHASE_TYPE.code;
@@ -172,6 +159,8 @@ public class CashEmulator {
         } else {
             log.warn("Неизвестный тип документа: {}", document);
         }
+        
+        log.info("Try send one document - {}", document);
 		docSender.sendObject(type, document);
     }
 	
@@ -205,7 +194,7 @@ public class CashEmulator {
 	    
 		sendDocument(wdr);
 		log.info("Выполнить изъятие..");
-		ifCheckInRetail(wdr);
+		ifCheckInRetail((WithdrawalEntity) wdr);
 		return wdr;
 	}
 	
@@ -230,7 +219,7 @@ public class CashEmulator {
 
 		sendDocument(intr);
 		log.info("Выполнить внесение..");
-		ifCheckInRetail(intr);
+		ifCheckInRetail((IntroductionEntity) intr);
 		return intr;
 	}
 	
@@ -277,7 +266,6 @@ public class CashEmulator {
 	    return rse;
 	}
 	
-	
 	/*
 	 * Сгенерить чек с рандомным набором позиций,
 	 * заполнить данные о смене
@@ -293,7 +281,7 @@ public class CashEmulator {
 	}
 	
 	/*
-	 * Сгенерить чек с рандомным набором позиций,
+	 * Сгенерить возвратный чек с рандомным набором позиций,
 	 * заполнить данные о смене
 	 * и не отправлять на сервер
 	 */
@@ -301,7 +289,8 @@ public class CashEmulator {
 			PurchaseEntity superPurchase, 
 			// произвольный возврат
 			boolean arbitraryReturn) {
-
+		PurchaseEntity purhase;
+		
 		openShiftOnFirstDocument();
 		
 		HashMap<Long, Long> returnPositions = new HashMap<Long, Long>();
@@ -310,18 +299,25 @@ public class CashEmulator {
 			PositionEntity pe = superPurchase.getPositions().get(i);
 			returnPositions.put(pe.getNumber(), pe.getQnty());
 		}
-		return  (PurchaseEntity)refundCheck(superPurchase, returnPositions, arbitraryReturn);
+		purhase = (PurchaseEntity)refundCheck(superPurchase, returnPositions, arbitraryReturn);
+		return (PurchaseEntity)completeDocument(purhase);
 	}
 	
-	public PurchaseEntity nextCancelledPurchaseWithoutSending(PurchaseEntity purchase) {
-		/*
-		 * Уменьшаем нумерацию на 1, т.к будет нарушение последовательности
-		 * нумерации чека (т.к purchase отменен)
-		 */
-		checkNumber--;
-		//openShiftOnFirstDocument();
+	
+	public PurchaseEntity nextCancelledPurchaseWithoutSending() {
+		PurchaseEntity purchase = nextPurchaseWithoutSending();
 	    purchase.setCheckStatus(CheckStatus.Cancelled);
 	    return  purchase;
+	}
+	
+	/*
+	 * Отправить аннулированый чек
+	 */
+	public DocumentEntity nextCancelledPurchase(PurchaseEntity purchase) {
+		openShiftOnFirstDocument();
+		log.info("Отправить аннулированный чек..");
+		purchase.setCheckStatus(CheckStatus.Cancelled);
+	    return (DocumentEntity)completeAndSendPurchase(purchase);
 	}
 	
 	/*
@@ -335,22 +331,12 @@ public class CashEmulator {
 	}
 	
 	/*
-	 * Отрпавить существующий чек
+	 * Отправить существующий чек
 	 */
 	public DocumentEntity nextPurchase(DocumentEntity purchase) {
-
 		openShiftOnFirstDocument();
-		
 	    log.info("Отправить  чек..");
 	    return completeAndSendPurchase((DocumentEntity)purchase);
-	}
-	
-	/*
-	 * Отрпавить аннулированый чек
-	 */
-	public DocumentEntity nextCancelledPurchase(PurchaseEntity purchase) {
-		log.info("Отправить аннулированный чек..");
-	    return (DocumentEntity)completeAndSendPurchase(nextCancelledPurchaseWithoutSending(purchase));
 	}
 	
 	/*
@@ -469,7 +455,12 @@ public class CashEmulator {
 	}
 	
 	private DocumentEntity completeAndSendPurchase(DocumentEntity de){
-		de = completeDocument(de);
+		/*
+		 * Проверка на заполнение у чеке информации о смене
+		 */
+		if (de.getShift() == null) {
+			de = completeDocument(de);
+		}	
 		sendDocument(de);
 		logCheckEntities((PurchaseEntity) de);
 		ifCheckInRetail((PurchaseEntity) de);
@@ -511,16 +502,6 @@ public class CashEmulator {
 		    pe.setTransactions(paymentTransactions);
 	    }  
 	    return de;
-	}
-	
-	/*
-	 * Метод используется для отправки чеков с заполненной информацией о скидках
-	 */
-	public DocumentEntity sendPurchase(PurchaseEntity de){
-		 sendDocument(de);
-		 logCheckEntities((PurchaseEntity) de);
-		 ifCheckInRetail((PurchaseEntity) de);
-		 return de;
 	}
 	
     private ShiftEntity nextShift(SessionEntity session) {
@@ -579,7 +560,6 @@ public class CashEmulator {
          */
         return lastName;
     }
-    
 	
 	public void useNextShift(){
 		checkNumber = 1;
@@ -617,16 +597,24 @@ public class CashEmulator {
     	// ждем в течение 30 секунд
 	    int timeOut = 60;
     	int tryCount = 0;
-    	while (tryCount < timeOut) {
-    		tryCount++;
-    		DisinsectorTools.delay(500);
-    		if (db.queryForInt(db_operday, String.format(dbRequest, fiscalDocNum)) == 1) {
-    			log.info(String.format("Чек зарегистрирован в операционном дне; fiscalDocNum: %s ", fiscalDocNum));
-    			return true;
-    		}	
-    	}
-    	log.info(String.format("Check transport timeout! No check found with number:  %s and fiscalDocNum: %s ", purchase.getNumber(), fiscalDocNum));
-		return false;
+    	
+    	try {
+	    	while (tryCount < timeOut) {
+	    		tryCount++;
+	    		DisinsectorTools.delay(500);
+	    		if (db.queryForInt(db_operday, String.format(dbRequest, fiscalDocNum)) == 1) {
+	    			log.info(String.format("Чек зарегистрирован в операционном дне; fiscalDocNum: %s ", fiscalDocNum));
+	    			return true;
+	    		}	
+	    	}
+	    	//log.info(String.format("Check transport timeout! No check found with number:  %s and fiscalDocNum: %s ", purchase.getNumber(), fiscalDocNum));
+			throw new Exception(String.format("Check transport timeout! No check found with number:  %s and fiscalDocNum: %s ", purchase.getNumber(), fiscalDocNum));
+		} catch (Exception e) {
+
+			e.printStackTrace();
+		}
+    	
+    	return false;
 	}
 	
 	private static long random(int max) {

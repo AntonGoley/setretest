@@ -36,7 +36,7 @@ public class CheckGeneratorTest {
 	
 	@AfterClass
 	public void sendZreport(){
-		cashEmulator.nextWithdrawal();
+		//cashEmulator.nextWithdrawal();
 		cashEmulator.nextZReport();
 	}
 	

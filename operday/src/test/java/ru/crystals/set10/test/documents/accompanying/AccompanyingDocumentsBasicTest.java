@@ -115,7 +115,7 @@ public class AccompanyingDocumentsBasicTest extends AbstractTest{
 			ProductEntity printProduct = getPurchasePosition(allowPrintMarkingOfTheGood);
 			
 			printPosition.setProduct(printProduct);
-			printPosition.setQnty(Long.valueOf(1 * 1000L));
+			printPosition.setQnty(Long.valueOf(1 * 1200L));
 			printPosition.setPriceEnd(Long.valueOf(10020));
 			printPosition.setSum(Long.valueOf(10020));
 			printPosition = completePositionEntity(printPosition);

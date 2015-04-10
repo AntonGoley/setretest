@@ -36,17 +36,14 @@ public class CashShiftTimeInOperDayTabTest extends AbstractTest{
 		cashEmulator.useNextShift();
 		cashEmulator.nextPurchase();
 		cashEmulator.nextZReport();
-		
-
 	}
 	
-	@Test(description = "SRTE-117. Отображается фамилия кассира, работающего на кассе в данный момент")
-	public void testActiveCashierNameExist(){
-		String surname = cashEmulator.changeCashUser(DisinsectorTools.random(100));
+	@Test(description = "SRTE-83. ")
+	public void testMessageIfShiftOpenMoreThan6Days(){
+		
 		operDayTab = operDayTab.refreshOperdayTab();
 		
-		Assert.assertTrue(operDayTab.getCashierNameForLastShift(cashEmulator.getCashNumber()).contains(surname), 
-				"Неверная фамилия кассира работающего на кассе, после смены польлзователя на открытой смене "); 
+		
 	}
 
 	
