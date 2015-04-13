@@ -44,6 +44,7 @@ public class CashEmulator {
 	private  int checkNumber;
 	private  int shiftNum;
 	private  int shopNumber = -1;
+	private String targetHost;
 	private  ShiftEntity shift;
 	private String db_operday;
 
@@ -83,6 +84,7 @@ public class CashEmulator {
 	private CashEmulator(String serverIP, int shopNum, int cashNum) {
 	    cashNumber = cashNum;
 	    shopNumber = shopNum;
+	    targetHost = serverIP;
 	    /*
 	     * Если индекс магазина не Ритейл, то
 	     * это виртуальный магазин (смотрим в бд центрума)
@@ -93,10 +95,10 @@ public class CashEmulator {
 	    	db_operday = DB_CENTRUM_OPERDAY;
 	    }
 	    
-	    docSender = new DocsSender(serverIP, shopNumber, cashNumber);
+	    docSender = new DocsSender(targetHost, shopNumber, cashNumber);
 	    shiftNum = getCurrentShiftNum(cashNumber);
 	    checkNumber =  getNextCheckNum(cashNumber, shiftNum);
-	    loySender = new LoySender(serverIP, shopNumber, cashNumber);
+	    loySender = new LoySender(targetHost, shopNumber, cashNumber);
 	    log.info("Создан cashEmulator: " + cashNumber +  "; ShopNum = " + shopNum + "; ShiftNum = " + shiftNum + "; NextCheckNumber = " + checkNumber);
 	    
 	} 
@@ -651,7 +653,7 @@ public class CashEmulator {
 	 * Отправляет на сервер данные кассы (эмуляция вызова кассой сервера)
 	 */
 	public void sendCashVO(CashVO cashVo) {
-		httpConnect.setUrl("http://" + Config.RETAIL_HOST + ":8090" + GLOBAL_SERVLET_PATH);
+		httpConnect.setUrl("http://" + targetHost + ":8090" + GLOBAL_SERVLET_PATH);
 		cashManager = httpConnect.find(CashManagerRemote.class, CashManagerRemote.SERVER_EJB_NAME);
 		try {
 			cashManager.updateCashParams(cashVo, true);
@@ -667,7 +669,7 @@ public class CashEmulator {
 		String prefix = String.valueOf(date);
 		
 		cashVo.setNumber(cashNumber);
-		cashVo.setShopNumber(Integer.valueOf(Config.SHOP_NUMBER));
+		cashVo.setShopNumber(Integer.valueOf(shop));
 		cashVo.setEklzNum("ek" + prefix);
 		cashVo.setFactoryNum("fact" + prefix);
 		cashVo.setFiscalNum("fisc" + prefix);
