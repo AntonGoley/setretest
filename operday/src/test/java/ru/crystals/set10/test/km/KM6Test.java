@@ -70,7 +70,7 @@ public class KM6Test extends AbstractTest{
 		//String shiftNum = String.valueOf(purchaseReturn.getShift().getNumShift());
 		
 		CashVO cashVO = new CashVO();
-		cashVO = cashEmulator.setCashVO(cashEmulator.getCashNumber(), TARGET_HOST, new Date().getTime());
+		cashVO = cashEmulator.setCashVO(cashEmulator.getCashNumber(), TARGET_SHOP, new Date().getTime());
 		cashEmulator.sendCashVO(cashVO);
 		
 		return new Object[][]{
@@ -102,6 +102,8 @@ public class KM6Test extends AbstractTest{
 		}
 		
 		log.info("Значение поля: " + field);
+		
+		
 		Assert.assertTrue(reportText.contains(expectedValue), "Неверное значение поля в форме КМ6");
 	}
 	
