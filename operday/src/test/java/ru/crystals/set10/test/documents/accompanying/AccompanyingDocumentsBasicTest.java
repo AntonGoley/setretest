@@ -67,9 +67,9 @@ public class AccompanyingDocumentsBasicTest extends AbstractTest{
 	 * Строка Итого в документах
 	 */
 	
-	static final String denyPrintSumTotal = "Итого: 1,00 100,20";
-	static final String allowPrintSumTotal = "Итого: 2,00 300,41";
-	static final String denyPrintSumTotalInvoice = "Всего по накладной 1 X 80,16 X 20,04 100,20";
+	static final String denyPrintSumTotal = "Итого: 1,20 100,20";
+	static final String allowPrintSumTotal = "Итого: 2,20 300,41";
+	static final String denyPrintSumTotalInvoice = "Всего по накладной 1,200 X 80,16 X 20,04 100,20";
 	static final String denyPrintSumTotalGoodsBill = "Всего к оплате 80,16 Х 20,04 100,20";
 	
 	private static final String SQL_GOODS = 

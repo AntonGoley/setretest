@@ -82,8 +82,6 @@ public class CheckGeneratorTest {
 		
 	}
 	
-	
-	
 	private PurchaseEntity getBankCardPayment(Class<? extends BankCardPaymentEntity> cardType){
 		log.info("Чек с оплатой банковской/детской картой..");
 		PurchaseEntity p;
