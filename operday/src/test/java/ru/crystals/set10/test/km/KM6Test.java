@@ -1,14 +1,10 @@
 package ru.crystals.set10.test.km;
 
-
-
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashMap;
 
-import junit.framework.Assert;
-
-import org.testng.ITestNGMethod;
+import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -33,7 +29,7 @@ public class KM6Test extends AbstractTest{
 	HTMLRepotResultPage htmlReportResults;
 	private static PurchaseEntity purchase;
 	private static PurchaseEntity purchaseReturn;
-	private static String cashier;
+	//private static String cashier;
 	private String reportText;
 	private boolean reportOpened = false;
 	
@@ -57,8 +53,6 @@ public class KM6Test extends AbstractTest{
 		
 		km6Tablerows = km6.getKmCountOnPage(LOCATOR_KM3_TABLE);
 		
-		cashier = cashEmulator.changeCashUser(10);
-		
 		cashEmulator.useNextShift();
 		//генерим чек
 		purchase = (PurchaseEntity) cashEmulator.nextPurchase();
@@ -73,7 +67,7 @@ public class KM6Test extends AbstractTest{
 	public static Object[][] km6Fields(){
 		BigDecimal sumPurchases = purchase.getCheckSumEndBigDecimal();
 		BigDecimal sumRetunPositions  = purchaseReturn.getCheckSumEndBigDecimal();
-		String shiftNum = String.valueOf(purchaseReturn.getShift().getNumShift());
+		//String shiftNum = String.valueOf(purchaseReturn.getShift().getNumShift());
 		
 		CashVO cashVO = new CashVO();
 		cashVO = cashEmulator.setCashVO(cashEmulator.getCashNumber(), TARGET_HOST, new Date().getTime());
@@ -93,7 +87,7 @@ public class KM6Test extends AbstractTest{
 	public void testKM6CreatesAfterCloseShiftOnCash(){
 		km6.switchToKm(LOCATOR_KM3).switchToKm(LOCATOR_KM6);
 		km6 = new KmPage(getDriver());
-		Assert.assertEquals("Не появилась форма КМ6", km6Tablerows + 1, km6.getKmCountOnPage(LOCATOR_KM6_TABLE));
+		Assert.assertEquals(km6Tablerows + 1, km6.getKmCountOnPage(LOCATOR_KM6_TABLE), "Не появилась форма КМ6");
 	}
 	
 	@Test (	dependsOnMethods ="testKM6CreatesAfterCloseShiftOnCash",
@@ -108,7 +102,7 @@ public class KM6Test extends AbstractTest{
 		}
 		
 		log.info("Значение поля: " + field);
-		Assert.assertTrue("Неверное значение поля в форме КМ6", reportText.contains(expectedValue));
+		Assert.assertTrue(reportText.contains(expectedValue), "Неверное значение поля в форме КМ6");
 	}
 	
 }

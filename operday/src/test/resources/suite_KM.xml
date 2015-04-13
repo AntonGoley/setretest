@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+
+
+<suite name="Акты КМ6, КМ6" preserve-order="true" configfailurepolicy="continue">
+<listeners>
+    <listener class-name="org.uncommons.reportng.HTMLReporter" />
+ </listeners>
+ 
+<!-- КМ3, КМ6--> 	
+  	<test name="КМ3" >
+	  	<classes>
+	  		<class name="ru.crystals.set10.test.km.KM3Test"/>
+	  		<class name="ru.crystals.set10.test.km.KM6Test"/>
+		</classes>	 
+  	</test>
+  	
+</suite> 
