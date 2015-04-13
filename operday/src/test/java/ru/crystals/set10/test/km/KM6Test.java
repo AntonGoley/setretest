@@ -22,6 +22,7 @@ import static ru.crystals.set10.utils.DbAdapter.*;
 import static ru.crystals.set10.pages.operday.cashes.KmPage.*;
 import static ru.crystals.set10.pages.operday.OperDayPage.CASHES;
 
+@Test(groups = {"retail", "centrum"})
 public class KM6Test extends AbstractTest{
 	
 	KmPage km6;

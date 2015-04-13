@@ -8,7 +8,7 @@
  </listeners>
  
 <!-- КМ3, КМ6--> 	
-  	<test name="КМ3" >
+  	<test name="КМ3, KM6" >
 	  	<classes>
 	  		<class name="ru.crystals.set10.test.km.KM3Test"/>
 	  		<class name="ru.crystals.set10.test.km.KM6Test"/>
