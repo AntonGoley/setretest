@@ -18,7 +18,6 @@ import ru.crystals.set10.pages.operday.cashes.CashesPage;
 import ru.crystals.set10.pages.operday.cashes.KmPage;
 import ru.crystals.set10.test.AbstractTest;
 import ru.crystals.setretailx.cash.CashVO;
-import static ru.crystals.set10.utils.DbAdapter.*;
 import static ru.crystals.set10.pages.operday.cashes.KmPage.*;
 import static ru.crystals.set10.pages.operday.OperDayPage.CASHES;
 
@@ -42,11 +41,11 @@ public class KM6Test extends AbstractTest{
 	
 	@BeforeClass
 	public void prepareData(){
-		dbAdapter.batchUpdateDb(DB_RETAIL_OPERDAY, new String[] {SQL_CLEAN_KM6} );
+		dbAdapter.batchUpdateDb(DB_OPERDAY, new String[] {SQL_CLEAN_KM6} );
 		
-		log.info("Записи в таблице od_km6 удалены в базе " + DB_RETAIL_OPERDAY);
+		log.info("Записи в таблице od_km6 удалены в базе " + DB_OPERDAY);
 		
-		km6 = new LoginPage(getDriver(), Config.RETAIL_URL).
+		km6 = new LoginPage(getDriver(), TARGET_HOST).
 				openOperDay(Config.MANAGER, Config.MANAGER_PASSWORD)
 				.navigatePage(CashesPage.class, CASHES)
 				.openTab(KmPage.class, CashesPage.LOCATOR_ACTS_TAB)
