@@ -45,13 +45,13 @@ public class KM6Test extends AbstractTest{
 		
 		log.info("Записи в таблице od_km6 удалены в базе " + DB_OPERDAY);
 		
-		km6 = new LoginPage(getDriver(), TARGET_HOST).
-				openOperDay(Config.MANAGER, Config.MANAGER_PASSWORD)
+		km6 = new LoginPage(getDriver(), TARGET_HOST_URL)
+				.openOperDay(Config.MANAGER, Config.MANAGER_PASSWORD)
 				.navigatePage(CashesPage.class, CASHES)
 				.openTab(KmPage.class, CashesPage.LOCATOR_ACTS_TAB)
 				.switchToKm(LOCATOR_KM6);
 		
-		km6Tablerows = km6.getKmCountOnPage(LOCATOR_KM3_TABLE);
+		km6Tablerows = km6.getKmCountOnPage(LOCATOR_KM6_TABLE);
 		
 		cashEmulator.useNextShift();
 		//генерим чек
