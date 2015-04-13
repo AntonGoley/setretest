@@ -48,7 +48,7 @@ public class GoodsParser {
 	
 	static
 	  {
-		// проверить, есть ли товары в set_operday, и если нет, импортировать через ERP импорт
+		// проверить, есть ли товары в set, и если нет, импортировать через ERP импорт
 		if ((db.queryForInt(DB_RETAIL_SET, SQL_GOODS_COUNT)) < 30 ) {
 			SoapRequestSender soapSender  = new SoapRequestSender();
 			soapSender.sendGoodsToStartTesting(Config.RETAIL_HOST, "goods.txt");
@@ -73,7 +73,7 @@ public class GoodsParser {
 	      long summ = 0L;
 	      for (int i = 1; i < end; i++) {
 	        PositionEntity pos = new PositionEntity();
-	        ProductEntity product = catalogGoods.get((int)(Math.random() * catalogGoods.size() - 1.0D));
+	        ProductEntity product = catalogGoods.get((int)(Math.random() * catalogGoods.size()));
 	        pos.setProduct(product);
 	        pos.setNumber(Long.valueOf(i));
 

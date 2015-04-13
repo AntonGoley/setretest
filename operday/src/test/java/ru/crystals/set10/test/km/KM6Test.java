@@ -2,10 +2,13 @@ package ru.crystals.set10.test.km;
 
 
 
+import java.math.BigDecimal;
+import java.util.Date;
 import java.util.HashMap;
 
 import junit.framework.Assert;
 
+import org.testng.ITestNGMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -18,6 +21,7 @@ import ru.crystals.set10.pages.operday.OperDayPage;
 import ru.crystals.set10.pages.operday.cashes.CashesPage;
 import ru.crystals.set10.pages.operday.cashes.KmPage;
 import ru.crystals.set10.test.AbstractTest;
+import ru.crystals.setretailx.cash.CashVO;
 import static ru.crystals.set10.utils.DbAdapter.*;
 import static ru.crystals.set10.pages.operday.cashes.KmPage.*;
 import static ru.crystals.set10.pages.operday.OperDayPage.CASHES;
@@ -29,27 +33,15 @@ public class KM6Test extends AbstractTest{
 	HTMLRepotResultPage htmlReportResults;
 	private static PurchaseEntity purchase;
 	private static PurchaseEntity purchaseReturn;
+	private static String cashier;
+	private String reportText;
+	private boolean reportOpened = false;
 	
 	//количество отчетов на закладке КМ6
 	int km6Tablerows;
 	
 	private static String SQL_CLEAN_KM6 = "delete from od_km6";
 	private HashMap<Long, Long>  returnPositions = new HashMap<Long, Long>(); 
-	
-	@DataProvider (name = "Поля КМ6")
-	public static Object[][] km6Fields(){
-		String sumPurchases = String.valueOf(purchase.getCheckSumEndBigDecimal());
-		String sumRetunPositions  = String.valueOf(purchaseReturn.getCheckSumEndBigDecimal());
-		String shiftNum = String.valueOf(purchaseReturn.getShift().getNumShift());
-		
-		return new Object[][]{
-				{"Название формы", "СПРАВКА-ОТЧЁТ"},
-				//Итого 15466,43 2869,26 0,00
-				{"Строка ИТОГО", "Итого" + " " + sumPurchases + " " + sumRetunPositions},
-				{"Содержание табилцы",  shiftNum },							
-		};
-	}
-
 	
 	@BeforeClass
 	public void prepareData(){
@@ -65,6 +57,7 @@ public class KM6Test extends AbstractTest{
 		
 		km6Tablerows = km6.getKmCountOnPage(LOCATOR_KM3_TABLE);
 		
+		cashier = cashEmulator.changeCashUser(10);
 		
 		cashEmulator.useNextShift();
 		//генерим чек
@@ -76,6 +69,26 @@ public class KM6Test extends AbstractTest{
 		cashEmulator.nextZReport();
 	}
 	
+	@DataProvider (name = "Поля КМ6")
+	public static Object[][] km6Fields(){
+		BigDecimal sumPurchases = purchase.getCheckSumEndBigDecimal();
+		BigDecimal sumRetunPositions  = purchaseReturn.getCheckSumEndBigDecimal();
+		String shiftNum = String.valueOf(purchaseReturn.getShift().getNumShift());
+		
+		CashVO cashVO = new CashVO();
+		cashVO = cashEmulator.setCashVO(cashEmulator.getCashNumber(), TARGET_HOST, new Date().getTime());
+		cashEmulator.sendCashVO(cashVO);
+		
+		return new Object[][]{
+				{"Название формы", "СПРАВКА-ОТЧЁТ"},
+				{"Содержит ККМ: номер производителя (factory num)", cashVO.getFactoryNum()},
+				{"Содержит ККМ: рег. номер (fisc num)", cashVO.getFiscalNum()},
+//				{"Содержит фамилию кассира", cashier},
+				{"Строка Итого", ("Итого " + String.valueOf(sumPurchases) + " " + String.valueOf(sumRetunPositions)  + " " + String.valueOf(sumPurchases.subtract(sumRetunPositions))).replace(".", ",")},
+				
+		};
+	}
+	
 	@Test( description = "SRTE-29. Акт КМ6 создается, если приходит закрытие смены (Z-отчет)")
 	public void testKM6CreatesAfterCloseShiftOnCash(){
 		km6.switchToKm(LOCATOR_KM3).switchToKm(LOCATOR_KM6);
@@ -85,31 +98,17 @@ public class KM6Test extends AbstractTest{
 	
 	@Test (	dependsOnMethods ="testKM6CreatesAfterCloseShiftOnCash",
 			description = "SRTE-29. Правильность заполнения формы КМ6 данными",
-			dataProvider = "Поля КМ6")
-	public void testKM6Data(String fiels, String expectedValue){
-		log.info("Значение поля: " + fiels);
-		Assert.assertTrue("Неверное значение поля в форме КМ6", km6.printAllKmForms().contains(expectedValue));
+			dataProvider = "Поля КМ6"
+			)
+	public void testKM6Data(String field, String expectedValue){
+		
+		if (!reportOpened) {
+			reportText = km6.printAllKmForms();
+			reportOpened = true;
+		}
+		
+		log.info("Значение поля: " + field);
+		Assert.assertTrue("Неверное значение поля в форме КМ6", reportText.contains(expectedValue));
 	}
-	
-//	
-//	@Test( description = "SRL-2. Если форма КМ3 распечатана, следующий возвратный чек попадает в новую форму КМ3")
-//	public void testNewKM3CreatesIfcurrentPrinted(){
-//	}
-//	
-//	@Test( description = "SRL-2. Если в форме КМ3 12 чеков возврата, следующий возвратный чек попадает в новую форму КМ3")
-//	public void testNewKM3After12RefundChecks(){
-//	}
-//	
-//	@Test( description = "SRL-2. Новая форма КМ3 создается для новой смены")
-//	public void testKM3CreatesForNewShift(){
-//	}
-//	
-//	@Test( description = "Новая форма КМ3 создается для новой кассы")
-//	public void testKM3CreatesForNewCash(){
-//	}
-//	
-//	@Test( description = "SRL-2. Создается новая форма КМ3, если чек возврата с датой следующего дня (после 00:00:00 часов)")
-//	public void testNewKM3AfterMidnight(){
-//	}
 	
 }

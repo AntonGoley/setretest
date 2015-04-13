@@ -6,13 +6,10 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-
-import ru.crystals.httpclient.HttpClient;
 import ru.crystals.set10.config.Config;
 import ru.crystals.set10.pages.operday.tablereports.ReportConfigPage;
 import ru.crystals.set10.test.dataproviders.TableReportsDataprovider;
 import ru.crystals.set10.utils.DisinsectorTools;
-import ru.crystals.setretailx.cash.CashManagerRemote;
 import ru.crystals.setretailx.cash.CashVO;
 import static ru.crystals.set10.pages.operday.tablereports.TableReportPage.*;
 import static ru.crystals.set10.pages.operday.tablereports.ReportConfigPage.*;
@@ -21,9 +18,6 @@ import static ru.crystals.set10.pages.operday.tablereports.ReportConfigPage.*;
 @Test (groups = "retail")
 public class CashRegNumbersReportTest extends AbstractReportTest{
 	
-	private CashManagerRemote cashManager;
-	private final String  GLOBAL_SERVLET_PATH = "/SET-OperDay-Web/TransportServlet";
-	HttpClient httpConnect = new HttpClient();
 	ReportConfigPage cashNumbersConfigPage;
 	
 	long date = new Date().getTime();
@@ -52,8 +46,7 @@ public class CashRegNumbersReportTest extends AbstractReportTest{
 		 * Отправить данные по кассам на сервер
 		 */
 		for (int i=1; i<=5; i++) {
-			setCashData(date - 86400*100*100*i);
-			setCashVO(i);
+			setCashData(i, date - 86400*100*100*i);
 		}	
 		
 		cashNumbersConfigPage =  navigateToReportConfig(
@@ -102,35 +95,17 @@ public class CashRegNumbersReportTest extends AbstractReportTest{
 	}
 	
 	/*
-	 * Отправляет на сервер данные кассы (эмуляция вызова кассой сервера)
+	 * Задать данные по каждой кассе
 	 */
-	private void setCashVO(int cashNumber) throws Exception{
-		CashVO cashVo = new CashVO();
-			cashVo.setNumber(cashNumber);
-			cashVo.setShopNumber(Integer.valueOf(Config.SHOP_NUMBER));
-			cashVo.setEklzNum(eklzNum);
-			cashVo.setFactoryNum(factoryNum);
-			cashVo.setFiscalNum(fiscalNum);
-			cashVo.setFiscalDate(fiscalDate);
-			cashVo.setHardwareName("Beetle");
-			
-		httpConnect.setUrl("http://" + Config.RETAIL_HOST + ":8090" + GLOBAL_SERVLET_PATH);
-		cashManager = httpConnect.find(CashManagerRemote.class, CashManagerRemote.SERVER_EJB_NAME);
-		cashManager.updateCashParams(cashVo, true);
-		log.info(String.format("Отправлена информация по кассе %s на сервер: заводской номер - %s, рег. номер - %s, номер ЭКЛЗ - %s, дата фискализации - %s", 
-				cashNumber, factoryNum, fiscalNum, eklzNum, fiscalDate )  );
-	}
-	
-	
-	/*
-	 * Метод задает данные кассы: фискальный номер, заводской номер, дату фискализации
-	 */
-	private void setCashData(long date){
-		String prefix = String.valueOf(date);
-		factoryNum = "fact" + prefix;
-		fiscalNum  = "fisc" + prefix;
-		eklzNum  = "ek" + prefix;
-		fiscalDate  = DisinsectorTools.getDate("dd.MM.yyyy", date);
+	private void setCashData(int cashNumber, long date) throws Exception{
+		CashVO cashVO = new CashVO();
+		cashVO = cashEmulator.setCashVO(cashNumber, Config.SHOP_NUMBER, date);
+		eklzNum = cashVO.getEklzNum();
+		factoryNum = cashVO.getFactoryNum();
+		fiscalNum = cashVO.getFiscalNum();
+		fiscalDate = DisinsectorTools.getDate("dd.MM.YYYY", Long.valueOf(cashVO.getFiscalDate()));
+		
+		cashEmulator.sendCashVO(cashVO);	
 	}
 }
 

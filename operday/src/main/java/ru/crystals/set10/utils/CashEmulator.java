@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import ru.crystals.discount.processing.entity.LoyTransactionEntity;
+import ru.crystals.httpclient.HttpClient;
 import ru.crystals.pos.check.CashOnlineMessage;
 import ru.crystals.pos.check.CheckStatus;
 import ru.crystals.pos.check.DocumentEntity;
@@ -28,6 +29,9 @@ import ru.crystals.pos.payments.CashPaymentEntity;
 import ru.crystals.pos.payments.PaymentEntity;
 import ru.crystals.pos.payments.PaymentTransactionEntity;
 import ru.crystals.set10.config.Config;
+import ru.crystals.setretailx.cash.CashManagerException;
+import ru.crystals.setretailx.cash.CashManagerRemote;
+import ru.crystals.setretailx.cash.CashVO;
 import ru.crystals.transport.DataTypesEnum;
 import static ru.crystals.set10.utils.DbAdapter.*;
 import static ru.crystals.set10.utils.GoodsParser.*;
@@ -45,6 +49,10 @@ public class CashEmulator {
 
 	private long yesterday = Long.valueOf("0"); //(86400000 * 130); ("-11232000000")
 	
+	private final String  GLOBAL_SERVLET_PATH = "/SET-OperDay-Web/TransportServlet";
+	HttpClient httpConnect = new HttpClient();
+	private CashManagerRemote cashManager;
+	
 	/*
 	 * Список созданных в тестах касс
 	 */
@@ -58,9 +66,6 @@ public class CashEmulator {
 	private static DbAdapter db = new  DbAdapter();
 	
 	private static final String SQL_MAX_SHIFT_NUM = "select max(numshift) from od_shift as od_s where cashnum = %s  and shopindex = %s and shiftcreate >= '%s 00:00:00' and shiftcreate < '%s 23:59:59.999'";
-	//private static final String SQL_MAX_SHIFT_NUM = "select max(numshift) from od_shift as od_s join od_purchase as od_p on od_p.id_shift = od_s.id where cashnum = %s  and shopindex = %s and shiftcreate >= '%s 00:00:00' and shiftcreate < '%s 23:59:59.999'";
-	
-	//private static final String SQL_SHIFT_STATUS = "select distinct(state) from od_shift where numshift = %s and cashnum = %s and shopindex = %s and shiftcreate >= '%s 00:00:00' and shiftcreate < '%s 23:59:59.999'";
 	
 	private static final String SQL_CHECK_NUM = "select max(numberfield) from od_shift as od_s join od_purchase as od_p on od_p.id_shift = od_s.id where cashnum = %s and numshift = %s and shopindex = %s and shiftcreate >= '%s 00:00:00' and shiftcreate < '%s 23:59:59.999'";
 	
@@ -631,12 +636,6 @@ public class CashEmulator {
 		return dateFormat.format(date);
 	}
 	
-	public void sendCashMessage(){
-		CashOnlineMessage message = new CashOnlineMessage();
-		message.setUser(shift.getSessionStart().getUser());
-		docSender.sendObject(DataTypesEnum.CASHONLINE_TYPE.code, message);
-	}
-	
 	public int getCashNumber(){
 		return cashNumber;
 	}
@@ -648,4 +647,38 @@ public class CashEmulator {
 		this.yesterday = ofset;
 	}
 	
+	/*
+	 * Отправляет на сервер данные кассы (эмуляция вызова кассой сервера)
+	 */
+	public void sendCashVO(CashVO cashVo) {
+		httpConnect.setUrl("http://" + Config.RETAIL_HOST + ":8090" + GLOBAL_SERVLET_PATH);
+		cashManager = httpConnect.find(CashManagerRemote.class, CashManagerRemote.SERVER_EJB_NAME);
+		try {
+			cashManager.updateCashParams(cashVo, true);
+		} catch (CashManagerException e) {
+			e.printStackTrace();
+		}
+		log.info(String.format("Отправлена информация по кассе %s на сервер: заводской номер - %s, рег. номер - %s, номер ЭКЛЗ - %s, дата фискализации - %s", 
+				cashNumber, cashVo.getFactoryNum(), cashVo.getFiscalNum(), cashVo.getEklzNum(), cashVo.getFiscalDate() )  );
+	}
+	
+	public CashVO setCashVO(int cashNumber, String shop, long date){
+		CashVO cashVo = new CashVO();
+		String prefix = String.valueOf(date);
+		
+		cashVo.setNumber(cashNumber);
+		cashVo.setShopNumber(Integer.valueOf(Config.SHOP_NUMBER));
+		cashVo.setEklzNum("ek" + prefix);
+		cashVo.setFactoryNum("fact" + prefix);
+		cashVo.setFiscalNum("fisc" + prefix);
+		cashVo.setFiscalDate(prefix);
+		cashVo.setHardwareName("Beetle");
+		return cashVo;
+	}
+	
+	public void sendCashMessage(){
+		CashOnlineMessage message = new CashOnlineMessage();
+		message.setUser(shift.getSessionStart().getUser());
+		docSender.sendObject(DataTypesEnum.CASHONLINE_TYPE.code, message);
+	}
 }
