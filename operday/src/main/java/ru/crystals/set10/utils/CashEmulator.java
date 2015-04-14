@@ -609,21 +609,15 @@ public class CashEmulator {
 	    int timeOut = 60;
     	int tryCount = 0;
     	
-    	try {
-	    	while (tryCount < timeOut) {
-	    		tryCount++;
-	    		DisinsectorTools.delay(500);
-	    		if (db.queryForInt(db_operday, String.format(dbRequest, fiscalDocNum)) == 1) {
-	    			log.info(String.format("Чек зарегистрирован в операционном дне; fiscalDocNum: %s ", fiscalDocNum));
-	    			return true;
-	    		}	
-	    	}
-	    	//log.info(String.format("Check transport timeout! No check found with number:  %s and fiscalDocNum: %s ", purchase.getNumber(), fiscalDocNum));
-			throw new Exception(String.format("Check transport timeout! No check found with number:  %s and fiscalDocNum: %s ", purchase.getNumber(), fiscalDocNum));
-		} catch (Exception e) {
-
-			e.printStackTrace();
-		}
+    	while (tryCount < timeOut) {
+    		tryCount++;
+    		DisinsectorTools.delay(500);
+    		if (db.queryForInt(db_operday, String.format(dbRequest, fiscalDocNum)) == 1) {
+    			log.info(String.format("Чек зарегистрирован в операционном дне; fiscalDocNum: %s ", fiscalDocNum));
+    			return true;
+    		}	
+    	}
+	    log.info(String.format("Check transport timeout!!! No check found with number:  %s and fiscalDocNum: %s ", purchase.getNumber(), fiscalDocNum).toUpperCase());
     	
     	return false;
 	}

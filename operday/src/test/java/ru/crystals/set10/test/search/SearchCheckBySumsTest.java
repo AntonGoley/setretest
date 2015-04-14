@@ -78,19 +78,19 @@ public class SearchCheckBySumsTest extends SearchCheckAbstractTest{
 		 * Чек продажи с транзакцией лояльности,
 		 * для поиска по сумме скидки на чек
 		 */
-		p4 =  cashEmulator.nextPurchaseWithoutSending();
+		p4 =  cashEmulatorSearchCheck.nextPurchaseWithoutSending();
 		loyTransaction = discountEmulator.addDiscount(p4);
 		// отправим транзакцию лояльности, а в тесте отправим чек
-		cashEmulator.sendLoy(loyTransaction, p4);
+		cashEmulatorSearchCheck.sendLoy(loyTransaction, p4);
 		p4.setDiscountValueTotal(loyTransaction.getDiscountValueTotal());
 		
 		/*
 		 * Чек продажи с транзакцией лояльности
 		 */
-//		p5 =  cashEmulator.nextPurchaseWithoutSending();
+//		p5 =  cashEmulatorSearchCheck.nextPurchaseWithoutSending();
 //		loyTransaction = discountEmulator.addDiscountForPosition(p5, 1, true);
 //		// отправим транзакцию лояльности, а в тесте отправим чек
-//		cashEmulator.sendLoy(loyTransaction, p5);
+//		cashEmulatorSearchCheck.sendLoy(loyTransaction, p5);
 //		p5.setDiscountValueTotal(loyTransaction.getDiscountValueTotal());
 		
 		/*TODO:
@@ -132,9 +132,9 @@ public class SearchCheckBySumsTest extends SearchCheckAbstractTest{
 	
 	@Test (description = "SRTE-131. Поиск чека на ТК по суммам", 
 			dataProvider = "Суммы" )
-	public void testSearchCheckBySum(String filter, long sum, PurchaseEntity p1){
+	public void testSearchCheckBySum(String filter, long sum, PurchaseEntity p){
 		/*
-		 * Определить, сколько зарегистрировано чеков, с суммой sum, до отправки чека p1 
+		 * Определить, сколько зарегистрировано чеков, с суммой sum, до отправки чека p 
 		 */
  		expectedCountEquals = getResults(filter, FILTER_CATEGORY_SELECT_EQUALS, convertSum(sum));
  		expectedCountGreater = getResults(filter, FILTER_CATEGORY_SELECT_GREATER, convertSum(sum));
@@ -142,7 +142,7 @@ public class SearchCheckBySumsTest extends SearchCheckAbstractTest{
  		expectedCountSmaller = getResults(filter, FILTER_CATEGORY_SELECT_SMALLER, convertSum(sum));
  		expectedCountSmaller_100 = getResults(filter, FILTER_CATEGORY_SELECT_SMALLER, convertSum(sum + 100));
  		
- 		sendCheck(p1);
+ 		sendCheck(p);
  		log.info("Проверка поиска по фильтру: " + filter);
  		/*
  		 *  Чек НЕ попадает в результат поиска, если условие поиска > сумма чека  
