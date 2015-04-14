@@ -13,10 +13,10 @@ import static ru.crystals.set10.pages.operday.searchcheck.CheckSearchPage.*;
 @Test (groups={"centrum", "retail"})
 public class SearchCheckByCheckTypeGroupTest extends SearchCheckAbstractTest{
 	
+	private PurchaseEntity p;
 	private PurchaseEntity p1;
 	private PurchaseEntity p1refund;
 	private PurchaseEntity p1cancel;
-	
 	
 	@BeforeClass
 	public void send1stCheck(){
@@ -75,11 +75,13 @@ public class SearchCheckByCheckTypeGroupTest extends SearchCheckAbstractTest{
 		searchCheck.deleteAllFilters();
 		searchCheck.addFilter();
 		
-		searchCheck.setFilterMultiText(FILTER_CATEGORY_CASH_NUMBER, String.valueOf(cashNumber));
+		p = cashEmulatorSearchCheck.nextPurchaseWithoutSending();
+		
+		searchCheck.setFilterMultiText(FILTER_CATEGORY_CASH_NUMBER, String.valueOf(cashEmulatorSearchCheck.getCashNumber()));
  		searchCheck.doSearch();
  		
  		searchResult = searchCheck.getSearchResultCount();
- 		sendCheck();
+ 		sendCheck(p);
  		
 		searchCheck.doSearch();
 		Assert.assertEquals(searchCheck.getExpectedResultCount(searchResult + 1), searchResult + 1, "");
@@ -92,14 +94,17 @@ public class SearchCheckByCheckTypeGroupTest extends SearchCheckAbstractTest{
 	@Test (
 			description = "SRTE-71. Поиск чека на ТК по номеру смены")
 	public void testSearchCheckBySiftNumber(){
- 		searchCheck.setFilterMultiText(FILTER_CATEGORY_SHIFT_NUMBER, String.valueOf(shiftNumber));
+		long shiftNumber;
+		p = cashEmulatorSearchCheck.nextPurchaseWithoutSending();
+		shiftNumber = p.getShift().getNumShift();
+		
+		searchCheck.setFilterMultiText(FILTER_CATEGORY_SHIFT_NUMBER, String.valueOf(shiftNumber));
  		searchCheck.doSearch();
  		
  		searchResult = searchCheck.getSearchResultCount();
- 		sendCheck();
- 		
-		searchCheck.doSearch();
-		Assert.assertEquals(searchCheck.getExpectedResultCount(searchResult + 1), searchResult + 1, "");
+ 		sendCheck(p);
+ 		searchCheck.doSearch();
+ 		Assert.assertEquals(searchCheck.getExpectedResultCount(searchResult + 1), searchResult + 1, "");
  		testExcelExport(LOCATOR_XLS_CHECK_CONTENT, XLS_REPORT_CONTENT_PATTERN);
  		testExcelExport(LOCATOR_XLS_CHECK_HEADERS, XLS_REPORT_HEADERS_PATTERN);
 	}
@@ -107,14 +112,17 @@ public class SearchCheckByCheckTypeGroupTest extends SearchCheckAbstractTest{
 	@Test ( 
 			description = "SRTE-71. Поиск чека на ТК по номеру чека")
 	public void testSearchCheckByNumber(){
-		// Найдем чек продажи с номером checkNumber + 1 (номер следующего чека продажи, который будет отправлен после)
- 		searchCheck.setFilterMultiText(FILTER_CATEGORY_CHECK_NUMBER, String.valueOf(checkNumber + 1));
+		long checkNumber;
+		p = cashEmulatorSearchCheck.nextPurchaseWithoutSending();
+		checkNumber = p.getNumber();
+
+		searchCheck.setFilterMultiText(FILTER_CATEGORY_CHECK_NUMBER, String.valueOf(checkNumber));
  		searchCheck.doSearch();
- 		
  		searchResult = searchCheck.getSearchResultCount();
- 		sendCheck();
- 		searchCheck.doSearch();
- 		Assert.assertEquals(searchCheck.getExpectedResultCount(searchResult + 1), searchResult + 1, "");
+ 		sendCheck(p);
+ 		
+		searchCheck.doSearch();
+		Assert.assertEquals(searchCheck.getExpectedResultCount(searchResult + 1), searchResult + 1, "");
  		testExcelExport(LOCATOR_XLS_CHECK_CONTENT, XLS_REPORT_CONTENT_PATTERN);
  		testExcelExport(LOCATOR_XLS_CHECK_HEADERS, XLS_REPORT_HEADERS_PATTERN);
 	}

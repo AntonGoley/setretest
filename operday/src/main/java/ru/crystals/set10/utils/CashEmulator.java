@@ -285,8 +285,6 @@ public class CashEmulator {
 	public PurchaseEntity nextPurchaseWithoutSending() {
 
 		openShiftOnFirstDocument();
-		
-	   	log.info("Сгенерить чек для транзакций лояльности"); 
 	   	int idx = (int)random(peList.size() - 2) + 1;
 	    return (PurchaseEntity)completeDocument(peList.get(idx));
 	}

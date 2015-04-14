@@ -27,11 +27,6 @@ public class SearchCheckAbstractTest extends AbstractTest{
 	PaymentTransactionsPage paymentTransactions;
 	
 	static PurchaseEntity purchase;
-	static long checkNumber = 0;
-	static long shiftNumber = 0;
-	static long shopNumber = 0;
-	static long cashNumber = 0;
-	static long checkBarcode = 0;
 	static int searchResult = 0;
 	
 	/*
@@ -45,16 +40,16 @@ public class SearchCheckAbstractTest extends AbstractTest{
 		searchCheck = mainPage.openOperDay().navigatePage(CheckSearchPage.class, SEARCH_CHECK);
 	}	
 	
+	
+	//TODO: следующие 2 метода выглядят как ненужные..
 	protected static void sendCheck(){
 		// Сгенерим чек продажи
 		purchase = (PurchaseEntity) cashEmulatorSearchCheck.nextPurchase();
-		setCheckData();
 	}
 	
-	protected static void sendCheck(PurchaseEntity pe){
+	protected static void sendCheck(PurchaseEntity p){
 		// Сгенерим чек продажи
-		purchase = (PurchaseEntity) cashEmulatorSearchCheck.nextPurchase(pe);
-		setCheckData();
+		purchase = (PurchaseEntity) cashEmulatorSearchCheck.nextPurchase(p);
 	}
 	
 	/*
@@ -65,19 +60,6 @@ public class SearchCheckAbstractTest extends AbstractTest{
 		superPurchase = purchase;
 		// Сгенерим чек продажи
 		purchase = (PurchaseEntity) cashEmulatorSearchCheck.nextRefundAll(superPurchase, false);
-		setCheckData();
-	}
-	
-	protected static void setCheckData(){
-		checkNumber = purchase.getNumber();
-		shiftNumber = purchase.getShift().getNumShift();
-		shopNumber = purchase.getShift().getShopIndex();
-		cashNumber = purchase.getShift().getCashNum();
-		/*
-		 * Задержка, после отправки чека, т.к в системе не все сущности 
-		 * успевают обновиться до нажатия кнопки поиск.
-		 */
-		DisinsectorTools.delay(1000);
 	}
 	
 	public void testExcelExport(String reportLocator, String reportFileNamePattern){
