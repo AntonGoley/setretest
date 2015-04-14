@@ -52,10 +52,10 @@ public class OperDayPage extends AbstractPage{
 	 * Копируем в консоль содержание документа
 	 * и возвращаем как String 
 	 */
-	public String getReportText(){
+	public synchronized String getReportText(){
 		// если это первый документ, который печатаем	
 			if (ifFirstDocument) {
-				log.info("Ожидание первой загрузки сопроводительного документа");
+				log.info("Ожидание первой загрузки документа");
 				DisinsectorTools.delay(10000);
 				ifFirstDocument = false;
 			}

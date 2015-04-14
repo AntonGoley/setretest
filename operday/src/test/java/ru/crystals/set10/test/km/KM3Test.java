@@ -5,8 +5,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashMap;
 
-import junit.framework.Assert;
-
+import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -19,6 +18,7 @@ import ru.crystals.set10.pages.operday.OperDayPage;
 import ru.crystals.set10.pages.operday.cashes.CashesPage;
 import ru.crystals.set10.pages.operday.cashes.KmPage;
 import ru.crystals.set10.test.AbstractTest;
+import ru.crystals.set10.utils.GoodsParser;
 import ru.crystals.setretailx.cash.CashVO;
 import static ru.crystals.set10.pages.operday.cashes.KmPage.*;
 import static ru.crystals.set10.pages.operday.OperDayPage.CASHES;
@@ -32,7 +32,7 @@ public class KM3Test extends AbstractTest{
 	private static PurchaseEntity purchase;
 	private static PurchaseEntity purchaseReturn;
 	
-	private int km3Tablerows;
+	private int km3Tablerows = 0;
 	
 	private static String SQL_CLEAN_KM3 = "delete from od_km3";
 	private static String SQL_CLEAN_KM3_ROW = "delete from od_km3_row";
@@ -55,11 +55,12 @@ public class KM3Test extends AbstractTest{
 		//количество актов km3
 		km3Tablerows = km3.getKmCountOnPage(LOCATOR_KM3_TABLE);
 		
-		purchase = (PurchaseEntity) cashEmulator.nextPurchase();
+		purchase = (PurchaseEntity) GoodsParser.generatePurchaseWithPositions(10);
+		cashEmulator.nextPurchase(purchase);
 		//Возвращаем 1-ю позицию
 		returnPositions.put(1L, 1L * 1000);
 		
-		purchaseReturn = (PurchaseEntity) cashEmulator.nextRefundPositions(purchase, returnPositions, true);
+		purchaseReturn = (PurchaseEntity) cashEmulator.nextRefundPositions(purchase, returnPositions, false);
 	}
 	
 	@DataProvider (name = "Поля КМ3")
@@ -82,7 +83,7 @@ public class KM3Test extends AbstractTest{
 	public void testKM3CreatesAfter1stRefund(){
 		km3.switchToKm(LOCATOR_KM6).switchToKm(LOCATOR_KM3);
 		km3 = new KmPage(getDriver());
-		Assert.assertEquals("Не появилась форма КМ3", km3Tablerows + 1, km3.getKmCountOnPage(LOCATOR_KM3_TABLE));
+		Assert.assertEquals(km3.getKmCountOnPage(LOCATOR_KM3_TABLE), ++km3Tablerows, "Не появилась форма КМ3");
 	}
 	
 	@Test (	dependsOnMethods ="testKM3CreatesAfter1stRefund",
@@ -94,22 +95,40 @@ public class KM3Test extends AbstractTest{
 			reportOpened = true;
 		}
 		log.info("Значение поля: " + fiels);
-		Assert.assertTrue("Неверное значение поля в форме КМ3", reportText.contains(expectedValue));
+		Assert.assertTrue(reportText.contains(expectedValue), "Неверное значение поля в форме КМ3");
 	}
-//	
-//	@Test( description = "SRL-2. Если форма КМ3 распечатана, следующий возвратный чек попадает в новую форму КМ3")
-//	public void testNewKM3CreatesIfcurrentPrinted(){
-//	}
+	
+	@Test(  dependsOnMethods ="testKM3Data",
+			description = "SRL-2. Если форма КМ3 распечатана, следующий возвратный чек попадает в новую форму КМ3",
+			alwaysRun = true
+			)
+	public void testNewKM3CreatesIfcurrentPrinted(){
+		returnPositions.clear();
+		returnPositions.put(2L, 1L * 1000);
+		purchaseReturn = (PurchaseEntity) cashEmulator.nextRefundPositions(purchase, returnPositions, false);
+		km3.switchToKm(LOCATOR_KM6).switchToKm(LOCATOR_KM3);
+		Assert.assertEquals(km3.getKmCountOnPage(LOCATOR_KM3_TABLE), ++km3Tablerows, "Новая форма КМ3 не создалась для нового чека возврата, после печати существующей КМ3");
+	}
+	
+	@Test(  dependsOnMethods ="testNewKM3CreatesIfcurrentPrinted",
+			description = "SRL-2. Новая форма КМ3 создается для новой смены")
+	public void testKM3CreatesForNewShift(){
+		returnPositions.clear();
+		returnPositions.put(3L, 1L * 1000);
+		cashEmulator.useNextShift();
+		purchaseReturn = (PurchaseEntity) cashEmulator.nextRefundPositions(purchase, returnPositions, true);
+		km3.switchToKm(LOCATOR_KM6).switchToKm(LOCATOR_KM3);
+		Assert.assertEquals(km3.getKmCountOnPage(LOCATOR_KM3_TABLE), ++km3Tablerows, "Новая форма КМ3 не создалась для новой смены");
+	}
+
 //	
 //	@Test( description = "SRL-2. Если в форме КМ3 12 чеков возврата, следующий возвратный чек попадает в новую форму КМ3")
 //	public void testNewKM3After12RefundChecks(){
 //	}
 //	
-//	@Test( description = "SRL-2. Новая форма КМ3 создается для новой смены")
-//	public void testKM3CreatesForNewShift(){
-//	}
 //	
-//	@Test( description = "Новая форма КМ3 создается для новой кассы")
+//	@Test( 	dependsOnMethods ="testNewKM3CreatesIfcurrentPrinted",
+//			description = "Новая форма КМ3 создается для новой кассы")
 //	public void testKM3CreatesForNewCash(){
 //	}
 //	
