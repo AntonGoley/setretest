@@ -29,6 +29,7 @@ public class KM3Test extends AbstractTest{
 	KmPage km3;
 	OperDayPage operDay;
 	HTMLRepotResultPage htmlReportResults;
+	
 	private static PurchaseEntity purchase;
 	private static PurchaseEntity purchaseReturn;
 	
@@ -36,8 +37,8 @@ public class KM3Test extends AbstractTest{
 	
 	private static String SQL_CLEAN_KM3 = "delete from od_km3";
 	private static String SQL_CLEAN_KM3_ROW = "delete from od_km3_row";
+
 	private HashMap<Long, Long>  returnPositions = new HashMap<Long, Long>(); 
-	
 	private String reportText;
 	private boolean reportOpened = false;
 	
@@ -46,8 +47,8 @@ public class KM3Test extends AbstractTest{
 		dbAdapter.batchUpdateDb(DB_OPERDAY, new String[] {SQL_CLEAN_KM3, SQL_CLEAN_KM3_ROW} );
 		log.info("Записи в таблице od_km3 и в таблице od_km3_row удалены в базе " + DB_OPERDAY);
 		
-		km3 = new LoginPage(getDriver(), TARGET_HOST_URL).
-				openOperDay(Config.MANAGER, Config.MANAGER_PASSWORD)
+		km3 = new LoginPage(getDriver(), TARGET_HOST_URL)
+				.openOperDay(Config.MANAGER, Config.MANAGER_PASSWORD)
 				.navigatePage(CashesPage.class, CASHES)
 				.openTab(KmPage.class, CashesPage.LOCATOR_ACTS_TAB)
 				.switchToKm(LOCATOR_KM3);
@@ -99,7 +100,7 @@ public class KM3Test extends AbstractTest{
 	}
 	
 	@Test(  dependsOnMethods ="testKM3Data",
-			description = "SRL-2. Если форма КМ3 распечатана, следующий возвратный чек попадает в новую форму КМ3",
+			description = "SRTE-28. Если форма КМ3 распечатана, следующий возвратный чек попадает в новую форму КМ3",
 			alwaysRun = true
 			)
 	public void testNewKM3CreatesIfcurrentPrinted(){
@@ -111,28 +112,38 @@ public class KM3Test extends AbstractTest{
 	}
 	
 	@Test(  dependsOnMethods ="testNewKM3CreatesIfcurrentPrinted",
-			description = "SRL-2. Новая форма КМ3 создается для новой смены")
+			description = "SRTE-28. Новая форма КМ3 создается для новой смены",
+			alwaysRun = true)
 	public void testKM3CreatesForNewShift(){
 		returnPositions.clear();
 		returnPositions.put(3L, 1L * 1000);
 		cashEmulator.useNextShift();
-		purchaseReturn = (PurchaseEntity) cashEmulator.nextRefundPositions(purchase, returnPositions, true);
+		purchaseReturn = (PurchaseEntity) cashEmulator.nextRefundPositions(purchase, returnPositions, false);
 		km3.switchToKm(LOCATOR_KM6).switchToKm(LOCATOR_KM3);
 		Assert.assertEquals(km3.getKmCountOnPage(LOCATOR_KM3_TABLE), ++km3Tablerows, "Новая форма КМ3 не создалась для новой смены");
 	}
+	
+	@Test( 	dependsOnMethods ="testNewKM3CreatesIfcurrentPrinted",
+			description = "SRTE-28. Новая форма КМ3 создается для новой кассы",
+			alwaysRun = true)
+	public void testKM3CreatesForNewCash(){
+		PurchaseEntity p1 = (PurchaseEntity) cashEmulatorMainCash.nextPurchase();
+		returnPositions.clear();
+		returnPositions.put(1L, 1L * 1000);
+		purchaseReturn = (PurchaseEntity) cashEmulatorMainCash.nextRefundPositions(p1, returnPositions, true);
+		km3.switchToKm(LOCATOR_KM6).switchToKm(LOCATOR_KM3);
+		Assert.assertEquals(km3.getKmCountOnPage(LOCATOR_KM3_TABLE), ++km3Tablerows, "Новая форма КМ3 не создалась для новой смены");
 
+	}
+	
 //	
-//	@Test( description = "SRL-2. Если в форме КМ3 12 чеков возврата, следующий возвратный чек попадает в новую форму КМ3")
+//	@Test( description = "SRTE-28. Если в форме КМ3 12 чеков возврата, следующий возвратный чек попадает в новую форму КМ3")
 //	public void testNewKM3After12RefundChecks(){
 //	}
 //	
+//
 //	
-//	@Test( 	dependsOnMethods ="testNewKM3CreatesIfcurrentPrinted",
-//			description = "Новая форма КМ3 создается для новой кассы")
-//	public void testKM3CreatesForNewCash(){
-//	}
-//	
-//	@Test( description = "SRL-2. Создается новая форма КМ3, если чек возврата с датой следующего дня (после 00:00:00 часов)")
+//	@Test( description = "SRTE-28. Создается новая форма КМ3, если чек возврата с датой следующего дня (после 00:00:00 часов)")
 //	public void testNewKM3AfterMidnight(){
 //	}
 	

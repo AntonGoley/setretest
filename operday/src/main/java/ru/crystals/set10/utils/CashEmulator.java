@@ -48,7 +48,7 @@ public class CashEmulator {
 	private  ShiftEntity shift;
 	private String db_operday;
 
-	private long yesterday = Long.valueOf("0"); //(86400000 * 130); ("-11232000000")
+	private long yesterday = Long.valueOf("0");
 	
 	private final String  GLOBAL_SERVLET_PATH = "/SET-OperDay-Web/TransportServlet";
 	HttpClient httpConnect = new HttpClient();
@@ -149,7 +149,15 @@ public class CashEmulator {
 		String date = getDate("yyyy-MM-dd", System.currentTimeMillis() - yesterday);
 		return db.queryForInt(db_operday, String.format(SQL_GET_SHIFT_FINAL_SUM, String.valueOf("false"), cashNumber, shiftNum, shopNumber, date, date));
 	}
-
+	
+	/*
+	 * Открытие смены для фискального документа
+	 */
+	private void openShiftOnFirstDocument(){
+		if (shift.getShiftOpen() == null) {
+			shift.setShiftOpen(new Date(System.currentTimeMillis() - yesterday));
+		}
+	}
 	
 	protected void sendDocument(Serializable document) {
 		
@@ -170,15 +178,6 @@ public class CashEmulator {
         log.info("Try send one document - {}", document);
 		docSender.sendObject(type, document);
     }
-	
-	/*
-	 * Открытие смены для фискального документа
-	 */
-	private void openShiftOnFirstDocument(){
-		if (shift.getShiftOpen() == null) {
-			shift.setShiftOpen(new Date(System.currentTimeMillis() - yesterday));
-		}
-	}
 	
 	/*
 	 * выполнить изъятие
@@ -468,7 +467,7 @@ public class CashEmulator {
 	
 	private DocumentEntity completeAndSendPurchase(DocumentEntity de){
 		/*
-		 * Проверка на заполнение у чеке информации о смене
+		 * Проверка на заполнение в чеке информации о смене
 		 */
 		if (de.getShift() == null) {
 			de = completeDocument(de);
@@ -646,6 +645,7 @@ public class CashEmulator {
 	 * Установить смещение времени, относительно текущего момента
 	 */
 	public void setTimeOfset(long ofset){
+		 //(86400000 * 130); ("-11232000000")
 		this.yesterday = ofset;
 	}
 	

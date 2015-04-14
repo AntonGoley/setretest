@@ -41,16 +41,24 @@ public class  AbstractTest implements IExecutionListener{
      * эмулятор для магазина и виртуального магазина на центруме
      */
     protected static CashEmulator cashEmulator;
-    protected static CashEmulator cashEmulatorRetail = CashEmulator.getCashEmulator(Config.RETAIL_HOST, Integer.valueOf(Config.SHOP_NUMBER), Integer.valueOf(Config.CASH_NUMBER));
-    protected static CashEmulator cashEmulatorVirtualShop = CashEmulator.getCashEmulator(Config.CENTRUM_HOST, Integer.valueOf(Config.VIRTUAL_SHOP_NUMBER), Integer.valueOf(Config.CASH_NUMBER));
+    private static CashEmulator cashEmulatorRetail = CashEmulator.getCashEmulator(Config.RETAIL_HOST, Integer.valueOf(Config.SHOP_NUMBER), Integer.valueOf(Config.CASH_NUMBER));
+    private static CashEmulator cashEmulatorVirtualShop = CashEmulator.getCashEmulator(Config.CENTRUM_HOST, Integer.valueOf(Config.VIRTUAL_SHOP_NUMBER), Integer.valueOf(Config.CASH_NUMBER));
     
     /*
      *  эмулятор для поиска чеков
      */
     protected static CashEmulator cashEmulatorSearchCheck;
-    protected static CashEmulator cashEmulatorSearchCheckRetail = CashEmulator.getCashEmulator(Config.RETAIL_HOST, Integer.valueOf(Config.SHOP_NUMBER), Integer.valueOf(Config.CASH_NUMBER) + 1);
-    protected static CashEmulator cashEmulatorSearchCheckVirtualShop = CashEmulator.getCashEmulator(Config.CENTRUM_HOST, Integer.valueOf(Config.VIRTUAL_SHOP_NUMBER), Integer.valueOf(Config.CASH_NUMBER) + 1);
-   
+    private static CashEmulator cashEmulatorSearchCheckRetail = CashEmulator.getCashEmulator(Config.RETAIL_HOST, Integer.valueOf(Config.SHOP_NUMBER), Integer.valueOf(Config.CASH_NUMBER) + 1);
+    private static CashEmulator cashEmulatorSearchCheckVirtualShop = CashEmulator.getCashEmulator(Config.CENTRUM_HOST, Integer.valueOf(Config.VIRTUAL_SHOP_NUMBER), Integer.valueOf(Config.CASH_NUMBER) + 1);
+    
+    /*
+     *  эмулятор для поиска чеков
+     */
+    protected static CashEmulator cashEmulatorMainCash;
+    private static CashEmulator cashEmulatorMainCashRetail = CashEmulator.getCashEmulator(Config.RETAIL_HOST, Integer.valueOf(Config.SHOP_NUMBER), Integer.valueOf(Config.CASH_NUMBER) + 2);
+    private static CashEmulator cashEmulatorMainCashVirtualShop = CashEmulator.getCashEmulator(Config.CENTRUM_HOST, Integer.valueOf(Config.VIRTUAL_SHOP_NUMBER), Integer.valueOf(Config.CASH_NUMBER) + 2);
+    
+    
     protected static DbAdapter dbAdapter = new DbAdapter();
     
     private static boolean firstRun = true;
@@ -98,7 +106,8 @@ public class  AbstractTest implements IExecutionListener{
     	Config.SALES_PREFERENCES_INDEX = 10;
     	cashEmulator = cashEmulatorRetail;
     	cashEmulatorSearchCheck = cashEmulatorSearchCheckRetail;
-
+    	cashEmulatorMainCash = cashEmulatorMainCashRetail;
+    	
     	for (int i=0; i<groups.length; i++){
     		if (groups[i].equals("centrum")){
     			TARGET_HOST = Config.CENTRUM_HOST;
@@ -111,6 +120,7 @@ public class  AbstractTest implements IExecutionListener{
     	    	Config.SALES_PREFERENCES_INDEX = 11;
     			cashEmulator = cashEmulatorVirtualShop;
     			cashEmulatorSearchCheck = cashEmulatorSearchCheckVirtualShop;
+    			cashEmulatorMainCash = cashEmulatorMainCashVirtualShop;
     		} 
     	}
 	}

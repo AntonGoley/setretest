@@ -56,7 +56,7 @@ public class OperDayPage extends AbstractPage{
 		// если это первый документ, который печатаем	
 			if (ifFirstDocument) {
 				log.info("Ожидание первой загрузки документа");
-				DisinsectorTools.delay(10000);
+				DisinsectorTools.delay(15000);
 				ifFirstDocument = false;
 			}
 			String reportText = "";
