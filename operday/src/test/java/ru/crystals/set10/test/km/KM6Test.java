@@ -102,8 +102,6 @@ public class KM6Test extends AbstractTest{
 		}
 		
 		log.info("Значение поля: " + field);
-		
-		
 		Assert.assertTrue(reportText.contains(expectedValue), "Неверное значение поля в форме КМ6");
 	}
 	
