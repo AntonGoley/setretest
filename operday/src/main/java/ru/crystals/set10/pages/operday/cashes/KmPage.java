@@ -3,6 +3,8 @@ package ru.crystals.set10.pages.operday.cashes;
 
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+
+import ru.crystals.set10.utils.DisinsectorTools;
 import static ru.crystals.set10.utils.FlexMediator.*;
 
 
@@ -34,7 +36,22 @@ public class  KmPage extends CashesPage{
 				getElementProperty(getDriver(), ID_OPERDAYSWF, formType, "length"));
 	}
 	
-	public String printAllKmForms(){
+	
+	public String printAllKmForms(String downloadPath, String fileName, int pageNumber){
+		clickElement(getDriver(), ID_OPERDAYSWF, BUTTON_SELECT_ALL_UNPRINTED);
+		waitForProperty(getDriver(), ID_OPERDAYSWF, LOCATOR_PRINTALL_BUTTON, new String[]{"enabled", "true"});
+		// удалить ранее распечатанные отчеты
+		DisinsectorTools.removeOldReport(downloadPath, fileName);
+		clickElement(getDriver(), ID_OPERDAYSWF, LOCATOR_PRINTALL_BUTTON);
+		return getPDFContent(DisinsectorTools.getDownloadedFile(downloadPath, fileName), pageNumber);
+	}
+	
+	/*
+	 * Метод не используется, пока  в хроме не пофиксят открытие 
+	 * окна для просмотра печати
+	 */
+	@Deprecated
+	public String printAllKmFormsWhenPrinPreviewEnable(){
 		clickElement(getDriver(), ID_OPERDAYSWF, BUTTON_SELECT_ALL_UNPRINTED);
 		waitForProperty(getDriver(), ID_OPERDAYSWF, LOCATOR_PRINTALL_BUTTON, new String[]{"enabled", "true"});
 		clickElement(getDriver(), ID_OPERDAYSWF, LOCATOR_PRINTALL_BUTTON);

@@ -64,7 +64,7 @@ public class KM6Test extends AbstractTest{
 	}
 	
 	@DataProvider (name = "Поля КМ6")
-	public static Object[][] km6Fields(){
+	private static Object[][] km6Fields(){
 		BigDecimal sumPurchases = purchase.getCheckSumEndBigDecimal();
 		BigDecimal sumRetunPositions  = purchaseReturn.getCheckSumEndBigDecimal();
 		//String shiftNum = String.valueOf(purchaseReturn.getShift().getNumShift());
@@ -78,7 +78,7 @@ public class KM6Test extends AbstractTest{
 				{"Содержит ККМ: номер производителя (factory num)", cashVO.getFactoryNum()},
 				{"Содержит ККМ: рег. номер (fisc num)", cashVO.getFiscalNum()},
 //				{"Содержит фамилию кассира", cashier},
-				{"Строка Итого", ("Итого " + String.valueOf(sumPurchases) + " " + String.valueOf(sumRetunPositions)  + " " + String.valueOf(sumPurchases.subtract(sumRetunPositions))).replace(".", ",")},
+				{"Строка Итого", ("Итого\n" + String.valueOf(sumPurchases.subtract(sumRetunPositions)) + String.valueOf(sumPurchases) + " " + String.valueOf(sumRetunPositions)).replace(".", ",")},
 				
 		};
 	}
@@ -97,7 +97,7 @@ public class KM6Test extends AbstractTest{
 	public void testKM6Data(String field, String expectedValue){
 		
 		if (!reportOpened) {
-			reportText = km6.printAllKmForms();
+			reportText = km6.printAllKmForms(chromeDownloadPath, "KM6.pdf", 1);
 			reportOpened = true;
 		}
 		

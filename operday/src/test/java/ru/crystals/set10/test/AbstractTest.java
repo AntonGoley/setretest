@@ -19,7 +19,6 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.annotations.BeforeMethod;
-
 import ru.crystals.set10.config.*;
 import ru.crystals.set10.pages.basic.*;
 import ru.crystals.set10.utils.CashEmulator;
@@ -205,5 +204,5 @@ public class  AbstractTest implements IExecutionListener{
 			log.info("Сервис успешно остановлен"); 
 		}	
 	};
-    
+	
 }

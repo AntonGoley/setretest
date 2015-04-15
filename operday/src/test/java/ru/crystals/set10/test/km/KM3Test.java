@@ -74,7 +74,7 @@ public class KM3Test extends AbstractTest{
 		
 		return new Object[][]{
 				{"Название формы", "О ВОЗВРАТЕ ДЕНЕЖНЫХ СУММ ПОКУПАТЕЛЯМ (КЛИЕНТАМ)\nПО НЕИСПОЛЬЗОВАННЫМ КАССОВЫМ ЧЕКАМ"},
-				{"Строка Итого", ("Итого " + String.valueOf(sumRetunPositions)).replace(".", ",")},
+				{"Строка Итого", (String.valueOf(sumRetunPositions)).replace(".", ",") + " р.\n" + "Итого"},
 				{"Содержит ККМ: номер производителя (factory num)", cashVO.getFactoryNum()},
 				{"Содержит ККМ: рег. номер (fisc num)", cashVO.getFiscalNum()},
 		};
@@ -92,8 +92,8 @@ public class KM3Test extends AbstractTest{
 			dataProvider = "Поля КМ3")
 	public void testKM3Data(String fiels, String expectedValue){
 		if (!reportOpened) {
-			reportText = km3.printAllKmForms();
 			reportOpened = true;
+			reportText = km3.printAllKmForms(chromeDownloadPath, "KM3.pdf", 1);
 		}
 		log.info("Значение поля: " + fiels);
 		Assert.assertTrue(reportText.contains(expectedValue), "Неверное значение поля в форме КМ3");

@@ -31,6 +31,11 @@ public class AccompanyingDocumentsBasicTest extends AbstractTest{
 	HTMLRepotResultPage htmlReportResults;
 	CheckContentPage checkContent;
 	
+	protected final String PDF_GOODS_BILL = "GoodsBill.pdf";
+	protected final String PDF_GOODS_CHEQUE = "GoodsCheque.pdf";
+	protected final String PDF_GOODS_INVOICE = "GoodsInvoice.pdf";
+	protected final String PDF_GOODS_NOMENCLATURE = "PurchaseNomenclature.pdf";
+	
 	protected static PurchaseEntity purchase;
 	/*
 	 * Данные для заполнения контрагента
@@ -66,11 +71,10 @@ public class AccompanyingDocumentsBasicTest extends AbstractTest{
 	/*
 	 * Строка Итого в документах
 	 */
-	
 	static final String denyPrintSumTotal = "Итого: 1,200 100,20";
 	static final String allowPrintSumTotal = "Итого: 2,200 300,41";
-	static final String denyPrintSumTotalInvoice = "Всего по накладной 1,200 X 80,16 X 20,04 100,20";
-	static final String denyPrintSumTotalGoodsBill = "Всего к оплате 80,16 Х 20,04 100,20";
+	static final String denyPrintSumTotalInvoice = "Всего по накладной 1,200 80,16 20,04 100,20";
+	static final String denyPrintSumTotalGoodsBill = "80,16 20,04 100,20Всего к оплате";
 	
 	private static final String SQL_GOODS = 
 			"SELECT  markingofthegood, barc.code as barcode, pr.name as name, fullname, lastimporttime, measure_code, vat, plugin_class_name " +

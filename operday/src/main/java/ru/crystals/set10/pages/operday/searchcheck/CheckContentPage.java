@@ -40,13 +40,14 @@ public class  CheckContentPage extends OperDayPage{
 		getWait().until(ExpectedConditions.visibilityOfElementLocated(By.id(ID_OPERDAYSWF)));
 	}
 	
-	public String generateReport(String docType){
+	public CheckContentPage generateReport(String docType){
 		doFlexMouseDown(getDriver(), ID_OPERDAYSWF, docType);
 		clickElement(getDriver(), ID_OPERDAYSWF, docType);
-		return getReportText();
+		//return getReportText();
+		return this;
 	}
 
-	public String generateReportWithCounterpart(
+	public CheckContentPage generateReportWithCounterpart(
 			String docType,
 			String name,
 			String inn,
@@ -62,7 +63,8 @@ public class  CheckContentPage extends OperDayPage{
 		typeText(getDriver(), ID_OPERDAYSWF , INPUT_KPP, kpp);
 		typeText(getDriver(), ID_OPERDAYSWF , INPUT_JURISTIC_ADRESS, juristicAdress);
 		clickElement(getDriver(), ID_OPERDAYSWF , BUTTON_PRINT);
-		return getReportText();
+		//return getReportText();
+		return this;
 	}
 	
 	public RefundRequestPage openRefundForm(){
