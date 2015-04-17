@@ -22,7 +22,7 @@ public class AccompanyingNomenclatureContentTest extends AccompanyingDocumentsBa
 		DisinsectorTools.removeOldReport(chromeDownloadPath, PDF_GOODS_NOMENCLATURE);
 		checkContent = checkContent.generateReport(LINK_NOMENCLATURE);
 		File file = DisinsectorTools.getDownloadedFile(chromeDownloadPath, PDF_GOODS_NOMENCLATURE);
-		reportResult = checkContent.getPDFContent(file, 1);
+		reportResult = checkContent.getPDFContent(file);
 	}	
 	
 	@DataProvider (name = "Номенклатура чека")

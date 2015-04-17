@@ -3,8 +3,6 @@ package ru.crystals.set10.pages.operday.cashes;
 
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-
-import ru.crystals.set10.utils.DisinsectorTools;
 import static ru.crystals.set10.utils.FlexMediator.*;
 
 
@@ -19,6 +17,8 @@ public class  KmPage extends CashesPage{
 	public static final String LOCATOR_KM3_TABLE = "km3Table";
 	public static final String LOCATOR_KM6_TABLE = "km6Table";
 	
+	public static final String KM3_PDF = "KM3.pdf";
+	public static final String KM6_PDF = "KM6.pdf";
 	
 	
 	public KmPage(WebDriver driver) {
@@ -37,13 +37,11 @@ public class  KmPage extends CashesPage{
 	}
 	
 	
-	public String printAllKmForms(String downloadPath, String fileName, int pageNumber){
+	public KmPage printAllKmForms(){
 		clickElement(getDriver(), ID_OPERDAYSWF, BUTTON_SELECT_ALL_UNPRINTED);
 		waitForProperty(getDriver(), ID_OPERDAYSWF, LOCATOR_PRINTALL_BUTTON, new String[]{"enabled", "true"});
-		// удалить ранее распечатанные отчеты
-		DisinsectorTools.removeOldReport(downloadPath, fileName);
 		clickElement(getDriver(), ID_OPERDAYSWF, LOCATOR_PRINTALL_BUTTON);
-		return getPDFContent(DisinsectorTools.getDownloadedFile(downloadPath, fileName), pageNumber);
+		return this;
 	}
 	
 	/*

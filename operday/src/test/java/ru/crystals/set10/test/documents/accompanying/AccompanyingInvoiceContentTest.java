@@ -27,7 +27,7 @@ public class AccompanyingInvoiceContentTest extends AccompanyingDocumentsBasicTe
 				counterpartKpp, 
 				counterpartAdress);
 		File file = DisinsectorTools.getDownloadedFile(chromeDownloadPath, PDF_GOODS_INVOICE);
-		reportResult = checkContent.getPDFContent(file, 1) + checkContent.getPDFContent(file, 2);
+		reportResult = checkContent.getPDFContent(file);
 	}	
 	
 	@DataProvider (name = "Товарная накладная")

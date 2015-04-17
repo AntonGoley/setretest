@@ -237,7 +237,6 @@ public class CashEmulator {
 		long sumReturnFiscal = (long) getShiftSumChecksRefund();
 		
 		Date dateClose = new Date(System.currentTimeMillis() - yesterday);
-		//Date dateClose = new Date(System.currentTimeMillis());
 		
 		openShiftOnFirstDocument();
 		
@@ -515,6 +514,7 @@ public class CashEmulator {
 	
     private ShiftEntity nextShift(SessionEntity session) {
       SessionEntity sess = session != null ? session : nextSession();
+      
       shift = new ShiftEntity();
       shift.setFiscalNum("Emulator." + shopNumber + "." + cashNumber);
       shift.setNumShift(Long.valueOf(++shiftNum));
@@ -572,6 +572,7 @@ public class CashEmulator {
 	
 	public void useNextShift(){
 		checkNumber = 1;
+		getCurrentShiftNum(cashNumber);
 		nextShift(null);
 	}
 	
@@ -665,7 +666,7 @@ public class CashEmulator {
 		cashVo.setEklzNum("ek" + prefix);
 		cashVo.setFactoryNum("fact" + prefix);
 		cashVo.setFiscalNum("fisc" + prefix);
-		cashVo.setFiscalDate(prefix);
+		cashVo.setFiscalDate(DisinsectorTools.getDate(CashManagerRemote.DATE_FORMAT, date));
 		cashVo.setHardwareName("Beetle");
 		return cashVo;
 	}

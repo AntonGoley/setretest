@@ -9,7 +9,6 @@ import org.testng.annotations.Test;
 import ru.crystals.set10.config.Config;
 import ru.crystals.set10.pages.operday.tablereports.ReportConfigPage;
 import ru.crystals.set10.test.dataproviders.TableReportsDataprovider;
-import ru.crystals.set10.utils.DisinsectorTools;
 import ru.crystals.setretailx.cash.CashVO;
 import static ru.crystals.set10.pages.operday.tablereports.TableReportPage.*;
 import static ru.crystals.set10.pages.operday.tablereports.ReportConfigPage.*;
@@ -103,7 +102,7 @@ public class CashRegNumbersReportTest extends AbstractReportTest{
 		eklzNum = cashVO.getEklzNum();
 		factoryNum = cashVO.getFactoryNum();
 		fiscalNum = cashVO.getFiscalNum();
-		fiscalDate = DisinsectorTools.getDate("dd.MM.YYYY", Long.valueOf(cashVO.getFiscalDate()));
+		fiscalDate = cashVO.getFiscalDate();
 		
 		cashEmulator.sendCashVO(cashVO);	
 	}

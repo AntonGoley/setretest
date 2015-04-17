@@ -18,6 +18,7 @@ import ru.crystals.set10.pages.operday.OperDayPage;
 import ru.crystals.set10.pages.operday.cashes.CashesPage;
 import ru.crystals.set10.pages.operday.cashes.KmPage;
 import ru.crystals.set10.test.AbstractTest;
+import ru.crystals.set10.utils.DisinsectorTools;
 import ru.crystals.set10.utils.GoodsParser;
 import ru.crystals.setretailx.cash.CashVO;
 import static ru.crystals.set10.pages.operday.cashes.KmPage.*;
@@ -44,7 +45,12 @@ public class KM3Test extends AbstractTest{
 	
 	@BeforeClass
 	public void prepareData(){
+		/**  удалить km3 из базы*/
 		dbAdapter.batchUpdateDb(DB_OPERDAY, new String[] {SQL_CLEAN_KM3, SQL_CLEAN_KM3_ROW} );
+		/** удалить файлы отчетов KM3 на диске*/
+		DisinsectorTools.removeOldReport(chromeDownloadPath, KM3_PDF);
+		
+		
 		log.info("Записи в таблице od_km3 и в таблице od_km3_row удалены в базе " + DB_OPERDAY);
 		
 		km3 = new LoginPage(getDriver(), TARGET_HOST_URL)
@@ -93,7 +99,8 @@ public class KM3Test extends AbstractTest{
 	public void testKM3Data(String fiels, String expectedValue){
 		if (!reportOpened) {
 			reportOpened = true;
-			reportText = km3.printAllKmForms(chromeDownloadPath, "KM3.pdf", 1);
+			km3.printAllKmForms();
+			reportText = km3.getPDFContent(DisinsectorTools.getDownloadedFile(chromeDownloadPath, KM3_PDF), 1);
 		}
 		log.info("Значение поля: " + fiels);
 		Assert.assertTrue(reportText.contains(expectedValue), "Неверное значение поля в форме КМ3");
