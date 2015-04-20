@@ -1,6 +1,7 @@
 package ru.crystals.set10.utils;
 
 import static ru.crystals.set10.utils.DbAdapter.DB_RETAIL_SET;
+import static ru.crystals.set10.utils.DbAdapter.DB_CENTRUM_SET;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -25,27 +26,43 @@ public class GoodsParser {
 	private static final Logger log = LoggerFactory.getLogger(GoodsParser.class);
 	
 	public static List<ProductEntity> catalogGoods = new ArrayList<ProductEntity>();
-	public static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-DD hh:mm:ss");
-	/*
-	 * Список чеков с оплатой наличными
-	 */
-	public static List<DocumentEntity> peList = new ArrayList<DocumentEntity>();
 	
-	/*
-	 * Список чеков БЕЗ оплат
-	 */
+	public static List<ProductEntity> catalogAllGoods = new ArrayList<ProductEntity>();
+	public static List<ProductEntity> catalogWeightGoods = new ArrayList<ProductEntity>();
+	public static List<ProductEntity> catalogSpiritsGoods = new ArrayList<ProductEntity>();
+	public static List<ProductEntity> catalogCiggyGoods = new ArrayList<ProductEntity>();
+	
+	public static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-DD hh:mm:ss");
+	
+	/** Список чеков с оплатой наличными*/
+	public static List<DocumentEntity> peList = new ArrayList<DocumentEntity>();
+
+	/** Список чеков БЕЗ оплат */
 	public static List<DocumentEntity> peListWithoutPayments = new ArrayList<DocumentEntity>();
+	
+	
+	private static String weightEntity = "%ProductWeightEntityBillet";
+	private static String spiritsEntity = "%ProductSpiritsEntityBillet";
+	private static String ciggyEntity = "%ProductCiggyEntityBillet";
 	
 	
 	private static DbAdapter db = new  DbAdapter();
 	private static final String SQL_GOODS_COUNT = "select count(*) from un_cg_product";
-	private static final String SQL_GOODS = 
+	
+	private static final String SQL_GOODS_ALL = 
 			"SELECT  markingofthegood, barc.code as barcode, pr.name as name, lastimporttime, measure_code, vat, plugin_class_name " +
 			"FROM  un_cg_product pr " +
 			"JOIN " +
 			"un_cg_barcode barc " +
 			"on barc.product_marking = pr.markingofthegood";
 	
+	private static final String SQL_GOODS = 
+			"SELECT  markingofthegood, barc.code as barcode, pr.name as name, lastimporttime, measure_code, vat, plugin_class_name " + 
+			"FROM  un_cg_product pr " +
+			"JOIN 		un_cg_barcode barc " +
+			"on barc.product_marking = pr.markingofthegood " +
+			"where pr.plugin_class_name like '%s'";
+
 	static
 	  {
 		// проверить, есть ли товары в set, и если нет, импортировать через ERP импорт
@@ -53,7 +70,17 @@ public class GoodsParser {
 			SoapRequestSender soapSender  = new SoapRequestSender();
 			soapSender.sendGoodsToStartTesting(Config.RETAIL_HOST, "goods.txt");
 		}
-		catalogGoods = parsePurchasesFromDB(db.queryForRowSet(DB_RETAIL_SET, SQL_GOODS));
+		
+		if ((db.queryForInt(DB_CENTRUM_SET, SQL_GOODS_COUNT)) < 30 ) {
+			SoapRequestSender soapSender  = new SoapRequestSender();
+			soapSender.sendGoodsToStartTesting(Config.CENTRUM_HOST, "goods.txt");
+		}
+		
+		catalogAllGoods = parsePurchasesFromDB(db.queryForRowSet(DB_RETAIL_SET, SQL_GOODS_ALL));
+		catalogWeightGoods = parsePurchasesFromDB(db.queryForRowSet(DB_RETAIL_SET, String.format(SQL_GOODS, weightEntity)) );
+		catalogCiggyGoods = parsePurchasesFromDB(db.queryForRowSet(DB_RETAIL_SET, String.format(SQL_GOODS, ciggyEntity)) );
+		catalogSpiritsGoods = parsePurchasesFromDB(db.queryForRowSet(DB_RETAIL_SET, String.format(SQL_GOODS, spiritsEntity)));
+		
 		peList.addAll(generateChecks(true));
 		peListWithoutPayments.addAll(generateChecks(false));
 	  }
