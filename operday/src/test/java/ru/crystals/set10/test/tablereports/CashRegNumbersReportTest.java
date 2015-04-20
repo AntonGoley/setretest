@@ -30,16 +30,12 @@ public class CashRegNumbersReportTest extends AbstractReportTest{
 	private String fiscalDate;
 	private String replaceEklzDate;
 	private String blockCashDate;
-	private int dateBeforeBlockCask;
+	private String dateBeforeBlockCask;
 	
 	private Calendar calendar;
 
 	@BeforeClass
 	public void navigateCashRegNumsReport() throws Exception {
-		
-		
-		
-
 		
 		/*
 		 * Отправить данные по кассам на сервер
@@ -72,7 +68,8 @@ public class CashRegNumbersReportTest extends AbstractReportTest{
 				{"Поле: Номер ЭКЛЗ", eklzNum},
 				{"Поле: Дата фискализации", fiscalDate.replace("-", ".")},
 				{"Поле: Заменить ЭКЛЗ с", replaceEklzDate},
-				{"Поле: Дата блокировки кассы", blockCashDate}
+				{"Поле: Дата блокировки кассы", blockCashDate},
+				{"Поле: До блокировки кассы осталось (дней) ", dateBeforeBlockCask},
 		};
 	}
 	
@@ -115,6 +112,9 @@ public class CashRegNumbersReportTest extends AbstractReportTest{
 	 * Задать данные по каждой кассе
 	 */
 	private void setCashData(int cashNumber, long date) throws Exception{
+		long currentDateMs = 0;
+		long blockDateDateMs = 0;
+		
 		CashVO cashVO = new CashVO();
 		cashVO = cashEmulator.setCashVO(cashNumber, Config.SHOP_NUMBER, date);
 		eklzNum = cashVO.getEklzNum();
@@ -122,14 +122,23 @@ public class CashRegNumbersReportTest extends AbstractReportTest{
 		fiscalNum = cashVO.getFiscalNum();
 		fiscalDate = cashVO.getFiscalDate();
 		
+		
 		calendar = Calendar.getInstance();
+		calendar.setTimeInMillis(date);
+		currentDateMs = calendar.getTimeInMillis();
+		/** считаем дату начала замены эклз*/
 		calendar.add(Calendar.YEAR, 1);
-		replaceEklzDate = DisinsectorTools.getDate("dd.MM.yyyy", calendar.getTimeInMillis());
-
+		replaceEklzDate = DisinsectorTools.getDate("dd.MM.yyyy", calendar.getTimeInMillis());	
+		
+		/** считаем дату блокировки кассы*/
 		calendar.add(Calendar.MONTH, 2);
 		calendar.set(Calendar.DATE, 1);
 		
 		blockCashDate = DisinsectorTools.getDate("dd.MM.yyyy", calendar.getTimeInMillis());
+		blockDateDateMs = calendar.getTimeInMillis();
+		/** сколько дней до блокировки кассы*/
+		dateBeforeBlockCask = String.valueOf( ((blockDateDateMs - currentDateMs)/(24 * 60 * 60 * 1000) - 1));
+		log.info("Количество дней до блокировки: " +  dateBeforeBlockCask);
 		
 		
 		cashEmulator.sendCashVO(cashVO);	
