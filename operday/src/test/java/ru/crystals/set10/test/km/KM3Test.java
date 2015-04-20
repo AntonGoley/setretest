@@ -50,7 +50,6 @@ public class KM3Test extends AbstractTest{
 		/** удалить файлы отчетов KM3 на диске*/
 		DisinsectorTools.removeOldReport(chromeDownloadPath, KM3_PDF);
 		
-		
 		log.info("Записи в таблице od_km3 и в таблице od_km3_row удалены в базе " + DB_OPERDAY);
 		
 		km3 = new LoginPage(getDriver(), TARGET_HOST_URL)
