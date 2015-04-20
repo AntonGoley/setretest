@@ -282,10 +282,12 @@ public class CashEmulator {
 	 * и не отправлять на сервер
 	 */
 	public PurchaseEntity nextPurchaseWithoutSending() {
-
+		PurchaseEntity purchase;
 		openShiftOnFirstDocument();
 	   	int idx = (int)random(peList.size() - 2) + 1;
-	    return (PurchaseEntity)completeDocument(peList.get(idx));
+	   	purchase = (PurchaseEntity)completeDocument(peList.get(idx));
+	   	peList.remove(idx);
+	    return purchase;
 	}
 	
 	/*
@@ -332,10 +334,13 @@ public class CashEmulator {
 	 * Сгенерить чек с рандомным набором позиций
 	 */
 	public DocumentEntity nextPurchase() {
+		DocumentEntity document;
 		openShiftOnFirstDocument();
 	   	int idx = (int)random(peList.size() - 2) + 1;
 	   	log.info("Отправить  чек..");
-	   	return completeAndSendPurchase((DocumentEntity)peList.get(idx));
+	   	document = (DocumentEntity)peList.get(idx);
+	   	peList.remove(idx);
+	   	return completeAndSendPurchase(document);
 	}
 	
 	/*
