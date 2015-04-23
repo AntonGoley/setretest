@@ -6,12 +6,14 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+
 import ru.crystals.pos.bank.datastruct.AuthorizationData;
 import ru.crystals.pos.bank.datastruct.BankCard;
 import ru.crystals.pos.payments.BankCardPaymentEntity;
 import ru.crystals.set10.pages.operday.searchcheck.TransactionSearchPage;
-import ru.crystals.set10.utils.CashEmulatorPayments;
+import ru.crystals.set10.utils.PaymentGenerator;
 import ru.crystals.set10.utils.DisinsectorTools;
+import ru.crystals.set10.utils.PurchaseGenerator;
 import static ru.crystals.set10.pages.operday.searchcheck.CheckSearchPage.*;
 import static ru.crystals.set10.pages.operday.searchcheck.TransactionSearchPage.*;
 
@@ -20,7 +22,7 @@ public class SearchTransactionsTest extends SearchCheckAbstractTest{
 	
 	TransactionSearchPage transactions;
 	
-	CashEmulatorPayments payments = new CashEmulatorPayments();
+	PaymentGenerator payments = new PaymentGenerator();
 	
 	BankCard card;
 	AuthorizationData validAuth;
@@ -35,7 +37,7 @@ public class SearchTransactionsTest extends SearchCheckAbstractTest{
 		
 		resetFiltersAndAdd2New();
 		
-		purchase = payments.getPurchaseWithoutPayments();
+		purchase = PurchaseGenerator.getPurchaseWithoutPayments();
 		String prefix = String.valueOf(System.currentTimeMillis()).substring(5);
 		String bankCardNumber = String.format("1234****%s", prefix);
 		

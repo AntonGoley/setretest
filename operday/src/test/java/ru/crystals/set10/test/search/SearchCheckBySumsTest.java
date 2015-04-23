@@ -14,7 +14,7 @@ import ru.crystals.pos.check.PositionEntity;
 import ru.crystals.pos.check.PurchaseEntity;
 import ru.crystals.pos.payments.BankCardPaymentEntity;
 import ru.crystals.set10.utils.CashEmulatorDiscounts;
-import ru.crystals.set10.utils.CashEmulatorPayments;
+import ru.crystals.set10.utils.PaymentGenerator;
 import ru.crystals.set10.utils.DisinsectorTools;
 import ru.crystals.set10.utils.PurchaseGenerator;
 import static ru.crystals.set10.pages.operday.searchcheck.CheckSearchPage.*;
@@ -40,7 +40,7 @@ public class SearchCheckBySumsTest extends SearchCheckAbstractTest{
 	private int expectedCountSmaller = 0;
 	private int expectedCountSmaller_100 = 0;
 	
-	CashEmulatorPayments payments = new CashEmulatorPayments();
+	PaymentGenerator payments = new PaymentGenerator();
 	LoyTransactionEntity loyTransaction = new LoyTransactionEntity();
 	CashEmulatorDiscounts discountEmulator = new CashEmulatorDiscounts();
 	
@@ -63,7 +63,7 @@ public class SearchCheckBySumsTest extends SearchCheckAbstractTest{
 		 * Чек продажи с оплатой наличными =  оплатой банковской картой
 		 * для поиска чека по сумме оплаты. Суммы оплаты должны быть равны
 		 */
-		p2 = payments.getPurchaseWithoutPayments();
+		p2 = PurchaseGenerator.getPurchaseWithoutPayments();
 		p2 = payments.setBankCardPayment(BankCardPaymentEntity.class, p2, p2.getCheckSumEnd()/2, payments.generateCardData("VISA"), null);
 		p2 = payments.setCashPayment(p2, p2.getCheckSumEnd()/2);
 		

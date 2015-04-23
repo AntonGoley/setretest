@@ -1,18 +1,21 @@
 package ru.crystals.set10.test.search;
 
 import static ru.crystals.set10.pages.operday.searchcheck.CheckSearchPage.*;
+
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+
 import ru.crystals.pos.bank.datastruct.AuthorizationData;
 import ru.crystals.pos.bank.datastruct.BankCard;
 import ru.crystals.pos.check.PurchaseEntity;
 import ru.crystals.pos.payments.BankCardPaymentEntity;
 import ru.crystals.pos.payments.ChildrenCardPaymentEntity;
 import ru.crystals.set10.config.Config;
-import ru.crystals.set10.utils.CashEmulatorPayments;
+import ru.crystals.set10.utils.PaymentGenerator;
 import ru.crystals.set10.utils.DisinsectorTools;
+import ru.crystals.set10.utils.PurchaseGenerator;
 
 
 @Test (groups={"centrum", "retail"})
@@ -49,7 +52,7 @@ public class SearchCheckByPaymentGroupTest extends SearchCheckAbstractTest{
 		
 		resetFiltersAndAdd2New();
 		
-		CashEmulatorPayments payments = new CashEmulatorPayments();
+		PaymentGenerator payments = new PaymentGenerator();
 		
 		/*
 		 * Оплата банковской картой	
@@ -57,7 +60,7 @@ public class SearchCheckByPaymentGroupTest extends SearchCheckAbstractTest{
 		// берем 8 символов из возвращаемых миллисекунд и подставляем в номер карты
 		String prefix = String.valueOf(System.currentTimeMillis()).substring(5);
 		bankCardNumber = String.format("1234****%s", prefix);
-		purchase1 = payments.getPurchaseWithoutPayments();
+		purchase1 = PurchaseGenerator.getPurchaseWithoutPayments();
 		BankCard card = payments.setBankCardData(bankCardNumber, "Maestro");
 		purchase1 = payments.setBankCardPayment(BankCardPaymentEntity.class, purchase1, purchase1.getCheckSumEnd(), card, null);
 		
@@ -65,14 +68,14 @@ public class SearchCheckByPaymentGroupTest extends SearchCheckAbstractTest{
 		 * Оплата бонусной картой	
 		 */
 		bonusCardNumber =String.valueOf(System.currentTimeMillis());
-		purchase2 = payments.getPurchaseWithoutPayments();
+		purchase2 = PurchaseGenerator.getPurchaseWithoutPayments();
 		purchase2 = payments.setBonusCardPayment(purchase2, purchase2.getCheckSumEnd(), bonusCardNumber);
 
 		/*
 		 * Оплата подарочной картой	
 		 */
 		giftCardNumber =String.valueOf(System.currentTimeMillis() + 99);
-		purchase3 = payments.getPurchaseWithoutPayments();
+		purchase3 = PurchaseGenerator.getPurchaseWithoutPayments();
 		long cashSum = purchase3.getCheckSumEnd() - purchase3.getCheckSumEnd()/2;
 		purchase3 = payments.setCashPayment(purchase3, cashSum);
 		purchase3 = payments.setGiftCardPayment(purchase3, purchase3.getCheckSumEnd() - cashSum, giftCardNumber);
@@ -82,7 +85,7 @@ public class SearchCheckByPaymentGroupTest extends SearchCheckAbstractTest{
 		 */
 		String prefixChild = String.valueOf(System.currentTimeMillis()).substring(5);
 		childCardNumber = String.format("5678****%s", prefixChild);
-		purchase4 = payments.getPurchaseWithoutPayments();
+		purchase4 = PurchaseGenerator.getPurchaseWithoutPayments();
 		long cashSum4 = purchase4.getCheckSumEnd() - purchase4.getCheckSumEnd()/2;
 		purchase4 = payments.setCashPayment(purchase4, cashSum4);
 		BankCard childrenCard = payments.setBankCardData(childCardNumber, "VISA");
@@ -98,13 +101,13 @@ public class SearchCheckByPaymentGroupTest extends SearchCheckAbstractTest{
 		authData.setTerminalId("AA854380");
 		authData.setResultCode(354L);
 		
-		purchase5 = payments.getPurchaseWithoutPayments();
-		purchase6 = payments.getPurchaseWithoutPayments();
-		purchase7 = payments.getPurchaseWithoutPayments();
-		purchase8 = payments.getPurchaseWithoutPayments();
-		purchase9 = payments.getPurchaseWithoutPayments();
-		purchase10 = payments.getPurchaseWithoutPayments();
-		purchase11 = payments.getPurchaseWithoutPayments();
+		purchase5 = PurchaseGenerator.getPurchaseWithoutPayments();
+		purchase6 = PurchaseGenerator.getPurchaseWithoutPayments();
+		purchase7 = PurchaseGenerator.getPurchaseWithoutPayments();
+		purchase8 = PurchaseGenerator.getPurchaseWithoutPayments();
+		purchase9 = PurchaseGenerator.getPurchaseWithoutPayments();
+		purchase10 = PurchaseGenerator.getPurchaseWithoutPayments();
+		purchase11 = PurchaseGenerator.getPurchaseWithoutPayments();
 		
 		//возьмем карту из оплаты банковской карты
 		

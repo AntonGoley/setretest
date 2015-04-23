@@ -1,9 +1,11 @@
 package ru.crystals.set10.test.checkgenerator;
 
 import java.util.HashMap;
+
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.Test;
+
 import ru.crystals.set10.config.*;
 import ru.crystals.pos.bank.datastruct.AuthorizationData;
 import ru.crystals.pos.bank.datastruct.BankCard;
@@ -12,8 +14,9 @@ import ru.crystals.pos.check.PurchaseEntity;
 import ru.crystals.pos.payments.BankCardPaymentEntity;
 import ru.crystals.pos.payments.ChildrenCardPaymentEntity;
 import ru.crystals.set10.utils.CashEmulator;
-import ru.crystals.set10.utils.CashEmulatorPayments;
+import ru.crystals.set10.utils.PaymentGenerator;
 import ru.crystals.set10.utils.DisinsectorTools;
+import ru.crystals.set10.utils.PurchaseGenerator;
 
 public class CheckGeneratorFunctionalTest {
 	
@@ -22,7 +25,7 @@ public class CheckGeneratorFunctionalTest {
 	CashEmulator cashEmulatorVirtual;
 	HashMap<Long, Long>  returnPositions = new HashMap<Long, Long>(); 
 	
-	CashEmulatorPayments payments = new CashEmulatorPayments();
+	PaymentGenerator payments = new PaymentGenerator();
 	PurchaseEntity p1;
 	PurchaseEntity p2;
 	
@@ -98,7 +101,7 @@ public class CheckGeneratorFunctionalTest {
 	private PurchaseEntity getBankCardPayment(Class<? extends BankCardPaymentEntity> cardType){
 		//log.info("Чек с оплатой банковской/детской картой..");
 		PurchaseEntity p;
-		p = payments.getPurchaseWithoutPayments();
+		p = PurchaseGenerator.getPurchaseWithoutPayments();
 		
 		String prefix = String.valueOf(System.currentTimeMillis()).substring(5);
 		DisinsectorTools.delay(99);
@@ -121,7 +124,7 @@ public class CheckGeneratorFunctionalTest {
 	private PurchaseEntity getBonusCardPayment(){
 		//log.info("Чек с оплатой бонусной картой..");
 		PurchaseEntity p;
-		p = payments.getPurchaseWithoutPayments();
+		p = PurchaseGenerator.getPurchaseWithoutPayments();
 
 		String bonusCardNumber =String.valueOf(System.currentTimeMillis());
 		p = payments.setBonusCardPayment(p, p.getCheckSumEnd()/2, String.valueOf(bonusCardNumber));
@@ -133,7 +136,7 @@ public class CheckGeneratorFunctionalTest {
 	private PurchaseEntity getGiftCardPayment(){
 		//log.info("Чек с оплатой подарочной картой..");
 		PurchaseEntity p;
-		p = payments.getPurchaseWithoutPayments();
+		p = PurchaseGenerator.getPurchaseWithoutPayments();
 		
 		String giftCardNumber =String.valueOf(System.currentTimeMillis() + 99);
 		p = payments.setGiftCardPayment(p, p.getCheckSumEnd()/2, giftCardNumber);
@@ -144,7 +147,7 @@ public class CheckGeneratorFunctionalTest {
 	private PurchaseEntity getCashPayment(){
 		//log.info("Чек с оплатой наличными..");
 		PurchaseEntity p;
-		p = payments.getPurchaseWithoutPayments();
+		p = PurchaseGenerator.getPurchaseWithoutPayments();
 		p = payments.setCashPayment(p, p.getCheckSumEnd());
 		return p;
 	}
@@ -153,7 +156,7 @@ public class CheckGeneratorFunctionalTest {
 		//log.info("Чек с оплатой дисконтной картой..");
 		String discountCardNumber = String.valueOf(System.currentTimeMillis());
 		PurchaseEntity p;
-		p = payments.getPurchaseWithoutPayments();
+		p = PurchaseGenerator.getPurchaseWithoutPayments();
 		p = payments.setCashPayment(p, p.getCheckSumEnd());
 		p = payments.setDiscountCard(p, discountCardNumber);
 		return p;

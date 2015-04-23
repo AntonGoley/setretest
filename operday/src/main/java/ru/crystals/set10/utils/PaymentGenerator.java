@@ -3,7 +3,6 @@ package ru.crystals.set10.utils;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
 import ru.crystals.cards.common.CardTypes;
 import ru.crystals.pos.bank.datastruct.AuthorizationData;
 import ru.crystals.pos.bank.datastruct.BankCard;
@@ -16,23 +15,8 @@ import ru.crystals.pos.payments.CashPaymentEntity;
 import ru.crystals.pos.payments.GiftCardPaymentEntity;
 import ru.crystals.pos.payments.PaymentEntity;
 import ru.crystals.pos.payments.PaymentTransactionEntity;
-import static ru.crystals.set10.utils.PurchaseGenerator.peListWithoutPayments;
 
-public class CashEmulatorPayments {
-	
-	/*
-	 * Чек без оплаты
-	 */
-	public PurchaseEntity getPurchaseWithoutPayments(){
-		PurchaseEntity result;
-		int idx = (int)random(peListWithoutPayments.size() - 2) + 1;
-		result = (PurchaseEntity) peListWithoutPayments.get(idx);
-		/*
-		 *  Удаление чека из списка, для предотвращения добавления одному чеку нескольких оплат
-		 */
-		peListWithoutPayments.remove(idx);
-	    return result;
-	}
+public class PaymentGenerator {
 	
 	/*
 	 * Добавить оплату в чек к уже существующим оплатам

@@ -3,7 +3,6 @@ package ru.crystals.set10.utils;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
 import ru.crystals.pos.catalog.ProductEntity;
 import ru.crystals.pos.check.CheckStatus;
 import ru.crystals.pos.check.DocumentEntity;
@@ -93,6 +92,20 @@ public class PurchaseGenerator {
 	 */
 	public static PurchaseEntity generatePurchaseWithPositions(int positionsNumber){
 		return generatePurchase(positionsNumber, true);
+	}
+	
+	/*
+	 * Чек без оплаты
+	 */
+	public static PurchaseEntity getPurchaseWithoutPayments(){
+		PurchaseEntity result;
+		int idx = (int)random(peListWithoutPayments.size() - 2) + 1;
+		result = (PurchaseEntity) peListWithoutPayments.get(idx);
+		/*
+		 *  Удаление чека из списка
+		 */
+		peListWithoutPayments.remove(idx);
+	    return result;
 	}
 	
 	

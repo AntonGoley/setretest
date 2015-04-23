@@ -11,7 +11,7 @@ import ru.crystals.httpclient.HttpFileTransport;
 import ru.crystals.pos.check.PurchaseEntity;
 import ru.crystals.set10.utils.CashEmulator;
 import ru.crystals.set10.utils.CashEmulatorDiscounts;
-import ru.crystals.set10.utils.CashEmulatorPayments;
+import ru.crystals.set10.utils.PaymentGenerator;
 
 public class LoyalExportTest {
 	
@@ -23,7 +23,7 @@ public class LoyalExportTest {
 	CashEmulator cashEmulatorVirtualShop;
 	HashMap<Long, Long>  returnPositions = new HashMap<Long, Long>(); 
 	
-	CashEmulatorPayments payments = new CashEmulatorPayments();
+	PaymentGenerator payments = new PaymentGenerator();
 	PurchaseEntity p1;
 	PurchaseEntity p2;
 	

@@ -5,6 +5,7 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+
 import ru.crystals.pos.bank.datastruct.AuthorizationData;
 import ru.crystals.pos.bank.datastruct.BankCard;
 import ru.crystals.pos.check.PurchaseEntity;
@@ -16,8 +17,9 @@ import ru.crystals.set10.pages.operday.searchcheck.CheckContentPage;
 import ru.crystals.set10.pages.operday.searchcheck.CheckSearchPage;
 import ru.crystals.set10.pages.operday.searchcheck.PaymentTransactionsPage;
 import ru.crystals.set10.pages.operday.tablereports.ReportConfigPage;
-import ru.crystals.set10.utils.CashEmulatorPayments;
+import ru.crystals.set10.utils.PaymentGenerator;
 import ru.crystals.set10.utils.DisinsectorTools;
+import ru.crystals.set10.utils.PurchaseGenerator;
 import static ru.crystals.set10.pages.operday.searchcheck.PaymentTransactionsPage.LINK_SAVE_EXCEL;
 import static ru.crystals.set10.pages.operday.OperDayPage.SEARCH_CHECK;
 
@@ -67,8 +69,6 @@ public class BankTransactionInCheckTest extends AbstractTest {
 	String prefix = String.valueOf(System.currentTimeMillis()).substring(5);
 	String validBankCardNumber = String.format("1234****%s", prefix);
 	long validResultCode = 577L;
-	
-	CashEmulatorPayments payments = new CashEmulatorPayments();
 	
 	@DataProvider (name = "inValidBankTransaction")
 	private Object[][] setInValidTransactionData(){
@@ -146,7 +146,8 @@ public class BankTransactionInCheckTest extends AbstractTest {
 	
 	private PurchaseEntity setPayments(){
 		
-		PurchaseEntity purchase = payments.getPurchaseWithoutPayments();
+		PaymentGenerator payments = new PaymentGenerator();
+		PurchaseEntity purchase = PurchaseGenerator.getPurchaseWithoutPayments();
 		
 		AuthorizationData authDataInvalid = new AuthorizationData();
 			authDataInvalid.setStatus(false);
