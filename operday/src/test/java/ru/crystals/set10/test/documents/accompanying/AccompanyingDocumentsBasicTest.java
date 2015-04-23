@@ -19,7 +19,7 @@ import ru.crystals.set10.pages.operday.searchcheck.CheckSearchPage;
 import ru.crystals.set10.pages.operday.tablereports.ReportConfigPage;
 import ru.crystals.set10.test.AbstractTest;
 import ru.crystals.set10.utils.SoapRequestSender;
-import ru.crystals.set10.utils.GoodsParser;
+import ru.crystals.set10.utils.GoodParser;
 import static ru.crystals.set10.pages.operday.OperDayPage.SEARCH_CHECK;;
 
 
@@ -169,13 +169,13 @@ public class AccompanyingDocumentsBasicTest extends AbstractTest{
 	
 	private static ProductEntity getPurchasePosition(String markingOfTheGood){
 		ArrayList<ProductEntity> result = new ArrayList<ProductEntity>();
-		result = GoodsParser.parsePurchasesFromDB(
+		result = GoodParser.parsePurchasesFromDB(
 				dbAdapter.queryForRowSet(DB_SET, String.format(SQL_GOODS, "'" + markingOfTheGood + "'")));
 
 		if (result.size() == 0) {
 			SoapRequestSender soapSender  = new SoapRequestSender();
 			soapSender.sendGoodsToStartTesting(TARGET_HOST, "deny_and_allow_print_goods.txt");
-			result = GoodsParser.parsePurchasesFromDB(
+			result = GoodParser.parsePurchasesFromDB(
 					dbAdapter.queryForRowSet(DB_SET, String.format(SQL_GOODS, "'" + markingOfTheGood + "'")));
 		}
 		return result.get(0);

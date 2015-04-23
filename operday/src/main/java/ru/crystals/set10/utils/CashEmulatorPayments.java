@@ -16,7 +16,7 @@ import ru.crystals.pos.payments.CashPaymentEntity;
 import ru.crystals.pos.payments.GiftCardPaymentEntity;
 import ru.crystals.pos.payments.PaymentEntity;
 import ru.crystals.pos.payments.PaymentTransactionEntity;
-import static ru.crystals.set10.utils.GoodsParser.peListWithoutPayments;
+import static ru.crystals.set10.utils.PurchaseGenerator.peListWithoutPayments;
 
 public class CashEmulatorPayments {
 	

@@ -35,7 +35,7 @@ public class PriceCheckerReportTest extends AbstractReportTest{
 				PriceCheckerConfigPage.class, 
 				TAB_OTHER, 
 				REPORT_NAME_PRICE_CHECKER);
-		soapSender.setSoapServiceIP(Config.CENTRUM_HOST);
+		soapSender.setSoapServiceIP(Config.RETAIL_HOST);
 		// Послать товар, который будет проверен на прайсчекере
 		sendGoodData();
 		// Послать запрос к прайсчекеру

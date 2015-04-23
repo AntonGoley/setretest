@@ -4,12 +4,10 @@ package ru.crystals.set10.test.km;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashMap;
-
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-
 import ru.crystals.pos.check.PurchaseEntity;
 import ru.crystals.set10.config.Config;
 import ru.crystals.set10.pages.basic.LoginPage;
@@ -18,7 +16,7 @@ import ru.crystals.set10.pages.operday.OperDayPage;
 import ru.crystals.set10.pages.operday.cashes.CashesPage;
 import ru.crystals.set10.pages.operday.cashes.KmPage;
 import ru.crystals.set10.test.AbstractTest;
-import ru.crystals.set10.utils.GoodsParser;
+import ru.crystals.set10.utils.PurchaseGenerator;
 import ru.crystals.setretailx.cash.CashVO;
 import static ru.crystals.set10.pages.operday.cashes.KmPage.*;
 import static ru.crystals.set10.pages.operday.OperDayPage.CASHES;
@@ -56,7 +54,7 @@ public class KM3Test extends AbstractTest{
 		//количество актов km3
 		km3Tablerows = km3.getKmCountOnPage(LOCATOR_KM3_TABLE);
 		
-		purchase = (PurchaseEntity) GoodsParser.generatePurchaseWithPositions(10);
+		purchase = (PurchaseEntity) PurchaseGenerator.generatePurchaseWithPositions(10);
 		cashEmulator.nextPurchase(purchase);
 		//Возвращаем 1-ю позицию
 		returnPositions.put(1L, 1L * 1000);

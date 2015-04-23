@@ -34,7 +34,7 @@ import ru.crystals.setretailx.cash.CashManagerRemote;
 import ru.crystals.setretailx.cash.CashVO;
 import ru.crystals.transport.DataTypesEnum;
 import static ru.crystals.set10.utils.DbAdapter.*;
-import static ru.crystals.set10.utils.GoodsParser.*;
+import static ru.crystals.set10.utils.PurchaseGenerator.peList;
 
 public class CashEmulator {
 	

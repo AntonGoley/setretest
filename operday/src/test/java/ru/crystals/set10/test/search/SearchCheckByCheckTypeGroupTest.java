@@ -17,7 +17,6 @@ public class SearchCheckByCheckTypeGroupTest extends SearchCheckAbstractTest{
 	private PurchaseEntity p1refund;
 	private PurchaseEntity p1cancel;
 	
-	
 	@BeforeClass
 	public void send1stCheck(){
 		super.openSearchPage();
