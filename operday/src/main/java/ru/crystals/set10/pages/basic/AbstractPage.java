@@ -1,16 +1,17 @@
 package ru.crystals.set10.pages.basic;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Iterator;
 import java.util.Set;
-
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
+import com.lowagie.text.pdf.PdfReader;
+import com.lowagie.text.pdf.parser.PdfTextExtractor;
 import ru.crystals.set10.utils.DisinsectorTools;
 
 
@@ -47,7 +48,6 @@ public abstract class  AbstractPage {
 	public void switchWindow(Boolean closeMainWindow) {
 		
 		Set<String> set = getDriver().getWindowHandles();
-		
 		/*
 		 * Если вызывается метод, то ожидается 
 		 *  больше, чем одно окно
@@ -81,10 +81,45 @@ public abstract class  AbstractPage {
 			log.info(String.format("Предыдущие файлы отчетов %s не удалены перед выполнением теста", reportNamePattern));
 			return new File("");
 		}
-		
 		save.saveFile(fileType);
-		
 		return DisinsectorTools.getDownloadedFile(chromeDownloadPath, reportNamePattern);
 	}
+	
+	
+	public String getPDFContent(File file, int pageNumber){
+		String result = "";
+		PdfReader reader;
+		try {
+			reader = new PdfReader(file.getAbsolutePath());
+			PdfTextExtractor parser = new PdfTextExtractor(reader);
+			result = parser.getTextFromPage(pageNumber);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		log.info(result);
+		return result;
+	}
+	
+	public String getPDFContent(File file){
+		String result = "";
+		PdfReader reader;
+		try {
+			reader = new PdfReader(file.getAbsolutePath());
+			PdfTextExtractor parser = new PdfTextExtractor(reader);
+
+			for (int i=1; i<=reader.getNumberOfPages(); i++){
+				result += parser.getTextFromPage(i);
+			};
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		log.info(result);
+		return result;
+	}
+	
+	
 	
 }

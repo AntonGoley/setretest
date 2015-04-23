@@ -1,9 +1,14 @@
 package ru.crystals.set10.test.documents.accompanying;
 
+import java.io.File;
+
 import junit.framework.Assert;
+
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+
+import ru.crystals.set10.utils.DisinsectorTools;
 import static ru.crystals.set10.pages.operday.searchcheck.CheckContentPage.*;
 
 @Test (groups={"centrum", "retail"})
@@ -14,7 +19,15 @@ public class AccompanyingGoodsBillContentTest extends AccompanyingDocumentsBasic
 	@BeforeClass
 	public void prepareData() {
 		super.navigateToCheckSearchPage();
-		reportResult = checkContent.generateReportWithCounterpart(LINK_GOODS_BILL, counterpartName, counterpartInn, counterpartKpp, counterpartAdress);
+		DisinsectorTools.removeOldReport(chromeDownloadPath, PDF_GOODS_BILL);
+		checkContent = checkContent.generateReportWithCounterpart(
+				LINK_GOODS_BILL, 
+				counterpartName, 
+				counterpartInn, 
+				counterpartKpp, 
+				counterpartAdress);
+		File file = DisinsectorTools.getDownloadedFile(chromeDownloadPath, PDF_GOODS_BILL);
+		reportResult = checkContent.getPDFContent(file);
 	}	
 	
 	@DataProvider (name = "Счет-фактура")

@@ -73,5 +73,6 @@ public class OperDayPage extends AbstractPage{
 			switchWindow(true);
 			return reportText;
 	}
-
+	
+	
 }

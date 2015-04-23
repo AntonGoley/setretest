@@ -237,7 +237,6 @@ public class CashEmulator {
 		long sumReturnFiscal = (long) getShiftSumChecksRefund();
 		
 		Date dateClose = new Date(System.currentTimeMillis() - yesterday);
-		//Date dateClose = new Date(System.currentTimeMillis());
 		
 		openShiftOnFirstDocument();
 		
@@ -283,12 +282,12 @@ public class CashEmulator {
 	 * и не отправлять на сервер
 	 */
 	public PurchaseEntity nextPurchaseWithoutSending() {
-
+		PurchaseEntity purchase;
 		openShiftOnFirstDocument();
-		
-	   	log.info("Сгенерить чек для транзакций лояльности"); 
 	   	int idx = (int)random(peList.size() - 2) + 1;
-	    return (PurchaseEntity)completeDocument(peList.get(idx));
+	   	purchase = (PurchaseEntity)completeDocument(peList.get(idx));
+	   	peList.remove(idx);
+	    return purchase;
 	}
 	
 	/*
@@ -335,10 +334,13 @@ public class CashEmulator {
 	 * Сгенерить чек с рандомным набором позиций
 	 */
 	public DocumentEntity nextPurchase() {
+		DocumentEntity document;
 		openShiftOnFirstDocument();
 	   	int idx = (int)random(peList.size() - 2) + 1;
 	   	log.info("Отправить  чек..");
-	   	return completeAndSendPurchase((DocumentEntity)peList.get(idx));
+	   	document = (DocumentEntity)peList.get(idx);
+	   	peList.remove(idx);
+	   	return completeAndSendPurchase(document);
 	}
 	
 	/*
@@ -517,6 +519,7 @@ public class CashEmulator {
 	
     private ShiftEntity nextShift(SessionEntity session) {
       SessionEntity sess = session != null ? session : nextSession();
+      
       shift = new ShiftEntity();
       shift.setFiscalNum("Emulator." + shopNumber + "." + cashNumber);
       shift.setNumShift(Long.valueOf(++shiftNum));
@@ -574,6 +577,7 @@ public class CashEmulator {
 	
 	public void useNextShift(){
 		checkNumber = 1;
+		getCurrentShiftNum(cashNumber);
 		nextShift(null);
 	}
 	
@@ -667,7 +671,7 @@ public class CashEmulator {
 		cashVo.setEklzNum("ek" + prefix);
 		cashVo.setFactoryNum("fact" + prefix);
 		cashVo.setFiscalNum("fisc" + prefix);
-		cashVo.setFiscalDate(prefix);
+		cashVo.setFiscalDate(DisinsectorTools.getDate(CashManagerRemote.DATE_FORMAT, date));
 		cashVo.setHardwareName("Beetle");
 		return cashVo;
 	}

@@ -17,6 +17,7 @@ import ru.crystals.set10.pages.operday.OperDayPage;
 import ru.crystals.set10.pages.operday.cashes.CashesPage;
 import ru.crystals.set10.pages.operday.cashes.KmPage;
 import ru.crystals.set10.test.AbstractTest;
+import ru.crystals.set10.utils.DisinsectorTools;
 import ru.crystals.setretailx.cash.CashVO;
 import static ru.crystals.set10.pages.operday.cashes.KmPage.*;
 import static ru.crystals.set10.pages.operday.OperDayPage.CASHES;
@@ -41,7 +42,10 @@ public class KM6Test extends AbstractTest{
 	
 	@BeforeClass
 	public void prepareData(){
+		/**  удалить KM6 из базы*/
 		dbAdapter.batchUpdateDb(DB_OPERDAY, new String[] {SQL_CLEAN_KM6} );
+		/** удалить файлы отчетов KM6 на диске*/
+		DisinsectorTools.removeOldReport(chromeDownloadPath, KM6_PDF);
 		
 		log.info("Записи в таблице od_km6 удалены в базе " + DB_OPERDAY);
 		
@@ -64,7 +68,7 @@ public class KM6Test extends AbstractTest{
 	}
 	
 	@DataProvider (name = "Поля КМ6")
-	public static Object[][] km6Fields(){
+	private static Object[][] km6Fields(){
 		BigDecimal sumPurchases = purchase.getCheckSumEndBigDecimal();
 		BigDecimal sumRetunPositions  = purchaseReturn.getCheckSumEndBigDecimal();
 		//String shiftNum = String.valueOf(purchaseReturn.getShift().getNumShift());
@@ -78,7 +82,7 @@ public class KM6Test extends AbstractTest{
 				{"Содержит ККМ: номер производителя (factory num)", cashVO.getFactoryNum()},
 				{"Содержит ККМ: рег. номер (fisc num)", cashVO.getFiscalNum()},
 //				{"Содержит фамилию кассира", cashier},
-				{"Строка Итого", ("Итого " + String.valueOf(sumPurchases) + " " + String.valueOf(sumRetunPositions)  + " " + String.valueOf(sumPurchases.subtract(sumRetunPositions))).replace(".", ",")},
+				{"Строка Итого", ("Итого\n" + String.valueOf(sumPurchases.subtract(sumRetunPositions)) + String.valueOf(sumPurchases) + " " + String.valueOf(sumRetunPositions)).replace(".", ",")},
 				
 		};
 	}
@@ -97,7 +101,8 @@ public class KM6Test extends AbstractTest{
 	public void testKM6Data(String field, String expectedValue){
 		
 		if (!reportOpened) {
-			reportText = km6.printAllKmForms();
+			km6.printAllKmForms();
+			reportText = km6.getPDFContent(DisinsectorTools.getDownloadedFile(chromeDownloadPath, KM6_PDF), 1);
 			reportOpened = true;
 		}
 		

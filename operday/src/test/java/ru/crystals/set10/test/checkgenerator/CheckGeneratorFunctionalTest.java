@@ -1,12 +1,9 @@
 package ru.crystals.set10.test.checkgenerator;
 
 import java.util.HashMap;
-
-import org.apache.log4j.Logger;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.Test;
-
 import ru.crystals.set10.config.*;
 import ru.crystals.pos.bank.datastruct.AuthorizationData;
 import ru.crystals.pos.bank.datastruct.BankCard;
@@ -31,9 +28,12 @@ public class CheckGeneratorFunctionalTest {
 	
 	@BeforeClass
 	public void setupCash(){
-		cashEmulator = CashEmulator.getCashEmulator(Config.RETAIL_HOST, Integer.valueOf(Config.SHOP_NUMBER), Integer.valueOf(String.valueOf(5)));
+		
+		cashEmulator = CashEmulator.getCashEmulator(Config.RETAIL_HOST, Integer.valueOf(Config.SHOP_NUMBER), Integer.valueOf(String.valueOf(1)));
 		//cashEmulator = CashEmulator.getCashEmulator(Config.CENTRUM_HOST, Integer.valueOf(Config.VIRTUAL_SHOP_NUMBER), Integer.valueOf(Config.CASH_NUMBER ));
 		//cashEmulatorVirtual = CashEmulator.getCashEmulator(Config.CENTRUM_HOST, Integer.valueOf(Config.VIRTUAL_SHOP_NUMBER), Integer.valueOf(Config.CASH_NUMBER ));
+		cashEmulator.setTimeOfset(86400000);
+		cashEmulator.useNextShift();
 		//cashEmulator.nextIntroduction();
 		
 		//cashEmulator.changeCashUser(2);
@@ -43,30 +43,22 @@ public class CheckGeneratorFunctionalTest {
 	
 	@AfterClass
 	public void sendZreport(){
-		
-		cashEmulator.nextWithdrawal();
-		//cashEmulatorVirtual.nextWithdrawal();
-		cashEmulator.changeCashUser(3);
-		
+		//cashEmulator.nextWithdrawal();
 		cashEmulator.nextZReport();
-	//	cashEmulatorVirtual.nextZReport();
 	}
 	
 	@Test (	description = "Сгенерить чеки продажи")
 	public void testSendChecks(){
 		for(int i=0; i<1; i++) {
-			p1 = payments.getPurchaseWithoutPayments();
-			cashEmulator.nextCancelledPurchase(p1); 
+//			p1 = payments.getPurchaseWithoutPayments();
+//			cashEmulator.nextCancelledPurchase(p1); 
 			
 			p1 = (PurchaseEntity) cashEmulator.nextPurchase(getCashPayment());
-			//p2 = (PurchaseEntity) cashEmulator2104.nextPurchase(getCashPayment());
 			//cashEmulator.nextRefundAll(p1, false);
 
-			p1 = (PurchaseEntity) cashEmulator.nextPurchase(getBankCardPayment(BankCardPaymentEntity.class));
-			returnPositions.put(1L,1000L);
-			
-			//cashEmulator.nextRefundPositions(p1, returnPositions, false);
-			
+			//p2 = (PurchaseEntity) cashEmulator.nextPurchase(getBankCardPayment(BankCardPaymentEntity.class));
+			//returnPositions.put(1L,1000L);
+			cashEmulator.nextRefundAll(p1, false);
 			
 			//cashEmulator.nextCancelledPurchase(cashEmulator.nextPurchaseWithoutSending());
 			

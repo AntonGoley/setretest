@@ -1,10 +1,14 @@
 package ru.crystals.set10.test.documents.accompanying;
 
+import java.io.File;
+
 import junit.framework.Assert;
 
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+
+import ru.crystals.set10.utils.DisinsectorTools;
 import static ru.crystals.set10.pages.operday.searchcheck.CheckContentPage.*;
 
 @Test (groups={"centrum", "retail"})
@@ -15,7 +19,10 @@ public class AccompanyingGoodsCheckContentTest extends AccompanyingDocumentsBasi
 	@BeforeClass
 	public void prepareData() {
 		super.navigateToCheckSearchPage();
-		reportResult = checkContent.generateReport(LINK_GOODS_CHECK);
+		DisinsectorTools.removeOldReport(chromeDownloadPath, PDF_GOODS_CHEQUE);
+		checkContent = checkContent.generateReport(LINK_GOODS_CHECK);
+		File file = DisinsectorTools.getDownloadedFile(chromeDownloadPath, PDF_GOODS_CHEQUE);
+		reportResult = checkContent.getPDFContent(file);
 	}	
 	
 	@DataProvider (name = "Товарный чек")
@@ -27,7 +34,7 @@ public class AccompanyingGoodsCheckContentTest extends AccompanyingDocumentsBasi
 				 * 	- inn магазина
 				 */
 				{"Отображаение названия отчета", "Товарный чек", true },
-				{"Отображение шапки таблицы", "Поз. Штрих-код Название Ед. изм В уп. Кол-во Цена Сумма", true },
+				{"Отображение шапки таблицы", "Штрих-кодПоз. Ед. изм В уп. Кол-во Цена СуммаНазвание", true },
 				{"Содержит fullName товара, разрешенного к печати", allowPrintFullName, true },
 				{"Не содержит товар, запрещенный к печати", denyPrintFullName, false },
 				{"Сумма прописью ", denyPrintSumTotalInWords, true },

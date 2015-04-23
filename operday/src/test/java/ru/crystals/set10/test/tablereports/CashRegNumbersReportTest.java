@@ -1,11 +1,13 @@
 package ru.crystals.set10.test.tablereports;
 
+import java.util.Calendar;
 import java.util.Date;
 
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+
 import ru.crystals.set10.config.Config;
 import ru.crystals.set10.pages.operday.tablereports.ReportConfigPage;
 import ru.crystals.set10.test.dataproviders.TableReportsDataprovider;
@@ -26,22 +28,15 @@ public class CashRegNumbersReportTest extends AbstractReportTest{
 	private String fiscalNum;
 	private String eklzNum;
 	private String fiscalDate;
-
-	/*
-	 * Дата провайдер для валидации одной из касс
-	 */
-	@DataProvider (name = "CashData")
-	private Object[][] cashData() throws Exception{
-		return new Object[][] {
-				{"Поле: Заводской номер", factoryNum},
-				{"Поле: Регистрационный номер", fiscalNum},
-				{"Поле: Номер ЭКЛЗ", eklzNum},
-				{"Поле: Дата фискализации", fiscalDate.replace("-", ".")}
-		};
-	}
+	private String replaceEklzDate;
+	private String blockCashDate;
+	private String dateBeforeBlockCask;
 	
+	private Calendar calendar;
+
 	@BeforeClass
 	public void navigateCashRegNumsReport() throws Exception {
+		
 		/*
 		 * Отправить данные по кассам на сервер
 		 */
@@ -57,6 +52,25 @@ public class CashRegNumbersReportTest extends AbstractReportTest{
 				TAB_OTHER, 
 				REPORT_NAME_CASH_REGNUMBERS);
 		doHTMLReport(cashNumbersConfigPage, true);
+	}
+	
+	/*
+	 * Дата провайдер для валидации одной из касс
+	 */
+	@DataProvider (name = "CashData")
+	private Object[][] cashData() throws Exception{
+		
+		
+		
+		return new Object[][] {
+				{"Поле: Заводской номер", factoryNum},
+				{"Поле: Регистрационный номер", fiscalNum},
+				{"Поле: Номер ЭКЛЗ", eklzNum},
+				{"Поле: Дата фискализации", fiscalDate.replace("-", ".")},
+				{"Поле: Заменить ЭКЛЗ с", replaceEklzDate},
+				{"Поле: Дата блокировки кассы", blockCashDate},
+				{"Поле: До блокировки кассы осталось (дней) ", dateBeforeBlockCask},
+		};
 	}
 	
 	@Test (	description = "SRL-137. Проверить данные о кассе 1 в отчете о регистрационных номерах касс на ТК", 
@@ -98,12 +112,34 @@ public class CashRegNumbersReportTest extends AbstractReportTest{
 	 * Задать данные по каждой кассе
 	 */
 	private void setCashData(int cashNumber, long date) throws Exception{
+		long currentDateMs = 0;
+		long blockDateDateMs = 0;
+		
 		CashVO cashVO = new CashVO();
 		cashVO = cashEmulator.setCashVO(cashNumber, Config.SHOP_NUMBER, date);
 		eklzNum = cashVO.getEklzNum();
 		factoryNum = cashVO.getFactoryNum();
 		fiscalNum = cashVO.getFiscalNum();
-		fiscalDate = DisinsectorTools.getDate("dd.MM.YYYY", Long.valueOf(cashVO.getFiscalDate()));
+		fiscalDate = cashVO.getFiscalDate();
+		
+		
+		calendar = Calendar.getInstance();
+		calendar.setTimeInMillis(date);
+		currentDateMs = calendar.getTimeInMillis();
+		/** считаем дату начала замены эклз*/
+		calendar.add(Calendar.YEAR, 1);
+		replaceEklzDate = DisinsectorTools.getDate("dd.MM.yyyy", calendar.getTimeInMillis());	
+		
+		/** считаем дату блокировки кассы*/
+		calendar.add(Calendar.MONTH, 2);
+		calendar.set(Calendar.DATE, 1);
+		
+		blockCashDate = DisinsectorTools.getDate("dd.MM.yyyy", calendar.getTimeInMillis());
+		blockDateDateMs = calendar.getTimeInMillis();
+		/** сколько дней до блокировки кассы*/
+		dateBeforeBlockCask = String.valueOf( ((blockDateDateMs - currentDateMs)/(24 * 60 * 60 * 1000) - 1));
+		log.info("Количество дней до блокировки: " +  dateBeforeBlockCask);
+		
 		
 		cashEmulator.sendCashVO(cashVO);	
 	}

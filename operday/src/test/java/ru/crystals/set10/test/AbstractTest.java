@@ -19,9 +19,7 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.annotations.BeforeMethod;
-
 import ru.crystals.set10.config.*;
-import ru.crystals.set10.pages.basic.*;
 import ru.crystals.set10.utils.CashEmulator;
 import ru.crystals.set10.utils.DbAdapter;
 import ru.crystals.set10.utils.DisinsectorTools;
@@ -147,13 +145,6 @@ public class  AbstractTest implements IExecutionListener{
     @AfterClass (alwaysRun = true)
     public void close(ITestContext contx) {
     	driver.close();
-    	//service.stop();  
-    	// close all windows and quite
-    	//driver.quit();
-    }
-    
-    protected LoginPage loginAs(String user, String pwd, String url) {
-    	return new LoginPage(getDriver(), url);
     }
     
     private String getChromeDownloadPath(){
@@ -205,5 +196,5 @@ public class  AbstractTest implements IExecutionListener{
 			log.info("Сервис успешно остановлен"); 
 		}	
 	};
-    
+	
 }

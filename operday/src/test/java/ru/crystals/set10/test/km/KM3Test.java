@@ -17,6 +17,7 @@ import ru.crystals.set10.pages.operday.cashes.CashesPage;
 import ru.crystals.set10.pages.operday.cashes.KmPage;
 import ru.crystals.set10.test.AbstractTest;
 import ru.crystals.set10.utils.PurchaseGenerator;
+import ru.crystals.set10.utils.DisinsectorTools;
 import ru.crystals.setretailx.cash.CashVO;
 import static ru.crystals.set10.pages.operday.cashes.KmPage.*;
 import static ru.crystals.set10.pages.operday.OperDayPage.CASHES;
@@ -42,7 +43,11 @@ public class KM3Test extends AbstractTest{
 	
 	@BeforeClass
 	public void prepareData(){
+		/**  удалить km3 из базы*/
 		dbAdapter.batchUpdateDb(DB_OPERDAY, new String[] {SQL_CLEAN_KM3, SQL_CLEAN_KM3_ROW} );
+		/** удалить файлы отчетов KM3 на диске*/
+		DisinsectorTools.removeOldReport(chromeDownloadPath, KM3_PDF);
+		
 		log.info("Записи в таблице od_km3 и в таблице od_km3_row удалены в базе " + DB_OPERDAY);
 		
 		km3 = new LoginPage(getDriver(), TARGET_HOST_URL)
@@ -72,7 +77,7 @@ public class KM3Test extends AbstractTest{
 		
 		return new Object[][]{
 				{"Название формы", "О ВОЗВРАТЕ ДЕНЕЖНЫХ СУММ ПОКУПАТЕЛЯМ (КЛИЕНТАМ)\nПО НЕИСПОЛЬЗОВАННЫМ КАССОВЫМ ЧЕКАМ"},
-				{"Строка Итого", ("Итого " + String.valueOf(sumRetunPositions)).replace(".", ",")},
+				{"Строка Итого", (String.valueOf(sumRetunPositions)).replace(".", ",") + " р.\n" + "Итого"},
 				{"Содержит ККМ: номер производителя (factory num)", cashVO.getFactoryNum()},
 				{"Содержит ККМ: рег. номер (fisc num)", cashVO.getFiscalNum()},
 		};
@@ -90,8 +95,9 @@ public class KM3Test extends AbstractTest{
 			dataProvider = "Поля КМ3")
 	public void testKM3Data(String fiels, String expectedValue){
 		if (!reportOpened) {
-			reportText = km3.printAllKmForms();
 			reportOpened = true;
+			km3.printAllKmForms();
+			reportText = km3.getPDFContent(DisinsectorTools.getDownloadedFile(chromeDownloadPath, KM3_PDF), 1);
 		}
 		log.info("Значение поля: " + fiels);
 		Assert.assertTrue(reportText.contains(expectedValue), "Неверное значение поля в форме КМ3");

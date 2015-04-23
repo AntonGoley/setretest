@@ -17,6 +17,8 @@ public class  KmPage extends CashesPage{
 	public static final String LOCATOR_KM3_TABLE = "km3Table";
 	public static final String LOCATOR_KM6_TABLE = "km6Table";
 	
+	public static final String KM3_PDF = "KM3.pdf";
+	public static final String KM6_PDF = "KM6.pdf";
 	
 	
 	public KmPage(WebDriver driver) {
@@ -34,7 +36,20 @@ public class  KmPage extends CashesPage{
 				getElementProperty(getDriver(), ID_OPERDAYSWF, formType, "length"));
 	}
 	
-	public String printAllKmForms(){
+	
+	public KmPage printAllKmForms(){
+		clickElement(getDriver(), ID_OPERDAYSWF, BUTTON_SELECT_ALL_UNPRINTED);
+		waitForProperty(getDriver(), ID_OPERDAYSWF, LOCATOR_PRINTALL_BUTTON, new String[]{"enabled", "true"});
+		clickElement(getDriver(), ID_OPERDAYSWF, LOCATOR_PRINTALL_BUTTON);
+		return this;
+	}
+	
+	/*
+	 * Метод не используется, пока  в хроме не пофиксят открытие 
+	 * окна для просмотра печати
+	 */
+	@Deprecated
+	public String printAllKmFormsWhenPrinPreviewEnable(){
 		clickElement(getDriver(), ID_OPERDAYSWF, BUTTON_SELECT_ALL_UNPRINTED);
 		waitForProperty(getDriver(), ID_OPERDAYSWF, LOCATOR_PRINTALL_BUTTON, new String[]{"enabled", "true"});
 		clickElement(getDriver(), ID_OPERDAYSWF, LOCATOR_PRINTALL_BUTTON);

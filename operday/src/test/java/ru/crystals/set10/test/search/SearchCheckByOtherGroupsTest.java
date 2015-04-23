@@ -97,15 +97,15 @@ public class SearchCheckByOtherGroupsTest extends SearchCheckAbstractTest{
  		testExcelExport(LOCATOR_XLS_CHECK_HEADERS, XLS_REPORT_HEADERS_PATTERN);
 	}
 	
-	@Test (enabled = false, description = "SRTE-71. Поиск чека на ТК по номеру магазина")
-	public void testSearchCheckByShopNumber(){
- 		searchCheck.setFilterText(FILTER_CATEGORY_SHOP_NUMBER, String.valueOf(shopNumber));
- 		searchCheck.doSearch();
- 		searchResult = searchCheck.getSearchResultCount();
- 		sendCheck();
- 		
-		searchCheck.doSearch();
-		Assert.assertEquals(searchCheck.getExpectedResultCount(searchResult + 1), searchResult + 1, "");
-	}
+//	@Test (enabled = false, description = "SRTE-71. Поиск чека на ТК по номеру магазина")
+//	public void testSearchCheckByShopNumber(){
+// 		searchCheck.setFilterText(FILTER_CATEGORY_SHOP_NUMBER, String.valueOf(shopNumber));
+// 		searchCheck.doSearch();
+// 		searchResult = searchCheck.getSearchResultCount();
+// 		sendCheck();
+// 		
+//		searchCheck.doSearch();
+//		Assert.assertEquals(searchCheck.getExpectedResultCount(searchResult + 1), searchResult + 1, "");
+//	}
 	
 }
