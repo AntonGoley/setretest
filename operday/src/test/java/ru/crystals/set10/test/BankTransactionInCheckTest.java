@@ -17,7 +17,7 @@ import ru.crystals.set10.pages.operday.searchcheck.CheckContentPage;
 import ru.crystals.set10.pages.operday.searchcheck.CheckSearchPage;
 import ru.crystals.set10.pages.operday.searchcheck.PaymentTransactionsPage;
 import ru.crystals.set10.pages.operday.tablereports.ReportConfigPage;
-import ru.crystals.set10.utils.PaymentGenerator;
+import ru.crystals.set10.utils.PaymentEmulator;
 import ru.crystals.set10.utils.DisinsectorTools;
 import ru.crystals.set10.utils.PurchaseGenerator;
 import static ru.crystals.set10.pages.operday.searchcheck.PaymentTransactionsPage.LINK_SAVE_EXCEL;
@@ -146,7 +146,7 @@ public class BankTransactionInCheckTest extends AbstractTest {
 	
 	private PurchaseEntity setPayments(){
 		
-		PaymentGenerator payments = new PaymentGenerator();
+		PaymentEmulator payments = new PaymentEmulator();
 		PurchaseEntity purchase = PurchaseGenerator.getPurchaseWithoutPayments();
 		
 		AuthorizationData authDataInvalid = new AuthorizationData();

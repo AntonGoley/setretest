@@ -13,7 +13,7 @@ import ru.crystals.pos.check.PurchaseEntity;
 import ru.crystals.pos.payments.BankCardPaymentEntity;
 import ru.crystals.pos.payments.ChildrenCardPaymentEntity;
 import ru.crystals.set10.config.Config;
-import ru.crystals.set10.utils.PaymentGenerator;
+import ru.crystals.set10.utils.PaymentEmulator;
 import ru.crystals.set10.utils.DisinsectorTools;
 import ru.crystals.set10.utils.PurchaseGenerator;
 
@@ -52,7 +52,7 @@ public class SearchCheckByPaymentGroupTest extends SearchCheckAbstractTest{
 		
 		resetFiltersAndAdd2New();
 		
-		PaymentGenerator payments = new PaymentGenerator();
+		PaymentEmulator payments = new PaymentEmulator();
 		
 		/*
 		 * Оплата банковской картой	

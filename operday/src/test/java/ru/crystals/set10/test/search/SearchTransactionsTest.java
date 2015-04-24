@@ -11,7 +11,7 @@ import ru.crystals.pos.bank.datastruct.AuthorizationData;
 import ru.crystals.pos.bank.datastruct.BankCard;
 import ru.crystals.pos.payments.BankCardPaymentEntity;
 import ru.crystals.set10.pages.operday.searchcheck.TransactionSearchPage;
-import ru.crystals.set10.utils.PaymentGenerator;
+import ru.crystals.set10.utils.PaymentEmulator;
 import ru.crystals.set10.utils.DisinsectorTools;
 import ru.crystals.set10.utils.PurchaseGenerator;
 import static ru.crystals.set10.pages.operday.searchcheck.CheckSearchPage.*;
@@ -22,7 +22,7 @@ public class SearchTransactionsTest extends SearchCheckAbstractTest{
 	
 	TransactionSearchPage transactions;
 	
-	PaymentGenerator payments = new PaymentGenerator();
+	PaymentEmulator payments = new PaymentEmulator();
 	
 	BankCard card;
 	AuthorizationData validAuth;

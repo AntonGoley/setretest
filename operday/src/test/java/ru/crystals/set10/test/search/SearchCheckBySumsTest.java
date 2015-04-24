@@ -13,8 +13,8 @@ import ru.crystals.operday.util.FormatHelper;
 import ru.crystals.pos.check.PositionEntity;
 import ru.crystals.pos.check.PurchaseEntity;
 import ru.crystals.pos.payments.BankCardPaymentEntity;
-import ru.crystals.set10.utils.CashEmulatorDiscounts;
-import ru.crystals.set10.utils.PaymentGenerator;
+import ru.crystals.set10.utils.DiscountEmulator;
+import ru.crystals.set10.utils.PaymentEmulator;
 import ru.crystals.set10.utils.DisinsectorTools;
 import ru.crystals.set10.utils.PurchaseGenerator;
 import static ru.crystals.set10.pages.operday.searchcheck.CheckSearchPage.*;
@@ -40,9 +40,9 @@ public class SearchCheckBySumsTest extends SearchCheckAbstractTest{
 	private int expectedCountSmaller = 0;
 	private int expectedCountSmaller_100 = 0;
 	
-	PaymentGenerator payments = new PaymentGenerator();
+	PaymentEmulator payments = new PaymentEmulator();
 	LoyTransactionEntity loyTransaction = new LoyTransactionEntity();
-	CashEmulatorDiscounts discountEmulator = new CashEmulatorDiscounts();
+	DiscountEmulator discountEmulator = new DiscountEmulator();
 	
 	long sumDiscount;
 	
@@ -70,7 +70,7 @@ public class SearchCheckBySumsTest extends SearchCheckAbstractTest{
 		/*
 		 * Чек продажи с одной позицией для поиска по сумме позиции
 		 */
-		p3 = PurchaseGenerator.generatePurchaseWithPositions(1);
+		p3 = purchaseGenerator.generatePurchaseWithPositions(1);
 		
 		/*
 		 * Чек продажи с транзакцией лояльности,
@@ -98,7 +98,7 @@ public class SearchCheckBySumsTest extends SearchCheckAbstractTest{
 		 * для поиска чека по скидке на позицию 
 		 */
 		sumDiscount = DisinsectorTools.random(10000) + 15023L;
-		p5 = PurchaseGenerator.generatePurchaseWithPositions(1);
+		p5 = purchaseGenerator.generatePurchaseWithPositions(1);
 		PositionEntity position = p5.getPositions().get(0);
 		position.setSumDiscount(sumDiscount);
 		List<PositionEntity> positions = new ArrayList<PositionEntity>();

@@ -30,9 +30,7 @@ public class PurchaseGenerator {
 		}
 	}
 	
-	/*
-	 * Сгенерить чек с заданным числом позиций
-	 */
+	/** Сгенерить чек с заданным числом позиций */
 	public static PurchaseEntity generatePurchase(int positionsNumber, boolean generatePayment){
 		PurchaseEntity pe = new PurchaseEntity();	
 		pe.setCheckStatus(CheckStatus.Registered);
@@ -87,10 +85,8 @@ public class PurchaseGenerator {
 	      return pe;
 	}
 	
-	/*TODO: временный метод
-	 * Сгенерить чек с заданным числом позиций с оплатой наличными
-	 */
-	public static PurchaseEntity generatePurchaseWithPositions(int positionsNumber){
+
+	public PurchaseEntity generatePurchaseWithPositions(int positionsNumber){
 		return generatePurchase(positionsNumber, true);
 	}
 	
@@ -107,6 +103,9 @@ public class PurchaseGenerator {
 		peListWithoutPayments.remove(idx);
 	    return result;
 	}
+	
+	
+	
 	
 	
 	public static long random(int max) {

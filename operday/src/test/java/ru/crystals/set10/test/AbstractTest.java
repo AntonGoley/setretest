@@ -8,9 +8,11 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
+
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.concurrent.TimeUnit;
+
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -19,10 +21,12 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.annotations.BeforeMethod;
+
 import ru.crystals.set10.config.*;
 import ru.crystals.set10.utils.CashEmulator;
 import ru.crystals.set10.utils.DbAdapter;
 import ru.crystals.set10.utils.DisinsectorTools;
+import ru.crystals.set10.utils.PurchaseGenerator;
 
 
 @Listeners(ru.crystals.set10.test.AbstractTest.class)
@@ -55,6 +59,11 @@ public class  AbstractTest implements IExecutionListener{
     protected static CashEmulator cashEmulatorMainCash;
     private static CashEmulator cashEmulatorMainCashRetail = CashEmulator.getCashEmulator(Config.RETAIL_HOST, Integer.valueOf(Config.SHOP_NUMBER), Integer.valueOf(Config.CASH_NUMBER) + 2);
     private static CashEmulator cashEmulatorMainCashVirtualShop = CashEmulator.getCashEmulator(Config.CENTRUM_HOST, Integer.valueOf(Config.VIRTUAL_SHOP_NUMBER), Integer.valueOf(Config.CASH_NUMBER) + 2);
+    
+    /*
+     * эмулятор чеков
+     */
+    protected PurchaseGenerator purchaseGenerator = new PurchaseGenerator();
     
     
     protected static DbAdapter dbAdapter = new DbAdapter();

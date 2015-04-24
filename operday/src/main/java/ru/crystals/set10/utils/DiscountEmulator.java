@@ -11,7 +11,7 @@ import ru.crystals.pos.check.PositionEntity;
 import ru.crystals.pos.check.PurchaseEntity;
 import ru.crystals.pos.check.SentToServerStatus;
 
-public class CashEmulatorDiscounts {
+public class DiscountEmulator {
 	
 	
 	/*

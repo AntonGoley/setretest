@@ -30,7 +30,7 @@ public class CashRegNumbersReportTest extends AbstractReportTest{
 	private String fiscalDate;
 	private String replaceEklzDate;
 	private String blockCashDate;
-	private String dateBeforeBlockCask;
+	private String dateBeforeBlockCash;
 	
 	private Calendar calendar;
 
@@ -69,7 +69,7 @@ public class CashRegNumbersReportTest extends AbstractReportTest{
 				{"Поле: Дата фискализации", fiscalDate.replace("-", ".")},
 				{"Поле: Заменить ЭКЛЗ с", replaceEklzDate},
 				{"Поле: Дата блокировки кассы", blockCashDate},
-				{"Поле: До блокировки кассы осталось (дней) ", dateBeforeBlockCask},
+				{"Поле: До блокировки кассы осталось (дней) ", dateBeforeBlockCash},
 		};
 	}
 	
@@ -137,8 +137,8 @@ public class CashRegNumbersReportTest extends AbstractReportTest{
 		blockCashDate = DisinsectorTools.getDate("dd.MM.yyyy", calendar.getTimeInMillis());
 		blockDateDateMs = calendar.getTimeInMillis();
 		/** сколько дней до блокировки кассы*/
-		dateBeforeBlockCask = String.valueOf( ((blockDateDateMs - currentDateMs)/(24 * 60 * 60 * 1000) - 1));
-		log.info("Количество дней до блокировки: " +  dateBeforeBlockCask);
+		dateBeforeBlockCash = String.valueOf( ((blockDateDateMs - currentDateMs)/(24 * 60 * 60 * 1000) - 1));
+		log.info("Количество дней до блокировки: " +  dateBeforeBlockCash);
 		
 		
 		cashEmulator.sendCashVO(cashVO);	

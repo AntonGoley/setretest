@@ -7,7 +7,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import ru.crystals.pos.check.PurchaseEntity;
 import ru.crystals.set10.utils.CashEmulator;
-import ru.crystals.set10.utils.PaymentGenerator;
+import ru.crystals.set10.utils.PaymentEmulator;
 
 public class ERPExportTest {
 	
@@ -17,7 +17,7 @@ public class ERPExportTest {
 	CashEmulator cashEmulatorVirtualShop;
 	HashMap<Long, Long>  returnPositions = new HashMap<Long, Long>(); 
 	
-	PaymentGenerator payments = new PaymentGenerator();
+	PaymentEmulator payments = new PaymentEmulator();
 	PurchaseEntity p1;
 	PurchaseEntity p2;
 	

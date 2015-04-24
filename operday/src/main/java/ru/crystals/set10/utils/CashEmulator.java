@@ -99,6 +99,8 @@ public class CashEmulator {
 	    shiftNum = getCurrentShiftNum(cashNumber);
 	    checkNumber =  getNextCheckNum(cashNumber, shiftNum);
 	    loySender = new LoySender(targetHost, shopNumber, cashNumber);
+	    sendCashVO(setCashVO(cashNumber, String.valueOf(shopNum), new Date().getTime()));
+	    sendCashMessage();
 	    log.info("Создан cashEmulator: " + cashNumber +  "; ShopNum = " + shopNum + "; ShiftNum = " + shiftNum + "; NextCheckNumber = " + checkNumber);
 	    
 	} 
@@ -648,7 +650,7 @@ public class CashEmulator {
 	}
 	
 	/*
-	 * Отправляет на сервер данные кассы (эмуляция вызова кассой сервера)
+	 * Отправляет на сервер данные кассы
 	 */
 	public void sendCashVO(CashVO cashVo) {
 		httpConnect.setUrl("http://" + targetHost + ":8090" + GLOBAL_SERVLET_PATH);

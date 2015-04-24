@@ -15,7 +15,7 @@ import ru.crystals.pos.check.PurchaseEntity;
 import ru.crystals.pos.payments.BankCardPaymentEntity;
 import ru.crystals.pos.payments.ChildrenCardPaymentEntity;
 import ru.crystals.set10.utils.CashEmulator;
-import ru.crystals.set10.utils.PaymentGenerator;
+import ru.crystals.set10.utils.PaymentEmulator;
 import ru.crystals.set10.utils.DisinsectorTools;
 import ru.crystals.set10.utils.PurchaseGenerator;
 
@@ -25,7 +25,7 @@ public class CheckGeneratorTest {
 	
 	HashMap<Long, Long>  returnPositions = new HashMap<Long, Long>(); 
 	
-	PaymentGenerator payments = new PaymentGenerator();
+	PaymentEmulator payments = new PaymentEmulator();
 	PurchaseEntity p1;
 		
 	CashEmulator cashEmulator = CashEmulator.getCashEmulator(Config.RETAIL_HOST, Integer.valueOf(Config.SHOP_NUMBER), Integer.valueOf(Config.CASH_NUMBER));

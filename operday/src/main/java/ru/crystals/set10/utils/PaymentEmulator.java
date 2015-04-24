@@ -16,7 +16,7 @@ import ru.crystals.pos.payments.GiftCardPaymentEntity;
 import ru.crystals.pos.payments.PaymentEntity;
 import ru.crystals.pos.payments.PaymentTransactionEntity;
 
-public class PaymentGenerator {
+public class PaymentEmulator {
 	
 	/*
 	 * Добавить оплату в чек к уже существующим оплатам
@@ -194,7 +194,6 @@ public class PaymentGenerator {
 	 * Данные авторизации
 	 */
 	private AuthorizationData generateAuthorizationData(long sum, BankCard card, AuthorizationData authBasicData){
-		
 		/*
 		 * По умолчанию статус true 
 		 */

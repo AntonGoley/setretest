@@ -9,7 +9,7 @@ import ru.crystals.set10.pages.basic.LoginPage;
 import ru.crystals.set10.pages.basic.MainPage;
 import ru.crystals.set10.pages.operday.cashes.CashOperDayTabPage;
 import ru.crystals.set10.pages.operday.cashes.CashesPage;
-import ru.crystals.set10.utils.PaymentGenerator;
+import ru.crystals.set10.utils.PaymentEmulator;
 import ru.crystals.set10.utils.DisinsectorTools;
 import static ru.crystals.set10.pages.operday.cashes.CashesPage.LOCATOR_OPERDAY_TAB;
 import static ru.crystals.set10.pages.operday.OperDayPage.CASHES;
@@ -18,7 +18,7 @@ import static ru.crystals.set10.pages.operday.OperDayPage.CASHES;
 @Test(groups = {"retail"})
 public class CashierNameOperDayTabTest extends AbstractTest{
 	
-	PaymentGenerator payments = new PaymentGenerator();
+	PaymentEmulator payments = new PaymentEmulator();
 	PurchaseEntity p1;
 	
 	MainPage mainPage;

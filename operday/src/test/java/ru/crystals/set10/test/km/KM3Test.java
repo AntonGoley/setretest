@@ -16,7 +16,6 @@ import ru.crystals.set10.pages.operday.OperDayPage;
 import ru.crystals.set10.pages.operday.cashes.CashesPage;
 import ru.crystals.set10.pages.operday.cashes.KmPage;
 import ru.crystals.set10.test.AbstractTest;
-import ru.crystals.set10.utils.PurchaseGenerator;
 import ru.crystals.set10.utils.DisinsectorTools;
 import ru.crystals.setretailx.cash.CashVO;
 import static ru.crystals.set10.pages.operday.cashes.KmPage.*;
@@ -59,7 +58,7 @@ public class KM3Test extends AbstractTest{
 		//количество актов km3
 		km3Tablerows = km3.getKmCountOnPage(LOCATOR_KM3_TABLE);
 		
-		purchase = (PurchaseEntity) PurchaseGenerator.generatePurchaseWithPositions(10);
+		purchase = (PurchaseEntity) purchaseGenerator.generatePurchaseWithPositions(10);
 		cashEmulator.nextPurchase(purchase);
 		//Возвращаем 1-ю позицию
 		returnPositions.put(1L, 1L * 1000);

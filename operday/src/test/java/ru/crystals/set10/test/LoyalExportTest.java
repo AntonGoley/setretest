@@ -10,8 +10,8 @@ import ru.crystals.discount.processing.entity.LoyTransactionEntity;
 import ru.crystals.httpclient.HttpFileTransport;
 import ru.crystals.pos.check.PurchaseEntity;
 import ru.crystals.set10.utils.CashEmulator;
-import ru.crystals.set10.utils.CashEmulatorDiscounts;
-import ru.crystals.set10.utils.PaymentGenerator;
+import ru.crystals.set10.utils.DiscountEmulator;
+import ru.crystals.set10.utils.PaymentEmulator;
 
 public class LoyalExportTest {
 	
@@ -23,7 +23,7 @@ public class LoyalExportTest {
 	CashEmulator cashEmulatorVirtualShop;
 	HashMap<Long, Long>  returnPositions = new HashMap<Long, Long>(); 
 	
-	PaymentGenerator payments = new PaymentGenerator();
+	PaymentEmulator payments = new PaymentEmulator();
 	PurchaseEntity p1;
 	PurchaseEntity p2;
 	
@@ -39,7 +39,7 @@ public class LoyalExportTest {
 	@Test (	description = "Экспорт документов в SAP. Чек экспортируется в SAP")
 	public void testExportChecks(){
 		
-		CashEmulatorDiscounts payments = new CashEmulatorDiscounts();
+		DiscountEmulator payments = new DiscountEmulator();
 		LoyTransactionEntity loyTransaction = new LoyTransactionEntity();
 		
 		for (int i = 0; i < 1; i++) {

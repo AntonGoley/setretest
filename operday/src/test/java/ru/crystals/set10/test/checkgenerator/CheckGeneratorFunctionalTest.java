@@ -14,7 +14,7 @@ import ru.crystals.pos.check.PurchaseEntity;
 import ru.crystals.pos.payments.BankCardPaymentEntity;
 import ru.crystals.pos.payments.ChildrenCardPaymentEntity;
 import ru.crystals.set10.utils.CashEmulator;
-import ru.crystals.set10.utils.PaymentGenerator;
+import ru.crystals.set10.utils.PaymentEmulator;
 import ru.crystals.set10.utils.DisinsectorTools;
 import ru.crystals.set10.utils.PurchaseGenerator;
 
@@ -25,23 +25,19 @@ public class CheckGeneratorFunctionalTest {
 	CashEmulator cashEmulatorVirtual;
 	HashMap<Long, Long>  returnPositions = new HashMap<Long, Long>(); 
 	
-	PaymentGenerator payments = new PaymentGenerator();
+	PaymentEmulator payments = new PaymentEmulator();
 	PurchaseEntity p1;
 	PurchaseEntity p2;
 	
 	@BeforeClass
 	public void setupCash(){
 		
-		cashEmulator = CashEmulator.getCashEmulator(Config.RETAIL_HOST, Integer.valueOf(Config.SHOP_NUMBER), Integer.valueOf(String.valueOf(1)));
+		cashEmulator = CashEmulator.getCashEmulator(Config.RETAIL_HOST, Integer.valueOf(Config.SHOP_NUMBER), Integer.valueOf(String.valueOf(2)));
 		//cashEmulator = CashEmulator.getCashEmulator(Config.CENTRUM_HOST, Integer.valueOf(Config.VIRTUAL_SHOP_NUMBER), Integer.valueOf(Config.CASH_NUMBER ));
-		//cashEmulatorVirtual = CashEmulator.getCashEmulator(Config.CENTRUM_HOST, Integer.valueOf(Config.VIRTUAL_SHOP_NUMBER), Integer.valueOf(Config.CASH_NUMBER ));
-		cashEmulator.setTimeOfset(86400000);
-		cashEmulator.useNextShift();
+		//cashEmulator.setTimeOfset(86400000);
+		//cashEmulator.useNextShift();
 		//cashEmulator.nextIntroduction();
-		
-		//cashEmulator.changeCashUser(2);
-		//cashEmulator2104.nextIntroduction();
-		//cashEmulator.sendCashMessage();
+
 	}
 	
 	@AfterClass
@@ -56,31 +52,18 @@ public class CheckGeneratorFunctionalTest {
 //			p1 = payments.getPurchaseWithoutPayments();
 //			cashEmulator.nextCancelledPurchase(p1); 
 			
+			cashEmulator.changeCashUser(2);
+			cashEmulator.nextIntroduction();
+			
+			cashEmulator.changeCashUser(1);
 			p1 = (PurchaseEntity) cashEmulator.nextPurchase(getCashPayment());
 			//cashEmulator.nextRefundAll(p1, false);
 
 			//p2 = (PurchaseEntity) cashEmulator.nextPurchase(getBankCardPayment(BankCardPaymentEntity.class));
 			//returnPositions.put(1L,1000L);
-			cashEmulator.nextRefundAll(p1, false);
-			
-			//cashEmulator.nextCancelledPurchase(cashEmulator.nextPurchaseWithoutSending());
-			
-//			cashEmulator.nextRefundAll(p1, false);
-	//		cashEmulatorVirtual.nextRefundAll(p2, false);
-//			p1 = (PurchaseEntity) cashEmulator.nextPurchase(getBankCardPayment(ChildrenCardPaymentEntity.class));
-	//		p2 = (PurchaseEntity) cashEmulator2104.nextPurchase(getBankCardPayment(ChildrenCardPaymentEntity.class));
-	////		cashEmulator.nextRefundAll(p1, false);
-	//		p1 = (PurchaseEntity) cashEmulator.nextPurchase(getBonusCardPayment());
-	//		p2 = (PurchaseEntity) cashEmulator2104.nextPurchase(getBonusCardPayment());
-	////		cashEmulator.nextRefundAll(p1, false);
-	//		p1 = (PurchaseEntity) cashEmulator.nextPurchase(getGiftCardPayment());
-	//		p2 = (PurchaseEntity) cashEmulator2104.nextPurchase(getGiftCardPayment());
-	////		cashEmulator.nextRefundAll(p1, false);
-	//		p1 = (PurchaseEntity) cashEmulator.nextPurchase(getDiscountCardPayment());
-	//		p2 = (PurchaseEntity) cashEmulator2104.nextPurchase(getDiscountCardPayment());
-	//		log.info("Выполнить возврать последнего чека");
-		//	cashEmulator.nextRefundAll(p1, false);
-		//	cashEmulator2104.nextRefundAll(p2, false);
+			cashEmulator.changeCashUser(2);
+			//cashEmulator.nextRefundAll(p1, false);
+
 		}
 	}
 	
