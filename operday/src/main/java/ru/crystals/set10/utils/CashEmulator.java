@@ -554,6 +554,8 @@ public class CashEmulator {
     	String lastName = String.format("LName_tab%s", String.valueOf(tabnum));
     	String middleName = "MName";
     	
+    	/** закрыть предыдущую сессию */
+    	shift.getSessionStart().setDateEnd(new Date(System.currentTimeMillis() - yesterday));
     	
     	SessionEntity se = new SessionEntity();
         se.setDateBegin(new Date(System.currentTimeMillis() - yesterday));
@@ -568,7 +570,6 @@ public class CashEmulator {
         ue.getSessions().add(se);
         se.setUser(ue);
         //закрываем сессию предыдущего юзера
-        shift.getSessionStart().setDateEnd(new Date(System.currentTimeMillis() - yesterday));
         shift.setSessionStart(se);
         sendCashMessage();
         /*
