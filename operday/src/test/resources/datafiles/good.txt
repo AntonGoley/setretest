@@ -5,10 +5,6 @@
 			<count>1</count>
 			<default-code>true</default-code>
 		</bar-code>
-		<bar-code code="%2$s">
-			<count>1</count>
-			<default-code>false</default-code>
-		</bar-code>
 		<product-type>ProductSpiritsEntity</product-type>
 		<price-entry price="877.00">
 			<begin-date>2011-08-18T00:00:00.000</begin-date>

@@ -19,7 +19,7 @@ public class WeightPricesTest extends WeightAbstractTest{
 	
 SoapRequestSender soapSender = new SoapRequestSender();
 	
-	PluParserInterface pluParser;
+	
 	HashMap<String, String> weightGood = new HashMap<String, String>();
 	
 	
@@ -64,31 +64,5 @@ SoapRequestSender soapSender = new SoapRequestSender();
 //		Assert.assertEquals(scales.getPluParameterExpectedValue(weightGood.get(PLU_NUMBER_PARAM), price2Parser(), "1001"), 
 //				"1001", "Не выгрузилась новая цена 2");
 	}
-	
-
-	public PluParserInterface price1Parser(){
-		return new PluParserInterface() {
-			
-			@Override
-			public String getParameter(LinkToPluType linkToPlu) {
-				linkToPlu.getPlu().getPrice();
-				return null;
-			}
-		};
-		
-	}
-	
-	public PluParserInterface price2Parser(){
-		return new PluParserInterface() {
-			
-			@Override
-			public String getParameter(LinkToPluType linkToPlu) {
-				linkToPlu.getPlu().getExPrice();
-				return null;
-			}
-		};
-		
-	}
-	
 	
 }
