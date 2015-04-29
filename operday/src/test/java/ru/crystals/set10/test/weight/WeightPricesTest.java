@@ -1,68 +1,89 @@
 package ru.crystals.set10.test.weight;
 
-import java.util.HashMap;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-import ru.crystals.scales.tech.core.scales.virtual.xml.LinkToPluType;
+import ru.crystals.scales.tech.core.scales.virtual.xml.PluType;
 import ru.crystals.set10.config.Config;
-import ru.crystals.set10.utils.DisinsectorTools;
+import ru.crystals.set10.utils.GoodGenerator;
 import ru.crystals.set10.utils.SoapRequestSender;
+import ru.crystals.setretailx.products.catalog.Good;
+import ru.crystals.setretailx.products.catalog.Price;
 
 
 
 public class WeightPricesTest extends WeightAbstractTest{
 
 	
-SoapRequestSender soapSender = new SoapRequestSender();
+	SoapRequestSender soapSender = new SoapRequestSender();
+	GoodGenerator goodGenerator = new GoodGenerator();
+	Good weightGood;
 	
+	BigDecimal priceVal1 = new BigDecimal("100.99");
+	BigDecimal priceVal2 = new BigDecimal("90.01");
+	BigDecimal priceVal3 = new BigDecimal("80.11");
+	BigDecimal priceVal4 = new BigDecimal("70.55");
 	
-	HashMap<String, String> weightGood = new HashMap<String, String>();
+	Price price1;
+	Price price2;
+	Price price3;
+	Price price4;
 	
+	int pluNumber = 16;
+	
+	PluType plu;
+	
+	List<Price> prices;
 	
 	@BeforeClass
 	public void initData(){
+		
 		scales.clearVScalesFileData();
 		soapSender.setSoapServiceIP(Config.RETAIL_HOST);
-		weightGood = generateGoodData();
-		weightGood.put("${plu-number}", "9");
-		weightGood = soapSender.sendGoods(DisinsectorTools.getFileContentAsString(WEIGHT_GOOD_FILE), weightGood);
+		
+		weightGood = goodGenerator.generateWeightGood(String.valueOf(pluNumber));
+		weightGood.getBarCodes().add(goodGenerator.generateWeightBarCode(Config.WEIGHT_BARCODE_PREFIX, 7));
+		soapSender.sendGood(weightGood);
+		plu = scales.getPlu(pluNumber);
+		
+		price1 = goodGenerator.generatePrice(1);
+		price2 = goodGenerator.generatePrice(2);
+		price3 = goodGenerator.generatePrice(3);
+		price4 = goodGenerator.generatePrice(4);
 	}
-	
-	@BeforeMethod
-	public void clearScales(){
-		//scales.clearVScalesFileData();
-	}
-	
 	
 	@Test()
-	public void testUnloadPriceIfPriceBanSelling(){
+	public void test(){
+		PluType expPlu = plu;
+		price1.setPrice(priceVal2);
+		price2.setPrice(priceVal1);
+		price3.setPrice(priceVal3);
 		
-		Assert.assertEquals(scales.waitPluActionType(weightGood.get(PLU_NUMBER_PARAM), ACTION_TYPE_LOAD), 
-				ACTION_TYPE_LOAD, "Товар не загрузился в весы");
+		prices = weightGood.getPrices();
+		weightGood.getPrices().removeAll(prices);
 		
+		weightGood.getPrices().add(0, price2);
+		weightGood.getPrices().add(1, price1);
+		weightGood.getPrices().add(2,price3);
 		
-		scales.clearVScalesFileData();
-		long now = System.currentTimeMillis();
-		weightGood.put(GOOD_PRICE1_PARAM, "20.01");
-		weightGood.put(GOOD_PRICE1_BEGIN_DATE_PARAM, DisinsectorTools.getDate(LECOND_DATE_FORMAT, now - day/2));
-		weightGood.put(GOOD_PRICE1_END_DATE_PARAM, DisinsectorTools.getDate(LECOND_DATE_FORMAT, now + day));
+		soapSender.sendGood(weightGood);
+		plu = scales.getPluUpdated(expPlu);
 		
-		weightGood.put(GOOD_PRICE2_PARAM, "10.01");
-		weightGood.put(GOOD_PRICE2_BEGIN_DATE_PARAM, DisinsectorTools.getDate(LECOND_DATE_FORMAT, now - day/2));
-		weightGood.put(GOOD_PRICE2_END_DATE_PARAM, DisinsectorTools.getDate(LECOND_DATE_FORMAT, now + day));
+		log.info(priceVal1.toPlainString().replace(".", ""));
+		log.info(priceVal3.toPlainString().replace(".", ""));
 		
-		weightGood = soapSender.sendGoods(DisinsectorTools.getFileContentAsString(WEIGHT_GOOD_FILE), weightGood);
+		Assert.assertEquals(String.valueOf(plu.getPrice()), priceVal2.toPlainString().replace(".", ""), "Цена за кг не равна цене 3!");
+		Assert.assertEquals(String.valueOf(plu.getExPrice()), priceVal1.toPlainString().replace(".", ""), "Цена за кг по карте не равна цене 1!");
 		
+		plu.getPrice();
 		
-//		Assert.assertEquals(scales.getPluParameterExpectedValue(weightGood.get(PLU_NUMBER_PARAM), price1Parser(), "2001"), 
-//				"2001", "Не выгрузилась новая цена 1");
-//		
-//		Assert.assertEquals(scales.getPluParameterExpectedValue(weightGood.get(PLU_NUMBER_PARAM), price2Parser(), "1001"), 
-//				"1001", "Не выгрузилась новая цена 2");
+	
 	}
 	
 }

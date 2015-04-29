@@ -18,6 +18,7 @@ import org.apache.log4j.Logger;
 
 import ru.crystals.scales.tech.core.scales.virtual.xml.LinkToPluType;
 import ru.crystals.scales.tech.core.scales.virtual.xml.Links;
+import ru.crystals.scales.tech.core.scales.virtual.xml.PluType;
 
 public class VirtualScalesReader {
 	
@@ -26,6 +27,8 @@ public class VirtualScalesReader {
 	
 	public static final int FILE_EXIST_RESPONSE = 200;
 	public static final int FILE_DELETED_RESPONSE = 404;
+	private static final int defaultTimeout = 60;
+	private Iterator<LinkToPluType> pluOnScales;
 	
 	HttpURLConnection  connection;
 	StringBuffer vScalesFileContent = new StringBuffer();
@@ -33,6 +36,171 @@ public class VirtualScalesReader {
 	public VirtualScalesReader(){
 		try {
 			virtualScales = new URL(VIRTUAL_WEIGHT_PATH);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private Iterator<LinkToPluType> readVirtualScales(){
+		Iterator<LinkToPluType> result = null;
+		try {
+			Links links = new Links();
+			Unmarshaller unmarchaller;
+			JAXBContext context = null;
+            context = JAXBContext.newInstance(Links.class.getPackage().getName());
+            unmarchaller = context.createUnmarshaller();
+            links = (Links)unmarchaller.unmarshal(virtualScales);
+            
+            /*
+             * Читаeм файл виртуальных весов и записываем содержимое в 
+             * vScalesFileContent
+             */
+            BufferedReader br = new BufferedReader(new InputStreamReader(virtualScales.openStream()));
+            String fileContent;
+            while ((fileContent = br.readLine()) != null) {
+            	vScalesFileContent.append(fileContent).append("\n");
+            }
+            
+            result = links.getLinkToPlu().iterator();
+
+	        } catch (JAXBException e) {
+	            e.printStackTrace();
+	        } catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		return result;
+	}
+	
+	/*
+	 * Метод возвращает true, если товар с pluNumber 
+	 * загружен в весы
+	 */
+	public boolean waitPluLoaded(int pluNumber){
+		int timeout = defaultTimeout;
+		
+		try {
+			getExpectedFileStatus(FILE_EXIST_RESPONSE);
+		} catch (Exception e){
+			return false;
+		}
+		
+		log.info("Ожидание загрузки PLU с номером " + pluNumber + " в весы");
+		while (timeout > 0){
+			timeout--;
+			pluOnScales = readVirtualScales();
+			while(pluOnScales.hasNext()){
+				if (pluOnScales.next().getPlu().getNumber() == pluNumber){
+					return true;
+				}
+			}
+			DisinsectorTools.delay(1000);
+		}
+		log.info("Превышено время ожидания загрузки PLU с номером " + pluNumber + " в весы: " + defaultTimeout);
+		return false;
+	}
+	
+	/*
+	 * 
+	 */
+	public PluType getPlu(int pluNumber){
+		PluType plu;
+		
+		if(!waitPluLoaded(pluNumber)){
+			log.info("PLU с номером " + pluNumber + " не загружено в весы!");
+			return null;
+		};
+		
+		pluOnScales = readVirtualScales();
+		while(pluOnScales.hasNext()){
+			plu = pluOnScales.next().getPlu();
+			if (plu.getNumber() == pluNumber){
+				return plu;
+			}
+		}
+		log.info("PLU с номером " + pluNumber + " не загружено в весы!");
+		return null;
+	}
+	
+	/*
+	 * Метод возващает plu,
+	 * когда переданный plu неравен resultPlu в весах с таким же номером.
+	 * Необходимо для понимания, что plu в весах обновился
+	 */
+	public PluType getPluUpdated(PluType plu){
+		PluType resultPlu = plu;
+		int timeout = defaultTimeout;
+		
+		while (timeout > 0){
+			timeout--;
+			pluOnScales = readVirtualScales();
+			while(pluOnScales.hasNext()){
+				resultPlu = pluOnScales.next().getPlu();
+				if (resultPlu.getNumber() == plu.getNumber()){
+					//TODO: сравнить объекты
+					if ( resultPlu.getPrice() != plu.getPrice() || 
+						 resultPlu.getExPrice() != plu.getExPrice() )
+					{
+						return resultPlu;
+					}
+				}
+			}
+			DisinsectorTools.delay(1000);
+		}
+		log.info("Товар в весах не обновился в течение " + defaultTimeout + ". PLU = " + plu.getNumber());
+		return resultPlu;
+	}
+	
+	
+	
+	/*
+	 * Проверить, статус файла виртуальных весов
+	 * 404 - удален
+	 * 200 - создан
+	 */
+	public boolean getExpectedFileStatus(int responseCode){
+		boolean result =  false;
+		long delay = 1000;
+		long timeout = defaultTimeout;
+		try {
+			//log.info("Ожидание респонс кода для файла виртуальных весов: " + responseCode);
+			while (timeout > 0){
+				connection = (HttpURLConnection) virtualScales.openConnection();
+				connection.setDoInput(true);
+				connection.setRequestMethod("GET");
+				
+				if (connection.getResponseCode() == responseCode){
+					//log.info("Время ожидания обновления файла виртуальных весов: " + timeout);
+					return true;
+				}
+				connection.connect();
+				timeout--;
+				DisinsectorTools.delay(delay);
+			}
+
+			throw new Exception("Время ожидания обновления файла виртуальных весов  превысило допустимое: " + defaultTimeout + ". Ожидаемый код ответа: " + responseCode);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+	
+	public void clearVScalesFileData(){
+		try {
+			connection = (HttpURLConnection) virtualScales.openConnection();
+			connection.setDoOutput(true);
+			connection.setRequestMethod("DELETE");
+			connection.connect();
+			log.info("Код ответа серверва: " + connection.getResponseCode());
+			connection.disconnect();
+			/*
+			 * Проверить, что файл весов удален
+			 */
+			getExpectedFileStatus(FILE_DELETED_RESPONSE);
+			
+			log.info("Файл " + VIRTUAL_WEIGHT_PATH + " удален!");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -61,192 +229,4 @@ public class VirtualScalesReader {
 		log.info(vScalesFileContent);
 		return "";
 	}
-	
-	public String waitPluActionType(String pluNumber, String expectedActionType){
-		long timeout = 0;
-		vScalesFileContent.setLength(0);
-		/*
-		 * Проверяем, что файл весов создан
-		 */
-		getExpectedFileStatus(FILE_EXIST_RESPONSE);
-		while (timeout < 60000) {
-			Iterator<LinkToPluType> iterator = readVirtualScales(); 
-			LinkToPluType linkToPlu;
-			while (iterator.hasNext()){
-				linkToPlu = iterator.next();
-				if (linkToPlu.getPlu().getNumber() == Integer.valueOf(pluNumber)){
-					if (linkToPlu.getActionType().equals(expectedActionType)){
-						log.info(vScalesFileContent);
-						return linkToPlu.getActionType();
-					}	
-				}
-			}
-			timeout+=500;
-			DisinsectorTools.delay(500);
-		}	
-		log.info("PLU " + pluNumber + " не найден в заданиях на загрузку/выгрузку");
-		log.info(vScalesFileContent);
-		return "";
-	}
-	
-	
-	
-	
-//	public String getPluParameterExpectedValue(String pluNumber, PluParserInterface pluParser, String expectedValue){
-//		long timeout = 0;
-//		vScalesFileContent.setLength(0);
-//		Iterator<LinkToPluType> iterator = null ;
-//		LinkToPluType linkToPlu;
-//		/*
-//		 * Проверяем, что файл весов создан
-//		 */
-//		getExpectedFileStatus(FILE_EXIST_RESPONSE);
-//		
-//		/*
-//		 * Ждем минуту, значение необходимого параметра
-//		 */
-//		while (timeout < 60000) {	
-//			// Перечитываем файл
-//			iterator = readVirtualScales(); 
-//			while (iterator.hasNext()){
-//				linkToPlu = iterator.next();
-//				if (linkToPlu.getPlu().getNumber() == Integer.valueOf(pluNumber)){
-//						log.info(vScalesFileContent);
-//						return pluParser.getParameter(linkToPlu);
-//				}
-//			}
-//			timeout+=500;
-//		}	
-//		log.info("PLU " + pluNumber + " не найден в заданиях на загрузку/выгрузку");
-//		log.info(vScalesFileContent);
-//		return "";
-//	}
-	
-	
-	
-	
-	public String getPluPriceValue(String pluNumber, String priceNumber, String expectedValue){
-		String result = "";
-		long timeout = 0;
-		vScalesFileContent.setLength(0);
-		while (timeout < 60000) {	
-			Iterator<LinkToPluType> iterator = readVirtualScales(); 
-			LinkToPluType linkToPlu;
-			while (iterator.hasNext()){
-				linkToPlu = iterator.next();
-				
-				if (linkToPlu.getPlu().getNumber() == Integer.valueOf(pluNumber)){
-					switch (priceNumber) {
-						case  "price1" : result = String.valueOf(linkToPlu.getPlu().getPrice());
-							break;
-						case  "price2" : result = String.valueOf(linkToPlu.getPlu().getExPrice());		
-							break;
-					}
-					if (result.equals(expectedValue)){
-						log.info(vScalesFileContent);
-						return result;
-					};
-				}
-			}
-			timeout+=500;
-		}	
-		log.info("PLU " + pluNumber + " не найден в заданиях на загрузку/выгрузку");
-		log.info(vScalesFileContent);
-		return result;
-	}
-	
-	
-	
-	
-	private Iterator<LinkToPluType> readVirtualScales(){
-		Iterator<LinkToPluType> result = null;
-		
-		try {	
-			Links links = new Links();
-			Unmarshaller unmarchaller;
-			JAXBContext context = null;
-            context = JAXBContext.newInstance(Links.class.getPackage().getName());
-            unmarchaller = context.createUnmarshaller();
-            links = (Links)unmarchaller.unmarshal(virtualScales);
-            
-            /*
-             * Читаме файл виртуальных весов и записываем содержимое в 
-             * vScalesFileContent
-             */
-            BufferedReader br = new BufferedReader(new InputStreamReader(virtualScales.openStream()));
-            String fileContent;
-            while ((fileContent = br.readLine())!=null) {
-            	vScalesFileContent.append(fileContent).append("\n");
-            }
-            
-            result = links.getLinkToPlu().iterator();
-
-	        } catch (JAXBException e) {
-	            e.printStackTrace();
-	        } catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
-		return result;
-	}
-	
-	public void getLinkByLPUNumber(String pluNumber){
-			
-	}
-	
-	/*
-	 * Проверить, статус файла виртуальных весов
-	 * 404 - удален
-	 * 200 - существует
-	 */
-	public boolean getExpectedFileStatus(int responseCode){
-		boolean result =  false;
-		long timeout = 0 ;
-		long delay = 500;
-		long defaultTimeout = 60000;
-		try {
-			log.info("Ожидание респонс кода для файла виртуальных весов: " + responseCode);
-			while (timeout < defaultTimeout){
-				connection = (HttpURLConnection) virtualScales.openConnection();
-				connection.setDoInput(true);
-				connection.setRequestMethod("GET");
-				
-				DisinsectorTools.delay(delay);
-				timeout +=delay;
-				if (connection.getResponseCode() == responseCode){
-					log.info("Время ожидания обновления файла виртуальных весов: " + timeout);
-					return true;
-				}
-				connection.connect();
-			}
-
-			throw new Exception("Время ожидания обновления файла виртуальных весов " + timeout + " превысило допустимое: " + defaultTimeout);
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		return result;
-	}
-	
-	public void clearVScalesFileData(){
-		try {
-			connection = (HttpURLConnection) virtualScales.openConnection();
-			connection.setDoOutput(true);
-			connection.setRequestMethod("DELETE");
-			connection.connect();
-			log.info("При удалении файла весов код ответа серверва: " + connection.getResponseCode());
-			connection.disconnect();
-			/*
-			 * Проверит, что файл весов удален
-			 */
-			getExpectedFileStatus(FILE_DELETED_RESPONSE);
-			
-			log.info("Файл " + VIRTUAL_WEIGHT_PATH + " удален!");
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-
 }

@@ -57,7 +57,7 @@ public class  AbstractTest implements IExecutionListener{
      *  эмулятор для поиска чеков
      */
     protected static CashEmulator cashEmulatorMainCash;
-    private static CashEmulator cashEmulatorMainCashRetail = CashEmulator.getCashEmulator(Config.RETAIL_HOST, Integer.valueOf(Config.SHOP_NUMBER), Integer.valueOf(Config.CASH_NUMBER) + 2);
+    private static CashEmulator cashEmulatorMainCashRetail = CashEmulator.getCashEmulator(Config.RETAIL_HOST, Integer.valueOf(Config.SHOP_NUMBER), Integer.valueOf(Config.CASH_NUMBER) + 3);
     private static CashEmulator cashEmulatorMainCashVirtualShop = CashEmulator.getCashEmulator(Config.CENTRUM_HOST, Integer.valueOf(Config.VIRTUAL_SHOP_NUMBER), Integer.valueOf(Config.CASH_NUMBER) + 2);
     
     /*

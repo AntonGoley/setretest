@@ -1,17 +1,24 @@
 package ru.crystals.set10.utils;
 import org.apache.commons.codec.binary.Base64;
+
 import javax.xml.bind.DatatypeConverter;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -20,11 +27,13 @@ import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
+
 import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
 import ru.crystals.set10.config.Config;
+import ru.crystals.setretailx.products.catalog.Good;
 
 
 public class SoapRequestSender{
@@ -177,6 +186,38 @@ public class SoapRequestSender{
 		return params;
 	}
 	
+
+	public String sendGood(Good good){
+		ti = generateTI();
+		
+		StringWriter request = new StringWriter();
+		GoodsCatalog goodsCatalog = new GoodsCatalog();
+		List<Good> gList = new ArrayList<Good>();
+		gList.add(good);
+		goodsCatalog.setGoods(gList);
+		
+		try {
+			JAXBContext jaxbContext = JAXBContext.newInstance(GoodsCatalog.class);
+			Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
+			
+			jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+			jaxbMarshaller.marshal(goodsCatalog, request);
+			
+		} catch (JAXBException e) {
+			e.printStackTrace();
+		}
+		
+		this.soapRequest = String.format(soapRequestGoods, encodeBase64(request.toString()), ti);
+		this.service = ERP_INTEGRATION_GOOSERVICE; 
+		this.method = METHOD_GOODS_WITHTI;
+		log.info("Отправить товары. SOAP request: \n" + request.toString()); 
+		sendSOAPRequest();
+		assertSOAPResponse(RETURN_MESSAGE_CORRECT, ti);
+		return ti;
+	}
+	
+	
+	
 	private String processRequestParams(String request, HashMap<String, String> params){
 		for (String param:params.keySet()){
 			if (!param.equals("ti")) {
@@ -301,7 +342,7 @@ public class SoapRequestSender{
 			sendSOAPRequest();
 		}
 
-		log.info("Пакет с ti " + ti + "не содержит " + expectedResult);
+		log.info("Пакет с ti " + ti + " не содержит " + expectedResult);
 		return false;
 	}
 	
