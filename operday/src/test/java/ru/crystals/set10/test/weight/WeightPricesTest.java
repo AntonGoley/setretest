@@ -1,14 +1,10 @@
 package ru.crystals.set10.test.weight;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
-
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
-import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-
 import ru.crystals.scales.tech.core.scales.virtual.xml.PluType;
 import ru.crystals.set10.config.Config;
 import ru.crystals.set10.utils.GoodGenerator;
@@ -17,29 +13,24 @@ import ru.crystals.setretailx.products.catalog.Good;
 import ru.crystals.setretailx.products.catalog.Price;
 
 
-
 public class WeightPricesTest extends WeightAbstractTest{
 
-	
-	SoapRequestSender soapSender = new SoapRequestSender();
-	GoodGenerator goodGenerator = new GoodGenerator();
+	Price price1;
+	Price price2;
+	Price price3;
+	Price price4;
 	Good weightGood;
+	PluType plu;
+	List<Price> prices;
 	
+	int pluNumber = 1;
 	BigDecimal priceVal1 = new BigDecimal("100.99");
 	BigDecimal priceVal2 = new BigDecimal("90.01");
 	BigDecimal priceVal3 = new BigDecimal("80.11");
 	BigDecimal priceVal4 = new BigDecimal("70.55");
 	
-	Price price1;
-	Price price2;
-	Price price3;
-	Price price4;
-	
-	int pluNumber = 16;
-	
-	PluType plu;
-	
-	List<Price> prices;
+	SoapRequestSender soapSender = new SoapRequestSender();
+	GoodGenerator goodGenerator = new GoodGenerator();
 	
 	@BeforeClass
 	public void initData(){
@@ -75,14 +66,8 @@ public class WeightPricesTest extends WeightAbstractTest{
 		soapSender.sendGood(weightGood);
 		plu = scales.getPluUpdated(expPlu);
 		
-		log.info(priceVal1.toPlainString().replace(".", ""));
-		log.info(priceVal3.toPlainString().replace(".", ""));
-		
 		Assert.assertEquals(String.valueOf(plu.getPrice()), priceVal2.toPlainString().replace(".", ""), "Цена за кг не равна цене 3!");
 		Assert.assertEquals(String.valueOf(plu.getExPrice()), priceVal1.toPlainString().replace(".", ""), "Цена за кг по карте не равна цене 1!");
-		
-		plu.getPrice();
-		
 	
 	}
 	
