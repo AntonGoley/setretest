@@ -13,8 +13,15 @@ import ru.crystals.setretailx.products.catalog.Good;
 import ru.crystals.setretailx.products.catalog.Price;
 
 
-public class WeightPricesTest extends WeightAbstractTest{
 
+public class WeightPricesTest extends WeightAbstractTest{
+	
+	/*
+	 * 	Цена 1 - базовая цена, действует без карты,
+		Цена 2 - цена по карте, действует только по карте
+		Цена 3 - акционная цена без карты, действует без карты
+		Цена 4 - акционная цена по карте, действует только по карте
+	 */
 	Price price1;
 	Price price2;
 	Price price3;
@@ -23,17 +30,22 @@ public class WeightPricesTest extends WeightAbstractTest{
 	PluType plu;
 	List<Price> prices;
 	
-	int pluNumber = 1;
-	BigDecimal priceVal1 = new BigDecimal("100.99");
-	BigDecimal priceVal2 = new BigDecimal("90.01");
-	BigDecimal priceVal3 = new BigDecimal("80.11");
-	BigDecimal priceVal4 = new BigDecimal("70.55");
+	/*
+	 * Задаем значения по умолчанию: 
+	 * priceVal1 > priceVal2 > priceVal3 > priceVal4
+	 */
+	BigDecimal priceVal100 = new BigDecimal("100.99");
+	BigDecimal priceVal200 = new BigDecimal("200.01");
+	BigDecimal priceVal300 = new BigDecimal("300.11");
+	BigDecimal priceVal400 = new BigDecimal("400.55");
 	
 	SoapRequestSender soapSender = new SoapRequestSender();
 	GoodGenerator goodGenerator = new GoodGenerator();
 	
 	@BeforeClass
 	public void initData(){
+		
+		pluNumber++;
 		
 		scales.clearVScalesFileData();
 		soapSender.setSoapServiceIP(Config.RETAIL_HOST);
@@ -49,25 +61,116 @@ public class WeightPricesTest extends WeightAbstractTest{
 		price4 = goodGenerator.generatePrice(4);
 	}
 	
-	@Test()
-	public void test(){
+	@Test(description = "Товар содержит цену 1 и цену 2. ц1 > ц2. На весы выгружается Цена за кг = ц1, Цена за кг по карте = ц2",
+			groups = "price12")
+	public void testPrice1GeaterPrice2(){
 		PluType expPlu = plu;
-		price1.setPrice(priceVal2);
-		price2.setPrice(priceVal1);
-		price3.setPrice(priceVal3);
+		price1.setPrice(priceVal100);
+		price2.setPrice(priceVal200);
 		
-		prices = weightGood.getPrices();
-		weightGood.getPrices().removeAll(prices);
+		weightGood.getPrices().clear();
 		
-		weightGood.getPrices().add(0, price2);
-		weightGood.getPrices().add(1, price1);
-		weightGood.getPrices().add(2,price3);
+		weightGood.getPrices().add(price1);
+		weightGood.getPrices().add(price2);
 		
 		soapSender.sendGood(weightGood);
 		plu = scales.getPluUpdated(expPlu);
 		
-		Assert.assertEquals(String.valueOf(plu.getPrice()), priceVal2.toPlainString().replace(".", ""), "Цена за кг не равна цене 3!");
-		Assert.assertEquals(String.valueOf(plu.getExPrice()), priceVal1.toPlainString().replace(".", ""), "Цена за кг по карте не равна цене 1!");
+		Assert.assertEquals(String.valueOf(plu.getPrice()), priceVal100.toPlainString().replace(".", ""), "Цена за кг не равна цене 2!");
+		Assert.assertEquals(String.valueOf(plu.getExPrice()), priceVal200.toPlainString().replace(".", ""), "Цена за кг по карте не равна цене 1!");
+	
+	}
+	
+	@Test (description =  "Товар содержит цену 1 и цену 2. ц1 < ц2. На весы выгружается Цена за кг = ц2, Цена за кг по карте = ц1",
+			groups = "price12")
+	public void testPrice1LessPrice2(){
+		PluType expPlu = plu;
+		price1.setPrice(priceVal200);
+		price2.setPrice(priceVal100);
+		
+		prices = weightGood.getPrices();
+		weightGood.getPrices().removeAll(prices);
+		
+		weightGood.getPrices().add(price2);
+		weightGood.getPrices().add(price1);
+		
+		soapSender.sendGood(weightGood);
+		plu = scales.getPluUpdated(expPlu);
+		
+		Assert.assertEquals(String.valueOf(plu.getPrice()), priceVal200.toPlainString().replace(".", ""), "Цена за кг не равна цене 1!");
+		Assert.assertEquals(String.valueOf(plu.getExPrice()), priceVal100.toPlainString().replace(".", ""), "Цена за кг по карте не равна цене 2!");
+	
+	}
+	
+	@Test (description =  "Товар содержит цену 1 и цену 2. ц1 = ц2.", 
+			groups = "price12")
+	public void testPrice1EqualsPrice2(){
+		PluType expPlu = plu;
+		price1.setPrice(priceVal100);
+		price2.setPrice(priceVal100);
+		
+		prices = weightGood.getPrices();
+		weightGood.getPrices().removeAll(prices);
+		
+		weightGood.getPrices().add(price1);
+		weightGood.getPrices().add(price2);
+		
+		soapSender.sendGood(weightGood);
+		plu = scales.getPluUpdated(expPlu);
+		
+		Assert.assertEquals(String.valueOf(plu.getPrice()), priceVal100.toPlainString().replace(".", ""), "Цена за кг не равна цене 1!");
+		Assert.assertEquals(String.valueOf(plu.getExPrice()), priceVal100.toPlainString().replace(".", ""), "Цена за кг по карте не равна цене 2!");
+	
+	}
+	
+	@Test (description =  "Товар содержит цену 1, 2 и 3. ц1>ц2, ц1>ц3, ц2<ц3. Цена за кг = ц3. Цена за кг по карте = ц2",
+			dependsOnGroups = "price12", 
+			alwaysRun = true)
+	public void testPrice1Price3GreaterPrice2(){
+		PluType expPlu = plu;
+		price1.setPrice(priceVal100);
+		price2.setPrice(priceVal300);
+		price3.setPrice(priceVal200);
+		
+		prices = weightGood.getPrices();
+		weightGood.getPrices().removeAll(prices);
+		
+		weightGood.getPrices().add(price1);
+		weightGood.getPrices().add(price2);
+		weightGood.getPrices().add(price3);
+		
+		soapSender.sendGood(weightGood);
+		plu = scales.getPluUpdated(expPlu);
+		
+		Assert.assertEquals(String.valueOf(plu.getPrice()), priceVal100.toPlainString().replace(".", ""), "Цена за кг не равна цене 1!");
+		Assert.assertEquals(String.valueOf(plu.getExPrice()), priceVal200.toPlainString().replace(".", ""), "Цена за кг по карте не равна цене 3!");
+	
+	}
+	
+	@Test (description =  "Товар содержит цену 1, 2 и 4. ц1>ц2, ц4<ц2. Цена за кг = ц1. Цена за кг по карте = ц4",
+			dependsOnMethods = "testPrice1Price3GreaterPrice2", 
+			alwaysRun = true)
+	public void testPrice1Price2GreaterPrice4(){
+		PluType expPlu = plu;
+		price1.setPrice(priceVal300);
+		price2.setPrice(priceVal200);
+		price4.setPrice(priceVal100);
+		// удаляем цену 3, чтобы она не учитывалась
+		price3.setDeleted(true);
+		
+		prices = weightGood.getPrices();
+		weightGood.getPrices().removeAll(prices);
+		
+		weightGood.getPrices().add(price1);
+		weightGood.getPrices().add(price2);
+		weightGood.getPrices().add(price4);
+		weightGood.getPrices().add(price3);
+		
+		soapSender.sendGood(weightGood);
+		plu = scales.getPluUpdated(expPlu);
+		
+		Assert.assertEquals(String.valueOf(plu.getPrice()), priceVal300.toPlainString().replace(".", ""), "Цена за кг не равна цене 1!");
+		Assert.assertEquals(String.valueOf(plu.getExPrice()), priceVal100.toPlainString().replace(".", ""), "Цена за кг по карте не равна цене 4!");
 	
 	}
 	
