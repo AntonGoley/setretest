@@ -99,8 +99,8 @@ public class CashEmulator {
 	    shiftNum = getCurrentShiftNum(cashNumber);
 	    checkNumber =  getNextCheckNum(cashNumber, shiftNum);
 	    loySender = new LoySender(targetHost, shopNumber, cashNumber);
-	    sendCashVO(setCashVO(cashNumber, String.valueOf(shopNum), new Date().getTime()));
-	    sendCashMessage();
+	    //sendCashVO(setCashVO(cashNumber, String.valueOf(shopNum), new Date().getTime()));
+	    //sendCashMessage();
 	    log.info("Создан cashEmulator: " + cashNumber +  "; ShopNum = " + shopNum + "; ShiftNum = " + shiftNum + "; NextCheckNumber = " + checkNumber);
 	    
 	} 
