@@ -1,45 +1,37 @@
 <goods-catalog>
-<good marking-of-the-good="288121_KG" transaction-id="0000000166699814">
+	<good marking-of-the-good="266754KAR" transaction-id="0000000166770749">
 		<shop-indices/>
-		<name>Яблоки Чемпион вес 1кг</name>
-		<bar-code code="2999999320900" do-not-send-to-scales="false">
+		<name>Крем-мыло DOVE ПрикоснСвежДуопак200г</name>
+		<bar-code code="08712561288521">
 			<count>1</count>
 			<default-code>true</default-code>
 		</bar-code>
-		<bar-code code="2405281" do-not-send-to-scales="false">
-			<count>1</count>
-			<default-code>false</default-code>
-		</bar-code>
-		<product-type>ProductWeightEntity</product-type>
+		<product-type>ProductPieceEntity</product-type>
 		<vat>18</vat>
-		<group id="180303">
-			<name>Группа 180303</name>
-			<parent-group id="1803">
-				<name>Группа 1803</name>
-				<parent-group id="18">
-					<name>Группа 18</name>
+		<group id="390901">
+			<name>Группа 390901</name>
+			<parent-group id="3909">
+				<name>Группа 3909</name>
+				<parent-group id="39">
+					<name>Группа 39</name>
 				</parent-group>
 			</parent-group>
 		</group>
-		<measure-type id="2">
-			<name>кг.</name>
+		<measure-type id="7">
+			<name>кор.</name>
 		</measure-type>
-		<country id="Z1"/>
-		<manufacturer id="0000200276">
-			<name>FRULITA. Sp. Zo.o.</name>
+		<country id="DE"/>
+		<manufacturer id="0000100681">
+			<name>ООО "Юнилевер Русь"</name>
 		</manufacturer>
 		<delete-from-cash>false</delete-from-cash>
-		<erp-code>288121</erp-code>
+		<erp-code>266754</erp-code>
 		<is-child-product>0</is-child-product>
-		<fullname>Яблоки Чемпион вес (Импорт) 1кг</fullname>
-		<plugin-property key="precision" value="0.001"/>
+		<fullname>Крем-мыло DOVE Прикосновение свежести Дуопак (Германия) 200г</fullname>
+		<plugin-property key="precision" value="1"/>
 		<plugin-property key="deny-print-to-documents" value="false"/>
-		<plugin-property key="plu-number" value="0416"/>
-		<plugin-property key="name-on-scale-screen" value="Яблоки Чемпион вес (Импорт) "/>
-		<plugin-property key="description-on-scale-screen" value="1кг"/>
-		<plugin-property key="composition" value="Первый сорт Дата сбора 2014год"/>
-		<plugin-property key="good-for-hours" value="108"/>
-		<price-entry price="45.99" currency="RUB">
+		<plugin-property key="amount-in-package" value="24"/>
+		<price-entry price="1588.56" currency="RUB">
 			<shop-indices>2</shop-indices>
 			<begin-date>1900-01-01T00:00:00</begin-date>
 			<end-date>2070-12-31T23:59:00</end-date>
@@ -48,7 +40,7 @@
 				<name>Отдел 1</name>
 			</department>
 		</price-entry>
-		<price-entry price="48.29" currency="RUB">
+		<price-entry price="1667.99" currency="RUB">
 			<shop-indices>2</shop-indices>
 			<begin-date>2014-04-01T03:00:00</begin-date>
 			<end-date>2070-12-31T23:59:00</end-date>
@@ -58,4 +50,3347 @@
 			</department>
 		</price-entry>
 	</good>
+	<good marking-of-the-good="266754_ST" transaction-id="0000000166770749">
+		<shop-indices/>
+		<name>Крем-мыло DOVE ПрикоснСвежДуопак200г</name>
+		<bar-code code="8712561288545">
+			<count>1</count>
+			<default-code>true</default-code>
+		</bar-code>
+		<product-type>ProductPieceEntity</product-type>
+		<vat>18</vat>
+		<group id="390901">
+			<name>Группа 390901</name>
+			<parent-group id="3909">
+				<name>Группа 3909</name>
+				<parent-group id="39">
+					<name>Группа 39</name>
+				</parent-group>
+			</parent-group>
+		</group>
+		<measure-type id="1">
+			<name>шт.</name>
+		</measure-type>
+		<country id="DE"/>
+		<manufacturer id="0000100681">
+			<name>ООО "Юнилевер Русь"</name>
+		</manufacturer>
+		<delete-from-cash>false</delete-from-cash>
+		<erp-code>266754</erp-code>
+		<is-child-product>0</is-child-product>
+		<fullname>Крем-мыло DOVE Прикосновение свежести Дуопак (Германия) 200г</fullname>
+		<plugin-property key="precision" value="1"/>
+		<plugin-property key="deny-print-to-documents" value="false"/>
+		<plugin-property key="amount-in-package" value="1"/>
+		<price-entry price="66.19" currency="RUB">
+			<shop-indices>2</shop-indices>
+			<begin-date>1900-01-01T00:00:00</begin-date>
+			<end-date>2070-12-31T23:59:00</end-date>
+			<number>2</number>
+			<department number="1">
+				<name>Отдел 1</name>
+			</department>
+		</price-entry>
+		<price-entry price="69.5" currency="RUB">
+			<shop-indices>2</shop-indices>
+			<begin-date>2014-04-01T03:00:00</begin-date>
+			<end-date>2070-12-31T23:59:00</end-date>
+			<number>1</number>
+			<department number="1">
+				<name>Отдел 1</name>
+			</department>
+		</price-entry>
+	</good>
+	<good marking-of-the-good="266845KAR" transaction-id="0000000166770749">
+		<shop-indices/>
+		<name>Лосьон д/т DOVE ОбъятНежКокМолЖасм250мл</name>
+		<bar-code code="8711700919005">
+			<count>1</count>
+			<default-code>true</default-code>
+		</bar-code>
+		<product-type>ProductPieceEntity</product-type>
+		<vat>18</vat>
+		<group id="390203">
+			<name>Группа 390203</name>
+			<parent-group id="3902">
+				<name>Группа 3902</name>
+				<parent-group id="39">
+					<name>Группа 39</name>
+				</parent-group>
+			</parent-group>
+		</group>
+		<measure-type id="7">
+			<name>кор.</name>
+		</measure-type>
+		<country id="DE"/>
+		<manufacturer id="0000100681">
+			<name>ООО "Юнилевер Русь"</name>
+		</manufacturer>
+		<delete-from-cash>false</delete-from-cash>
+		<erp-code>266845</erp-code>
+		<is-child-product>0</is-child-product>
+		<fullname>Лосьон д/тела DOVE Объятия нежности кокос.молоч.и лепест.жасмина (Германия) 250мл</fullname>
+		<plugin-property key="precision" value="1"/>
+		<plugin-property key="deny-print-to-documents" value="false"/>
+		<plugin-property key="amount-in-package" value="12"/>
+		<price-entry price="2199.48" currency="RUB">
+			<shop-indices>2</shop-indices>
+			<begin-date>1900-01-01T00:00:00</begin-date>
+			<end-date>2070-12-31T23:59:00</end-date>
+			<number>2</number>
+			<department number="1">
+				<name>Отдел 1</name>
+			</department>
+		</price-entry>
+		<price-entry price="2309.45" currency="RUB">
+			<shop-indices>2</shop-indices>
+			<begin-date>2014-04-01T03:00:00</begin-date>
+			<end-date>2070-12-31T23:59:00</end-date>
+			<number>1</number>
+			<department number="1">
+				<name>Отдел 1</name>
+			</department>
+		</price-entry>
+	</good>
+	<good marking-of-the-good="266845_ST" transaction-id="0000000166770749">
+		<shop-indices/>
+		<name>Лосьон д/т DOVE ОбъятНежКокМолЖасм250мл</name>
+		<bar-code code="8711700918794">
+			<count>1</count>
+			<default-code>true</default-code>
+		</bar-code>
+		<product-type>ProductPieceEntity</product-type>
+		<vat>18</vat>
+		<group id="390203">
+			<name>Группа 390203</name>
+			<parent-group id="3902">
+				<name>Группа 3902</name>
+				<parent-group id="39">
+					<name>Группа 39</name>
+				</parent-group>
+			</parent-group>
+		</group>
+		<measure-type id="1">
+			<name>шт.</name>
+		</measure-type>
+		<country id="DE"/>
+		<manufacturer id="0000100681">
+			<name>ООО "Юнилевер Русь"</name>
+		</manufacturer>
+		<delete-from-cash>false</delete-from-cash>
+		<erp-code>266845</erp-code>
+		<is-child-product>0</is-child-product>
+		<fullname>Лосьон д/тела DOVE Объятия нежности кокос.молоч.и лепест.жасмина (Германия) 250мл</fullname>
+		<plugin-property key="precision" value="1"/>
+		<plugin-property key="deny-print-to-documents" value="false"/>
+		<plugin-property key="amount-in-package" value="1"/>
+		<price-entry price="183.29" currency="RUB">
+			<shop-indices>2</shop-indices>
+			<begin-date>1900-01-01T00:00:00</begin-date>
+			<end-date>2070-12-31T23:59:00</end-date>
+			<number>2</number>
+			<department number="1">
+				<name>Отдел 1</name>
+			</department>
+		</price-entry>
+		<price-entry price="192.46" currency="RUB">
+			<shop-indices>2</shop-indices>
+			<begin-date>2014-04-01T03:00:00</begin-date>
+			<end-date>2070-12-31T23:59:00</end-date>
+			<number>1</number>
+			<department number="1">
+				<name>Отдел 1</name>
+			</department>
+		</price-entry>
+	</good>
+	<good marking-of-the-good="266848KAR" transaction-id="0000000166770749">
+		<shop-indices/>
+		<name>З/паста ЛЕСНОЙ БАЛЬЗАМ Эк.Ром.Мас.Обл75</name>
+		<bar-code code="14600702068624">
+			<count>1</count>
+			<default-code>true</default-code>
+		</bar-code>
+		<product-type>ProductPieceEntity</product-type>
+		<vat>18</vat>
+		<group id="391001">
+			<name>Группа 391001</name>
+			<parent-group id="3910">
+				<name>Группа 3910</name>
+				<parent-group id="39">
+					<name>Группа 39</name>
+				</parent-group>
+			</parent-group>
+		</group>
+		<measure-type id="7">
+			<name>кор.</name>
+		</measure-type>
+		<country id="RU"/>
+		<manufacturer id="0000101136">
+			<name>ООО Концерн "Калина"</name>
+		</manufacturer>
+		<delete-from-cash>false</delete-from-cash>
+		<erp-code>266848</erp-code>
+		<is-child-product>0</is-child-product>
+		<fullname>З/паста ЛЕСНОЙ БАЛЬЗАМ Профилак.с экстр.ромашки и маслом облепихи на отв.трав (Россия) 75мл</fullname>
+		<plugin-property key="precision" value="1"/>
+		<plugin-property key="deny-print-to-documents" value="false"/>
+		<plugin-property key="amount-in-package" value="48"/>
+		<price-entry price="1621.92" currency="RUB">
+			<shop-indices>2</shop-indices>
+			<begin-date>1900-01-01T00:00:00</begin-date>
+			<end-date>2070-12-31T23:59:00</end-date>
+			<number>2</number>
+			<department number="1">
+				<name>Отдел 1</name>
+			</department>
+		</price-entry>
+		<price-entry price="1703.02" currency="RUB">
+			<shop-indices>2</shop-indices>
+			<begin-date>2014-04-01T03:00:00</begin-date>
+			<end-date>2070-12-31T23:59:00</end-date>
+			<number>1</number>
+			<department number="1">
+				<name>Отдел 1</name>
+			</department>
+		</price-entry>
+	</good>
+	<good marking-of-the-good="266848_ST" transaction-id="0000000166770749">
+		<shop-indices/>
+		<name>З/паста ЛЕСНОЙ БАЛЬЗАМ Эк.Ром.Мас.Обл75</name>
+		<bar-code code="4600702068627">
+			<count>1</count>
+			<default-code>true</default-code>
+		</bar-code>
+		<product-type>ProductPieceEntity</product-type>
+		<vat>18</vat>
+		<group id="391001">
+			<name>Группа 391001</name>
+			<parent-group id="3910">
+				<name>Группа 3910</name>
+				<parent-group id="39">
+					<name>Группа 39</name>
+				</parent-group>
+			</parent-group>
+		</group>
+		<measure-type id="1">
+			<name>шт.</name>
+		</measure-type>
+		<country id="RU"/>
+		<manufacturer id="0000101136">
+			<name>ООО Концерн "Калина"</name>
+		</manufacturer>
+		<delete-from-cash>false</delete-from-cash>
+		<erp-code>266848</erp-code>
+		<is-child-product>0</is-child-product>
+		<fullname>З/паста ЛЕСНОЙ БАЛЬЗАМ Профилак.с экстр.ромашки и маслом облепихи на отв.трав (Россия) 75мл</fullname>
+		<plugin-property key="precision" value="1"/>
+		<plugin-property key="deny-print-to-documents" value="false"/>
+		<plugin-property key="amount-in-package" value="1"/>
+		<price-entry price="33.79" currency="RUB">
+			<shop-indices>2</shop-indices>
+			<begin-date>1900-01-01T00:00:00</begin-date>
+			<end-date>2070-12-31T23:59:00</end-date>
+			<number>2</number>
+			<department number="1">
+				<name>Отдел 1</name>
+			</department>
+		</price-entry>
+		<price-entry price="35.48" currency="RUB">
+			<shop-indices>2</shop-indices>
+			<begin-date>2014-04-01T03:00:00</begin-date>
+			<end-date>2070-12-31T23:59:00</end-date>
+			<number>1</number>
+			<department number="1">
+				<name>Отдел 1</name>
+			</department>
+		</price-entry>
+	</good>
+	<good marking-of-the-good="266849KAR" transaction-id="0000000166770749">
+		<shop-indices/>
+		<name>Крем д/век ЧЕРНЫЙ ЖЕМЧУГ Bio-прОмолУх20</name>
+		<bar-code code="14600702092414">
+			<count>1</count>
+			<default-code>true</default-code>
+		</bar-code>
+		<product-type>ProductPieceEntity</product-type>
+		<vat>18</vat>
+		<group id="390102">
+			<name>Группа 390102</name>
+			<parent-group id="3901">
+				<name>Группа 3901</name>
+				<parent-group id="39">
+					<name>Группа 39</name>
+				</parent-group>
+			</parent-group>
+		</group>
+		<measure-type id="7">
+			<name>кор.</name>
+		</measure-type>
+		<country id="RU"/>
+		<manufacturer id="0000101136">
+			<name>ООО Концерн "Калина"</name>
+		</manufacturer>
+		<delete-from-cash>false</delete-from-cash>
+		<erp-code>266849</erp-code>
+		<is-child-product>0</is-child-product>
+		<fullname>Крем д/век ЧЕРНЫЙ ЖЕМЧУГ Bio-программа Омолаж.уход (Россия) 20мл</fullname>
+		<plugin-property key="precision" value="1"/>
+		<plugin-property key="deny-print-to-documents" value="false"/>
+		<plugin-property key="amount-in-package" value="32"/>
+		<price-entry price="2719.68" currency="RUB">
+			<shop-indices>2</shop-indices>
+			<begin-date>1900-01-01T00:00:00</begin-date>
+			<end-date>2070-12-31T23:59:00</end-date>
+			<number>2</number>
+			<department number="1">
+				<name>Отдел 1</name>
+			</department>
+		</price-entry>
+		<price-entry price="2855.66" currency="RUB">
+			<shop-indices>2</shop-indices>
+			<begin-date>2014-04-01T03:00:00</begin-date>
+			<end-date>2070-12-31T23:59:00</end-date>
+			<number>1</number>
+			<department number="1">
+				<name>Отдел 1</name>
+			</department>
+		</price-entry>
+	</good>
+	<good marking-of-the-good="266849_ST" transaction-id="0000000166770749">
+		<shop-indices/>
+		<name>Крем д/век ЧЕРНЫЙ ЖЕМЧУГ Bio-прОмолУх20</name>
+		<bar-code code="4600702092417">
+			<count>1</count>
+			<default-code>true</default-code>
+		</bar-code>
+		<product-type>ProductPieceEntity</product-type>
+		<vat>18</vat>
+		<group id="390102">
+			<name>Группа 390102</name>
+			<parent-group id="3901">
+				<name>Группа 3901</name>
+				<parent-group id="39">
+					<name>Группа 39</name>
+				</parent-group>
+			</parent-group>
+		</group>
+		<measure-type id="1">
+			<name>шт.</name>
+		</measure-type>
+		<country id="RU"/>
+		<manufacturer id="0000101136">
+			<name>ООО Концерн "Калина"</name>
+		</manufacturer>
+		<delete-from-cash>false</delete-from-cash>
+		<erp-code>266849</erp-code>
+		<is-child-product>0</is-child-product>
+		<fullname>Крем д/век ЧЕРНЫЙ ЖЕМЧУГ Bio-программа Омолаж.уход (Россия) 20мл</fullname>
+		<plugin-property key="precision" value="1"/>
+		<plugin-property key="deny-print-to-documents" value="false"/>
+		<plugin-property key="amount-in-package" value="1"/>
+		<price-entry price="84.99" currency="RUB">
+			<shop-indices>2</shop-indices>
+			<begin-date>1900-01-01T00:00:00</begin-date>
+			<end-date>2070-12-31T23:59:00</end-date>
+			<number>2</number>
+			<department number="1">
+				<name>Отдел 1</name>
+			</department>
+		</price-entry>
+		<price-entry price="89.24" currency="RUB">
+			<shop-indices>2</shop-indices>
+			<begin-date>2014-04-01T03:00:00</begin-date>
+			<end-date>2070-12-31T23:59:00</end-date>
+			<number>1</number>
+			<department number="1">
+				<name>Отдел 1</name>
+			</department>
+		</price-entry>
+	</good>
+	<good marking-of-the-good="267432KAR" transaction-id="0000000166770749">
+		<shop-indices/>
+		<name>Шампунь ЧИСТАЯ ЛИНИЯ УкрСвДЖирВол400мл</name>
+		<bar-code code="14600702094883">
+			<count>1</count>
+			<default-code>true</default-code>
+		</bar-code>
+		<product-type>ProductPieceEntity</product-type>
+		<vat>18</vat>
+		<group id="390702">
+			<name>Группа 390702</name>
+			<parent-group id="3907">
+				<name>Группа 3907</name>
+				<parent-group id="39">
+					<name>Группа 39</name>
+				</parent-group>
+			</parent-group>
+		</group>
+		<measure-type id="7">
+			<name>кор.</name>
+		</measure-type>
+		<country id="RU"/>
+		<manufacturer id="0000101136">
+			<name>ООО Концерн "Калина"</name>
+		</manufacturer>
+		<delete-from-cash>false</delete-from-cash>
+		<erp-code>267432</erp-code>
+		<is-child-product>0</is-child-product>
+		<fullname>Шампунь ЧИСТАЯ ЛИНИЯ Укрепление и свежесть д/жир.волос и кож.головы (Россия) 400мл</fullname>
+		<plugin-property key="precision" value="1"/>
+		<plugin-property key="deny-print-to-documents" value="false"/>
+		<plugin-property key="amount-in-package" value="12"/>
+		<price-entry price="776.28" currency="RUB">
+			<shop-indices>2</shop-indices>
+			<begin-date>1900-01-01T00:00:00</begin-date>
+			<end-date>2070-12-31T23:59:00</end-date>
+			<number>2</number>
+			<department number="1">
+				<name>Отдел 1</name>
+			</department>
+		</price-entry>
+		<price-entry price="815.1" currency="RUB">
+			<shop-indices>2</shop-indices>
+			<begin-date>2014-04-01T03:00:00</begin-date>
+			<end-date>2070-12-31T23:59:00</end-date>
+			<number>1</number>
+			<department number="1">
+				<name>Отдел 1</name>
+			</department>
+		</price-entry>
+	</good>
+	<good marking-of-the-good="267432_ST" transaction-id="0000000166770749">
+		<shop-indices/>
+		<name>Шампунь ЧИСТАЯ ЛИНИЯ УкрСвДЖирВол400мл</name>
+		<bar-code code="4600702094886">
+			<count>1</count>
+			<default-code>true</default-code>
+		</bar-code>
+		<product-type>ProductPieceEntity</product-type>
+		<vat>18</vat>
+		<group id="390702">
+			<name>Группа 390702</name>
+			<parent-group id="3907">
+				<name>Группа 3907</name>
+				<parent-group id="39">
+					<name>Группа 39</name>
+				</parent-group>
+			</parent-group>
+		</group>
+		<measure-type id="1">
+			<name>шт.</name>
+		</measure-type>
+		<country id="RU"/>
+		<manufacturer id="0000101136">
+			<name>ООО Концерн "Калина"</name>
+		</manufacturer>
+		<delete-from-cash>false</delete-from-cash>
+		<erp-code>267432</erp-code>
+		<is-child-product>0</is-child-product>
+		<fullname>Шампунь ЧИСТАЯ ЛИНИЯ Укрепление и свежесть д/жир.волос и кож.головы (Россия) 400мл</fullname>
+		<plugin-property key="precision" value="1"/>
+		<plugin-property key="deny-print-to-documents" value="false"/>
+		<plugin-property key="amount-in-package" value="1"/>
+		<price-entry price="64.69" currency="RUB">
+			<shop-indices>2</shop-indices>
+			<begin-date>1900-01-01T00:00:00</begin-date>
+			<end-date>2070-12-31T23:59:00</end-date>
+			<number>2</number>
+			<department number="1">
+				<name>Отдел 1</name>
+			</department>
+		</price-entry>
+		<price-entry price="67.93" currency="RUB">
+			<shop-indices>2</shop-indices>
+			<begin-date>2014-04-01T03:00:00</begin-date>
+			<end-date>2070-12-31T23:59:00</end-date>
+			<number>1</number>
+			<department number="1">
+				<name>Отдел 1</name>
+			</department>
+		</price-entry>
+	</good>
+	<good marking-of-the-good="267433KAR" transaction-id="0000000166770749">
+		<shop-indices/>
+		<name>Шампунь ЧИСТАЯ ЛИНИЯ УкрУхДНорВол400мл</name>
+		<bar-code code="14600702094869">
+			<count>1</count>
+			<default-code>true</default-code>
+		</bar-code>
+		<product-type>ProductPieceEntity</product-type>
+		<vat>18</vat>
+		<group id="390702">
+			<name>Группа 390702</name>
+			<parent-group id="3907">
+				<name>Группа 3907</name>
+				<parent-group id="39">
+					<name>Группа 39</name>
+				</parent-group>
+			</parent-group>
+		</group>
+		<measure-type id="7">
+			<name>кор.</name>
+		</measure-type>
+		<country id="RU"/>
+		<manufacturer id="0000101136">
+			<name>ООО Концерн "Калина"</name>
+		</manufacturer>
+		<delete-from-cash>false</delete-from-cash>
+		<erp-code>267433</erp-code>
+		<is-child-product>0</is-child-product>
+		<fullname>Шампунь ЧИСТАЯ ЛИНИЯ Укрепление и уход д/норм.волос и кож.головы (Россия) 400мл</fullname>
+		<plugin-property key="precision" value="1"/>
+		<plugin-property key="deny-print-to-documents" value="false"/>
+		<plugin-property key="amount-in-package" value="12"/>
+		<price-entry price="776.28" currency="RUB">
+			<shop-indices>2</shop-indices>
+			<begin-date>1900-01-01T00:00:00</begin-date>
+			<end-date>2070-12-31T23:59:00</end-date>
+			<number>2</number>
+			<department number="1">
+				<name>Отдел 1</name>
+			</department>
+		</price-entry>
+		<price-entry price="815.1" currency="RUB">
+			<shop-indices>2</shop-indices>
+			<begin-date>2014-04-01T03:00:00</begin-date>
+			<end-date>2070-12-31T23:59:00</end-date>
+			<number>1</number>
+			<department number="1">
+				<name>Отдел 1</name>
+			</department>
+		</price-entry>
+	</good>
+	<good marking-of-the-good="267433_ST" transaction-id="0000000166770749">
+		<shop-indices/>
+		<name>Шампунь ЧИСТАЯ ЛИНИЯ УкрУхДНорВол400мл</name>
+		<bar-code code="4600702094862">
+			<count>1</count>
+			<default-code>true</default-code>
+		</bar-code>
+		<product-type>ProductPieceEntity</product-type>
+		<vat>18</vat>
+		<group id="390702">
+			<name>Группа 390702</name>
+			<parent-group id="3907">
+				<name>Группа 3907</name>
+				<parent-group id="39">
+					<name>Группа 39</name>
+				</parent-group>
+			</parent-group>
+		</group>
+		<measure-type id="1">
+			<name>шт.</name>
+		</measure-type>
+		<country id="RU"/>
+		<manufacturer id="0000101136">
+			<name>ООО Концерн "Калина"</name>
+		</manufacturer>
+		<delete-from-cash>false</delete-from-cash>
+		<erp-code>267433</erp-code>
+		<is-child-product>0</is-child-product>
+		<fullname>Шампунь ЧИСТАЯ ЛИНИЯ Укрепление и уход д/норм.волос и кож.головы (Россия) 400мл</fullname>
+		<plugin-property key="precision" value="1"/>
+		<plugin-property key="deny-print-to-documents" value="false"/>
+		<plugin-property key="amount-in-package" value="1"/>
+		<price-entry price="64.69" currency="RUB">
+			<shop-indices>2</shop-indices>
+			<begin-date>1900-01-01T00:00:00</begin-date>
+			<end-date>2070-12-31T23:59:00</end-date>
+			<number>2</number>
+			<department number="1">
+				<name>Отдел 1</name>
+			</department>
+		</price-entry>
+		<price-entry price="67.93" currency="RUB">
+			<shop-indices>2</shop-indices>
+			<begin-date>2014-04-01T03:00:00</begin-date>
+			<end-date>2070-12-31T23:59:00</end-date>
+			<number>1</number>
+			<department number="1">
+				<name>Отдел 1</name>
+			</department>
+		</price-entry>
+	</good>
+	<good marking-of-the-good="267434KAR" transaction-id="0000000166770749">
+		<shop-indices/>
+		<name>Шампунь ЧИСТАЯ ЛИНИЯ УкрПитДСухВол400мл</name>
+		<bar-code code="14600702094890">
+			<count>1</count>
+			<default-code>true</default-code>
+		</bar-code>
+		<product-type>ProductPieceEntity</product-type>
+		<vat>18</vat>
+		<group id="390702">
+			<name>Группа 390702</name>
+			<parent-group id="3907">
+				<name>Группа 3907</name>
+				<parent-group id="39">
+					<name>Группа 39</name>
+				</parent-group>
+			</parent-group>
+		</group>
+		<measure-type id="7">
+			<name>кор.</name>
+		</measure-type>
+		<country id="RU"/>
+		<manufacturer id="0000101136">
+			<name>ООО Концерн "Калина"</name>
+		</manufacturer>
+		<delete-from-cash>false</delete-from-cash>
+		<erp-code>267434</erp-code>
+		<is-child-product>0</is-child-product>
+		<fullname>Шампунь ЧИСТАЯ ЛИНИЯ Укрепление и питание д/сух.волос и кож.головы (Россия) 400мл</fullname>
+		<plugin-property key="precision" value="1"/>
+		<plugin-property key="deny-print-to-documents" value="false"/>
+		<plugin-property key="amount-in-package" value="12"/>
+		<price-entry price="776.28" currency="RUB">
+			<shop-indices>2</shop-indices>
+			<begin-date>1900-01-01T00:00:00</begin-date>
+			<end-date>2070-12-31T23:59:00</end-date>
+			<number>2</number>
+			<department number="1">
+				<name>Отдел 1</name>
+			</department>
+		</price-entry>
+		<price-entry price="815.1" currency="RUB">
+			<shop-indices>2</shop-indices>
+			<begin-date>2014-04-01T03:00:00</begin-date>
+			<end-date>2070-12-31T23:59:00</end-date>
+			<number>1</number>
+			<department number="1">
+				<name>Отдел 1</name>
+			</department>
+		</price-entry>
+	</good>
+	<good marking-of-the-good="267434_ST" transaction-id="0000000166770749">
+		<shop-indices/>
+		<name>Шампунь ЧИСТАЯ ЛИНИЯ УкрПитДСухВол400мл</name>
+		<bar-code code="4600702094893">
+			<count>1</count>
+			<default-code>true</default-code>
+		</bar-code>
+		<product-type>ProductPieceEntity</product-type>
+		<vat>18</vat>
+		<group id="390702">
+			<name>Группа 390702</name>
+			<parent-group id="3907">
+				<name>Группа 3907</name>
+				<parent-group id="39">
+					<name>Группа 39</name>
+				</parent-group>
+			</parent-group>
+		</group>
+		<measure-type id="1">
+			<name>шт.</name>
+		</measure-type>
+		<country id="RU"/>
+		<manufacturer id="0000101136">
+			<name>ООО Концерн "Калина"</name>
+		</manufacturer>
+		<delete-from-cash>false</delete-from-cash>
+		<erp-code>267434</erp-code>
+		<is-child-product>0</is-child-product>
+		<fullname>Шампунь ЧИСТАЯ ЛИНИЯ Укрепление и питание д/сух.волос и кож.головы (Россия) 400мл</fullname>
+		<plugin-property key="precision" value="1"/>
+		<plugin-property key="deny-print-to-documents" value="false"/>
+		<plugin-property key="amount-in-package" value="1"/>
+		<price-entry price="64.69" currency="RUB">
+			<shop-indices>2</shop-indices>
+			<begin-date>1900-01-01T00:00:00</begin-date>
+			<end-date>2070-12-31T23:59:00</end-date>
+			<number>2</number>
+			<department number="1">
+				<name>Отдел 1</name>
+			</department>
+		</price-entry>
+		<price-entry price="67.93" currency="RUB">
+			<shop-indices>2</shop-indices>
+			<begin-date>2014-04-01T03:00:00</begin-date>
+			<end-date>2070-12-31T23:59:00</end-date>
+			<number>1</number>
+			<department number="1">
+				<name>Отдел 1</name>
+			</department>
+		</price-entry>
+	</good>
+	<good marking-of-the-good="267603KAR" transaction-id="0000000166770749">
+		<shop-indices/>
+		<name>Крем-суфле д/т ЧЕРНЫЙ ЖЕМЧУГ ШелНежПит</name>
+		<bar-code code="14600702092315">
+			<count>1</count>
+			<default-code>true</default-code>
+		</bar-code>
+		<product-type>ProductPieceEntity</product-type>
+		<vat>18</vat>
+		<group id="390203">
+			<name>Группа 390203</name>
+			<parent-group id="3902">
+				<name>Группа 3902</name>
+				<parent-group id="39">
+					<name>Группа 39</name>
+				</parent-group>
+			</parent-group>
+		</group>
+		<measure-type id="7">
+			<name>кор.</name>
+		</measure-type>
+		<country id="RU"/>
+		<manufacturer id="0000101136">
+			<name>ООО Концерн "Калина"</name>
+		</manufacturer>
+		<delete-from-cash>false</delete-from-cash>
+		<erp-code>267603</erp-code>
+		<is-child-product>0</is-child-product>
+		<fullname>Крем-суфле д/тела ЧЕРНЫЙ ЖЕМЧУГ Шелковое Нежное питание (Россия) 200мл</fullname>
+		<plugin-property key="precision" value="1"/>
+		<plugin-property key="deny-print-to-documents" value="false"/>
+		<plugin-property key="amount-in-package" value="12"/>
+		<price-entry price="1361.88" currency="RUB">
+			<shop-indices>2</shop-indices>
+			<begin-date>1900-01-01T00:00:00</begin-date>
+			<end-date>2070-12-31T23:59:00</end-date>
+			<number>2</number>
+			<department number="1">
+				<name>Отдел 1</name>
+			</department>
+		</price-entry>
+		<price-entry price="1429.97" currency="RUB">
+			<shop-indices>2</shop-indices>
+			<begin-date>2014-04-01T03:00:00</begin-date>
+			<end-date>2070-12-31T23:59:00</end-date>
+			<number>1</number>
+			<department number="1">
+				<name>Отдел 1</name>
+			</department>
+		</price-entry>
+	</good>
+	<good marking-of-the-good="267603_ST" transaction-id="0000000166770749">
+		<shop-indices/>
+		<name>Крем-суфле д/т ЧЕРНЫЙ ЖЕМЧУГ ШелНежПит</name>
+		<bar-code code="4600702092318">
+			<count>1</count>
+			<default-code>true</default-code>
+		</bar-code>
+		<product-type>ProductPieceEntity</product-type>
+		<vat>18</vat>
+		<group id="390203">
+			<name>Группа 390203</name>
+			<parent-group id="3902">
+				<name>Группа 3902</name>
+				<parent-group id="39">
+					<name>Группа 39</name>
+				</parent-group>
+			</parent-group>
+		</group>
+		<measure-type id="1">
+			<name>шт.</name>
+		</measure-type>
+		<country id="RU"/>
+		<manufacturer id="0000101136">
+			<name>ООО Концерн "Калина"</name>
+		</manufacturer>
+		<delete-from-cash>false</delete-from-cash>
+		<erp-code>267603</erp-code>
+		<is-child-product>0</is-child-product>
+		<fullname>Крем-суфле д/тела ЧЕРНЫЙ ЖЕМЧУГ Шелковое Нежное питание (Россия) 200мл</fullname>
+		<plugin-property key="precision" value="1"/>
+		<plugin-property key="deny-print-to-documents" value="false"/>
+		<plugin-property key="amount-in-package" value="1"/>
+		<price-entry price="113.49" currency="RUB">
+			<shop-indices>2</shop-indices>
+			<begin-date>1900-01-01T00:00:00</begin-date>
+			<end-date>2070-12-31T23:59:00</end-date>
+			<number>2</number>
+			<department number="1">
+				<name>Отдел 1</name>
+			</department>
+		</price-entry>
+		<price-entry price="119.17" currency="RUB">
+			<shop-indices>2</shop-indices>
+			<begin-date>2014-04-01T03:00:00</begin-date>
+			<end-date>2070-12-31T23:59:00</end-date>
+			<number>1</number>
+			<department number="1">
+				<name>Отдел 1</name>
+			</department>
+		</price-entry>
+	</good>
+	<good marking-of-the-good="267604KAR" transaction-id="0000000166770749">
+		<shop-indices/>
+		<name>Молочко д/т ЧЕРНЫЙ ЖЕМЧУГ ЭнерУпруг200</name>
+		<bar-code code="14600702090113">
+			<count>1</count>
+			<default-code>true</default-code>
+		</bar-code>
+		<product-type>ProductPieceEntity</product-type>
+		<vat>18</vat>
+		<group id="390203">
+			<name>Группа 390203</name>
+			<parent-group id="3902">
+				<name>Группа 3902</name>
+				<parent-group id="39">
+					<name>Группа 39</name>
+				</parent-group>
+			</parent-group>
+		</group>
+		<measure-type id="7">
+			<name>кор.</name>
+		</measure-type>
+		<country id="RU"/>
+		<manufacturer id="0000101136">
+			<name>ООО Концерн "Калина"</name>
+		</manufacturer>
+		<delete-from-cash>false</delete-from-cash>
+		<erp-code>267604</erp-code>
+		<is-child-product>0</is-child-product>
+		<fullname>Молочко д/тела ЧЕРНЫЙ ЖЕМЧУГ Энергия и упругость (Россия) 200мл</fullname>
+		<plugin-property key="precision" value="1"/>
+		<plugin-property key="deny-print-to-documents" value="false"/>
+		<plugin-property key="amount-in-package" value="9"/>
+		<price-entry price="1021.41" currency="RUB">
+			<shop-indices>2</shop-indices>
+			<begin-date>1900-01-01T00:00:00</begin-date>
+			<end-date>2070-12-31T23:59:00</end-date>
+			<number>2</number>
+			<department number="1">
+				<name>Отдел 1</name>
+			</department>
+		</price-entry>
+		<price-entry price="1072.48" currency="RUB">
+			<shop-indices>2</shop-indices>
+			<begin-date>2014-04-01T03:00:00</begin-date>
+			<end-date>2070-12-31T23:59:00</end-date>
+			<number>1</number>
+			<department number="1">
+				<name>Отдел 1</name>
+			</department>
+		</price-entry>
+	</good>
+	<good marking-of-the-good="267604_ST" transaction-id="0000000166770749">
+		<shop-indices/>
+		<name>Молочко д/т ЧЕРНЫЙ ЖЕМЧУГ ЭнерУпруг200</name>
+		<bar-code code="4600702090116">
+			<count>1</count>
+			<default-code>true</default-code>
+		</bar-code>
+		<product-type>ProductPieceEntity</product-type>
+		<vat>18</vat>
+		<group id="390203">
+			<name>Группа 390203</name>
+			<parent-group id="3902">
+				<name>Группа 3902</name>
+				<parent-group id="39">
+					<name>Группа 39</name>
+				</parent-group>
+			</parent-group>
+		</group>
+		<measure-type id="1">
+			<name>шт.</name>
+		</measure-type>
+		<country id="RU"/>
+		<manufacturer id="0000101136">
+			<name>ООО Концерн "Калина"</name>
+		</manufacturer>
+		<delete-from-cash>false</delete-from-cash>
+		<erp-code>267604</erp-code>
+		<is-child-product>0</is-child-product>
+		<fullname>Молочко д/тела ЧЕРНЫЙ ЖЕМЧУГ Энергия и упругость (Россия) 200мл</fullname>
+		<plugin-property key="precision" value="1"/>
+		<plugin-property key="deny-print-to-documents" value="false"/>
+		<plugin-property key="amount-in-package" value="1"/>
+		<price-entry price="113.49" currency="RUB">
+			<shop-indices>2</shop-indices>
+			<begin-date>1900-01-01T00:00:00</begin-date>
+			<end-date>2070-12-31T23:59:00</end-date>
+			<number>2</number>
+			<department number="1">
+				<name>Отдел 1</name>
+			</department>
+		</price-entry>
+		<price-entry price="119.17" currency="RUB">
+			<shop-indices>2</shop-indices>
+			<begin-date>2014-04-01T03:00:00</begin-date>
+			<end-date>2070-12-31T23:59:00</end-date>
+			<number>1</number>
+			<department number="1">
+				<name>Отдел 1</name>
+			</department>
+		</price-entry>
+	</good>
+	<good marking-of-the-good="269117KAR" transaction-id="0000000166770749">
+		<shop-indices/>
+		<name>Опол-ль ЛЕСНОЙ БАЛЬЗАМ Д/чувст.ЗубДес400</name>
+		<bar-code code="14600702094135">
+			<count>1</count>
+			<default-code>true</default-code>
+		</bar-code>
+		<product-type>ProductPieceEntity</product-type>
+		<vat>18</vat>
+		<group id="391003">
+			<name>Группа 391003</name>
+			<parent-group id="3910">
+				<name>Группа 3910</name>
+				<parent-group id="39">
+					<name>Группа 39</name>
+				</parent-group>
+			</parent-group>
+		</group>
+		<measure-type id="7">
+			<name>кор.</name>
+		</measure-type>
+		<country id="RU"/>
+		<manufacturer id="0000101136">
+			<name>ООО Концерн "Калина"</name>
+		</manufacturer>
+		<delete-from-cash>false</delete-from-cash>
+		<erp-code>269117</erp-code>
+		<is-child-product>0</is-child-product>
+		<fullname>Ополаскиватель ЛЕСНОЙ БАЛЬЗАМ Д/чувст.зубов и десен (Россия) 400мл</fullname>
+		<plugin-property key="precision" value="1"/>
+		<plugin-property key="deny-print-to-documents" value="false"/>
+		<plugin-property key="amount-in-package" value="12"/>
+		<price-entry price="1435.08" currency="RUB">
+			<shop-indices>2</shop-indices>
+			<begin-date>1900-01-01T00:00:00</begin-date>
+			<end-date>2070-12-31T23:59:00</end-date>
+			<number>2</number>
+			<department number="1">
+				<name>Отдел 1</name>
+			</department>
+		</price-entry>
+		<price-entry price="1506.83" currency="RUB">
+			<shop-indices>2</shop-indices>
+			<begin-date>2014-04-01T03:00:00</begin-date>
+			<end-date>2070-12-31T23:59:00</end-date>
+			<number>1</number>
+			<department number="1">
+				<name>Отдел 1</name>
+			</department>
+		</price-entry>
+	</good>
+	<good marking-of-the-good="269117_ST" transaction-id="0000000166770749">
+		<shop-indices/>
+		<name>Опол-ль ЛЕСНОЙ БАЛЬЗАМ Д/чувст.ЗубДес400</name>
+		<bar-code code="4600702094138">
+			<count>1</count>
+			<default-code>true</default-code>
+		</bar-code>
+		<product-type>ProductPieceEntity</product-type>
+		<vat>18</vat>
+		<group id="391003">
+			<name>Группа 391003</name>
+			<parent-group id="3910">
+				<name>Группа 3910</name>
+				<parent-group id="39">
+					<name>Группа 39</name>
+				</parent-group>
+			</parent-group>
+		</group>
+		<measure-type id="1">
+			<name>шт.</name>
+		</measure-type>
+		<country id="RU"/>
+		<manufacturer id="0000101136">
+			<name>ООО Концерн "Калина"</name>
+		</manufacturer>
+		<delete-from-cash>false</delete-from-cash>
+		<erp-code>269117</erp-code>
+		<is-child-product>0</is-child-product>
+		<fullname>Ополаскиватель ЛЕСНОЙ БАЛЬЗАМ Д/чувст.зубов и десен (Россия) 400мл</fullname>
+		<plugin-property key="precision" value="1"/>
+		<plugin-property key="deny-print-to-documents" value="false"/>
+		<plugin-property key="amount-in-package" value="1"/>
+		<price-entry price="119.59" currency="RUB">
+			<shop-indices>2</shop-indices>
+			<begin-date>1900-01-01T00:00:00</begin-date>
+			<end-date>2070-12-31T23:59:00</end-date>
+			<number>2</number>
+			<department number="1">
+				<name>Отдел 1</name>
+			</department>
+		</price-entry>
+		<price-entry price="125.57" currency="RUB">
+			<shop-indices>2</shop-indices>
+			<begin-date>2014-04-01T03:00:00</begin-date>
+			<end-date>2070-12-31T23:59:00</end-date>
+			<number>1</number>
+			<department number="1">
+				<name>Отдел 1</name>
+			</department>
+		</price-entry>
+	</good>
+	<good marking-of-the-good="270221KAR" transaction-id="0000000166770749">
+		<shop-indices/>
+		<name>Вино CHIANTI Кьянти кр.сух.13% 0.75L</name>
+		<bar-code code="8000160175732">
+			<count>1</count>
+			<default-code>true</default-code>
+		</bar-code>
+		<product-type>ProductSpiritsEntity</product-type>
+		<vat>18</vat>
+		<group id="270102">
+			<name>Группа 270102</name>
+			<parent-group id="2701">
+				<name>Группа 2701</name>
+				<parent-group id="27">
+					<name>Группа 27</name>
+				</parent-group>
+			</parent-group>
+		</group>
+		<measure-type id="7">
+			<name>кор.</name>
+		</measure-type>
+		<country id="IT"/>
+		<manufacturer id="0000101557">
+			<name>ООО "Компания "Симпл-СПб"</name>
+		</manufacturer>
+		<delete-from-cash>false</delete-from-cash>
+		<erp-code>270221</erp-code>
+		<is-child-product>0</is-child-product>
+		<fullname>Вино CHIANTI Кьянти геогр.наим.кр.сух.алк.13% (Италия) 0.75L</fullname>
+		<plugin-property key="precision" value="1"/>
+		<plugin-property key="deny-print-to-documents" value="true"/>
+		<plugin-property key="amount-in-package" value="6"/>
+		<plugin-property key="alcoholic-content-percentage" value="13.00"/>
+		<price-entry price="2097.54" currency="RUB">
+			<shop-indices>2</shop-indices>
+			<begin-date>1900-01-01T00:00:00</begin-date>
+			<end-date>2070-12-31T23:59:00</end-date>
+			<number>2</number>
+			<department number="1">
+				<name>Отдел 1</name>
+			</department>
+		</price-entry>
+		<price-entry price="2202.42" currency="RUB">
+			<shop-indices>2</shop-indices>
+			<begin-date>2014-04-01T03:00:00</begin-date>
+			<end-date>2070-12-31T23:59:00</end-date>
+			<number>1</number>
+			<department number="1">
+				<name>Отдел 1</name>
+			</department>
+		</price-entry>
+	</good>
+	<sale-denied-restriction id="0002||270221KAR||LIGHTALCOHOLRESTRICT" subject-type="GOOD" subject-code="270221KAR" type="SALE_DENIED" value="false">
+		<since-date>1900-01-01T00:00:00</since-date>
+		<till-date>2075-12-31T23:59:59</till-date>
+		<since-time>21:55:00</since-time>
+		<till-time>11:00:00</till-time>
+		<deleted>false</deleted>
+		<days-of-week>MO TU WE TH FR SA SU</days-of-week>
+	</sale-denied-restriction>
+	<good marking-of-the-good="270221_ST" transaction-id="0000000166770749">
+		<shop-indices/>
+		<name>Вино CHIANTI Кьянти кр.сух.13% 0.75L</name>
+		<bar-code code="8000160675737">
+			<count>1</count>
+			<default-code>true</default-code>
+		</bar-code>
+		<product-type>ProductSpiritsEntity</product-type>
+		<vat>18</vat>
+		<group id="270102">
+			<name>Группа 270102</name>
+			<parent-group id="2701">
+				<name>Группа 2701</name>
+				<parent-group id="27">
+					<name>Группа 27</name>
+				</parent-group>
+			</parent-group>
+		</group>
+		<measure-type id="1">
+			<name>шт.</name>
+		</measure-type>
+		<country id="IT"/>
+		<manufacturer id="0000101557">
+			<name>ООО "Компания "Симпл-СПб"</name>
+		</manufacturer>
+		<delete-from-cash>false</delete-from-cash>
+		<erp-code>270221</erp-code>
+		<is-child-product>0</is-child-product>
+		<fullname>Вино CHIANTI Кьянти геогр.наим.кр.сух.алк.13% (Италия) 0.75L</fullname>
+		<plugin-property key="precision" value="1"/>
+		<plugin-property key="deny-print-to-documents" value="true"/>
+		<plugin-property key="amount-in-package" value="1"/>
+		<plugin-property key="alcoholic-content-percentage" value="13.00"/>
+		<price-entry price="349.59" currency="RUB">
+			<shop-indices>2</shop-indices>
+			<begin-date>1900-01-01T00:00:00</begin-date>
+			<end-date>2070-12-31T23:59:00</end-date>
+			<number>2</number>
+			<department number="1">
+				<name>Отдел 1</name>
+			</department>
+		</price-entry>
+		<price-entry price="367.07" currency="RUB">
+			<shop-indices>2</shop-indices>
+			<begin-date>2014-04-01T03:00:00</begin-date>
+			<end-date>2070-12-31T23:59:00</end-date>
+			<number>1</number>
+			<department number="1">
+				<name>Отдел 1</name>
+			</department>
+		</price-entry>
+	</good>
+	<sale-denied-restriction id="0002||270221_ST||LIGHTALCOHOLRESTRICT" subject-type="GOOD" subject-code="270221_ST" type="SALE_DENIED" value="false">
+		<since-date>1900-01-01T00:00:00</since-date>
+		<till-date>2075-12-31T23:59:59</till-date>
+		<since-time>21:55:00</since-time>
+		<till-time>11:00:00</till-time>
+		<deleted>false</deleted>
+		<days-of-week>MO TU WE TH FR SA SU</days-of-week>
+	</sale-denied-restriction>
+	<good marking-of-the-good="270541KAR" transaction-id="0000000166770749">
+		<shop-indices/>
+		<name>Бальзам д/т ЧЕРНЫЙ ЖЕМЧУГ Шелковый200мл</name>
+		<bar-code code="14600702092889">
+			<count>1</count>
+			<default-code>true</default-code>
+		</bar-code>
+		<product-type>ProductPieceEntity</product-type>
+		<vat>18</vat>
+		<group id="390203">
+			<name>Группа 390203</name>
+			<parent-group id="3902">
+				<name>Группа 3902</name>
+				<parent-group id="39">
+					<name>Группа 39</name>
+				</parent-group>
+			</parent-group>
+		</group>
+		<measure-type id="7">
+			<name>кор.</name>
+		</measure-type>
+		<country id="RU"/>
+		<manufacturer id="0000101136">
+			<name>ООО Концерн "Калина"</name>
+		</manufacturer>
+		<delete-from-cash>false</delete-from-cash>
+		<erp-code>270541</erp-code>
+		<is-child-product>0</is-child-product>
+		<fullname>Бальзам д/тела ЧЕРНЫЙ ЖЕМЧУГ Шелковый (Россия) 200мл</fullname>
+		<plugin-property key="precision" value="1"/>
+		<plugin-property key="deny-print-to-documents" value="false"/>
+		<plugin-property key="amount-in-package" value="9"/>
+		<price-entry price="986.31" currency="RUB">
+			<shop-indices>2</shop-indices>
+			<begin-date>1900-01-01T00:00:00</begin-date>
+			<end-date>2070-12-31T23:59:00</end-date>
+			<number>2</number>
+			<department number="1">
+				<name>Отдел 1</name>
+			</department>
+		</price-entry>
+		<price-entry price="1035.63" currency="RUB">
+			<shop-indices>2</shop-indices>
+			<begin-date>2014-04-01T03:00:00</begin-date>
+			<end-date>2070-12-31T23:59:00</end-date>
+			<number>1</number>
+			<department number="1">
+				<name>Отдел 1</name>
+			</department>
+		</price-entry>
+	</good>
+	<good marking-of-the-good="270541_ST" transaction-id="0000000166770749">
+		<shop-indices/>
+		<name>Бальзам д/т ЧЕРНЫЙ ЖЕМЧУГ Шелковый200мл</name>
+		<bar-code code="4600702092882">
+			<count>1</count>
+			<default-code>true</default-code>
+		</bar-code>
+		<product-type>ProductPieceEntity</product-type>
+		<vat>18</vat>
+		<group id="390203">
+			<name>Группа 390203</name>
+			<parent-group id="3902">
+				<name>Группа 3902</name>
+				<parent-group id="39">
+					<name>Группа 39</name>
+				</parent-group>
+			</parent-group>
+		</group>
+		<measure-type id="1">
+			<name>шт.</name>
+		</measure-type>
+		<country id="RU"/>
+		<manufacturer id="0000101136">
+			<name>ООО Концерн "Калина"</name>
+		</manufacturer>
+		<delete-from-cash>false</delete-from-cash>
+		<erp-code>270541</erp-code>
+		<is-child-product>0</is-child-product>
+		<fullname>Бальзам д/тела ЧЕРНЫЙ ЖЕМЧУГ Шелковый (Россия) 200мл</fullname>
+		<plugin-property key="precision" value="1"/>
+		<plugin-property key="deny-print-to-documents" value="false"/>
+		<plugin-property key="amount-in-package" value="1"/>
+		<price-entry price="109.59" currency="RUB">
+			<shop-indices>2</shop-indices>
+			<begin-date>1900-01-01T00:00:00</begin-date>
+			<end-date>2070-12-31T23:59:00</end-date>
+			<number>2</number>
+			<department number="1">
+				<name>Отдел 1</name>
+			</department>
+		</price-entry>
+		<price-entry price="115.07" currency="RUB">
+			<shop-indices>2</shop-indices>
+			<begin-date>2014-04-01T03:00:00</begin-date>
+			<end-date>2070-12-31T23:59:00</end-date>
+			<number>1</number>
+			<department number="1">
+				<name>Отдел 1</name>
+			</department>
+		</price-entry>
+	</good>
+	<good marking-of-the-good="271872KAR" transaction-id="0000000166770749">
+		<shop-indices/>
+		<name>Крем д/л/т СТО РЕЦЕПТОВ НежнСмяг200мл</name>
+		<bar-code code="14600702092575">
+			<count>1</count>
+			<default-code>true</default-code>
+		</bar-code>
+		<product-type>ProductPieceEntity</product-type>
+		<vat>18</vat>
+		<group id="390203">
+			<name>Группа 390203</name>
+			<parent-group id="3902">
+				<name>Группа 3902</name>
+				<parent-group id="39">
+					<name>Группа 39</name>
+				</parent-group>
+			</parent-group>
+		</group>
+		<measure-type id="7">
+			<name>кор.</name>
+		</measure-type>
+		<country id="RU"/>
+		<manufacturer id="0000101136">
+			<name>ООО Концерн "Калина"</name>
+		</manufacturer>
+		<delete-from-cash>false</delete-from-cash>
+		<erp-code>271872</erp-code>
+		<is-child-product>0</is-child-product>
+		<fullname>Крем д/лица и тела СТО РЕЦЕПТОВ КРАСОТЫ Нежное смягчение (Россия) 200мл</fullname>
+		<plugin-property key="precision" value="1"/>
+		<plugin-property key="deny-print-to-documents" value="false"/>
+		<plugin-property key="amount-in-package" value="12"/>
+		<price-entry price="1178.28" currency="RUB">
+			<shop-indices>2</shop-indices>
+			<begin-date>1900-01-01T00:00:00</begin-date>
+			<end-date>2070-12-31T23:59:00</end-date>
+			<number>2</number>
+			<department number="1">
+				<name>Отдел 1</name>
+			</department>
+		</price-entry>
+		<price-entry price="1237.19" currency="RUB">
+			<shop-indices>2</shop-indices>
+			<begin-date>2014-04-01T03:00:00</begin-date>
+			<end-date>2070-12-31T23:59:00</end-date>
+			<number>1</number>
+			<department number="1">
+				<name>Отдел 1</name>
+			</department>
+		</price-entry>
+	</good>
+	<good marking-of-the-good="271872_ST" transaction-id="0000000166770749">
+		<shop-indices/>
+		<name>Крем д/л/т СТО РЕЦЕПТОВ НежнСмяг200мл</name>
+		<bar-code code="4600702092578">
+			<count>1</count>
+			<default-code>true</default-code>
+		</bar-code>
+		<product-type>ProductPieceEntity</product-type>
+		<vat>18</vat>
+		<group id="390203">
+			<name>Группа 390203</name>
+			<parent-group id="3902">
+				<name>Группа 3902</name>
+				<parent-group id="39">
+					<name>Группа 39</name>
+				</parent-group>
+			</parent-group>
+		</group>
+		<measure-type id="1">
+			<name>шт.</name>
+		</measure-type>
+		<country id="RU"/>
+		<manufacturer id="0000101136">
+			<name>ООО Концерн "Калина"</name>
+		</manufacturer>
+		<delete-from-cash>false</delete-from-cash>
+		<erp-code>271872</erp-code>
+		<is-child-product>0</is-child-product>
+		<fullname>Крем д/лица и тела СТО РЕЦЕПТОВ КРАСОТЫ Нежное смягчение (Россия) 200мл</fullname>
+		<plugin-property key="precision" value="1"/>
+		<plugin-property key="deny-print-to-documents" value="false"/>
+		<plugin-property key="amount-in-package" value="1"/>
+		<price-entry price="98.19" currency="RUB">
+			<shop-indices>2</shop-indices>
+			<begin-date>1900-01-01T00:00:00</begin-date>
+			<end-date>2070-12-31T23:59:00</end-date>
+			<number>2</number>
+			<department number="1">
+				<name>Отдел 1</name>
+			</department>
+		</price-entry>
+		<price-entry price="103.1" currency="RUB">
+			<shop-indices>2</shop-indices>
+			<begin-date>2014-04-01T03:00:00</begin-date>
+			<end-date>2070-12-31T23:59:00</end-date>
+			<number>1</number>
+			<department number="1">
+				<name>Отдел 1</name>
+			</department>
+		</price-entry>
+	</good>
+	<good marking-of-the-good="271873KAR" transaction-id="0000000166770749">
+		<shop-indices/>
+		<name>Крем д/л/т СТО РЕЦЕПТОВ Увл24часа200мл</name>
+		<bar-code code="14600702092568">
+			<count>1</count>
+			<default-code>true</default-code>
+		</bar-code>
+		<product-type>ProductPieceEntity</product-type>
+		<vat>18</vat>
+		<group id="390203">
+			<name>Группа 390203</name>
+			<parent-group id="3902">
+				<name>Группа 3902</name>
+				<parent-group id="39">
+					<name>Группа 39</name>
+				</parent-group>
+			</parent-group>
+		</group>
+		<measure-type id="7">
+			<name>кор.</name>
+		</measure-type>
+		<country id="RU"/>
+		<manufacturer id="0000101136">
+			<name>ООО Концерн "Калина"</name>
+		</manufacturer>
+		<delete-from-cash>false</delete-from-cash>
+		<erp-code>271873</erp-code>
+		<is-child-product>0</is-child-product>
+		<fullname>Крем д/лица и тела СТО РЕЦЕПТОВ КРАСОТЫ Увлажнение 24 часа (Россия) 200мл</fullname>
+		<plugin-property key="precision" value="1"/>
+		<plugin-property key="deny-print-to-documents" value="false"/>
+		<plugin-property key="amount-in-package" value="12"/>
+		<price-entry price="1178.28" currency="RUB">
+			<shop-indices>2</shop-indices>
+			<begin-date>1900-01-01T00:00:00</begin-date>
+			<end-date>2070-12-31T23:59:00</end-date>
+			<number>2</number>
+			<department number="1">
+				<name>Отдел 1</name>
+			</department>
+		</price-entry>
+		<price-entry price="1237.19" currency="RUB">
+			<shop-indices>2</shop-indices>
+			<begin-date>2014-04-01T03:00:00</begin-date>
+			<end-date>2070-12-31T23:59:00</end-date>
+			<number>1</number>
+			<department number="1">
+				<name>Отдел 1</name>
+			</department>
+		</price-entry>
+	</good>
+	<good marking-of-the-good="271873_ST" transaction-id="0000000166770749">
+		<shop-indices/>
+		<name>Крем д/л/т СТО РЕЦЕПТОВ Увл24часа200мл</name>
+		<bar-code code="4600702092561">
+			<count>1</count>
+			<default-code>true</default-code>
+		</bar-code>
+		<product-type>ProductPieceEntity</product-type>
+		<vat>18</vat>
+		<group id="390203">
+			<name>Группа 390203</name>
+			<parent-group id="3902">
+				<name>Группа 3902</name>
+				<parent-group id="39">
+					<name>Группа 39</name>
+				</parent-group>
+			</parent-group>
+		</group>
+		<measure-type id="1">
+			<name>шт.</name>
+		</measure-type>
+		<country id="RU"/>
+		<manufacturer id="0000101136">
+			<name>ООО Концерн "Калина"</name>
+		</manufacturer>
+		<delete-from-cash>false</delete-from-cash>
+		<erp-code>271873</erp-code>
+		<is-child-product>0</is-child-product>
+		<fullname>Крем д/лица и тела СТО РЕЦЕПТОВ КРАСОТЫ Увлажнение 24 часа (Россия) 200мл</fullname>
+		<plugin-property key="precision" value="1"/>
+		<plugin-property key="deny-print-to-documents" value="false"/>
+		<plugin-property key="amount-in-package" value="1"/>
+		<price-entry price="98.19" currency="RUB">
+			<shop-indices>2</shop-indices>
+			<begin-date>1900-01-01T00:00:00</begin-date>
+			<end-date>2070-12-31T23:59:00</end-date>
+			<number>2</number>
+			<department number="1">
+				<name>Отдел 1</name>
+			</department>
+		</price-entry>
+		<price-entry price="103.1" currency="RUB">
+			<shop-indices>2</shop-indices>
+			<begin-date>2014-04-01T03:00:00</begin-date>
+			<end-date>2070-12-31T23:59:00</end-date>
+			<number>1</number>
+			<department number="1">
+				<name>Отдел 1</name>
+			</department>
+		</price-entry>
+	</good>
+	<good marking-of-the-good="271874KAR" transaction-id="0000000166770749">
+		<shop-indices/>
+		<name>Крем-масло д/т СТО РЕЦЕПТОВ Инт.Пит200мл</name>
+		<bar-code code="14600702092551">
+			<count>1</count>
+			<default-code>true</default-code>
+		</bar-code>
+		<product-type>ProductPieceEntity</product-type>
+		<vat>18</vat>
+		<group id="390203">
+			<name>Группа 390203</name>
+			<parent-group id="3902">
+				<name>Группа 3902</name>
+				<parent-group id="39">
+					<name>Группа 39</name>
+				</parent-group>
+			</parent-group>
+		</group>
+		<measure-type id="7">
+			<name>кор.</name>
+		</measure-type>
+		<country id="RU"/>
+		<manufacturer id="0000101136">
+			<name>ООО Концерн "Калина"</name>
+		</manufacturer>
+		<delete-from-cash>false</delete-from-cash>
+		<erp-code>271874</erp-code>
+		<is-child-product>0</is-child-product>
+		<fullname>Крем-масло д/тела СТО РЕЦЕПТОВ КРАСОТЫ Интенсивное питание (Россия) 200мл</fullname>
+		<plugin-property key="precision" value="1"/>
+		<plugin-property key="deny-print-to-documents" value="false"/>
+		<plugin-property key="amount-in-package" value="12"/>
+		<price-entry price="1178.28" currency="RUB">
+			<shop-indices>2</shop-indices>
+			<begin-date>1900-01-01T00:00:00</begin-date>
+			<end-date>2070-12-31T23:59:00</end-date>
+			<number>2</number>
+			<department number="1">
+				<name>Отдел 1</name>
+			</department>
+		</price-entry>
+		<price-entry price="1237.19" currency="RUB">
+			<shop-indices>2</shop-indices>
+			<begin-date>2014-04-01T03:00:00</begin-date>
+			<end-date>2070-12-31T23:59:00</end-date>
+			<number>1</number>
+			<department number="1">
+				<name>Отдел 1</name>
+			</department>
+		</price-entry>
+	</good>
+	<good marking-of-the-good="271874_ST" transaction-id="0000000166770749">
+		<shop-indices/>
+		<name>Крем-масло д/т СТО РЕЦЕПТОВ Инт.Пит200мл</name>
+		<bar-code code="4600702092554">
+			<count>1</count>
+			<default-code>true</default-code>
+		</bar-code>
+		<product-type>ProductPieceEntity</product-type>
+		<vat>18</vat>
+		<group id="390203">
+			<name>Группа 390203</name>
+			<parent-group id="3902">
+				<name>Группа 3902</name>
+				<parent-group id="39">
+					<name>Группа 39</name>
+				</parent-group>
+			</parent-group>
+		</group>
+		<measure-type id="1">
+			<name>шт.</name>
+		</measure-type>
+		<country id="RU"/>
+		<manufacturer id="0000101136">
+			<name>ООО Концерн "Калина"</name>
+		</manufacturer>
+		<delete-from-cash>false</delete-from-cash>
+		<erp-code>271874</erp-code>
+		<is-child-product>0</is-child-product>
+		<fullname>Крем-масло д/тела СТО РЕЦЕПТОВ КРАСОТЫ Интенсивное питание (Россия) 200мл</fullname>
+		<plugin-property key="precision" value="1"/>
+		<plugin-property key="deny-print-to-documents" value="false"/>
+		<plugin-property key="amount-in-package" value="1"/>
+		<price-entry price="98.19" currency="RUB">
+			<shop-indices>2</shop-indices>
+			<begin-date>1900-01-01T00:00:00</begin-date>
+			<end-date>2070-12-31T23:59:00</end-date>
+			<number>2</number>
+			<department number="1">
+				<name>Отдел 1</name>
+			</department>
+		</price-entry>
+		<price-entry price="103.1" currency="RUB">
+			<shop-indices>2</shop-indices>
+			<begin-date>2014-04-01T03:00:00</begin-date>
+			<end-date>2070-12-31T23:59:00</end-date>
+			<number>1</number>
+			<department number="1">
+				<name>Отдел 1</name>
+			</department>
+		</price-entry>
+	</good>
+	<good marking-of-the-good="273529KAR" transaction-id="0000000166770749">
+		<shop-indices/>
+		<name>Пирожное БАРНИ промо 300г</name>
+		<bar-code code="7622210185358">
+			<count>1</count>
+			<default-code>true</default-code>
+		</bar-code>
+		<product-type>ProductPieceEntity</product-type>
+		<vat>18</vat>
+		<group id="321403">
+			<name>Группа 321403</name>
+			<parent-group id="3214">
+				<name>Группа 3214</name>
+				<parent-group id="32">
+					<name>Группа 32</name>
+				</parent-group>
+			</parent-group>
+		</group>
+		<measure-type id="7">
+			<name>кор.</name>
+		</measure-type>
+		<country id="RU"/>
+		<manufacturer id="0000100405">
+			<name>ООО "Мон`дэлис Русь"</name>
+		</manufacturer>
+		<delete-from-cash>false</delete-from-cash>
+		<erp-code>273529</erp-code>
+		<is-child-product>0</is-child-product>
+		<fullname>Пирожное БАРНИ промо (Россия) 300г</fullname>
+		<plugin-property key="precision" value="1"/>
+		<plugin-property key="deny-print-to-documents" value="false"/>
+		<plugin-property key="amount-in-package" value="10"/>
+		<price-entry price="1049.99" currency="RUB">
+			<shop-indices>2</shop-indices>
+			<begin-date>1900-01-01T00:00:00</begin-date>
+			<end-date>2070-12-31T23:59:00</end-date>
+			<number>2</number>
+			<department number="1">
+				<name>Отдел 1</name>
+			</department>
+		</price-entry>
+		<price-entry price="1102.99" currency="RUB">
+			<shop-indices>2</shop-indices>
+			<begin-date>2014-04-01T03:00:00</begin-date>
+			<end-date>2070-12-31T23:59:00</end-date>
+			<number>1</number>
+			<department number="1">
+				<name>Отдел 1</name>
+			</department>
+		</price-entry>
+	</good>
+	<good marking-of-the-good="273529_ST" transaction-id="0000000166770749">
+		<shop-indices/>
+		<name>Пирожное БАРНИ промо 300г</name>
+		<bar-code code="7622210184511">
+			<count>1</count>
+			<default-code>true</default-code>
+		</bar-code>
+		<product-type>ProductPieceEntity</product-type>
+		<vat>18</vat>
+		<group id="321403">
+			<name>Группа 321403</name>
+			<parent-group id="3214">
+				<name>Группа 3214</name>
+				<parent-group id="32">
+					<name>Группа 32</name>
+				</parent-group>
+			</parent-group>
+		</group>
+		<measure-type id="1">
+			<name>шт.</name>
+		</measure-type>
+		<country id="RU"/>
+		<manufacturer id="0000100405">
+			<name>ООО "Мон`дэлис Русь"</name>
+		</manufacturer>
+		<delete-from-cash>false</delete-from-cash>
+		<erp-code>273529</erp-code>
+		<is-child-product>0</is-child-product>
+		<fullname>Пирожное БАРНИ промо (Россия) 300г</fullname>
+		<plugin-property key="precision" value="1"/>
+		<plugin-property key="deny-print-to-documents" value="false"/>
+		<plugin-property key="amount-in-package" value="1"/>
+		<price-entry price="104.99" currency="RUB">
+			<shop-indices>2</shop-indices>
+			<begin-date>1900-01-01T00:00:00</begin-date>
+			<end-date>2070-12-31T23:59:00</end-date>
+			<number>2</number>
+			<department number="1">
+				<name>Отдел 1</name>
+			</department>
+		</price-entry>
+		<price-entry price="110.29" currency="RUB">
+			<shop-indices>2</shop-indices>
+			<begin-date>2014-04-01T03:00:00</begin-date>
+			<end-date>2070-12-31T23:59:00</end-date>
+			<number>1</number>
+			<department number="1">
+				<name>Отдел 1</name>
+			</department>
+		</price-entry>
+	</good>
+	<good marking-of-the-good="274156KAR" transaction-id="0000000166770749">
+		<shop-indices/>
+		<name>Вода мин.PERRIER прир.стол.газ.1L</name>
+		<bar-code code="3179732348944">
+			<count>1</count>
+			<default-code>true</default-code>
+		</bar-code>
+		<product-type>ProductPieceEntity</product-type>
+		<vat>18</vat>
+		<group id="310602">
+			<name>Группа 310602</name>
+			<parent-group id="3106">
+				<name>Группа 3106</name>
+				<parent-group id="31">
+					<name>Группа 31</name>
+				</parent-group>
+			</parent-group>
+		</group>
+		<measure-type id="7">
+			<name>кор.</name>
+		</measure-type>
+		<country id="FR"/>
+		<manufacturer id="0000104071">
+			<name>ООО "ЛенМИКС Элитные воды СПб"</name>
+		</manufacturer>
+		<delete-from-cash>false</delete-from-cash>
+		<erp-code>274156</erp-code>
+		<is-child-product>0</is-child-product>
+		<fullname>Вода минеральная PERRIER природная столовая газ.пластик (Франция) 1L</fullname>
+		<plugin-property key="precision" value="1"/>
+		<plugin-property key="deny-print-to-documents" value="false"/>
+		<plugin-property key="amount-in-package" value="6"/>
+		<price-entry price="565.79" currency="RUB">
+			<shop-indices>2</shop-indices>
+			<begin-date>1900-01-01T00:00:00</begin-date>
+			<end-date>2070-12-31T23:59:00</end-date>
+			<number>2</number>
+			<department number="1">
+				<name>Отдел 1</name>
+			</department>
+		</price-entry>
+		<price-entry price="594.59" currency="RUB">
+			<shop-indices>2</shop-indices>
+			<begin-date>2014-04-01T03:00:00</begin-date>
+			<end-date>2070-12-31T23:59:00</end-date>
+			<number>1</number>
+			<department number="1">
+				<name>Отдел 1</name>
+			</department>
+		</price-entry>
+	</good>
+	<good marking-of-the-good="274156_ST" transaction-id="0000000166770749">
+		<shop-indices/>
+		<name>Вода мин.PERRIER прир.стол.газ.1L</name>
+		<bar-code code="3179732348913">
+			<count>1</count>
+			<default-code>true</default-code>
+		</bar-code>
+		<product-type>ProductPieceEntity</product-type>
+		<vat>18</vat>
+		<group id="310602">
+			<name>Группа 310602</name>
+			<parent-group id="3106">
+				<name>Группа 3106</name>
+				<parent-group id="31">
+					<name>Группа 31</name>
+				</parent-group>
+			</parent-group>
+		</group>
+		<measure-type id="1">
+			<name>шт.</name>
+		</measure-type>
+		<country id="FR"/>
+		<manufacturer id="0000104071">
+			<name>ООО "ЛенМИКС Элитные воды СПб"</name>
+		</manufacturer>
+		<delete-from-cash>false</delete-from-cash>
+		<erp-code>274156</erp-code>
+		<is-child-product>0</is-child-product>
+		<fullname>Вода минеральная PERRIER природная столовая газ.пластик (Франция) 1L</fullname>
+		<plugin-property key="precision" value="1"/>
+		<plugin-property key="deny-print-to-documents" value="false"/>
+		<plugin-property key="amount-in-package" value="1"/>
+		<price-entry price="94.29" currency="RUB">
+			<shop-indices>2</shop-indices>
+			<begin-date>1900-01-01T00:00:00</begin-date>
+			<end-date>2070-12-31T23:59:00</end-date>
+			<number>2</number>
+			<department number="1">
+				<name>Отдел 1</name>
+			</department>
+		</price-entry>
+		<price-entry price="99.09" currency="RUB">
+			<shop-indices>2</shop-indices>
+			<begin-date>2014-04-01T03:00:00</begin-date>
+			<end-date>2070-12-31T23:59:00</end-date>
+			<number>1</number>
+			<department number="1">
+				<name>Отдел 1</name>
+			</department>
+		</price-entry>
+	</good>
+	<good marking-of-the-good="279112KAR" transaction-id="0000000166770749">
+		<shop-indices/>
+		<name>Вино CANTI Барбера д'АстиСуп кр.сух0.75L</name>
+		<bar-code code="8005415044405">
+			<count>1</count>
+			<default-code>true</default-code>
+		</bar-code>
+		<product-type>ProductSpiritsEntity</product-type>
+		<vat>18</vat>
+		<group id="270102">
+			<name>Группа 270102</name>
+			<parent-group id="2701">
+				<name>Группа 2701</name>
+				<parent-group id="27">
+					<name>Группа 27</name>
+				</parent-group>
+			</parent-group>
+		</group>
+		<measure-type id="7">
+			<name>кор.</name>
+		</measure-type>
+		<country id="IT"/>
+		<manufacturer id="0000101557">
+			<name>ООО "Компания "Симпл-СПб"</name>
+		</manufacturer>
+		<delete-from-cash>false</delete-from-cash>
+		<erp-code>279112</erp-code>
+		<is-child-product>0</is-child-product>
+		<fullname>Вино CANTI Канти Барбера д'Асти Супериоре геогр.наим.кр.сух.алк.13% (Италия) 0.75L</fullname>
+		<plugin-property key="precision" value="1"/>
+		<plugin-property key="deny-print-to-documents" value="true"/>
+		<plugin-property key="amount-in-package" value="6"/>
+		<plugin-property key="alcoholic-content-percentage" value="13.00"/>
+		<price-entry price="3642.54" currency="RUB">
+			<shop-indices>2</shop-indices>
+			<begin-date>1900-01-01T00:00:00</begin-date>
+			<end-date>2070-12-31T23:59:00</end-date>
+			<number>2</number>
+			<department number="1">
+				<name>Отдел 1</name>
+			</department>
+		</price-entry>
+		<price-entry price="3824.67" currency="RUB">
+			<shop-indices>2</shop-indices>
+			<begin-date>2014-04-01T03:00:00</begin-date>
+			<end-date>2070-12-31T23:59:00</end-date>
+			<number>1</number>
+			<department number="1">
+				<name>Отдел 1</name>
+			</department>
+		</price-entry>
+	</good>
+	<sale-denied-restriction id="0002||279112KAR||LIGHTALCOHOLRESTRICT" subject-type="GOOD" subject-code="279112KAR" type="SALE_DENIED" value="false">
+		<since-date>1900-01-01T00:00:00</since-date>
+		<till-date>2075-12-31T23:59:59</till-date>
+		<since-time>21:55:00</since-time>
+		<till-time>11:00:00</till-time>
+		<deleted>false</deleted>
+		<days-of-week>MO TU WE TH FR SA SU</days-of-week>
+	</sale-denied-restriction>
+	<good marking-of-the-good="279112_ST" transaction-id="0000000166770749">
+		<shop-indices/>
+		<name>Вино CANTI Барбера д'АстиСуп кр.сух0.75L</name>
+		<bar-code code="8005415000005">
+			<count>1</count>
+			<default-code>true</default-code>
+		</bar-code>
+		<product-type>ProductSpiritsEntity</product-type>
+		<vat>18</vat>
+		<group id="270102">
+			<name>Группа 270102</name>
+			<parent-group id="2701">
+				<name>Группа 2701</name>
+				<parent-group id="27">
+					<name>Группа 27</name>
+				</parent-group>
+			</parent-group>
+		</group>
+		<measure-type id="1">
+			<name>шт.</name>
+		</measure-type>
+		<country id="IT"/>
+		<manufacturer id="0000101557">
+			<name>ООО "Компания "Симпл-СПб"</name>
+		</manufacturer>
+		<delete-from-cash>false</delete-from-cash>
+		<erp-code>279112</erp-code>
+		<is-child-product>0</is-child-product>
+		<fullname>Вино CANTI Канти Барбера д'Асти Супериоре геогр.наим.кр.сух.алк.13% (Италия) 0.75L</fullname>
+		<plugin-property key="precision" value="1"/>
+		<plugin-property key="deny-print-to-documents" value="true"/>
+		<plugin-property key="amount-in-package" value="1"/>
+		<plugin-property key="alcoholic-content-percentage" value="13.00"/>
+		<price-entry price="607.09" currency="RUB">
+			<shop-indices>2</shop-indices>
+			<begin-date>1900-01-01T00:00:00</begin-date>
+			<end-date>2070-12-31T23:59:00</end-date>
+			<number>2</number>
+			<department number="1">
+				<name>Отдел 1</name>
+			</department>
+		</price-entry>
+		<price-entry price="637.45" currency="RUB">
+			<shop-indices>2</shop-indices>
+			<begin-date>2014-04-01T03:00:00</begin-date>
+			<end-date>2070-12-31T23:59:00</end-date>
+			<number>1</number>
+			<department number="1">
+				<name>Отдел 1</name>
+			</department>
+		</price-entry>
+	</good>
+	<sale-denied-restriction id="0002||279112_ST||LIGHTALCOHOLRESTRICT" subject-type="GOOD" subject-code="279112_ST" type="SALE_DENIED" value="false">
+		<since-date>1900-01-01T00:00:00</since-date>
+		<till-date>2075-12-31T23:59:59</till-date>
+		<since-time>21:55:00</since-time>
+		<till-time>11:00:00</till-time>
+		<deleted>false</deleted>
+		<days-of-week>MO TU WE TH FR SA SU</days-of-week>
+	</sale-denied-restriction>
+	<good marking-of-the-good="279115KAR" transaction-id="0000000166770749">
+		<shop-indices/>
+		<name>Вино игрCANTI Москато д'Асти бел.сл0.75L</name>
+		<bar-code code="8005415049943">
+			<count>1</count>
+			<default-code>true</default-code>
+		</bar-code>
+		<product-type>ProductSpiritsEntity</product-type>
+		<vat>18</vat>
+		<group id="270202">
+			<name>Группа 270202</name>
+			<parent-group id="2702">
+				<name>Группа 2702</name>
+				<parent-group id="27">
+					<name>Группа 27</name>
+				</parent-group>
+			</parent-group>
+		</group>
+		<measure-type id="7">
+			<name>кор.</name>
+		</measure-type>
+		<country id="IT"/>
+		<manufacturer id="0000101557">
+			<name>ООО "Компания "Симпл-СПб"</name>
+		</manufacturer>
+		<delete-from-cash>false</delete-from-cash>
+		<erp-code>279115</erp-code>
+		<is-child-product>0</is-child-product>
+		<fullname>Вино игристое CANTI Канти Москато д'Асти жемчужное бел.сл.алк.5,5% (Италия) 0.75L</fullname>
+		<plugin-property key="precision" value="1"/>
+		<plugin-property key="deny-print-to-documents" value="true"/>
+		<plugin-property key="amount-in-package" value="12"/>
+		<plugin-property key="alcoholic-content-percentage" value="5.50"/>
+		<price-entry price="7285.08" currency="RUB">
+			<shop-indices>2</shop-indices>
+			<begin-date>1900-01-01T00:00:00</begin-date>
+			<end-date>2070-12-31T23:59:00</end-date>
+			<number>2</number>
+			<department number="1">
+				<name>Отдел 1</name>
+			</department>
+		</price-entry>
+		<price-entry price="7649.33" currency="RUB">
+			<shop-indices>2</shop-indices>
+			<begin-date>2014-04-01T03:00:00</begin-date>
+			<end-date>2070-12-31T23:59:00</end-date>
+			<number>1</number>
+			<department number="1">
+				<name>Отдел 1</name>
+			</department>
+		</price-entry>
+	</good>
+	<sale-denied-restriction id="0002||279115KAR||LIGHTALCOHOLRESTRICT" subject-type="GOOD" subject-code="279115KAR" type="SALE_DENIED" value="false">
+		<since-date>1900-01-01T00:00:00</since-date>
+		<till-date>2075-12-31T23:59:59</till-date>
+		<since-time>21:55:00</since-time>
+		<till-time>11:00:00</till-time>
+		<deleted>false</deleted>
+		<days-of-week>MO TU WE TH FR SA SU</days-of-week>
+	</sale-denied-restriction>
+	<good marking-of-the-good="279115_ST" transaction-id="0000000166770749">
+		<shop-indices/>
+		<name>Вино игрCANTI Москато д'Асти бел.сл0.75L</name>
+		<bar-code code="8005415049936">
+			<count>1</count>
+			<default-code>true</default-code>
+		</bar-code>
+		<product-type>ProductSpiritsEntity</product-type>
+		<vat>18</vat>
+		<group id="270202">
+			<name>Группа 270202</name>
+			<parent-group id="2702">
+				<name>Группа 2702</name>
+				<parent-group id="27">
+					<name>Группа 27</name>
+				</parent-group>
+			</parent-group>
+		</group>
+		<measure-type id="1">
+			<name>шт.</name>
+		</measure-type>
+		<country id="IT"/>
+		<manufacturer id="0000101557">
+			<name>ООО "Компания "Симпл-СПб"</name>
+		</manufacturer>
+		<delete-from-cash>false</delete-from-cash>
+		<erp-code>279115</erp-code>
+		<is-child-product>0</is-child-product>
+		<fullname>Вино игристое CANTI Канти Москато д'Асти жемчужное бел.сл.алк.5,5% (Италия) 0.75L</fullname>
+		<plugin-property key="precision" value="1"/>
+		<plugin-property key="deny-print-to-documents" value="true"/>
+		<plugin-property key="amount-in-package" value="1"/>
+		<plugin-property key="alcoholic-content-percentage" value="5.50"/>
+		<price-entry price="607.09" currency="RUB">
+			<shop-indices>2</shop-indices>
+			<begin-date>1900-01-01T00:00:00</begin-date>
+			<end-date>2070-12-31T23:59:00</end-date>
+			<number>2</number>
+			<department number="1">
+				<name>Отдел 1</name>
+			</department>
+		</price-entry>
+		<price-entry price="637.45" currency="RUB">
+			<shop-indices>2</shop-indices>
+			<begin-date>2014-04-01T03:00:00</begin-date>
+			<end-date>2070-12-31T23:59:00</end-date>
+			<number>1</number>
+			<department number="1">
+				<name>Отдел 1</name>
+			</department>
+		</price-entry>
+	</good>
+	<sale-denied-restriction id="0002||279115_ST||LIGHTALCOHOLRESTRICT" subject-type="GOOD" subject-code="279115_ST" type="SALE_DENIED" value="false">
+		<since-date>1900-01-01T00:00:00</since-date>
+		<till-date>2075-12-31T23:59:59</till-date>
+		<since-time>21:55:00</since-time>
+		<till-time>11:00:00</till-time>
+		<deleted>false</deleted>
+		<days-of-week>MO TU WE TH FR SA SU</days-of-week>
+	</sale-denied-restriction>
+	<good marking-of-the-good="279763KAR" transaction-id="0000000166770749">
+		<shop-indices/>
+		<name>Лосьон ЧИСТАЯ ЛИНИЯ Д/снятия макю.с век</name>
+		<bar-code code="14600702087076">
+			<count>1</count>
+			<default-code>true</default-code>
+		</bar-code>
+		<product-type>ProductPieceEntity</product-type>
+		<vat>18</vat>
+		<group id="390101">
+			<name>Группа 390101</name>
+			<parent-group id="3901">
+				<name>Группа 3901</name>
+				<parent-group id="39">
+					<name>Группа 39</name>
+				</parent-group>
+			</parent-group>
+		</group>
+		<measure-type id="7">
+			<name>кор.</name>
+		</measure-type>
+		<country id="RU"/>
+		<manufacturer id="0000101136">
+			<name>ООО Концерн "Калина"</name>
+		</manufacturer>
+		<delete-from-cash>false</delete-from-cash>
+		<erp-code>279763</erp-code>
+		<is-child-product>0</is-child-product>
+		<fullname>Лосьон ЧИСТАЯ ЛИНИЯ Д/снятия макияжа с век (Россия) 100мл</fullname>
+		<plugin-property key="precision" value="1"/>
+		<plugin-property key="deny-print-to-documents" value="false"/>
+		<plugin-property key="amount-in-package" value="18"/>
+		<price-entry price="935.82" currency="RUB">
+			<shop-indices>2</shop-indices>
+			<begin-date>1900-01-01T00:00:00</begin-date>
+			<end-date>2070-12-31T23:59:00</end-date>
+			<number>2</number>
+			<department number="1">
+				<name>Отдел 1</name>
+			</department>
+		</price-entry>
+		<price-entry price="982.61" currency="RUB">
+			<shop-indices>2</shop-indices>
+			<begin-date>2014-04-01T03:00:00</begin-date>
+			<end-date>2070-12-31T23:59:00</end-date>
+			<number>1</number>
+			<department number="1">
+				<name>Отдел 1</name>
+			</department>
+		</price-entry>
+	</good>
+	<good marking-of-the-good="279763_ST" transaction-id="0000000166770749">
+		<shop-indices/>
+		<name>Лосьон ЧИСТАЯ ЛИНИЯ Д/снятия макю.с век</name>
+		<bar-code code="4600702087079">
+			<count>1</count>
+			<default-code>true</default-code>
+		</bar-code>
+		<product-type>ProductPieceEntity</product-type>
+		<vat>18</vat>
+		<group id="390101">
+			<name>Группа 390101</name>
+			<parent-group id="3901">
+				<name>Группа 3901</name>
+				<parent-group id="39">
+					<name>Группа 39</name>
+				</parent-group>
+			</parent-group>
+		</group>
+		<measure-type id="1">
+			<name>шт.</name>
+		</measure-type>
+		<country id="RU"/>
+		<manufacturer id="0000101136">
+			<name>ООО Концерн "Калина"</name>
+		</manufacturer>
+		<delete-from-cash>false</delete-from-cash>
+		<erp-code>279763</erp-code>
+		<is-child-product>0</is-child-product>
+		<fullname>Лосьон ЧИСТАЯ ЛИНИЯ Д/снятия макияжа с век (Россия) 100мл</fullname>
+		<plugin-property key="precision" value="1"/>
+		<plugin-property key="deny-print-to-documents" value="false"/>
+		<plugin-property key="amount-in-package" value="1"/>
+		<price-entry price="51.99" currency="RUB">
+			<shop-indices>2</shop-indices>
+			<begin-date>1900-01-01T00:00:00</begin-date>
+			<end-date>2070-12-31T23:59:00</end-date>
+			<number>2</number>
+			<department number="1">
+				<name>Отдел 1</name>
+			</department>
+		</price-entry>
+		<price-entry price="54.59" currency="RUB">
+			<shop-indices>2</shop-indices>
+			<begin-date>2014-04-01T03:00:00</begin-date>
+			<end-date>2070-12-31T23:59:00</end-date>
+			<number>1</number>
+			<department number="1">
+				<name>Отдел 1</name>
+			</department>
+		</price-entry>
+	</good>
+	<good marking-of-the-good="279766KAR" transaction-id="0000000166770749">
+		<shop-indices/>
+		<name>Крем д/л СТО РЕЦЕПТОВ КРАСОТЫ 7Ак.Масл50</name>
+		<bar-code code="14600702091141">
+			<count>1</count>
+			<default-code>true</default-code>
+		</bar-code>
+		<product-type>ProductPieceEntity</product-type>
+		<vat>18</vat>
+		<group id="390102">
+			<name>Группа 390102</name>
+			<parent-group id="3901">
+				<name>Группа 3901</name>
+				<parent-group id="39">
+					<name>Группа 39</name>
+				</parent-group>
+			</parent-group>
+		</group>
+		<measure-type id="7">
+			<name>кор.</name>
+		</measure-type>
+		<country id="RU"/>
+		<manufacturer id="0000101136">
+			<name>ООО Концерн "Калина"</name>
+		</manufacturer>
+		<delete-from-cash>false</delete-from-cash>
+		<erp-code>279766</erp-code>
+		<is-child-product>0</is-child-product>
+		<fullname>Крем д/лица СТО РЕЦЕПТОВ КРАСОТЫ 7 активных масел (Россия) 50мл</fullname>
+		<plugin-property key="precision" value="1"/>
+		<plugin-property key="deny-print-to-documents" value="false"/>
+		<plugin-property key="amount-in-package" value="24"/>
+		<price-entry price="1638.96" currency="RUB">
+			<shop-indices>2</shop-indices>
+			<begin-date>1900-01-01T00:00:00</begin-date>
+			<end-date>2070-12-31T23:59:00</end-date>
+			<number>2</number>
+			<department number="1">
+				<name>Отдел 1</name>
+			</department>
+		</price-entry>
+		<price-entry price="1720.91" currency="RUB">
+			<shop-indices>2</shop-indices>
+			<begin-date>2014-04-01T03:00:00</begin-date>
+			<end-date>2070-12-31T23:59:00</end-date>
+			<number>1</number>
+			<department number="1">
+				<name>Отдел 1</name>
+			</department>
+		</price-entry>
+	</good>
+	<good marking-of-the-good="279766_ST" transaction-id="0000000166770749">
+		<shop-indices/>
+		<name>Крем д/л СТО РЕЦЕПТОВ КРАСОТЫ 7Ак.Масл50</name>
+		<bar-code code="4600702091144">
+			<count>1</count>
+			<default-code>true</default-code>
+		</bar-code>
+		<product-type>ProductPieceEntity</product-type>
+		<vat>18</vat>
+		<group id="390102">
+			<name>Группа 390102</name>
+			<parent-group id="3901">
+				<name>Группа 3901</name>
+				<parent-group id="39">
+					<name>Группа 39</name>
+				</parent-group>
+			</parent-group>
+		</group>
+		<measure-type id="1">
+			<name>шт.</name>
+		</measure-type>
+		<country id="RU"/>
+		<manufacturer id="0000101136">
+			<name>ООО Концерн "Калина"</name>
+		</manufacturer>
+		<delete-from-cash>false</delete-from-cash>
+		<erp-code>279766</erp-code>
+		<is-child-product>0</is-child-product>
+		<fullname>Крем д/лица СТО РЕЦЕПТОВ КРАСОТЫ 7 активных масел (Россия) 50мл</fullname>
+		<plugin-property key="precision" value="1"/>
+		<plugin-property key="deny-print-to-documents" value="false"/>
+		<plugin-property key="amount-in-package" value="1"/>
+		<price-entry price="68.29" currency="RUB">
+			<shop-indices>2</shop-indices>
+			<begin-date>1900-01-01T00:00:00</begin-date>
+			<end-date>2070-12-31T23:59:00</end-date>
+			<number>2</number>
+			<department number="1">
+				<name>Отдел 1</name>
+			</department>
+		</price-entry>
+		<price-entry price="71.71" currency="RUB">
+			<shop-indices>2</shop-indices>
+			<begin-date>2014-04-01T03:00:00</begin-date>
+			<end-date>2070-12-31T23:59:00</end-date>
+			<number>1</number>
+			<department number="1">
+				<name>Отдел 1</name>
+			</department>
+		</price-entry>
+	</good>
+	<good marking-of-the-good="279778KAR" transaction-id="0000000166770749">
+		<shop-indices/>
+		<name>Шампунь СТО РЕЦЕПТОВ Пивной380мл</name>
+		<bar-code code="14600702094432">
+			<count>1</count>
+			<default-code>true</default-code>
+		</bar-code>
+		<product-type>ProductPieceEntity</product-type>
+		<vat>18</vat>
+		<group id="390702">
+			<name>Группа 390702</name>
+			<parent-group id="3907">
+				<name>Группа 3907</name>
+				<parent-group id="39">
+					<name>Группа 39</name>
+				</parent-group>
+			</parent-group>
+		</group>
+		<measure-type id="7">
+			<name>кор.</name>
+		</measure-type>
+		<country id="RU"/>
+		<manufacturer id="0000101136">
+			<name>ООО Концерн "Калина"</name>
+		</manufacturer>
+		<delete-from-cash>false</delete-from-cash>
+		<erp-code>279778</erp-code>
+		<is-child-product>0</is-child-product>
+		<fullname>Шампунь СТО РЕЦЕПТОВ КРАСОТЫ Пивной (Россия) 380мл</fullname>
+		<plugin-property key="precision" value="1"/>
+		<plugin-property key="deny-print-to-documents" value="false"/>
+		<plugin-property key="amount-in-package" value="12"/>
+		<price-entry price="707.88" currency="RUB">
+			<shop-indices>2</shop-indices>
+			<begin-date>1900-01-01T00:00:00</begin-date>
+			<end-date>2070-12-31T23:59:00</end-date>
+			<number>2</number>
+			<department number="1">
+				<name>Отдел 1</name>
+			</department>
+		</price-entry>
+		<price-entry price="743.28" currency="RUB">
+			<shop-indices>2</shop-indices>
+			<begin-date>2014-04-01T03:00:00</begin-date>
+			<end-date>2070-12-31T23:59:00</end-date>
+			<number>1</number>
+			<department number="1">
+				<name>Отдел 1</name>
+			</department>
+		</price-entry>
+	</good>
+	<good marking-of-the-good="279778_ST" transaction-id="0000000166770749">
+		<shop-indices/>
+		<name>Шампунь СТО РЕЦЕПТОВ Пивной380мл</name>
+		<bar-code code="4600702094435">
+			<count>1</count>
+			<default-code>true</default-code>
+		</bar-code>
+		<product-type>ProductPieceEntity</product-type>
+		<vat>18</vat>
+		<group id="390702">
+			<name>Группа 390702</name>
+			<parent-group id="3907">
+				<name>Группа 3907</name>
+				<parent-group id="39">
+					<name>Группа 39</name>
+				</parent-group>
+			</parent-group>
+		</group>
+		<measure-type id="1">
+			<name>шт.</name>
+		</measure-type>
+		<country id="RU"/>
+		<manufacturer id="0000101136">
+			<name>ООО Концерн "Калина"</name>
+		</manufacturer>
+		<delete-from-cash>false</delete-from-cash>
+		<erp-code>279778</erp-code>
+		<is-child-product>0</is-child-product>
+		<fullname>Шампунь СТО РЕЦЕПТОВ КРАСОТЫ Пивной (Россия) 380мл</fullname>
+		<plugin-property key="precision" value="1"/>
+		<plugin-property key="deny-print-to-documents" value="false"/>
+		<plugin-property key="amount-in-package" value="1"/>
+		<price-entry price="58.99" currency="RUB">
+			<shop-indices>2</shop-indices>
+			<begin-date>1900-01-01T00:00:00</begin-date>
+			<end-date>2070-12-31T23:59:00</end-date>
+			<number>2</number>
+			<department number="1">
+				<name>Отдел 1</name>
+			</department>
+		</price-entry>
+		<price-entry price="61.94" currency="RUB">
+			<shop-indices>2</shop-indices>
+			<begin-date>2014-04-01T03:00:00</begin-date>
+			<end-date>2070-12-31T23:59:00</end-date>
+			<number>1</number>
+			<department number="1">
+				<name>Отдел 1</name>
+			</department>
+		</price-entry>
+	</good>
+	<good marking-of-the-good="279781KAR" transaction-id="0000000166770749">
+		<shop-indices/>
+		<name>Фито-кр.д/в ЧИСТАЯ ЛИНИЯ СилКедраД/ИстВ</name>
+		<bar-code code="14600702094418">
+			<count>1</count>
+			<default-code>true</default-code>
+		</bar-code>
+		<product-type>ProductPieceEntity</product-type>
+		<vat>18</vat>
+		<group id="390702">
+			<name>Группа 390702</name>
+			<parent-group id="3907">
+				<name>Группа 3907</name>
+				<parent-group id="39">
+					<name>Группа 39</name>
+				</parent-group>
+			</parent-group>
+		</group>
+		<measure-type id="7">
+			<name>кор.</name>
+		</measure-type>
+		<country id="RU"/>
+		<manufacturer id="0000101136">
+			<name>ООО Концерн "Калина"</name>
+		</manufacturer>
+		<delete-from-cash>false</delete-from-cash>
+		<erp-code>279781</erp-code>
+		<is-child-product>0</is-child-product>
+		<fullname>Фито-крем д/волос ЧИСТАЯ ЛИНИЯ Сила кедра д/истонч.вол.укреп. (Россия)</fullname>
+		<plugin-property key="precision" value="1"/>
+		<plugin-property key="deny-print-to-documents" value="false"/>
+		<plugin-property key="amount-in-package" value="12"/>
+		<price-entry price="878.28" currency="RUB">
+			<shop-indices>2</shop-indices>
+			<begin-date>1900-01-01T00:00:00</begin-date>
+			<end-date>2070-12-31T23:59:00</end-date>
+			<number>2</number>
+			<department number="1">
+				<name>Отдел 1</name>
+			</department>
+		</price-entry>
+		<price-entry price="922.19" currency="RUB">
+			<shop-indices>2</shop-indices>
+			<begin-date>2014-04-01T03:00:00</begin-date>
+			<end-date>2070-12-31T23:59:00</end-date>
+			<number>1</number>
+			<department number="1">
+				<name>Отдел 1</name>
+			</department>
+		</price-entry>
+	</good>
+	<good marking-of-the-good="279781_ST" transaction-id="0000000166770749">
+		<shop-indices/>
+		<name>Фито-кр.д/в ЧИСТАЯ ЛИНИЯ СилКедраД/ИстВ</name>
+		<bar-code code="4600702095562">
+			<count>1</count>
+			<default-code>true</default-code>
+		</bar-code>
+		<product-type>ProductPieceEntity</product-type>
+		<vat>18</vat>
+		<group id="390702">
+			<name>Группа 390702</name>
+			<parent-group id="3907">
+				<name>Группа 3907</name>
+				<parent-group id="39">
+					<name>Группа 39</name>
+				</parent-group>
+			</parent-group>
+		</group>
+		<measure-type id="1">
+			<name>шт.</name>
+		</measure-type>
+		<country id="RU"/>
+		<manufacturer id="0000101136">
+			<name>ООО Концерн "Калина"</name>
+		</manufacturer>
+		<delete-from-cash>false</delete-from-cash>
+		<erp-code>279781</erp-code>
+		<is-child-product>0</is-child-product>
+		<fullname>Фито-крем д/волос ЧИСТАЯ ЛИНИЯ Сила кедра д/истонч.вол.укреп. (Россия)</fullname>
+		<plugin-property key="precision" value="1"/>
+		<plugin-property key="deny-print-to-documents" value="false"/>
+		<plugin-property key="amount-in-package" value="1"/>
+		<price-entry price="73.19" currency="RUB">
+			<shop-indices>2</shop-indices>
+			<begin-date>1900-01-01T00:00:00</begin-date>
+			<end-date>2070-12-31T23:59:00</end-date>
+			<number>2</number>
+			<department number="1">
+				<name>Отдел 1</name>
+			</department>
+		</price-entry>
+		<price-entry price="76.85" currency="RUB">
+			<shop-indices>2</shop-indices>
+			<begin-date>2014-04-01T03:00:00</begin-date>
+			<end-date>2070-12-31T23:59:00</end-date>
+			<number>1</number>
+			<department number="1">
+				<name>Отдел 1</name>
+			</department>
+		</price-entry>
+	</good>
+	<good marking-of-the-good="279783KAR" transaction-id="0000000166770749">
+		<shop-indices/>
+		<name>Фито-кр.д/в ЧИСТАЯ ЛИНИЯ ТаежЯгЛомСекВ</name>
+		<bar-code code="14600702095552">
+			<count>1</count>
+			<default-code>true</default-code>
+		</bar-code>
+		<product-type>ProductPieceEntity</product-type>
+		<vat>18</vat>
+		<group id="390702">
+			<name>Группа 390702</name>
+			<parent-group id="3907">
+				<name>Группа 3907</name>
+				<parent-group id="39">
+					<name>Группа 39</name>
+				</parent-group>
+			</parent-group>
+		</group>
+		<measure-type id="7">
+			<name>кор.</name>
+		</measure-type>
+		<country id="RU"/>
+		<manufacturer id="0000101136">
+			<name>ООО Концерн "Калина"</name>
+		</manufacturer>
+		<delete-from-cash>false</delete-from-cash>
+		<erp-code>279783</erp-code>
+		<is-child-product>0</is-child-product>
+		<fullname>Фито-крем д/волос ЧИСТАЯ ЛИНИЯ Таежные ягоды д/оч.ломких секущихся волос (Россия)</fullname>
+		<plugin-property key="precision" value="1"/>
+		<plugin-property key="deny-print-to-documents" value="false"/>
+		<plugin-property key="amount-in-package" value="12"/>
+		<price-entry price="878.28" currency="RUB">
+			<shop-indices>2</shop-indices>
+			<begin-date>1900-01-01T00:00:00</begin-date>
+			<end-date>2070-12-31T23:59:00</end-date>
+			<number>2</number>
+			<department number="1">
+				<name>Отдел 1</name>
+			</department>
+		</price-entry>
+		<price-entry price="922.19" currency="RUB">
+			<shop-indices>2</shop-indices>
+			<begin-date>2014-04-01T03:00:00</begin-date>
+			<end-date>2070-12-31T23:59:00</end-date>
+			<number>1</number>
+			<department number="1">
+				<name>Отдел 1</name>
+			</department>
+		</price-entry>
+	</good>
+	<good marking-of-the-good="279783_ST" transaction-id="0000000166770749">
+		<shop-indices/>
+		<name>Фито-кр.д/в ЧИСТАЯ ЛИНИЯ ТаежЯгЛомСекВ</name>
+		<bar-code code="4600702095555">
+			<count>1</count>
+			<default-code>true</default-code>
+		</bar-code>
+		<product-type>ProductPieceEntity</product-type>
+		<vat>18</vat>
+		<group id="390702">
+			<name>Группа 390702</name>
+			<parent-group id="3907">
+				<name>Группа 3907</name>
+				<parent-group id="39">
+					<name>Группа 39</name>
+				</parent-group>
+			</parent-group>
+		</group>
+		<measure-type id="1">
+			<name>шт.</name>
+		</measure-type>
+		<country id="RU"/>
+		<manufacturer id="0000101136">
+			<name>ООО Концерн "Калина"</name>
+		</manufacturer>
+		<delete-from-cash>false</delete-from-cash>
+		<erp-code>279783</erp-code>
+		<is-child-product>0</is-child-product>
+		<fullname>Фито-крем д/волос ЧИСТАЯ ЛИНИЯ Таежные ягоды д/оч.ломких секущихся волос (Россия)</fullname>
+		<plugin-property key="precision" value="1"/>
+		<plugin-property key="deny-print-to-documents" value="false"/>
+		<plugin-property key="amount-in-package" value="1"/>
+		<price-entry price="73.19" currency="RUB">
+			<shop-indices>2</shop-indices>
+			<begin-date>1900-01-01T00:00:00</begin-date>
+			<end-date>2070-12-31T23:59:00</end-date>
+			<number>2</number>
+			<department number="1">
+				<name>Отдел 1</name>
+			</department>
+		</price-entry>
+		<price-entry price="76.85" currency="RUB">
+			<shop-indices>2</shop-indices>
+			<begin-date>2014-04-01T03:00:00</begin-date>
+			<end-date>2070-12-31T23:59:00</end-date>
+			<number>1</number>
+			<department number="1">
+				<name>Отдел 1</name>
+			</department>
+		</price-entry>
+	</good>
+	<good marking-of-the-good="281030_KG" transaction-id="0000000166770749">
+		<shop-indices/>
+		<name>Сыр MARIENTHAL Гауда п/тв 48% вес</name>
+		<bar-code code="2999999311298" do-not-send-to-scales="false">
+			<count>1</count>
+			<default-code>true</default-code>
+		</bar-code>
+		<bar-code code="2404898" do-not-send-to-scales="false">
+			<count>1</count>
+			<default-code>false</default-code>
+		</bar-code>
+		<product-type>ProductWeightEntity</product-type>
+		<vat>10</vat>
+		<group id="250207">
+			<name>Группа 250207</name>
+			<parent-group id="2502">
+				<name>Группа 2502</name>
+				<parent-group id="25">
+					<name>Группа 25</name>
+				</parent-group>
+			</parent-group>
+		</group>
+		<measure-type id="2">
+			<name>кг.</name>
+		</measure-type>
+		<country id="NL"/>
+		<manufacturer id="0000100719">
+			<name>ООО "АРГО"</name>
+		</manufacturer>
+		<delete-from-cash>false</delete-from-cash>
+		<erp-code>281030</erp-code>
+		<is-child-product>0</is-child-product>
+		<fullname>Сыр MARIENTHAL Гауда п/тв 48% вес (Нидерланды) 1кг</fullname>
+		<plugin-property key="precision" value="0.001"/>
+		<plugin-property key="deny-print-to-documents" value="false"/>
+		<plugin-property key="name-on-scale-screen" value="Сыр MARIENTHAL Гауда п/тв 48"/>
+		<plugin-property key="description-on-scale-screen" value="% вес (Нидерланды) 1кг"/>
+		<plugin-property key="composition" value="пастеризованное коровье молоко, соль (2%), мезофильная культура, сычужный фермент, краситель Е160 b (не содержит ГМО)"/>
+		<plugin-property key="food-value" value="белки 23г, жиры 30 г, углеводы &lt; 0,1 г, сахароза &lt; 0,1 г фасовано ООО Лента по ТУ9225-016-71385386-12"/>
+		<plugin-property key="storage-conditions" value="от+2 до+8С и отн. вл. не более 85%"/>
+		<plugin-property key="good-for-hours" value="108"/>
+		<price-entry price="419.99" currency="RUB">
+			<shop-indices>2</shop-indices>
+			<begin-date>1900-01-01T00:00:00</begin-date>
+			<end-date>2070-12-31T23:59:00</end-date>
+			<number>2</number>
+			<department number="1">
+				<name>Отдел 1</name>
+			</department>
+		</price-entry>
+		<price-entry price="440.99" currency="RUB">
+			<shop-indices>2</shop-indices>
+			<begin-date>2014-04-01T03:00:00</begin-date>
+			<end-date>2070-12-31T23:59:00</end-date>
+			<number>1</number>
+			<department number="1">
+				<name>Отдел 1</name>
+			</department>
+		</price-entry>
+	</good>
+	<good marking-of-the-good="281030_KG" transaction-id="0000000166770749">
+		<shop-indices/>
+		<name>Сыр MARIENTHAL Гауда п/тв 48% вес</name>
+		<bar-code code="2999999311298" do-not-send-to-scales="false">
+			<count>1</count>
+			<default-code>true</default-code>
+		</bar-code>
+		<bar-code code="2404898" do-not-send-to-scales="false">
+			<count>1</count>
+			<default-code>false</default-code>
+		</bar-code>
+		<product-type>ProductWeightEntity</product-type>
+		<vat>10</vat>
+		<group id="250207">
+			<name>Группа 250207</name>
+			<parent-group id="2502">
+				<name>Группа 2502</name>
+				<parent-group id="25">
+					<name>Группа 25</name>
+				</parent-group>
+			</parent-group>
+		</group>
+		<measure-type id="2">
+			<name>кг.</name>
+		</measure-type>
+		<country id="NL"/>
+		<manufacturer id="0000100719">
+			<name>ООО "АРГО"</name>
+		</manufacturer>
+		<delete-from-cash>false</delete-from-cash>
+		<erp-code>281030</erp-code>
+		<is-child-product>0</is-child-product>
+		<fullname>Сыр MARIENTHAL Гауда п/тв 48% вес (Нидерланды) 1кг</fullname>
+		<plugin-property key="precision" value="0.001"/>
+		<plugin-property key="deny-print-to-documents" value="false"/>
+		<plugin-property key="name-on-scale-screen" value="Сыр MARIENTHAL Гауда п/тв 48"/>
+		<plugin-property key="description-on-scale-screen" value="% вес (Нидерланды) 1кг"/>
+		<plugin-property key="composition" value="пастеризованное коровье молоко, соль (2%), мезофильная культура, сычужный фермент, краситель Е160 b (не содержит ГМО)"/>
+		<plugin-property key="food-value" value="белки 23г, жиры 30 г, углеводы &lt; 0,1 г, сахароза &lt; 0,1 г фасовано ООО Лента по ТУ9225-016-71385386-12"/>
+		<plugin-property key="storage-conditions" value="от+2 до+8С и отн. вл. не более 85%"/>
+		<plugin-property key="good-for-hours" value="108"/>
+		<price-entry price="419.99" currency="RUB">
+			<shop-indices>2</shop-indices>
+			<begin-date>1900-01-01T00:00:00</begin-date>
+			<end-date>2070-12-31T23:59:00</end-date>
+			<number>2</number>
+			<department number="1">
+				<name>Отдел 1</name>
+			</department>
+		</price-entry>
+		<price-entry price="440.99" currency="RUB">
+			<shop-indices>2</shop-indices>
+			<begin-date>2014-04-01T03:00:00</begin-date>
+			<end-date>2070-12-31T23:59:00</end-date>
+			<number>1</number>
+			<department number="1">
+				<name>Отдел 1</name>
+			</department>
+		</price-entry>
+		<price-entry price="355.99" currency="RUB">
+			<shop-indices>2</shop-indices>
+			<begin-date>2014-04-04T03:00:00</begin-date>
+			<end-date>2014-04-14T23:59:00</end-date>
+			<number>4</number>
+			<department number="1">
+				<name>Отдел 1</name>
+			</department>
+			<identifier>ADMARIENTH</identifier>
+		</price-entry>
+	</good>
+	<good marking-of-the-good="281618KAR" transaction-id="0000000166770749">
+		<shop-indices/>
+		<name>Шампунь СТО РЕЦЕПТОВ Яичный380мл</name>
+		<bar-code code="14600702094456">
+			<count>1</count>
+			<default-code>true</default-code>
+		</bar-code>
+		<product-type>ProductPieceEntity</product-type>
+		<vat>18</vat>
+		<group id="390702">
+			<name>Группа 390702</name>
+			<parent-group id="3907">
+				<name>Группа 3907</name>
+				<parent-group id="39">
+					<name>Группа 39</name>
+				</parent-group>
+			</parent-group>
+		</group>
+		<measure-type id="7">
+			<name>кор.</name>
+		</measure-type>
+		<country id="RU"/>
+		<manufacturer id="0000101136">
+			<name>ООО Концерн "Калина"</name>
+		</manufacturer>
+		<delete-from-cash>false</delete-from-cash>
+		<erp-code>281618</erp-code>
+		<is-child-product>0</is-child-product>
+		<fullname>Шампунь СТО РЕЦЕПТОВ КРАСОТЫ Яичный (Россия) 380мл</fullname>
+		<plugin-property key="precision" value="1"/>
+		<plugin-property key="deny-print-to-documents" value="false"/>
+		<plugin-property key="amount-in-package" value="12"/>
+		<price-entry price="707.88" currency="RUB">
+			<shop-indices>2</shop-indices>
+			<begin-date>1900-01-01T00:00:00</begin-date>
+			<end-date>2070-12-31T23:59:00</end-date>
+			<number>2</number>
+			<department number="1">
+				<name>Отдел 1</name>
+			</department>
+		</price-entry>
+		<price-entry price="743.28" currency="RUB">
+			<shop-indices>2</shop-indices>
+			<begin-date>2014-04-01T03:00:00</begin-date>
+			<end-date>2070-12-31T23:59:00</end-date>
+			<number>1</number>
+			<department number="1">
+				<name>Отдел 1</name>
+			</department>
+		</price-entry>
+	</good>
+	<good marking-of-the-good="281618_ST" transaction-id="0000000166770749">
+		<shop-indices/>
+		<name>Шампунь СТО РЕЦЕПТОВ Яичный380мл</name>
+		<bar-code code="4600702094459">
+			<count>1</count>
+			<default-code>true</default-code>
+		</bar-code>
+		<product-type>ProductPieceEntity</product-type>
+		<vat>18</vat>
+		<group id="390702">
+			<name>Группа 390702</name>
+			<parent-group id="3907">
+				<name>Группа 3907</name>
+				<parent-group id="39">
+					<name>Группа 39</name>
+				</parent-group>
+			</parent-group>
+		</group>
+		<measure-type id="1">
+			<name>шт.</name>
+		</measure-type>
+		<country id="RU"/>
+		<manufacturer id="0000101136">
+			<name>ООО Концерн "Калина"</name>
+		</manufacturer>
+		<delete-from-cash>false</delete-from-cash>
+		<erp-code>281618</erp-code>
+		<is-child-product>0</is-child-product>
+		<fullname>Шампунь СТО РЕЦЕПТОВ КРАСОТЫ Яичный (Россия) 380мл</fullname>
+		<plugin-property key="precision" value="1"/>
+		<plugin-property key="deny-print-to-documents" value="false"/>
+		<plugin-property key="amount-in-package" value="1"/>
+		<price-entry price="58.99" currency="RUB">
+			<shop-indices>2</shop-indices>
+			<begin-date>1900-01-01T00:00:00</begin-date>
+			<end-date>2070-12-31T23:59:00</end-date>
+			<number>2</number>
+			<department number="1">
+				<name>Отдел 1</name>
+			</department>
+		</price-entry>
+		<price-entry price="61.94" currency="RUB">
+			<shop-indices>2</shop-indices>
+			<begin-date>2014-04-01T03:00:00</begin-date>
+			<end-date>2070-12-31T23:59:00</end-date>
+			<number>1</number>
+			<department number="1">
+				<name>Отдел 1</name>
+			</department>
+		</price-entry>
+	</good>
+	<good marking-of-the-good="282557KAR" transaction-id="0000000166770749">
+		<shop-indices/>
+		<name>Опол-ль д/рта ЛЕСН БАЛЬЗ НатОтбУхДесн400</name>
+		<bar-code code="14600702096405">
+			<count>1</count>
+			<default-code>true</default-code>
+		</bar-code>
+		<product-type>ProductPieceEntity</product-type>
+		<vat>18</vat>
+		<group id="391003">
+			<name>Группа 391003</name>
+			<parent-group id="3910">
+				<name>Группа 3910</name>
+				<parent-group id="39">
+					<name>Группа 39</name>
+				</parent-group>
+			</parent-group>
+		</group>
+		<measure-type id="7">
+			<name>кор.</name>
+		</measure-type>
+		<country id="RU"/>
+		<manufacturer id="0000101136">
+			<name>ООО Концерн "Калина"</name>
+		</manufacturer>
+		<delete-from-cash>false</delete-from-cash>
+		<erp-code>282557</erp-code>
+		<is-child-product>0</is-child-product>
+		<fullname>Ополаскиватель д/полости рта ЛЕСНОЙ БАЛЬЗАМ Натуральное отбел.и уход за деснами (Россия) 400мл</fullname>
+		<plugin-property key="precision" value="1"/>
+		<plugin-property key="deny-print-to-documents" value="false"/>
+		<plugin-property key="amount-in-package" value="12"/>
+		<price-entry price="1435.08" currency="RUB">
+			<shop-indices>2</shop-indices>
+			<begin-date>1900-01-01T00:00:00</begin-date>
+			<end-date>2070-12-31T23:59:00</end-date>
+			<number>2</number>
+			<department number="1">
+				<name>Отдел 1</name>
+			</department>
+		</price-entry>
+		<price-entry price="1506.83" currency="RUB">
+			<shop-indices>2</shop-indices>
+			<begin-date>2014-04-01T03:00:00</begin-date>
+			<end-date>2070-12-31T23:59:00</end-date>
+			<number>1</number>
+			<department number="1">
+				<name>Отдел 1</name>
+			</department>
+		</price-entry>
+	</good>
+	<good marking-of-the-good="282557_ST" transaction-id="0000000166770749">
+		<shop-indices/>
+		<name>Опол-ль д/рта ЛЕСН БАЛЬЗ НатОтбУхДесн400</name>
+		<bar-code code="4600702096408">
+			<count>1</count>
+			<default-code>true</default-code>
+		</bar-code>
+		<product-type>ProductPieceEntity</product-type>
+		<vat>18</vat>
+		<group id="391003">
+			<name>Группа 391003</name>
+			<parent-group id="3910">
+				<name>Группа 3910</name>
+				<parent-group id="39">
+					<name>Группа 39</name>
+				</parent-group>
+			</parent-group>
+		</group>
+		<measure-type id="1">
+			<name>шт.</name>
+		</measure-type>
+		<country id="RU"/>
+		<manufacturer id="0000101136">
+			<name>ООО Концерн "Калина"</name>
+		</manufacturer>
+		<delete-from-cash>false</delete-from-cash>
+		<erp-code>282557</erp-code>
+		<is-child-product>0</is-child-product>
+		<fullname>Ополаскиватель д/полости рта ЛЕСНОЙ БАЛЬЗАМ Натуральное отбел.и уход за деснами (Россия) 400мл</fullname>
+		<plugin-property key="precision" value="1"/>
+		<plugin-property key="deny-print-to-documents" value="false"/>
+		<plugin-property key="amount-in-package" value="1"/>
+		<price-entry price="119.59" currency="RUB">
+			<shop-indices>2</shop-indices>
+			<begin-date>1900-01-01T00:00:00</begin-date>
+			<end-date>2070-12-31T23:59:00</end-date>
+			<number>2</number>
+			<department number="1">
+				<name>Отдел 1</name>
+			</department>
+		</price-entry>
+		<price-entry price="125.57" currency="RUB">
+			<shop-indices>2</shop-indices>
+			<begin-date>2014-04-01T03:00:00</begin-date>
+			<end-date>2070-12-31T23:59:00</end-date>
+			<number>1</number>
+			<department number="1">
+				<name>Отдел 1</name>
+			</department>
+		</price-entry>
+	</good>
+	<good marking-of-the-good="283613KAR" transaction-id="0000000166770749">
+		<shop-indices/>
+		<name>З/паста ЛЕСНОЙ БАЛЬЗАМ Нат.От.Ух.Дес75</name>
+		<bar-code code="14600702096412">
+			<count>1</count>
+			<default-code>true</default-code>
+		</bar-code>
+		<product-type>ProductPieceEntity</product-type>
+		<vat>18</vat>
+		<group id="391001">
+			<name>Группа 391001</name>
+			<parent-group id="3910">
+				<name>Группа 3910</name>
+				<parent-group id="39">
+					<name>Группа 39</name>
+				</parent-group>
+			</parent-group>
+		</group>
+		<measure-type id="7">
+			<name>кор.</name>
+		</measure-type>
+		<country id="RU"/>
+		<manufacturer id="0000101136">
+			<name>ООО Концерн "Калина"</name>
+		</manufacturer>
+		<delete-from-cash>false</delete-from-cash>
+		<erp-code>283613</erp-code>
+		<is-child-product>0</is-child-product>
+		<fullname>З/паста ЛЕСНОЙ БАЛЬЗАМ Натур.отбел.и уход за деснами (Россия) 75мл</fullname>
+		<plugin-property key="precision" value="1"/>
+		<plugin-property key="deny-print-to-documents" value="false"/>
+		<plugin-property key="amount-in-package" value="48"/>
+		<price-entry price="3489.12" currency="RUB">
+			<shop-indices>2</shop-indices>
+			<begin-date>1900-01-01T00:00:00</begin-date>
+			<end-date>2070-12-31T23:59:00</end-date>
+			<number>2</number>
+			<department number="1">
+				<name>Отдел 1</name>
+			</department>
+		</price-entry>
+		<price-entry price="3663.58" currency="RUB">
+			<shop-indices>2</shop-indices>
+			<begin-date>2014-04-01T03:00:00</begin-date>
+			<end-date>2070-12-31T23:59:00</end-date>
+			<number>1</number>
+			<department number="1">
+				<name>Отдел 1</name>
+			</department>
+		</price-entry>
+	</good>
+	<good marking-of-the-good="283613_ST" transaction-id="0000000166770749">
+		<shop-indices/>
+		<name>З/паста ЛЕСНОЙ БАЛЬЗАМ Нат.От.Ух.Дес75</name>
+		<bar-code code="4600702096415">
+			<count>1</count>
+			<default-code>true</default-code>
+		</bar-code>
+		<product-type>ProductPieceEntity</product-type>
+		<vat>18</vat>
+		<group id="391001">
+			<name>Группа 391001</name>
+			<parent-group id="3910">
+				<name>Группа 3910</name>
+				<parent-group id="39">
+					<name>Группа 39</name>
+				</parent-group>
+			</parent-group>
+		</group>
+		<measure-type id="1">
+			<name>шт.</name>
+		</measure-type>
+		<country id="RU"/>
+		<manufacturer id="0000101136">
+			<name>ООО Концерн "Калина"</name>
+		</manufacturer>
+		<delete-from-cash>false</delete-from-cash>
+		<erp-code>283613</erp-code>
+		<is-child-product>0</is-child-product>
+		<fullname>З/паста ЛЕСНОЙ БАЛЬЗАМ Натур.отбел.и уход за деснами (Россия) 75мл</fullname>
+		<plugin-property key="precision" value="1"/>
+		<plugin-property key="deny-print-to-documents" value="false"/>
+		<plugin-property key="amount-in-package" value="1"/>
+		<price-entry price="72.69" currency="RUB">
+			<shop-indices>2</shop-indices>
+			<begin-date>1900-01-01T00:00:00</begin-date>
+			<end-date>2070-12-31T23:59:00</end-date>
+			<number>2</number>
+			<department number="1">
+				<name>Отдел 1</name>
+			</department>
+		</price-entry>
+		<price-entry price="76.33" currency="RUB">
+			<shop-indices>2</shop-indices>
+			<begin-date>2014-04-01T03:00:00</begin-date>
+			<end-date>2070-12-31T23:59:00</end-date>
+			<number>1</number>
+			<department number="1">
+				<name>Отдел 1</name>
+			</department>
+		</price-entry>
+	</good>
+	<good marking-of-the-good="283614KAR" transaction-id="0000000166770749">
+		<shop-indices/>
+		<name>З/паста ЛЕСНОЙ БАЛЬЗАМ С Бальз2в1 75мл</name>
+		<bar-code code="24600702094934">
+			<count>1</count>
+			<default-code>true</default-code>
+		</bar-code>
+		<product-type>ProductPieceEntity</product-type>
+		<vat>18</vat>
+		<group id="391001">
+			<name>Группа 391001</name>
+			<parent-group id="3910">
+				<name>Группа 3910</name>
+				<parent-group id="39">
+					<name>Группа 39</name>
+				</parent-group>
+			</parent-group>
+		</group>
+		<measure-type id="7">
+			<name>кор.</name>
+		</measure-type>
+		<country id="RU"/>
+		<manufacturer id="0000101136">
+			<name>ООО Концерн "Калина"</name>
+		</manufacturer>
+		<delete-from-cash>false</delete-from-cash>
+		<erp-code>283614</erp-code>
+		<is-child-product>0</is-child-product>
+		<fullname>З/паста ЛЕСНОЙ БАЛЬЗАМ С бальзамом д/десен 2в1 (Россия) 75мл</fullname>
+		<plugin-property key="precision" value="1"/>
+		<plugin-property key="deny-print-to-documents" value="false"/>
+		<plugin-property key="amount-in-package" value="48"/>
+		<price-entry price="3489.12" currency="RUB">
+			<shop-indices>2</shop-indices>
+			<begin-date>1900-01-01T00:00:00</begin-date>
+			<end-date>2070-12-31T23:59:00</end-date>
+			<number>2</number>
+			<department number="1">
+				<name>Отдел 1</name>
+			</department>
+		</price-entry>
+		<price-entry price="3663.58" currency="RUB">
+			<shop-indices>2</shop-indices>
+			<begin-date>2014-04-01T03:00:00</begin-date>
+			<end-date>2070-12-31T23:59:00</end-date>
+			<number>1</number>
+			<department number="1">
+				<name>Отдел 1</name>
+			</department>
+		</price-entry>
+	</good>
+	<good marking-of-the-good="283614_ST" transaction-id="0000000166770749">
+		<shop-indices/>
+		<name>З/паста ЛЕСНОЙ БАЛЬЗАМ С Бальз2в1 75мл</name>
+		<bar-code code="4600702094930">
+			<count>1</count>
+			<default-code>true</default-code>
+		</bar-code>
+		<product-type>ProductPieceEntity</product-type>
+		<vat>18</vat>
+		<group id="391001">
+			<name>Группа 391001</name>
+			<parent-group id="3910">
+				<name>Группа 3910</name>
+				<parent-group id="39">
+					<name>Группа 39</name>
+				</parent-group>
+			</parent-group>
+		</group>
+		<measure-type id="1">
+			<name>шт.</name>
+		</measure-type>
+		<country id="RU"/>
+		<manufacturer id="0000101136">
+			<name>ООО Концерн "Калина"</name>
+		</manufacturer>
+		<delete-from-cash>false</delete-from-cash>
+		<erp-code>283614</erp-code>
+		<is-child-product>0</is-child-product>
+		<fullname>З/паста ЛЕСНОЙ БАЛЬЗАМ С бальзамом д/десен 2в1 (Россия) 75мл</fullname>
+		<plugin-property key="precision" value="1"/>
+		<plugin-property key="deny-print-to-documents" value="false"/>
+		<plugin-property key="amount-in-package" value="1"/>
+		<price-entry price="72.69" currency="RUB">
+			<shop-indices>2</shop-indices>
+			<begin-date>1900-01-01T00:00:00</begin-date>
+			<end-date>2070-12-31T23:59:00</end-date>
+			<number>2</number>
+			<department number="1">
+				<name>Отдел 1</name>
+			</department>
+		</price-entry>
+		<price-entry price="76.33" currency="RUB">
+			<shop-indices>2</shop-indices>
+			<begin-date>2014-04-01T03:00:00</begin-date>
+			<end-date>2070-12-31T23:59:00</end-date>
+			<number>1</number>
+			<department number="1">
+				<name>Отдел 1</name>
+			</department>
+		</price-entry>
+	</good>
+	<good marking-of-the-good="283892KAR" transaction-id="0000000166770749">
+		<shop-indices/>
+		<name>Ср-во космет DOVE IntimoNeutralД/ИнтГиг</name>
+		<bar-code code="8712561381611">
+			<count>1</count>
+			<default-code>true</default-code>
+		</bar-code>
+		<product-type>ProductPieceEntity</product-type>
+		<vat>18</vat>
+		<group id="391104">
+			<name>Группа 391104</name>
+			<parent-group id="3911">
+				<name>Группа 3911</name>
+				<parent-group id="39">
+					<name>Группа 39</name>
+				</parent-group>
+			</parent-group>
+		</group>
+		<measure-type id="7">
+			<name>кор.</name>
+		</measure-type>
+		<country id="PL"/>
+		<manufacturer id="0000100681">
+			<name>ООО "Юнилевер Русь"</name>
+		</manufacturer>
+		<delete-from-cash>false</delete-from-cash>
+		<erp-code>283892</erp-code>
+		<is-child-product>0</is-child-product>
+		<fullname>Средство косметическое DOVE Intimo Neutral д/интим.гигиены (Польша) 250мл</fullname>
+		<plugin-property key="precision" value="1"/>
+		<plugin-property key="deny-print-to-documents" value="false"/>
+		<plugin-property key="amount-in-package" value="12"/>
+		<price-entry price="1634.28" currency="RUB">
+			<shop-indices>2</shop-indices>
+			<begin-date>1900-01-01T00:00:00</begin-date>
+			<end-date>2070-12-31T23:59:00</end-date>
+			<number>2</number>
+			<department number="1">
+				<name>Отдел 1</name>
+			</department>
+		</price-entry>
+		<price-entry price="1715.99" currency="RUB">
+			<shop-indices>2</shop-indices>
+			<begin-date>2014-04-01T03:00:00</begin-date>
+			<end-date>2070-12-31T23:59:00</end-date>
+			<number>1</number>
+			<department number="1">
+				<name>Отдел 1</name>
+			</department>
+		</price-entry>
+	</good>
+	<good marking-of-the-good="283892_ST" transaction-id="0000000166770749">
+		<shop-indices/>
+		<name>Ср-во космет DOVE IntimoNeutralД/ИнтГиг</name>
+		<bar-code code="8717163456613">
+			<count>1</count>
+			<default-code>true</default-code>
+		</bar-code>
+		<product-type>ProductPieceEntity</product-type>
+		<vat>18</vat>
+		<group id="391104">
+			<name>Группа 391104</name>
+			<parent-group id="3911">
+				<name>Группа 3911</name>
+				<parent-group id="39">
+					<name>Группа 39</name>
+				</parent-group>
+			</parent-group>
+		</group>
+		<measure-type id="1">
+			<name>шт.</name>
+		</measure-type>
+		<country id="PL"/>
+		<manufacturer id="0000100681">
+			<name>ООО "Юнилевер Русь"</name>
+		</manufacturer>
+		<delete-from-cash>false</delete-from-cash>
+		<erp-code>283892</erp-code>
+		<is-child-product>0</is-child-product>
+		<fullname>Средство косметическое DOVE Intimo Neutral д/интим.гигиены (Польша) 250мл</fullname>
+		<plugin-property key="precision" value="1"/>
+		<plugin-property key="deny-print-to-documents" value="false"/>
+		<plugin-property key="amount-in-package" value="1"/>
+		<price-entry price="136.19" currency="RUB">
+			<shop-indices>2</shop-indices>
+			<begin-date>1900-01-01T00:00:00</begin-date>
+			<end-date>2070-12-31T23:59:00</end-date>
+			<number>2</number>
+			<department number="1">
+				<name>Отдел 1</name>
+			</department>
+		</price-entry>
+		<price-entry price="143" currency="RUB">
+			<shop-indices>2</shop-indices>
+			<begin-date>2014-04-01T03:00:00</begin-date>
+			<end-date>2070-12-31T23:59:00</end-date>
+			<number>1</number>
+			<department number="1">
+				<name>Отдел 1</name>
+			</department>
+		</price-entry>
+		<price-entry price="89.99" currency="RUB">
+			<shop-indices>2</shop-indices>
+			<begin-date>2014-03-18T03:00:00</begin-date>
+			<end-date>2014-03-31T23:59:00</end-date>
+			<number>4</number>
+			<department number="1">
+				<name>Отдел 1</name>
+			</department>
+			<identifier>ADKIZV_P27</identifier>
+		</price-entry>
+	</good>
+	<good marking-of-the-good="283893KAR" transaction-id="0000000166770749">
+		<shop-indices/>
+		<name>Ж/крем-мыло DOVE Об.Неж.Мас.Ши.Пр250</name>
+		<bar-code code="8712561023252">
+			<count>1</count>
+			<default-code>true</default-code>
+		</bar-code>
+		<product-type>ProductPieceEntity</product-type>
+		<vat>18</vat>
+		<group id="390902">
+			<name>Группа 390902</name>
+			<parent-group id="3909">
+				<name>Группа 3909</name>
+				<parent-group id="39">
+					<name>Группа 39</name>
+				</parent-group>
+			</parent-group>
+		</group>
+		<measure-type id="7">
+			<name>кор.</name>
+		</measure-type>
+		<country id="DE"/>
+		<manufacturer id="0000100681">
+			<name>ООО "Юнилевер Русь"</name>
+		</manufacturer>
+		<delete-from-cash>false</delete-from-cash>
+		<erp-code>283893</erp-code>
+		<is-child-product>0</is-child-product>
+		<fullname>Ж/крем-мыло DOVE Объятия нежности Масло Ши и Пряная Ваниль (Германия) 250мл</fullname>
+		<plugin-property key="precision" value="1"/>
+		<plugin-property key="deny-print-to-documents" value="false"/>
+		<plugin-property key="amount-in-package" value="12"/>
+		<price-entry price="1387.08" currency="RUB">
+			<shop-indices>2</shop-indices>
+			<begin-date>1900-01-01T00:00:00</begin-date>
+			<end-date>2070-12-31T23:59:00</end-date>
+			<number>2</number>
+			<department number="1">
+				<name>Отдел 1</name>
+			</department>
+		</price-entry>
+		<price-entry price="1456.43" currency="RUB">
+			<shop-indices>2</shop-indices>
+			<begin-date>2014-04-01T03:00:00</begin-date>
+			<end-date>2070-12-31T23:59:00</end-date>
+			<number>1</number>
+			<department number="1">
+				<name>Отдел 1</name>
+			</department>
+		</price-entry>
+	</good>
+	<good marking-of-the-good="283893_ST" transaction-id="0000000166770749">
+		<shop-indices/>
+		<name>Ж/крем-мыло DOVE Об.Неж.Мас.Ши.Пр250</name>
+		<bar-code code="8711700921565">
+			<count>1</count>
+			<default-code>true</default-code>
+		</bar-code>
+		<product-type>ProductPieceEntity</product-type>
+		<vat>18</vat>
+		<group id="390902">
+			<name>Группа 390902</name>
+			<parent-group id="3909">
+				<name>Группа 3909</name>
+				<parent-group id="39">
+					<name>Группа 39</name>
+				</parent-group>
+			</parent-group>
+		</group>
+		<measure-type id="1">
+			<name>шт.</name>
+		</measure-type>
+		<country id="DE"/>
+		<manufacturer id="0000100681">
+			<name>ООО "Юнилевер Русь"</name>
+		</manufacturer>
+		<delete-from-cash>false</delete-from-cash>
+		<erp-code>283893</erp-code>
+		<is-child-product>0</is-child-product>
+		<fullname>Ж/крем-мыло DOVE Объятия нежности Масло Ши и Пряная Ваниль (Германия) 250мл</fullname>
+		<plugin-property key="precision" value="1"/>
+		<plugin-property key="deny-print-to-documents" value="false"/>
+		<plugin-property key="amount-in-package" value="1"/>
+		<price-entry price="115.59" currency="RUB">
+			<shop-indices>2</shop-indices>
+			<begin-date>1900-01-01T00:00:00</begin-date>
+			<end-date>2070-12-31T23:59:00</end-date>
+			<number>2</number>
+			<department number="1">
+				<name>Отдел 1</name>
+			</department>
+		</price-entry>
+		<price-entry price="121.37" currency="RUB">
+			<shop-indices>2</shop-indices>
+			<begin-date>2014-04-01T03:00:00</begin-date>
+			<end-date>2070-12-31T23:59:00</end-date>
+			<number>1</number>
+			<department number="1">
+				<name>Отдел 1</name>
+			</department>
+		</price-entry>
+		<price-entry price="76.99" currency="RUB">
+			<shop-indices>2</shop-indices>
+			<begin-date>2014-03-18T03:00:00</begin-date>
+			<end-date>2014-03-31T23:59:00</end-date>
+			<number>4</number>
+			<department number="1">
+				<name>Отдел 1</name>
+			</department>
+			<identifier>ADKIZV_P27</identifier>
+		</price-entry>
+	</good>
+	<good marking-of-the-good="285301KAR" transaction-id="0000000166770749">
+		<shop-indices/>
+		<name>Вино игр.CANTI Кюве Дольче бел.сл.0.75L</name>
+		<bar-code code="8005415044566">
+			<count>1</count>
+			<default-code>true</default-code>
+		</bar-code>
+		<product-type>ProductSpiritsEntity</product-type>
+		<vat>18</vat>
+		<group id="270601">
+			<name>Группа 270601</name>
+			<parent-group id="2706">
+				<name>Группа 2706</name>
+				<parent-group id="27">
+					<name>Группа 27</name>
+				</parent-group>
+			</parent-group>
+		</group>
+		<measure-type id="7">
+			<name>кор.</name>
+		</measure-type>
+		<country id="IT"/>
+		<manufacturer id="0000101557">
+			<name>ООО "Компания "Симпл-СПб"</name>
+		</manufacturer>
+		<delete-from-cash>false</delete-from-cash>
+		<erp-code>285301</erp-code>
+		<is-child-product>0</is-child-product>
+		<fullname>Вино игристое CANTI Кюве Дольче бел.сл.алк.7,5% (Италия) 0.75L</fullname>
+		<plugin-property key="precision" value="1"/>
+		<plugin-property key="deny-print-to-documents" value="true"/>
+		<plugin-property key="amount-in-package" value="6"/>
+		<plugin-property key="alcoholic-content-percentage" value="7.50"/>
+		<price-entry price="2393.94" currency="RUB">
+			<shop-indices>2</shop-indices>
+			<begin-date>1900-01-01T00:00:00</begin-date>
+			<end-date>2070-12-31T23:59:00</end-date>
+			<number>2</number>
+			<department number="1">
+				<name>Отдел 1</name>
+			</department>
+		</price-entry>
+		<price-entry price="2513.64" currency="RUB">
+			<shop-indices>2</shop-indices>
+			<begin-date>2014-04-01T03:00:00</begin-date>
+			<end-date>2070-12-31T23:59:00</end-date>
+			<number>1</number>
+			<department number="1">
+				<name>Отдел 1</name>
+			</department>
+		</price-entry>
+	</good>
+	<sale-denied-restriction id="0002||285301KAR||LIGHTALCOHOLRESTRICT" subject-type="GOOD" subject-code="285301KAR" type="SALE_DENIED" value="false">
+		<since-date>1900-01-01T00:00:00</since-date>
+		<till-date>2075-12-31T23:59:59</till-date>
+		<since-time>21:55:00</since-time>
+		<till-time>11:00:00</till-time>
+		<deleted>false</deleted>
+		<days-of-week>MO TU WE TH FR SA SU</days-of-week>
+	</sale-denied-restriction>
+	<good marking-of-the-good="285301_ST" transaction-id="0000000166770749">
+		<shop-indices/>
+		<name>Вино игр.CANTI Кюве Дольче бел.сл.0.75L</name>
+		<bar-code code="8005415044559">
+			<count>1</count>
+			<default-code>true</default-code>
+		</bar-code>
+		<product-type>ProductSpiritsEntity</product-type>
+		<vat>18</vat>
+		<group id="270601">
+			<name>Группа 270601</name>
+			<parent-group id="2706">
+				<name>Группа 2706</name>
+				<parent-group id="27">
+					<name>Группа 27</name>
+				</parent-group>
+			</parent-group>
+		</group>
+		<measure-type id="1">
+			<name>шт.</name>
+		</measure-type>
+		<country id="IT"/>
+		<manufacturer id="0000101557">
+			<name>ООО "Компания "Симпл-СПб"</name>
+		</manufacturer>
+		<delete-from-cash>false</delete-from-cash>
+		<erp-code>285301</erp-code>
+		<is-child-product>0</is-child-product>
+		<fullname>Вино игристое CANTI Кюве Дольче бел.сл.алк.7,5% (Италия) 0.75L</fullname>
+		<plugin-property key="precision" value="1"/>
+		<plugin-property key="deny-print-to-documents" value="true"/>
+		<plugin-property key="amount-in-package" value="1"/>
+		<plugin-property key="alcoholic-content-percentage" value="7.50"/>
+		<price-entry price="398.99" currency="RUB">
+			<shop-indices>2</shop-indices>
+			<begin-date>1900-01-01T00:00:00</begin-date>
+			<end-date>2070-12-31T23:59:00</end-date>
+			<number>2</number>
+			<department number="1">
+				<name>Отдел 1</name>
+			</department>
+		</price-entry>
+		<price-entry price="418.94" currency="RUB">
+			<shop-indices>2</shop-indices>
+			<begin-date>2014-04-01T03:00:00</begin-date>
+			<end-date>2070-12-31T23:59:00</end-date>
+			<number>1</number>
+			<department number="1">
+				<name>Отдел 1</name>
+			</department>
+		</price-entry>
+		<price-entry price="249.99" currency="RUB">
+			<shop-indices>2</shop-indices>
+			<begin-date>2014-03-27T03:00:00</begin-date>
+			<end-date>2014-04-09T23:59:00</end-date>
+			<number>4</number>
+			<department number="1">
+				<name>Отдел 1</name>
+			</department>
+			<identifier>ADLN06-P33</identifier>
+		</price-entry>
+	</good>
+	<sale-denied-restriction id="0002||285301_ST||LIGHTALCOHOLRESTRICT" subject-type="GOOD" subject-code="285301_ST" type="SALE_DENIED" value="false">
+		<since-date>1900-01-01T00:00:00</since-date>
+		<till-date>2075-12-31T23:59:59</till-date>
+		<since-time>21:55:00</since-time>
+		<till-time>11:00:00</till-time>
+		<deleted>false</deleted>
+		<days-of-week>MO TU WE TH FR SA SU</days-of-week>
+	</sale-denied-restriction>
 </goods-catalog>

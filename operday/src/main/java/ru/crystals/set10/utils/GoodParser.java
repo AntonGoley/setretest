@@ -53,11 +53,11 @@ public class GoodParser {
 			SoapRequestSender soapSender  = new SoapRequestSender();
 			soapSender.sendGoodsToStartTesting(Config.RETAIL_HOST, "goods.txt");
 		}
-		
-		if ((db.queryForInt(DB_CENTRUM_SET, SQL_GOODS_COUNT)) < 30 ) {
-			SoapRequestSender soapSender  = new SoapRequestSender();
-			soapSender.sendGoodsToStartTesting(Config.CENTRUM_HOST, "goods.txt");
-		}
+//		
+//		if ((db.queryForInt(DB_CENTRUM_SET, SQL_GOODS_COUNT)) < 30 ) {
+//			SoapRequestSender soapSender  = new SoapRequestSender();
+//			soapSender.sendGoodsToStartTesting(Config.CENTRUM_HOST, "goods.txt");
+//		}
 		
 		catalogAllGoods = parsePurchasesFromDB(db.queryForRowSet(DB_RETAIL_SET, SQL_GOODS_ALL));
 		catalogWeightGoods = parsePurchasesFromDB(db.queryForRowSet(DB_RETAIL_SET, String.format(SQL_GOODS, weightEntity)) );
