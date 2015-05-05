@@ -65,8 +65,8 @@ public class WeightPricesTest extends WeightAbstractTest{
 			groups = "price12")
 	public void testPrice1GeaterPrice2(){
 		PluType expPlu = plu;
-		price1.setPrice(priceVal100);
-		price2.setPrice(priceVal200);
+		price1.setPrice(priceVal200);
+		price2.setPrice(priceVal100);
 		
 		weightGood.getPrices().clear();
 		
@@ -76,17 +76,18 @@ public class WeightPricesTest extends WeightAbstractTest{
 		soapSender.sendGood(weightGood);
 		plu = scales.getPluUpdated(expPlu);
 		
-		Assert.assertEquals(String.valueOf(plu.getPrice()), priceVal100.toPlainString().replace(".", ""), "Цена за кг не равна цене 2!");
-		Assert.assertEquals(String.valueOf(plu.getExPrice()), priceVal200.toPlainString().replace(".", ""), "Цена за кг по карте не равна цене 1!");
+		Assert.assertEquals(String.valueOf(plu.getPrice()), priceVal200.toPlainString().replace(".", ""), "Цена за кг не равна цене 1!");
+		Assert.assertEquals(String.valueOf(plu.getExPrice()), priceVal100.toPlainString().replace(".", ""), "Цена за кг по карте не равна цене 2!");
 	
 	}
 	
-	@Test (description =  "Товар содержит цену 1 и цену 2. ц1 < ц2. На весы выгружается Цена за кг = ц2, Цена за кг по карте = ц1",
-			groups = "price12")
+	@Test (description =  "Товар содержит цену 1 и цену 2. ц1 < ц2. ??? Прояснить, как должна обрабатываться ситуация",
+			groups = "price12",
+			enabled = false)
 	public void testPrice1LessPrice2(){
 		PluType expPlu = plu;
-		price1.setPrice(priceVal200);
-		price2.setPrice(priceVal100);
+		price1.setPrice(priceVal100);
+		price2.setPrice(priceVal200);
 		
 		prices = weightGood.getPrices();
 		weightGood.getPrices().removeAll(prices);
@@ -97,8 +98,8 @@ public class WeightPricesTest extends WeightAbstractTest{
 		soapSender.sendGood(weightGood);
 		plu = scales.getPluUpdated(expPlu);
 		
-		Assert.assertEquals(String.valueOf(plu.getPrice()), priceVal200.toPlainString().replace(".", ""), "Цена за кг не равна цене 1!");
-		Assert.assertEquals(String.valueOf(plu.getExPrice()), priceVal100.toPlainString().replace(".", ""), "Цена за кг по карте не равна цене 2!");
+		Assert.assertEquals(String.valueOf(plu.getPrice()), priceVal200.toPlainString().replace(".", ""), "Цена за кг не равна цене 2!");
+		Assert.assertEquals(String.valueOf(plu.getExPrice()), priceVal100.toPlainString().replace(".", ""), "Цена за кг по карте не равна цене 1!");
 	
 	}
 	
@@ -125,11 +126,12 @@ public class WeightPricesTest extends WeightAbstractTest{
 	
 	@Test (description =  "Товар содержит цену 1, 2 и 3. ц1>ц2, ц1>ц3, ц2<ц3. Цена за кг = ц3. Цена за кг по карте = ц2",
 			dependsOnGroups = "price12", 
+			groups = "price123",
 			alwaysRun = true)
 	public void testPrice1Price3GreaterPrice2(){
 		PluType expPlu = plu;
-		price1.setPrice(priceVal100);
-		price2.setPrice(priceVal300);
+		price1.setPrice(priceVal300);
+		price2.setPrice(priceVal100);
 		price3.setPrice(priceVal200);
 		
 		prices = weightGood.getPrices();
@@ -142,13 +144,37 @@ public class WeightPricesTest extends WeightAbstractTest{
 		soapSender.sendGood(weightGood);
 		plu = scales.getPluUpdated(expPlu);
 		
-		Assert.assertEquals(String.valueOf(plu.getPrice()), priceVal100.toPlainString().replace(".", ""), "Цена за кг не равна цене 1!");
-		Assert.assertEquals(String.valueOf(plu.getExPrice()), priceVal200.toPlainString().replace(".", ""), "Цена за кг по карте не равна цене 3!");
+		Assert.assertEquals(String.valueOf(plu.getPrice()), priceVal200.toPlainString().replace(".", ""), "Цена за кг не равна цене 3!");
+		Assert.assertEquals(String.valueOf(plu.getExPrice()), priceVal100.toPlainString().replace(".", ""), "Цена за кг по карте не равна цене 2!");
+	}
+	
+	@Test (description =  "Товар содержит цену 1, 2 и 3. ц3<ц1, ц3<ц2. Цена за кг = ц3. Цена за кг по карте = ц3",
+			dependsOnGroups = "price12", 
+			groups = "price123",
+			alwaysRun = true)
+	public void testPrice3LessPrice1Price2(){
+		PluType expPlu = plu;
+		price1.setPrice(priceVal300);
+		price2.setPrice(priceVal200);
+		price3.setPrice(priceVal100);
+		
+		prices = weightGood.getPrices();
+		weightGood.getPrices().removeAll(prices);
+		
+		weightGood.getPrices().add(price1);
+		weightGood.getPrices().add(price2);
+		weightGood.getPrices().add(price3);
+		
+		soapSender.sendGood(weightGood);
+		plu = scales.getPluUpdated(expPlu);
+		
+		Assert.assertEquals(String.valueOf(plu.getPrice()), priceVal100.toPlainString().replace(".", ""), "Цена за кг не равна цене 3!");
+		Assert.assertEquals(String.valueOf(plu.getExPrice()), priceVal100.toPlainString().replace(".", ""), "Цена за кг по карте не равна цене 3!");
 	
 	}
 	
 	@Test (description =  "Товар содержит цену 1, 2 и 4. ц1>ц2, ц4<ц2. Цена за кг = ц1. Цена за кг по карте = ц4",
-			dependsOnMethods = "testPrice1Price3GreaterPrice2", 
+			dependsOnGroups = "price123", 
 			alwaysRun = true)
 	public void testPrice1Price2GreaterPrice4(){
 		PluType expPlu = plu;
@@ -170,6 +196,31 @@ public class WeightPricesTest extends WeightAbstractTest{
 		plu = scales.getPluUpdated(expPlu);
 		
 		Assert.assertEquals(String.valueOf(plu.getPrice()), priceVal300.toPlainString().replace(".", ""), "Цена за кг не равна цене 1!");
+		Assert.assertEquals(String.valueOf(plu.getExPrice()), priceVal100.toPlainString().replace(".", ""), "Цена за кг по карте не равна цене 4!");
+	}
+	
+	@Test (description =  "Товар содержит цену 1, 2, 3 и 4. ц3>ц2, ц3<ц1, ц4<3. Цена за кг = ц3. Цена за кг по карте = ц4",
+			dependsOnMethods = "testPrice1Price2GreaterPrice4", 
+			alwaysRun = true)
+	public void testPrice1Price2Price3Price4(){
+		PluType expPlu = plu;
+		price1.setPrice(priceVal400);
+		price2.setPrice(priceVal200);
+		price3.setPrice(priceVal300);
+		price4.setPrice(priceVal100);
+		
+		prices = weightGood.getPrices();
+		weightGood.getPrices().removeAll(prices);
+		
+		weightGood.getPrices().add(price1);
+		weightGood.getPrices().add(price2);
+		weightGood.getPrices().add(price4);
+		weightGood.getPrices().add(price3);
+		
+		soapSender.sendGood(weightGood);
+		plu = scales.getPluUpdated(expPlu);
+		
+		Assert.assertEquals(String.valueOf(plu.getPrice()), priceVal300.toPlainString().replace(".", ""), "Цена за кг не равна цене 3!");
 		Assert.assertEquals(String.valueOf(plu.getExPrice()), priceVal100.toPlainString().replace(".", ""), "Цена за кг по карте не равна цене 4!");
 	
 	}
