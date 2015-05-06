@@ -1,245 +1,169 @@
 package ru.crystals.set10.test.weight;
 
-import java.util.HashMap;
-
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-
 import ru.crystals.set10.config.Config;
-import ru.crystals.set10.utils.DisinsectorTools;
+import ru.crystals.set10.utils.GoodGenerator;
 import ru.crystals.set10.utils.SoapRequestSender;
-import ru.crystals.set10.utils.VirtualScalesReader;
+import ru.crystals.setretailx.products.catalog.Good;
+import ru.crystals.setretailx.products.catalog.Likond;
 
 
 public class WeightLekondTest extends WeightAbstractTest { 
 	
 	SoapRequestSender soapSender = new SoapRequestSender();
+	GoodGenerator goodGenerator = new GoodGenerator();
+	
+	Good weightGood;
+	Likond likond;
+	long likondFrom;
+	long likondTo;
 
 	@BeforeClass
 	public void initData(){
 		soapSender.setSoapServiceIP(Config.RETAIL_HOST);
+		pluNumber++;
+		prerareSuite();
+		scales.clearVScalesFileData();
+		
 	}
 	
 	@BeforeMethod
-	public void clearScales(){
-		scales.clearVScalesFileData();
+	public void setUpLikond(){
+		likond = new Likond();
 	}
 	
+	/*
+	 * В товаре необходимо передавайть ERP код,
+	 * т.к далее, в ликонде, на самом деле, высылается ERP код товара, а не marking-of-the-good товара.
+	 * По ERP коду товара, переданному в ликонде товар выгрузится из весов.
+	 */
 	@Test (description = "SRTE-119. Весовой товар выгружается из весов, если загружен леконд запрещающий продажу товара (время продажи закончилось вчера)")
 	public void testGoodUnloadIfLecondBanSales(){
-		/*
-		 * Отправить товар и проверить, что он прогрузился в весы
-		 */
-		HashMap<String, String> weightGood = new HashMap<String, String>();
-		weightGood = generateGoodData();
-		weightGood = soapSender.sendGoods(DisinsectorTools.getFileContentAsString(WEIGHT_GOOD_FILE), weightGood);
 		
-		Assert.assertEquals(scales.getPluActionType(weightGood.get(PLU_NUMBER_PARAM)), 
-				ACTION_TYPE_LOAD, "Товар 1 не выгружен из весов");
+		/* Отправить товар и проверить, что он прогрузился в весы */
+		 
+		weightGood = goodGenerator.generateWeightGood(String.valueOf(pluNumber));
+		weightGood.setErpCode(weightGood.getMarkingOfTheGood().substring(8, 13));
+		soapSender.sendGood(weightGood);
 		
-		long now = System.currentTimeMillis(); 
-		HashMap<String, String> lecondData = new HashMap<String, String>();
+		Assert.assertTrue(scales.waitPluLoaded(pluNumber), "Товар не загрузился в весы. PLU = " + pluNumber);
 		
-		lecondData = generateLecondData(
-				DisinsectorTools.getDate(LECOND_DATE_FORMAT, now - 2*day ), 
-				DisinsectorTools.getDate(LECOND_DATE_FORMAT, now - day ), 
-				weightGood);
-		soapSender.sendGoods(DisinsectorTools.getFileContentAsString(WEIGHT_LECOND_FILE), lecondData);
+		/* сгенерить и отправить леконд, запрещающий продажу */
+		likondFrom = System.currentTimeMillis() - 3600 * 12 * 1000;
+		likondTo = System.currentTimeMillis() - 3600 * 6 * 1000;
 		
-		scales.clearVScalesFileData();
+		likond.setBeginDate(goodGenerator.getDate(likondFrom));
+		likond.setEndDate(goodGenerator.getDate(likondTo));
+		likond.setMarking(weightGood.getErpCode());
 		
-		Assert.assertEquals(scales.getPluActionType(weightGood.get(PLU_NUMBER_PARAM)), 
-				ACTION_TYPE_CLEAR, "Товар 1 не выгружен из весов");
+		soapSender.sendLicond(likond);
+		Assert.assertTrue(scales.waitPluUnLoaded(pluNumber), "Товар НЕ выгрузился из весов после загрузки ликонда, запрещающего продажу. PLU = " + pluNumber);
 	}
 	
-	@Test (description = "SRTE-119. Весовой товар не загружается на весы, если загружен леконд запрещающий продажу товара (вчера)")
+	
+	@Test (description = "SRTE-119. Весовой товар не загружается на весы, если загружен леконд запрещающий продажу товара (вчера)",
+			/* тест не должен запускаться первый, т.к должен быть создан файл виртуальных весов*/
+			groups = "loadUnload",
+			priority = 1)
 	public void testGoodNotLoadedIfLecondBanSales(){
-		/*
-		 * Сгенерить товар, который отправим после леконда
-		 */
-		HashMap<String, String> weightGood = new HashMap<String, String>();
-		weightGood = generateGoodData();
+		pluNumber++;
+		weightGood = goodGenerator.generateWeightGood(String.valueOf(pluNumber));
+		weightGood.setErpCode(weightGood.getMarkingOfTheGood().substring(8, 13));
 		
-		long now = System.currentTimeMillis(); 
-		HashMap<String, String> lecondData = new HashMap<String, String>();
-		lecondData = generateLecondData(
-				DisinsectorTools.getDate(LECOND_DATE_FORMAT, now - 2*day ), 
-				DisinsectorTools.getDate(LECOND_DATE_FORMAT, now - day ), 
-				weightGood);
-		/*
-		 * Отправляем леконд, затем товар
-		 */
-		soapSender.sendGoods(DisinsectorTools.getFileContentAsString(WEIGHT_LECOND_FILE), lecondData);
-		weightGood = soapSender.sendGoods(DisinsectorTools.getFileContentAsString(WEIGHT_GOOD_FILE), weightGood);
-
-		/*
-		 * Ждем минуту, потом проверяем, что файл весов не создался (т.е товар не выгрузился) 
-		 */
-		DisinsectorTools.delay(60000);
-		Assert.assertTrue(scales.getExpectedFileStatus(VirtualScalesReader.FILE_DELETED_RESPONSE),  "Товар не должен быть выгружен в весы");
+		/* сгенерить и отправить леконд, запрещающий продажу */
+		likondFrom = System.currentTimeMillis() - 3600 * 12 * 1000;
+		likondTo = System.currentTimeMillis() - 3600 * 6 * 1000;
+		
+		likond.setBeginDate(goodGenerator.getDate(likondFrom));
+		likond.setEndDate(goodGenerator.getDate(likondTo));
+		likond.setMarking(weightGood.getErpCode());
+		soapSender.sendLicond(likond);
+		
+		/* отправить товар*/
+		soapSender.sendGood(weightGood);
+		Assert.assertFalse(scales.waitPluLoaded(pluNumber),  "Товар не должен быть выгружен в весы, т.к ликонд, загруженый ранее запрещает продажу. PLU = " + pluNumber);
 	}
-	
 	
 	@Test (description = "SRTE-119. Весовой товар загружается на весы, если загружен новый леконд, разрешающий продажу товара"
-			+ " (новый леконд отменяет действие леконда, загруженного прежде)")
+			+ " (новый леконд отменяет действие леконда, загруженного прежде)",
+			/* тест должен запускаться после указанного в  dependsOnMethods*/
+			groups = "loadUnload",
+			priority = 1,
+			dependsOnMethods = "testGoodNotLoadedIfLecondBanSales")
 	public void testGoodLoadedIfLecondAllowSalesAfterBan(){
 		
-		/*
-		 * Сгенерить товар, который отправим после леконда
-		 */
-		HashMap<String, String> weightGood = new HashMap<String, String>();
-		weightGood = generateGoodData();
+		/* сгенерить и отправить леконд, разрешающий продажу товара, созданного в тесте testGoodNotLoadedIfLecondBanSales*/
+		likondFrom = System.currentTimeMillis() - 3600 * 2 * 1000;
+		likondTo = System.currentTimeMillis() + 3600 * 6 * 1000;
 		
-		long now = System.currentTimeMillis(); 
-		HashMap<String, String> lecondData = new HashMap<String, String>();
-		lecondData = generateLecondData(
-				DisinsectorTools.getDate(LECOND_DATE_FORMAT, now - 2*day ), 
-				DisinsectorTools.getDate(LECOND_DATE_FORMAT, now - day ), 
-				weightGood);
-		/*
-		 * Отправляем леконд, затем товар
-		 */
-		soapSender.sendGoods(DisinsectorTools.getFileContentAsString(WEIGHT_LECOND_FILE), lecondData);
-		weightGood = soapSender.sendGoods(DisinsectorTools.getFileContentAsString(WEIGHT_GOOD_FILE), weightGood);
+		likond.setBeginDate(goodGenerator.getDate(likondFrom));
+		likond.setEndDate(goodGenerator.getDate(likondTo));
+		likond.setMarking(weightGood.getErpCode());
+		soapSender.sendLicond(likond);
 		
-		DisinsectorTools.delay(60000);
-		Assert.assertTrue(scales.getExpectedFileStatus(VirtualScalesReader.FILE_DELETED_RESPONSE),  "Товар не должен быть выгружен в весы");
-		
-		/*
-		 * Генерим новый леконд, разрешающий продажу товара
-		 */
-		
-		HashMap<String, String> newLecondData = new HashMap<String, String>();
-		newLecondData = generateLecondData(
-				DisinsectorTools.getDate(LECOND_DATE_FORMAT, now - day ), 
-				DisinsectorTools.getDate(LECOND_DATE_FORMAT, now + day ), 
-				weightGood);
-		
-		soapSender.sendGoods(DisinsectorTools.getFileContentAsString(WEIGHT_LECOND_FILE), newLecondData);
-		
-		Assert.assertEquals(scales.getPluActionType(weightGood.get(PLU_NUMBER_PARAM)), 
-				ACTION_TYPE_LOAD, "Товар 1 выгружен в весы");
-
+		Assert.assertTrue(scales.waitPluLoaded(pluNumber), "Товар не выгружен на весы, после загрузки ликонда, разрешающего продажу товара. PLU = " + pluNumber);
 	}
 	
-	@Test (description = "SRTE-119. Весовой товар выгружается на весы, если загружен леконд разрешающий продажу товара (со вчера до завтра)")
+	@Test (description = "SRTE-119. Весовой товар выгружается на весы, если загружен леконд разрешающий продажу товара (со вчера до завтра)", 
+			/* тест не должен запускаться первый, т.к должен быть создан файл виртуальных весов*/
+			dependsOnGroups = "loadUnload",
+			alwaysRun = true)
 	public void testGoodLoadedIfLecondallowSales(){
-		/*
-		 * Сгенерить товар, который отправим после леконда
-		 */
-		HashMap<String, String> weightGood = new HashMap<String, String>();
-		weightGood = generateGoodData();
 		
-		long now = System.currentTimeMillis(); 
-		HashMap<String, String> lecondData = new HashMap<String, String>();
-		lecondData = generateLecondData(
-				DisinsectorTools.getDate(LECOND_DATE_FORMAT, now - day ), 
-				DisinsectorTools.getDate(LECOND_DATE_FORMAT, now + day ), 
-				weightGood);
-		/*
-		 * Отправляем леконд разрешающий продажу, затем товар
-		 */
-		soapSender.sendGoods(DisinsectorTools.getFileContentAsString(WEIGHT_LECOND_FILE), lecondData);
-		weightGood = soapSender.sendGoods(DisinsectorTools.getFileContentAsString(WEIGHT_GOOD_FILE), weightGood);
+		pluNumber++;
+		weightGood = goodGenerator.generateWeightGood(String.valueOf(pluNumber));
+		weightGood.setErpCode(weightGood.getMarkingOfTheGood().substring(8, 13));
 		
-		Assert.assertEquals(scales.getPluActionType(weightGood.get(PLU_NUMBER_PARAM)), 
-				ACTION_TYPE_LOAD, "Товар 1 не выгружен в весы");
+		/* сгенерить и отправить леконд, разрешающий продажу */
+		likondFrom = System.currentTimeMillis() - 3600 * 24 * 1000;
+		likondTo = System.currentTimeMillis() + 3600 * 24 * 1000;
+		
+		likond.setBeginDate(goodGenerator.getDate(likondFrom));
+		likond.setEndDate(goodGenerator.getDate(likondTo));
+		likond.setMarking(weightGood.getErpCode());
+		soapSender.sendLicond(likond);
+		
+		/* отправить товар*/
+		soapSender.sendGood(weightGood);
+		
+		Assert.assertTrue(scales.waitPluLoaded(pluNumber),  "Товар не загрузился на весы, после загрузки ликонда, разрешающего продажу. PLU = " + pluNumber);
 	}
 	
-	@Test (description = "SRTE-119. Весовой товар не выгружается на весы, если леконд разрешает продажу товара через 2 часа")
+	
+	@Test (description = "SRTE-119. Весовой товар не выгружается на весы, если леконд разрешает продажу товара в будущем (через 2 часа)", 
+			/* тест не должен запускаться первый, т.к должен быть создан файл виртуальных весов*/
+			dependsOnGroups = "loadUnload",
+			alwaysRun = true)
 	public void testGoodNotLoadedIfLecondallowSalesInFuture(){
-		/*
-		 * Сгенерить товар, который отправим после леконда
-		 */
-		HashMap<String, String> weightGood = new HashMap<String, String>();
-		weightGood = generateGoodData();
+
+		pluNumber++;
+		weightGood = goodGenerator.generateWeightGood(String.valueOf(pluNumber));
+		weightGood.setErpCode(weightGood.getMarkingOfTheGood().substring(8, 13));
 		
-		long now = System.currentTimeMillis(); 
-		/*
-		 * срок действия леконда истек
-		 */
-		HashMap<String, String> lecondData = new HashMap<String, String>();
-		lecondData = generateLecondData(
-				DisinsectorTools.getDate(LECOND_DATE_FORMAT, now - 2*day ), 
-				DisinsectorTools.getDate(LECOND_DATE_FORMAT, now - day ), 
-				weightGood);
-		/*
-		 * Отправляем леконд , затем товар
-		 */
-		soapSender.sendGoods(DisinsectorTools.getFileContentAsString(WEIGHT_LECOND_FILE), lecondData);
-		weightGood = soapSender.sendGoods(DisinsectorTools.getFileContentAsString(WEIGHT_GOOD_FILE), weightGood);
+		/* сгенерить и отправить леконд, разрешающий продажу */
+		likondFrom = System.currentTimeMillis() + 3600 * 24 * 1000;
+		likondTo = System.currentTimeMillis() + 3600 * 48 * 1000;
 		
-		/*
-		 * Сгенерить новый леконд, разрешающий продажу через 2 часа
-		 */
-		HashMap<String, String> newLecondData = new HashMap<String, String>();
-		newLecondData = generateLecondData(
-				DisinsectorTools.getDate(LECOND_DATE_FORMAT, now + day/12 ), 
-				DisinsectorTools.getDate(LECOND_DATE_FORMAT, now + day ), 
-				weightGood);
-		soapSender.sendGoods(DisinsectorTools.getFileContentAsString(WEIGHT_LECOND_FILE), newLecondData);
+		likond.setBeginDate(goodGenerator.getDate(likondFrom));
+		likond.setEndDate(goodGenerator.getDate(likondTo));
+		likond.setMarking(weightGood.getErpCode());
+		soapSender.sendLicond(likond);
 		
-		DisinsectorTools.delay(60000);
-		Assert.assertTrue(scales.getExpectedFileStatus(VirtualScalesReader.FILE_DELETED_RESPONSE),  "Товар не должен быть выгружен в весы");
-	}
-	
-	
-	@Test (description = "SRTE-119. Весовой товар загружается в весы при загрузке нового леконда, разрешающего продажу, если до наст. момента товар был выгружен лекондом, "
-			+ "запрещающим продажу")
-	public void testGoodLoadedIfLecondallowSalesReplacingOldLecond(){
-		/*
-		 * Сгенерить товар, который отправим на весы
-		 */
-		HashMap<String, String> weightGood = new HashMap<String, String>();
-		weightGood = generateGoodData();
+		/* отправить товар*/
+		soapSender.sendGood(weightGood);
 		
-		weightGood = soapSender.sendGoods(DisinsectorTools.getFileContentAsString(WEIGHT_GOOD_FILE), weightGood);
-		
-		/*
-		 * Джем, что товар загрузился в весы
-		 *
-		 */
-		Assert.assertEquals(scales.getPluActionType(weightGood.get(PLU_NUMBER_PARAM)), 
-				ACTION_TYPE_LOAD, "Товар 1 не выгружен в весы");
-		
-		scales.clearVScalesFileData();
-		/*
-		 * Загрузить леконд, запрещающий продажу товара
-		 */
-		long now = System.currentTimeMillis(); 
-		HashMap<String, String> lecondData = new HashMap<String, String>();
-		lecondData = generateLecondData(
-				DisinsectorTools.getDate(LECOND_DATE_FORMAT, now - 2*day ), 
-				DisinsectorTools.getDate(LECOND_DATE_FORMAT, now - day ), 
-				weightGood);
-		
-		soapSender.sendGoods(DisinsectorTools.getFileContentAsString(WEIGHT_LECOND_FILE), lecondData);
-		Assert.assertEquals(scales.getPluActionType(weightGood.get(PLU_NUMBER_PARAM)), 
-				ACTION_TYPE_CLEAR, "Товар 1 не удалился из весов");
-		scales.clearVScalesFileData();
-		
-		/*
-		 * Отправляем леконд разрешающий продажу
-		 */
-		HashMap<String, String> newLecondData = new HashMap<String, String>();
-		newLecondData = generateLecondData(
-				DisinsectorTools.getDate(LECOND_DATE_FORMAT, now - 2*day ), 
-				DisinsectorTools.getDate(LECOND_DATE_FORMAT, now + 2*day ), 
-				weightGood);
-		
-		soapSender.sendGoods(DisinsectorTools.getFileContentAsString(WEIGHT_LECOND_FILE), newLecondData);
-		Assert.assertEquals(scales.getPluActionType(weightGood.get(PLU_NUMBER_PARAM)), 
-				ACTION_TYPE_LOAD, "Товар 1 не выгружен в весы");
+		Assert.assertFalse(scales.waitPluLoaded(pluNumber),  "Товар не загрузился на весы, после загрузки ликонда, разрешающего продажу. PLU = " + pluNumber);
 	}
 	
 	
 	/*
-	 * Подумать, как синхронизировать время сервера (получить время сервера)
+	 *  как синхронизировать время сервера (получить время сервера)?
 	 */
-	@Test (description = "SRTE-119. Весовой товар загружается на весы при наступлении времени начала продажи, заданное в леконде",
-			enabled = false)
+	//@Test (description = "SRTE-119. Весовой товар загружается на весы при наступлении времени начала продажи, заданное в леконде",
+	//		enabled = false)
 	public void testGoodLoadedIfLecondStartTimeIsOn(){
 		
 	}

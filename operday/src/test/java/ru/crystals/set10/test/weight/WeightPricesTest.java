@@ -2,9 +2,12 @@ package ru.crystals.set10.test.weight;
 
 import java.math.BigDecimal;
 import java.util.List;
+
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+
 import ru.crystals.scales.tech.core.scales.virtual.xml.PluType;
 import ru.crystals.set10.config.Config;
 import ru.crystals.set10.utils.GoodGenerator;
@@ -51,24 +54,30 @@ public class WeightPricesTest extends WeightAbstractTest{
 		soapSender.setSoapServiceIP(Config.RETAIL_HOST);
 		
 		weightGood = goodGenerator.generateWeightGood(String.valueOf(pluNumber));
-		weightGood.getBarCodes().add(goodGenerator.generateWeightBarCode(Config.WEIGHT_BARCODE_PREFIX, 7));
 		soapSender.sendGood(weightGood);
 		plu = scales.getPlu(pluNumber);
+	}
+	
+	@BeforeMethod
+	public void resetPricesValues(){
+		/* удалить цены у товара */
+		List<Price> prices = weightGood.getPrices();
+		weightGood.getPrices().removeAll(prices);
 		
+		/* сгенерить новый действующие цены*/
 		price1 = goodGenerator.generatePrice(1);
 		price2 = goodGenerator.generatePrice(2);
 		price3 = goodGenerator.generatePrice(3);
 		price4 = goodGenerator.generatePrice(4);
+		
 	}
 	
-	@Test(description = "Товар содержит цену 1 и цену 2. ц1 > ц2. На весы выгружается Цена за кг = ц1, Цена за кг по карте = ц2",
+	@Test(description = "SRTE-93. Товар содержит цену 1 и цену 2. ц1 > ц2. На весы выгружается Цена за кг = ц1, Цена за кг по карте = ц2",
 			groups = "price12")
 	public void testPrice1GeaterPrice2(){
 		PluType expPlu = plu;
 		price1.setPrice(priceVal200);
 		price2.setPrice(priceVal100);
-		
-		weightGood.getPrices().clear();
 		
 		weightGood.getPrices().add(price1);
 		weightGood.getPrices().add(price2);
@@ -81,16 +90,13 @@ public class WeightPricesTest extends WeightAbstractTest{
 	
 	}
 	
-	@Test (description =  "Товар содержит цену 1 и цену 2. ц1 < ц2. ??? Прояснить, как должна обрабатываться ситуация",
+	@Test (description =  "SRTE-93. Товар содержит цену 1 и цену 2. ц1 < ц2. ??? Прояснить, как должна обрабатываться ситуация",
 			groups = "price12",
 			enabled = false)
 	public void testPrice1LessPrice2(){
 		PluType expPlu = plu;
 		price1.setPrice(priceVal100);
 		price2.setPrice(priceVal200);
-		
-		prices = weightGood.getPrices();
-		weightGood.getPrices().removeAll(prices);
 		
 		weightGood.getPrices().add(price2);
 		weightGood.getPrices().add(price1);
@@ -103,15 +109,12 @@ public class WeightPricesTest extends WeightAbstractTest{
 	
 	}
 	
-	@Test (description =  "Товар содержит цену 1 и цену 2. ц1 = ц2.", 
+	@Test (description =  "SRTE-93. Товар содержит цену 1 и цену 2. ц1 = ц2.", 
 			groups = "price12")
 	public void testPrice1EqualsPrice2(){
 		PluType expPlu = plu;
 		price1.setPrice(priceVal100);
 		price2.setPrice(priceVal100);
-		
-		prices = weightGood.getPrices();
-		weightGood.getPrices().removeAll(prices);
 		
 		weightGood.getPrices().add(price1);
 		weightGood.getPrices().add(price2);
@@ -124,7 +127,7 @@ public class WeightPricesTest extends WeightAbstractTest{
 	
 	}
 	
-	@Test (description =  "Товар содержит цену 1, 2 и 3. ц1>ц2, ц1>ц3, ц2<ц3. Цена за кг = ц3. Цена за кг по карте = ц2",
+	@Test (description =  "SRTE-93. Товар содержит цену 1, 2 и 3. ц1>ц2, ц1>ц3, ц2<ц3. Цена за кг = ц3. Цена за кг по карте = ц2",
 			dependsOnGroups = "price12", 
 			groups = "price123",
 			alwaysRun = true)
@@ -133,9 +136,6 @@ public class WeightPricesTest extends WeightAbstractTest{
 		price1.setPrice(priceVal300);
 		price2.setPrice(priceVal100);
 		price3.setPrice(priceVal200);
-		
-		prices = weightGood.getPrices();
-		weightGood.getPrices().removeAll(prices);
 		
 		weightGood.getPrices().add(price1);
 		weightGood.getPrices().add(price2);
@@ -148,7 +148,7 @@ public class WeightPricesTest extends WeightAbstractTest{
 		Assert.assertEquals(String.valueOf(plu.getExPrice()), priceVal100.toPlainString().replace(".", ""), "Цена за кг по карте не равна цене 2!");
 	}
 	
-	@Test (description =  "Товар содержит цену 1, 2 и 3. ц3<ц1, ц3<ц2. Цена за кг = ц3. Цена за кг по карте = ц3",
+	@Test (description =  "SRTE-93. Товар содержит цену 1, 2 и 3. ц3<ц1, ц3<ц2. Цена за кг = ц3. Цена за кг по карте = ц3",
 			dependsOnGroups = "price12", 
 			groups = "price123",
 			alwaysRun = true)
@@ -157,9 +157,6 @@ public class WeightPricesTest extends WeightAbstractTest{
 		price1.setPrice(priceVal300);
 		price2.setPrice(priceVal200);
 		price3.setPrice(priceVal100);
-		
-		prices = weightGood.getPrices();
-		weightGood.getPrices().removeAll(prices);
 		
 		weightGood.getPrices().add(price1);
 		weightGood.getPrices().add(price2);
@@ -173,7 +170,7 @@ public class WeightPricesTest extends WeightAbstractTest{
 	
 	}
 	
-	@Test (description =  "Товар содержит цену 1, 2 и 4. ц1>ц2, ц4<ц2. Цена за кг = ц1. Цена за кг по карте = ц4",
+	@Test (description =  "SRTE-93. Товар содержит цену 1, 2 и 4. ц1>ц2, ц4<ц2. Цена за кг = ц1. Цена за кг по карте = ц4",
 			dependsOnGroups = "price123", 
 			alwaysRun = true)
 	public void testPrice1Price2GreaterPrice4(){
@@ -181,12 +178,9 @@ public class WeightPricesTest extends WeightAbstractTest{
 		price1.setPrice(priceVal300);
 		price2.setPrice(priceVal200);
 		price4.setPrice(priceVal100);
-		// удаляем цену 3, чтобы она не учитывалась
+		
 		price3.setDeleted(true);
-		
-		prices = weightGood.getPrices();
-		weightGood.getPrices().removeAll(prices);
-		
+
 		weightGood.getPrices().add(price1);
 		weightGood.getPrices().add(price2);
 		weightGood.getPrices().add(price4);
@@ -199,7 +193,7 @@ public class WeightPricesTest extends WeightAbstractTest{
 		Assert.assertEquals(String.valueOf(plu.getExPrice()), priceVal100.toPlainString().replace(".", ""), "Цена за кг по карте не равна цене 4!");
 	}
 	
-	@Test (description =  "Товар содержит цену 1, 2, 3 и 4. ц3>ц2, ц3<ц1, ц4<3. Цена за кг = ц3. Цена за кг по карте = ц4",
+	@Test (description =  "SRTE-93. Товар содержит цену 1, 2, 3 и 4. ц3>ц2, ц3<ц1, ц4<3. Цена за кг = ц3. Цена за кг по карте = ц4",
 			dependsOnMethods = "testPrice1Price2GreaterPrice4", 
 			alwaysRun = true)
 	public void testPrice1Price2Price3Price4(){
@@ -208,9 +202,6 @@ public class WeightPricesTest extends WeightAbstractTest{
 		price2.setPrice(priceVal200);
 		price3.setPrice(priceVal300);
 		price4.setPrice(priceVal100);
-		
-		prices = weightGood.getPrices();
-		weightGood.getPrices().removeAll(prices);
 		
 		weightGood.getPrices().add(price1);
 		weightGood.getPrices().add(price2);

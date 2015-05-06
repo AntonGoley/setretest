@@ -99,15 +99,6 @@ public class WeightAbstractTest extends AbstractTest{
 		return weightGood;
 	}
 	
-	protected HashMap<String, String> generateLecondData(String sinceDate, String tillDate, HashMap<String, String> good){
-		HashMap<String, String> lecond = new HashMap<String, String>();	
-		lecond.put(MARKING_OF_THE_GOOD_PARAM, good.get(MARKING_OF_THE_GOOD_PARAM));
-		lecond.put(LECOND_SINCE_DATE_PARAM, sinceDate);
-		lecond.put(LECOND_TILL_DATE_PARAM, tillDate);
-
-		return lecond;
-	}
-	
 	private String generateBarCode(){
 		/*
 		 * Берем последние 5 символов 

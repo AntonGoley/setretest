@@ -89,6 +89,12 @@ public class VirtualScalesReader {
 		while (timeout > 0){
 			timeout--;
 			pluOnScales = readVirtualScales();
+			
+			/* если в весах пусто*/
+			if (pluOnScales == null) {
+				continue;
+			}
+			
 			while(pluOnScales.hasNext()){
 				if (pluOnScales.next().getPlu().getNumber() == pluNumber){
 					return true;
@@ -97,6 +103,43 @@ public class VirtualScalesReader {
 			DisinsectorTools.delay(1000);
 		}
 		log.info("Превышено время ожидания загрузки PLU с номером " + pluNumber + " в весы: " + defaultTimeout);
+		return false;
+	}
+	
+	/*
+	 * Метод возвращает true, если товар с pluNumber 
+	 * удален из весов
+	 */
+	public boolean waitPluUnLoaded(int pluNumber){
+		int timeout = defaultTimeout;
+		
+		try {
+			getExpectedFileStatus(FILE_EXIST_RESPONSE);
+		} catch (Exception e){
+			return false;
+		}
+		
+		log.info("Ожидание выгрузки PLU с номером " + pluNumber + " из весов");
+		while (timeout > 0){
+			timeout--;
+			pluOnScales = readVirtualScales();
+			
+			/* если в весах пусто, значит товар выгрузился*/
+			if (!pluOnScales.hasNext()) {
+				return true;
+			}
+			
+			while(pluOnScales.hasNext()){
+				if (pluOnScales.next().getPlu().getNumber() == pluNumber){
+					break;
+				}
+				if (!pluOnScales.hasNext()){
+					return true;
+				}
+			}
+			DisinsectorTools.delay(1000);
+		}
+		log.info("Превышено время ожидания выгрузки PLU с номером " + pluNumber + " из весов: " + defaultTimeout);
 		return false;
 	}
 	

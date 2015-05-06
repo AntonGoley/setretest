@@ -8,7 +8,9 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 
+
 import ru.crystals.setretailx.products.catalog.Good;
+import ru.crystals.setretailx.products.catalog.Likond;
 
 	@XmlAccessorType(XmlAccessType.FIELD)
 	@XmlRootElement(name = "goods-catalog")
@@ -17,10 +19,17 @@ import ru.crystals.setretailx.products.catalog.Good;
 		@XmlElement(name = "good")
 	    protected List<Good> goods;
 		
+		@XmlElement(name = "product-sales-allowing")
+	    protected List<Likond> likonds;
+		
+		
 		public void setGoods(List<Good> goods){
 			this.goods = goods;
 		}
 		
+		public void setLikonds(List<Likond> likonds){
+			this.likonds = likonds;
+		}
 	}
 
 

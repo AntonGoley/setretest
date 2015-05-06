@@ -34,6 +34,7 @@ import org.xml.sax.SAXException;
 
 import ru.crystals.set10.config.Config;
 import ru.crystals.setretailx.products.catalog.Good;
+import ru.crystals.setretailx.products.catalog.Likond;
 
 
 public class SoapRequestSender{
@@ -188,20 +189,32 @@ public class SoapRequestSender{
 	
 
 	public String sendGood(Good good){
-		ti = generateTI();
-		
-		StringWriter request = new StringWriter();
 		GoodsCatalog goodsCatalog = new GoodsCatalog();
 		List<Good> gList = new ArrayList<Good>();
 		gList.add(good);
 		goodsCatalog.setGoods(gList);
+		return send(goodsCatalog);
 		
+	}	
+	
+	public String sendLicond(Likond likond){
+		GoodsCatalog goodsCatalog = new GoodsCatalog();
+		List<Likond> likondList = new ArrayList<Likond>();
+		likondList.add(likond);
+		goodsCatalog.setLikonds(likondList);
+		return send(goodsCatalog);
+		
+	}	
+	
+	private String send(GoodsCatalog catalog){	
+		ti = generateTI();
+		StringWriter request = new StringWriter();
 		try {
 			JAXBContext jaxbContext = JAXBContext.newInstance(GoodsCatalog.class);
 			Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
 			
 			jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-			jaxbMarshaller.marshal(goodsCatalog, request);
+			jaxbMarshaller.marshal(catalog, request);
 			
 		} catch (JAXBException e) {
 			e.printStackTrace();

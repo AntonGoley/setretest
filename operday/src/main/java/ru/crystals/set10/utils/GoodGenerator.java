@@ -2,9 +2,12 @@ package ru.crystals.set10.utils;
 
 import java.math.BigDecimal;
 import java.util.Date;
+
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
+
+import ru.crystals.set10.config.Config;
 import ru.crystals.setretailx.products.catalog.BarCode;
 import ru.crystals.setretailx.products.catalog.Department;
 import ru.crystals.setretailx.products.catalog.Good;
@@ -28,6 +31,8 @@ public class GoodGenerator {
 	public Good generateWeightGood(String pluNumber){
 		Good weightGood = generateGood(GOODTYPE_WEIGHT);
 		weightGood.getPluginProperties().add(generatePluginProperty("plu-number", pluNumber));
+		/* генерим по умолчанию дополнительный весовой бар код*/
+		weightGood.getBarCodes().add(generateWeightBarCode(Config.WEIGHT_BARCODE_PREFIX, 7));
 		return weightGood;
 	}
 	
@@ -89,8 +94,8 @@ public class GoodGenerator {
 		XMLGregorianCalendar dateSince = null;
 		XMLGregorianCalendar dateFrom = null;
 		
-		dateSince = getDate(new Date().getTime());
-		dateFrom = getDate(new Date().getTime() + 86400000 * 365);
+		dateSince = getDate(new Date().getTime() - 86400000 * 10);
+		dateFrom = getDate(new Date().getTime() + 86400000 * 10);
 		
 		Department dep = new Department();
 		dep.setName("Отдел 1");
@@ -111,7 +116,7 @@ public class GoodGenerator {
 	public XMLGregorianCalendar getDate(long date){
 		XMLGregorianCalendar result = null;
 		String strDateRepresentation = "";
-		strDateRepresentation = DisinsectorTools.getDate("yyyy-MM-dd", date) + "T" + DisinsectorTools.getDate("hh:mm:ss", date);
+		strDateRepresentation = DisinsectorTools.getDate("yyyy-MM-dd", date) + "T" + DisinsectorTools.getDate("HH:mm:ss", date);
 		try {
 			result =  DatatypeFactory.newInstance().newXMLGregorianCalendar(strDateRepresentation);
 		} catch (DatatypeConfigurationException e) {
