@@ -55,7 +55,7 @@ public class KM6Test extends AbstractTest{
 				.openTab(KmPage.class, CashesPage.LOCATOR_ACTS_TAB)
 				.switchToKm(LOCATOR_KM6);
 		
-		km6Tablerows = km6.getKmCountOnPage(LOCATOR_KM6_TABLE);
+		km6Tablerows = km6.getKmCountOnPage();
 		
 		cashEmulator.useNextShift();
 		//генерим чек
@@ -91,7 +91,7 @@ public class KM6Test extends AbstractTest{
 	public void testKM6CreatesAfterCloseShiftOnCash(){
 		km6.switchToKm(LOCATOR_KM3).switchToKm(LOCATOR_KM6);
 		km6 = new KmPage(getDriver());
-		Assert.assertEquals(km6Tablerows + 1, km6.getKmCountOnPage(LOCATOR_KM6_TABLE), "Не появилась форма КМ6");
+		Assert.assertEquals(km6Tablerows + 1, km6.getKmCountOnPage(), "Не появилась форма КМ6");
 	}
 	
 	@Test (	dependsOnMethods ="testKM6CreatesAfterCloseShiftOnCash",

@@ -56,7 +56,7 @@ public class KM3Test extends AbstractTest{
 				.switchToKm(LOCATOR_KM3);
 		
 		//количество актов km3
-		km3Tablerows = km3.getKmCountOnPage(LOCATOR_KM3_TABLE);
+		km3Tablerows = km3.getKmCountOnPage();
 		
 		purchase = (PurchaseEntity) purchaseGenerator.generatePurchaseWithPositions(10);
 		cashEmulator.nextPurchase(purchase);
@@ -86,7 +86,7 @@ public class KM3Test extends AbstractTest{
 	public void testKM3CreatesAfter1stRefund(){
 		km3.switchToKm(LOCATOR_KM6).switchToKm(LOCATOR_KM3);
 		km3 = new KmPage(getDriver());
-		Assert.assertEquals(km3.getKmCountOnPage(LOCATOR_KM3_TABLE), ++km3Tablerows, "Не появилась форма КМ3");
+		Assert.assertEquals(km3.getKmCountOnPage(), ++km3Tablerows, "Не появилась форма КМ3");
 	}
 	
 	@Test (	dependsOnMethods ="testKM3CreatesAfter1stRefund",
@@ -111,7 +111,7 @@ public class KM3Test extends AbstractTest{
 		returnPositions.put(2L, 1L * 1000);
 		purchaseReturn = (PurchaseEntity) cashEmulator.nextRefundPositions(purchase, returnPositions, false);
 		km3.switchToKm(LOCATOR_KM6).switchToKm(LOCATOR_KM3);
-		Assert.assertEquals(km3.getKmCountOnPage(LOCATOR_KM3_TABLE), ++km3Tablerows, "Новая форма КМ3 не создалась для нового чека возврата, после печати существующей КМ3");
+		Assert.assertEquals(km3.getKmCountOnPage(), ++km3Tablerows, "Новая форма КМ3 не создалась для нового чека возврата, после печати существующей КМ3");
 	}
 	
 	@Test(  dependsOnMethods ="testNewKM3CreatesIfcurrentPrinted",
@@ -123,7 +123,7 @@ public class KM3Test extends AbstractTest{
 		cashEmulator.useNextShift();
 		purchaseReturn = (PurchaseEntity) cashEmulator.nextRefundPositions(purchase, returnPositions, false);
 		km3.switchToKm(LOCATOR_KM6).switchToKm(LOCATOR_KM3);
-		Assert.assertEquals(km3.getKmCountOnPage(LOCATOR_KM3_TABLE), ++km3Tablerows, "Новая форма КМ3 не создалась для новой смены");
+		Assert.assertEquals(km3.getKmCountOnPage(), ++km3Tablerows, "Новая форма КМ3 не создалась для новой смены");
 	}
 	
 	@Test( 	dependsOnMethods ="testNewKM3CreatesIfcurrentPrinted",
@@ -135,7 +135,7 @@ public class KM3Test extends AbstractTest{
 		returnPositions.put(1L, 1L * 1000);
 		purchaseReturn = (PurchaseEntity) cashEmulatorMainCash.nextRefundPositions(p1, returnPositions, true);
 		km3.switchToKm(LOCATOR_KM6).switchToKm(LOCATOR_KM3);
-		Assert.assertEquals(km3.getKmCountOnPage(LOCATOR_KM3_TABLE), ++km3Tablerows, "Новая форма КМ3 не создалась для новой смены");
+		Assert.assertEquals(km3.getKmCountOnPage(), ++km3Tablerows, "Новая форма КМ3 не создалась для новой смены");
 
 	}
 	
