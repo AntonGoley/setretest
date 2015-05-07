@@ -13,6 +13,7 @@ import ru.crystals.set10.config.Config;
 import ru.crystals.set10.pages.basic.LoginPage;
 import ru.crystals.set10.pages.operday.HTMLRepotResultPage;
 import ru.crystals.set10.pages.operday.OperDayPage;
+import ru.crystals.set10.pages.operday.cashes.CashDocsAbstractPage;
 import ru.crystals.set10.pages.operday.cashes.CashesPage;
 import ru.crystals.set10.pages.operday.cashes.KmPage;
 import ru.crystals.set10.test.AbstractTest;
@@ -20,6 +21,7 @@ import ru.crystals.set10.utils.DisinsectorTools;
 import ru.crystals.setretailx.cash.CashVO;
 import static ru.crystals.set10.pages.operday.cashes.KmPage.*;
 import static ru.crystals.set10.pages.operday.OperDayPage.CASHES;
+import static ru.crystals.set10.pages.operday.cashes.CashDocsAbstractPage.SQL_MAIN_CASH;
 
 @Test(groups = {"retail", "centrum"})
 public class KM3Test extends AbstractTest{
@@ -27,6 +29,9 @@ public class KM3Test extends AbstractTest{
 	KmPage km3;
 	OperDayPage operDay;
 	HTMLRepotResultPage htmlReportResults;
+	CashesPage cashesPage;
+	
+	private String ifMainCash = "false";
 	
 	private static PurchaseEntity purchase;
 	private static PurchaseEntity purchaseReturn;
@@ -42,25 +47,35 @@ public class KM3Test extends AbstractTest{
 	
 	@BeforeClass
 	public void prepareData(){
-		/**  удалить km3 из базы*/
+		/*  удалить km3 из базы*/
 		dbAdapter.batchUpdateDb(DB_OPERDAY, new String[] {SQL_CLEAN_KM3, SQL_CLEAN_KM3_ROW} );
-		/** удалить файлы отчетов KM3 на диске*/
-		DisinsectorTools.removeOldReport(chromeDownloadPath, KM3_PDF);
-		
 		log.info("Записи в таблице od_km3 и в таблице od_km3_row удалены в базе " + DB_OPERDAY);
 		
-		km3 = new LoginPage(getDriver(), TARGET_HOST_URL)
-				.openOperDay(Config.MANAGER, Config.MANAGER_PASSWORD)
-				.navigatePage(CashesPage.class, CASHES)
-				.openTab(KmPage.class, CashesPage.LOCATOR_ACTS_TAB)
-				.switchToKm(LOCATOR_KM3);
+		/* удалить файлы отчетов KM3 на диске*/
+		DisinsectorTools.removeOldReport(chromeDownloadPath, KM3_PDF);
 		
-		//количество актов km3
-		km3Tablerows = km3.getKmCountOnPage();
+		/* проверка, включена ли главная касса*/
+		ifMainCash = dbAdapter.queryForString(DB_SET, SQL_MAIN_CASH);
+		
+		/* перейти на страницу с документами КМ3*/
+		cashesPage = new LoginPage(getDriver(), TARGET_HOST_URL)
+				.openOperDay(Config.MANAGER, Config.MANAGER_PASSWORD)
+				.navigatePage(CashesPage.class, CASHES);
+
+		if (ifMainCash.equals("true")) {
+			km3 = (KmPage) cashesPage.openTab(CashDocsAbstractPage.class, CashesPage.LOCATOR_MAINCASH_TAB)
+				.switchToTable(LOCATOR_KM3);
+		} else {
+			km3 = (KmPage)cashesPage.openTab(KmPage.class, CashesPage.LOCATOR_ACTS_TAB)
+					.switchToTable(LOCATOR_KM3);
+		}
+		
+		/* количество актов km3 */
+		km3Tablerows = km3.getDocCountOnPage();
 		
 		purchase = (PurchaseEntity) purchaseGenerator.generatePurchaseWithPositions(10);
 		cashEmulator.nextPurchase(purchase);
-		//Возвращаем 1-ю позицию
+		/* Возвращаем 1-ю позицию */
 		returnPositions.put(1L, 1L * 1000);
 		
 		purchaseReturn = (PurchaseEntity) cashEmulator.nextRefundPositions(purchase, returnPositions, false);
@@ -84,9 +99,10 @@ public class KM3Test extends AbstractTest{
 	
 	@Test( description = "SRTE-28. Если в систему пришел первый возвратный чек, создается форма КМ3")
 	public void testKM3CreatesAfter1stRefund(){
-		km3.switchToKm(LOCATOR_KM6).switchToKm(LOCATOR_KM3);
+		km3.switchToTable(LOCATOR_KM6).switchToTable(LOCATOR_KM3);
 		km3 = new KmPage(getDriver());
-		Assert.assertEquals(km3.getKmCountOnPage(), ++km3Tablerows, "Не появилась форма КМ3");
+		++km3Tablerows;
+		Assert.assertEquals(km3.getExpectedDocsCountOnPage(km3Tablerows), km3Tablerows, "Не появилась форма КМ3");
 	}
 	
 	@Test (	dependsOnMethods ="testKM3CreatesAfter1stRefund",
@@ -95,7 +111,7 @@ public class KM3Test extends AbstractTest{
 	public void testKM3Data(String fiels, String expectedValue){
 		if (!reportOpened) {
 			reportOpened = true;
-			km3.printAllKmForms();
+			km3.printAllDocs();
 			reportText = km3.getPDFContent(DisinsectorTools.getDownloadedFile(chromeDownloadPath, KM3_PDF), 1);
 		}
 		log.info("Значение поля: " + fiels);
@@ -110,8 +126,9 @@ public class KM3Test extends AbstractTest{
 		returnPositions.clear();
 		returnPositions.put(2L, 1L * 1000);
 		purchaseReturn = (PurchaseEntity) cashEmulator.nextRefundPositions(purchase, returnPositions, false);
-		km3.switchToKm(LOCATOR_KM6).switchToKm(LOCATOR_KM3);
-		Assert.assertEquals(km3.getKmCountOnPage(), ++km3Tablerows, "Новая форма КМ3 не создалась для нового чека возврата, после печати существующей КМ3");
+		km3.switchToTable(LOCATOR_KM6).switchToTable(LOCATOR_KM3);
+		++km3Tablerows;
+		Assert.assertEquals(km3.getExpectedDocsCountOnPage(km3Tablerows), km3Tablerows, "Новая форма КМ3 не создалась для нового чека возврата, после печати существующей КМ3");
 	}
 	
 	@Test(  dependsOnMethods ="testNewKM3CreatesIfcurrentPrinted",
@@ -122,8 +139,9 @@ public class KM3Test extends AbstractTest{
 		returnPositions.put(3L, 1L * 1000);
 		cashEmulator.useNextShift();
 		purchaseReturn = (PurchaseEntity) cashEmulator.nextRefundPositions(purchase, returnPositions, false);
-		km3.switchToKm(LOCATOR_KM6).switchToKm(LOCATOR_KM3);
-		Assert.assertEquals(km3.getKmCountOnPage(), ++km3Tablerows, "Новая форма КМ3 не создалась для новой смены");
+		km3.switchToTable(LOCATOR_KM6).switchToTable(LOCATOR_KM3);
+		++km3Tablerows;
+		Assert.assertEquals(km3.getExpectedDocsCountOnPage(km3Tablerows), km3Tablerows, "Новая форма КМ3 не создалась для новой смены");
 	}
 	
 	@Test( 	dependsOnMethods ="testNewKM3CreatesIfcurrentPrinted",
@@ -134,8 +152,9 @@ public class KM3Test extends AbstractTest{
 		returnPositions.clear();
 		returnPositions.put(1L, 1L * 1000);
 		purchaseReturn = (PurchaseEntity) cashEmulatorMainCash.nextRefundPositions(p1, returnPositions, true);
-		km3.switchToKm(LOCATOR_KM6).switchToKm(LOCATOR_KM3);
-		Assert.assertEquals(km3.getKmCountOnPage(), ++km3Tablerows, "Новая форма КМ3 не создалась для новой смены");
+		km3.switchToTable(LOCATOR_KM6).switchToTable(LOCATOR_KM3);
+		++km3Tablerows;
+		Assert.assertEquals(km3.getExpectedDocsCountOnPage(km3Tablerows), km3Tablerows, "Новая форма КМ3 не создалась для новой смены");
 
 	}
 	

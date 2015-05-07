@@ -11,9 +11,11 @@ import static ru.crystals.set10.utils.FlexMediator.*;
 
 public class  CashesPage extends OperDayPage{
 	
-	public static final String LOCATOR_ACTS_TAB = "id:shiftsNavigator/label:Акты;className:Tab";
 	public static final String LOCATOR_OPERDAY_TAB = "id:shiftsNavigator/label:Операционный день;className:Tab";
 	public static final String LOCATOR_PROBLEM_SHIFTS_TAB = "id:shiftsNavigator/label:Проблемные смены;className:Tab";
+	
+	public static final String LOCATOR_MAINCASH_TAB = "id:shiftsNavigator/label:Главная касса;className:Tab";
+	public static final String LOCATOR_ACTS_TAB = "id:shiftsNavigator/label:Акты;className:Tab";
 	
 	
 	public CashesPage(WebDriver driver) {

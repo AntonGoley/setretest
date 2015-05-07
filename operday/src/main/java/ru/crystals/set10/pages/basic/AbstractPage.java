@@ -1,17 +1,22 @@
 package ru.crystals.set10.pages.basic;
 
+import static ru.crystals.set10.utils.FlexMediator.waitForProperty;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.Set;
+
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
 import com.lowagie.text.pdf.PdfReader;
 import com.lowagie.text.pdf.parser.PdfTextExtractor;
+
 import ru.crystals.set10.utils.DisinsectorTools;
 
 
@@ -43,6 +48,10 @@ public abstract class  AbstractPage {
 	
 	public void isSWFReady() {
 		getWait().until(ExpectedConditions.presenceOfElementLocated(By.id("isSWFReady")));
+	}
+	
+	public void waitSpinner(String ID_SWF){
+		waitForProperty(getDriver(), ID_SWF, SPINNER, new String[]{"visible", "false"});
 	}
 	
 	public void switchWindow(Boolean closeMainWindow) {

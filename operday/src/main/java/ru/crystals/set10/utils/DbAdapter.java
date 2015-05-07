@@ -62,13 +62,14 @@ public class DbAdapter {
 	public  SqlRowSet queryForRowSet(String db, String sql) {
 		return connectionPool.get(db).queryForRowSet(sql); 
 	}
-	
 
 	public  String queryForString(String db, String sql) {
 		String result = "";
 		result = (String) connectionPool.get(db).queryForObject(sql, result.getClass());
 		return result;
 	}
+	
+	
 	
 	public void updateDb(String db, String sql){
 		connectionPool.get(db).update(sql);	

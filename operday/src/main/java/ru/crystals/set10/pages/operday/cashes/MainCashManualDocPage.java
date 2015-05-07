@@ -9,7 +9,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import static ru.crystals.set10.utils.FlexMediator.*;
 
 
-public class  MainCahsManualDoc extends CashesPage{
+public class  MainCashManualDocPage extends CashesPage{
 	
 	private static final String BUTTON_SAVE_CHANGES = "id:saveChangesButton";
 	private static final String BUTTON_BACK_TO_MAINCASH = "id:backButton";
@@ -31,19 +31,19 @@ public class  MainCahsManualDoc extends CashesPage{
 	public static final String FIELD_COMMENTS = "Комментарии";
 	
 	
-	public MainCahsManualDoc(WebDriver driver) {
+	public MainCashManualDocPage(WebDriver driver) {
 		super(driver);
 		getWait().until(ExpectedConditions.visibilityOfElementLocated(By.id(ID_OPERDAYSWF)));
 	}
 	
-	public MainCahsManualDoc saveChanges(){
+	public MainCashManualDocPage saveChanges(){
 		clickElement(getDriver(), ID_OPERDAYSWF, BUTTON_SAVE_CHANGES);
 		return this;
 	}
 	
-	public MainCashPage backToMainCash(){
+	public MainCashDocsPage backToMainCash(){
 		clickElement(getDriver(), ID_OPERDAYSWF, BUTTON_BACK_TO_MAINCASH);
-		return new MainCashPage(getDriver());
+		return new MainCashDocsPage(getDriver());
 	}
 	
 	/** сколько полей редактирования докумена на форме*/
@@ -53,7 +53,7 @@ public class  MainCahsManualDoc extends CashesPage{
 	}
 	
 	/** установить значение текстового поля*/
-	public MainCahsManualDoc setTextFieldValue(String fiels, String value){
+	public MainCashManualDocPage setTextFieldValue(String fiels, String value){
 		
 		return this;
 	}
