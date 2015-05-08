@@ -26,7 +26,8 @@ public class  CashDocsAbstractPage extends CashesPage{
 	/* локатор разный для таблицы Документы и КМ-3, КМ-6*/
 	private static String DOC_TABLE_LOCATOR = "";
 	
-	/* запрос определяет, включена главная касса или нет*/
+	/* запрос определяет, включена главная касса или нет,
+	 * проверка необходима только для проверки актов КМ-3, КМ-6*/
 	public static final String SQL_MAIN_CASH = "select property_value from sales_management_properties where property_key = 'main.cash.enabled'";
 	
 	public CashDocsAbstractPage(WebDriver driver) {
@@ -64,6 +65,8 @@ public class  CashDocsAbstractPage extends CashesPage{
 				getElementProperty(getDriver(), ID_OPERDAYSWF, ID + DOC_TABLE_LOCATOR, "length"));
 	}
 	
+	/* возвращает ожидаемое количество документов в таблице,
+	 * по истечении таймаута возвратит реальное количество*/
 	public int getExpectedDocsCountOnPage(int expectedCount){
 		int result = 0;
 		int timeout = 10;

@@ -12,6 +12,7 @@ import ru.crystals.setretailx.products.catalog.BarCode;
 import ru.crystals.setretailx.products.catalog.Department;
 import ru.crystals.setretailx.products.catalog.Good;
 import ru.crystals.setretailx.products.catalog.GoodsGroup;
+import ru.crystals.setretailx.products.catalog.Measure;
 import ru.crystals.setretailx.products.catalog.PluginProperty;
 import ru.crystals.setretailx.products.catalog.Price;
 
@@ -33,6 +34,8 @@ public class GoodGenerator {
 		weightGood.getPluginProperties().add(generatePluginProperty("plu-number", pluNumber));
 		/* генерим по умолчанию дополнительный весовой бар код*/
 		weightGood.getBarCodes().add(generateWeightBarCode(Config.WEIGHT_BARCODE_PREFIX, 7));
+		weightGood.getMeasure().setCode("2");
+		weightGood.getMeasure().setName("кг.");;
 		return weightGood;
 	}
 	
@@ -53,8 +56,19 @@ public class GoodGenerator {
 		bc.setCode(goodprefix);
 		bc.setCount(new BigDecimal(1));
 		bc.setDefaultCode(true);
-		
 		good.getBarCodes().add(bc);
+		
+		/*
+		 * spirit - 14
+		 * weight - 2
+		 * piece - 7
+		 * ciggy - 16
+		 */
+		Measure measure = new Measure();
+		measure.setCode("7");
+		measure.setName("шт.");
+		good.setMeasure(measure);
+		
 		good.getPrices().add(generatePrice(1L));
 		good.getPrices().add(generatePrice(2L));
 		

@@ -34,8 +34,8 @@ public class CheckGeneratorFunctionalTest {
 		
 		cashEmulator = CashEmulator.getCashEmulator(Config.RETAIL_HOST, Integer.valueOf(Config.SHOP_NUMBER), Integer.valueOf(String.valueOf(2)));
 		//cashEmulator = CashEmulator.getCashEmulator(Config.CENTRUM_HOST, Integer.valueOf(Config.VIRTUAL_SHOP_NUMBER), Integer.valueOf(Config.CASH_NUMBER ));
-		cashEmulator.setTimeOfset(86400000);
-		cashEmulator.useNextShift();
+		//cashEmulator.setTimeOfset(86400000 );
+		//cashEmulator.useNextShift();
 		//cashEmulator.nextIntroduction();
 
 	}
@@ -56,10 +56,11 @@ public class CheckGeneratorFunctionalTest {
 			//cashEmulator.nextIntroduction();
 			
 			//cashEmulator.changeCashUser(1);
+			
 			p1 = (PurchaseEntity) cashEmulator.nextPurchase(getCashPayment());
-			//cashEmulator.nextRefundAll(p1, false);
+			cashEmulator.nextRefundAll(p1, false);
 
-			//p2 = (PurchaseEntity) cashEmulator.nextPurchase(getBankCardPayment(BankCardPaymentEntity.class));
+			p2 = (PurchaseEntity) cashEmulator.nextPurchase(getBankCardPayment(BankCardPaymentEntity.class));
 			//returnPositions.put(1L,1000L);
 			//cashEmulator.changeCashUser(2);
 			//cashEmulator.nextRefundAll(p1, false);

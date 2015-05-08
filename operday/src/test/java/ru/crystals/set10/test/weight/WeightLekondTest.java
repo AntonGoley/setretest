@@ -44,9 +44,7 @@ public class WeightLekondTest extends WeightAbstractTest {
 	public void testGoodUnloadIfLecondBanSales(){
 		
 		/* Отправить товар и проверить, что он прогрузился в весы */
-		 
 		weightGood = goodGenerator.generateWeightGood(String.valueOf(pluNumber));
-		weightGood.setErpCode(weightGood.getMarkingOfTheGood().substring(8, 13));
 		soapSender.sendGood(weightGood);
 		
 		Assert.assertTrue(scales.waitPluLoaded(pluNumber), "Товар не загрузился в весы. PLU = " + pluNumber);
@@ -71,7 +69,6 @@ public class WeightLekondTest extends WeightAbstractTest {
 	public void testGoodNotLoadedIfLecondBanSales(){
 		pluNumber++;
 		weightGood = goodGenerator.generateWeightGood(String.valueOf(pluNumber));
-		weightGood.setErpCode(weightGood.getMarkingOfTheGood().substring(8, 13));
 		
 		/* сгенерить и отправить леконд, запрещающий продажу */
 		likondFrom = System.currentTimeMillis() - 3600 * 12 * 1000;
@@ -115,7 +112,6 @@ public class WeightLekondTest extends WeightAbstractTest {
 		
 		pluNumber++;
 		weightGood = goodGenerator.generateWeightGood(String.valueOf(pluNumber));
-		weightGood.setErpCode(weightGood.getMarkingOfTheGood().substring(8, 13));
 		
 		/* сгенерить и отправить леконд, разрешающий продажу */
 		likondFrom = System.currentTimeMillis() - 3600 * 24 * 1000;
@@ -141,7 +137,6 @@ public class WeightLekondTest extends WeightAbstractTest {
 
 		pluNumber++;
 		weightGood = goodGenerator.generateWeightGood(String.valueOf(pluNumber));
-		weightGood.setErpCode(weightGood.getMarkingOfTheGood().substring(8, 13));
 		
 		/* сгенерить и отправить леконд, разрешающий продажу */
 		likondFrom = System.currentTimeMillis() + 3600 * 24 * 1000;

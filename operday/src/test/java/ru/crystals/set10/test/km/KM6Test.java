@@ -76,7 +76,8 @@ public class KM6Test extends AbstractTest{
 		
 		cashEmulator.useNextShift();
 		//генерим чек
-		purchase = (PurchaseEntity) cashEmulator.nextPurchase();
+		purchase = (PurchaseEntity) purchaseGenerator.generatePurchaseWithPositions(10);
+		cashEmulator.nextPurchase(purchase);
 		//Возвращаем 1-ю позицию
 		returnPositions.put(1L, 1L * 1000);
 		purchaseReturn = (PurchaseEntity) cashEmulator.nextRefundPositions(purchase, returnPositions, true);
