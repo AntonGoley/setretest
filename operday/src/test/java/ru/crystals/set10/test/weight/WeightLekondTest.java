@@ -10,7 +10,7 @@ import ru.crystals.set10.utils.SoapRequestSender;
 import ru.crystals.setretailx.products.catalog.Good;
 import ru.crystals.setretailx.products.catalog.Likond;
 
-
+@Test(groups = {"retail"})
 public class WeightLekondTest extends WeightAbstractTest { 
 	
 	SoapRequestSender soapSender = new SoapRequestSender();
@@ -164,7 +164,7 @@ public class WeightLekondTest extends WeightAbstractTest {
 	 */
 	//@Test (description = "SRTE-119. Весовой товар загружается на весы при наступлении времени начала продажи, заданное в леконде",
 	//		enabled = false)
-	public void testGoodLoadedIfLecondStartTimeIsOn(){
-		
-	}
+//	public void testGoodLoadedIfLecondStartTimeIsOn(){
+//		
+//	}
 }

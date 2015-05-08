@@ -16,7 +16,7 @@ import ru.crystals.setretailx.products.catalog.Good;
 import ru.crystals.setretailx.products.catalog.Price;
 
 
-
+@Test(groups = {"retail"})
 public class WeightPricesTest extends WeightAbstractTest{
 	
 	/*
