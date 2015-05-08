@@ -171,7 +171,7 @@ public class VirtualScalesReader {
 	 * Необходимо для понимания, что plu в весах обновился
 	 */
 	public PluType getPluUpdated(PluType plu){
-		log.info("Ожидание обновления PLU в виртуальных весах..");
+		log.info("Ожидание обновления PLU = " +  plu.getNumber() + " в виртуальных весах..");
 		PluType resultPlu = plu;
 		int timeout = defaultTimeout;
 		
@@ -185,7 +185,7 @@ public class VirtualScalesReader {
 					if ( resultPlu.getPrice() != plu.getPrice() || 
 						 resultPlu.getExPrice() != plu.getExPrice() )
 					{
-						log.info("PLU успешно обновлен");
+						log.info("PLU = " +  plu.getNumber() + " успешно обновлен");
 						return resultPlu;
 					}
 				}

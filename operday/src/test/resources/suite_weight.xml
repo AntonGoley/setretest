@@ -1,27 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="Весовой модуль" preserve-order="true" configfailurepolicy="continue" >
+
+
+<suite name="Весовой модуль" preserve-order="true" configfailurepolicy="continue" > <!-- parallel="tests" thread-count="3" -->
+
 <listeners>
     <listener class-name="org.uncommons.reportng.HTMLReporter" />
  </listeners>
-<!-- 	 <test name="Загрузка/выгрузка товара на всесы" > -->
-<!-- 	<classes> -->
-<!-- 			<class name="ru.crystals.set10.test.weight.WeightBaseTest"/> -->
-<!-- 	</classes> -->
-<!-- 	</test> -->
-<!-- 	 <test name="Выгрузка из весов с запретом продаж (Леконды)" > -->
-<!-- 	<classes> -->
-<!-- 			<class name="ru.crystals.set10.test.weight.WeightLekondTest"/> -->
-<!-- 	</classes> -->
-<!-- 	</test> -->
-	
-	 <test name="Выгрузка акционных цена на весы (1, 2, 3, 4)" >
-	<classes>
-			<class name="ru.crystals.set10.test.weight.WeightPricesTest"/>
-	</classes>
+
+	 <test name="Загрузка/выгрузка товара на всесы" >
+		<classes>
+			<class name="ru.crystals.set10.test.weight.WeightBaseTest"/>
+		</classes>
 	</test>
-	
-		 <test name="Выгрузка из весов с запретом продаж (Леконды)" >
+	<test name="Выгрузка акционных цена на весы (1, 2, 3, 4)" >
+		<classes>
+			<class name="ru.crystals.set10.test.weight.WeightPricesTest"/>
+		</classes>
+	</test>
+	 <test name="Выгрузка из весов с запретом продаж (Леконды)" >
 	<classes>
 			<class name="ru.crystals.set10.test.weight.WeightLekondTest"/>
 	</classes>

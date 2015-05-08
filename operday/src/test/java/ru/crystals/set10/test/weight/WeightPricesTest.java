@@ -47,15 +47,13 @@ public class WeightPricesTest extends WeightAbstractTest{
 	
 	@BeforeClass
 	public void initData(){
-		
-		pluNumber++;
-		
-		scales.clearVScalesFileData();
+		int pluNum = pluNumber++;
+		prerareSuite();
 		soapSender.setSoapServiceIP(Config.RETAIL_HOST);
 		
-		weightGood = goodGenerator.generateWeightGood(String.valueOf(pluNumber));
+		weightGood = goodGenerator.generateWeightGood(String.valueOf(pluNum));
 		soapSender.sendGood(weightGood);
-		plu = scales.getPlu(pluNumber);
+		plu = scales.getPlu(pluNum);
 	}
 	
 	@BeforeMethod
@@ -175,7 +173,7 @@ public class WeightPricesTest extends WeightAbstractTest{
 			alwaysRun = true)
 	public void testPrice1Price2GreaterPrice4(){
 		PluType expPlu = plu;
-		price1.setPrice(priceVal300);
+		price1.setPrice(priceVal400);
 		price2.setPrice(priceVal200);
 		price4.setPrice(priceVal100);
 		

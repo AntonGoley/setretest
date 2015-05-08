@@ -2,6 +2,7 @@ package ru.crystals.set10.utils;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.Iterator;
 
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
@@ -27,8 +28,7 @@ public class GoodGenerator {
 	public static String GOODTYPE_SPIRIT = "ProductSpiritsEntity";
 	public static String GOODTYPE_CIGGY = "ProductCiggyEntity";
 	
-	
-	
+
 	public Good generateWeightGood(String pluNumber){
 		Good weightGood = generateGood(GOODTYPE_WEIGHT);
 		weightGood.getPluginProperties().add(generatePluginProperty("plu-number", pluNumber));
@@ -88,6 +88,19 @@ public class GoodGenerator {
 		bc.setCount(new BigDecimal(1));
 		bc.setDefaultCode(false);
 		return bc;
+	}
+	
+	public int getWeightPluNumber(Good weightGood){
+		Iterator<PluginProperty> it =  weightGood.getPluginProperties().iterator();
+		while (it.hasNext()){
+			PluginProperty property;
+			property = it.next();
+			if (property.getKey().equals("plu-number")){
+				return Integer.valueOf(property.getValue());
+			}
+		}
+		/* если нет PluginProperty, возвращаем 0*/
+		return 0; 
 	}
 	
 	private GoodsGroup generateGrop(){

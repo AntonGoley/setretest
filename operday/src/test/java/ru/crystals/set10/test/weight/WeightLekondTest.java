@@ -23,11 +23,8 @@ public class WeightLekondTest extends WeightAbstractTest {
 
 	@BeforeClass
 	public void initData(){
+		//prerareSuite();
 		soapSender.setSoapServiceIP(Config.RETAIL_HOST);
-		pluNumber++;
-		prerareSuite();
-		scales.clearVScalesFileData();
-		
 	}
 	
 	@BeforeMethod
@@ -42,12 +39,13 @@ public class WeightLekondTest extends WeightAbstractTest {
 	 */
 	@Test (description = "SRTE-119. Весовой товар выгружается из весов, если загружен леконд запрещающий продажу товара (время продажи закончилось вчера)")
 	public void testGoodUnloadIfLecondBanSales(){
+		int pluNum = pluNumber++;
 		
 		/* Отправить товар и проверить, что он прогрузился в весы */
-		weightGood = goodGenerator.generateWeightGood(String.valueOf(pluNumber));
+		weightGood = goodGenerator.generateWeightGood(String.valueOf(pluNum));
 		soapSender.sendGood(weightGood);
 		
-		Assert.assertTrue(scales.waitPluLoaded(pluNumber), "Товар не загрузился в весы. PLU = " + pluNumber);
+		Assert.assertTrue(scales.waitPluLoaded(pluNum), "Товар не загрузился в весы. PLU = " + pluNum);
 		
 		/* сгенерить и отправить леконд, запрещающий продажу */
 		likondFrom = System.currentTimeMillis() - 3600 * 12 * 1000;
@@ -58,7 +56,7 @@ public class WeightLekondTest extends WeightAbstractTest {
 		likond.setMarking(weightGood.getErpCode());
 		
 		soapSender.sendLicond(likond);
-		Assert.assertTrue(scales.waitPluUnLoaded(pluNumber), "Товар НЕ выгрузился из весов после загрузки ликонда, запрещающего продажу. PLU = " + pluNumber);
+		Assert.assertTrue(scales.waitPluUnLoaded(pluNumber), "Товар НЕ выгрузился из весов после загрузки ликонда, запрещающего продажу. PLU = " + pluNum);
 	}
 	
 	
@@ -67,8 +65,9 @@ public class WeightLekondTest extends WeightAbstractTest {
 			groups = "loadUnload",
 			priority = 1)
 	public void testGoodNotLoadedIfLecondBanSales(){
-		pluNumber++;
-		weightGood = goodGenerator.generateWeightGood(String.valueOf(pluNumber));
+		int pluNum = pluNumber++;
+		
+		weightGood = goodGenerator.generateWeightGood(String.valueOf(pluNum));
 		
 		/* сгенерить и отправить леконд, запрещающий продажу */
 		likondFrom = System.currentTimeMillis() - 3600 * 12 * 1000;
@@ -81,7 +80,7 @@ public class WeightLekondTest extends WeightAbstractTest {
 		
 		/* отправить товар*/
 		soapSender.sendGood(weightGood);
-		Assert.assertFalse(scales.waitPluLoaded(pluNumber),  "Товар не должен быть выгружен в весы, т.к ликонд, загруженый ранее запрещает продажу. PLU = " + pluNumber);
+		Assert.assertFalse(scales.waitPluLoaded(pluNum),  "Товар не должен быть выгружен в весы, т.к ликонд, загруженый ранее запрещает продажу. PLU = " + pluNum);
 	}
 	
 	@Test (description = "SRTE-119. Весовой товар загружается на весы, если загружен новый леконд, разрешающий продажу товара"
@@ -91,7 +90,9 @@ public class WeightLekondTest extends WeightAbstractTest {
 			priority = 1,
 			dependsOnMethods = "testGoodNotLoadedIfLecondBanSales")
 	public void testGoodLoadedIfLecondAllowSalesAfterBan(){
-		
+		/* берем PLU из товра предыдущего теста: testGoodNotLoadedIfLecondBanSales*/
+		int pluNum = goodGenerator.getWeightPluNumber(weightGood);
+
 		/* сгенерить и отправить леконд, разрешающий продажу товара, созданного в тесте testGoodNotLoadedIfLecondBanSales*/
 		likondFrom = System.currentTimeMillis() - 3600 * 2 * 1000;
 		likondTo = System.currentTimeMillis() + 3600 * 6 * 1000;
@@ -101,7 +102,7 @@ public class WeightLekondTest extends WeightAbstractTest {
 		likond.setMarking(weightGood.getErpCode());
 		soapSender.sendLicond(likond);
 		
-		Assert.assertTrue(scales.waitPluLoaded(pluNumber), "Товар не выгружен на весы, после загрузки ликонда, разрешающего продажу товара. PLU = " + pluNumber);
+		Assert.assertTrue(scales.waitPluLoaded(pluNum), "Товар не выгружен на весы, после загрузки ликонда, разрешающего продажу товара. PLU = " + pluNum);
 	}
 	
 	@Test (description = "SRTE-119. Весовой товар выгружается на весы, если загружен леконд разрешающий продажу товара (со вчера до завтра)", 
@@ -110,8 +111,9 @@ public class WeightLekondTest extends WeightAbstractTest {
 			alwaysRun = true)
 	public void testGoodLoadedIfLecondallowSales(){
 		
-		pluNumber++;
-		weightGood = goodGenerator.generateWeightGood(String.valueOf(pluNumber));
+		int pluNum = pluNumber++;
+		
+		weightGood = goodGenerator.generateWeightGood(String.valueOf(pluNum));
 		
 		/* сгенерить и отправить леконд, разрешающий продажу */
 		likondFrom = System.currentTimeMillis() - 3600 * 24 * 1000;
@@ -125,7 +127,7 @@ public class WeightLekondTest extends WeightAbstractTest {
 		/* отправить товар*/
 		soapSender.sendGood(weightGood);
 		
-		Assert.assertTrue(scales.waitPluLoaded(pluNumber),  "Товар не загрузился на весы, после загрузки ликонда, разрешающего продажу. PLU = " + pluNumber);
+		Assert.assertTrue(scales.waitPluLoaded(pluNum),  "Товар не загрузился на весы, после загрузки ликонда, разрешающего продажу. PLU = " + pluNum);
 	}
 	
 	
@@ -135,7 +137,8 @@ public class WeightLekondTest extends WeightAbstractTest {
 			alwaysRun = true)
 	public void testGoodNotLoadedIfLecondallowSalesInFuture(){
 
-		pluNumber++;
+		int pluNum = pluNumber++;
+		
 		weightGood = goodGenerator.generateWeightGood(String.valueOf(pluNumber));
 		
 		/* сгенерить и отправить леконд, разрешающий продажу */
@@ -150,7 +153,7 @@ public class WeightLekondTest extends WeightAbstractTest {
 		/* отправить товар*/
 		soapSender.sendGood(weightGood);
 		
-		Assert.assertFalse(scales.waitPluLoaded(pluNumber),  "Товар не загрузился на весы, после загрузки ликонда, разрешающего продажу. PLU = " + pluNumber);
+		Assert.assertFalse(scales.waitPluLoaded(pluNum),  "Товар не загрузился на весы, после загрузки ликонда, разрешающего продажу. PLU = " + pluNum);
 	}
 	
 	
