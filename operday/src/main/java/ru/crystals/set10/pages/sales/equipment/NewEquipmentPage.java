@@ -35,8 +35,7 @@ public class NewEquipmentPage extends SalesPage {
 		clickElement(getDriver(), ID_SALESSWF, String.format(SELECT_EQUPMENT_GROUP, equpmentGroup));
 		
 		clickElement(getDriver(), ID_SALESSWF, BUTTON_REGISTER_NEW_EQUIPMENT);
-		DisinsectorTools.delay(1000);
-		waitForProperty(getDriver(), ID_SALESSWF, SPINNER, new String[] {"isRunning", "false"});
+		waitSpinner(ID_SALESSWF);
 		return new EquipmentPage(getDriver());
 	}
 	

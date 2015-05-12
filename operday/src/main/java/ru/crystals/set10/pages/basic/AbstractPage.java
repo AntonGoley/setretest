@@ -51,6 +51,11 @@ public abstract class  AbstractPage {
 	}
 	
 	public void waitSpinner(String ID_SWF){
+		log.info("Ожидание спиннера...");
+		if (ID_SWF.equals(SalesPage.ID_SALESSWF)) {
+			DisinsectorTools.delay(1500);
+			return;
+		}
 		waitForProperty(getDriver(), ID_SWF, SPINNER, new String[]{"visible", "false"});
 	}
 	

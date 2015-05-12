@@ -36,7 +36,7 @@ public class  CheckSearchPage extends SearchFormPopUp implements SaveFile {
 	public void doSearch(){
 		clickElement(getDriver(), ID_OPERDAYSWF, BUTTON_SEARCH);
 		log.info("Выполнить поиск!");
-		waitForProperty(getDriver(), ID_OPERDAYSWF, SPINNER, new String[] {"visible", "false"});
+		waitSpinner(ID_OPERDAYSWF);
 		new CheckSearchPage(getDriver());
 	}
 	

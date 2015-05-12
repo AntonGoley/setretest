@@ -55,7 +55,7 @@ public class ShopPreferencesPage extends AbstractPage {
 		typeText(getDriver(), ID_SALESSWF, LOCATOR_CASHES_COUNT_INPUT, String.valueOf(cashCount));
 		totalCashesBefore = getTotalCashesInShop();
 		clickElement(getDriver(), ID_SALESSWF, LOCATOR_ADD_CASH_TO_SHOP_BUTTON);
-		waitForProperty(getDriver(), ID_SALESSWF, SPINNER, new String[] {"isRunning", "false"});
+		waitSpinner(ID_SALESSWF);
 		/*
 		 *  ждем пока счетчик касс увеличится на cashCount
 		 */

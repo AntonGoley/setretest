@@ -2,10 +2,7 @@ package ru.crystals.set10.utils;
 
 
 import static ru.crystals.set10.config.Config.VIRTUAL_WEIGHT_PATH;
-
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Iterator;
@@ -51,23 +48,10 @@ public class VirtualScalesReader {
             unmarchaller = context.createUnmarshaller();
             links = (Links)unmarchaller.unmarshal(virtualScales);
             
-            /*
-             * Читаeм файл виртуальных весов и записываем содержимое в 
-             * vScalesFileContent
-             */
-            BufferedReader br = new BufferedReader(new InputStreamReader(virtualScales.openStream()));
-            String fileContent;
-            while ((fileContent = br.readLine()) != null) {
-            	vScalesFileContent.append(fileContent).append("\n");
-            }
-            
             result = links.getLinkToPlu().iterator();
 
 	        } catch (JAXBException e) {
 	            e.printStackTrace();
-	        } catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
 			}
 		return result;
 	}
@@ -143,9 +127,6 @@ public class VirtualScalesReader {
 		return false;
 	}
 	
-	/*
-	 * 
-	 */
 	public PluType getPlu(int pluNumber){
 		PluType plu;
 		

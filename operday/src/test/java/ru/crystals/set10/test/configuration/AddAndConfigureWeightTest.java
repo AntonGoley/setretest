@@ -79,7 +79,7 @@ public class AddAndConfigureWeightTest extends AbstractTest{
 		weightGood
 			.setGoodAction(ACTION_FASOVKA)
 			.setPrefix(WEIGHT_BARCODE_PREFIX)
-			.setPLUGeneration(PLU_GENERATION_ERP)
+			.setPLUGeneration(PLU_GENERATION_ERP_AND_BAR_CODE)
 			.addGoodAction()
 			.goBack();
 	}

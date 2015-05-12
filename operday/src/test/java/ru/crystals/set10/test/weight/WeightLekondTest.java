@@ -56,7 +56,7 @@ public class WeightLekondTest extends WeightAbstractTest {
 		likond.setMarking(weightGood.getErpCode());
 		
 		soapSender.sendLicond(likond);
-		Assert.assertTrue(scales.waitPluUnLoaded(pluNumber), "Товар НЕ выгрузился из весов после загрузки ликонда, запрещающего продажу. PLU = " + pluNum);
+		Assert.assertTrue(scales.waitPluUnLoaded(pluNum), "Товар НЕ выгрузился из весов после загрузки ликонда, запрещающего продажу. PLU = " + pluNum);
 	}
 	
 	
@@ -139,7 +139,7 @@ public class WeightLekondTest extends WeightAbstractTest {
 
 		int pluNum = pluNumber++;
 		
-		weightGood = goodGenerator.generateWeightGood(String.valueOf(pluNumber));
+		weightGood = goodGenerator.generateWeightGood(String.valueOf(pluNum));
 		
 		/* сгенерить и отправить леконд, разрешающий продажу */
 		likondFrom = System.currentTimeMillis() + 3600 * 24 * 1000;

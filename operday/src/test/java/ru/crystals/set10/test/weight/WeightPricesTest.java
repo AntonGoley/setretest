@@ -34,8 +34,7 @@ public class WeightPricesTest extends WeightAbstractTest{
 	List<Price> prices;
 	
 	/*
-	 * Задаем значения по умолчанию: 
-	 * priceVal1 > priceVal2 > priceVal3 > priceVal4
+	 * Значение цен
 	 */
 	BigDecimal priceVal1; 
 	BigDecimal priceVal2; 
@@ -47,6 +46,7 @@ public class WeightPricesTest extends WeightAbstractTest{
 	
 	@BeforeClass
 	public void initData(){
+		/* тесты проводятся на одном товаре с PLU = pluNum */
 		int pluNum = pluNumber++;
 		prerareSuite();
 		soapSender.setSoapServiceIP(Config.RETAIL_HOST);

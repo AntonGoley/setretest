@@ -20,7 +20,7 @@ public class WeightGoodPage extends SalesPage{
 	public static final String PLU_GENERATION_ERP = "id:erpGenerationRadioButton";
 	public static final String PLU_GENERATION_GOOD_CODE = "id:codeGenerationRadioButton";
 	public static final String PLU_GENERATION_BAR_CODE = "id:barCodeGenerationRadioButton";
-	public static final String PLU_GENERATION_ERP_AND_BAR_CODE= "id:erpAndBarCodeGenerationRadioButton";
+	public static final String PLU_GENERATION_ERP_AND_BAR_CODE = "id:erpAndBarCodeGenerationRadioButton";
 	
 	
 	public static final String BACK_BUTTON = "label:К типам товаров и оплат";
