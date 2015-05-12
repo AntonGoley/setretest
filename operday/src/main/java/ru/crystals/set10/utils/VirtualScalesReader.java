@@ -250,28 +250,5 @@ public class VirtualScalesReader {
 			e.printStackTrace();
 		}
 	}
-	
-	public String getPluActionType(String pluNumber){
-		long timeout = 0;
-		vScalesFileContent.setLength(0);
-		/*
-		 * Проверяем, что файл весов создан
-		 */
-		getExpectedFileStatus(FILE_EXIST_RESPONSE);
-		while (timeout < 60000) {
-			Iterator<LinkToPluType> iterator = readVirtualScales(); 
-			LinkToPluType linkToPlu;
-			while (iterator.hasNext()){
-				linkToPlu = iterator.next();
-				if (linkToPlu.getPlu().getNumber() == Integer.valueOf(pluNumber)){
-					log.info(vScalesFileContent);
-					return linkToPlu.getActionType();
-				}
-			}
-			timeout+=500;
-		}	
-		log.info("PLU " + pluNumber + " не найден в заданиях на загрузку/выгрузку");
-		log.info(vScalesFileContent);
-		return "";
-	}
+
 }

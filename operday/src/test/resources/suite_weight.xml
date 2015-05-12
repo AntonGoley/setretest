@@ -2,7 +2,7 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 
 
-<suite name="Весовой модуль" preserve-order="true" configfailurepolicy="continue" > <!-- parallel="tests" thread-count="3" -->
+<suite name="Весовой модуль" preserve-order="true" configfailurepolicy="continue" > <!-- parallel="tests" thread-count="2" -->
 
 <listeners>
     <listener class-name="org.uncommons.reportng.HTMLReporter" />
