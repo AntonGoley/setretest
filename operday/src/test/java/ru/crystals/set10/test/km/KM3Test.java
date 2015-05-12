@@ -81,6 +81,8 @@ public class KM3Test extends AbstractTest{
 		purchaseReturn = (PurchaseEntity) cashEmulator.nextRefundPositions(purchase, returnPositions, false);
 	}
 	
+	
+	
 	@DataProvider (name = "Поля КМ3")
 	private static Object[][] km3Fields(){
 		BigDecimal sumRetunPositions  = purchaseReturn.getCheckSumEndBigDecimal();
@@ -123,38 +125,45 @@ public class KM3Test extends AbstractTest{
 			alwaysRun = true
 			)
 	public void testNewKM3CreatesIfcurrentPrinted(){
+		
+		km3Tablerows = km3.getDocCountOnPage();
+		
 		returnPositions.clear();
 		returnPositions.put(2L, 1L * 1000);
 		purchaseReturn = (PurchaseEntity) cashEmulator.nextRefundPositions(purchase, returnPositions, false);
 		km3.switchToTable(LOCATOR_KM6).switchToTable(LOCATOR_KM3);
-		++km3Tablerows;
-		Assert.assertEquals(km3.getExpectedDocsCountOnPage(km3Tablerows), km3Tablerows, "Новая форма КМ3 не создалась для нового чека возврата, после печати существующей КМ3");
+		
+		Assert.assertEquals(km3.getExpectedDocsCountOnPage(km3Tablerows + 1), km3Tablerows + 1, "Новая форма КМ3 не создалась для нового чека возврата, после печати существующей КМ3");
 	}
 	
 	@Test(  dependsOnMethods ="testNewKM3CreatesIfcurrentPrinted",
 			description = "SRTE-28. Новая форма КМ3 создается для новой смены",
 			alwaysRun = true)
 	public void testKM3CreatesForNewShift(){
+		
+		km3Tablerows = km3.getDocCountOnPage();
+		
 		returnPositions.clear();
 		returnPositions.put(3L, 1L * 1000);
 		cashEmulator.useNextShift();
 		purchaseReturn = (PurchaseEntity) cashEmulator.nextRefundPositions(purchase, returnPositions, false);
 		km3.switchToTable(LOCATOR_KM6).switchToTable(LOCATOR_KM3);
-		++km3Tablerows;
-		Assert.assertEquals(km3.getExpectedDocsCountOnPage(km3Tablerows), km3Tablerows, "Новая форма КМ3 не создалась для новой смены");
+		Assert.assertEquals(km3.getExpectedDocsCountOnPage(km3Tablerows + 1), km3Tablerows + 1, "Новая форма КМ3 не создалась для новой смены");
 	}
 	
 	@Test( 	dependsOnMethods ="testNewKM3CreatesIfcurrentPrinted",
 			description = "SRTE-28. Новая форма КМ3 создается для новой кассы",
 			alwaysRun = true)
 	public void testKM3CreatesForNewCash(){
+		
+		km3Tablerows = km3.getDocCountOnPage();
+		
 		PurchaseEntity p1 = (PurchaseEntity) cashEmulatorMainCash.nextPurchase();
 		returnPositions.clear();
 		returnPositions.put(1L, 1L * 1000);
 		purchaseReturn = (PurchaseEntity) cashEmulatorMainCash.nextRefundPositions(p1, returnPositions, true);
 		km3.switchToTable(LOCATOR_KM6).switchToTable(LOCATOR_KM3);
-		++km3Tablerows;
-		Assert.assertEquals(km3.getExpectedDocsCountOnPage(km3Tablerows), km3Tablerows, "Новая форма КМ3 не создалась для новой смены");
+		Assert.assertEquals(km3.getExpectedDocsCountOnPage(km3Tablerows + 1), km3Tablerows + 1, "Новая форма КМ3 не создалась для новой смены");
 
 	}
 	
