@@ -35,7 +35,7 @@ public class CheckGeneratorTest {
 		cashEmulator.nextIntroduction();
 	}
 	
-	@AfterGroups  (groups = {"simple_shift", "all_payments"})
+	@AfterGroups  (groups = {"simple_shift", "all_payments", "maincash"})
 	public void closeShift(){
 		cashEmulator.nextWithdrawal();
 		cashEmulator.nextZReport();
@@ -47,6 +47,20 @@ public class CheckGeneratorTest {
 		// оплата банковской картой и аннулирование чека
 		p1 = getBankCardPayment(BankCardPaymentEntity.class);
 		cashEmulator.nextPurchase(p1);
+	}
+	
+	@Test ( groups = "maincash",
+			description = "Сгенерить чек продажи и возврата")
+	public void testRefundCheck(){
+		// оплата банковской картой и аннулирование чека
+		p1 = getBankCardPayment(BankCardPaymentEntity.class);
+		cashEmulator.nextPurchase(p1);
+
+		//возвращаем первую позицию в кол-ве 1шт
+		HashMap<Long, Long> returnPositions = new HashMap<Long, Long>();
+		returnPositions.put(1L, 100L);
+		cashEmulator.nextRefundPositions(p1, returnPositions, false);
+		
 	}
 	
 	@Test ( groups = "all_payments",
