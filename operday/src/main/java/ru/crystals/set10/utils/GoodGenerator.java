@@ -29,15 +29,22 @@ public class GoodGenerator {
 	public static String GOODTYPE_CIGGY = "ProductCiggyEntity";
 	
 
-	public Good generateWeightGood(String pluNumber){
+	public Good generateWeightGoodWithNoBarCode(String pluNumber){
 		Good weightGood = generateGood(GOODTYPE_WEIGHT);
 		weightGood.getPluginProperties().add(generatePluginProperty("plu-number", pluNumber));
-		/* генерим по умолчанию дополнительный весовой бар код*/
-		weightGood.getBarCodes().add(generateWeightBarCode(Config.WEIGHT_BARCODE_PREFIX, 7));
 		weightGood.getMeasure().setCode("2");
 		weightGood.getMeasure().setName("кг.");;
 		return weightGood;
 	}
+	
+	
+	public Good generateWeightGood(String pluNumber){
+		Good weightGood = generateWeightGoodWithNoBarCode(pluNumber);
+		/* генерим по умолчанию дополнительный весовой бар код*/
+		weightGood.getBarCodes().add(generateWeightBarCode(Config.WEIGHT_BARCODE_PREFIX, 7));
+		return weightGood;
+	}
+	
 	
 	private Good generateGood(String goodType){
 		goodprefix = String.valueOf(prefix++);

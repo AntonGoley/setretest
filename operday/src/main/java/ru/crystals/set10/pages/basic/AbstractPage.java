@@ -52,6 +52,7 @@ public abstract class  AbstractPage {
 	
 	public void waitSpinner(String ID_SWF){
 		log.info("Ожидание спиннера...");
+		/* удалить проверку, когда перенесут новый спиннер в Sales */
 		if (ID_SWF.equals(SalesPage.ID_SALESSWF)) {
 			DisinsectorTools.delay(1500);
 			return;

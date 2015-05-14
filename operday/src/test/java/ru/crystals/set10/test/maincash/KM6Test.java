@@ -1,4 +1,4 @@
-package ru.crystals.set10.test.km;
+package ru.crystals.set10.test.maincash;
 
 import java.math.BigDecimal;
 import java.util.Date;

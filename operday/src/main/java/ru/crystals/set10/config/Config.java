@@ -29,8 +29,13 @@ public class Config {
     public static  String CHECK_COUNT;
     public static String NEXT_SHIFT;
     public static String VIRTUAL_WEIGHT_PATH;
-    public static String WEIGHT_BARCODE_PREFIX;
     
+    /*
+     * Настройки весового модуля
+     */
+    public static String WEIGHT_BARCODE_PREFIX;
+    public static String WEIGHT_BARCODEGENERATION_PREFIX;
+    public static String WEIGHT_BARCODEGENERATION_OFSET;
     
     /*
      * Кассы
@@ -227,7 +232,12 @@ public class Config {
          */
         VIRTUAL_WEIGHT_PATH = "http://" + RETAIL_HOST + ":" + props.getProperty("nginx.port") + props.getProperty("virtualweight.path");
         WEIGHT_BARCODE_PREFIX = props.getProperty("weight.barcodeprefix");
+        WEIGHT_BARCODEGENERATION_PREFIX = props.getProperty("weight.barcodegenerationp.refix");
+        WEIGHT_BARCODEGENERATION_OFSET = props.getProperty("weight.barcodegeneration.ofset");
         log.info("Path to virtual scales:   " + VIRTUAL_WEIGHT_PATH);
+        log.info("Weight prefix:   " + WEIGHT_BARCODE_PREFIX);
+        log.info("Weight barcode autogeneration prefix:   " + WEIGHT_BARCODEGENERATION_PREFIX);
+        log.info("Weight barcode autogeneration ofset:   " + WEIGHT_BARCODEGENERATION_OFSET);
     }
     
 }

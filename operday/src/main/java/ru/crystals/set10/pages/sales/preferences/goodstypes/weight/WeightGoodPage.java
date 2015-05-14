@@ -14,6 +14,7 @@ public class WeightGoodPage extends SalesPage{
 	
 	static final String SELECT_GOOD_ACTION = "id:productActionsComboBox";
 	static final String SELECT_PREFIX = "id:prefixesComboBox";
+	static final String LOCATOR_PLU_OFSET = "id:pluOffsetTextInput";
 	
 	static final String BUTTON_ADD_GOOD_ACTION= "label:Добавить действие с товаром";
 	
@@ -44,9 +45,14 @@ public class WeightGoodPage extends SalesPage{
 		return this;
 	}
 	
+	public WeightGoodPage setPLUOfset(String ofset){
+		selectElement(getDriver(), ID_SALESSWF,  LOCATOR_PLU_OFSET, ofset);
+		log.info("Смещение PLU: " + ofset);
+		return this;
+	}
 	
 	public WeightGoodPage setPLUGeneration(String PLUGeneration){
-		checkBoxValue(getDriver(), ID_SALESSWF, PLUGeneration, true);
+		radioButtonValue(getDriver(), ID_SALESSWF, PLUGeneration, true);
 		log.info("Способ генерации PLU: " + PLUGeneration);
 		return this;
 	}

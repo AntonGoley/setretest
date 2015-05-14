@@ -33,14 +33,14 @@ public class GoodParser {
 	private static final String SQL_GOODS_COUNT = "select count(*) from un_cg_product";
 	
 	private static final String SQL_GOODS_ALL = 
-			"SELECT  markingofthegood, barc.code as barcode, pr.name as name, lastimporttime, measure_code, vat, plugin_class_name " +
+			"SELECT  markingofthegood, barc.code as barcode, pr.name as name, lastimporttime, measure_code, vat, plugin_class_name, erpcode " +
 			"FROM  un_cg_product pr " +
 			"JOIN " +
 			"un_cg_barcode barc " +
 			"on barc.product_marking = pr.markingofthegood";
 	
 	private static final String SQL_GOODS = 
-			"SELECT  markingofthegood, barc.code as barcode, pr.name as name, lastimporttime, measure_code, vat, plugin_class_name " + 
+			"SELECT  markingofthegood, barc.code as barcode, pr.name as name, lastimporttime, measure_code, vat, plugin_class_name, erpcode " + 
 			"FROM  un_cg_product pr " +
 			"JOIN 		un_cg_barcode barc " +
 			"on barc.product_marking = pr.markingofthegood " +
@@ -80,6 +80,8 @@ public class GoodParser {
 	        pe.setName(goods.getString("name"));
 	        pe.setNds(Float.valueOf(18.0F));
 	        pe.setNdsClass("NDS");
+	        pe.setErpCode(goods.getString("erpcode"));
+	        
 	        /** В поле дискриминатор берем только название класса без "Billet" */
 	        discriminator = goods.getString("plugin_class_name").split("\\.");
 	        pe.setDiscriminator(discriminator[discriminator.length - 1].replace("Billet", ""));

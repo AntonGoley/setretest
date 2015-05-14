@@ -12,6 +12,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import ru.crystals.set10.pages.operday.OperDayPage;
 import ru.crystals.set10.pages.operday.searchcheck.CheckSearchPage;
+import ru.crystals.set10.utils.DisinsectorTools;
 
 
 public class  CashOperDayTabPage extends OperDayPage{
@@ -73,6 +74,7 @@ public class  CashOperDayTabPage extends OperDayPage{
 	public CashOperDayTabPage refreshOperdayTab(){
 		navigatePage(CheckSearchPage.class, TABLEREPORTS);
 		navigatePage(CashesPage.class, CASHES);
+		DisinsectorTools.delay(1000);
 		return this;
 	}
 	

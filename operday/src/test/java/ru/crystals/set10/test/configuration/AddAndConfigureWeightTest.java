@@ -19,6 +19,8 @@ import static ru.crystals.set10.pages.sales.shops.RetailShopInfoTabPage.*;
 import static ru.crystals.set10.pages.sales.preferences.goodstypes.weight.WeightGoodPage.*;
 import static ru.crystals.set10.pages.sales.preferences.SalesPreferencesPage.TAB_TYPES_GOODS_PAYMENTS;
 import static ru.crystals.set10.config.Config.WEIGHT_BARCODE_PREFIX;
+import static ru.crystals.set10.config.Config.WEIGHT_BARCODEGENERATION_OFSET;
+import static ru.crystals.set10.config.Config.WEIGHT_BARCODEGENERATION_PREFIX;;
 
 
 public class AddAndConfigureWeightTest extends AbstractTest{
@@ -77,9 +79,15 @@ public class AddAndConfigureWeightTest extends AbstractTest{
 				.navigateTab(TAB_TYPES_GOODS_PAYMENTS)
 				.selectProductTypeItem(ProductTypeItems.WEIGHT_GOOD, WeightGoodPage.class);
 		weightGood
+			.setPLUGeneration(PLU_GENERATION_ERP_AND_BAR_CODE)
 			.setGoodAction(ACTION_FASOVKA)
 			.setPrefix(WEIGHT_BARCODE_PREFIX)
-			.setPLUGeneration(PLU_GENERATION_ERP_AND_BAR_CODE)
+			.addGoodAction();
+			
+		weightGood	
+			.setGoodAction(ACTION_FASOVKA)
+			.setPrefix(WEIGHT_BARCODEGENERATION_PREFIX)
+			.setPLUOfset(WEIGHT_BARCODEGENERATION_OFSET)
 			.addGoodAction()
 			.goBack();
 	}

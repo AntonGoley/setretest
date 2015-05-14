@@ -25,10 +25,21 @@ public class FlexMediator {
 		ecxecute(driver, String.format("document.getElementById('%s').doFlexMouseDown('%s')", swfSrc, flexId));
 	}
 	
+	public static void doFlexMouseUp(WebDriver driver, String swfSrc, String flexId) {
+		waitForElement(driver, swfSrc, flexId);
+		ecxecute(driver, String.format("document.getElementById('%s').doFlexMouseUp('%s')", swfSrc, flexId));
+	}
+	
 	public static void checkBoxValue(WebDriver driver, String swfSrc, String flexId, boolean checkBoxValue) {
 		waitForElement(driver, swfSrc, flexId);
 		ecxecute(driver, String.format("document.getElementById('%s').doFlexCheckBox('%s', '%s')", swfSrc, flexId, checkBoxValue));	
 	}
+	
+	public static void radioButtonValue(WebDriver driver, String swfSrc, String flexId, boolean value) {
+		waitForElement(driver, swfSrc, flexId);
+		ecxecute(driver, String.format("document.getElementById('%s').doFlexProperty('%s', 'selected', '%s')", swfSrc, flexId, value));	
+	}
+	
 	
 	/*
 	 * Вернуть свойство элемента, который представлен на странице и visible
@@ -52,6 +63,11 @@ public class FlexMediator {
 		return  Integer.valueOf(
 				ecxecuteAndReturnString(driver, String.format("return document.getElementById('%s').getElementsNum('%s')", swfSrc, flexId)));
 	}
+	
+//	public static void findElements(WebDriver driver, String swfSrc, String flexId){
+//		log.info(
+//				ecxecuteAndReturnString(driver, String.format("return document.getElementById('%s').findElement('%s')", swfSrc, flexId)));
+//	}
 	
 	/*
 	 * args - [property value] 

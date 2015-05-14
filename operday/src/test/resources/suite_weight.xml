@@ -8,7 +8,7 @@
     <listener class-name="org.uncommons.reportng.HTMLReporter" />
  </listeners>
 
-	 <test name="Загрузка/выгрузка товара на всесы" >
+	 <test name="Загрузка/выгрузка товара на весы" >
 		<classes>
 			<class name="ru.crystals.set10.test.weight.WeightBaseTest"/>
 		</classes>
@@ -19,8 +19,13 @@
 		</classes>
 	</test>
 	 <test name="Выгрузка из весов с запретом продаж (Леконды)" >
-	<classes>
+		<classes>
 			<class name="ru.crystals.set10.test.weight.WeightLekondTest"/>
-	</classes>
+		</classes>
+	</test>
+	 <test name="Автоматическая генерация PLU с учетом префикса" >
+		<classes>
+			<class name="ru.crystals.set10.test.weight.WeightPLUGenerationTest"/>
+		</classes>
 	</test>
 </suite> 
