@@ -101,10 +101,8 @@ public class KM3Test extends AbstractTest{
 	
 	@Test( description = "SRTE-28. Если в систему пришел первый возвратный чек, создается форма КМ3")
 	public void testKM3CreatesAfter1stRefund(){
-		
 		km3.switchToTable(LOCATOR_KM6).switchToTable(LOCATOR_KM3);
 		km3 = new KmPage(getDriver());
-		km3Tablerows = km3.getDocCountOnPage();
 		Assert.assertEquals(km3.getExpectedDocsCountOnPage(km3Tablerows + 1), km3Tablerows + 1, "Не появилась форма КМ3");
 	}
 	

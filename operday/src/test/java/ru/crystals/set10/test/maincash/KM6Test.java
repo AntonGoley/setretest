@@ -109,8 +109,7 @@ public class KM6Test extends AbstractTest{
 	public void testKM6CreatesAfterCloseShiftOnCash(){
 		km6.switchToTable(LOCATOR_KM3).switchToTable(LOCATOR_KM6);
 		km6 = new KmPage(getDriver());
-		++km6Tablerows;
-		Assert.assertEquals(km6.getExpectedDocsCountOnPage(km6Tablerows), km6Tablerows, "Не появилась форма КМ6");
+		Assert.assertEquals(km6.getExpectedDocsCountOnPage(km6Tablerows + 1), km6Tablerows + 1, "Не появилась форма КМ6");
 	}
 	
 	@Test (	dependsOnMethods ="testKM6CreatesAfterCloseShiftOnCash",
