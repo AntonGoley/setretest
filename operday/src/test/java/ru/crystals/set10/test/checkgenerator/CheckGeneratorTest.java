@@ -60,7 +60,6 @@ public class CheckGeneratorTest {
 		HashMap<Long, Long> returnPositions = new HashMap<Long, Long>();
 		returnPositions.put(1L, 100L);
 		cashEmulator.nextRefundPositions(p1, returnPositions, false);
-		
 	}
 	
 	@Test ( groups = "all_payments",
