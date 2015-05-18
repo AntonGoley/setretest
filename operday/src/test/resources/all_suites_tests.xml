@@ -8,6 +8,6 @@
  </listeners>
  
 <suite-files> 
-	<suite-file = "suite_KM.xml"/>
+	<suite-file  "suite_KM.xml"/>
 </suite-files>	
 </suite> 
