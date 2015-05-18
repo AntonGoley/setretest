@@ -12,7 +12,7 @@
 	<suite-file path="suite_KM.xml" />
 	<suite-file path="suite_accompanying.xml" />
 	<suite-file path="suite_tablereports.xml" />
-	<suite-file path="suite_operday.xmll" />
+	<suite-file path="suite_operday.xml" />
 	<suite-file path="suite_other.xml" />
 </suite-files>	
 </suite> 
