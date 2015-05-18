@@ -46,7 +46,7 @@ public class WeightGoodPage extends SalesPage{
 	}
 	
 	public WeightGoodPage setPLUOfset(String ofset){
-		selectElement(getDriver(), ID_SALESSWF,  LOCATOR_PLU_OFSET, ofset);
+		typeText(getDriver(), ID_SALESSWF,  LOCATOR_PLU_OFSET, ofset);
 		log.info("Смещение PLU: " + ofset);
 		return this;
 	}
