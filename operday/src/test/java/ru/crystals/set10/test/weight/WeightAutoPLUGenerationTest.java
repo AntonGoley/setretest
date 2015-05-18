@@ -10,7 +10,7 @@ import ru.crystals.setretailx.products.catalog.BarCode;
 import ru.crystals.setretailx.products.catalog.Good;
 
 @Test(groups = {"retail"})
-public class WeightPLUGenerationTest extends WeightAbstractTest { 
+public class WeightAutoPLUGenerationTest extends WeightAbstractTest { 
 	
 	
 	SoapRequestSender soapSender = new SoapRequestSender();

@@ -15,7 +15,7 @@
 	</test>
 	<test name="Выгрузка акционных цена на весы (1, 2, 3, 4)" >
 		<classes>
-			<class name="ru.crystals.set10.test.weight.WeightPricesTest"/>
+			<class name="ru.crystals.set10.test.weight.WeightAdverstingPricesTest"/>
 		</classes>
 	</test>
 	 <test name="Выгрузка из весов с запретом продаж (Леконды)" >
@@ -25,7 +25,7 @@
 	</test>
 	 <test name="Автоматическая генерация PLU с учетом префикса" >
 		<classes>
-			<class name="ru.crystals.set10.test.weight.WeightPLUGenerationTest"/>
+			<class name="ru.crystals.set10.test.weight.WeightAutoPLUGenerationTest"/>
 		</classes>
 	</test>
 </suite> 

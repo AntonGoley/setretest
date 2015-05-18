@@ -17,7 +17,7 @@ import ru.crystals.setretailx.products.catalog.Price;
 
 
 @Test(groups = {"retail"})
-public class WeightPricesTest extends WeightAbstractTest{
+public class WeightAdverstingPricesTest extends WeightAbstractTest{
 	
 	/*
 	 * 	Цена 1 - базовая цена, действует без карты,
