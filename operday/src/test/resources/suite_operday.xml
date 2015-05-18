@@ -10,7 +10,7 @@
 <!-- СМЕНЫ ОПЕРДНЯ --> 	
   	<test name="Информация о кассире на вкладке Операционный день" >
 	  	<classes>
-	  		<class name="ru.crystals.set10.test.CashierNameOperDayTab"/>
+	  		<class name="ru.crystals.set10.test.CashierNameOperDayTabTest"/>
 		</classes>	 
   	</test>
   	
