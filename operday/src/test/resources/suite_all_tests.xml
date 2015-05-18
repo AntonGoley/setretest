@@ -3,9 +3,6 @@
 
 
 <suite name="Все тесты в одном сьюте" preserve-order="true" configfailurepolicy="continue" >
-<listeners>
-    <listener class-name="org.uncommons.reportng.HTMLReporter" />
- </listeners>
  
 <suite-files> 
 	<suite-file path="suite_search.xml" />
@@ -14,5 +11,6 @@
 	<suite-file path="suite_tablereports.xml" />
 	<suite-file path="suite_operday.xml" />
 	<suite-file path="suite_other.xml" />
+	<suite-file path="suite_weight.xml" />
 </suite-files>	
 </suite> 
