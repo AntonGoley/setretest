@@ -2,128 +2,17 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 
 
-<suite name="Все тесты в одном сьюте" preserve-order="true" configfailurepolicy="continue">
+<suite name="Все тесты в одном сьюте" preserve-order="true" configfailurepolicy="continue" >
 <listeners>
     <listener class-name="org.uncommons.reportng.HTMLReporter" />
  </listeners>
  
-  <!-- ПОИСК ЧЕКА --> 		
-  	<test name="Поиск чека" >
-	  	<classes>
-	  		<class name="ru.crystals.set10.test.search.SearchCheckBySumsTest"/>
-			<class name="ru.crystals.set10.test.search.SearchCheckByCheckTypeGroupTest"/>
-			<class name="ru.crystals.set10.test.search.SearchCheckByPaymentGroupTest"/>
-			<class name="ru.crystals.set10.test.search.SearchCheckByOtherGroupsTest"/>
-		</classes>	 
-  	</test>
-
-   	<!-- ПОИСК ТРАНЗАКЦИЙ ОПЛАТЫ --> 		
-  	<test name="Поиск транзакций оплаты" >
-	  	<classes>
-			<class name="ru.crystals.set10.test.search.SearchTransactionsTest"/>
-		</classes>	 
-  	</test>
-
-  <!-- СОПРОВОДИТЕЛЬНЫЕ ДОКУМЕНТЫ -->
-	<test name="Сопроводительные документы. Печать товарной накладной" >
-	  	<classes>
-	  		<class name="ru.crystals.set10.test.documents.accompanying.AccompanyingInvoiceContentTest"/>
-		</classes>	 
-  	</test>	
-  	
-  	<test name="Сопроводительные документы. Печать номенклатуры кассового чека" >
-	  	<classes>
-		  	<class name="ru.crystals.set10.test.documents.accompanying.AccompanyingNomenclatureContentTest"/>
-		</classes>	 
-  	</test>	
-  	
-  	<test name="Сопроводительные документы. Печать товарного чека" >
-	  	<classes>
-		  	<class name="ru.crystals.set10.test.documents.accompanying.AccompanyingGoodsCheckContentTest"/>
-		</classes>	 
-  	</test>	
-  	
-    <test name="Сопроводительные документы. Печать счета фактуры" >
-	  	<classes>
-		  	<class name="ru.crystals.set10.test.documents.accompanying.AccompanyingGoodsBillContentTest"/>
-		</classes>	 
-  	</test>		
-  	  	
-   <!-- ТАБЛИЧНЫЕ ОТЧЕТЫ --> 	
-	<test name="Табличные отчеты. Отчет по рекламным акциям">
-	  		<classes>	
-	  			<class name="ru.crystals.set10.test.tablereports.AdverstingTableReportTest"/>
-	  		</classes>	
-  	</test>	
-  	<test name="Табличные отчеты. Отчет по товару на ТК">
-	  		<classes>	
-	  			<class name="ru.crystals.set10.test.tablereports.GoodOnTKReportTest"/>
-	  		</classes>	
-  	</test>	
-  	<test name="Табличные отчеты. Отчет по прайс чекерам">
-	  		<classes>	
-	  			<class name="ru.crystals.set10.test.tablereports.PriceCheckerReportTest"/>
-	  		</classes>	
-  	</test>	
-  	<test name="Табличные отчеты. Отчет по количеству PLU в весах">
-	  		<classes>	
-	  			<class name="ru.crystals.set10.test.tablereports.PLUinWeightReportTest"/>
-	  		</classes>	
-  	</test>	
-	<test name="Табличные отчеты. Отчет по регистрационным номерам касс">
-	  		<classes>	
-	  			<class name="ru.crystals.set10.test.tablereports.CashRegNumbersReportTest"/>
-	  		</classes>	
-  	</test>	
-	
-	<test name="Табличные отчеты. Прейскурант на табачные изделия" >
-	  	<classes>
-		  	<class name="ru.crystals.set10.test.tablereports.MRCPriceReportTest"/>
-		  	<class name="ru.crystals.set10.test.tablereports.MRCPriceReportWithLekondsTest"/>
-		</classes>	 
-  	</test>	
-  	
-   	<test name="Табличные отчеты. Отчет о некорректной акционной цене"> 
- 	  		<classes>	 
- 	  			<class name="ru.crystals.set10.test.tablereports.WrongAdverstingPriceTest"/>
- 	  		</classes>	 
-   	</test>	  		 
-  	<test name="Просмотр в чеке информации по банковским транзакциям" >
-	  	<classes>
-			<class name="ru.crystals.set10.test.BankTransactionInCheckTest"/>
-		</classes>	 
-  	</test>
- 
-   <!-- КМ3, КМ6, ОТЧЕТ ПО ВОЗВРАТАМ --> 	
-  	<test name="КМ3, KM6" >
-	  	<classes>
-	  		<class name="ru.crystals.set10.test.maincash.KM3Test"/>
-	  		<class name="ru.crystals.set10.test.maincash.KM6Test"/>
-		</classes>	 
-  	</test>
-  	<test name="Табличные отчеты. Отчет по возвратам" >
-	  	<classes>
-			<class name="ru.crystals.set10.test.tablereports.RefundChecksReportTest"/>
-		</classes>	 
-  	</test>
-  	
-<!--     КАРТОЧКА ТОВАРА  	 -->
-  	<test name="Поля карточки товара" >
-	  	<classes>
-			<class name="ru.crystals.set10.test.GoodsAdditionalFieldsTest"/>
-		</classes>	 
-  	</test>
-  	
-    <!-- АЛКОГОЛЬНЫЕ ОГРАНИЧЕНИЯ --> 
-  	<test name="Выгрузка в SAP алкогольных ограничений" >
-	  	<classes>
-	  		<class name="ru.crystals.set10.test.SpiritRestrictionsToSAPTest"/>
-		</classes>	 
-  	</test>	
-  	<!-- СМЕНЫ ОПЕРДНЯ --> 	
-  	<test name="Информация о кассире на вкладке Операционный день" >
-	  	<classes>
-	  		<class name="ru.crystals.set10.test.CashierNameOperDayTabTest"/>
-		</classes>	 
-  	</test>
+<suite-files> 
+	<suite-file path="suite_search.xml" />
+	<suite-file path="suite_KM.xml" />
+	<suite-file path="suite_accompanying.xml" />
+	<suite-file path="suite_tablereports.xml" />
+	<suite-file path="suite_operday.xmll" />
+	<suite-file path="suite_other.xml" />
+</suite-files>	
 </suite> 
