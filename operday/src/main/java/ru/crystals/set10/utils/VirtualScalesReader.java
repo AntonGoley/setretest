@@ -6,13 +6,10 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Iterator;
-
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
-
 import org.apache.log4j.Logger;
-
 import ru.crystals.scales.tech.core.scales.virtual.xml.LinkToPluType;
 import ru.crystals.scales.tech.core.scales.virtual.xml.Links;
 import ru.crystals.scales.tech.core.scales.virtual.xml.PluType;
@@ -200,6 +197,7 @@ public class VirtualScalesReader {
 					return true;
 				}
 				connection.connect();
+				
 				timeout--;
 				DisinsectorTools.delay(delay);
 			}

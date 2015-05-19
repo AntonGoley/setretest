@@ -28,4 +28,10 @@
 			<class name="ru.crystals.set10.test.weight.WeightAutoPLUGenerationTest"/>
 		</classes>
 	</test>
+	 <test name="Выгрузка из весов товаров без действующих цен" >
+		<classes>
+			<class name="ru.crystals.set10.test.weight.WeightInvalidPricesTest"/>
+		</classes>
+	</test>
+	
 </suite> 
