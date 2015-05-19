@@ -13,7 +13,7 @@
 			<class name="ru.crystals.set10.test.weight.WeightBaseTest"/>
 		</classes>
 	</test>
-	<test name="Выгрузка акционных цена на весы (1, 2, 3, 4)" >
+	<test name="Выгрузка акционных цен на весы (1, 2, 3, 4)" >
 		<classes>
 			<class name="ru.crystals.set10.test.weight.WeightAdverstingPricesTest"/>
 		</classes>

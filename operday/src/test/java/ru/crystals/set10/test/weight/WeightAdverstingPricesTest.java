@@ -48,7 +48,6 @@ public class WeightAdverstingPricesTest extends WeightAbstractTest{
 	public void initData(){
 		/* тесты проводятся на одном товаре с PLU = pluNum */
 		int pluNum = pluNumber++;
-		prerareSuite();
 		soapSender.setSoapServiceIP(Config.RETAIL_HOST);
 		
 		weightGood = goodGenerator.generateWeightGood(String.valueOf(pluNum));
