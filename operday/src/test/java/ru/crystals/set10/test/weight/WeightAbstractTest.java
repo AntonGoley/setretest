@@ -1,11 +1,15 @@
 package ru.crystals.set10.test.weight;
 
 import org.testng.annotations.BeforeSuite;
+import org.testng.annotations.Test;
+
 import ru.crystals.set10.config.Config;
 import ru.crystals.set10.test.AbstractTest;
 import ru.crystals.set10.utils.DbAdapter;
 import ru.crystals.set10.utils.VirtualScalesReader;
 
+
+@Test(groups = {"retail"})
 public class WeightAbstractTest extends AbstractTest{
 	
 	protected static VirtualScalesReader scales = new VirtualScalesReader();
