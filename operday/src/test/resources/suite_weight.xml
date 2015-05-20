@@ -33,5 +33,10 @@
 			<class name="ru.crystals.set10.test.weight.WeightInvalidPricesTest"/>
 		</classes>
 	</test>
+		 <test name="Загрузка и обновление полей весового товара" >
+		<classes>
+			<class name="ru.crystals.set10.test.weight.WeightFieldsOnLabelTest"/>
+		</classes>
+	</test>
 	
 </suite> 

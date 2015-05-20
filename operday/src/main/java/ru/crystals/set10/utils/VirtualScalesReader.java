@@ -161,7 +161,8 @@ public class VirtualScalesReader {
 				if (resultPlu.getNumber() == plu.getNumber()){
 					//TODO: сравнить объекты
 					if ( resultPlu.getPrice() != plu.getPrice() || 
-						 resultPlu.getExPrice() != plu.getExPrice() )
+						 resultPlu.getExPrice() != plu.getExPrice() ||
+						!resultPlu.getCertificationType().equals(plu.getCertificationType()) )
 					{
 						log.info("PLU = " +  plu.getNumber() + " успешно обновлен");
 						return resultPlu;

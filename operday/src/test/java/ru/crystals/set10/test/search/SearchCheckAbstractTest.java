@@ -1,6 +1,8 @@
 package ru.crystals.set10.test.search;
 
 import org.testng.Assert;
+import org.testng.annotations.AfterSuite;
+import org.testng.annotations.Test;
 
 import ru.crystals.pos.check.PurchaseEntity;
 import ru.crystals.set10.config.Config;
@@ -16,6 +18,7 @@ import static ru.crystals.set10.pages.operday.OperDayPage.SEARCH_CHECK;
 import static ru.crystals.set10.pages.operday.searchcheck.SearchFormPopUp.FILTER_CATEGORY_CASH_NUMBER;
 
 
+@Test (groups={"centrum", "retail"})
 public class SearchCheckAbstractTest extends AbstractTest{
 	
 	MainPage mainPage;
@@ -28,6 +31,12 @@ public class SearchCheckAbstractTest extends AbstractTest{
 	
 	static PurchaseEntity purchase;
 	static int searchResult = 0;
+	
+	
+	@AfterSuite
+	public void closeShift(){
+		cashEmulatorSearchCheck.nextZReport();
+	}
 	
 	/*
 	 *  Переход на страницу поиска

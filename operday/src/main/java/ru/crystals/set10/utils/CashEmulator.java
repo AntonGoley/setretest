@@ -254,7 +254,6 @@ public class CashEmulator {
 	    // Сумма наличных продаж
 	    rse.setSumCashPurchase(sumPurchaseFiscal - sumReturnFiscal);
 	    
-	    shift.setShiftClose(dateClose);
 	    rse.setId(Long.valueOf(reportId++));
 	    rse.setDateCommit(dateClose);
 
@@ -271,6 +270,7 @@ public class CashEmulator {
 	    rse.setIncresentTotalStart(100L);
 	    rse.setIncresentTotalFinish(200L);
 	    
+	    shift.setShiftClose(dateClose);
 	    sendDocument(rse);
 	    log.info("Отправить Z отчет..");
 	    ifCheckInRetail((ReportShiftEntity) rse);
@@ -541,7 +541,8 @@ public class CashEmulator {
       ue.setFirstName(String.format("Cashier_%s", String.valueOf(cashNumber) + "_first_name"));
       ue.setLastName(String.format("Cashier_%s", String.valueOf(cashNumber) + "_last_name"));
       ue.setMiddleName(String.format("Cashier_%s", String.valueOf(cashNumber) + "_middle_name"));
-      // Сейчас, при настройке заводим только одного кассира с номером 1
+      
+      /* Сейчас, при настройке заводим только одного кассира с номером 1 */
       ue.setTabNum(String.valueOf(1L));
       ue.setSessions(new ArrayList<SessionEntity>());
       ue.getSessions().add(se);
@@ -554,8 +555,9 @@ public class CashEmulator {
     	String lastName = String.format("LName_tab%s", String.valueOf(tabnum));
     	String middleName = "MName";
     	
-    	/** закрыть предыдущую сессию */
+    	/* закрыть предыдущую сессию */
     	shift.getSessionStart().setDateEnd(new Date(System.currentTimeMillis() - yesterday));
+    	sendCashMessage();
     	
     	SessionEntity se = new SessionEntity();
         se.setDateBegin(new Date(System.currentTimeMillis() - yesterday));
