@@ -44,7 +44,7 @@ public class SearchCheckAbstractTest extends AbstractTest{
 	 *  все тесты должны выполняться последовательно в одном потоке
 	 */
 
-	public void openSearchPage() {
+	protected void openSearchPage() {
 		mainPage = new LoginPage(getDriver(), TARGET_HOST_URL).doLogin(Config.MANAGER, Config.MANAGER_PASSWORD);
 		searchCheck = mainPage.openOperDay().navigatePage(CheckSearchPage.class, SEARCH_CHECK);
 	}	
