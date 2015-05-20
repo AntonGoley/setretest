@@ -46,7 +46,7 @@ public class GoodGenerator {
 	}
 	
 	
-	private Good generateGood(String goodType){
+	public Good generateGood(String goodType){
 		goodprefix = String.valueOf(prefix++);
 		Good good = new Good();
 		good.setName("Товар_" + goodprefix);
@@ -76,8 +76,9 @@ public class GoodGenerator {
 		measure.setName("шт.");
 		good.setMeasure(measure);
 		
-		good.getPrices().add(generatePrice(1L));
-		good.getPrices().add(generatePrice(2L));
+		Price price1 = generatePrice(1L);
+		good.getPrices().add(price1);
+		good.getPrices().add(generatePriceWithValue(2L, price1.getPrice().subtract(new BigDecimal("5.99")))); /*цена 1 генерится не меньше 10*/
 		
 		return good;
 	}
@@ -146,6 +147,13 @@ public class GoodGenerator {
 		
 		return price;
 	}
+	
+	public Price generatePriceWithValue(long number, BigDecimal value){
+		Price price =  generatePrice(number);
+		price.setPrice(value);
+		return price;
+	}
+	
 	
 	public XMLGregorianCalendar getDate(long date){
 		XMLGregorianCalendar result = null;

@@ -99,7 +99,7 @@ public class FlexMediator {
 	public static boolean  waitForElementPresent(WebDriver driver, String swfSrc, String flexId){
 		DisinsectorTools.delay(100);
 		int timeout = 0;
-		String result = "false";
+		//String result = "false";
 		boolean resultBoolean = false;
 		while (timeout < 25000 ){
 			/*

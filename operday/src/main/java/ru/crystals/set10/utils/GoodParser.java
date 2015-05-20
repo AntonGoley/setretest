@@ -1,7 +1,6 @@
 package ru.crystals.set10.utils;
 
 import static ru.crystals.set10.utils.DbAdapter.DB_RETAIL_SET;
-import static ru.crystals.set10.utils.DbAdapter.DB_CENTRUM_SET;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;

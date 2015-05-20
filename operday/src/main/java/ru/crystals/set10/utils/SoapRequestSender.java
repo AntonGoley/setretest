@@ -5,7 +5,6 @@ import javax.xml.bind.DatatypeConverter;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
-
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -17,9 +16,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -27,11 +24,9 @@ import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
-
 import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
-
 import ru.crystals.set10.config.Config;
 import ru.crystals.setretailx.products.catalog.Good;
 import ru.crystals.setretailx.products.catalog.Likond;
@@ -167,34 +162,12 @@ public class SoapRequestSender{
 		assertSOAPResponse(RETURN_MESSAGE_CORRECT, ti);
 	}
 	
-	/*
-	 * Метод посылает товары, и ждет ответа status="3" (товары успешно импортировались)
-	 */
-	public HashMap<String, String> sendGoods(String request, HashMap<String, String> params){
-		ti = generateTI();
-		this.soapRequest = String.format(soapRequestGoods, encodeBase64(processRequestParams(request, params)), ti);
-		this.service = ERP_INTEGRATION_GOOSERVICE; 
-		this.method = METHOD_GOODS_WITHTI;
-		params.put("ti", ti);
-		log.info("Отправить товары. SOAP request: \n" + this.soapRequest); 
-		log.info("Параметры товара: "); 
-		for (String key:params.keySet()){
-			log.info(key + " = " + params.get(key));
-		}
-		
-		sendSOAPRequest();
-		assertSOAPResponse(RETURN_MESSAGE_CORRECT, ti);
-		return params;
-	}
-	
-
 	public String sendGood(Good good){
 		GoodsCatalog goodsCatalog = new GoodsCatalog();
 		List<Good> gList = new ArrayList<Good>();
 		gList.add(good);
 		goodsCatalog.setGoods(gList);
 		return send(goodsCatalog);
-		
 	}	
 	
 	public String sendLicond(Likond likond){
@@ -227,17 +200,6 @@ public class SoapRequestSender{
 		sendSOAPRequest();
 		assertSOAPResponse(RETURN_MESSAGE_CORRECT, ti);
 		return ti;
-	}
-	
-	
-	
-	private String processRequestParams(String request, HashMap<String, String> params){
-		for (String param:params.keySet()){
-			if (!param.equals("ti")) {
-				request = request.replace(param, params.get(param));
-			}	
-		}
-		return request;
 	}
 	
 	public void sendAdversting(String request, String ti){

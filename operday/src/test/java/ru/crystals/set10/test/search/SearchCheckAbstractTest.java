@@ -71,7 +71,7 @@ public class SearchCheckAbstractTest extends AbstractTest{
 		purchase = (PurchaseEntity) cashEmulatorSearchCheck.nextRefundAll(superPurchase, false);
 	}
 	
-	public void testExcelExport(String reportLocator, String reportFileNamePattern){
+	protected void testExcelExport(String reportLocator, String reportFileNamePattern){
 		long fileSize = 0;
 		log.info("Проверить сохранение файла результатов поиска " + reportFileNamePattern);
 		fileSize =  searchCheck.exportFileData(chromeDownloadPath, reportFileNamePattern, searchCheck, reportLocator).length();

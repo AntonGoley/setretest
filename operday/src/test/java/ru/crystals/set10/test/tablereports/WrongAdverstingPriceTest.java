@@ -1,36 +1,40 @@
 package ru.crystals.set10.test.tablereports;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-
+import java.util.List;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-
 import ru.crystals.set10.config.Config;
 import ru.crystals.set10.pages.operday.HTMLRepotResultPage;
 import ru.crystals.set10.pages.operday.tablereports.WrongAdverstingPriceConfigPage;
 import ru.crystals.set10.test.dataproviders.TableReportsDataprovider;
-import ru.crystals.set10.utils.DisinsectorTools;
+import ru.crystals.set10.utils.GoodGenerator;
 import ru.crystals.set10.utils.SoapRequestSender;
+import ru.crystals.setretailx.products.catalog.Good;
+import ru.crystals.setretailx.products.catalog.Price;
 import static ru.crystals.set10.pages.operday.tablereports.ReportConfigPage.EXCELREPORT;
 import static ru.crystals.set10.pages.operday.tablereports.TableReportPage.*;
+import static ru.crystals.set10.utils.GoodGenerator.*;
+
 
 @Test (groups = {"centrum", "retail"})
 public class WrongAdverstingPriceTest extends AbstractReportTest{
 	
 	WrongAdverstingPriceConfigPage reportConfigPage;
 	SoapRequestSender soapSender = new SoapRequestSender();
+	GoodGenerator goodGenerator = new GoodGenerator();
 	String reportNamePattern = "IncorrectActionPrice*.xls";
 	
+	private Good goodPrice4BiggerThanPrice2;
+	private Good goodPrice3BiggerThanPrice1;
+	private Good goodPrice3BiggerThanPrice2;;
+	private Good goodPrice2BiggerThanPrice1;
 	
-	private static HashMap<String, String> price4BiggerThanPrice2;
-	private static HashMap<String, String> price3BiggerThanPrice1;
-	private static HashMap<String, String> price3BiggerThanPrice2;
-	private static HashMap<String, String> price2BiggerThanPrice1;
-	
+	List<Price> emptyPrices = new ArrayList<Price>();
 	
 	@BeforeClass
 	public void navigateToReport() {
@@ -45,72 +49,80 @@ public class WrongAdverstingPriceTest extends AbstractReportTest{
 		doHTMLReport(reportConfigPage, false);
 	}	
 	
-	private static void setTnputData(){
-		long marking_prefix = new Date().getTime(); 
-		long barcode_prefix = new Date().getTime();
+	private Price getPriceByNumber(Good good, Long priceNumber){
+		List<Price> prices = good.getPrices();
+		for (int i=0; i<prices.size(); i++ ) {
+			if (prices.get(i).getNumber().equals(priceNumber)){
+				return prices.get(i);
+			}
+		}
+		return new Price();
+	}
+	
+	private  void setInputData(){
 		
-		price4BiggerThanPrice2 =  new HashMap<String, String>();
-			price4BiggerThanPrice2.put("${marking-of-the-good}", String.valueOf(marking_prefix) + "_ST");
-			price4BiggerThanPrice2.put("${goodgroup}", String.valueOf(barcode_prefix));
-			price4BiggerThanPrice2.put("${price_1}","99.12");
-			price4BiggerThanPrice2.put("${price_2}","99.11");
-			price4BiggerThanPrice2.put("${price_4}","100.10");
-			price4BiggerThanPrice2.put("${adversting_identifier}","Price_4 > price_2");
-			price4BiggerThanPrice2.put("${shop}", TARGET_SHOP);
+		goodPrice4BiggerThanPrice2 = goodGenerator.generateGood(GOODTYPE_PIECE);
+			Price price4 = goodGenerator.generatePrice(4L);
+			getPriceByNumber(goodPrice4BiggerThanPrice2, 1L).setPrice(new BigDecimal("120.79"));
+			getPriceByNumber(goodPrice4BiggerThanPrice2, 2L).setPrice(new BigDecimal("100.89"));
+			price4.setPrice(new BigDecimal("110.99"));
 			
-		price3BiggerThanPrice1 =  new HashMap<String, String>();
-			price3BiggerThanPrice1.put("${marking-of-the-good}", String.valueOf(marking_prefix - 99) + "_ST");
-			price3BiggerThanPrice1.put("${goodgroup}", String.valueOf(barcode_prefix - 99));
-			price3BiggerThanPrice1.put("${price_1}","203.32");
-			price3BiggerThanPrice1.put("${price_2}","201.33");
-			price3BiggerThanPrice1.put("${price_3}","204.33");
-			price3BiggerThanPrice1.put("${adversting_identifier}","Price_3 > price_1");	
-			price3BiggerThanPrice1.put("${shop}", TARGET_SHOP);
+			price4.setDiscountIdentifier("Price_4 bigger than  price_2");
+			goodPrice4BiggerThanPrice2.getPrices().add(price4);
+			goodPrice4BiggerThanPrice2.getShopIndices().add(new BigInteger((TARGET_SHOP)));
+		
+		goodPrice3BiggerThanPrice1 = goodGenerator.generateGood(GOODTYPE_PIECE);
+			Price price3 = goodGenerator.generatePrice(3L);
+			getPriceByNumber(goodPrice3BiggerThanPrice1, 1L).setPrice(new BigDecimal("99.79"));
+			getPriceByNumber(goodPrice3BiggerThanPrice1, 2L).setPrice(new BigDecimal("89.89"));
+			price3.setPrice(new BigDecimal("101.99"));
 			
-		price3BiggerThanPrice2 =  new HashMap<String, String>();
-			price3BiggerThanPrice2.put("${marking-of-the-good}", String.valueOf(marking_prefix - 199) + "_ST");
-			price3BiggerThanPrice2.put("${goodgroup}", String.valueOf(barcode_prefix - 199));
-			price3BiggerThanPrice2.put("${price_1}","303.33");
-			price3BiggerThanPrice2.put("${price_2}","301.32");
-			price3BiggerThanPrice2.put("${price_3}","302.33");
-			price3BiggerThanPrice2.put("${adversting_identifier}","Price_3 > price_2");	
-			price3BiggerThanPrice2.put("${shop}", TARGET_SHOP);
+			price3.setDiscountIdentifier("Price_3 bigger than price_1");
+			goodPrice3BiggerThanPrice1.getPrices().add(price3);
+			goodPrice3BiggerThanPrice1.getShopIndices().add(new BigInteger((TARGET_SHOP)));
+		
+		goodPrice3BiggerThanPrice2 = goodGenerator.generateGood(GOODTYPE_PIECE);
+			Price _price3 = goodGenerator.generatePrice(3L);
+			getPriceByNumber(goodPrice3BiggerThanPrice2, 1L).setPrice(new BigDecimal("299.79"));
+			getPriceByNumber(goodPrice3BiggerThanPrice2, 2L).setPrice(new BigDecimal("289.89"));
+			_price3.setPrice(new BigDecimal("290.99"));
 			
-		price2BiggerThanPrice1 =  new HashMap<String, String>();
-			price2BiggerThanPrice1.put("${marking-of-the-good}", String.valueOf(marking_prefix - 299) + "_ST");
-			price2BiggerThanPrice1.put("${goodgroup}",String.valueOf(barcode_prefix - 299));
-			price2BiggerThanPrice1.put("${price_1}","301.33");
-			price2BiggerThanPrice1.put("${price_2}","302.32");
-			price2BiggerThanPrice1.put("${adversting_identifier}","");	
-			price2BiggerThanPrice1.put("${shop}", TARGET_SHOP);
+			_price3.setDiscountIdentifier("Price_3 bigger than price_2");
+			goodPrice3BiggerThanPrice2.getPrices().add(_price3);
+			goodPrice3BiggerThanPrice2.getShopIndices().add(new BigInteger((TARGET_SHOP)));
+			
+		goodPrice2BiggerThanPrice1 = goodGenerator.generateGood(GOODTYPE_PIECE);
+			getPriceByNumber(goodPrice2BiggerThanPrice1, 1L).setPrice(new BigDecimal("10.99"));
+			getPriceByNumber(goodPrice2BiggerThanPrice1, 2L).setPrice(new BigDecimal("12.99"));
+			goodPrice2BiggerThanPrice1.getShopIndices().add(new BigInteger((TARGET_SHOP)));
 	}
 	
 	@DataProvider(name = "Цены")
 	private Object[][] priceData(){
-		setTnputData();
+		setInputData();
 		soapSender.setSoapServiceIP(TARGET_HOST);
 		return new Object[][]{
-				{"Price_4> price_2", DisinsectorTools.getFileContentAsString("wrong_adversting_price_good_price_2_4.txt"), price4BiggerThanPrice2},
-				{"Price_3> price_1", DisinsectorTools.getFileContentAsString("wrong_adversting_price_good_price_1_3.txt"), price3BiggerThanPrice1},
-				{"Price_3> price_2", DisinsectorTools.getFileContentAsString("wrong_adversting_price_good_price_1_3.txt"), price3BiggerThanPrice2},
-				{"Price_2> price_1", DisinsectorTools.getFileContentAsString("wrong_adversting_price_good_price_1_2.txt"), price2BiggerThanPrice1},
+				{"Price_4> price_2", goodPrice4BiggerThanPrice2, getPriceByNumber(goodPrice4BiggerThanPrice2, 4L).getDiscountIdentifier()},
+				{"Price_3> price_1", goodPrice3BiggerThanPrice1, getPriceByNumber(goodPrice3BiggerThanPrice1, 3L).getDiscountIdentifier()},
+				{"Price_3> price_2", goodPrice3BiggerThanPrice2, getPriceByNumber(goodPrice3BiggerThanPrice2, 3L).getDiscountIdentifier()},
+				{"Price_2> price_1", goodPrice2BiggerThanPrice1, ""},
 		};
 	}
 	
 	@Test (	description = "SRTE-67. Проверить условие попадания рекламной цены в отчет на ТК",
 			dataProvider = "Цены"
 			)
-	public void testAdverstingPrice(String description, String request, HashMap<String, String> params){
+	public void testAdverstingPrice(String description, Good good, String advIdentifier){
 		ArrayList<String> reportRow;
 		
-		soapSender.sendGoods(request, params);
+		soapSender.sendGood(good);
 		getDriver().navigate().refresh();
 		htmlReportResults = new HTMLRepotResultPage(getDriver());
-		reportRow = htmlReportResults.getLineValuesByCellValue(params.get("${marking-of-the-good}"));
+		reportRow = htmlReportResults.getLineValuesByCellValue(good.getMarkingOfTheGood());
 
-		Assert.assertTrue(reportRow.contains(params.get("${marking-of-the-good}")), "В отчете не отображается значение кода товара");
-		Assert.assertTrue(reportRow.contains(params.get("${goodgroup}")), "В отчете не отображается значение для группы товара" );
-		Assert.assertTrue(reportRow.contains(params.get("${adversting_identifier}")), "В отчете неверно отображается название рекламной акции");
+		Assert.assertTrue(reportRow.contains(good.getMarkingOfTheGood()), "В отчете не отображается значение кода товара");
+		Assert.assertTrue(reportRow.contains(good.getGroup().getCode()), "В отчете не отображается значение для группы товара" );
+		Assert.assertTrue(reportRow.contains(advIdentifier), "В отчете неверно отображается название рекламной акции");
 	}
 	
 	@Test (	description = "SRTE-67. Проверить названия отчета и название колонок в шапке таблицы отчета \"Некорректная акционная цена\"", 
