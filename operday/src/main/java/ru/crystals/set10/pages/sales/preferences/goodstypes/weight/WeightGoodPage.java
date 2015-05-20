@@ -52,7 +52,7 @@ public class WeightGoodPage extends SalesPage{
 	}
 	
 	public WeightGoodPage setPLUGeneration(String PLUGeneration){
-		radioButtonValue(getDriver(), ID_SALESSWF, PLUGeneration, true);
+		clickElement(getDriver(), ID_SALESSWF, PLUGeneration);
 		log.info("Способ генерации PLU: " + PLUGeneration);
 		return this;
 	}
