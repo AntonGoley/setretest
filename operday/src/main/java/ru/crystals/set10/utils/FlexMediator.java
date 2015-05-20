@@ -1,5 +1,7 @@
 package ru.crystals.set10.utils;
 
+import java.util.ArrayList;
+
 import org.apache.log4j.Logger;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
@@ -98,11 +100,20 @@ public class FlexMediator {
 		DisinsectorTools.delay(100);
 		int timeout = 0;
 		String result = "false";
+		boolean resultBoolean = false;
 		while (timeout < 25000 ){
-			result = (String) ecxecuteAndReturnString(driver, String.format("return document.getElementById('%s').findElement('%s')", swfSrc, flexId));
-			if (result.equals("true")) {
+			/*
+			 * Т.к в методе findElement поменяли возвращаемый тим с String на List, пока так:
+			 */
+//			result = (String) ecxecuteAndReturnArray(driver, String.format("return document.getElementById('%s').findElement('%s')", swfSrc, flexId));
+//			if (result.equals("true")) {
+//				return true;
+//			}
+			resultBoolean = ecxecuteAndReturnArray(driver, String.format("return document.getElementById('%s').findElement('%s')", swfSrc, flexId));
+			if (resultBoolean) {
 				return true;
 			}
+			
 			DisinsectorTools.delay(200);
 			timeout+=200;
 		}
@@ -135,6 +146,19 @@ public class FlexMediator {
 		JavascriptExecutor js = (JavascriptExecutor) driver;
 		return (String) js.executeScript(command);
 	}
+	
+	/*
+	 * TODO: сделать обрабоку для findElement
+	 */
+	private static boolean ecxecuteAndReturnArray(WebDriver driver, String command) {
+		JavascriptExecutor js = (JavascriptExecutor) driver;
+		ArrayList<Object> result = (ArrayList<Object>) js.executeScript(command);
+		if (result.size() > 0) {
+			return true;
+		}
+		return false;
+	}
+	
 	
 	private static void ecxecute(WebDriver driver, String command) {
 		String result;
