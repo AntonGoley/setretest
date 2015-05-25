@@ -20,7 +20,6 @@ public class WeightFieldsOnLabelTest extends WeightAbstractTest {
 	@BeforeClass
 	public void initData(){
 		soapSender.setSoapServiceIP(Config.RETAIL_HOST);
-		prerareSuite();
 	}
 	
 	@Test (description = "SRL-739. Обновление типа сертификации в весах")
