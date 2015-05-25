@@ -3,9 +3,7 @@ package ru.crystals.set10.pages.sales.equipment;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-
 import ru.crystals.set10.pages.basic.SalesPage;
-import ru.crystals.set10.utils.DisinsectorTools;
 import static ru.crystals.set10.utils.FlexMediator.*;
 
 public class NewEquipmentPage extends SalesPage {

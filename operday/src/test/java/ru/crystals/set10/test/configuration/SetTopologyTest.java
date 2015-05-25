@@ -1,6 +1,7 @@
  package ru.crystals.set10.test.configuration;
 
 
+import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
@@ -10,8 +11,9 @@ import ru.crystals.set10.pages.basic.*;
 import ru.crystals.set10.pages.sales.cashiers.CashiersMainPage;
 import ru.crystals.set10.pages.sales.cashiers.CashierConfigPage;
 import ru.crystals.set10.pages.sales.equipment.NewEquipmentPage;
-import ru.crystals.set10.pages.sales.externalsystems.ExternalSystemsBankTabPage;
+import ru.crystals.set10.pages.sales.externalsystems.ExternalSystemsPage;
 import ru.crystals.set10.pages.sales.externalsystems.NewBankPage;
+import ru.crystals.set10.pages.sales.externalsystems.NewExternalProcessingPage;
 import ru.crystals.set10.pages.sales.shops.JuristicPersonPage;
 import ru.crystals.set10.pages.sales.shops.ShopPage;
 import ru.crystals.set10.pages.sales.shops.ShopPreferencesPage;
@@ -22,6 +24,7 @@ import ru.crystals.set10.test.AbstractTest;
 import ru.crystals.set10.utils.DbAdapter;
 import ru.crystals.set10.utils.DisinsectorTools;
 import ru.crystals.set10.utils.SoapRequestSender;
+import static ru.crystals.set10.pages.sales.externalsystems.ExternalSystemsPage.*;
 
 
 
@@ -37,8 +40,9 @@ public class SetTopologyTest extends AbstractTest{
 	JuristicPersonPage juristicPerson;
 	CashierConfigPage cashierConfig;
 	NewEquipmentPage  newEqupment;
-	ExternalSystemsBankTabPage bankTab;
 	NewBankPage newBankPage;
+	NewExternalProcessingPage newExternalProcessingPage;
+	ExternalSystemsPage externalSystemPage;
 	
 	
 	@BeforeClass
@@ -116,12 +120,6 @@ public class SetTopologyTest extends AbstractTest{
 		addCashier();
 	}
 	
-	@Test ( priority = 6)
-	public void addBankTest(){
-		addBank(Config.BANK_NAME_1);
-		addBank(Config.BANK_NAME_2);
-	}
-	
 	
 //	@Test (	
 //			description = "Добавить права пользователю manager на центруме"
@@ -151,6 +149,28 @@ public class SetTopologyTest extends AbstractTest{
 		dbAdapter.updateDb(DbAdapter.DB_RETAIL_SET, String.format("update users_server_user " +
 				"set firstname = '%s', lastname='%s', middlename='%s' ", Config.MANAGER_NAME, Config.MANAGER_LASTNAME, Config.MANAGER_MIDDLENAME ));
 	}
+	
+	
+//	@Test
+//	public void testAddRegionAndCity(){
+//		int totalRegions = 0;
+//		int totalCities = 0;
+//		
+//		topologyPage = salesPage.navigateMenu(1, TopologyPage.class);
+//		totalRegions = topologyPage.getRegionsCount();
+//		regionPage = topologyPage.addRegion().setRegionName("TestRegion");
+//		
+//		totalCities = regionPage.getCitiesCount();
+//		cityPage = regionPage.addCity();
+//		regionPage = cityPage.goBack();
+//		
+//		Assert.assertEquals(regionPage.getCitiesCount(), totalCities + 1, "Город не добавился");
+//		
+//		topologyPage = regionPage.goBack();
+//		
+//		Assert.assertEquals(topologyPage.getRegionsCount(), totalRegions + 1, "Регион не добавился");
+//		
+//	}
 	
 	private void addRegionAndCity() {
 		topologyPage = salesPage.navigateMenu(1, TopologyPage.class);
@@ -222,16 +242,53 @@ public class SetTopologyTest extends AbstractTest{
 				Config.CASHIER_ADMIN_ROLE);
 	}
 	
-	private void addBank(String bankName){
+	
+	/*
+	 * Добавление банков
+	 */
+	@DataProvider(name="banks")
+	public Object[][] banks() {
+		return new Object[][]{
+				{Config.BANK_NAME_1},
+				{Config.BANK_NAME_2}
+		};
+	}
+	
+	@Test (dataProvider = "banks")
+	public void addBank(String bankName){
 		getDriver().navigate().refresh();
 		DisinsectorTools.delay(1000);
-		bankTab = salesPage
-				.navigateMenu(3, ExternalSystemsBankTabPage.class);
-		newBankPage = bankTab.addNewBank();
+		externalSystemPage = salesPage
+				.navigateMenu(3, ExternalSystemsPage.class);
+		newBankPage = externalSystemPage.addEntity(NewBankPage.class);
 		newBankPage.addBank(bankName);
 	}
 	
-	@AfterClass
+	/*
+	 * Добавление процессингов
+	 */
+	@DataProvider(name="processing")
+	public Object[][] processing() {
+		return new Object[][]{
+				//TODO: вынести в конфиг?
+				{"Подарочные карты", "Подарочные карты ЦФТ"},
+				{"Бонусные процессинги", "Спасибо от Сбербанка"}
+		};
+	}
+	
+	@Test (dataProvider = "processing")
+	public void addExternalProcessing(String processingType, String processingValue){
+		getDriver().navigate().refresh();
+		DisinsectorTools.delay(1000);
+		externalSystemPage = salesPage
+				.navigateMenu(3, ExternalSystemsPage.class);
+		externalSystemPage.navigateTab(TAB_EXTERNAL_PROCESSINGS);
+		newExternalProcessingPage = externalSystemPage.addEntity(NewExternalProcessingPage.class);
+		newExternalProcessingPage.addProcessing(processingType, processingValue);
+	}
+	
+	
+	//@AfterClass
 	private void sendGoods(){
 		SoapRequestSender soapSender  = new SoapRequestSender();
 		soapSender.sendGoodsToStartTesting(Config.CENTRUM_HOST, "goods.txt");

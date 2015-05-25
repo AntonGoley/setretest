@@ -12,6 +12,8 @@ import ru.crystals.set10.pages.basic.SalesPage;
 public class TopologyPage extends SalesPage{
 	
 	static final String LOCATOR_ADD_REGION= "label:Добавить регион";
+	static final String LOCATOR_DATA_GRID= "id:dataGrid";
+	
 	
 	public TopologyPage(WebDriver driver) {
 		super(driver);
@@ -23,5 +25,9 @@ public class TopologyPage extends SalesPage{
 		return new RegionPage(getDriver());
 	}
 	
+	public int getRegionsCount(){
+		return Integer.valueOf(
+				getElementProperty(getDriver(), ID_SALESSWF, LOCATOR_DATA_GRID, "realDataLength"));
+	}
 	
 }

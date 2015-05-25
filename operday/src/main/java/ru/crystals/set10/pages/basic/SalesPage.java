@@ -29,7 +29,7 @@ public class SalesPage extends AbstractPage {
 		// + 1 из-за hiddenObject, размещенного в начале
 		doFlexMouseDown(getDriver(), ID_SALESSWF, MENU_ELEMENT_LOCATOR + Integer.toString(menuItemPosition + 1));
 		clickElement(getDriver(), ID_SALESSWF, MENU_ELEMENT_LOCATOR + Integer.toString(menuItemPosition + 1));
-		waitSpinner(ID_SALESSWF);
+		//waitSpinner(ID_SALESSWF);
 		DisinsectorTools.delay(1000);
 		return PageFactory.initElements(getDriver(), page);
 	}

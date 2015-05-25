@@ -16,6 +16,7 @@ public class RegionPage extends AbstractPage{
 	static final String LOCATOR_REGION_NAME_INPUT = "id:regionNameTI";
 	static final String LOCATOR_ADD_CITY_BUTTON = "label:Добавить город";
 	static final String LOCATOR_BACK_BUTTON = "label:К регионам";
+	static final String LOCATOR_DATA_GRID = "id:dataGrid";
 	
 	
 	public RegionPage(WebDriver driver) {
@@ -33,6 +34,11 @@ public class RegionPage extends AbstractPage{
 	public CityPage addCity(){
 		clickElement(getDriver(), ID_SALESSWF, LOCATOR_ADD_CITY_BUTTON);
 		return new CityPage(getDriver());
+	}
+	
+	public int getCitiesCount(){
+		return Integer.valueOf(
+				getElementProperty(getDriver(), ID_SALESSWF, LOCATOR_DATA_GRID, "realDataLength"));
 	}
 	
 	public TopologyPage goBack(){

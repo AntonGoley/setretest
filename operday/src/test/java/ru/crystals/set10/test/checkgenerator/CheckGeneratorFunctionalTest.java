@@ -59,7 +59,12 @@ public class CheckGeneratorFunctionalTest {
 			returnPositions.put(1L, 1000L);
 			cashEmulator.nextRefundPositions(p1, returnPositions, false);
 			
-			cashEmulator.changeCashUser(2);
+			p1 = cashEmulator.nextCancelledPurchaseWithoutSending();
+			p1.setReturn();
+			cashEmulator.nextPurchase(p1);
+			
+			
+			//cashEmulator.changeCashUser(2);
 
 		}
 	}

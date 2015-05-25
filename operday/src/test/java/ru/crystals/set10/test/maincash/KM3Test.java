@@ -166,6 +166,18 @@ public class KM3Test extends AbstractTest{
 
 	}
 	
+	@Test(description = "SRL-782. В отчет КМ3 не должны попадать аннулированые возвратные чеки")
+	public void testNoAnnulateRefundInKM3(){
+		
+		km3Tablerows = km3.getDocCountOnPage();
+		
+		PurchaseEntity p1 = cashEmulator.nextCancelledPurchaseWithoutSending();
+		p1.setReturn();
+		cashEmulator.nextPurchase(p1);
+		km3.switchToTable(LOCATOR_KM6).switchToTable(LOCATOR_KM3);
+		Assert.assertEquals(km3.getExpectedDocsCountOnPage(km3Tablerows), km3Tablerows, "КМ3 не должен создаваться, если приходит аннулированый возвратный чек");
+	}
+	
 //	
 //	@Test( description = "SRTE-28. Если в форме КМ3 12 чеков возврата, следующий возвратный чек попадает в новую форму КМ3")
 //	public void testNewKM3After12RefundChecks(){
