@@ -3,7 +3,9 @@
 
 
 <suite name="Все тесты в одном сьюте" preserve-order="true" configfailurepolicy="continue" >
- 
+ 	 <listeners>
+    	<listener class-name="org.uncommons.reportng.HTMLReporter" />
+ 		</listeners>
 <suite-files> 
 	<suite-file path="suite_search.xml" />
 	<suite-file path="suite_KM.xml" />
