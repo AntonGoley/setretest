@@ -126,7 +126,6 @@ public class SoapRequestSender{
 	}
 	
 	public String generateTI(){
-		// get last numbers of date value
 		this.ti =  String.valueOf((new Date().getTime())).substring(6, 13);
 		log.info("TI = " + this.ti);
 		return this.ti;
@@ -162,6 +161,9 @@ public class SoapRequestSender{
 		assertSOAPResponse(RETURN_MESSAGE_CORRECT, ti);
 	}
 	
+	/*
+	 * Отправить товар
+	 */
 	public String sendGood(Good good){
 		GoodsCatalog goodsCatalog = new GoodsCatalog();
 		List<Good> gList = new ArrayList<Good>();
@@ -170,16 +172,21 @@ public class SoapRequestSender{
 		return send(goodsCatalog);
 	}	
 	
+	/*
+	 * Отправить ликонд
+	 */
 	public String sendLicond(Likond likond){
 		GoodsCatalog goodsCatalog = new GoodsCatalog();
 		List<Likond> likondList = new ArrayList<Likond>();
 		likondList.add(likond);
 		goodsCatalog.setLikonds(likondList);
 		return send(goodsCatalog);
-		
 	}	
 	
-	private String send(GoodsCatalog catalog){	
+	/*
+	 *	Отправить группу товаров (ликондов, бар кодов) 
+	 */
+	public String send(GoodsCatalog catalog){	
 		ti = generateTI();
 		StringWriter request = new StringWriter();
 		try {
@@ -268,9 +275,7 @@ public class SoapRequestSender{
 				
 		}
 		this.response = result;
-		//log.info("SOAP RESPONSE: " + this.response);
 	}
-	
 	
 	public boolean assertSOAPResponseXpath(String xpathExpression)  {
 		boolean xpathResult = false;
