@@ -254,10 +254,12 @@ public class SetTopologyTest extends AbstractTest{
 		};
 	}
 	
-	@Test (dataProvider = "banks")
+	@Test (dataProvider = "banks", 
+			description = "Добавление банка")
 	public void addBank(String bankName){
 		getDriver().navigate().refresh();
 		DisinsectorTools.delay(1000);
+		log.info("Добавление банка: " + bankName);
 		externalSystemPage = salesPage
 				.navigateMenu(3, ExternalSystemsPage.class);
 		newBankPage = externalSystemPage.addEntity(NewBankPage.class);
@@ -276,7 +278,8 @@ public class SetTopologyTest extends AbstractTest{
 		};
 	}
 	
-	@Test (dataProvider = "processing")
+	@Test (dataProvider = "processing",
+			description = "Добавление внешнего процессинга")
 	public void addExternalProcessing(String processingType, String processingValue){
 		getDriver().navigate().refresh();
 		DisinsectorTools.delay(1000);
