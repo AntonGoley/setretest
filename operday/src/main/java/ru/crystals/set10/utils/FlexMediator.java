@@ -99,20 +99,20 @@ public class FlexMediator {
 	public static boolean  waitForElementPresent(WebDriver driver, String swfSrc, String flexId){
 		DisinsectorTools.delay(100);
 		int timeout = 0;
-		//String result = "false";
-		boolean resultBoolean = false;
+		String result = "false";
+//		boolean resultBoolean = false;
 		while (timeout < 25000 ){
 			/*
 			 * Т.к в методе findElement поменяли возвращаемый тим с String на List, пока так:
 			 */
-//			result = (String) ecxecuteAndReturnArray(driver, String.format("return document.getElementById('%s').findElement('%s')", swfSrc, flexId));
-//			if (result.equals("true")) {
-//				return true;
-//			}
-			resultBoolean = ecxecuteAndReturnArray(driver, String.format("return document.getElementById('%s').findElement('%s')", swfSrc, flexId));
-			if (resultBoolean) {
+			result = (String) ecxecuteAndReturnString(driver, String.format("return document.getElementById('%s').findElement('%s')", swfSrc, flexId));
+			if (result.equals("true")) {
 				return true;
 			}
+//			resultBoolean = ecxecuteAndReturnArray(driver, String.format("return document.getElementById('%s').findElement('%s')", swfSrc, flexId));
+//			if (resultBoolean) {
+//				return true;
+//			}
 			
 			DisinsectorTools.delay(200);
 			timeout+=200;

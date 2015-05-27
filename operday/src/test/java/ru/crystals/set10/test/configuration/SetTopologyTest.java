@@ -6,6 +6,7 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+
 import ru.crystals.set10.config.Config;
 import ru.crystals.set10.pages.basic.*;
 import ru.crystals.set10.pages.sales.cashiers.CashiersMainPage;
@@ -13,6 +14,7 @@ import ru.crystals.set10.pages.sales.cashiers.CashierConfigPage;
 import ru.crystals.set10.pages.sales.equipment.NewEquipmentPage;
 import ru.crystals.set10.pages.sales.externalsystems.ExternalSystemsPage;
 import ru.crystals.set10.pages.sales.externalsystems.NewBankPage;
+import ru.crystals.set10.pages.sales.externalsystems.NewERPPage;
 import ru.crystals.set10.pages.sales.externalsystems.NewExternalProcessingPage;
 import ru.crystals.set10.pages.sales.shops.JuristicPersonPage;
 import ru.crystals.set10.pages.sales.shops.ShopPage;
@@ -41,6 +43,7 @@ public class SetTopologyTest extends AbstractTest{
 	CashierConfigPage cashierConfig;
 	NewEquipmentPage  newEqupment;
 	NewBankPage newBankPage;
+	NewERPPage newERPPage;
 	NewExternalProcessingPage newExternalProcessingPage;
 	ExternalSystemsPage externalSystemPage;
 	
@@ -262,9 +265,30 @@ public class SetTopologyTest extends AbstractTest{
 		log.info("Добавление банка: " + bankName);
 		externalSystemPage = salesPage
 				.navigateMenu(3, ExternalSystemsPage.class);
+		externalSystemPage.navigateTab(TAB_NAME_BANKS);
 		newBankPage = externalSystemPage.addEntity(NewBankPage.class);
 		newBankPage.addBank(bankName);
 	}
+	
+	/*
+	 * Добавление ERP
+	 */
+	@Test (description = "Добавление ERP")
+	public void addERP(){
+		int erpSystemsBefore = 0;
+		getDriver().navigate().refresh();
+		DisinsectorTools.delay(1000);
+		log.info("Добавление ERP: Протокол Set Retail 10: файлы");
+		externalSystemPage = salesPage
+				.navigateMenu(3, ExternalSystemsPage.class);
+		externalSystemPage.navigateTab(TAB_NAME_ERP);
+		erpSystemsBefore = externalSystemPage.getERPsCount();
+		
+		newERPPage = externalSystemPage.addEntity(NewERPPage.class);
+		externalSystemPage = newERPPage.addERP("Протокол Set Retail 10: файлы");
+		Assert.assertEquals(externalSystemPage.getERPsCount(), erpSystemsBefore + 1, "Новая ERP система не добавлена!");
+	}
+	
 	
 	/*
 	 * Добавление процессингов
@@ -281,14 +305,24 @@ public class SetTopologyTest extends AbstractTest{
 	@Test (dataProvider = "processing",
 			description = "Добавление внешнего процессинга")
 	public void addExternalProcessing(String processingType, String processingValue){
+		int extSystemsBefore = 0;
+		log.info("Добавление внешней системы: " + processingValue);
 		getDriver().navigate().refresh();
-		DisinsectorTools.delay(1000);
+		//DisinsectorTools.delay(1000);
+		
 		externalSystemPage = salesPage
 				.navigateMenu(3, ExternalSystemsPage.class);
+		
 		externalSystemPage.navigateTab(TAB_EXTERNAL_PROCESSINGS);
+		extSystemsBefore = externalSystemPage.getExternalProcessingCount();
 		newExternalProcessingPage = externalSystemPage.addEntity(NewExternalProcessingPage.class);
-		newExternalProcessingPage.addProcessing(processingType, processingValue);
+		externalSystemPage = newExternalProcessingPage.addProcessing(processingType, processingValue);
+		
+		Assert.assertTrue(extSystemsBefore < externalSystemPage.getExternalProcessingCount(), String.format("Внешняя система %s не добавлена!", processingValue));
+		
 	}
+	
+	
 	
 	
 	//@AfterClass

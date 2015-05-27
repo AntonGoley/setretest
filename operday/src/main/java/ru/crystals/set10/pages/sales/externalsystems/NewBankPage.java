@@ -19,7 +19,7 @@ public class NewBankPage extends SalesPage {
 		getWait().until(ExpectedConditions.visibilityOfElementLocated(By.id(ID_SALESSWF)));
 	}
 	
-	public NewBankPage addBank(String processingName){
+	public ExternalSystemsPage addBank(String processingName){
 		typeText(getDriver(), ID_SALESSWF, LOCATOR_BANK_FILTER, processingName);
 		DisinsectorTools.delay(1000);
 		// ждем, пока количество найденных объектов = 1
@@ -28,7 +28,8 @@ public class NewBankPage extends SalesPage {
 		doFlexProperty(getDriver(), ID_SALESSWF, LOCATOR_BANK_TABLE, new String[] {"selectedIndex", "0"});
 		waitForProperty(getDriver(), ID_SALESSWF, BUTTON_REGISTER_BANK, new String[] {"enabled", "true"});
 		clickElement(getDriver(), ID_SALESSWF, BUTTON_REGISTER_BANK);
+		/* задержка, потому что не успевает сохраняться значение после добавления*/
 		DisinsectorTools.delay(1000);
-		return this;
+		return new ExternalSystemsPage(getDriver());
 	}
 }

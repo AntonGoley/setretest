@@ -40,7 +40,7 @@ public class ExternalSystemsPage extends SalesPage{
 			buttonLocator = "label:Добавить ERP";
 		}
 		
-		clickElement(getDriver(), ID_SALESSWF, buttonLocator );
+		clickElement(getDriver(), ID_SALESSWF, buttonLocator);
 		return PageFactory.initElements(getDriver(), page);
 	}
 	
