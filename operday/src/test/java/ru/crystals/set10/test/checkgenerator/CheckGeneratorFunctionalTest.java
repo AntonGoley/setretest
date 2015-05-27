@@ -5,9 +5,6 @@ import java.util.HashMap;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.Test;
-
-import com.sun.xml.internal.ws.api.pipe.NextAction;
-
 import ru.crystals.set10.config.*;
 import ru.crystals.pos.bank.datastruct.AuthorizationData;
 import ru.crystals.pos.bank.datastruct.BankCard;
