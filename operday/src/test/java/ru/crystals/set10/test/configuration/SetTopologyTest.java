@@ -11,6 +11,7 @@ import ru.crystals.set10.config.Config;
 import ru.crystals.set10.pages.basic.*;
 import ru.crystals.set10.pages.sales.cashiers.CashiersMainPage;
 import ru.crystals.set10.pages.sales.cashiers.CashierConfigPage;
+import ru.crystals.set10.pages.sales.equipment.EquipmentPage;
 import ru.crystals.set10.pages.sales.equipment.NewEquipmentPage;
 import ru.crystals.set10.pages.sales.externalsystems.ExternalSystemsPage;
 import ru.crystals.set10.pages.sales.externalsystems.NewBankPage;
@@ -46,6 +47,7 @@ public class SetTopologyTest extends AbstractTest{
 	NewERPPage newERPPage;
 	NewExternalProcessingPage newExternalProcessingPage;
 	ExternalSystemsPage externalSystemPage;
+	EquipmentPage equipmentPage;
 	
 	
 	@BeforeClass
@@ -245,6 +247,35 @@ public class SetTopologyTest extends AbstractTest{
 				Config.CASHIER_ADMIN_ROLE);
 	}
 	
+	/*
+	 * Добавление оборудования
+	 */
+	@DataProvider(name="equipment")
+	public Object[][] equipment() {
+		return new Object[][]{
+				{"Клавиатуры", "QWERTY клавиатура"},
+				{"Сканер", "Сканер штриховых кодов"},
+				{"Принтеры A4", "Стандартный принтер А4"},
+				{"VirtualScales", "VirtualScales"},
+				
+		};
+	}
+	
+	@Test (dataProvider = "equipment",
+			description = "Добавление оборудования")
+	public void testAddEquipment(String equipmentGoup, String equipment){
+		getDriver().navigate().refresh();
+		DisinsectorTools.delay(1000);
+		
+		equipmentPage = salesPage.navigateMenu(2, EquipmentPage.class);
+		newEqupment = equipmentPage.addNewEquipment();
+
+		equipmentPage = newEqupment.addEquipment(equipmentGoup, equipment);
+		
+//		Assert.assertTrue(equipmentPage.getEqupmentTypeCount(scalesItem) > 0, 
+//				"Новые весы " + scalesItem + " не добавлены в обородувание");
+		
+	}
 	
 	/*
 	 * Добавление банков

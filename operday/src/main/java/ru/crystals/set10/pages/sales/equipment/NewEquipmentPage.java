@@ -29,8 +29,8 @@ public class NewEquipmentPage extends SalesPage {
 		doFlexMouseDown(getDriver(), ID_SALESSWF, String.format(SELECT_EQUPMENT_GROUP, equpmentGroup));
 		clickElement(getDriver(), ID_SALESSWF, String.format(SELECT_EQUPMENT_GROUP, equpmentGroup));
 		
-		doFlexMouseDown(getDriver(), ID_SALESSWF, String.format(SELECT_EQUPMENT_GROUP, equpmentGroup));
-		clickElement(getDriver(), ID_SALESSWF, String.format(SELECT_EQUPMENT_GROUP, equpmentGroup));
+		doFlexMouseDown(getDriver(), ID_SALESSWF, String.format(LOCATOR_EQUPMENT_ITEM_TABLE, equpmentItem));
+		clickElement(getDriver(), ID_SALESSWF, String.format(LOCATOR_EQUPMENT_ITEM_TABLE, equpmentItem));
 		
 		clickElement(getDriver(), ID_SALESSWF, BUTTON_REGISTER_NEW_EQUIPMENT);
 		waitSpinner(ID_SALESSWF);
