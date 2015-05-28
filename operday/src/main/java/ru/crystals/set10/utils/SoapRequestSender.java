@@ -5,8 +5,14 @@ import javax.xml.bind.DatatypeConverter;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
+
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
@@ -17,6 +23,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -24,9 +31,11 @@ import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
+
 import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
+
 import ru.crystals.set10.config.Config;
 import ru.crystals.setretailx.products.catalog.Good;
 import ru.crystals.setretailx.products.catalog.Likond;
@@ -179,7 +188,7 @@ public class SoapRequestSender{
 		
 	}	
 	
-	private String send(GoodsCatalog catalog){	
+	public String send(GoodsCatalog catalog){	
 		ti = generateTI();
 		StringWriter request = new StringWriter();
 		try {
@@ -196,6 +205,18 @@ public class SoapRequestSender{
 		this.soapRequest = String.format(soapRequestGoods, encodeBase64(request.toString()), ti);
 		this.service = ERP_INTEGRATION_GOOSERVICE; 
 		this.method = METHOD_GOODS_WITHTI;
+		
+//		File f = new File("c:/weightGoods.txt"); 
+//		try {
+//			FileWriter fis = new FileWriter(f);
+//			fis.write(request.toString());
+//			fis.close();
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}	
+		
+		
 		log.info("Отправить товары. SOAP request: \n" + request.toString()); 
 		sendSOAPRequest();
 		assertSOAPResponse(RETURN_MESSAGE_CORRECT, ti);

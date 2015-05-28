@@ -8,6 +8,9 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import ru.crystals.set10.pages.basic.SalesPage;
 
 
+/*
+ * Общие настройки: вкладка "Типы товаров и оплат"
+ */
 public class SalesGoodsTypesAndPaymentsTabPage extends SalesPage{
 	
 	static final String LOCATOR_PRODUCT_TYPE_LIST = "id:productTypeList";

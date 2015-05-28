@@ -17,6 +17,8 @@ import ru.crystals.set10.pages.sales.externalsystems.ExternalSystemsPage;
 import ru.crystals.set10.pages.sales.externalsystems.NewBankPage;
 import ru.crystals.set10.pages.sales.externalsystems.NewERPPage;
 import ru.crystals.set10.pages.sales.externalsystems.NewExternalProcessingPage;
+import ru.crystals.set10.pages.sales.preferences.SalesGoodsTypesAndPaymentsTabPage;
+import ru.crystals.set10.pages.sales.preferences.SalesPreferencesPage;
 import ru.crystals.set10.pages.sales.shops.JuristicPersonPage;
 import ru.crystals.set10.pages.sales.shops.ShopPage;
 import ru.crystals.set10.pages.sales.shops.ShopPreferencesPage;
@@ -30,8 +32,7 @@ import ru.crystals.set10.utils.SoapRequestSender;
 import static ru.crystals.set10.pages.sales.externalsystems.ExternalSystemsPage.*;
 
 
-
-public class SetTopologyTest extends AbstractTest{
+public class SetTopologyTest extends AbstractTest {
 	
 	MainPage mainPage;
 	TopologyPage topologyPage;
@@ -48,7 +49,8 @@ public class SetTopologyTest extends AbstractTest{
 	NewExternalProcessingPage newExternalProcessingPage;
 	ExternalSystemsPage externalSystemPage;
 	EquipmentPage equipmentPage;
-	
+	SalesPreferencesPage salesPreferencesPage;
+	SalesGoodsTypesAndPaymentsTabPage salesGoodsTypesPage;
 	
 	@BeforeClass
 	public void doLogin(){
@@ -350,11 +352,7 @@ public class SetTopologyTest extends AbstractTest{
 		externalSystemPage = newExternalProcessingPage.addProcessing(processingType, processingValue);
 		
 		Assert.assertTrue(extSystemsBefore < externalSystemPage.getExternalProcessingCount(), String.format("Внешняя система %s не добавлена!", processingValue));
-		
 	}
-	
-	
-	
 	
 	//@AfterClass
 	private void sendGoods(){

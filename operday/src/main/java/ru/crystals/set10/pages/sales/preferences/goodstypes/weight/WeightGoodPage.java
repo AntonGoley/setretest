@@ -4,12 +4,14 @@ import static ru.crystals.set10.utils.FlexMediator.*;
 
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-
-import ru.crystals.set10.pages.basic.SalesPage;
+import ru.crystals.set10.pages.sales.preferences.AbstractGoodAndPaymentPreferencesPage;
 import ru.crystals.set10.utils.DisinsectorTools;
 
 
-public class WeightGoodPage extends SalesPage{
+/*
+ * Типы товаров и оплат. Весовой товар: настройка весового товара
+ */
+public class WeightGoodPage extends AbstractGoodAndPaymentPreferencesPage{
 	
 	
 	static final String SELECT_GOOD_ACTION = "id:productActionsComboBox";
@@ -22,7 +24,7 @@ public class WeightGoodPage extends SalesPage{
 	public static final String PLU_GENERATION_GOOD_CODE = "id:codeGenerationRadioButton";
 	public static final String PLU_GENERATION_BAR_CODE = "id:barCodeGenerationRadioButton";
 	public static final String PLU_GENERATION_ERP_AND_BAR_CODE = "id:erpAndBarCodeGenerationRadioButton";
-	
+	public static final String PLU_GENERATION_MULTIPLIER = "id:multipliersComboBox";
 	
 	public static final String BACK_BUTTON = "label:К типам товаров и оплат";
 
@@ -45,6 +47,12 @@ public class WeightGoodPage extends SalesPage{
 		return this;
 	}
 	
+	public WeightGoodPage setMultiplier(String multiplier){
+		selectElement(getDriver(), ID_SALESSWF,  PLU_GENERATION_MULTIPLIER, multiplier);
+		log.info("Множитель: " + multiplier);
+		return this;
+	}
+	
 	public WeightGoodPage setPLUOfset(String ofset){
 		typeText(getDriver(), ID_SALESSWF,  LOCATOR_PLU_OFSET, ofset);
 		log.info("Смещение PLU: " + ofset);
@@ -63,11 +71,4 @@ public class WeightGoodPage extends SalesPage{
 		DisinsectorTools.delay(1000);
 		return this;
 	}
-	
-	public SalesPage goBack(){
-		clickElement(getDriver(), ID_SALESSWF, BACK_BUTTON);
-		DisinsectorTools.delay(1000);
-		return new SalesPage(getDriver());
-	}
-	
 }

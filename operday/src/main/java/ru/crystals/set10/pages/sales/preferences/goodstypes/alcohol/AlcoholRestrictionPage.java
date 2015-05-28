@@ -4,13 +4,13 @@ import static ru.crystals.set10.utils.FlexMediator.*;
 
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import ru.crystals.set10.pages.basic.SalesPage;
 
-import ru.crystals.set10.pages.basic.AbstractPage;
-
-
-public class AlcoholRestrictionPage extends AbstractPage{
+/*
+ * Типы товаров и оплат: "Крепкий алкоголь". Страница добавления нового алкогольного ограничения
+ */
+public class AlcoholRestrictionPage extends SalesPage{
 	
-	static final String ID_SALESSWF = "Sales";
 	static final String LOCATOR_BACK_TO_RESTRICTIONS_TAB = "label=К ограничениям";
 	static final String LOCATOR_RESTRICTION_NAME = "restrictionNameField";
 	// Период действия

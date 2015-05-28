@@ -21,7 +21,6 @@ public class SalesPreferencesPage extends SalesPage{
 	
 	//TODO replace with factory
 	public SalesGoodsTypesAndPaymentsTabPage  navigateTab(String salesPreferencesTab) {
-		//clickElement(getDriver(), ID_SALESSWF, LOCATOR_TABBAR, salesPreferencesTab);
 		/*
 		 * Ждем, что загрузились все вкладки
 		 */
