@@ -8,6 +8,7 @@ import ru.crystals.set10.utils.GoodGenerator;
 import ru.crystals.set10.utils.SoapRequestSender;
 import ru.crystals.setretailx.products.catalog.BarCode;
 import ru.crystals.setretailx.products.catalog.Good;
+import static ru.crystals.set10.utils.GoodGenerator.GOODTYPE_WEIGHT;
 
 @Test(groups = {"retail"})
 public class WeightAutoPLUGenerationTest extends WeightAbstractTest { 
@@ -24,7 +25,7 @@ public class WeightAutoPLUGenerationTest extends WeightAbstractTest {
 	 */
 	
 	/*
-	 * Генерация штрихкодов происходит в случае, если у товара свойство plu-number = 0
+	 * Генерация штрихкодов происходит в случае, если у товара свойство plu-number = 0 (или не указано плагинное свойство plu-number)
 	 * и в настройке весового товара установлен способ генерации PLU -  "приходит из внешней системы и по штриховому коду"
 	 */
 	@BeforeClass
@@ -43,16 +44,27 @@ public class WeightAutoPLUGenerationTest extends WeightAbstractTest {
 		/* добавляем баркод с префиксом Config.WEIGHT_BARCODEGENERATION_PREFIX*/
 		weightGood.getBarCodes().add(weightCode);
 		
-		/* PLU, который должен автоматически сгенериться*/
-		if (weightCode.getCode().matches("^0")) {
-			/* если код начинается с 0, добавляем префикс*/
-			autoGenPLU = Integer.valueOf(weightCode.getCode().substring(1, 6)) + Integer.valueOf(Config.WEIGHT_BARCODEGENERATION_OFSET);
-		} else {
-			autoGenPLU = Integer.valueOf(weightCode.getCode().substring(1));
-		}
+		autoGenPLU = Integer.valueOf(weightCode.getCode().substring(2, 7)) + Integer.valueOf(Config.WEIGHT_BARCODEGENERATION_OFSET);
 		
 		soapSender.sendGood(weightGood);
 		Assert.assertTrue(scales.waitPluLoaded(autoGenPLU) , "Товар не загрузился в весы. PLU =  " + autoGenPLU);
+	}
+	
+	@Test (description = "SRTE-153. Если не приходит поле \"plu-number\" из ERP, происходит автогенерация PLU.")
+	public void testBarCodeGenerationIfNoPluFromERP(){
+		Good weightGood;
+		int autoGenPLU = 0;
+		
+		/* сгенерить весовой товар без плагинного свойства plu-number**/
+		weightGood = goodGenerator.generateGood(GOODTYPE_WEIGHT);
+		BarCode weightCode = goodGenerator.generateWeightBarCode(Config.WEIGHT_BARCODEGENERATION_PREFIX, 7);
+		weightGood.getBarCodes().add(weightCode);
+		
+		autoGenPLU = Integer.valueOf(weightCode.getCode().substring(2, 7)) + Integer.valueOf(Config.WEIGHT_BARCODEGENERATION_OFSET);
+		
+		soapSender.sendGood(weightGood);
+		Assert.assertTrue(scales.waitPluLoaded(autoGenPLU) , "Товар не загрузился в весы. PLU =  " + autoGenPLU);
+		
 	}
 	
 	@Test (description = "SRTE-153. Формирование PLU для весового товара с учетом префикса. Генерация PLU без смещения")

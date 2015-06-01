@@ -11,15 +11,15 @@ import ru.crystals.set10.pages.basic.MainPage;
 import ru.crystals.set10.pages.basic.SalesPage;
 import ru.crystals.set10.pages.sales.preferences.SalesGoodsTypesAndPaymentsTabPage;
 import ru.crystals.set10.pages.sales.preferences.SalesPreferencesPage;
-import ru.crystals.set10.pages.sales.preferences.SalesGoodsTypesAndPaymentsTabPage.ProductTypeItems;
 import ru.crystals.set10.pages.sales.preferences.goodstypes.alcohol.AlcoholPage;
-import ru.crystals.set10.pages.sales.preferences.goodstypes.alcohol.AlcoholRestrictionPage;
-import ru.crystals.set10.pages.sales.preferences.goodstypes.alcohol.AlcoholTabsRestrictionsPage;
-import ru.crystals.set10.pages.sales.preferences.goodstypes.alcohol.AlcoholPage.AlcoholTabs;
+import ru.crystals.set10.pages.sales.preferences.goodstypes.alcohol.NewAlcoholRestrictionPage;
+import ru.crystals.set10.pages.sales.preferences.goodstypes.alcohol.AlcoholRestrictionsTabPage;
 import ru.crystals.set10.test.dataproviders.SpiritRistrictionsDataprovider;
 import ru.crystals.set10.utils.DisinsectorTools;
 import ru.crystals.set10.utils.SoapRequestSender;
 import static ru.crystals.set10.pages.sales.preferences.SalesPreferencesPage.*;
+import static ru.crystals.set10.pages.sales.preferences.SalesGoodsTypesAndPaymentsTabPage.GOOD_TYPE_ALCOHOL;
+import static ru.crystals.set10.pages.sales.preferences.goodstypes.alcohol.AlcoholPage.ALCOHOL_RESTRICTIONS;
 
 @Test (groups = {"retail", "centrum"})
 public class SpiritRestrictionsToSAPTest extends AbstractTest{
@@ -28,8 +28,8 @@ public class SpiritRestrictionsToSAPTest extends AbstractTest{
 	SalesPage salesPage;
 	SalesGoodsTypesAndPaymentsTabPage goodsAndTypeTab; 
 	AlcoholPage alcoholPage;
-	AlcoholTabsRestrictionsPage alcoholRestrictionTab;
-	AlcoholRestrictionPage alcoholRestrictionPage;
+	AlcoholRestrictionsTabPage alcoholRestrictionTab;
+	NewAlcoholRestrictionPage alcoholRestrictionPage;
 	SoapRequestSender soapSender  = new SoapRequestSender();
 	
 	
@@ -49,8 +49,8 @@ public class SpiritRestrictionsToSAPTest extends AbstractTest{
 		alcoholPage = salesPage
 				.navigateMenu(Config.SALES_PREFERENCES_INDEX, SalesPreferencesPage.class)
 				.navigateTab(TAB_TYPES_GOODS_PAYMENTS)
-				.selectProductTypeItem(ProductTypeItems.ALCOHOL, AlcoholPage.class);
-		alcoholRestrictionTab = alcoholPage.selectAlcoholTab(AlcoholTabs.ALCOHOL_RESTRICTIONS);
+				.selectProductTypeItem(GOOD_TYPE_ALCOHOL, AlcoholPage.class);
+		alcoholRestrictionTab = alcoholPage.selectAlcoholTab(ALCOHOL_RESTRICTIONS, AlcoholRestrictionsTabPage.class);
 	}
 	
 	@BeforeMethod

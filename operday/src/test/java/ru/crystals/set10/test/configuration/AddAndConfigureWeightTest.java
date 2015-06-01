@@ -9,7 +9,6 @@ import ru.crystals.set10.config.Config;
 import ru.crystals.set10.pages.basic.*;
 import ru.crystals.set10.pages.sales.equipment.EquipmentPage;
 import ru.crystals.set10.pages.sales.equipment.NewEquipmentPage;
-import ru.crystals.set10.pages.sales.preferences.SalesGoodsTypesAndPaymentsTabPage.ProductTypeItems;
 import ru.crystals.set10.pages.sales.preferences.SalesPreferencesPage;
 import ru.crystals.set10.pages.sales.preferences.goodstypes.weight.WeightGoodPage;
 import ru.crystals.set10.pages.sales.shops.RetailShopInfoTabPage;
@@ -20,7 +19,8 @@ import static ru.crystals.set10.pages.sales.preferences.goodstypes.weight.Weight
 import static ru.crystals.set10.pages.sales.preferences.SalesPreferencesPage.TAB_TYPES_GOODS_PAYMENTS;
 import static ru.crystals.set10.config.Config.WEIGHT_BARCODE_PREFIX;
 import static ru.crystals.set10.config.Config.WEIGHT_BARCODEGENERATION_OFSET;
-import static ru.crystals.set10.config.Config.WEIGHT_BARCODEGENERATION_PREFIX;;
+import static ru.crystals.set10.config.Config.WEIGHT_BARCODEGENERATION_PREFIX;
+import static ru.crystals.set10.pages.sales.preferences.SalesGoodsTypesAndPaymentsTabPage.*;
 
 
 public class AddAndConfigureWeightTest extends AbstractTest{
@@ -63,7 +63,7 @@ public class AddAndConfigureWeightTest extends AbstractTest{
 		shopWeightTab = salesPage.navigateMenu(0, RetailShopInfoTabPage.class)
 				.navigateTab(TAB_WEIGHT, RetailShopWeightTabPage.class);
 		
-		totalScalesBefore = shopWeightTab.getBindedWeightsCount();
+		totalScalesBefore = shopWeightTab.getBindedWeightsCount(); 
 		
 		shopWeightTab.bindWeight("Фасовочные", "VirtualScales");
 		
@@ -71,13 +71,13 @@ public class AddAndConfigureWeightTest extends AbstractTest{
 		Assert.assertTrue(shopWeightTab.getBindedWeightsCount() > totalScalesBefore, "Весы не добавлены в магазин");
 	}
 	
-	@Test (description = "Насткройка генерации штрихкодов для весового товара (Типы товаров и оплат)", 
+	@Test (enabled = false, description = "Насткройка генерации штрихкодов для весового товара (Типы товаров и оплат)", 
 			priority = 3)
 	public void bindBarCodeForWeightGoodTest(){
 		weightGood = salesPage
 				.navigateMenu(10, SalesPreferencesPage.class)
 				.navigateTab(TAB_TYPES_GOODS_PAYMENTS)
-				.selectProductTypeItem(ProductTypeItems.WEIGHT_GOOD, WeightGoodPage.class);
+				.selectProductTypeItem(GOOD_TYPE_WEIGHT_GOOD, WeightGoodPage.class);
 		weightGood
 			.setPLUGeneration(PLU_GENERATION_ERP_AND_BAR_CODE)
 			.setGoodAction(ACTION_FASOVKA)
