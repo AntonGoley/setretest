@@ -44,7 +44,7 @@ public class WeightAutoPLUGenerationTest extends WeightAbstractTest {
 		/* добавляем баркод с префиксом Config.WEIGHT_BARCODEGENERATION_PREFIX*/
 		weightGood.getBarCodes().add(weightCode);
 		
-		autoGenPLU = Integer.valueOf(weightCode.getCode().substring(2, 7)) + Integer.valueOf(Config.WEIGHT_BARCODEGENERATION_OFSET);
+		autoGenPLU =  goodGenerator.getWeightAutoGenPlu(weightCode, Config.WEIGHT_BARCODEGENERATION_OFSET);
 		
 		soapSender.sendGood(weightGood);
 		Assert.assertTrue(scales.waitPluLoaded(autoGenPLU) , "Товар не загрузился в весы. PLU =  " + autoGenPLU);
@@ -60,7 +60,7 @@ public class WeightAutoPLUGenerationTest extends WeightAbstractTest {
 		BarCode weightCode = goodGenerator.generateWeightBarCode(Config.WEIGHT_BARCODEGENERATION_PREFIX, 7);
 		weightGood.getBarCodes().add(weightCode);
 		
-		autoGenPLU = Integer.valueOf(weightCode.getCode().substring(2, 7)) + Integer.valueOf(Config.WEIGHT_BARCODEGENERATION_OFSET);
+		autoGenPLU = goodGenerator.getWeightAutoGenPlu(weightCode, Config.WEIGHT_BARCODEGENERATION_OFSET);
 		
 		soapSender.sendGood(weightGood);
 		Assert.assertTrue(scales.waitPluLoaded(autoGenPLU) , "Товар не загрузился в весы. PLU =  " + autoGenPLU);

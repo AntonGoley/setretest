@@ -1,4 +1,5 @@
 package ru.crystals.set10.utils;
+
 import org.apache.commons.codec.binary.Base64;
 
 import javax.xml.bind.DatatypeConverter;
@@ -37,8 +38,11 @@ import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
 import ru.crystals.set10.config.Config;
+import ru.crystals.setretailx.products.catalog.BarCode;
+import ru.crystals.setretailx.products.catalog.BarcodeExt;
 import ru.crystals.setretailx.products.catalog.Good;
 import ru.crystals.setretailx.products.catalog.Likond;
+import ru.crystals.setretailx.products.catalog.GoodsCatalog;
 
 
 public class SoapRequestSender{
@@ -177,7 +181,7 @@ public class SoapRequestSender{
 		GoodsCatalog goodsCatalog = new GoodsCatalog();
 		List<Good> gList = new ArrayList<Good>();
 		gList.add(good);
-		goodsCatalog.setGoods(gList);
+		goodsCatalog.getGoods().addAll(gList);
 		return send(goodsCatalog);
 	}	
 	
@@ -188,11 +192,21 @@ public class SoapRequestSender{
 		GoodsCatalog goodsCatalog = new GoodsCatalog();
 		List<Likond> likondList = new ArrayList<Likond>();
 		likondList.add(likond);
-		goodsCatalog.setLikonds(likondList);
+		goodsCatalog.getLikonds().addAll(likondList);
 		return send(goodsCatalog);
 	}	
 	
-
+	/*
+	 * Отправить баркоды
+	 */
+	public String sendBarcode(BarcodeExt barcode){
+		GoodsCatalog goodsCatalog = new GoodsCatalog();
+		List<BarcodeExt> barcodes = new ArrayList<BarcodeExt>();
+		barcodes.add(barcode);
+		goodsCatalog.getBarcodes().addAll(barcodes);
+		return send(goodsCatalog);
+	}
+	
 	/*
 	 *	Отправить группу товаров (ликондов, бар кодов) 
 	 */

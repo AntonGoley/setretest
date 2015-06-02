@@ -13,7 +13,7 @@ import ru.crystals.setretailx.products.catalog.Good;
 import ru.crystals.setretailx.products.catalog.Price;
 
 @Test(groups = {"retail"})
-public class WeightInvalidPricesTest extends WeightAbstractTest { 
+public class Weight1stPriceUpdatesTest extends WeightAbstractTest { 
 	
 	
 	SoapRequestSender soapSender = new SoapRequestSender();
@@ -60,12 +60,11 @@ public class WeightInvalidPricesTest extends WeightAbstractTest {
 				prices.get(i).setSinceDate(goodGenerator.getDate(sinceDate));;
 			}
 		}
-		
 		soapSender.sendGood(weightGood);
 		Assert.assertFalse(scales.waitPluLoaded(pluNum), "Товар не должен загрузиться в весы, если срок действия 1й цены в будущем. PLU = " + pluNum);
 	}
 	
-	@Test (description = "Весовой товар не должен выгружаться из весов, если приходит обновление первой цены.")
+	@Test (description = "Весовой товар не должен выгружаться из весов, если приходит обновление 1й цены")
 	public void testPriceNotUnloadedOnUpdate(){
 		int pluNum = pluNumber++;
 		Good weightGood = goodGenerator.generateWeightGood(String.valueOf(pluNum));

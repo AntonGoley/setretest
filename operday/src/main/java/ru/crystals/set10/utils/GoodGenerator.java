@@ -20,7 +20,7 @@ import ru.crystals.setretailx.products.catalog.Price;
 
 public class GoodGenerator {
 	
-	private static long prefix = System.currentTimeMillis();;
+	private static long prefix = System.currentTimeMillis();
 	private String goodprefix;
 	
 	public static String GOODTYPE_WEIGHT = "ProductWeightEntity";
@@ -37,12 +37,18 @@ public class GoodGenerator {
 		return weightGood;
 	}
 	
-	
 	public Good generateWeightGood(String pluNumber){
 		Good weightGood = generateWeightGoodWithNoBarCode(pluNumber);
 		/* генерим по умолчанию дополнительный весовой бар код*/
 		weightGood.getBarCodes().add(generateWeightBarCode(Config.WEIGHT_BARCODE_PREFIX, 7));
 		return weightGood;
+	}
+	
+	/*
+	 * Возвращает автоматически сгенерированный PLU, 
+	 */
+	public int  getWeightAutoGenPlu(BarCode weightCode, String ofset){
+		return Integer.valueOf(weightCode.getCode().substring(2, 7)) + Integer.valueOf(ofset);
 	}
 	
 	
@@ -79,7 +85,6 @@ public class GoodGenerator {
 		Price price1 = generatePrice(1L);
 		good.getPrices().add(price1);
 		good.getPrices().add(generatePriceWithValue(2L, price1.getPrice().subtract(new BigDecimal("5.99")))); /*цена 1 генерится не меньше 10*/
-		
 		return good;
 	}
 	
@@ -95,6 +100,7 @@ public class GoodGenerator {
 		bc.setCode(barcodePrefix + goodprefix.substring(13 - (barcodeLength - 2)));
 		bc.setCount(new BigDecimal(1));
 		bc.setDefaultCode(false);
+		goodprefix = String.valueOf(prefix++);
 		return bc;
 	}
 	

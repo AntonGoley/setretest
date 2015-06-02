@@ -9,9 +9,9 @@ import org.testng.annotations.Test;
 
 import ru.crystals.set10.config.Config;
 import ru.crystals.set10.utils.GoodGenerator;
-import ru.crystals.set10.utils.GoodsCatalog;
 import ru.crystals.set10.utils.SoapRequestSender;
 import ru.crystals.setretailx.products.catalog.Good;
+import ru.crystals.setretailx.products.catalog.GoodsCatalog;
 import ru.crystals.setretailx.products.catalog.Price;
 
 @Test(groups = {"retail"})
@@ -39,7 +39,7 @@ public class WeightLoadTest extends WeightAbstractTest {
 	@Test (description = "Отправка 2000 весовых товаров в весы")
 	public void testLoad2000GoodsToScales(){
 		goodsCatalog = new GoodsCatalog();
-		goodsCatalog.setGoods(goods);
+		goodsCatalog.getGoods().addAll(goods);
 		soapSender.send(goodsCatalog);
 	}
 	

@@ -41,7 +41,7 @@ public class WeightBaseTest extends WeightAbstractTest {
 		Assert.assertTrue(scales.waitPluLoaded(plu_weightUnLoad) , "Товар не загрузился в весы. PLU = " + plu_weightUnLoad);
 	}
 	
-	@Test (description = "Весовой товар выгружается из весов, если у баркода поле do-not-send-to-scales=true",
+	@Test (description = "Весовой товар выгружается из весов, если при импорте товара, у весового баркода поле do-not-send-to-scales=true",
 			dependsOnMethods = "testGoodWeightLoadToScales")
 	public void testGoodWeightUnloadFromScalesBarCode(){
 		

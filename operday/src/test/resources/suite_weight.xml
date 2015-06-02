@@ -28,9 +28,9 @@
 			<class name="ru.crystals.set10.test.weight.WeightAutoPLUGenerationTest"/>
 		</classes>
 	</test>
-	 <test name="Выгрузка из весов товаров без действующих цен" >
+	 <test name="Обновление 1й цены в весах. Выгрузка из весов товаров без действующих цен" >
 		<classes>
-			<class name="ru.crystals.set10.test.weight.WeightInvalidPricesTest"/>
+			<class name="ru.crystals.set10.test.weight.Weight1stPriceUpdatesTest"/>
 		</classes>
 	</test>
 		 <test name="Загрузка и обновление полей весового товара" >
