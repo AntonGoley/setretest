@@ -5,7 +5,6 @@ import java.util.HashMap;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.Test;
-
 import ru.crystals.set10.config.*;
 import ru.crystals.pos.bank.datastruct.AuthorizationData;
 import ru.crystals.pos.bank.datastruct.BankCard;
@@ -50,22 +49,19 @@ public class CheckGeneratorFunctionalTest {
 	public void testSendChecks(){
 		for(int i=0; i<1; i++) {
 			
-			cashEmulator.changeCashUser(1);
+			p1 = (PurchaseEntity) cashEmulator.nextPurchaseWithoutSending();
+			p1.setReturn();
+			cashEmulator.nextCancelledPurchase(p1);
 			
-			p1 = (PurchaseEntity) cashEmulator.nextPurchase(getCashPayment());
-
+			
+			p1 = (PurchaseEntity) cashEmulator.nextPurchase();
 			//возвращаем первую позицию в кол-ве 1шт
 			HashMap<Long, Long> returnPositions = new HashMap<Long, Long>();
 			returnPositions.put(1L, 1000L);
 			cashEmulator.nextRefundPositions(p1, returnPositions, false);
 			
-			p1 = cashEmulator.nextCancelledPurchaseWithoutSending();
-			p1.setReturn();
-			cashEmulator.nextPurchase(p1);
+			p1 = (PurchaseEntity) cashEmulator.nextPurchase(getBankCardPayment(BankCardPaymentEntity.class));
 			
-			
-			//cashEmulator.changeCashUser(2);
-
 		}
 	}
 	
