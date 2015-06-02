@@ -26,7 +26,7 @@ public class WeightAutoPLUGenerationTest extends WeightAbstractTest {
 	
 	/*
 	 * Генерация штрихкодов происходит в случае, если у товара свойство plu-number = 0 (или не указано плагинное свойство plu-number)
-	 * и в настройке весового товара установлен способ генерации PLU -  "приходит из внешней системы и по штриховому коду"
+	 * и в настройке весового товара установлен способ генерации PLU -  "приходит из внешней системы и по штриховому коду" ("на основе штрихового кода")
 	 */
 	@BeforeClass
 	public void initData(){
@@ -50,7 +50,7 @@ public class WeightAutoPLUGenerationTest extends WeightAbstractTest {
 		Assert.assertTrue(scales.waitPluLoaded(autoGenPLU) , "Товар не загрузился в весы. PLU =  " + autoGenPLU);
 	}
 	
-	@Test (description = "SRTE-153. Если не приходит поле \"plu-number\" из ERP, происходит автогенерация PLU.")
+	@Test (description = "SRTE-153. Если не приходит поле \"plu-number\" из ERP, происходит автогенерация PLU с учетом смещения.")
 	public void testBarCodeGenerationIfNoPluFromERP(){
 		Good weightGood;
 		int autoGenPLU = 0;

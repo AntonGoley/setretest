@@ -128,8 +128,7 @@ public class Config {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        
-        // TODO: разрулить запуск с разных ос и разных драйверов
+
         System.setProperty("webdriver.chrome.logfile", "chromedriver.log");
         
         // Берем параметры из коммандной строки (передаваемые при запуске проекта maven)
