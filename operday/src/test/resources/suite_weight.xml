@@ -38,5 +38,10 @@
 			<class name="ru.crystals.set10.test.weight.WeightFieldsOnLabelTest"/>
 		</classes>
 	</test>
+	 <test name="Прогрузка и удаление весовых баркодов" >
+		<classes>
+			<class name="ru.crystals.set10.test.weight.WeightBarcodesTest"/>
+		</classes>
+	</test>
 	
 </suite> 

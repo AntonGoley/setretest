@@ -31,7 +31,7 @@ public class CheckGeneratorFunctionalTest {
 	@BeforeClass
 	public void setupCash(){
 		
-		cashEmulator = CashEmulator.getCashEmulator(Config.RETAIL_HOST, Integer.valueOf(Config.SHOP_NUMBER), Integer.valueOf(String.valueOf(2)));
+		cashEmulator = CashEmulator.getCashEmulator(Config.RETAIL_HOST, Integer.valueOf(Config.SHOP_NUMBER), Integer.valueOf(String.valueOf(3)));
 		//cashEmulator = CashEmulator.getCashEmulator(Config.CENTRUM_HOST, Integer.valueOf(Config.VIRTUAL_SHOP_NUMBER), Integer.valueOf(Config.CASH_NUMBER ));
 		//cashEmulator.setTimeOfset(86400000);
 		//cashEmulator.useNextShift();
@@ -47,21 +47,23 @@ public class CheckGeneratorFunctionalTest {
 	
 	@Test (	description = "Сгенерить чеки продажи")
 	public void testSendChecks(){
-		for(int i=0; i<1; i++) {
-			
-			p1 = (PurchaseEntity) cashEmulator.nextPurchaseWithoutSending();
-			p1.setReturn();
-			cashEmulator.nextCancelledPurchase(p1);
-			
+		for(int i=0; i<4; i++) {
 			
 			p1 = (PurchaseEntity) cashEmulator.nextPurchase();
-			//возвращаем первую позицию в кол-ве 1шт
-			HashMap<Long, Long> returnPositions = new HashMap<Long, Long>();
-			returnPositions.put(1L, 1000L);
-			cashEmulator.nextRefundPositions(p1, returnPositions, false);
 			
-			p1 = (PurchaseEntity) cashEmulator.nextPurchase(getBankCardPayment(BankCardPaymentEntity.class));
+			//p1 = (PurchaseEntity) cashEmulator.nextPurchaseWithoutSending();
+			//p1.setReturn();
+			//cashEmulator.nextCancelledPurchase(p1);
 			
+			
+			if (i==0) {
+				p1 = (PurchaseEntity) cashEmulator.nextPurchase();
+				//возвращаем первую позицию в кол-ве 1шт
+				HashMap<Long, Long> returnPositions = new HashMap<Long, Long>();
+				returnPositions.put(1L, 1000L);
+				cashEmulator.nextRefundPositions(p1, returnPositions, false);
+				p1 = (PurchaseEntity) cashEmulator.nextPurchase(getBankCardPayment(BankCardPaymentEntity.class));
+			}	
 		}
 	}
 	

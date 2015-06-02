@@ -33,7 +33,7 @@ public class WeightAutoPLUGenerationTest extends WeightAbstractTest {
 		soapSender.setSoapServiceIP(Config.RETAIL_HOST);
 	}
 	
-	@Test (description = "SRTE-153. Формирование PLU для весового товара с учетом префикса. Генерация PLU со смещением")
+	@Test (description = "SRTE-153. Генерация PLU со смещением. Если приходит весовой товар с префиксом, для которого настроено смещение, PLU генерится автоматически с учетом смещения")
 	public void testBarCodeGenerationWithOfset(){
 		Good weightGood;
 		int autoGenPLU = 0;
@@ -50,7 +50,7 @@ public class WeightAutoPLUGenerationTest extends WeightAbstractTest {
 		Assert.assertTrue(scales.waitPluLoaded(autoGenPLU) , "Товар не загрузился в весы. PLU =  " + autoGenPLU);
 	}
 	
-	@Test (description = "SRTE-153. Если не приходит поле \"plu-number\" из ERP, происходит автогенерация PLU с учетом смещения.")
+	@Test (description = "SRTE-153. Генерация PLU со смещением. Если приходит весовой товар с префиксом, для которого настроено смещение, и не приходит поле \"plu-number\",  PLU генерится автоматически с учетом смещения.")
 	public void testBarCodeGenerationIfNoPluFromERP(){
 		Good weightGood;
 		int autoGenPLU = 0;
@@ -67,7 +67,7 @@ public class WeightAutoPLUGenerationTest extends WeightAbstractTest {
 		
 	}
 	
-	@Test (description = "SRTE-153. Формирование PLU для весового товара с учетом префикса. Генерация PLU без смещения")
+	@Test (description = "SRTE-153. Генерация PLU без смещения. Если приходит весовой товар с префиксом, для которого не настроено смещение, PLU генерится автоматически на основе баркода отбрасывая весовой префикс")
 	public void testBarCodeGenerationWithoutOfset(){
 		Good weightGood;
 		int autoGenPLU = 0;

@@ -32,7 +32,7 @@ public class WeightBarcodesTest extends WeightAbstractTest {
 		soapSender.setSoapServiceIP(Config.RETAIL_HOST);
 	}
 	
-	@Test (description = "Для каждого из двух весовых баркодов, пришедших из ERP генерится свой PLU")
+	@Test (description = "Для каждого из двух весовых баркодов, пришедших из ERP при импорте товара, генерится свой PLU. ")
 	public void testGeneratePLUForBarcodes(){
 		
 		/*Сгеренить товар с двумя весовыми баркодами */
@@ -53,7 +53,7 @@ public class WeightBarcodesTest extends WeightAbstractTest {
 		Assert.assertTrue(scales.waitPluLoaded(plu2), "Товар не загрузился в весы. PLU = ");
 	}
 	
-	@Test (description = "Если из ERP приходит удаление одного из двух неосновных весовых баркодов (deleted = true), происходит удаление из весов баркода с признаком deleted = true, а не всего весового товара товара",
+	@Test (description = "Товар имеет 2 баркода. При прогрузке из ERP 2 баркодов, из весов удалится только тот баркод, который помечен как удаленный (deleted = true).",
 			dependsOnMethods = "testGeneratePLUForBarcodes" )
 	public void testWeightDeleteBarcode(){
 		/* Отправить удаление одного весового баркода*/
