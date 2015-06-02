@@ -87,5 +87,22 @@ public class Weight1stPriceUpdatesTest extends WeightAbstractTest {
 		
 	}
 	
-	
+	@Test (description = "SRTE-96. Весовой товар выгружается из весов, если пришла цена 1 со статусом удалена (deleted=true)")
+	public void testUnloadGoodIf1stPriceDeleted(){
+		int pluNum = pluNumber++;
+		Good weightGood = goodGenerator.generateWeightGood(String.valueOf(pluNum));
+		soapSender.sendGood(weightGood);
+		Assert.assertTrue(scales.waitPluLoaded(pluNum), "Товар не загрузился в весы. PLU = " + pluNum);
+		
+		List<Price> prices = weightGood.getPrices();
+		for (int i=0; i<prices.size(); i++){
+			if (prices.get(i).getNumber().equals(1L)){
+				prices.get(i).setDeleted(true);;
+			}
+		}
+		
+		soapSender.sendGood(weightGood);
+		Assert.assertTrue(scales.waitPluUnLoaded(pluNum), "Товар не выгрузился из весов, если цена 1 имеет статус удаленной (deleted = true). PLU = " + pluNum);
+		
+	}
 }

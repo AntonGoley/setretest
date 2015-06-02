@@ -157,7 +157,7 @@ public class WeightAdverstingPricesTest extends WeightAbstractTest{
 		soapSender.sendGood(weightGood);
 		plu = scales.getPluUpdated(expPlu);
 		
-		Assert.assertEquals(String.valueOf(plu.getPrice()), priceVal3.toPlainString().replace(".", ""), "Цена за кг не равна цене 3!");
+		Assert.assertEquals(String.valueOf(plu.getPrice()), priceVal3.toPlainString().replace(".", ""), "Цена за кг не равна цене 3!. Либо, не включена обработка третьей цены в настройках товара.");
 		Assert.assertEquals(String.valueOf(plu.getExPrice()), priceVal2.toPlainString().replace(".", ""), "Цена за кг по карте не равна цене 2!");
 	}
 	
@@ -183,7 +183,7 @@ public class WeightAdverstingPricesTest extends WeightAbstractTest{
 		soapSender.sendGood(weightGood);
 		plu = scales.getPluUpdated(expPlu);
 		
-		Assert.assertEquals(String.valueOf(plu.getPrice()), priceVal3.toPlainString().replace(".", ""), "Цена за кг не равна цене 3!");
+		Assert.assertEquals(String.valueOf(plu.getPrice()), priceVal3.toPlainString().replace(".", ""), "Цена за кг не равна цене 3! Либо, не включена обработка третьей цены в настройках товара.");
 		Assert.assertEquals(String.valueOf(plu.getExPrice()), priceVal3.toPlainString().replace(".", ""), "Цена за кг по карте не равна цене 3!");
 	
 	}
@@ -213,7 +213,7 @@ public class WeightAdverstingPricesTest extends WeightAbstractTest{
 		plu = scales.getPluUpdated(expPlu);
 		
 		Assert.assertEquals(String.valueOf(plu.getPrice()), priceVal1.toPlainString().replace(".", ""), "Цена за кг не равна цене 1!");
-		Assert.assertEquals(String.valueOf(plu.getExPrice()), priceVal4.toPlainString().replace(".", ""), "Цена за кг по карте не равна цене 4!");
+		Assert.assertEquals(String.valueOf(plu.getExPrice()), priceVal4.toPlainString().replace(".", ""), "Цена за кг по карте не равна цене 4! Либо, не включена обработка четвертой цены в настройках товара.");
 	}
 	
 	@Test (description =  "SRTE-93. Товар содержит цену 1, 2, 3 и 4. ц3>ц2, ц3<ц1, ц4<3. Цена за кг = ц3. Цена за кг по карте = ц4",
@@ -240,8 +240,8 @@ public class WeightAdverstingPricesTest extends WeightAbstractTest{
 		soapSender.sendGood(weightGood);
 		plu = scales.getPluUpdated(expPlu);
 		
-		Assert.assertEquals(String.valueOf(plu.getPrice()), priceVal3.toPlainString().replace(".", ""), "Цена за кг не равна цене 3!");
-		Assert.assertEquals(String.valueOf(plu.getExPrice()), priceVal4.toPlainString().replace(".", ""), "Цена за кг по карте не равна цене 4!");
+		Assert.assertEquals(String.valueOf(plu.getPrice()), priceVal3.toPlainString().replace(".", ""), "Цена за кг не равна цене 3! Либо, не включена обработка третьей цены в настройках товара.");
+		Assert.assertEquals(String.valueOf(plu.getExPrice()), priceVal4.toPlainString().replace(".", ""), "Цена за кг по карте не равна цене 4! Либо, не включена обработка четвертой цены в настройках товара.");
 	
 	}
 	
