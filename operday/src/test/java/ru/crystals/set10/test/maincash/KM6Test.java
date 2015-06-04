@@ -42,7 +42,7 @@ public class KM6Test extends AbstractTest{
 	//количество отчетов на закладке КМ6
 	int km6Tablerows;
 	
-	private String ifMainCash = "false";
+	private boolean ifMainCash = false;
 	
 	private static String SQL_CLEAN_KM6 = "delete from od_km6";
 	private HashMap<Long, Long>  returnPositions = new HashMap<Long, Long>(); 
@@ -57,14 +57,14 @@ public class KM6Test extends AbstractTest{
 		DisinsectorTools.removeOldReport(chromeDownloadPath, KM6_PDF);
 		
 		/* проверка, включена ли главная касса*/
-		ifMainCash = dbAdapter.queryForString(DB_SET, SQL_MAIN_CASH);
+		ifMainCash = Boolean.valueOf(dbAdapter.queryForString(DB_SET, SQL_MAIN_CASH));
 		
 		/* перейти на страницу с документами КМ3*/
 		cashesPage = new LoginPage(getDriver(), TARGET_HOST_URL)
 				.openOperDay(Config.MANAGER, Config.MANAGER_PASSWORD)
 				.navigatePage(CashesPage.class, CASHES);
 		
-		if (ifMainCash.equals("true")) {
+		if (ifMainCash) {
 			km6 = (KmPage) cashesPage.openTab(CashDocsAbstractPage.class, CashesPage.LOCATOR_MAINCASH_TAB)
 				.switchToTable(LOCATOR_KM6);
 		} else {
@@ -129,9 +129,6 @@ public class KM6Test extends AbstractTest{
 	}
 	
 	@Test (enabled = false, description = "Проверка сумм с учетом возвратов, типов оплат, продаж")
-	/*
-	 * 
-	 */
 	public void test (){
 		
 	}

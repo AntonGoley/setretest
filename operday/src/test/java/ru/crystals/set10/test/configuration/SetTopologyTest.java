@@ -2,8 +2,11 @@
 
 
 import org.testng.Assert;
+import org.testng.ITestResult;
 import org.testng.annotations.AfterClass;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -65,9 +68,29 @@ public class SetTopologyTest extends AbstractTest {
 		salesPage = mainPage.openSales();		
 	}
 	
+	@AfterClass
+	private void sendGoods(){
+		SoapRequestSender soapSender  = new SoapRequestSender();
+		soapSender.sendGoodsToStartTesting(Config.CENTRUM_HOST, "goods.txt");
+	}
+	
+	@BeforeMethod (firstTimeOnly = false)
+	public void refreshBeforeRun(ITestResult result){
+		getDriver().navigate().refresh();
+		DisinsectorTools.delay(1000);
+	}
+	
+//	@AfterMethod
+//	public void refreshOnError(ITestResult result){
+//		if (result.getStatus() == ITestResult.FAILURE) {
+//			getDriver().navigate().refresh();
+//			DisinsectorTools.delay(1000);
+//		}
+//	}
+	
 	@Test (	priority = 1,
 			groups = "Config",
-			description = "Настроить топологию: создать регион, город, магазин, юридическое лицо, добавить кассы, создать кассира")
+			description = "Настроить топологию: создать регион и город")
 	public void setTopology() {
 		addRegionAndCity();
 	}
@@ -82,7 +105,8 @@ public class SetTopologyTest extends AbstractTest {
 	}
 	
 	@Test (dataProvider = "shops",
-			priority = 2)
+			priority = 2, 
+			description = "Добавить виртуальный и магазин для ретейла.")
 	public void addShopsTest(String shopName, String shopNumber, boolean isVirtual){
 		addShop(shopName, shopNumber, isVirtual);
 	}
@@ -96,7 +120,8 @@ public class SetTopologyTest extends AbstractTest {
 	}
 	
 	@Test (dataProvider = "juristicPerson",
-			priority = 3)
+			priority = 3, 
+			description = "Добавить юридическое лицо")
 	public void addJuristicPersonTest( 
 			String shopName, 
 			String shopAdress, 
@@ -117,46 +142,118 @@ public class SetTopologyTest extends AbstractTest {
 	}
 	
 	@Test (dataProvider = "cashes",
-			priority = 4)
+			priority = 4, 
+			description = "Добавить кассы")
 	public void addCashesTest(String shopName){
 		addCash(shopName);
 	}
 	
-	@Test ( priority = 4)
+	@Test ( priority = 4, 
+			description = "")
 	public void addCashierTest(){
 		addCashier();
 	}
 	
-	
-//	@Test (	
-//			description = "Добавить права пользователю manager на центруме"
-//			)
-	private void setUpPrevilegesCentrum(){
-		log.info("Добавить права пользователю manager на центруме");
-		dbAdapter.updateDb(DbAdapter.DB_CENTRUM_SET , String.format("update users_server_user_users_server_user_role " + 
-				"set roles_id = '10' " +
-				"where serveruserentities_id = (select id from users_server_user where login = '%s')", Config.MANAGER));
-		dbAdapter.updateDb(DbAdapter.DB_CENTRUM_SET, String.format("update users_server_user " +
-				"set firstname = '%s', lastname='%s', middlename='%s' ", Config.MANAGER_NAME, Config.MANAGER_LASTNAME, Config.MANAGER_MIDDLENAME ));
-	}	
-
-//	@Test (	
-//			description = "Добавить все роли пользователю manager на ретейле"
-//			 )
-	private void setUpPrevilegesRetail(){
-		//Добавить все роли на ритейле
-		log.info("Добавить все роли пользователю manager на ретейле");
-		dbAdapter.updateDb(DbAdapter.DB_RETAIL_SET, "delete from users_server_user_users_server_user_role");
-		
-		for (int i=1; i<=7; i++) {
-			dbAdapter.updateDb(DbAdapter.DB_RETAIL_SET, String.format("INSERT INTO users_server_user_users_server_user_role(serveruserentities_id, roles_id)" +
-										" VALUES (%s, %s)", 1, i));
-		}
-		
-		dbAdapter.updateDb(DbAdapter.DB_RETAIL_SET, String.format("update users_server_user " +
-				"set firstname = '%s', lastname='%s', middlename='%s' ", Config.MANAGER_NAME, Config.MANAGER_LASTNAME, Config.MANAGER_MIDDLENAME ));
+	/*
+	 * Добавление оборудования
+	 */
+	@DataProvider(name="equipment")
+	public Object[][] equipment() {
+		return new Object[][]{
+				{"Клавиатуры", "QWERTY клавиатура"},
+				{"Сканер", "Сканер штриховых кодов"},
+				{"Принтеры A4", "Стандартный принтер А4"},
+				{"VirtualScales", "VirtualScales"},
+				
+		};
 	}
 	
+	@Test (priority = 4,
+			dataProvider = "equipment",
+			description = "Добавление оборудования")
+	public void testAddEquipment(String equipmentGoup, String equipment){
+		equipmentPage = salesPage.navigateMenu(2, EquipmentPage.class);
+		newEqupment = equipmentPage.addNewEquipment();
+
+		equipmentPage = newEqupment.addEquipment(equipmentGoup, equipment);
+		
+//		Assert.assertTrue(equipmentPage.getEqupmentTypeCount(scalesItem) > 0, 
+//				"Новые весы " + scalesItem + " не добавлены в обородувание");
+		
+	}
+	
+	/*
+	 * Добавление банков
+	 */
+	@DataProvider(name="banks")
+	public Object[][] banks() {
+		return new Object[][]{
+				{Config.BANK_NAME_1},
+				{Config.BANK_NAME_2}
+		};
+	}
+	
+	@Test (priority = 4,
+			dataProvider = "banks", 
+			description = "Добавление банка")
+	public void addBank(String bankName){
+		log.info("Добавление банка: " + bankName);
+		externalSystemPage = salesPage
+				.navigateMenu(3, ExternalSystemsPage.class);
+		externalSystemPage.navigateTab(TAB_NAME_BANKS);
+		newBankPage = externalSystemPage.addEntity(NewBankPage.class);
+		newBankPage.addBank(bankName);
+	}
+	
+	/*
+	 * Добавление ERP
+	 */
+	@Test (priority = 4,
+			description = "Добавление ERP")
+	public void addERP(){
+		int erpSystemsBefore = 0;
+		log.info("Добавление ERP: Протокол Set Retail 10: файлы");
+		externalSystemPage = salesPage
+				.navigateMenu(3, ExternalSystemsPage.class);
+		externalSystemPage.navigateTab(TAB_NAME_ERP);
+		erpSystemsBefore = externalSystemPage.getERPsCount();
+		
+		newERPPage = externalSystemPage.addEntity(NewERPPage.class);
+		externalSystemPage = newERPPage.addERP("Протокол Set Retail 10: файлы");
+		Assert.assertEquals(externalSystemPage.getERPsCount(), erpSystemsBefore + 1, "Новая ERP система не добавлена!");
+	}
+	
+	/*
+	 * Добавление процессингов
+	 */
+	@DataProvider(name="processing")
+	public Object[][] processing() {
+		return new Object[][]{
+				//TODO: вынести в конфиг?
+				{"Подарочные карты", "Подарочные карты ЦФТ"},
+				{"Бонусные процессинги", "Спасибо от Сбербанка"}
+		};
+	}
+	
+	@Test (priority = 4,
+			dataProvider = "processing",
+			description = "Добавление внешнего процессинга")
+	public void addExternalProcessing(String processingType, String processingValue){
+		int extSystemsBefore = 0;
+		log.info("Добавление внешней системы: " + processingValue);
+		getDriver().navigate().refresh();
+		//DisinsectorTools.delay(1000);
+		
+		externalSystemPage = salesPage
+				.navigateMenu(3, ExternalSystemsPage.class);
+		
+		externalSystemPage.navigateTab(TAB_EXTERNAL_PROCESSINGS);
+		extSystemsBefore = externalSystemPage.getExternalProcessingCount();
+		newExternalProcessingPage = externalSystemPage.addEntity(NewExternalProcessingPage.class);
+		externalSystemPage = newExternalProcessingPage.addProcessing(processingType, processingValue);
+		
+		Assert.assertTrue(extSystemsBefore < externalSystemPage.getExternalProcessingCount(), String.format("Внешняя система %s не добавлена!", processingValue));
+	}
 	
 //	@Test
 //	public void testAddRegionAndCity(){
@@ -220,8 +317,6 @@ public class SetTopologyTest extends AbstractTest {
 	}
 	
 	private void openShopPreferences(String shopName){
-		getDriver().navigate().refresh();
-		DisinsectorTools.delay(1000);
 		salesPage = new SalesPage(getDriver());
 		shopPage = salesPage.navigateMenu(0, ShopPage.class);
 		shopPreferences = shopPage.openShopPreferences(shopName);
@@ -235,9 +330,7 @@ public class SetTopologyTest extends AbstractTest {
 	}
 	
 	private void addCashier(){
-		getDriver().navigate().refresh();
-		DisinsectorTools.delay(1000);
-		cashierConfig = salesPage
+			cashierConfig = salesPage
 				.navigateMenu(5, CashiersMainPage.class)
 				.addCashier();
 		cashierConfig.addNewCashier(
@@ -249,118 +342,29 @@ public class SetTopologyTest extends AbstractTest {
 				Config.CASHIER_ADMIN_ROLE);
 	}
 	
-	/*
-	 * Добавление оборудования
-	 */
-	@DataProvider(name="equipment")
-	public Object[][] equipment() {
-		return new Object[][]{
-				{"Клавиатуры", "QWERTY клавиатура"},
-				{"Сканер", "Сканер штриховых кодов"},
-				{"Принтеры A4", "Стандартный принтер А4"},
-				{"VirtualScales", "VirtualScales"},
-				
-		};
-	}
-	
-	@Test (priority = 4,
-			dataProvider = "equipment",
-			description = "Добавление оборудования")
-	public void testAddEquipment(String equipmentGoup, String equipment){
-		getDriver().navigate().refresh();
-		DisinsectorTools.delay(1000);
-		
-		equipmentPage = salesPage.navigateMenu(2, EquipmentPage.class);
-		newEqupment = equipmentPage.addNewEquipment();
 
-		equipmentPage = newEqupment.addEquipment(equipmentGoup, equipment);
+	
+	private void setUpPrevilegesCentrum(){
+		log.info("Добавить права пользователю manager на центруме");
+		dbAdapter.updateDb(DbAdapter.DB_CENTRUM_SET , String.format("update users_server_user_users_server_user_role " + 
+				"set roles_id = '10' " +
+				"where serveruserentities_id = (select id from users_server_user where login = '%s')", Config.MANAGER));
+		dbAdapter.updateDb(DbAdapter.DB_CENTRUM_SET, String.format("update users_server_user " +
+				"set firstname = '%s', lastname='%s', middlename='%s' ", Config.MANAGER_NAME, Config.MANAGER_LASTNAME, Config.MANAGER_MIDDLENAME ));
+	}	
+
+	private void setUpPrevilegesRetail(){
+		//Добавить все роли на ритейле
+		log.info("Добавить все роли пользователю manager на ретейле");
+		dbAdapter.updateDb(DbAdapter.DB_RETAIL_SET, "delete from users_server_user_users_server_user_role");
 		
-//		Assert.assertTrue(equipmentPage.getEqupmentTypeCount(scalesItem) > 0, 
-//				"Новые весы " + scalesItem + " не добавлены в обородувание");
+		for (int i=1; i<=7; i++) {
+			dbAdapter.updateDb(DbAdapter.DB_RETAIL_SET, String.format("INSERT INTO users_server_user_users_server_user_role(serveruserentities_id, roles_id)" +
+										" VALUES (%s, %s)", 1, i));
+		}
 		
+		dbAdapter.updateDb(DbAdapter.DB_RETAIL_SET, String.format("update users_server_user " +
+				"set firstname = '%s', lastname='%s', middlename='%s' ", Config.MANAGER_NAME, Config.MANAGER_LASTNAME, Config.MANAGER_MIDDLENAME ));
 	}
-	
-	/*
-	 * Добавление банков
-	 */
-	@DataProvider(name="banks")
-	public Object[][] banks() {
-		return new Object[][]{
-				{Config.BANK_NAME_1},
-				{Config.BANK_NAME_2}
-		};
-	}
-	
-	@Test (priority = 4,
-			dataProvider = "banks", 
-			description = "Добавление банка")
-	public void addBank(String bankName){
-		getDriver().navigate().refresh();
-		DisinsectorTools.delay(1000);
-		log.info("Добавление банка: " + bankName);
-		externalSystemPage = salesPage
-				.navigateMenu(3, ExternalSystemsPage.class);
-		externalSystemPage.navigateTab(TAB_NAME_BANKS);
-		newBankPage = externalSystemPage.addEntity(NewBankPage.class);
-		newBankPage.addBank(bankName);
-	}
-	
-	/*
-	 * Добавление ERP
-	 */
-	@Test (priority = 4,
-			description = "Добавление ERP")
-	public void addERP(){
-		int erpSystemsBefore = 0;
-		getDriver().navigate().refresh();
-		DisinsectorTools.delay(1000);
-		log.info("Добавление ERP: Протокол Set Retail 10: файлы");
-		externalSystemPage = salesPage
-				.navigateMenu(3, ExternalSystemsPage.class);
-		externalSystemPage.navigateTab(TAB_NAME_ERP);
-		erpSystemsBefore = externalSystemPage.getERPsCount();
-		
-		newERPPage = externalSystemPage.addEntity(NewERPPage.class);
-		externalSystemPage = newERPPage.addERP("Протокол Set Retail 10: файлы");
-		Assert.assertEquals(externalSystemPage.getERPsCount(), erpSystemsBefore + 1, "Новая ERP система не добавлена!");
-	}
-	
-	
-	/*
-	 * Добавление процессингов
-	 */
-	@DataProvider(name="processing")
-	public Object[][] processing() {
-		return new Object[][]{
-				//TODO: вынести в конфиг?
-				{"Подарочные карты", "Подарочные карты ЦФТ"},
-				{"Бонусные процессинги", "Спасибо от Сбербанка"}
-		};
-	}
-	
-	@Test (priority = 4,
-			dataProvider = "processing",
-			description = "Добавление внешнего процессинга")
-	public void addExternalProcessing(String processingType, String processingValue){
-		int extSystemsBefore = 0;
-		log.info("Добавление внешней системы: " + processingValue);
-		getDriver().navigate().refresh();
-		//DisinsectorTools.delay(1000);
-		
-		externalSystemPage = salesPage
-				.navigateMenu(3, ExternalSystemsPage.class);
-		
-		externalSystemPage.navigateTab(TAB_EXTERNAL_PROCESSINGS);
-		extSystemsBefore = externalSystemPage.getExternalProcessingCount();
-		newExternalProcessingPage = externalSystemPage.addEntity(NewExternalProcessingPage.class);
-		externalSystemPage = newExternalProcessingPage.addProcessing(processingType, processingValue);
-		
-		Assert.assertTrue(extSystemsBefore < externalSystemPage.getExternalProcessingCount(), String.format("Внешняя система %s не добавлена!", processingValue));
-	}
-	
-	@AfterClass
-	private void sendGoods(){
-		SoapRequestSender soapSender  = new SoapRequestSender();
-		soapSender.sendGoodsToStartTesting(Config.CENTRUM_HOST, "goods.txt");
-	}
+
 }

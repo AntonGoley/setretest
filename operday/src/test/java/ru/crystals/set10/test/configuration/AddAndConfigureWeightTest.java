@@ -42,18 +42,18 @@ public class AddAndConfigureWeightTest extends AbstractTest{
 		salesPage = mainPage.openSales();		
 	}
 	
-	@Test (description = "Добавление виртуальных весов (как оборудования) на магазин", 
-			priority = 1)
-	public void addVirtualScalesTest(){
-		equipmentPage = salesPage.navigateMenu(1, EquipmentPage.class);
-		
-		newEqupment = equipmentPage.addNewEquipment();
-		equipmentPage = newEqupment.addEquipment(scalesGroup, scalesItem);
-		
-		Assert.assertTrue(equipmentPage.getEqupmentTypeCount(scalesItem) > 0, 
-				"Новые весы " + scalesItem + " не добавлены в обородувание");
-		
-	}
+//	@Test (description = "Добавление виртуальных весов (как оборудования) на магазин", 
+//			priority = 1)
+//	public void addVirtualScalesTest(){
+//		equipmentPage = salesPage.navigateMenu(1, EquipmentPage.class);
+//		
+//		newEqupment = equipmentPage.addNewEquipment();
+//		equipmentPage = newEqupment.addEquipment(scalesGroup, scalesItem);
+//		
+//		Assert.assertTrue(equipmentPage.getEqupmentTypeCount(scalesItem) > 0, 
+//				"Новые весы " + scalesItem + " не добавлены в обородувание");
+//		
+//	}
 	
 	@Test (description = "Привязка виртуальных весов к шаблону в магазине", 
 			priority = 2)

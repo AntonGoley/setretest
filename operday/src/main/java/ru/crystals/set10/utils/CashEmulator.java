@@ -669,7 +669,7 @@ public class CashEmulator {
 	
 	public CashVO setCashVO(int cashNumber, String shop, long date){
 		CashVO cashVo = new CashVO();
-		String prefix = String.valueOf(date);
+		String prefix = String.valueOf(date).substring(5);
 		
 		cashVo.setNumber(cashNumber);
 		cashVo.setShopNumber(Integer.valueOf(shop));
