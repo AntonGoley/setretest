@@ -41,13 +41,13 @@ public class CheckGeneratorFunctionalTest {
 	
 	@AfterClass
 	public void sendZreport(){
-		//cashEmulator.nextWithdrawal();
+		cashEmulator.nextWithdrawal();
 		cashEmulator.nextZReport();
 	}
 	
 	@Test (	description = "Сгенерить чеки продажи")
 	public void testSendChecks(){
-		for(int i=0; i<4; i++) {
+		for(int i=0; i<1; i++) {
 			
 			p1 = (PurchaseEntity) cashEmulator.nextPurchase();
 			

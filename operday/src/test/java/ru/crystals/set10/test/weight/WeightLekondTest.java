@@ -1,13 +1,17 @@
 package ru.crystals.set10.test.weight;
 
+import java.math.BigDecimal;
+
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+
 import ru.crystals.set10.config.Config;
 import ru.crystals.set10.utils.GoodGenerator;
 import ru.crystals.set10.utils.SoapRequestSender;
 import ru.crystals.setretailx.products.catalog.Good;
+import ru.crystals.setretailx.products.catalog.GoodsCatalog;
 import ru.crystals.setretailx.products.catalog.Likond;
 
 @Test(groups = {"retail"})
@@ -141,7 +145,7 @@ public class WeightLekondTest extends WeightAbstractTest {
 		
 		weightGood = goodGenerator.generateWeightGood(String.valueOf(pluNum));
 		
-		/* сгенерить и отправить леконд, разрешающий продажу */
+		/* сгенерить и отправить леконд, не разрешающий продажу */
 		likondFrom = System.currentTimeMillis() + 3600 * 24 * 1000;
 		likondTo = System.currentTimeMillis() + 3600 * 48 * 1000;
 		
@@ -156,6 +160,39 @@ public class WeightLekondTest extends WeightAbstractTest {
 		Assert.assertFalse(scales.waitPluLoaded(pluNum),  "Товар не загрузился на весы, после загрузки ликонда, разрешающего продажу. PLU = " + pluNum);
 	}
 	
+	@Test (description = "Товар должен выгружаться из весов, если приходит обновление цены и леконд на запрет продажи товара в одной транзакции импорта", 
+			dependsOnGroups = "loadUnload",
+			alwaysRun = true)
+	public void testGoodUnloadedIfLekondBanSalesAndImportedWithGood(){
+		int pluNum = pluNumber++;
+		weightGood = goodGenerator.generateWeightGood(String.valueOf(pluNum));
+		
+		/* сгенерить леконд, не разрешающий продажу */
+		likondFrom = System.currentTimeMillis() + 3600 * 24 * 1000;
+		likondTo = System.currentTimeMillis() + 3600 * 48 * 1000;
+		
+		likond.setBeginDate(goodGenerator.getDate(likondFrom));
+		likond.setEndDate(goodGenerator.getDate(likondTo));
+		likond.setMarking(weightGood.getErpCode());
+		
+		/* апдейтим 1ю цену у весового товара */
+		for(int i=0; i<weightGood.getPrices().size(); i++){
+			if (weightGood.getPrices().get(i).equals(1L)){
+				weightGood.getPrices().get(i).setPrice(new BigDecimal("1.00")); // задаем 1р, потому что по умолчанию 1я цена генерится большая
+			}
+		}
+		
+		GoodsCatalog goodsCatalog = new GoodsCatalog();
+		goodsCatalog.getLikonds().add(likond);
+		goodsCatalog.getGoods().add(weightGood);
+		
+		/* отправляем новую 1ю цену и леконд в одном запросе*/
+		soapSender.send(goodsCatalog);
+		
+		Assert.assertTrue(scales.waitPluUnLoaded(pluNum),  "Товар не не выгрузился из весов, при существующем леконде, запрещающем продажу. PLU = " + pluNum);
+		Assert.assertFalse(scales.waitPluLoaded(pluNum),  "Товар загрузился на весы, ри существующем леконде, запрещающем продажу. PLU = " + pluNum);
+		
+	}
 	
 	/*
 	 *  как синхронизировать время сервера (получить время сервера)?

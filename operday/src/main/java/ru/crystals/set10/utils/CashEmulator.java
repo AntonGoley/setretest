@@ -191,7 +191,7 @@ public class CashEmulator {
 		WithdrawalEntity wdr = new WithdrawalEntity();
 		wdr.setCurrency("RUB");
 		wdr.setWasBefore((long) 0);
-		wdr.setValue((long) 10000);
+		wdr.setValue((long) 100000);
 		wdr.setShift(shift);
 		wdr.setFiscalDocNum("testWdr;" + String.valueOf(System.currentTimeMillis()));
 		wdr.setNumber((long) checkNumber++);
