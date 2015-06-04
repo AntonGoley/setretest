@@ -122,7 +122,7 @@ public class SetTopologyTest extends AbstractTest {
 		addCash(shopName);
 	}
 	
-	@Test ( priority = 5)
+	@Test ( priority = 4)
 	public void addCashierTest(){
 		addCashier();
 	}
@@ -263,7 +263,8 @@ public class SetTopologyTest extends AbstractTest {
 		};
 	}
 	
-	@Test (dataProvider = "equipment",
+	@Test (priority = 4,
+			dataProvider = "equipment",
 			description = "Добавление оборудования")
 	public void testAddEquipment(String equipmentGoup, String equipment){
 		getDriver().navigate().refresh();
@@ -290,7 +291,8 @@ public class SetTopologyTest extends AbstractTest {
 		};
 	}
 	
-	@Test (dataProvider = "banks", 
+	@Test (priority = 4,
+			dataProvider = "banks", 
 			description = "Добавление банка")
 	public void addBank(String bankName){
 		getDriver().navigate().refresh();
@@ -306,7 +308,8 @@ public class SetTopologyTest extends AbstractTest {
 	/*
 	 * Добавление ERP
 	 */
-	@Test (description = "Добавление ERP")
+	@Test (priority = 4,
+			description = "Добавление ERP")
 	public void addERP(){
 		int erpSystemsBefore = 0;
 		getDriver().navigate().refresh();
@@ -335,7 +338,8 @@ public class SetTopologyTest extends AbstractTest {
 		};
 	}
 	
-	@Test (dataProvider = "processing",
+	@Test (priority = 4,
+			dataProvider = "processing",
 			description = "Добавление внешнего процессинга")
 	public void addExternalProcessing(String processingType, String processingValue){
 		int extSystemsBefore = 0;
@@ -354,7 +358,7 @@ public class SetTopologyTest extends AbstractTest {
 		Assert.assertTrue(extSystemsBefore < externalSystemPage.getExternalProcessingCount(), String.format("Внешняя система %s не добавлена!", processingValue));
 	}
 	
-	//@AfterClass
+	@AfterClass
 	private void sendGoods(){
 		SoapRequestSender soapSender  = new SoapRequestSender();
 		soapSender.sendGoodsToStartTesting(Config.CENTRUM_HOST, "goods.txt");
