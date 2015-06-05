@@ -28,7 +28,7 @@ public class WeightLoadTest extends WeightAbstractTest {
 	
 	@BeforeClass
 	public void initData(){
-		prerareSuite();
+		//prerareSuite();
 		soapSender.setSoapServiceIP(Config.RETAIL_HOST);
 		
 		for (int i=0; i<goodsAmount; i++){

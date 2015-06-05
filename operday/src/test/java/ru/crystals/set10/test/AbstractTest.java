@@ -28,7 +28,7 @@ import ru.crystals.set10.utils.PurchaseGenerator;
 
 
 @Listeners(ru.crystals.set10.test.AbstractTest.class)
-public class  AbstractTest implements IExecutionListener{
+public class  AbstractTest implements IExecutionListener {
 	
     protected static final Logger log = Logger.getLogger(AbstractTest.class);
 	
@@ -100,7 +100,6 @@ public class  AbstractTest implements IExecutionListener{
     		clearDownloadDir();
     	}	
     	
-    	String[] groups = context.getIncludedGroups();
     	TARGET_HOST = Config.RETAIL_HOST;
     	TARGET_HOST_URL = Config.RETAIL_URL;
     	TARGET_SHOP = Config.SHOP_NUMBER;
@@ -112,6 +111,8 @@ public class  AbstractTest implements IExecutionListener{
     	cashEmulator = cashEmulatorRetail;
     	cashEmulatorSearchCheck = cashEmulatorSearchCheckRetail;
     	cashEmulatorMainCash = cashEmulatorMainCashRetail;
+    	
+    	String[] groups = context.getIncludedGroups();
     	
     	for (int i=0; i<groups.length; i++){
     		if (groups[i].equals("centrum")){

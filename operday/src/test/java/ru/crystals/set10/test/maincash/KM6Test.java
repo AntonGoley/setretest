@@ -128,7 +128,9 @@ public class KM6Test extends AbstractTest{
 		Assert.assertTrue(reportText.contains(expectedValue), "Неверное значение поля в форме КМ6");
 	}
 	
-	@Test (enabled = false, description = "Проверка сумм с учетом возвратов, типов оплат, продаж")
+	
+	//TODO:
+	@Test (enabled = false, description = "Проверка сумм с учетом возвратов, типов оплат, продаж, типов чеков")
 	public void test (){
 		
 	}

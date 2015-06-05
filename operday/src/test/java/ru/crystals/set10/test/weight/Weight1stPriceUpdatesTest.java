@@ -22,7 +22,6 @@ public class Weight1stPriceUpdatesTest extends WeightAbstractTest {
 	@BeforeClass
 	public void initData(){
 		soapSender.setSoapServiceIP(Config.RETAIL_HOST);
-		prerareSuite();
 	}
 	
 	@Test (description = "SRTE-96. Весовой товар выгружается из весов, если пришла цена 1 равная 0")
