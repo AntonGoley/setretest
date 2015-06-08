@@ -38,7 +38,7 @@ public class CheckGeneratorTest {
 	@AfterGroups  (groups = {"simple_shift", "all_payments", "maincash"})
 	public void closeShift(){
 		cashEmulator.nextWithdrawal();
-		cashEmulator.nextZReport();
+		cashEmulator.nextZReport(10000L, 20000L);
 	}
 	
 	@Test ( groups = "simple_shift",

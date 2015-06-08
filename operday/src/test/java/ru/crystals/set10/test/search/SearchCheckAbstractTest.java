@@ -35,7 +35,7 @@ public class SearchCheckAbstractTest extends AbstractTest{
 	
 	@AfterSuite
 	public void closeShift(){
-		cashEmulatorSearchCheck.nextZReport();
+		//cashEmulatorSearchCheck.nextZReport();
 	}
 	
 	/*

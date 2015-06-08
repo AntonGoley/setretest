@@ -234,7 +234,7 @@ public class CashEmulator {
 	/*
 	 * закрыть текущую смену
 	 */
-	public DocumentEntity nextZReport(){
+	public DocumentEntity nextZReport(Long sumCashIn, Long sumCashOut){
 		long sumPurchaseFiscal = Long.valueOf(getShiftSumChecks());
 		long sumReturnFiscal = (long) getShiftSumChecksRefund();
 		
@@ -250,13 +250,19 @@ public class CashEmulator {
 	    // сумма чеков продажи за смену в ФР
 	    rse.setSumPurchaseFiscal(sumPurchaseFiscal);
 	    // сумма возвратов по ФР
-	    rse.setSumReturnFiscal(sumReturnFiscal);
+	    rse.setSumReturnFiscal(sumReturnFiscal - 1L);
 	    // Сумма наличных продаж
 	    rse.setSumCashPurchase(sumPurchaseFiscal - sumReturnFiscal);
 	    
 	    rse.setId(Long.valueOf(reportId++));
 	    rse.setDateCommit(dateClose);
-
+	    
+//	    rse.setSumCashBegin(sumCashBegin);
+//	    rse.setSumCashEnd(sumCashEnd);
+	    rse.setSumCashIn(sumCashIn);
+	    rse.setSumCashOut(sumCashOut);
+	    
+	    
 	    ReportPaymentTypeEntity reportPaymentTypeEntity = new ReportPaymentTypeEntity(rse.getId().longValue(), "CashPaymentEntity", 'P');
 	    //reportPaymentTypeEntity.setPSumm(getShiftSum(false));
 	    

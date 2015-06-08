@@ -49,7 +49,7 @@ public class CashierNameOperDayTabTest extends AbstractTest{
 			alwaysRun = true)
 	public void testCashierWhoCloseShift(){
 		String surname = cashEmulator.changeCashUser(DisinsectorTools.random(100));
-		cashEmulator.nextZReport();
+		cashEmulator.nextZReport(100000L, 200000L);
 		
 		operDayTab = operDayTab.refreshOperdayTab();
 		Assert.assertTrue(operDayTab.getCashierNameForLastShift(cashEmulator.getCashNumber()).contains(surname), 

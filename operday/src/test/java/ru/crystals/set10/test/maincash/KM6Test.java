@@ -82,7 +82,7 @@ public class KM6Test extends AbstractTest{
 		returnPositions.put(1L, 1L * 1000);
 		purchaseReturn = (PurchaseEntity) cashEmulator.nextRefundPositions(purchase, returnPositions, true);
 		// закрываем смену
-		cashEmulator.nextZReport();
+		cashEmulator.nextZReport(10000L, 20000L);
 	}
 	
 	@DataProvider (name = "Поля КМ6")

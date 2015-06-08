@@ -91,6 +91,8 @@ public class  MainCashManualDocPage extends CashesPage{
 				getElementsNum(getDriver(), ID_OPERDAYSWF, LOCATOR_EDIT_DOC_FORM));
 	}
 	
+	
+	
 	public class Fields {
 		private HashMap<String, Boolean> fieldsPKO;
 		private HashMap<String, Boolean> fieldsRKO;

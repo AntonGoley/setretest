@@ -3,6 +3,7 @@ package ru.crystals.set10.test.weight;
 import java.math.BigDecimal;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
@@ -18,6 +19,8 @@ import ru.crystals.setretailx.products.catalog.Price;
 
 @Test(groups = {"retail"})
 public class WeightAdverstingPricesTest extends WeightAbstractTest{
+	
+	protected static final Logger log = Logger.getLogger(WeightAdverstingPricesTest.class);
 	
 	/*
 	 * 	Цена 1 - базовая цена, действует без карты,

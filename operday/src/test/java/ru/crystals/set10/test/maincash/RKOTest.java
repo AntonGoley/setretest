@@ -9,6 +9,7 @@ import java.util.Date;
 
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import ru.crystals.set10.config.Config;
@@ -38,11 +39,19 @@ public class RKOTest extends AbstractTest {
 		
 	}
 	
+	
+	@DataProvider
+	public Object setUpRKOData(){
+		return new Object[][]{
+				{"", ""}	
+		};
+	}
+	
 	@Test(description = "SRTE-175. Добавление нового документа РКО.")
 	public void testAddNewRKO(){
 		rko = docs.addDoc();
-		
 		rko.setTextField(FIELD_DOC_SUM, "10,99")
+			
 			.setOperDayDate(FIELD_DATE_OPERDAY, DisinsectorTools.getDate("dd.MM.yy", new Date().getTime()))
 			.saveChanges()
 			.backToMainCash();

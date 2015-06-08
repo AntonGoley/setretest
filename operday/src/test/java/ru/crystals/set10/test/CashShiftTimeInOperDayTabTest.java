@@ -35,7 +35,7 @@ public class CashShiftTimeInOperDayTabTest extends AbstractTest{
 		cashEmulator.setTimeOfset(86400000 * 6);
 		cashEmulator.useNextShift();
 		cashEmulator.nextPurchase();
-		cashEmulator.nextZReport();
+		cashEmulator.nextZReport(100000L, 200000L);
 	}
 	
 	@Test(description = "SRTE-83. ")

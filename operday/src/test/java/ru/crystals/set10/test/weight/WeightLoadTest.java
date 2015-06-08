@@ -4,12 +4,14 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import ru.crystals.set10.config.Config;
 import ru.crystals.set10.utils.GoodGenerator;
 import ru.crystals.set10.utils.SoapRequestSender;
+import ru.crystals.setretailx.products.catalog.Department;
 import ru.crystals.setretailx.products.catalog.Good;
 import ru.crystals.setretailx.products.catalog.GoodsCatalog;
 import ru.crystals.setretailx.products.catalog.Price;
@@ -17,8 +19,9 @@ import ru.crystals.setretailx.products.catalog.Price;
 @Test(groups = {"retail"})
 public class WeightLoadTest extends WeightAbstractTest { 
 	
+	protected static final Logger log = Logger.getLogger(WeightLoadTest.class);
 	
-	private int goodsAmount = 2000;
+	private int goodsAmount = 1000;
 	
 	List<Good> goods = new ArrayList<Good>(goodsAmount);
 	GoodsCatalog goodsCatalog;
@@ -30,9 +33,32 @@ public class WeightLoadTest extends WeightAbstractTest {
 	public void initData(){
 		//prerareSuite();
 		soapSender.setSoapServiceIP(Config.RETAIL_HOST);
+		Good good;
+		Price price1;
 		
 		for (int i=0; i<goodsAmount; i++){
-			goods.add(goodGenerator.generateWeightGood(String.valueOf(pluNumber++)));
+			good = goodGenerator.generateWeightGood(String.valueOf(pluNumber++));
+			
+			for (int y=0; y<good.getPrices().size(); y++){
+				Price price = good.getPrices().get(y);
+				if (price.getNumber().equals(1L)){
+					price1 =  new Price();
+					price1.setNumber(1L);
+					price1.setPrice(price.getPrice());
+					price1.setSinceDate(price.getSinceDate());
+					price1.setTillDate(price.getSinceDate());
+					
+					
+					Department department = new Department();
+					department.setName("Отдел 2");
+					department.setNumber(2L);
+					price1.setDepartment(department);
+					good.getPrices().add(price1);
+					goods.add(good);
+					break;
+				}
+			}
+			
 		}
 	}
 	

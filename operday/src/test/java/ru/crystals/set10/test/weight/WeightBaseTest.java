@@ -1,9 +1,12 @@
 package ru.crystals.set10.test.weight;
 
 import java.util.Iterator;
+
+import org.apache.log4j.Logger;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+
 import ru.crystals.set10.config.Config;
 import ru.crystals.set10.utils.GoodGenerator;
 import ru.crystals.set10.utils.SoapRequestSender;
@@ -13,6 +16,7 @@ import ru.crystals.setretailx.products.catalog.Good;
 @Test(groups = {"retail"})
 public class WeightBaseTest extends WeightAbstractTest { 
 	
+	protected static final Logger log = Logger.getLogger(WeightBaseTest.class);
 	
 	Good weightUnLoadBarcode;
 	Good weightUnLoadDeleteCash;

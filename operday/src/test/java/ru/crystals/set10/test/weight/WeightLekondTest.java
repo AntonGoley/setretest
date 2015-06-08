@@ -2,6 +2,7 @@ package ru.crystals.set10.test.weight;
 
 import java.math.BigDecimal;
 
+import org.apache.log4j.Logger;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
@@ -16,6 +17,8 @@ import ru.crystals.setretailx.products.catalog.Likond;
 
 @Test(groups = {"retail"})
 public class WeightLekondTest extends WeightAbstractTest { 
+	
+	protected static final Logger log = Logger.getLogger(WeightLekondTest.class);
 	
 	SoapRequestSender soapSender = new SoapRequestSender();
 	GoodGenerator goodGenerator = new GoodGenerator();

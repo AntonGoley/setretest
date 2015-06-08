@@ -42,7 +42,7 @@ public class CheckGeneratorFunctionalTest {
 	@AfterClass
 	public void sendZreport(){
 		cashEmulator.nextWithdrawal();
-		cashEmulator.nextZReport();
+		cashEmulator.nextZReport(100000L, 200000L);
 	}
 	
 	@Test (	description = "Сгенерить чеки продажи")
@@ -51,19 +51,19 @@ public class CheckGeneratorFunctionalTest {
 			
 			p1 = (PurchaseEntity) cashEmulator.nextPurchase();
 			
-			p1 = (PurchaseEntity) cashEmulator.nextPurchaseWithoutSending();
-			p1.setReturn();
-			cashEmulator.nextCancelledPurchase(p1);
-			
-			
-			if (i==0) {
-				p1 = (PurchaseEntity) cashEmulator.nextPurchase();
-				//возвращаем первую позицию в кол-ве 1шт
-				HashMap<Long, Long> returnPositions = new HashMap<Long, Long>();
-				returnPositions.put(1L, 1000L);
-				cashEmulator.nextRefundPositions(p1, returnPositions, false);
-				p1 = (PurchaseEntity) cashEmulator.nextPurchase(getBankCardPayment(BankCardPaymentEntity.class));
-			}	
+//			p1 = (PurchaseEntity) cashEmulator.nextPurchaseWithoutSending();
+//			p1.setReturn();
+//			cashEmulator.nextCancelledPurchase(p1);
+//			
+//			
+//			if (i==0) {
+//				p1 = (PurchaseEntity) cashEmulator.nextPurchase();
+//				//возвращаем первую позицию в кол-ве 1шт
+//				HashMap<Long, Long> returnPositions = new HashMap<Long, Long>();
+//				returnPositions.put(1L, 1000L);
+//				cashEmulator.nextRefundPositions(p1, returnPositions, false);
+//				p1 = (PurchaseEntity) cashEmulator.nextPurchase(getBankCardPayment(BankCardPaymentEntity.class));
+//			}	
 		}
 	}
 	

@@ -1,8 +1,10 @@
 package ru.crystals.set10.test.weight;
 
+import org.apache.log4j.Logger;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+
 import ru.crystals.scales.tech.core.scales.virtual.xml.PluType;
 import ru.crystals.set10.config.Config;
 import ru.crystals.set10.utils.GoodGenerator;
@@ -13,6 +15,7 @@ import ru.crystals.setretailx.products.catalog.Good;
 @Test(groups = {"retail"})
 public class WeightFieldsOnLabelTest extends WeightAbstractTest { 
 	
+	protected static final Logger log = Logger.getLogger(WeightFieldsOnLabelTest.class);
 	
 	SoapRequestSender soapSender = new SoapRequestSender();
 	GoodGenerator goodGenerator = new GoodGenerator();

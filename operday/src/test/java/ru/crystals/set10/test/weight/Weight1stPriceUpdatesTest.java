@@ -3,6 +3,7 @@ package ru.crystals.set10.test.weight;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
+import org.apache.log4j.Logger;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -15,6 +16,7 @@ import ru.crystals.setretailx.products.catalog.Price;
 @Test(groups = {"retail"})
 public class Weight1stPriceUpdatesTest extends WeightAbstractTest { 
 	
+	protected static final Logger log = Logger.getLogger(Weight1stPriceUpdatesTest.class);
 	
 	SoapRequestSender soapSender = new SoapRequestSender();
 	GoodGenerator goodGenerator = new GoodGenerator();
