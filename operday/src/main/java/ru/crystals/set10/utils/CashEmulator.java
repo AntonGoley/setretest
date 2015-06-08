@@ -250,15 +250,13 @@ public class CashEmulator {
 	    // сумма чеков продажи за смену в ФР
 	    rse.setSumPurchaseFiscal(sumPurchaseFiscal);
 	    // сумма возвратов по ФР
-	    rse.setSumReturnFiscal(sumReturnFiscal - 1L);
+	    rse.setSumReturnFiscal(sumReturnFiscal);
 	    // Сумма наличных продаж
 	    rse.setSumCashPurchase(sumPurchaseFiscal - sumReturnFiscal);
 	    
 	    rse.setId(Long.valueOf(reportId++));
 	    rse.setDateCommit(dateClose);
 	    
-//	    rse.setSumCashBegin(sumCashBegin);
-//	    rse.setSumCashEnd(sumCashEnd);
 	    rse.setSumCashIn(sumCashIn);
 	    rse.setSumCashOut(sumCashOut);
 	    
@@ -675,7 +673,7 @@ public class CashEmulator {
 	
 	public CashVO setCashVO(int cashNumber, String shop, long date){
 		CashVO cashVo = new CashVO();
-		String prefix = String.valueOf(date).substring(5);
+		String prefix = String.valueOf(date).substring(6, 13);
 		
 		cashVo.setNumber(cashNumber);
 		cashVo.setShopNumber(Integer.valueOf(shop));
