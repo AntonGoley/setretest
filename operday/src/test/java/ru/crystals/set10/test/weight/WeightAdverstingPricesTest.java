@@ -116,7 +116,7 @@ public class WeightAdverstingPricesTest extends WeightAbstractTest{
 	
 	}
 	
-	@Test (description =  "SRTE-93. Товар содержит цену 1 и цену 2. ц1 = ц2.", 
+	@Test (description =  "SRTE-93. Товар содержит цену 1 и цену 2. ц1 = ц2. На весы выгружается Цена за кг = Цена за кг по карте = ц1", 
 			groups = "price12")
 	public void testPrice1EqualsPrice2(){
 		PluType expPlu = plu;
