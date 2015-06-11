@@ -5,7 +5,7 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import ru.crystals.set10.pages.operday.OperDayPage;
-import ru.crystals.set10.product.ProductCardPage;
+import ru.crystals.set10.pages.product.ProductCardPage;
 import ru.crystals.set10.utils.DisinsectorTools;
 import static ru.crystals.set10.utils.FlexMediator.*;
 

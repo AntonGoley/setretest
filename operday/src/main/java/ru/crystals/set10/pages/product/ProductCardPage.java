@@ -1,4 +1,4 @@
-package ru.crystals.set10.product;
+package ru.crystals.set10.pages.product;
 
 import static ru.crystals.set10.utils.FlexMediator.*;
 import org.openqa.selenium.By;
@@ -30,8 +30,28 @@ public class ProductCardPage extends AbstractPage{
 		return PageFactory.initElements(getDriver(), tab);
 	}
 	
+	/*
+	 * Значение нередактируемого текствого поля
+	 */
 	public String getTextFieldValue(String field){
 		return getElementProperty(getDriver(), ID_PRODUCTSWF, field, "text");
 	}
-
+	
+	/*
+	 * Значение свойсвт (сейчас пока radiobutton)
+	 */
+	public String getPropertyFieldValue(String field){
+		return getElementProperty(getDriver(), ID_PRODUCTSWF, field, "label");
+	}
+	
+	/*
+	 * выбрать свойство: чек бокс, radiobutton
+	 */
+	public void setProperty(String property){
+		boolean ifSelected = Boolean.valueOf(getElementProperty(getDriver(), ID_PRODUCTSWF, property, "selected") );
+		if (!ifSelected) {
+			clickElement(getDriver(), ID_PRODUCTSWF, property);
+		}
+	}
+	
 }

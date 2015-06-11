@@ -162,7 +162,12 @@ public class VirtualScalesReader {
 					//TODO: сравнить объекты
 					if ( resultPlu.getPrice() != plu.getPrice() || 
 						 resultPlu.getExPrice() != plu.getExPrice() ||
-						!resultPlu.getCertificationType().equals(plu.getCertificationType()) )
+						!resultPlu.getCertificationType().equals(plu.getCertificationType()) ||
+						!resultPlu.getAlternativeText4().equals(plu.getAlternativeText4()) || 
+						!resultPlu.getAlternativeText3().equals(plu.getAlternativeText3()) || 
+						!resultPlu.getAlternativeText2().equals(plu.getAlternativeText2()) || 
+						!resultPlu.getAlternativeText1().equals(plu.getAlternativeText1()) 
+						)
 					{
 						log.info("PLU = " +  plu.getNumber() + " успешно обновлен");
 						return resultPlu;

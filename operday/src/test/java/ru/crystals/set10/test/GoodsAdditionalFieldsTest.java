@@ -3,23 +3,25 @@ package ru.crystals.set10.test;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+
 import ru.crystals.set10.config.Config;
 import ru.crystals.set10.pages.basic.LoginPage;
 import ru.crystals.set10.pages.basic.MainPage;
 import ru.crystals.set10.pages.operday.tablereports.WrongAdverstingPriceConfigPage;
-import ru.crystals.set10.product.ProductCardPage;
-import ru.crystals.set10.product.ProductAdditionalInfoTabPage;
-import ru.crystals.set10.product.ProductMainInfoTabPage;
+import ru.crystals.set10.pages.product.ProductAdditionalInfoTabPage;
+import ru.crystals.set10.pages.product.ProductCardPage;
+import ru.crystals.set10.pages.product.ProductMainInfoTabPage;
 import ru.crystals.set10.utils.GoodGenerator;
 import ru.crystals.set10.utils.SoapRequestSender;
 import ru.crystals.setretailx.products.catalog.Good;
 import ru.crystals.setretailx.products.catalog.PluginProperty;
-import static ru.crystals.set10.product.ProductAdditionalInfoTabPage.*;
-import static ru.crystals.set10.product.ProductMainInfoTabPage.*;
+import static ru.crystals.set10.pages.product.ProductAdditionalInfoTabPage.*;
+import static ru.crystals.set10.pages.product.ProductMainInfoTabPage.*;
 
 
 @Test (groups = {"retail", "centrum"})

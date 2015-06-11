@@ -13,6 +13,9 @@ public class  MainCashDocsPage extends CashDocsAbstractPage {
 	private static final String BUTTON_DELETE_DOC = "label:Удалить";
 	private static final String BUTTON_EDIT_DOC = "label:Редактировать";
 	
+	private static final String BALANCE_DEGIN = "";
+	private static final String BALANCE_END = "";
+	
 	private static final String ID = "id:mainCashDeskDocuments/";
 
 	public MainCashDocsPage(WebDriver driver) {

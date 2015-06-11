@@ -32,8 +32,14 @@ public class GoodGenerator {
 	public Good generateWeightGoodWithNoBarCode(String pluNumber){
 		Good weightGood = generateGood(GOODTYPE_WEIGHT);
 		weightGood.getPluginProperties().add(generatePluginProperty("plu-number", pluNumber));
+		
+		weightGood.getPluginProperties().add(generatePluginProperty("composition", "Composition_" + weightGood.getMarkingOfTheGood() + "_PLU = "+ pluNumber));
+		weightGood.getPluginProperties().add(generatePluginProperty("food-value", "Food_value_" + weightGood.getMarkingOfTheGood() + "_PLU = "+ pluNumber));
+		weightGood.getPluginProperties().add(generatePluginProperty("storage-conditions", "Storage-condidions_" + weightGood.getMarkingOfTheGood() + "_PLU = "+ pluNumber));
+		weightGood.getPluginProperties().add(generatePluginProperty("producer", "Producer_" + weightGood.getMarkingOfTheGood() + "_PLU="+ pluNumber));
+		
 		weightGood.getMeasure().setCode("2");
-		weightGood.getMeasure().setName("кг.");;
+		weightGood.getMeasure().setName("кг.");
 		return weightGood;
 	}
 	

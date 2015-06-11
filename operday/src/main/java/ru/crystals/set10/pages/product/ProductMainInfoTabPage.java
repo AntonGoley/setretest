@@ -1,4 +1,4 @@
-package ru.crystals.set10.product;
+package ru.crystals.set10.pages.product;
 
 import static ru.crystals.set10.utils.FlexMediator.*;
 
