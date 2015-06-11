@@ -63,7 +63,7 @@ public class WeightDateOfManufactureTest extends WeightAbstractTest {
 				{ RADIO_CURRENT_DATE_AND_TIME, DisinsectorTools.getDate("Изготовлено: " + "dd.MM.yyyy", new Date().getTime()) },  // время добавится во время теста
 				{ RADIO_LABEL_PRINT_DATE_AND_TIME, "Изготовлено,"},
 				{ RADIO_SELECT_DATE, DisinsectorTools.getDate("Изготовлено: " + "dd.MM.yyyy", new Date().getTime())},
-				{ RADIO_DATE_NOT_SPECIFIED, ""}
+				{ RADIO_DATE_NOT_SPECIFIED, null}
 		};
 	}
 	

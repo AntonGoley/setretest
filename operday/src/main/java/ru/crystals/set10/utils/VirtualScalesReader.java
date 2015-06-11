@@ -163,7 +163,9 @@ public class VirtualScalesReader {
 					if ( resultPlu.getPrice() != plu.getPrice() || 
 						 resultPlu.getExPrice() != plu.getExPrice() ||
 						!resultPlu.getCertificationType().equals(plu.getCertificationType()) ||
-						!resultPlu.getAlternativeText4().equals(plu.getAlternativeText4()) || 
+						(resultPlu.getAlternativeText4() == null && plu.getAlternativeText4() != null) || 
+						(resultPlu.getAlternativeText4() != null && plu.getAlternativeText4() == null) ||
+						!resultPlu.getAlternativeText4().equals(plu.getAlternativeText4()) ||
 						!resultPlu.getAlternativeText3().equals(plu.getAlternativeText3()) || 
 						!resultPlu.getAlternativeText2().equals(plu.getAlternativeText2()) || 
 						!resultPlu.getAlternativeText1().equals(plu.getAlternativeText1()) 
