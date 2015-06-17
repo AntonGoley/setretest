@@ -126,7 +126,8 @@ public class ConfigGoodTypesAndPaymentsTest extends AbstractTest {
 	/*
 	 * Для центрума
 	 */
-	@Test (description = "Настройка типов товаров и оплат: алкогольные ограничения",
+	@Test ( enabled = false,
+			description = "Настройка типов товаров и оплат: алкогольные ограничения",
 		   dataProvider = "alcohol")
 	public void testConfigAlcoRestrictions(String name, String persentageValue, boolean spreadAllShops){
 		int restrictionsOnPage = 0;
