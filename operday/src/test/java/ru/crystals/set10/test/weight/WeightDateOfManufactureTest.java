@@ -67,7 +67,7 @@ public class WeightDateOfManufactureTest extends WeightAbstractTest {
 		};
 	}
 	
-	@Test (description = "SRL-758. Проверить, что дата изготовления изменяется в соответствии с выбраным условием в карточке товра",
+	@Test (description = "SRL-758. Проверить, что дата изготовления изменяется в соответствии с выбраным условием в карточке товара",
 			priority = 2,
 			dataProvider = "dateOfManufacture")
 	public void testWeightProductManufactureUpdatedFromProductCard(String property, String result ){

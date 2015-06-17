@@ -55,6 +55,7 @@ public class WeightAdverstingPricesTest extends WeightAbstractTest{
 		
 		weightGood = goodGenerator.generateWeightGood(String.valueOf(pluNum));
 		soapSender.sendGood(weightGood);
+		scales.waitPluLoaded(pluNum);
 		plu = scales.getPlu(pluNum);
 	}
 	
