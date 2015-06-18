@@ -64,6 +64,7 @@ public class ConfigEqupmentTest extends AbstractTest {
 			dataProvider = "equipment",
 			description = "Добавление оборудования")
 	public void testAddEquipment(String equipmentGoup, String equipment){
+		log.info("Добавление оборудования: " + equipment);
 		equipmentPage = salesPage.navigateMenu(1, EquipmentPage.class);
 		newEqupment = equipmentPage.addNewEquipment();
 
