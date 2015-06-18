@@ -4,12 +4,16 @@ import static ru.crystals.set10.config.Config.WEIGHT_BARCODEGENERATION_OFSET;
 import static ru.crystals.set10.config.Config.WEIGHT_BARCODEGENERATION_PREFIX;
 import static ru.crystals.set10.config.Config.WEIGHT_BARCODE_PREFIX;
 import static ru.crystals.set10.pages.sales.preferences.SalesPreferencesPage.TAB_TYPES_GOODS_PAYMENTS;
+
 import java.lang.reflect.Method;
+
 import org.testng.Assert;
+import org.testng.ITestContext;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+
 import ru.crystals.set10.config.Config;
 import ru.crystals.set10.pages.basic.LoginPage;
 import ru.crystals.set10.pages.basic.MainPage;
@@ -30,7 +34,7 @@ import static ru.crystals.set10.pages.sales.preferences.paymenttypes.ConsumerCre
 import static ru.crystals.set10.pages.sales.preferences.SalesGoodsTypesAndPaymentsTabPage.*;
 import static ru.crystals.set10.pages.sales.preferences.goodstypes.alcohol.AlcoholPage.ALCOHOL_RESTRICTIONS;
 
-
+@Test(groups = {"retail"})
 public class ConfigGoodTypesAndPaymentsTest extends AbstractTest {
 	
 	MainPage mainPage;
@@ -46,8 +50,8 @@ public class ConfigGoodTypesAndPaymentsTest extends AbstractTest {
 	
 	
 	@BeforeClass
-	public void doLogin(){
-		mainPage = new LoginPage(getDriver(), Config.RETAIL_URL).doLogin(Config.MANAGER, Config.MANAGER_PASSWORD);
+	public void doLogin(ITestContext context){
+		mainPage = new LoginPage(getDriver(), TARGET_HOST_URL).doLogin(Config.MANAGER, Config.MANAGER_PASSWORD);
 		salesPage = mainPage.openSales();
 		/*
 		 * TODO:!!! разрулить разницу в меню Retail и Центрум
@@ -72,7 +76,7 @@ public class ConfigGoodTypesAndPaymentsTest extends AbstractTest {
 	}
 	
 	@DataProvider(name = "weight")
-	public Object[][] weightConfig(){
+	private Object[][] weightConfig(){
 		/*
 		 * Посмотреть, насколько это хорошо выполнять шаг в dataProvider?
 		 */
@@ -115,7 +119,7 @@ public class ConfigGoodTypesAndPaymentsTest extends AbstractTest {
 	
 	
 	@DataProvider(name = "alcohol")
-	public Object[][] alcoholRestrictions(){
+	private Object[][] alcoholRestrictions(){
 		alcoholPage = salesGoodsTypesPage.selectProductTypeItem(GOOD_TYPE_ALCOHOL, AlcoholPage.class);
 		return new Object[][]{
 				{"Ограничение для 90,5%", "90,5", true},

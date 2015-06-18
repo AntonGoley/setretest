@@ -1,15 +1,11 @@
  package ru.crystals.set10.test.configuration;
 
 
-import org.testng.Assert;
 import org.testng.ITestResult;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-
 import ru.crystals.set10.config.Config;
 import ru.crystals.set10.pages.basic.*;
 import ru.crystals.set10.pages.sales.cashiers.CashiersMainPage;
@@ -31,8 +27,6 @@ import ru.crystals.set10.pages.sales.topology.TopologyPage;
 import ru.crystals.set10.test.AbstractTest;
 import ru.crystals.set10.utils.DbAdapter;
 import ru.crystals.set10.utils.DisinsectorTools;
-import ru.crystals.set10.utils.SoapRequestSender;
-import static ru.crystals.set10.pages.sales.externalsystems.ExternalSystemsPage.*;
 
 
 public class SetTopologyTest extends AbstractTest {
@@ -68,11 +62,11 @@ public class SetTopologyTest extends AbstractTest {
 		salesPage = mainPage.openSales();		
 	}
 	
-	@AfterClass
-	private void sendGoods(){
-		SoapRequestSender soapSender  = new SoapRequestSender();
-		soapSender.sendGoodsToStartTesting(Config.CENTRUM_HOST, "goods.txt");
-	}
+//	@AfterClass
+//	private void sendGoods(){
+//		SoapRequestSender soapSender  = new SoapRequestSender();
+//		soapSender.sendGoodsToStartTesting(Config.CENTRUM_HOST, "goods.txt");
+//	}
 	
 	@BeforeMethod (firstTimeOnly = false)
 	public void refreshBeforeRun(ITestResult result){
@@ -153,107 +147,7 @@ public class SetTopologyTest extends AbstractTest {
 	public void addCashierTest(){
 		addCashier();
 	}
-	
-	/*
-	 * Добавление оборудования
-	 */
-	@DataProvider(name="equipment")
-	public Object[][] equipment() {
-		return new Object[][]{
-				{"Клавиатуры", "QWERTY клавиатура"},
-				{"Сканер", "Сканер штриховых кодов"},
-				{"Принтеры A4", "Стандартный принтер А4"},
-				{"VirtualScales", "VirtualScales"},
-				
-		};
-	}
-	
-	@Test (priority = 4,
-			dataProvider = "equipment",
-			description = "Добавление оборудования")
-	public void testAddEquipment(String equipmentGoup, String equipment){
-		equipmentPage = salesPage.navigateMenu(2, EquipmentPage.class);
-		newEqupment = equipmentPage.addNewEquipment();
 
-		equipmentPage = newEqupment.addEquipment(equipmentGoup, equipment);
-		
-//		Assert.assertTrue(equipmentPage.getEqupmentTypeCount(scalesItem) > 0, 
-//				"Новые весы " + scalesItem + " не добавлены в обородувание");
-		
-	}
-	
-	/*
-	 * Добавление банков
-	 */
-	@DataProvider(name="banks")
-	public Object[][] banks() {
-		return new Object[][]{
-				{Config.BANK_NAME_1},
-				{Config.BANK_NAME_2}
-		};
-	}
-	
-	@Test (priority = 4,
-			dataProvider = "banks", 
-			description = "Добавление банка")
-	public void addBank(String bankName){
-		log.info("Добавление банка: " + bankName);
-		externalSystemPage = salesPage
-				.navigateMenu(3, ExternalSystemsPage.class);
-		externalSystemPage.navigateTab(TAB_NAME_BANKS);
-		newBankPage = externalSystemPage.addEntity(NewBankPage.class);
-		newBankPage.addBank(bankName);
-	}
-	
-	/*
-	 * Добавление ERP
-	 */
-	@Test (priority = 4,
-			description = "Добавление ERP")
-	public void addERP(){
-		int erpSystemsBefore = 0;
-		log.info("Добавление ERP: Протокол Set Retail 10: файлы");
-		externalSystemPage = salesPage
-				.navigateMenu(3, ExternalSystemsPage.class);
-		externalSystemPage.navigateTab(TAB_NAME_ERP);
-		erpSystemsBefore = externalSystemPage.getERPsCount();
-		
-		newERPPage = externalSystemPage.addEntity(NewERPPage.class);
-		externalSystemPage = newERPPage.addERP("Протокол Set Retail 10: файлы");
-		Assert.assertEquals(externalSystemPage.getERPsCount(), erpSystemsBefore + 1, "Новая ERP система не добавлена!");
-	}
-	
-	/*
-	 * Добавление процессингов
-	 */
-	@DataProvider(name="processing")
-	public Object[][] processing() {
-		return new Object[][]{
-				//TODO: вынести в конфиг?
-				{"Подарочные карты", "Подарочные карты ЦФТ"},
-				{"Бонусные процессинги", "Спасибо от Сбербанка"}
-		};
-	}
-	
-	@Test (priority = 4,
-			dataProvider = "processing",
-			description = "Добавление внешнего процессинга")
-	public void addExternalProcessing(String processingType, String processingValue){
-		int extSystemsBefore = 0;
-		log.info("Добавление внешней системы: " + processingValue);
-		getDriver().navigate().refresh();
-		//DisinsectorTools.delay(1000);
-		
-		externalSystemPage = salesPage
-				.navigateMenu(3, ExternalSystemsPage.class);
-		
-		externalSystemPage.navigateTab(TAB_EXTERNAL_PROCESSINGS);
-		extSystemsBefore = externalSystemPage.getExternalProcessingCount();
-		newExternalProcessingPage = externalSystemPage.addEntity(NewExternalProcessingPage.class);
-		externalSystemPage = newExternalProcessingPage.addProcessing(processingType, processingValue);
-		
-		Assert.assertTrue(extSystemsBefore < externalSystemPage.getExternalProcessingCount(), String.format("Внешняя система %s не добавлена!", processingValue));
-	}
 	
 //	@Test
 //	public void testAddRegionAndCity(){
@@ -341,8 +235,6 @@ public class SetTopologyTest extends AbstractTest {
 				Config.CASHIER_ADMIN_PASSWORD, 
 				Config.CASHIER_ADMIN_ROLE);
 	}
-	
-
 	
 	private void setUpPrevilegesCentrum(){
 		log.info("Добавить права пользователю manager на центруме");
