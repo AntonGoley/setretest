@@ -20,7 +20,9 @@ import ru.crystals.set10.utils.DisinsectorTools;
 import static ru.crystals.set10.pages.sales.externalsystems.ExternalSystemsPage.*;
 
 
-@Test(groups = {"retail", "centrum"})
+//TODO: обработать хождение по меню в продажах в случае центрума
+
+@Test (groups = "retail")
 public class ConfigEqupmentTest extends AbstractTest {
 	
 	MainPage mainPage;
@@ -55,7 +57,6 @@ public class ConfigEqupmentTest extends AbstractTest {
 				{"Сканер", "Сканер штриховых кодов"},
 				{"Принтеры A4", "Стандартный принтер А4"},
 				{"VirtualScales", "VirtualScales"},
-				
 		};
 	}
 	
@@ -63,7 +64,7 @@ public class ConfigEqupmentTest extends AbstractTest {
 			dataProvider = "equipment",
 			description = "Добавление оборудования")
 	public void testAddEquipment(String equipmentGoup, String equipment){
-		equipmentPage = salesPage.navigateMenu(2, EquipmentPage.class);
+		equipmentPage = salesPage.navigateMenu(1, EquipmentPage.class);
 		newEqupment = equipmentPage.addNewEquipment();
 
 		equipmentPage = newEqupment.addEquipment(equipmentGoup, equipment);
@@ -84,13 +85,15 @@ public class ConfigEqupmentTest extends AbstractTest {
 		};
 	}
 	
-	@Test (priority = 4,
+	@Test (	enabled = false,
+			priority = 4,
 			dataProvider = "banks", 
-			description = "Добавление банка")
+			description = "Добавление банка"
+			)
 	public void addBank(String bankName){
 		log.info("Добавление банка: " + bankName);
 		externalSystemPage = salesPage
-				.navigateMenu(3, ExternalSystemsPage.class);
+				.navigateMenu(2, ExternalSystemsPage.class);
 		externalSystemPage.navigateTab(TAB_NAME_BANKS);
 		newBankPage = externalSystemPage.addEntity(NewBankPage.class);
 		newBankPage.addBank(bankName);
@@ -100,12 +103,13 @@ public class ConfigEqupmentTest extends AbstractTest {
 	 * Добавление ERP
 	 */
 	@Test (priority = 4,
-			description = "Добавление ERP")
+			description = "Добавление ERP",
+			groups = "retail")
 	public void addERP(){
 		int erpSystemsBefore = 0;
 		log.info("Добавление ERP: Протокол Set Retail 10: файлы");
 		externalSystemPage = salesPage
-				.navigateMenu(3, ExternalSystemsPage.class);
+				.navigateMenu(2, ExternalSystemsPage.class);
 		externalSystemPage.navigateTab(TAB_NAME_ERP);
 		erpSystemsBefore = externalSystemPage.getERPsCount();
 		
@@ -126,7 +130,8 @@ public class ConfigEqupmentTest extends AbstractTest {
 		};
 	}
 	
-	@Test (priority = 4,
+	@Test ( enabled = false,
+			priority = 4,
 			dataProvider = "processing",
 			description = "Добавление внешнего процессинга")
 	public void addExternalProcessing(String processingType, String processingValue){
@@ -134,7 +139,7 @@ public class ConfigEqupmentTest extends AbstractTest {
 		log.info("Добавление внешней системы: " + processingValue);
 		
 		externalSystemPage = salesPage
-				.navigateMenu(3, ExternalSystemsPage.class);
+				.navigateMenu(2, ExternalSystemsPage.class);
 		
 		externalSystemPage.navigateTab(TAB_EXTERNAL_PROCESSINGS);
 		extSystemsBefore = externalSystemPage.getExternalProcessingCount();
