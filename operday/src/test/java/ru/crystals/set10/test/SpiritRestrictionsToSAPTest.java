@@ -20,6 +20,7 @@ import ru.crystals.set10.utils.SoapRequestSender;
 import static ru.crystals.set10.pages.sales.preferences.SalesPreferencesPage.*;
 import static ru.crystals.set10.pages.sales.preferences.SalesGoodsTypesAndPaymentsTabPage.GOOD_TYPE_ALCOHOL;
 import static ru.crystals.set10.pages.sales.preferences.goodstypes.alcohol.AlcoholPage.ALCOHOL_RESTRICTIONS;
+import static ru.crystals.set10.pages.sales.preferences.goodstypes.alcohol.NewAlcoholRestrictionPage.LOCATOR_CHECKBOX_ISANYPRESENT;
 
 @Test (groups = {"retail", "centrum"})
 public class SpiritRestrictionsToSAPTest extends AbstractTest{
@@ -44,6 +45,7 @@ public class SpiritRestrictionsToSAPTest extends AbstractTest{
 	
 	@BeforeClass
 	public void goToAlcoholRestrictions() {
+		soapSender.setSoapServiceIP(TARGET_HOST);
 		mainPage = new LoginPage(getDriver(), TARGET_HOST_URL).doLogin(Config.MANAGER, Config.MANAGER_PASSWORD);
 		salesPage = mainPage.openSales();
 		alcoholPage = salesPage
@@ -62,9 +64,10 @@ public class SpiritRestrictionsToSAPTest extends AbstractTest{
 			dataProvider = "Процент содержания алкоголя", 
 			dataProviderClass = SpiritRistrictionsDataprovider.class)
 	public void spiritSAPExportSpiritPercentTest(String name, String percentValue, String xpath) {
+		alcoholRestrictionPage.setCheckBoxValue(LOCATOR_CHECKBOX_ISANYPRESENT, false);  
 		alcoholRestrictionPage.setPersentAlco(percentValue);
 		alcoholRestrictionPage.setRestrictionName(name);
-		alcoholRestrictionPage.backToRestrictionsTab();
+		alcoholRestrictionPage.goBack();
 		Assert.assertTrue(validateResult(String.format(xpath, name), periodFrom, periodTill));
 	}
 	
@@ -75,7 +78,7 @@ public class SpiritRestrictionsToSAPTest extends AbstractTest{
 	public void spiritSAPExportDateRangeTest(String name, String period, String dateToValidate, String xpath) {
 		alcoholRestrictionPage.setDate(period);
 		alcoholRestrictionPage.setRestrictionName(name);
-		alcoholRestrictionPage.backToRestrictionsTab();
+		alcoholRestrictionPage.goBack();
 		validateResult(String.format(xpath, name, dateToValidate), periodFrom, periodTill);
 	}
 	
@@ -85,7 +88,7 @@ public class SpiritRestrictionsToSAPTest extends AbstractTest{
 	public void spiritSAPExportTimeRangeTest(String name, String fromTime, String toTime, String timeToValidate, String xpath) {
 		alcoholRestrictionPage.setTime(fromTime.split(":"), toTime.split(":"));
 		alcoholRestrictionPage.setRestrictionName(name);
-		alcoholRestrictionPage.backToRestrictionsTab();
+		alcoholRestrictionPage.goBack();
 		validateResult(String.format(xpath, name, timeToValidate), periodFrom, periodTill);
 	}
 	
@@ -94,13 +97,11 @@ public class SpiritRestrictionsToSAPTest extends AbstractTest{
 		boolean result = false;
 		long delay = 0;
 		log.info("Проверка ограничения:" + xpath);
-		SoapRequestSender soapValidate = new  SoapRequestSender();
-		soapValidate.setSoapServiceIP(TARGET_HOST);
 		while (delay < 15) {
 			DisinsectorTools.delay(1000);
 			delay++;
-			soapValidate.getAlcoRestrictions(from, till);	
-			result =  soapValidate.assertSOAPResponseXpath(xpath);
+			soapSender.getAlcoRestrictions(from, till);	
+			result =  soapSender.assertSOAPResponseXpath(xpath);
 			if (result) return true;
 		}	
 		return false;

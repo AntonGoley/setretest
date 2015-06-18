@@ -96,7 +96,7 @@ public class SoapRequestSender{
 	   "</soapenv:Body>" +
 	"</soapenv:Envelope>";
 	
-	private static String soapGetAlcoRestrictions = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:erp=\"http://erpiservice.alcohol.crystals.ru/\">" +
+	private static String soapGetAlcoRestrictions = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:erp=\"http://erpiservice.limits.crystals.ru/\">" +
 		"<soapenv:Header/>" +
 		"<soapenv:Body>" +
 		 "<erp:getSpiritRestrictions>" +

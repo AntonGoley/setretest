@@ -144,7 +144,7 @@ public class ConfigGoodTypesAndPaymentsTest extends AbstractTest {
 					.setPersentAlco(persentageValue)
 					.setRestrictionName(name)
 					//.setSpreadAllShopsCentrum(true)
-					.backToRestrictionsTab();
+					.back();
 		
 		Assert.assertEquals(alcoholRestrictionsTab.getRestrictionsCount(), restrictionsOnPage + 1, "Новое алкогольное ограничение не добавлено в таблицу ограничений!");
 		

@@ -14,7 +14,7 @@ import ru.crystals.set10.utils.DisinsectorTools;
  */
 public class AbstractGoodAndPaymentPreferencesPage extends SalesPage{
 	
-	private static final String BUTTON_BACK = "id:backButton;label:К типам товаров и оплат";
+	protected static final String BUTTON_BACK = "id:backButton;label:К типам товаров и оплат";
 	static final String CHECKBOX_LOCATOR = "id:checkBox;label:%s";
 	
 	public AbstractGoodAndPaymentPreferencesPage(WebDriver driver) {

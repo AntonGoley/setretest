@@ -4,14 +4,13 @@ import static ru.crystals.set10.utils.FlexMediator.*;
 
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import ru.crystals.set10.pages.basic.SalesPage;
+import ru.crystals.set10.utils.DisinsectorTools;
 
 /*
  * Типы товаров и оплат: "Крепкий алкоголь". Страница добавления нового алкогольного ограничения
  */
-public class NewAlcoholRestrictionPage extends SalesPage{
+public class NewAlcoholRestrictionPage extends AlcoholPage {
 	
-	static final String LOCATOR_BACK_TO_RESTRICTIONS_TAB = "label=К ограничениям";
 	static final String LOCATOR_RESTRICTION_NAME = "restrictionNameField";
 	// Период действия
 	static final String LOCATOR_CHECKBOX_ISALLPERIOD = "isAllPeriod";
@@ -23,7 +22,7 @@ public class NewAlcoholRestrictionPage extends SalesPage{
 	static final String LOCATOR_INPUT_UNTILHOUR = "id:untilInput/id:hourText";
 	static final String LOCATOR_INPUT_UNTILMINUTE = "id:untilInput/id:minuteText";
 	// Процент содержания алкоголя
-	static final String LOCATOR_CHECKBOX_ISANYPRESENT = "isAnyPersent";
+	public static final String LOCATOR_CHECKBOX_ISANYPRESENT = "isAnyPersent";
 	static final String LOCATOR_INPUT_ALKOVOL= "alcoVolInput";
 	// Минимальная цена за литр
 	static final String LOCATOR_INPUT_ALKOMINPRICE = "alcoMinPriceInput";
@@ -89,10 +88,10 @@ public class NewAlcoholRestrictionPage extends SalesPage{
 		return this;
 	}
 	
-	public AlcoholRestrictionsTabPage backToRestrictionsTab(){
-		clickElement(getDriver(), ID_SALESSWF, LOCATOR_BACK_TO_RESTRICTIONS_TAB);
+	public AlcoholRestrictionsTabPage back(){
+		clickElement(getDriver(), ID_SALESSWF, BUTTON_BACK);
+		DisinsectorTools.delay(1000);
 		return new AlcoholRestrictionsTabPage(getDriver());
 	}
-	
 	
 }
