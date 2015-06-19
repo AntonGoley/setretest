@@ -3,7 +3,9 @@ package ru.crystals.set10.pages.sales.equipment;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+
 import ru.crystals.set10.pages.basic.SalesPage;
+import ru.crystals.set10.utils.DisinsectorTools;
 import static ru.crystals.set10.utils.FlexMediator.*;
 
 public class NewEquipmentPage extends SalesPage {
@@ -25,7 +27,7 @@ public class NewEquipmentPage extends SalesPage {
 	
 	public EquipmentPage addEquipment(String equpmentGroup, String equpmentItem){
 		//выделить и выбрать группу оборудования
-		
+		DisinsectorTools.delay(1000);
 		doFlexMouseDown(getDriver(), ID_SALESSWF, String.format(SELECT_EQUPMENT_GROUP, equpmentGroup));
 		clickElement(getDriver(), ID_SALESSWF, String.format(SELECT_EQUPMENT_GROUP, equpmentGroup));
 		
