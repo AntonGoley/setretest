@@ -28,25 +28,36 @@ public class  MainCashManualDocPage extends CashesPage{
 	public static final String FIELD_CODE_CREDIT = "Кредит - код операции";
 	public static final String FIELD_COMMENTS = "Комментарии";
 	
-//	/*
-//	 * Документы ПКО
-//	 */
-//	public static final String DOC_TYPE_PKO_CASH_EXCESS = "Излишек по кассе";
-//	public static final String DOC_TYPE_PKO_UNENCLOSURE_ENCASHMENT = "Недовложение инкассация";
-//	public static final String DOC_TYPE_PKO_UNENCLOSURE_FROM_COUNTERPARTS = "Недовложение от контрагентов";
-//	public static final String DOC_TYPE_PKO_INCOME_FROM_OTHER_COUNTERPARTS = "Поступление от прочих контрагентов";
-//	public static final String DOC_TYPE_PKO_INCOME_FROM_EMPLOYEES = "Поступление от сотрудников магазина";
-//	public static final String DOC_TYPE_PKO_EXCHANGE_INCOME = "Размен денег приход";
-//	
-//	/*
-//	 * Документы РКО
-//	 */
-//	public static final String DOC_TYPE_RKO_ENCASHMENT= "Инкассация";
-//	public static final String DOC_TYPE_RKO_PAYMENT_FROM_DEPOSITOR = "Выдача с депонента";
-//	public static final String DOC_TYPE_RKO_SALARY_PAYMENT = "Выдача зарплаты";
-//	public static final String DOC_TYPE_RKO_CASH_LACK = "Недостача по кассе";
-//	public static final String DOC_TYPE_RKO_EXCESS_ENCASHMENT = "Перевложение Инкассация";
-//	public static final String DOC_TYPE_RKO_EXCHANGE_WITHDRAWAL = "Размен денег расход";
+	private static final String LOCATOR_DOCUMENT_SAVED = "id:savedMsgLabel";
+	
+	/*
+	 * Инкассация торговой выручки
+	 */
+	public static final String FIELD_ENCASHMENT_BANKNOTE_5000 = "Купюр 5000 р.";
+	public static final String FIELD_ENCASHMENT_BANKNOTE_1000 = "Купюр 1000 р.";
+	public static final String FIELD_ENCASHMENT_BANKNOTE_500 = "Купюр 500 р.";
+	public static final String FIELD_ENCASHMENT_BANKNOTE_100 = "Купюр 100 р.";
+	
+	
+	/*
+	 * Документы ПКО
+	 */
+	public static final String DOC_TYPE_PKO_CASH_EXCESS = "Излишек по кассе";
+	public static final String DOC_TYPE_PKO_UNENCLOSURE_ENCASHMENT = "Недовложение инкассация";
+	public static final String DOC_TYPE_PKO_UNENCLOSURE_FROM_COUNTERPARTS = "Недовложение от контрагентов";
+	public static final String DOC_TYPE_PKO_INCOME_FROM_OTHER_COUNTERPARTS = "Поступление от прочих контрагентов";
+	public static final String DOC_TYPE_PKO_INCOME_FROM_EMPLOYEES = "Поступление от сотрудников магазина";
+	public static final String DOC_TYPE_PKO_EXCHANGE_INCOME = "Размен денег приход";
+	
+	/*
+	 * Документы РКО
+	 */
+	public static final String DOC_TYPE_RKO_ENCASHMENT= "Инкассация";
+	public static final String DOC_TYPE_RKO_PAYMENT_FROM_DEPOSITOR = "Выдача с депонента";
+	public static final String DOC_TYPE_RKO_SALARY_PAYMENT = "Выдача зарплаты";
+	public static final String DOC_TYPE_RKO_CASH_LACK = "Недостача по кассе";
+	public static final String DOC_TYPE_RKO_EXCESS_ENCASHMENT = "Перевложение Инкассация";
+	public static final String DOC_TYPE_RKO_EXCHANGE_WITHDRAWAL = "Размен денег расход";
 	
 	
 	
@@ -61,6 +72,7 @@ public class  MainCashManualDocPage extends CashesPage{
 	
 	public MainCashManualDocPage saveChanges(){
 		clickElement(getDriver(), ID_OPERDAYSWF, BUTTON_SAVE_CHANGES);
+		waitForElementVisible(getDriver(), ID_OPERDAYSWF, LOCATOR_DOCUMENT_SAVED);
 		waitSpinner(ID_OPERDAYSWF);
 		return this;
 	}
@@ -120,32 +132,32 @@ public class  MainCashManualDocPage extends CashesPage{
 	}
 	
 	
-	/*
-	 * Документы ПКО
-	 */
-	public enum PKOtypes {
-	
-		PKO_REVENUE_STORE,						//Выручка магазина
-		PKO_SURPLUS_BY_CASH,					//Излишек по кассе
-		PKO_FAILURE_TO_INVEST_ENCASHMENT,		//Недовложение инкассация
-		PKO_DEBIT_FROM_COUNTERPARTIES,			//Недовложение от контрагентов
-		PKO_DEBIT_FROM_OTHER_COUNTERPARTIES,	//Поступление от прочих контрагентов
-		PKO_DEBIT_FROM_STORE_EMPLOYEES,			//Поступление от сотрудников магазина
-		PKO_MONEY_CHANGE;						//Размен денег приход
-	}
-	
-	
-	/*
-	 * Документы РКО
-	 */
-	public enum RKOtypes {
-		
-		RKO_ENCASHMENT,							//Инкассация
-		RKO_ISSUANCE_OF_DEPOSITOR,				//Выдача с депонента
-		RKO_PAYMENT_OF_SALARY,					//Выдача зарплаты
-		RKO_DEFICIT,							//Недостача по кассе
-		RKO_REINVESTMENT,						//Перевложение Инкассация
-		RKO_MONEY_CHANGE;						//Размен денег расход
-	}
+//	/*
+//	 * Документы ПКО, добавляемые вручную
+//	 */
+//	public enum PKOtypes {
+//	
+////		PKO_REVENUE_STORE,						//Выручка магазина
+//		PKO_SURPLUS_BY_CASH,					//Излишек по кассе
+//		PKO_FAILURE_TO_INVEST_ENCASHMENT,		//Недовложение инкассация
+//		PKO_DEBIT_FROM_COUNTERPARTIES,			//Недовложение от контрагентов
+//		PKO_DEBIT_FROM_OTHER_COUNTERPARTIES,	//Поступление от прочих контрагентов
+//		PKO_DEBIT_FROM_STORE_EMPLOYEES,			//Поступление от сотрудников магазина
+//		PKO_MONEY_CHANGE;						//Размен денег приход
+//	}
+//	
+//	
+//	/*
+//	 * Документы РКО, добавляемые вручную
+//	 */
+//	public enum RKOtypes {
+//		
+//		RKO_ENCASHMENT,							//Инкассация торговой выручки
+//		RKO_ISSUANCE_OF_DEPOSITOR,				//Выдача с депонента
+//		RKO_PAYMENT_OF_SALARY,					//Выдача зарплаты
+//		RKO_DEFICIT,							//Недостача по кассе
+//		RKO_REINVESTMENT,						//Перевложение Инкассация
+//		RKO_MONEY_CHANGE;						//Размен денег расход
+//	}
 	
 }
