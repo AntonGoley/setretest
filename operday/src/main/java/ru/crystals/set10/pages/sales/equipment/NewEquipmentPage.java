@@ -28,6 +28,7 @@ public class NewEquipmentPage extends SalesPage {
 	public EquipmentPage addEquipment(String equpmentGroup, String equpmentItem){
 		//выделить и выбрать группу оборудования
 		DisinsectorTools.delay(1000);
+		waitForElementVisible(getDriver(), ID_SALESSWF, BUTTON_REGISTER_NEW_EQUIPMENT);
 		doFlexMouseDown(getDriver(), ID_SALESSWF, String.format(SELECT_EQUPMENT_GROUP, equpmentGroup));
 		clickElement(getDriver(), ID_SALESSWF, String.format(SELECT_EQUPMENT_GROUP, equpmentGroup));
 		
