@@ -7,11 +7,11 @@ import org.apache.log4j.Logger;
 
 import ru.crystals.pos.check.PurchaseEntity;
 import ru.crystals.set10.config.Config;
-import ru.crystals.set10.test.AbstractTest;
+
 
 public class OdGenerator implements Runnable {
 	
-	private static final Logger log = Logger.getLogger(AbstractTest.class);
+	private static final Logger log = Logger.getLogger(OdGenerator.class);
 	
 	static int cashnumber = 3;
 	
