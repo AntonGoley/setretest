@@ -33,15 +33,17 @@ public class CheckGeneratorFunctionalTest {
 		
 		cashEmulator = CashEmulator.getCashEmulator(Config.RETAIL_HOST, Integer.valueOf(Config.SHOP_NUMBER), Integer.valueOf(String.valueOf(2)));
 		//cashEmulator = CashEmulator.getCashEmulator(Config.CENTRUM_HOST, Integer.valueOf(Config.VIRTUAL_SHOP_NUMBER), Integer.valueOf(Config.CASH_NUMBER ));
-		cashEmulator.setTimeOfset(86400000L);
-		cashEmulator.useNextShift();
-		cashEmulator.nextIntroduction();
+//		cashEmulator.setTimeOfset(86400000L);
+//		cashEmulator.useNextShift();
+		//cashEmulator.nextIntroduction();
 	}
 	
 	@AfterClass
 	public void sendZreport(){
-		cashEmulator.nextWithdrawal();
-		cashEmulator.nextZReport(100000L, 200000L);
+	//	cashEmulator.nextWithdrawal();
+		long sumStart = DisinsectorTools.random(100000) + 100;
+		
+		cashEmulator.nextZReport(sumStart, sumStart + DisinsectorTools.random(100000));
 	}
 	
 	
@@ -51,9 +53,9 @@ public class CheckGeneratorFunctionalTest {
 			
 			p1 = (PurchaseEntity) cashEmulator.nextPurchase();
 			
-			p1 = (PurchaseEntity) cashEmulator.nextPurchaseWithoutSending();
-			p1.setReturn();
-			cashEmulator.nextCancelledPurchase(p1);
+//			p1 = (PurchaseEntity) cashEmulator.nextPurchaseWithoutSending();
+//			p1.setReturn();
+//			cashEmulator.nextCancelledPurchase(p1);
 //			
 //			
 			if (i==1) {

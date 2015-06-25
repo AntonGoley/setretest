@@ -653,6 +653,7 @@ public class CashEmulator {
 	 */
 	public void setTimeOfset(long ofset){
 		 //(86400000 * 130); ("-11232000000")
+		log.info("Опердень для кассы " + cashNumber + DisinsectorTools.getDate("dd:MM:yyyy", new Date().getTime() - ofset  ));
 		this.yesterday = ofset;
 	}
 	

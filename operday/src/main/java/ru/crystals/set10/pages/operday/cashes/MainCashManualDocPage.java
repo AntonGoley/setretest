@@ -23,6 +23,7 @@ public class  MainCashManualDocPage extends CashesPage{
 	public static final String FIELD_HEAD_ACCOUNTANT = "Главный бухгалтер ФИО";
 	public static final String FIELD_PERSON_RECEIVED = "Получил ФИО";
 	public static final String FIELD_RECEIVED_FROM = "Принято от ФИО";
+	public static final String FIELD_PERSON_GIVE_TO= "Выдать ФИО";
 	public static final String FIELD_DOC_SUM = "Сумма документа";
 	public static final String FIELD_CODE_DEBET = "Дебет - код операции";
 	public static final String FIELD_CODE_CREDIT = "Кредит - код операции";
@@ -52,7 +53,7 @@ public class  MainCashManualDocPage extends CashesPage{
 	/*
 	 * Документы РКО
 	 */
-	public static final String DOC_TYPE_RKO_ENCASHMENT= "Инкассация";
+	public static final String DOC_TYPE_RKO_ENCASHMENT= "Инкассация торговой выручки";
 	public static final String DOC_TYPE_RKO_PAYMENT_FROM_DEPOSITOR = "Выдача с депонента";
 	public static final String DOC_TYPE_RKO_SALARY_PAYMENT = "Выдача зарплаты";
 	public static final String DOC_TYPE_RKO_CASH_LACK = "Недостача по кассе";

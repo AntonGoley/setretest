@@ -26,12 +26,18 @@ public class PKOTest extends AbstractTest {
 	MainCashDocsPage docs;
 	MainCashManualDocPage rko;
 	int docsOnPage = 0;
-	long dayOfset = - 86400000L * 2L;
+	long dayOfset = -86400000L * 2;
+	
+	
+	String headAccountant = "Главбухова О.А";
+	String receivedBy = "Получилов И.И";
+	String receivedFrom = "Вручалова Г.Г";
+	
 	
 	//@Parameters({"dayOfset"})
 	@BeforeClass
 	public void setUp(/*String ofset*/){
-	//	dayOfset = Long.valueOf(ofset) * 86400000L;
+		//dayOfset = Long.valueOf(ofset) * 86400000L;
 		docs = new LoginPage(getDriver(), Config.RETAIL_URL)
 		.openOperDay(Config.MANAGER, Config.MANAGER_PASSWORD)
 		.navigatePage(CashesPage.class, CASHES)
@@ -46,9 +52,9 @@ public class PKOTest extends AbstractTest {
 				{DOC_TYPE_PKO_CASH_EXCESS},
 				{DOC_TYPE_PKO_UNENCLOSURE_ENCASHMENT},
 				{DOC_TYPE_PKO_UNENCLOSURE_FROM_COUNTERPARTS},
-				{DOC_TYPE_PKO_INCOME_FROM_OTHER_COUNTERPARTS},
-				{DOC_TYPE_PKO_INCOME_FROM_EMPLOYEES},
-				{DOC_TYPE_PKO_EXCHANGE_INCOME}
+//				{DOC_TYPE_PKO_INCOME_FROM_OTHER_COUNTERPARTS},
+//				{DOC_TYPE_PKO_INCOME_FROM_EMPLOYEES},
+//				{DOC_TYPE_PKO_EXCHANGE_INCOME}
 		};
 	}
 	
@@ -62,6 +68,9 @@ public class PKOTest extends AbstractTest {
 		docs = rko.selectDocType(docType)
 			.setTextField(FIELD_DOC_SUM, DisinsectorTools.randomMoney(1000, ","))
 			.setOperDayDate(FIELD_DATE_OPERDAY, DisinsectorTools.getDate("dd.MM.yy", new Date().getTime() + dayOfset))
+			.setTextField(FIELD_HEAD_ACCOUNTANT, headAccountant)
+			.setTextField(FIELD_PERSON_RECEIVED, receivedBy)
+			.setTextField(FIELD_RECEIVED_FROM, receivedFrom)
 			.saveChanges()
 			.backToMainCash();
 		Assert.assertEquals(docs.getDocCountOnPage(), docsOnPage + 1, "Документ РКО " + docType.toString() + " не добавился на вкладку главной кассы Документы");
@@ -87,9 +96,6 @@ public class PKOTest extends AbstractTest {
 	@Test(  enabled = false,
 			description = "SRTE-175. Печать ПКО, сохранение полей и баланса в печатной форме")
 	public void testPrintPKO(String pkoType){
-		String headAccountant = "Главбухова О.А";
-		String receivedBy = "Получилов И.И";
-		String receivedFrom = "Вручалова Г.Г";
 		String docNumber = "0";
 		String sum = DisinsectorTools.randomMoney(1000, ",");
 				

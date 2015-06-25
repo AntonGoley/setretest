@@ -20,19 +20,22 @@ import static ru.crystals.set10.pages.operday.cashes.CashesPage.LOCATOR_MAINCASH
 import static ru.crystals.set10.pages.operday.cashes.CashDocsAbstractPage.*;
 import static ru.crystals.set10.pages.operday.cashes.MainCashManualDocPage.*;
 
-@Test (groups= "retail")
+//@Test (groups= "retail")
 public class RKOTest extends AbstractTest {
 	
 	MainCashDocsPage docs;
 	MainCashManualDocPage rko;
 	int docsOnPage = 0;
-	long dayOfset = 0;
+	long dayOfset = -86400000L * 2;
+	
+	String headAccountant = "Главбухова О.А";
+	String personReceived = "Вручалова Г.Г";
 	
 	
-	@Parameters({"dayOfset"})
+	//@Parameters({"dayOfset"})
 	@BeforeClass
-	public void setUp(String ofset){
-		dayOfset = Long.valueOf(ofset) * 86400000L;
+	public void setUp(/*String ofset*/){
+		//dayOfset = Long.valueOf(ofset) * 86400000L;
 		log.info("Смещение равно " + dayOfset);
 		docs = new LoginPage(getDriver(), Config.RETAIL_URL)
 		.openOperDay(Config.MANAGER, Config.MANAGER_PASSWORD)
@@ -45,12 +48,12 @@ public class RKOTest extends AbstractTest {
 	@DataProvider (name = "RKO")
 	private Object[][] setUpRKOData(){
 		return new Object[][]{
-				{DOC_TYPE_RKO_ENCASHMENT},
+				//{DOC_TYPE_RKO_ENCASHMENT},
 				{DOC_TYPE_RKO_PAYMENT_FROM_DEPOSITOR},
 				{DOC_TYPE_RKO_SALARY_PAYMENT},
-				{DOC_TYPE_RKO_CASH_LACK},
-				{DOC_TYPE_RKO_EXCESS_ENCASHMENT},
-				{DOC_TYPE_RKO_EXCHANGE_WITHDRAWAL}
+//				{DOC_TYPE_RKO_CASH_LACK},
+//				{DOC_TYPE_RKO_EXCESS_ENCASHMENT},
+//				{DOC_TYPE_RKO_EXCHANGE_WITHDRAWAL}
 		};
 	}
 	
@@ -64,6 +67,8 @@ public class RKOTest extends AbstractTest {
 		docs = rko.selectDocType(docType)
 			.setTextField(FIELD_DOC_SUM, DisinsectorTools.randomMoney(1000, ","))
 			.setOperDayDate(FIELD_DATE_OPERDAY, DisinsectorTools.getDate("dd.MM.yy", new Date().getTime() + dayOfset))
+			.setTextField(FIELD_HEAD_ACCOUNTANT, headAccountant)
+			.setTextField(FIELD_PERSON_GIVE_TO, personReceived)
 			.saveChanges()
 			.backToMainCash();
 		Assert.assertEquals(docs.getDocCountOnPage(), docsOnPage + 1, "Документ РКО " + docType.toString() + " не добавился на вкладку главной кассы Документы");
@@ -71,7 +76,7 @@ public class RKOTest extends AbstractTest {
 		//Assert.assertEquals(docs.getDocCountOnPage(), docsOnPage + 1, "Документ РКО " + docType.toString() + " не добавился на вкладку главной кассы Документы");
 	}
 	
-	@Test(description = "SRTE-175. Добавление нового документа Инкассация торговой выручки на вкладку \"Документы\" Главной кассы", 
+	@Test( enabled = false, description = "SRTE-175. Добавление нового документа Инкассация торговой выручки на вкладку \"Документы\" Главной кассы", 
 			dataProvider = "PKO")
 	public void testAddNewRKOEncashment(String docType){
 		docsOnPage = docs.getDocCountOnPage();
