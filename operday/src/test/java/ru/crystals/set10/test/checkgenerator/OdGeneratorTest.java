@@ -1,12 +1,8 @@
 package ru.crystals.set10.test.checkgenerator;
 
-
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
-
-
-
 import ru.crystals.set10.test.maincash.ConfigMainCash;
 
 
