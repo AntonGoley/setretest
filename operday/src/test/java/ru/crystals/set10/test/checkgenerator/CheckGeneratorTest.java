@@ -80,7 +80,7 @@ public class CheckGeneratorTest {
 		
 		//возвращаем первую позицию в кол-ве 1шт
 		HashMap<Long, Long> returnPositions = new HashMap<Long, Long>();
-		returnPositions.put(1L, 100L);
+		returnPositions.put(1L, 1000L);
 		cashEmulator.nextRefundPositions(p1, returnPositions, false);
 		
 		//оплата детской картой

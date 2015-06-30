@@ -33,8 +33,8 @@ public class CheckGeneratorFunctionalTest {
 		
 		cashEmulator = CashEmulator.getCashEmulator(Config.RETAIL_HOST, Integer.valueOf(Config.SHOP_NUMBER), Integer.valueOf(String.valueOf(2)));
 		//cashEmulator = CashEmulator.getCashEmulator(Config.CENTRUM_HOST, Integer.valueOf(Config.VIRTUAL_SHOP_NUMBER), Integer.valueOf(Config.CASH_NUMBER ));
-//		cashEmulator.setTimeOfset(86400000L);
-//		cashEmulator.useNextShift();
+		cashEmulator.setTimeOfset(86400000L);
+		cashEmulator.useNextShift();
 		//cashEmulator.nextIntroduction();
 	}
 	

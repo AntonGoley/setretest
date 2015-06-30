@@ -218,7 +218,7 @@ public class SetTopologyTest extends AbstractTest {
 	
 	private void addCash(String shopName){
 		openShopPreferences(shopName);
-		shopPreferences.addCashes(5);
+		shopPreferences.addCashes(10);
 		DisinsectorTools.delay(1000);
 		shopPreferences.goBack();
 	}

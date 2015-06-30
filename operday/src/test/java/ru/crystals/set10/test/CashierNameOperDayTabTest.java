@@ -57,12 +57,12 @@ public class CashierNameOperDayTabTest extends AbstractTest{
 		
 	}
 	
-	@Test (description = "SRTE-117. Отображается \"-\" на кассе N5, если смена на кассе не была открыта")
+	@Test (description = "SRTE-117. Отображается \"-\" на кассе N10, если смена на кассе не была открыта")
 	public void testCashierIfNoShiftOpened(){
 		operDayTab = operDayTab.refreshOperdayTab();
-		log.info("Проверить значение кассира на кассе номер 5, где нет открытых смен");
-		Assert.assertTrue(operDayTab.getCashierNameWithNoShift(5).equals("-"), 
-				String.format("Неверно отображатся значение \"-\", на кассе %s, для смены, которая не была открыта", "5"));
+		log.info("Проверить значение кассира на кассе номер 10, где нет открытых смен");
+		Assert.assertTrue(operDayTab.getCashierNameWithNoShift(10).equals("-"), 
+				String.format("Неверно отображатся значение \"-\", на кассе %s, для смены, которая не была открыта", "10"));
 	}
 	
 	@Test (description = "SRTE-117. Если нет активности в течение 3 минут, отображается \"нет кассира\"")
