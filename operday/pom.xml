@@ -82,6 +82,7 @@
                     	<test_virtualshop_number>${virtualShopNumber}</test_virtualshop_number>
                     	<test_dbUser>${dbUser}</test_dbUser>
                     	<test_dbPassword>${dbPassword}</test_dbPassword>
+                    	<test_operdays>${operdays}</test_operdays>
                     	<test_check_number>${checkNumber}</test_check_number>
                     	<test_cash_number>${cashNumber}</test_cash_number>
                		 </systemPropertyVariables>
