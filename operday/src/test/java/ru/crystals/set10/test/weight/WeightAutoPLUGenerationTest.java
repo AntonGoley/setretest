@@ -42,7 +42,7 @@ public class WeightAutoPLUGenerationTest extends WeightAbstractTest {
 		int autoGenPLU = 0;
 		
 		weightGood = goodGenerator.generateWeightGoodWithNoBarCode("0");
-		BarCode weightCode = goodGenerator.generateWeightBarCode(Config.WEIGHT_BARCODEGENERATION_PREFIX, 7);
+		BarCode weightCode = goodGenerator.generateWeightBarCode(Config.WEIGHT_BARCODEGENERATION_PREFIX);
 		
 		/* добавляем баркод с префиксом Config.WEIGHT_BARCODEGENERATION_PREFIX*/
 		weightGood.getBarCodes().add(weightCode);
@@ -60,7 +60,7 @@ public class WeightAutoPLUGenerationTest extends WeightAbstractTest {
 		
 		/* сгенерить весовой товар без плагинного свойства plu-number**/
 		weightGood = goodGenerator.generateGood(GOODTYPE_WEIGHT);
-		BarCode weightCode = goodGenerator.generateWeightBarCode(Config.WEIGHT_BARCODEGENERATION_PREFIX, 7);
+		BarCode weightCode = goodGenerator.generateWeightBarCode(Config.WEIGHT_BARCODEGENERATION_PREFIX);
 		weightGood.getBarCodes().add(weightCode);
 		
 		autoGenPLU = goodGenerator.getWeightAutoGenPlu(weightCode, Config.WEIGHT_BARCODEGENERATION_OFSET);
@@ -76,7 +76,7 @@ public class WeightAutoPLUGenerationTest extends WeightAbstractTest {
 		int autoGenPLU = 0;
 		
 		weightGood = goodGenerator.generateWeightGoodWithNoBarCode("0");
-		BarCode weightCode = goodGenerator.generateWeightBarCode(Config.WEIGHT_BARCODE_PREFIX, 7);
+		BarCode weightCode = goodGenerator.generateWeightBarCode(Config.WEIGHT_BARCODE_PREFIX);
 		weightGood.getBarCodes().add(weightCode);
 		
 		/*в баркоде отбрасываем префикс; бар код не должен начинаться с 0*/

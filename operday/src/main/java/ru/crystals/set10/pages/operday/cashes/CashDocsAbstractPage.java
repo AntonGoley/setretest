@@ -61,8 +61,10 @@ public class  CashDocsAbstractPage extends CashesPage{
 	/* возвращает количество документов в таблице КМ-3, КМ-6, Документы */
 	public int getDocCountOnPage(){
 		DisinsectorTools.delay(1000);
+		int rowsInTable = getElementsNum(getDriver(), ID_OPERDAYSWF, ID + DOC_TABLE_LOCATOR + "/id:groupRenderer;visible:true");
+		int hiddenrows = getElementsNum(getDriver(), ID_OPERDAYSWF, ID + DOC_TABLE_LOCATOR + "/name:hiddenItem/id:groupRenderer;visible:true");
 		return Integer.valueOf(
-				getElementProperty(getDriver(), ID_OPERDAYSWF, ID + DOC_TABLE_LOCATOR, "length"));
+				getElementProperty(getDriver(), ID_OPERDAYSWF, ID + DOC_TABLE_LOCATOR, "length")) - (rowsInTable - hiddenrows);
 	}
 	
 	/* возвращает ожидаемое количество документов в таблице,

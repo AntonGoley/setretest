@@ -12,7 +12,7 @@ import static ru.crystals.set10.utils.DbAdapter.DB_RETAIL_SET;
 
 
 
-public class ConfigMainCash {
+public class MainCashConfigTool {
 	
 	
 	private static final Logger log = Logger.getLogger(AbstractTest.class);

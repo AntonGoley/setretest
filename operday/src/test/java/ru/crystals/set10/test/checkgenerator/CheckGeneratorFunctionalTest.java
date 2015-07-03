@@ -33,8 +33,8 @@ public class CheckGeneratorFunctionalTest {
 		
 		cashEmulator = CashEmulator.getCashEmulator(Config.RETAIL_HOST, Integer.valueOf(Config.SHOP_NUMBER), Integer.valueOf(String.valueOf(2)));
 		//cashEmulator = CashEmulator.getCashEmulator(Config.CENTRUM_HOST, Integer.valueOf(Config.VIRTUAL_SHOP_NUMBER), Integer.valueOf(Config.CASH_NUMBER ));
-		cashEmulator.setTimeOfset(86400000L);
-		cashEmulator.useNextShift();
+		//cashEmulator.setTimeOfset(86400000L);
+		//cashEmulator.useNextShift();
 		//cashEmulator.nextIntroduction();
 	}
 	
@@ -53,12 +53,12 @@ public class CheckGeneratorFunctionalTest {
 			
 			p1 = (PurchaseEntity) cashEmulator.nextPurchase();
 			
-//			p1 = (PurchaseEntity) cashEmulator.nextPurchaseWithoutSending();
-//			p1.setReturn();
-//			cashEmulator.nextCancelledPurchase(p1);
+			p1 = (PurchaseEntity) cashEmulator.nextPurchaseWithoutSending();
+			p1.setReturn();
+			cashEmulator.nextCancelledPurchase(p1);
 //			
 //			
-			if (i==1) {
+			if (i==0) {
 				p1 = (PurchaseEntity) cashEmulator.nextPurchase();
 				//возвращаем первую позицию в кол-ве 1шт
 				HashMap<Long, Long> returnPositions = new HashMap<Long, Long>();

@@ -116,6 +116,15 @@ public class RefundChecksReportTest extends AbstractReportTest{
 				purchaseEntityData.get(tableColumnName));
 	}
 	
+	@Test (	description = "SRL-80. В отчет не попадают аннулированые возвратные чеки", 
+			enabled = false)
+	public void testCanceledRefundNotInReport(String tableColumnName, int columnNumber){
+		log.info("Поле: " + tableColumnName);
+		Assert.assertEquals(htmlReportResults.getLastLineColumnValue(columnNumber), 
+				purchaseEntityData.get(tableColumnName));
+	}
+	
+	
 //	@Test (	priority = 1,
 //			description = "Проверить, что отчет \"Отчёт по возвратам\" доступен для скачивания в формате xls"
 //			)

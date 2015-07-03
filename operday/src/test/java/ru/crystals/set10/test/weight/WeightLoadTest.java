@@ -31,33 +31,33 @@ public class WeightLoadTest extends WeightAbstractTest {
 	
 	@BeforeClass
 	public void initData(){
-		//prerareSuite();
+		prerareSuite();
 		soapSender.setSoapServiceIP(Config.RETAIL_HOST);
 		Good good;
-		Price price1;
+//		Price price1;
 		
 		for (int i=0; i<goodsAmount; i++){
 			good = goodGenerator.generateWeightGood(String.valueOf(pluNumber++));
+			goods.add(good);
 			
-			for (int y=0; y<good.getPrices().size(); y++){
-				Price price = good.getPrices().get(y);
-				if (price.getNumber().equals(1L)){
-					price1 =  new Price();
-					price1.setNumber(1L);
-					price1.setPrice(price.getPrice());
-					price1.setSinceDate(price.getSinceDate());
-					price1.setTillDate(price.getSinceDate());
-					
-					
-					Department department = new Department();
-					department.setName("Отдел 2");
-					department.setNumber(2L);
-					price1.setDepartment(department);
-					good.getPrices().add(price1);
-					goods.add(good);
-					break;
-				}
-			}
+//			for (int y=0; y<good.getPrices().size(); y++){
+//				Price price = good.getPrices().get(y);
+//				if (price.getNumber().equals(1L)){
+//					price1 =  new Price();
+//					price1.setNumber(1L);
+//					price1.setPrice(price.getPrice());
+//					price1.setSinceDate(price.getSinceDate());
+//					price1.setTillDate(price.getSinceDate());
+//					
+//					Department department = new Department();
+//					department.setName("Отдел 2");
+//					department.setNumber(2L);
+//					price1.setDepartment(department);
+//					good.getPrices().add(price1);
+//					goods.add(good);
+//					break;
+//				}
+//			}
 			
 		}
 	}

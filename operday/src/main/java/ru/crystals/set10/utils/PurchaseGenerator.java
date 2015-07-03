@@ -14,10 +14,10 @@ import ru.crystals.pos.payments.PaymentEntity;
 
 public class PurchaseGenerator {
 
-	/** Список чеков с оплатой наличными*/
+	/* Список чеков с оплатой наличными */
 	public static List<DocumentEntity> peList = new ArrayList<DocumentEntity>();
 
-	/** Список чеков БЕЗ оплат */
+	/* Список чеков БЕЗ оплат */
 	public static List<DocumentEntity> peListWithoutPayments = new ArrayList<DocumentEntity>();
 	
 	
@@ -30,7 +30,7 @@ public class PurchaseGenerator {
 		}
 	}
 	
-	/** Сгенерить чек с заданным числом позиций */
+	/* Сгенерить чек с заданным числом позиций */
 	public static PurchaseEntity generatePurchase(int positionsNumber, boolean generatePayment){
 		PurchaseEntity pe = new PurchaseEntity();	
 		pe.setCheckStatus(CheckStatus.Registered);
@@ -67,7 +67,7 @@ public class PurchaseGenerator {
 	      pe.setCheckSumEnd(Long.valueOf(summ));
 	      pe.setCheckSumStart(Long.valueOf(summ));
 	      
-	      /** сгенерить оплату наличными */
+	      /* сгенерить оплату наличными */
 	      if (generatePayment) {
 		      List<PaymentEntity> paymentEntityList = new ArrayList<PaymentEntity>(1);
 		      CashPaymentEntity payE = new CashPaymentEntity();

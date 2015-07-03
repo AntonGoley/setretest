@@ -6,7 +6,7 @@ import org.testng.annotations.Optional;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
-import ru.crystals.set10.test.maincash.ConfigMainCash;
+import ru.crystals.set10.test.maincash.MainCashConfigTool;
 
 
 public class OdGeneratorTest {
@@ -17,9 +17,8 @@ public class OdGeneratorTest {
 	
 	@BeforeClass
 	private void clearOd(){
-		ConfigMainCash.clearOD();
+		MainCashConfigTool.clearOD();
 	}
-	
 	
 	
 	@Parameters ("operdays")
@@ -41,12 +40,7 @@ public class OdGeneratorTest {
 			od_range[n.intValue()] = (day * n.longValue() );
 		}
 
-//		Long[] operDays = {
-//				day*2L,
-//				day,
-//				0L
-//			};
-		ConfigMainCash.createODWithCashDocs(od_range);
+		MainCashConfigTool.createODWithCashDocs(od_range);
 
 	}	
 	

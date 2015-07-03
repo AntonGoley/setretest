@@ -46,7 +46,7 @@ public class GoodGenerator {
 	public Good generateWeightGood(String pluNumber){
 		Good weightGood = generateWeightGoodWithNoBarCode(pluNumber);
 		/* генерим по умолчанию дополнительный весовой бар код*/
-		weightGood.getBarCodes().add(generateWeightBarCode(Config.WEIGHT_BARCODE_PREFIX, 7));
+		weightGood.getBarCodes().add(generateWeightBarCode(Config.WEIGHT_BARCODE_PREFIX));
 		return weightGood;
 	}
 	
@@ -59,13 +59,13 @@ public class GoodGenerator {
 	
 	
 	public Good generateGood(String goodType){
-		goodprefix = String.valueOf(prefix++);
+		goodprefix = String.valueOf(prefix++).substring(7);
 		Good good = new Good();
 		good.setName("Товар_" + goodprefix);
 		good.setMarkingOfTheGood(goodprefix);
 		good.setCertificationType(4);
 		good.setDeleteFromCash(false);
-		good.setErpCode(goodprefix.substring(8, 13));
+		good.setErpCode(goodprefix);
 		good.setFullname("Товар_" + goodprefix + "_полное имя товара - (fullname)");
 		good.setVat((float) 18.00);
 		good.setProductType(goodType);
@@ -101,9 +101,12 @@ public class GoodGenerator {
 		return property;
 	}
 	
-	public BarCode generateWeightBarCode(String barcodePrefix, int barcodeLength){
+	/*
+	 * Генерация баркода весового товара: prefix + 5 первых знаков кода товара 
+	 */
+	public BarCode generateWeightBarCode(String barcodePrefix){
 		BarCode bc = new BarCode();
-		bc.setCode(barcodePrefix + goodprefix.substring(13 - (barcodeLength - 2)));
+		bc.setCode(barcodePrefix + goodprefix.substring(1));
 		bc.setCount(new BigDecimal(1));
 		bc.setDefaultCode(false);
 		goodprefix = String.valueOf(prefix++);

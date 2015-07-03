@@ -39,8 +39,8 @@ public class WeightBarcodesTest extends WeightAbstractTest {
 		
 		/*Сгеренить товар с двумя весовыми баркодами */
 		weightGood = goodGenerator.generateWeightGoodWithNoBarCode("0");
-		barCode1 = goodGenerator.generateWeightBarCode(Config.WEIGHT_BARCODEGENERATION_PREFIX, 7);
-		barCode2 = goodGenerator.generateWeightBarCode(Config.WEIGHT_BARCODEGENERATION_PREFIX, 7);
+		barCode1 = goodGenerator.generateWeightBarCode(Config.WEIGHT_BARCODEGENERATION_PREFIX);
+		barCode2 = goodGenerator.generateWeightBarCode(Config.WEIGHT_BARCODEGENERATION_PREFIX);
 		
 		weightGood.getBarCodes().add(barCode1);
 		weightGood.getBarCodes().add(barCode2);
