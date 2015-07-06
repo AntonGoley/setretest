@@ -25,12 +25,16 @@ public class MainCashConfigTest extends AbstractTest {
 	
 	@BeforeClass
 	public void setUp(){
+		
+		//TODO: добавить проверку существования од и включенной ГК
+		
 		docs = new LoginPage(getDriver(), Config.RETAIL_URL)
 		.openOperDay(Config.MANAGER, Config.MANAGER_PASSWORD)
 		.navigatePage(CashesPage.class, CASHES)
 		.openTab(MainCashDocsPage.class, LOCATOR_MAINCASH_TAB);
 		docs.switchToTable(LOCATOR_DOCS);
 	}
+	
 	
 	
 }
