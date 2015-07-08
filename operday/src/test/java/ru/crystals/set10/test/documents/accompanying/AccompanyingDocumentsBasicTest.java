@@ -94,6 +94,7 @@ public class AccompanyingDocumentsBasicTest extends AbstractTest{
 		 */
 		if ( purchase == null) {
 			purchase = (PurchaseEntity) cashEmulator.nextPurchase(generatePredefinedCheck());
+			cashEmulator.nextZReport(10000L, 20000L);
 		}
 		
  		searchCheck.openFilter().setCheckBarcode(purchase);

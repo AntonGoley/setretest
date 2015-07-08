@@ -350,8 +350,13 @@ public class SoapRequestSender{
 			timeout +=1;
 			sendSOAPRequest();
 		}
-
-		log.info("Пакет с ti " + ti + " не содержит " + expectedResult);
+		
+		try {
+			throw new Exception("Пакет с ti " + ti + " не содержит " + expectedResult);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 		return false;
 	}
 	
