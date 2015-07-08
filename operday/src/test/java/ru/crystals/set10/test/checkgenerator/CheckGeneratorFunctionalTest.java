@@ -52,17 +52,17 @@ public class CheckGeneratorFunctionalTest {
 		for(int i=0; i<1; i++) {
 			
 			p1 = (PurchaseEntity) cashEmulator.nextPurchase();
-			p1 = (PurchaseEntity) cashEmulator.nextPurchase();
-			p1 = (PurchaseEntity) cashEmulator.nextPurchase();
-			p1 = (PurchaseEntity) cashEmulator.nextPurchase();
-			p1 = (PurchaseEntity) cashEmulator.nextPurchase();
+//			p1 = (PurchaseEntity) cashEmulator.nextPurchase();
+//			p1 = (PurchaseEntity) cashEmulator.nextPurchase();
+//			p1 = (PurchaseEntity) cashEmulator.nextPurchase();
+//			p1 = (PurchaseEntity) cashEmulator.nextPurchase();
 			
 //			p1 = (PurchaseEntity) cashEmulator.nextPurchaseWithoutSending();
 //			p1.setReturn();
 //			cashEmulator.nextCancelledPurchase(p1);
 //			
 //			
-			if (i==1) {
+			if (i==0) {
 				p1 = (PurchaseEntity) cashEmulator.nextPurchase();
 				//возвращаем первую позицию в кол-ве 1шт
 				HashMap<Long, Long> returnPositions = new HashMap<Long, Long>();

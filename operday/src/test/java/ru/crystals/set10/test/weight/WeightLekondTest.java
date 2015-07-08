@@ -30,7 +30,6 @@ public class WeightLekondTest extends WeightAbstractTest {
 
 	@BeforeClass
 	public void initData(){
-		//prerareSuite();
 		soapSender.setSoapServiceIP(Config.RETAIL_HOST);
 	}
 	

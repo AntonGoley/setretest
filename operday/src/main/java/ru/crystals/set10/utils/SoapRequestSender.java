@@ -64,7 +64,8 @@ public class SoapRequestSender{
 	String method = "";
 	String response = "";
 	
-	public String ti;
+	private static long tiPrefix = new Date().getTime();
+	private String ti;
 	
 	private static  String soapRequestGoods = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:plug=\"http://plugins.products.ERPIntegration.crystals.ru/\"> " +
 			"<soapenv:Header/> <soapenv:Body>" + 
@@ -135,12 +136,8 @@ public class SoapRequestSender{
 	}
 	
 	public String generateTI(){
-		this.ti =  String.valueOf((new Date().getTime())).substring(6, 13);
+		this.ti =  String.valueOf((tiPrefix++)).substring(6, 13);
 		log.info("TI = " + this.ti);
-		return this.ti;
-	}
-	
-	public String getTI(){
 		return this.ti;
 	}
 	
@@ -207,7 +204,7 @@ public class SoapRequestSender{
 	 *	Отправить группу товаров (ликондов, бар кодов) 
 	 */
 	public String send(GoodsCatalog catalog){	
-		ti = generateTI();
+		generateTI();
 		StringWriter request = new StringWriter();
 		try {
 			JAXBContext jaxbContext = JAXBContext.newInstance(GoodsCatalog.class);
@@ -220,7 +217,7 @@ public class SoapRequestSender{
 			e.printStackTrace();
 		}
 		
-		this.soapRequest = String.format(soapRequestGoods, encodeBase64(request.toString()), ti);
+		this.soapRequest = String.format(soapRequestGoods, encodeBase64(request.toString()), this.ti);
 		this.service = ERP_INTEGRATION_GOOSERVICE; 
 		this.method = METHOD_GOODS_WITHTI;
 		
