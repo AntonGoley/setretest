@@ -231,7 +231,7 @@ public class Config {
          */
         VIRTUAL_WEIGHT_PATH = "http://" + RETAIL_HOST + ":" + props.getProperty("nginx.port") + props.getProperty("virtualweight.path");
         WEIGHT_BARCODE_PREFIX = props.getProperty("weight.barcodeprefix");
-        WEIGHT_BARCODEGENERATION_PREFIX = props.getProperty("weight.barcodegenerationp.refix");
+        WEIGHT_BARCODEGENERATION_PREFIX = props.getProperty("weight.barcodegeneration.prefix");
         WEIGHT_BARCODEGENERATION_OFSET = props.getProperty("weight.barcodegeneration.ofset");
         log.info("Path to virtual scales:   " + VIRTUAL_WEIGHT_PATH);
         log.info("Weight prefix:   " + WEIGHT_BARCODE_PREFIX);

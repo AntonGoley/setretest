@@ -67,8 +67,8 @@ public class WeightBarcodesTest extends WeightAbstractTest {
 		
 		soapSender.sendBarcode(barcode);
 		
-		Assert.assertTrue(scales.waitPluUnLoaded(plu1), "Удаленный баркод не выгрузился из весов. PLU = ");
-		Assert.assertTrue(scales.waitPluLoaded(plu2), "Баркод (неудаленный) выгрузился из весов. PLU = ");
+		Assert.assertTrue(scales.waitPluUnLoaded(plu1), "Удаленный баркод не выгрузился из весов. PLU = " + plu1);
+		Assert.assertTrue(scales.waitPluLoaded(plu2), "Баркод (неудаленный) выгрузился из весов. PLU = " + plu1);
 
 	}
 }

@@ -28,7 +28,7 @@ public class GoodGenerator {
 	public static String GOODTYPE_SPIRIT = "ProductSpiritsEntity";
 	public static String GOODTYPE_CIGGY = "ProductCiggyEntity";
 	
-
+	
 	public Good generateWeightGoodWithNoBarCode(String pluNumber){
 		Good weightGood = generateGood(GOODTYPE_WEIGHT);
 		weightGood.getPluginProperties().add(generatePluginProperty("plu-number", pluNumber));
@@ -57,6 +57,31 @@ public class GoodGenerator {
 		return Integer.valueOf(weightCode.getCode().substring(2, 7)) + Integer.valueOf(ofset);
 	}
 	
+	/*
+	 * Генерация баркода весового товара: prefix + 5 первых знаков кода товара 
+	 */
+	public BarCode generateWeightBarCode(String barcodePrefix){
+		BarCode bc = new BarCode();
+		bc.setCode(barcodePrefix + goodprefix.substring(1));
+		bc.setCount(new BigDecimal(1));
+		bc.setDefaultCode(false);
+		goodprefix = String.valueOf(prefix++).substring(7);
+		return bc;
+	}
+	
+	public int getWeightPluNumber(Good weightGood){
+		Iterator<PluginProperty> it =  weightGood.getPluginProperties().iterator();
+		while (it.hasNext()){
+			PluginProperty property;
+			property = it.next();
+			if (property.getKey().equals("plu-number")){
+				return Integer.valueOf(property.getValue());
+			}
+		}
+		/* если нет PluginProperty, возвращаем 0*/
+		return 0; 
+	}
+	
 	
 	public Good generateGood(String goodType){
 		goodprefix = String.valueOf(prefix++).substring(7);
@@ -72,7 +97,7 @@ public class GoodGenerator {
 		good.setGroup(generateGrop());
 		
 		BarCode bc = new BarCode();
-		bc.setCode(goodprefix);
+		bc.setCode(String.valueOf(prefix++));
 		bc.setCount(new BigDecimal(1));
 		bc.setDefaultCode(true);
 		good.getBarCodes().add(bc);
@@ -99,31 +124,6 @@ public class GoodGenerator {
 		property.setKey(key);
 		property.setValue(value);
 		return property;
-	}
-	
-	/*
-	 * Генерация баркода весового товара: prefix + 5 первых знаков кода товара 
-	 */
-	public BarCode generateWeightBarCode(String barcodePrefix){
-		BarCode bc = new BarCode();
-		bc.setCode(barcodePrefix + goodprefix.substring(1));
-		bc.setCount(new BigDecimal(1));
-		bc.setDefaultCode(false);
-		goodprefix = String.valueOf(prefix++);
-		return bc;
-	}
-	
-	public int getWeightPluNumber(Good weightGood){
-		Iterator<PluginProperty> it =  weightGood.getPluginProperties().iterator();
-		while (it.hasNext()){
-			PluginProperty property;
-			property = it.next();
-			if (property.getKey().equals("plu-number")){
-				return Integer.valueOf(property.getValue());
-			}
-		}
-		/* если нет PluginProperty, возвращаем 0*/
-		return 0; 
 	}
 	
 	private GoodsGroup generateGrop(){

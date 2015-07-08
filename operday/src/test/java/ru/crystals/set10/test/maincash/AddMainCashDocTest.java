@@ -4,10 +4,13 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+
 import ru.crystals.set10.config.Config;
 import ru.crystals.set10.pages.operday.cashes.MainCashManualDocPage;
 import ru.crystals.set10.utils.DisinsectorTools;
@@ -16,7 +19,7 @@ import static ru.crystals.set10.pages.operday.cashes.MainCashDocsPage.*;
 
 
 @Test (groups= "retail")
-public class PKOTest extends MainCashConfigTest {
+public class AddMainCashDocTest extends MainCashConfigTest {
 	
 	MainCashManualDocPage pko;
 	int docsOnPage = 0;
@@ -25,12 +28,16 @@ public class PKOTest extends MainCashConfigTest {
 	String receivedFrom = "Вручалова Г.Г";
 	
 	
-	@BeforeClass
+	@BeforeMethod
 	public void setUptest(){
-		MainCashConfigTool.clearOD();
-//		MainCashConfigTool.createODWithCashDocs(new Long[]{0L});
+
+		
 		
 	}
+	
+	
+	
+	
 	
 	@DataProvider (name = "PKO")
 	public Object[][] setUpRKOData(){
@@ -126,7 +133,6 @@ public class PKOTest extends MainCashConfigTest {
 	@Test(description = "SRTE-175. Заполненные поля не сбрасываются при нажатии кнопки \"Сохранить изменения\"", 
 			dataProvider = "PKOTextFields")
 	public void testSavedFieldsPKO(String field, String value){
-		log.info("Поле " + field);
 		Assert.assertEquals(pko.getTextField(field), value,  "Некорректо сохранилось поле " +  field);
 	}
 	

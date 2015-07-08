@@ -24,7 +24,7 @@ public class MainCashConfigTest extends AbstractTest {
 	BigDecimal balance;
 	
 	@BeforeClass
-	public void setUp(){
+	public void openMainDocsPage(){
 		
 		//TODO: добавить проверку существования од и включенной ГК
 		
@@ -34,7 +34,5 @@ public class MainCashConfigTest extends AbstractTest {
 		.openTab(MainCashDocsPage.class, LOCATOR_MAINCASH_TAB);
 		docs.switchToTable(LOCATOR_DOCS);
 	}
-	
-	
 	
 }
