@@ -26,7 +26,6 @@ public class ProductCardPage extends AbstractPage{
 	
 	public <T> T selectTab(String tabName, Class<T> tab) {
 		clickElement(getDriver(), ID_PRODUCTSWF, TAB_LOCATOR + tabName);
-		//doFlexProperty(getDriver(), ID_PRODUCTSWF, TAB_LOCATOR, new String[] {"selectedIndex", String.valueOf(tabIndex.ordinal())});
 		return PageFactory.initElements(getDriver(), tab);
 	}
 	

@@ -53,9 +53,9 @@ public class ConfigEqupmentTest extends AbstractTest {
 	@DataProvider(name="equipment")
 	private Object[][] equipment() {
 		return new Object[][]{
-				{"Клавиатуры", "QWERTY клавиатура"},
+//				{"Клавиатуры", "QWERTY клавиатура"},
 				{"Сканер", "Сканер штриховых кодов"},
-				{"Принтеры A4", "Стандартный принтер А4"},
+//				{"Принтеры A4", "Стандартный принтер А4"},
 				{"VirtualScales", "VirtualScales"},
 		};
 	}
