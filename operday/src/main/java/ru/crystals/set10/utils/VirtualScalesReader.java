@@ -145,7 +145,7 @@ public class VirtualScalesReader {
 	
 	/*
 	 * Метод возващает plu,
-	 * когда переданный plu неравен resultPlu в весах с таким же номером.
+	 * когда переданный plu неравен resultPlu в весах с таким же номером (PLU number).
 	 * Необходимо для понимания, что plu в весах обновился
 	 */
 	public PluType getPluUpdated(PluType plu){
@@ -165,7 +165,6 @@ public class VirtualScalesReader {
 						!resultPlu.getCertificationType().equals(plu.getCertificationType()) ||
 						(resultPlu.getAlternativeText4() == null && plu.getAlternativeText4() != null) || 
 						(resultPlu.getAlternativeText4() != null && plu.getAlternativeText4() == null) ||
-						!resultPlu.getAlternativeText4().equals(plu.getAlternativeText4()) ||
 						!resultPlu.getAlternativeText3().equals(plu.getAlternativeText3()) || 
 						!resultPlu.getAlternativeText2().equals(plu.getAlternativeText2()) || 
 						!resultPlu.getAlternativeText1().equals(plu.getAlternativeText1()) 
@@ -174,10 +173,28 @@ public class VirtualScalesReader {
 						log.info("PLU = " +  plu.getNumber() + " успешно обновлен");
 						return resultPlu;
 					}
+					
+					/*
+					 * Дополнительная проверка для getAlternativeText4(),
+					 * необходима, если меняется только дата изготовления
+					 */
+					String altText4ResultPlu = resultPlu.getAlternativeText4();
+					String altText4Plu = plu.getAlternativeText4();
+					
+					if ( (altText4ResultPlu != null) && (altText4Plu != null) ){
+						if (!altText4ResultPlu.equals(altText4Plu)) {
+							log.info("PLU = " +  plu.getNumber() + " успешно обновлен");
+							return resultPlu;
+						}
+						
+					}
+					
+					
 				}
 			}
 			DisinsectorTools.delay(1000);
 		}
+		
 		log.info("Товар в весах не обновился в течение " + defaultTimeout + ". PLU = " + plu.getNumber());
 		return resultPlu;
 	}

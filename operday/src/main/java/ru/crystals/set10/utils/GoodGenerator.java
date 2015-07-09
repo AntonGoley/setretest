@@ -169,6 +169,18 @@ public class GoodGenerator {
 		return price;
 	}
 	
+	public String getPluginPropertyValue(Good good, String pluginProperty){
+		Iterator<PluginProperty> properties = good.getPluginProperties().iterator();
+		
+		while (properties.hasNext()){
+			PluginProperty property = properties.next();
+			if(property.getKey().equals(pluginProperty)){
+				return property.getValue();
+			}
+		}
+		
+		return null;
+	}
 	
 	public XMLGregorianCalendar getDate(long date){
 		XMLGregorianCalendar result = null;

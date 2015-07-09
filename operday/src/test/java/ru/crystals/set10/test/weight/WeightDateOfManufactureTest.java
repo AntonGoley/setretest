@@ -6,6 +6,7 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+
 import ru.crystals.scales.tech.core.scales.virtual.xml.PluType;
 import ru.crystals.set10.config.Config;
 import ru.crystals.set10.pages.basic.LoginPage;
@@ -90,14 +91,33 @@ public class WeightDateOfManufactureTest extends WeightAbstractTest {
 	}
 	
 	@Test (enabled = false, description = "SRL-758. При изменении даты изготовления, остальные текстовые поля этикетки (информация о товаре в полях altmessagetext) остаются неизменны/не перетираются",
-			priority = 2)
+			priority = 3)
 	public void testAllMessagesUnchangedIfNewDateOfManufature(){
 	}
 	
 	@Test (enabled = false, description = "SRL-758. При обновлении информации о товаре, ранее введенная информация о дате производства не меняется/не удаляется",
-			priority = 2)
+			priority = 3)
 	public void testDateOfManufatureUnchangedIfNewProductInformation(){
 	}
+	
+	
+	@Test (description = "SRL-805. Соответствие данных весового товара (состав, производитель, пищевая ценность, условия хранения, дата изготовления) полям в весовой этикетке (altText1, altText2, altText3, altText4)",
+			priority = 3) 
+	public void testWeightMessagesINProperFiesld(){
+		PluType plu; 
+		plu = scales.getPlu(pluNum);
+		
+		productAdditionalInfo.setProperty(RADIO_LABEL_PRINT_DATE_AND_TIME);
+		scales.getPluUpdated(plu);
+		
+		Assert.assertEquals(scales.getPlu(pluNum).getMessageText() , goodGenerator.getPluginPropertyValue(weightGood, "composition"), "" );
+		Assert.assertEquals(scales.getPlu(pluNum).getAlternativeText1(), goodGenerator.getPluginPropertyValue(weightGood, "producer"), "" ) ;
+		Assert.assertEquals(scales.getPlu(pluNum).getAlternativeText2() , goodGenerator.getPluginPropertyValue(weightGood, "food-value"), "" ) ;
+		Assert.assertEquals(scales.getPlu(pluNum).getAlternativeText3() , goodGenerator.getPluginPropertyValue(weightGood, "storage-conditions"), "" ) ;
+		Assert.assertEquals(scales.getPlu(pluNum).getAlternativeText4() , "Изготовлено,", "" ) ;
+
+	}
+	
 	
 	
 	@Test (enabled = false, description = "SRL-758")
