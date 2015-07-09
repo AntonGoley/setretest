@@ -129,4 +129,13 @@ public class GoodsAdditionalFieldsTest extends AbstractTest{
 				String.format("В карточке товара не должны одновременно отображаться значения полей \"Срок годности (в днях)\" и \"Срок годности (в часах) \" "));
 	}
 	
+	@Test (	description = "SRL-803. Отображается полное наименование товара в карточке товара",
+			dependsOnMethods = "testGoodForHoursDays", 
+			alwaysRun = true)
+	public void testGoodFullNameInProductCard(){
+		Assert.assertEquals(productAdditionalInfo.getTextFieldValue(FIELD_FULL_NAME), weightGood.getFullname(),  
+				"Не отображается значение в поле \"Полное наименование торава \" в карточке товара");
+	}
+	
+	
 }
