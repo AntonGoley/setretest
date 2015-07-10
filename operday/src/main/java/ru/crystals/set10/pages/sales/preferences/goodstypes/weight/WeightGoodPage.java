@@ -14,9 +14,9 @@ import ru.crystals.set10.utils.DisinsectorTools;
 public class WeightGoodPage extends AbstractGoodAndPaymentPreferencesPage{
 	
 	
-	static final String SELECT_GOOD_ACTION = "id:productActionsComboBox";
-	static final String SELECT_PREFIX = "id:prefixesComboBox";
-	static final String LOCATOR_PLU_OFSET = "id:pluOffsetTextInput";
+	static final String SELECT_GOOD_ACTION = "productActionsComboBox";
+	static final String SELECT_PREFIX = "prefixesComboBox";
+	static final String LOCATOR_PLU_OFSET = "pluOffsetTextInput";
 	
 	static final String BUTTON_ADD_GOOD_ACTION= "label:Добавить действие с товаром";
 	

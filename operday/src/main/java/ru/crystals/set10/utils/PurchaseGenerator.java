@@ -3,6 +3,9 @@ package ru.crystals.set10.utils;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import ru.crystals.pos.catalog.BarcodeEntity;
+import ru.crystals.pos.catalog.MeasureEntity;
 import ru.crystals.pos.catalog.ProductEntity;
 import ru.crystals.pos.check.CheckStatus;
 import ru.crystals.pos.check.DocumentEntity;
@@ -11,6 +14,7 @@ import ru.crystals.pos.check.PositionEntity;
 import ru.crystals.pos.check.PurchaseEntity;
 import ru.crystals.pos.payments.CashPaymentEntity;
 import ru.crystals.pos.payments.PaymentEntity;
+import ru.crystals.setretailx.products.catalog.Good;
 
 public class PurchaseGenerator {
 
@@ -104,8 +108,60 @@ public class PurchaseGenerator {
 	    return result;
 	}
 	
+	/*
+	 * добавить позицию в чек
+	 */
+	public  static PurchaseEntity addPositionToPurchase(
+			PurchaseEntity pe, 
+			Good good, 
+			long sumPerPosition, 
+			long amount) 
+	{
+		
+		PositionEntity pos = new PositionEntity();
+        ProductEntity product = convertToProduct(good) ;
+        pos.setProduct(product);
+        pos.setNumber(Long.valueOf(pe.getPositions().size()));
+
+        pos.setQnty(Long.valueOf(amount * 1000L));
+        
+        long price = sumPerPosition;
+        pos.setPriceStart(price);
+        pos.setPriceEnd(price);
+        pos.setSum(Long.valueOf(amount * pos.getPriceEnd().longValue()));
+        pos.setNdsSum(Long.valueOf(Math.round(pos.getSum().longValue() * 0.2D)));
+        pos.setInsertType(InsertType.Hand);
+        pos.setCalculateDiscount(Boolean.valueOf(true));
+        pos.setSumDiscount(Long.valueOf(0L));
+        pos.setDeleted(Boolean.valueOf(false));
+        pos.setSuccessProcessed(true);
+        pos.setDateTime(new Date(System.currentTimeMillis()));
+        
+        pe.getPositions().add(pos);
+		
+		return pe;
+	}
 	
-	
+	private static ProductEntity convertToProduct(Good good){
+		
+		ProductEntity pe = new ProductEntity();
+        
+		pe.setItem(good.getMarkingOfTheGood());
+        MeasureEntity me = new MeasureEntity();
+        me.setCode(good.getMeasure().getCode());
+        pe.setMeasure(me);
+        pe.setName(good.getName());
+        pe.setNds(Float.valueOf(18.0F));
+        pe.setNdsClass("NDS");
+        pe.setErpCode(good.getErpCode());
+        
+        pe.setDiscriminator(good.getProductType());
+        
+        BarcodeEntity be = new BarcodeEntity();
+        be.setBarCode(good.getBarCodes().get(0).getCode());
+        pe.setBarCode(be);
+        return pe;
+	}
 	
 	
 	public static long random(int max) {
