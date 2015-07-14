@@ -16,7 +16,6 @@ public class RKOTest extends MainCashConfigTest {
 	MainCashManualDocPage rko;
 	int docsOnPage = 0;
 
-	String headAccountant = "Главбухова О.А";
 	String personReceived = "Вручалова Г.Г";
 
 	
@@ -44,7 +43,6 @@ public class RKOTest extends MainCashConfigTest {
 		docs = rko.selectDocType(docType)
 			.setTextField(FIELD_DOC_SUM, docSum)
 			.setOperDayDate(FIELD_DATE_OPERDAY, DisinsectorTools.getDate("dd.MM.yy", new Date().getTime()))
-			.setTextField(FIELD_HEAD_ACCOUNTANT, headAccountant)
 			.setTextField(FIELD_PERSON_GIVE_TO, personReceived)
 			.saveChanges()
 			.backToMainCash();
@@ -71,9 +69,6 @@ public class RKOTest extends MainCashConfigTest {
 		/* проверить увеличение баланса*/
 		//Assert.assertEquals(docs.getDocCountOnPage(), docsOnPage + 1, "Документ РКО " + docType.toString() + " не добавился на вкладку главной кассы Документы");
 	}
-	
-	
-	
 	
 	
 	//@Test(description = "SRTE-175. Автомтическое заполнение полей РКО")

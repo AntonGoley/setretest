@@ -6,25 +6,28 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-
 import ru.crystals.set10.config.Config;
 import ru.crystals.set10.pages.operday.tablereports.PriceCheckerConfigPage;
 import ru.crystals.set10.test.dataproviders.TableReportsDataprovider;
-import ru.crystals.set10.utils.DisinsectorTools;
+import ru.crystals.set10.utils.GoodGenerator;
 import ru.crystals.set10.utils.SoapRequestSender;
+import ru.crystals.setretailx.products.catalog.Good;
 import static ru.crystals.set10.pages.operday.tablereports.ReportConfigPage.*;
 import static ru.crystals.set10.pages.operday.tablereports.TableReportPage.*;
+import static ru.crystals.set10.utils.GoodGenerator.*;
+
 
 @Test (groups = "centrum")
 public class PriceCheckerReportTest extends AbstractReportTest{
 
 	PriceCheckerConfigPage priceCheckerConfig;
-
-	SoapRequestSender soapSender  = new SoapRequestSender();
-	String ti = soapSender.generateTI();;
-	String erpCode = 47 + ti;
-	String barCode = "78" + ti;
+	Good good;
 	String mac = "mac_" +  new Date().getTime();
+	
+	
+	SoapRequestSender soapSender  = new SoapRequestSender();
+	GoodGenerator goodGenerator = new GoodGenerator();
+
 	
 	@BeforeClass
 	public void navigateToProceCheckerReport() {
@@ -37,10 +40,13 @@ public class PriceCheckerReportTest extends AbstractReportTest{
 				REPORT_NAME_PRICE_CHECKER);
 		soapSender.setSoapServiceIP(Config.CENTRUM_HOST);
 		// Послать товар, который будет проверен на прайсчекере
-		sendGoodData();
+		good = goodGenerator.generateGood(GOODTYPE_PIECE);
+		soapSender.sendGood(good);
+		
 		// Послать запрос к прайсчекеру
-		sendPriceCheckerData();
-		doHTMLReport(priceCheckerConfig, true);
+		soapSender.sendPriceCheckerRequest(mac, good.getBarCodes().get(0).getCode());
+
+		doHTMLReport(priceCheckerConfig, false);
 	}	
 	
 	@Test (	description = "SRL-176. Проверить название отчета и название колонок в шапке таблицы отчета по прайсчекерам", 
@@ -51,37 +57,33 @@ public class PriceCheckerReportTest extends AbstractReportTest{
 		Assert.assertTrue(htmlReportResults.containsValue(fieldName), "Неверное значение поля в шапке отчета: " + fieldName);
 	}
 	
-	//TODO: валидировать последнюю строку полностью
-	@Test (	description = "SRL-176. Проверить, что данные от прайсчекера приходят в отчет по прайсчекерам"
-			)
-	public void testPricechekerHTMLReportData(){
-		Assert.assertTrue(htmlReportResults.containsValue(mac), "В отчете не отображается информация о мак адресе " + mac);
-		Assert.assertTrue(htmlReportResults.containsValue(barCode), "В отчете не отображается информация о бар коде товара " + barCode);
+	@DataProvider (name = "reportData")
+	private Object[][] reportFieldsValues(){
+		return new Object[][]{
+				{"Значение мак адреса ", mac, 4},
+				{"Баркод товара ", good.getBarCodes().get(0).getCode(), 6},
+				{"Код товара ", good.getMarkingOfTheGood(), 7},
+				{"Наименование товара", good.getName(), 8},
+		};
+	}
+	
+	@Test (	description = "SRL-176. Проверить, что данные от прайсчекера приходят в отчет по прайсчекерам",
+			dataProvider = "reportData")
+	public void testPricechekerHTMLReportData(String field, String value, int columnNumber){
+		log.info("Поле " + field);
+		Assert.assertEquals(htmlReportResults.getLastLineColumnValue(columnNumber), value, "В отчете не отображается информация о " + field);
 	}
 
 	@Test (	description = "SRL-176. Проверить, что отчет \"Отчёт для Прайс чекеров\" доступен для скачивания в формате xls",
-			dataProvider = "Доступные форматы для скачивания")
-	public void testPricechekerSaveFormats(String reportFormat, String reportNamePattern){
+			priority = 2)
+	public void testPricechekerSaveFormats(){
+		String reportNamePattern = "PriceCheckerReport_*.xls";
 		long fileSize = 0;
+		
+		priceCheckerConfig.switchWindow(true);
 		fileSize =  priceCheckerConfig.exportFileData(chromeDownloadPath, reportNamePattern, priceCheckerConfig, EXCELREPORT).length();
 		log.info("Размер сохраненного файла: " + reportNamePattern + " равен " +  fileSize);
 		Assert.assertTrue(fileSize > 0, "Файл отчета сохранился некорректно");
 	}
-	
-	@DataProvider (name = "Доступные форматы для скачивания")
-	public static Object[][] reportFormats(){
-		return new  Object[][] {
-			{EXCELREPORT, "PriceCheckerReport_*.xls"}
-		};
-	}
-	
-	private void sendGoodData() {
-		String goodRequest = DisinsectorTools.getFileContentAsString("good.txt");
-		soapSender.sendGoods(String.format(goodRequest, erpCode, barCode),ti);
-	}
-	
-	private void sendPriceCheckerData(){
-		soapSender.sendPriceCheckerRequest(mac, barCode);
-		DisinsectorTools.delay(5000);
-	}
+
 }

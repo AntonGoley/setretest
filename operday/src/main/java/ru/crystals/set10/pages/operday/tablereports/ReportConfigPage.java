@@ -13,9 +13,9 @@ import static ru.crystals.set10.utils.FlexMediator.*;
 public class  ReportConfigPage extends AbstractPage implements SaveFile {
 	
 	static final String ID_OPERDAYSWF = "OperDay";
-	public static final String HTMLREPORT = "download_html";
-	public static final String EXCELREPORT = "download_excel";
-	public static final String PDFREPORT = "download_pdf";
+	public static final String HTMLREPORT = "downloadHTMLButton";
+	public static final String EXCELREPORT = "downloadExcelButton";
+	public static final String PDFREPORT = "downloadPDFButton";
 	
 	/*
 	 * необходимо немного подождать, при первом формировании отчета 

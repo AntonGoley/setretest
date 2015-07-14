@@ -191,8 +191,8 @@ public class WeightLekondTest extends WeightAbstractTest {
 		/* отправляем новую 1ю цену и леконд в одном запросе*/
 		soapSender.send(goodsCatalog);
 		
-		Assert.assertTrue(scales.waitPluUnLoaded(pluNum),  "Товар не не выгрузился из весов, при существующем леконде, запрещающем продажу. PLU = " + pluNum);
-		Assert.assertFalse(scales.waitPluLoaded(pluNum),  "Товар загрузился на весы, ри существующем леконде, запрещающем продажу. PLU = " + pluNum);
+		Assert.assertTrue(scales.waitPluUnLoaded(pluNum),  "Товар не выгрузился из весов, при существующем леконде, запрещающем продажу. PLU = " + pluNum);
+		Assert.assertFalse(scales.waitPluLoaded(pluNum),  "Товар загрузился на весы, при существующем леконде, запрещающем продажу. PLU = " + pluNum);
 		
 	}
 	

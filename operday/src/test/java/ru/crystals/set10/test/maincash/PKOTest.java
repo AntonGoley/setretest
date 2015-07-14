@@ -27,7 +27,7 @@ public class PKOTest extends MainCashConfigTest {
 	
 	@BeforeClass
 	public void setUptest(){
-		MainCashConfigTool.clearOD();
+	//	MainCashConfigTool.clearOD();
 //		MainCashConfigTool.createODWithCashDocs(new Long[]{0L});
 		
 	}
@@ -58,7 +58,6 @@ public class PKOTest extends MainCashConfigTest {
 		docs = pko.selectDocType(docType)
 			.setTextField(FIELD_DOC_SUM, docSum)
 			.setOperDayDate(FIELD_DATE_OPERDAY, DisinsectorTools.getDate("dd.MM.yy", new Date().getTime()))
-			.setTextField(FIELD_HEAD_ACCOUNTANT, headAccountant)
 			.setTextField(FIELD_PERSON_RECEIVED, receivedBy)
 			.setTextField(FIELD_RECEIVED_FROM, receivedFrom)
 			.saveChanges()
@@ -108,7 +107,6 @@ public class PKOTest extends MainCashConfigTest {
 		pko = pko.selectDocType(DOC_TYPE_PKO_EXCHANGE_INCOME)
 				.setTextField(FIELD_DOC_SUM, docSum)
 				.setOperDayDate(FIELD_DATE_OPERDAY, DisinsectorTools.getDate("dd.MM.yy", new Date().getTime()))
-				.setTextField(FIELD_HEAD_ACCOUNTANT, headAccountant)
 				.setTextField(FIELD_PERSON_RECEIVED, receivedBy)
 				.setTextField(FIELD_RECEIVED_FROM, receivedFrom)
 				.setTextField(FIELD_COMMENTS, testComment)
@@ -117,7 +115,6 @@ public class PKOTest extends MainCashConfigTest {
 		return new Object[][]{
 				{FIELD_DOC_SUM, docSum},
 				{FIELD_COMMENTS, testComment},
-				{FIELD_HEAD_ACCOUNTANT, headAccountant},
 				{FIELD_PERSON_RECEIVED, receivedBy},
 				{FIELD_RECEIVED_FROM, receivedFrom}
 		};
@@ -150,7 +147,6 @@ public class PKOTest extends MainCashConfigTest {
 		pko.selectDocType(pkoType)
 				.setTextField(FIELD_DOC_SUM, sum)
 				.setOperDayDate(FIELD_DATE_OPERDAY, DisinsectorTools.getDate("dd.MM.yy", new Date().getTime()))
-				.setTextField(FIELD_HEAD_ACCOUNTANT, headAccountant)
 				.setTextField(FIELD_RECEIVED_FROM, receivedFrom)
 				.setTextField(FIELD_PERSON_RECEIVED, receivedBy)
 				.saveChanges();

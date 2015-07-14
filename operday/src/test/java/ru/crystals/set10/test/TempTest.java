@@ -27,12 +27,13 @@ public class TempTest {
 	long macPrefix = new Date().getTime();
 	
 	@BeforeClass
-	public void setUp(){
-//		calendar = Calendar.getInstance();
-//		calendar.add(Calendar.YEAR, 1);
-//		calendar.add(Calendar.MONTH, 2);
-//		calendar.set(Calendar.DATE, 1);
-//		log.info(DisinsectorTools.getDate("dd.MM.yyyy", calendar.getTimeInMillis()));
+	private void setUp(){
+		calendar = Calendar.getInstance();
+		calendar.add(Calendar.YEAR, 1);
+		calendar.add(Calendar.MONTH, 2);
+		calendar.set(Calendar.DATE, 1);
+		log.info(DisinsectorTools.getDate("dd.MM.yyyy", calendar.getTimeInMillis()));
+		
 		soapSender.setSoapServiceIP(Config.RETAIL_HOST);
 	}
 	
@@ -51,9 +52,14 @@ public class TempTest {
 	
 	@Test ()
 	public void testPriceChecker(){
-		Good good = new GoodGenerator().generateGood(GOODTYPE_WEIGHT);
-		soapSender.sendGood(good);
-		soapSender.sendPriceCheckerRequest("mac_" + macPrefix++, good.getBarCodes().get(0).getCode());
+		String mac = "mac_" + macPrefix++;
+		
+		for (int i=0; i<5; i++) {
+			Good good = new GoodGenerator().generateGood(GOODTYPE_PIECE);
+			soapSender.sendGood(good);
+			soapSender.sendPriceCheckerRequest(mac, good.getBarCodes().get(0).getCode());
+		}	
+		
 	}
 	
 }

@@ -19,7 +19,6 @@ public class MainCashConfigTest extends AbstractTest {
 	MainCashDocsPage docs;
 	int docsOnPage = 0;
 	
-	String headAccountant = "Главбухова О.А";
 	BigDecimal balanceStart;
 	BigDecimal balance;
 	

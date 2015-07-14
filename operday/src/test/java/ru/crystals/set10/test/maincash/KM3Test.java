@@ -81,7 +81,12 @@ public class KM3Test extends AbstractTest{
 		purchaseReturn = (PurchaseEntity) cashEmulator.nextRefundPositions(purchase, returnPositions, false);
 	}
 	
-	
+	@Test( description = "SRTE-28. Если в систему пришел первый возвратный чек, создается форма КМ3")
+	public void testKM3CreatesAfter1stRefund(){
+		km3.switchToTable(LOCATOR_KM6).switchToTable(LOCATOR_KM3);
+		km3 = new KmPage(getDriver());
+		Assert.assertEquals(km3.getExpectedDocsCountOnPage(km3Tablerows + 1), km3Tablerows + 1, "Не появилась форма КМ3");
+	}
 	
 	@DataProvider (name = "Поля КМ3")
 	private static Object[][] km3Fields(){
@@ -97,13 +102,6 @@ public class KM3Test extends AbstractTest{
 				{"Содержит ККМ: номер производителя (factory num)", cashVO.getFactoryNum()},
 				{"Содержит ККМ: рег. номер (fisc num)", cashVO.getFiscalNum()},
 		};
-	}
-	
-	@Test( description = "SRTE-28. Если в систему пришел первый возвратный чек, создается форма КМ3")
-	public void testKM3CreatesAfter1stRefund(){
-		km3.switchToTable(LOCATOR_KM6).switchToTable(LOCATOR_KM3);
-		km3 = new KmPage(getDriver());
-		Assert.assertEquals(km3.getExpectedDocsCountOnPage(km3Tablerows + 1), km3Tablerows + 1, "Не появилась форма КМ3");
 	}
 	
 	@Test (	dependsOnMethods ="testKM3CreatesAfter1stRefund",
@@ -166,9 +164,12 @@ public class KM3Test extends AbstractTest{
 
 	}
 	
-	@Test(description = "SRL-782. В отчет КМ3 не должны попадать аннулированые возвратные чеки")
+	@Test(  dependsOnMethods = "testKM3CreatesForNewShift",
+			description = "SRL-782. В отчет КМ3 не должны попадать аннулированые возвратные чеки"
+			)
 	public void testNoAnnulateRefundInKM3(){
 		
+		cashEmulator.useNextShift();
 		km3Tablerows = km3.getDocCountOnPage();
 		
 		PurchaseEntity p1 = cashEmulator.nextCancelledPurchaseWithoutSending();
