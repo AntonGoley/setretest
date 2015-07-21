@@ -72,7 +72,7 @@ public class AdverstingTableReportTest extends AbstractReportTest {
 	public void testGoodInAdverstingReport(){
 
 		/* отправить РА*/
-		soapSender.sendAdversting(advertising);
+		soapSender.sendAdvertising(advertising);
 		doReport(good.getErpCode());
 		Assert.assertTrue(htmlReportResults.containsValue(good.getErpCode()), "Отсутствует ERP код в отчете");
 	}

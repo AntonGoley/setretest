@@ -60,10 +60,7 @@ public class SoapRequestSender{
     public static final String ERP_INTEGRATION_FEEDBACK = "http://feedback.ERPIntegration.crystals.ru/";
 	
 	private static final String METHOD_GOODS_WITHTI = "getGoodsCatalogWithTi";
-	private static final String METHOD_ACTIONS_WITHTI = "#importActionsWithTi";
-	private static final String METHOD_ALCO_RESTRICTIONS = "#getSpiritRestrictions";
 	private static final String METHOD_PRICECHECKER_SHUTTLE = "#getProductInfoForShuttle";
-	private static final String METHOD_PACKAGE_STATUS = "getPackageStatus";
 	
 	
 	public static final String RETURN_MESSAGE_CORRECT = "correct"; 
@@ -85,18 +82,7 @@ public class SoapRequestSender{
 			"<TI>%s</TI>" +
 			"</plug:getGoodsCatalogWithTi> </soapenv:Body> </soapenv:Envelope>";
 	
-	private static String soapRequestAdversting = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:ws=\"http://ws.discounts.ERPIntegration.crystals.ru/\">" +
-	   "<soapenv:Header/>" +
-	   "<soapenv:Body>" +
-	      "<ws:importActionsWithTi>" +
-	         "<!--Optional:-->" +
-	         "<xmlData>%s</xmlData>" +
-	         "<!--Optional:-->" +
-	         "<TI>%s</TI>" +
-	      "</ws:importActionsWithTi>" +
-	   "</soapenv:Body>" +
-	"</soapenv:Envelope>";
-	
+
 	private static String soapGetAlcoRestrictions = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:erp=\"http://erpiservice.limits.crystals.ru/\">" +
 		"<soapenv:Header/>" +
 		"<soapenv:Body>" +
@@ -168,26 +154,11 @@ public class SoapRequestSender{
 		assertSOAPResponse(RETURN_MESSAGE_CORRECT, ti);
 	}
 	
-	public void sendAdversting(String request, String ti){
-		this.soapRequest = String.format(soapRequestAdversting, encodeBase64(request), ti);
-		this.service = ERP_INTEGRATION_ADVERTSING_ACTIONS; 
-		this.method = METHOD_ACTIONS_WITHTI;
-		log.info("Отправить рекламную акцию. SOAP request: \n" + this.soapRequest);
-		//sendSOAPRequest();
-	}
-	
-	public void sendAdversting(){
-		SoapMessageFactory goodMessage = new SoapMessageFactory();
-		SOAPMessage message = goodMessage.getFeedBackMessage(ti);
-		sendSOAPRequest(message, ERP_INTEGRATION_FEDDBACK);
-	}
-	
 	public void getFeedBack(String ti){
 		SoapMessageFactory goodMessage = new SoapMessageFactory();
 		SOAPMessage message = goodMessage.getFeedBackMessage(ti);
 		sendSOAPRequest(message, ERP_INTEGRATION_FEDDBACK);
 	}
-	
 	
 	/*
 	 * Отправить товар
@@ -223,14 +194,14 @@ public class SoapRequestSender{
 	}
 	
 	
-	public void sendAdversting(AdvertisingActionType action){
+	public void sendAdvertising(AdvertisingActionType action){
 		AdvertisingActionsType actions = new AdvertisingActionsType();
 		actions.getAdvertisingAction().add(action);
 		sendAdverstings(actions);
 		
 	}
 	
-	public String sendAdverstings(AdvertisingActionsType action){
+	private String sendAdverstings(AdvertisingActionsType action){
 		generateTI();
 		StringWriter request = new StringWriter();
 		try {

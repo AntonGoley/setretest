@@ -4,27 +4,30 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-
+import ru.crystals.ERPIntegration.discounts.model.xml.imp.AdvertisingActionType;
 import ru.crystals.set10.config.Config;
 import ru.crystals.set10.pages.operday.tablereports.ReportConfigPage;
 import ru.crystals.set10.pages.operday.tablereports.GoodsOnTKConfigPage;
 import ru.crystals.set10.test.dataproviders.TableReportsDataprovider;
-import ru.crystals.set10.utils.DisinsectorTools;
+import ru.crystals.set10.utils.AdverstingActionsGenerator;
+import ru.crystals.set10.utils.GoodGenerator;
 import ru.crystals.set10.utils.SoapRequestSender;
+import ru.crystals.setretailx.products.catalog.Good;
 import static ru.crystals.set10.pages.operday.tablereports.TableReportPage.*;
+import static ru.crystals.set10.utils.GoodGenerator.GOODTYPE_PIECE;
 
 
 @Test (groups = {"centrum", "retail"})
 public class GoodOnTKReportTest extends AbstractReportTest{
 
 	GoodsOnTKConfigPage goodOnTKConfig;
-	String goodRequest;
-	String adverstingRequest;
 
-	static SoapRequestSender soapSender  = new SoapRequestSender();
-	static String ti = soapSender.generateTI();
-	static String  erpCode = 47 + ti;
-	static String barCode = 78 + ti;
+	SoapRequestSender soapSender  = new SoapRequestSender();
+	GoodGenerator goodGenerator = new GoodGenerator();
+	AdverstingActionsGenerator adverstingGenerator = new AdverstingActionsGenerator();
+	
+	Good good;
+	AdvertisingActionType advertising;
 	
 	@BeforeClass
 	public void navigateToGoodOnTKReports() {
@@ -38,12 +41,16 @@ public class GoodOnTKReportTest extends AbstractReportTest{
 		
 		soapSender.setSoapServiceIP(TARGET_HOST);
 		
-		// послать товар и акцию
-		sendGoodData();
-		sendAdverstingForGood();
+		/* сгенерить и отправить товар*/
+		good = goodGenerator.generateGood(GOODTYPE_PIECE);
+		soapSender.sendGood(good);
+		
+		/* сгенерить акцию и не отправлять*/
+		advertising = adverstingGenerator.generateAdversting(good.getMarkingOfTheGood());
+		soapSender.sendAdvertising(advertising);
 		
 		// сгенерить отчет
-		goodOnTKConfig.setErpCode(erpCode);
+		goodOnTKConfig.setErpCode(good.getErpCode());
 		doHTMLReport(goodOnTKConfig, true);
 	}	
 
@@ -53,6 +60,17 @@ public class GoodOnTKReportTest extends AbstractReportTest{
 	public void testGoodOnTKHTMLReportTableHead(String fieldName){
 		log.info(fieldName);
 		Assert.assertTrue(htmlReportResults.containsValue(fieldName), "Неверное значение поля в шапке отчета: " + fieldName);
+	}
+	
+	@DataProvider (name = "Данные отчета")
+	private  Object[][] adverstingReportTableHead() {
+		return new Object[][] {
+		{"Название рекламной акции",  advertising.getName() },
+		//TODO: почему в отчете обрезается код до 10 символов??
+		{"Код акции",  advertising.getExternalCode().substring(0, 10)},
+		{"id товара", good.getErpCode()},
+		{"Штрих-код", good.getBarCodes().get(0).getCode()},
+		};	
 	}
 	
 	@Test (	description = "SRL-174. Проверить наличие данных в отчете по товарам на ТК", 
@@ -72,40 +90,11 @@ public class GoodOnTKReportTest extends AbstractReportTest{
 		Assert.assertTrue(fileSize > 0, "Файл отчета сохранился некорректно");
 	}
 	
-	@DataProvider (name = "Данные отчета")
-	private static Object[][] adverstingReportTableHead() {
-		return new Object[][] {
-		// TODO: Сейчас условие акции такое же как и название акции		
-		{"Название рекламной акции", "test_" + erpCode},
-		// TODO: разобраться, почему в сьюте на товар генерятся 2 акции
-		//{"id товара", erpCode},
-		{"Штрих-код", barCode},
-		//{"Код акции", "TEST_" + ti},
-		};	
-	}
-	
 	@DataProvider (name = "Доступные форматы для скачивания")
 	private static Object[][] reportFormats(){
 		return new  Object[][] {
 			{ReportConfigPage.PDFREPORT, "ProductReport_*.pdf"},
 			{ReportConfigPage.EXCELREPORT, "ProductReport_*.xls"}
 		};
-	}
-	
-	private void sendGoodData() {
-		ti = soapSender.generateTI();
-		log.info("Загрузить товар с erpCode = " + erpCode + ", barCode = " + barCode);
-		goodRequest = DisinsectorTools.getFileContentAsString("good.txt");
-		soapSender.sendGoods(String.format(goodRequest, erpCode, barCode),ti);
-	}
-	
-	private void sendAdverstingForGood() {
-	// завести рекламную акцию на товар с erpCode
-		ti = soapSender.generateTI();
-		log.info("Добавить рекламную акцию для товара с erpCode = " + erpCode + ", barCode = " + barCode);
-		adverstingRequest = DisinsectorTools.getFileContentAsString("adversting.txt");
-		soapSender.sendAdversting(String.format(adverstingRequest, erpCode, ti),ti);
-		soapSender.assertSOAPResponse("status-message=\"correct\"", ti);
-		
 	}
 }
