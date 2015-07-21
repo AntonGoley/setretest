@@ -4,8 +4,10 @@ import org.apache.commons.codec.binary.Base64;
 
 import javax.xml.bind.DatatypeConverter;
 import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
+
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileWriter;
@@ -15,6 +17,8 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import javax.xml.namespace.QName;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -26,11 +30,15 @@ import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
+
 import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
+
+import ru.crystals.ERPIntegration.discounts.model.xml.imp.AdvertisingActionType;
+import ru.crystals.ERPIntegration.discounts.model.xml.imp.AdvertisingActionsType;
 import ru.crystals.set10.config.Config;
 import ru.crystals.setretailx.products.catalog.BarcodeExt;
 import ru.crystals.setretailx.products.catalog.Good;
@@ -168,7 +176,7 @@ public class SoapRequestSender{
 		//sendSOAPRequest();
 	}
 	
-	public void sendAdversting(String ti){
+	public void sendAdversting(){
 		SoapMessageFactory goodMessage = new SoapMessageFactory();
 		SOAPMessage message = goodMessage.getFeedBackMessage(ti);
 		sendSOAPRequest(message, ERP_INTEGRATION_FEDDBACK);
@@ -213,6 +221,49 @@ public class SoapRequestSender{
 		goodsCatalog.getBarcodes().addAll(barcodes);
 		return send(goodsCatalog);
 	}
+	
+	
+	public void sendAdversting(AdvertisingActionType action){
+		AdvertisingActionsType actions = new AdvertisingActionsType();
+		actions.getAdvertisingAction().add(action);
+		sendAdverstings(actions);
+		
+	}
+	
+	public String sendAdverstings(AdvertisingActionsType action){
+		generateTI();
+		StringWriter request = new StringWriter();
+		try {
+			JAXBContext jaxbContext = JAXBContext.newInstance(AdvertisingActionsType.class);
+			Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
+			
+			jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+			
+			QName qName = new QName("", "AdvertisingActions");
+	        JAXBElement<AdvertisingActionsType> root = new JAXBElement<AdvertisingActionsType>(qName, AdvertisingActionsType.class, action);
+			
+			jaxbMarshaller.marshal(root, request);
+			
+		} catch (JAXBException e) {
+			e.printStackTrace();
+		}
+		
+		try {
+			
+			log.info("Отправить рекламные акции. SOAP request: \n" + request.toString()); 
+			
+			SoapMessageFactory goodMessage = new SoapMessageFactory();
+			SOAPMessage message = goodMessage.getAdversting(request.toString(), this.ti);
+			sendSOAPRequest(message, ERP_INTEGRATION_ADVERTSING_ACTIONS);
+			assertSOAPResponseNew(RETURN_MESSAGE_CORRECT, this.ti);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return "";
+	}
+	
 	
 	/*
 	 *	Отправить группу товаров (ликондов, бар кодов) 
@@ -277,6 +328,9 @@ public class SoapRequestSender{
 	        soapConnection.close();
 	        
 	        this.soapResponse = soapResponse;
+	        
+	        //TODO:обработать ответ!!!
+	        
 	        
 		} catch (SOAPException se) {
 			se.printStackTrace();
@@ -344,6 +398,7 @@ public class SoapRequestSender{
 		try {
 			throw new Exception("Пакет с ti " + ti + " не содержит " + expectedResult);
 		} catch (Exception e) {
+			log.info("Запрос вернул status-message: " + result);
 			e.printStackTrace();
 		}
 		
@@ -362,7 +417,7 @@ public class SoapRequestSender{
 			DisinsectorTools.delay(1000);
 			timeout +=1;
 			//sendSOAPRequest();
-		}
+	}
 		
 		try {
 			throw new Exception("Пакет с ti " + ti + " не содержит " + expectedResult);
