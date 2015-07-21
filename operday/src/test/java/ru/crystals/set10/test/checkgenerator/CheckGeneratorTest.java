@@ -8,6 +8,7 @@ import org.testng.annotations.BeforeGroups;
 import org.testng.annotations.Test;
 
 import ru.crystals.set10.config.*;
+import ru.crystals.discount.processing.entity.LoyTransactionEntity;
 import ru.crystals.pos.bank.datastruct.AuthorizationData;
 import ru.crystals.pos.bank.datastruct.BankCard;
 import ru.crystals.pos.check.PositionEntity;
@@ -15,6 +16,7 @@ import ru.crystals.pos.check.PurchaseEntity;
 import ru.crystals.pos.payments.BankCardPaymentEntity;
 import ru.crystals.pos.payments.ChildrenCardPaymentEntity;
 import ru.crystals.set10.utils.CashEmulator;
+import ru.crystals.set10.utils.DiscountEmulator;
 import ru.crystals.set10.utils.PaymentEmulator;
 import ru.crystals.set10.utils.DisinsectorTools;
 import ru.crystals.set10.utils.PurchaseGenerator;
@@ -29,6 +31,8 @@ public class CheckGeneratorTest {
 	PurchaseEntity p1;
 		
 	CashEmulator cashEmulator = CashEmulator.getCashEmulator(Config.RETAIL_HOST, Integer.valueOf(Config.SHOP_NUMBER), Integer.valueOf(Config.CASH_NUMBER));
+	DiscountEmulator discountEmulator = new DiscountEmulator();
+	
 	
 	@BeforeGroups (groups = {"simple_shift", "all_payments"})
 	public void introduction(){
@@ -94,6 +98,15 @@ public class CheckGeneratorTest {
 		
 		//оплата скидочной картой
 		p1 = (PurchaseEntity) cashEmulator.nextPurchase(getDiscountCardPayment());
+		
+		
+		p1 =  (PurchaseEntity) cashEmulator.nextPurchaseWithoutSending();
+		// скидка на позиции чека
+		LoyTransactionEntity loyTransaction = new LoyTransactionEntity();
+		loyTransaction = discountEmulator.addDiscount(p1);
+		cashEmulator.sendLoy(loyTransaction, p1);
+		p1.setDiscountValueTotal(loyTransaction.getDiscountValueTotal());
+		cashEmulator.nextPurchase(p1);
 		
 	}
 	

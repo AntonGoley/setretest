@@ -235,7 +235,6 @@ public class SoapRequestSender{
 		return "";
 	}
 	
-	
 	/*
 	 *	Отправить группу товаров (ликондов, бар кодов) 
 	 */
