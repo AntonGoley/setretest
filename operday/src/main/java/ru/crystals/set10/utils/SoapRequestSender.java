@@ -6,34 +6,31 @@ import javax.xml.bind.DatatypeConverter;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
-
-import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.soap.SOAPConnection;
+import javax.xml.soap.SOAPConnectionFactory;
+import javax.xml.soap.SOAPException;
+import javax.xml.soap.SOAPMessage;
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
-
 import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
-
 import ru.crystals.set10.config.Config;
 import ru.crystals.setretailx.products.catalog.BarcodeExt;
 import ru.crystals.setretailx.products.catalog.Good;
@@ -50,19 +47,25 @@ public class SoapRequestSender{
     public static final String SERVICE_ALCO_RESTRICTIONS = "/SET-Alcohol/SET/SpiritRestrictionsExportWS";
     public static final String SERVICE_PRICE_CHECKER = "/SET-Products/SET/Products";
 	
+    
+    public static final String ERP_INTEGRATION_NAMESPACE = "http://plugins.products.ERPIntegration.crystals.ru/";
+    public static final String ERP_INTEGRATION_FEEDBACK = "http://feedback.ERPIntegration.crystals.ru/";
 	
-	private static final String METHOD_GOODS_WITHTI = "#getGoodsCatalogWithTi";
+	private static final String METHOD_GOODS_WITHTI = "getGoodsCatalogWithTi";
 	private static final String METHOD_ACTIONS_WITHTI = "#importActionsWithTi";
 	private static final String METHOD_ALCO_RESTRICTIONS = "#getSpiritRestrictions";
 	private static final String METHOD_PRICECHECKER_SHUTTLE = "#getProductInfoForShuttle";
+	private static final String METHOD_PACKAGE_STATUS = "getPackageStatus";
 	
-	public static final String RETURN_MESSAGE_CORRECT = "status-message=\"correct\""; 
+	
+	public static final String RETURN_MESSAGE_CORRECT = "correct"; 
 	
 	String soapServiceIP = ""; 
 	String soapRequest = "";
 	String service = "";
 	String method = "";
 	String response = "";
+	SOAPMessage soapResponse;
 	
 	private static long tiPrefix = new Date().getTime();
 	private String ti;
@@ -83,17 +86,6 @@ public class SoapRequestSender{
 	         "<!--Optional:-->" +
 	         "<TI>%s</TI>" +
 	      "</ws:importActionsWithTi>" +
-	   "</soapenv:Body>" +
-	"</soapenv:Envelope>";
-	
-	private static String soapGetFeedBack = "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:feed=\"http://feedback.ERPIntegration.crystals.ru/\">" +
-	   "<soapenv:Header/>" +
-	   "<soapenv:Body>" +
-	      "<feed:getPackageStatus>" +
-	         "<xmlGetstatus>" +
-	           "<import ti=\"%s\"/>" +
-	         "</xmlGetstatus>" +
-	      "</feed:getPackageStatus>" +
 	   "</soapenv:Body>" +
 	"</soapenv:Envelope>";
 	
@@ -120,6 +112,13 @@ public class SoapRequestSender{
 		"</soapenv:Envelope>";
 	
 	
+	public SoapRequestSender (){
+	}
+	
+	public SoapRequestSender (String ip){
+		setSoapServiceIP(ip);
+	}
+	
 	public void setSoapServiceIP(String ip){
 		log.info("Таргет хост для отправки soap запроса: " + ip);
 		this.soapServiceIP = ip;
@@ -142,12 +141,6 @@ public class SoapRequestSender{
 	}
 	
 	public void getAlcoRestrictions(String from, String till){
-		DisinsectorTools.delay(1000);
-		this.soapRequest = String.format(soapGetAlcoRestrictions, from, till);
-		this.service = SERVICE_ALCO_RESTRICTIONS; 
-		this.method = METHOD_ALCO_RESTRICTIONS;
-		log.info("Выгрузить алкогольные ограничения. SOAP request: \n" + this.soapRequest);
-		sendSOAPRequest();
 	}
 	
 	public void sendPriceCheckerRequest(String mac, String barcode){
@@ -155,7 +148,7 @@ public class SoapRequestSender{
 		this.service = SERVICE_PRICE_CHECKER; 
 		this.method = METHOD_PRICECHECKER_SHUTTLE;
 		log.info("Отправить запрос с парайс чекера. SOAP request: \n" + this.soapRequest);
-		sendSOAPRequest();
+		//sendSOAPRequest();
 	}
 	
 	public void sendGoods(String request, String ti){
@@ -163,9 +156,30 @@ public class SoapRequestSender{
 		this.service = ERP_INTEGRATION_GOOSERVICE; 
 		this.method = METHOD_GOODS_WITHTI;
 		log.info("Отправить товары. SOAP request: \n" + this.soapRequest);
-		sendSOAPRequest();
+		//sendSOAPRequest();
 		assertSOAPResponse(RETURN_MESSAGE_CORRECT, ti);
 	}
+	
+	public void sendAdversting(String request, String ti){
+		this.soapRequest = String.format(soapRequestAdversting, encodeBase64(request), ti);
+		this.service = ERP_INTEGRATION_ADVERTSING_ACTIONS; 
+		this.method = METHOD_ACTIONS_WITHTI;
+		log.info("Отправить рекламную акцию. SOAP request: \n" + this.soapRequest);
+		//sendSOAPRequest();
+	}
+	
+	public void sendAdversting(String ti){
+		SoapMessageFactory goodMessage = new SoapMessageFactory();
+		SOAPMessage message = goodMessage.getFeedBackMessage(ti);
+		sendSOAPRequest(message, ERP_INTEGRATION_FEDDBACK);
+	}
+	
+	public void getFeedBack(String ti){
+		SoapMessageFactory goodMessage = new SoapMessageFactory();
+		SOAPMessage message = goodMessage.getFeedBackMessage(ti);
+		sendSOAPRequest(message, ERP_INTEGRATION_FEDDBACK);
+	}
+	
 	
 	/*
 	 * Отправить товар
@@ -217,11 +231,24 @@ public class SoapRequestSender{
 			e.printStackTrace();
 		}
 		
-		this.soapRequest = String.format(soapRequestGoods, encodeBase64(request.toString()), this.ti);
-		this.service = ERP_INTEGRATION_GOOSERVICE; 
-		this.method = METHOD_GOODS_WITHTI;
-		
-		File f = new File("c:/weightGoods.txt"); 
+		try {
+			
+			log.info("Отправить товары. SOAP request: \n" + request.toString()); 
+			
+			SoapMessageFactory goodMessage = new SoapMessageFactory();
+			SOAPMessage message = goodMessage.getGoodMessage(request.toString(), this.ti);
+			sendSOAPRequest(message, ERP_INTEGRATION_GOOSERVICE);
+			assertSOAPResponseNew(RETURN_MESSAGE_CORRECT, this.ti);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		/*
+		 * Залогировать результат запроса в файл
+		 * TODO: добавить опцию вкл/выкл, имя файла
+		 */
+		File f = new File("weightGoods.txt"); 
 		try {
 			FileWriter fis = new FileWriter(f);
 			fis.write(request.toString());
@@ -230,80 +257,30 @@ public class SoapRequestSender{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}	
-		
-		
-		log.info("Отправить товары. SOAP request: \n" + request.toString()); 
-		sendSOAPRequest();
-		assertSOAPResponse(RETURN_MESSAGE_CORRECT, ti);
+
 		return ti;
 	}
 	
-	public void sendAdversting(String request, String ti){
-		this.soapRequest = String.format(soapRequestAdversting, encodeBase64(request), ti);
-		this.service = ERP_INTEGRATION_ADVERTSING_ACTIONS; 
-		this.method = METHOD_ACTIONS_WITHTI;
-		log.info("Отправить рекламную акцию. SOAP request: \n" + this.soapRequest);
-		sendSOAPRequest();
-	}
-	
-	public void getFeedBack(String ti){
-		this.soapRequest = String.format(soapGetFeedBack, ti);
-		this.service = ERP_INTEGRATION_FEDDBACK; 
-		this.method = METHOD_ACTIONS_WITHTI;
-		sendSOAPRequest();
-	}
-	
-	private void sendSOAPRequest(){
-		URL resourceURL;
-		HttpURLConnection con = null;
-		String result = "";
+	/*
+	 * Отправить SOAP запрос
+	 */
+	private void sendSOAPRequest(SOAPMessage message, String service){
+
 		String serviceUrl ="http://" + this.soapServiceIP + ":" + Config.DEFAULT_PORT; 
-
+		
 		try {
-			resourceURL = new URL(serviceUrl + this.service);
-			con = (HttpURLConnection) resourceURL.openConnection();
-			con.setDoOutput(true);
-			con.setDoInput(true);
-			con.setRequestMethod("POST");
-			con.setRequestProperty("Content-type", "text/xml; charset=utf-8");
-			   con.setRequestProperty("SOAPAction", 
-					   serviceUrl + this.service + this.method);
-			   
-		   OutputStream reqStream = con.getOutputStream();
-		   reqStream.write(this.soapRequest.getBytes()); 
-		   reqStream.close();
-		   
-		   InputStreamReader inR = new InputStreamReader(con.getInputStream());
-		   BufferedReader bufReader = new BufferedReader(inR);
-		   
-		   String res = "";
-		   while ((res = bufReader.readLine()) != null){
-			   result +=res; 
-		   }
-
-		   bufReader.close();
-		   inR.close();
-		   con.disconnect();
-
-		} catch (IOException e) {
-			try {
-				int respCode = con.getResponseCode();
-				InputStreamReader inR = new InputStreamReader(con.getErrorStream());
-				BufferedReader bufReader = new BufferedReader(inR);
-				 String res = "";
-				   while ((res = bufReader.readLine()) != null){
-					   result +=res; 
-				   }
-				   result = "Error response " + respCode +  ": "+ result;
-				   bufReader.close();
-				   inR.close();
-				   con.disconnect();
-			} catch (IOException ex) {
-				ex.printStackTrace();
-			}
-				
-		}
-		this.response = result;
+			
+			SOAPConnectionFactory soapConnectionFactory = SOAPConnectionFactory.newInstance();
+			SOAPConnection soapConnection = soapConnectionFactory.createConnection();
+		      
+		    SOAPMessage soapResponse = soapConnection.call(message, serviceUrl + service);
+	        soapConnection.close();
+	        
+	        this.soapResponse = soapResponse;
+	        
+		} catch (SOAPException se) {
+			se.printStackTrace();
+		}	
 	}
 	
 	public boolean assertSOAPResponseXpath(String xpathExpression)  {
@@ -337,6 +314,42 @@ public class SoapRequestSender{
 		return xpathResult;
 	}
 	
+	
+	public boolean assertSOAPResponseNew(String expectedResult, String ti){
+		int timeout = 0;
+		String result = "";
+		
+		log.info("Ожидаемое значение в SOAP response: " + expectedResult + " ; ti = " + ti); 
+
+		while (timeout <=20) {
+			getFeedBack(ti);
+			DisinsectorTools.delay(1000);
+			
+			try {
+				NodeList nodes =  soapResponse.getSOAPPart().getEnvelope().getBody().getElementsByTagName("import");
+
+				Element  resultElement = (Element) nodes.item(0);
+				result = resultElement.getAttribute("status-message");
+			
+				if (result.contains(expectedResult)){ 
+					return true;
+				}
+			
+				timeout +=1;
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}	
+		
+		try {
+			throw new Exception("Пакет с ti " + ti + " не содержит " + expectedResult);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return false;
+	}
+	
 	public boolean assertSOAPResponse(String expectedResult, String ti){
 		int timeout = 0;
 		getFeedBack(ti);
@@ -348,7 +361,7 @@ public class SoapRequestSender{
 			}
 			DisinsectorTools.delay(1000);
 			timeout +=1;
-			sendSOAPRequest();
+			//sendSOAPRequest();
 		}
 		
 		try {
