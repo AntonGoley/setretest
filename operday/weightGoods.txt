@@ -1,45 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <goods-catalog>
-    <good marking-of-the-good="926952">
-        <name>Товар_926952</name>
-        <bar-code code="1437557926953">
-            <count>1</count>
-            <default-code>true</default-code>
-        </bar-code>
-        <product-type>ProductCiggyEntity</product-type>
-        <child>false</child>
-        <price-entry price="9364.69">
-            <begin-date>2015-07-12T12:39:52</begin-date>
-            <end-date>2015-08-01T12:39:52</end-date>
-            <number>1</number>
-            <department number="1">
-                <name>Отдел 1</name>
-            </department>
-        </price-entry>
-        <price-entry price="9358.70">
-            <begin-date>2015-07-12T12:39:52</begin-date>
-            <end-date>2015-08-01T12:39:52</end-date>
-            <number>2</number>
-            <department number="1">
-                <name>Отдел 1</name>
-            </department>
-        </price-entry>
-        <vat>18.0</vat>
-        <group id="52001">
-            <name>Группа 5201</name>
-            <parent-group id="52">
-                <name>Группа 52</name>
-            </parent-group>
-        </group>
-        <measure-type id="7">
-            <name>шт.</name>
-        </measure-type>
-        <delete-from-cash>false</delete-from-cash>
-        <plugin-property key="mrc">
-            <plugin-property key="price" value="72.32;9364.69"/>
-        </plugin-property>
-        <erp-code>926952</erp-code>
-        <fullname>Товар_926952_полное имя товара - (fullname)</fullname>
-        <certification-type>4</certification-type>
-    </good>
+    <product-sales-allowing marking-of-the-good="933425">
+        <since-date>2015-07-21T12:55:53</since-date>
+        <till-date>2015-07-23T12:55:53</till-date>
+    </product-sales-allowing>
 </goods-catalog>

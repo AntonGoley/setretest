@@ -24,10 +24,8 @@ public class PriceCheckerReportTest extends AbstractReportTest{
 	Good good;
 	String mac = "mac_" +  new Date().getTime();
 	
-	
 	SoapRequestSender soapSender  = new SoapRequestSender();
 	GoodGenerator goodGenerator = new GoodGenerator();
-
 	
 	@BeforeClass
 	public void navigateToProceCheckerReport() {
@@ -45,7 +43,7 @@ public class PriceCheckerReportTest extends AbstractReportTest{
 		
 		// Послать запрос к прайсчекеру
 		soapSender.sendPriceCheckerRequest(mac, good.getBarCodes().get(0).getCode());
-
+		
 		doHTMLReport(priceCheckerConfig, false);
 	}	
 	
