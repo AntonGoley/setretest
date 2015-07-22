@@ -34,7 +34,7 @@ public class  ReportConfigPage extends AbstractPage implements SaveFile {
 		clickElement(getDriver(), ID_OPERDAYSWF, reportType);
 		if (ifFirstReport) {
 			log.info("Ожидание первой загрузки HTML отчета");
-			DisinsectorTools.delay(20000);
+			DisinsectorTools.delay(2000);
 			ifFirstReport = false;
 		}
 

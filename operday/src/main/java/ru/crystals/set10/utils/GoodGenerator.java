@@ -157,7 +157,7 @@ public class GoodGenerator {
 		price.setTillDate(dateFrom);
 		price.setDepartment(dep);
 		rub = DisinsectorTools.random(10000) + 10;
-		kop = DisinsectorTools.random(95) + 5;
+		kop = DisinsectorTools.random(88) + 11;
 		price.setPrice(new BigDecimal(String.valueOf(rub) + "." + String.valueOf(kop)));
 		
 		return price;
@@ -167,6 +167,19 @@ public class GoodGenerator {
 		Price price =  generatePrice(number);
 		price.setPrice(value);
 		return price;
+	}
+	
+	
+	public BigDecimal getPriceValue(Good good, long priceNumber){
+		BigDecimal result = new  BigDecimal("-1.00");
+		Iterator<Price> prices = good.getPrices().iterator();
+		while (prices.hasNext()){
+			Price price = prices.next();
+			if (price.getNumber().equals(priceNumber)){
+				return price.getPrice();
+			}
+		}
+		return result;
 	}
 	
 	public String getPluginPropertyValue(Good good, String pluginProperty){

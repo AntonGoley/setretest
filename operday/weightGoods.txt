@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <goods-catalog>
-    <good marking-of-the-good="845775">
-        <name>Товар_845775</name>
-        <bar-code code="1437494845776">
+    <good marking-of-the-good="926952">
+        <name>Товар_926952</name>
+        <bar-code code="1437557926953">
             <count>1</count>
             <default-code>true</default-code>
         </bar-code>
-        <product-type>ProductPieceEntity</product-type>
+        <product-type>ProductCiggyEntity</product-type>
         <child>false</child>
-        <price-entry price="8199.54">
-            <begin-date>2015-07-11T19:07:37</begin-date>
-            <end-date>2015-07-31T19:07:37</end-date>
+        <price-entry price="9364.69">
+            <begin-date>2015-07-12T12:39:52</begin-date>
+            <end-date>2015-08-01T12:39:52</end-date>
             <number>1</number>
             <department number="1">
                 <name>Отдел 1</name>
             </department>
         </price-entry>
-        <price-entry price="8193.55">
-            <begin-date>2015-07-11T19:07:37</begin-date>
-            <end-date>2015-07-31T19:07:37</end-date>
+        <price-entry price="9358.70">
+            <begin-date>2015-07-12T12:39:52</begin-date>
+            <end-date>2015-08-01T12:39:52</end-date>
             <number>2</number>
             <department number="1">
                 <name>Отдел 1</name>
@@ -35,8 +35,11 @@
             <name>шт.</name>
         </measure-type>
         <delete-from-cash>false</delete-from-cash>
-        <erp-code>845775</erp-code>
-        <fullname>Товар_845775_полное имя товара - (fullname)</fullname>
+        <plugin-property key="mrc">
+            <plugin-property key="price" value="72.32;9364.69"/>
+        </plugin-property>
+        <erp-code>926952</erp-code>
+        <fullname>Товар_926952_полное имя товара - (fullname)</fullname>
         <certification-type>4</certification-type>
     </good>
 </goods-catalog>

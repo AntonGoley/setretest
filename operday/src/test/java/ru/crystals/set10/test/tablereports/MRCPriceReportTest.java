@@ -1,7 +1,5 @@
 package ru.crystals.set10.test.tablereports;
 
-import java.util.Date;
-
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -9,18 +7,26 @@ import ru.crystals.set10.config.Config;
 import ru.crystals.set10.pages.operday.tablereports.ReportConfigPage;
 import ru.crystals.set10.test.dataproviders.TableReportsDataprovider;
 import ru.crystals.set10.utils.DisinsectorTools;
+import ru.crystals.set10.utils.GoodGenerator;
 import ru.crystals.set10.utils.SoapRequestSender;
+import ru.crystals.setretailx.products.catalog.Good;
+import ru.crystals.setretailx.products.catalog.PluginProperty;
 import static ru.crystals.set10.pages.operday.tablereports.TableReportPage.*;
 import static ru.crystals.set10.pages.operday.tablereports.ReportConfigPage.EXCELREPORT;
+import static ru.crystals.set10.utils.GoodGenerator.GOODTYPE_CIGGY;
 
 @Test(groups = "retail")
 public class MRCPriceReportTest extends AbstractReportTest{
 	
 	ReportConfigPage MRCConfigPage;
-	SoapRequestSender soapRequestSender;
+
+	SoapRequestSender soapRequestSender = new SoapRequestSender(Config.RETAIL_HOST);
+	GoodGenerator goodGenerator = new GoodGenerator();
+	
 	String mrcNameDataFilePattern = "${name}";
 	String price = "${price}";
-
+	
+	Good good;
 	
 	@BeforeClass
 	public void navigateToMRCReport() {
@@ -56,14 +62,15 @@ public class MRCPriceReportTest extends AbstractReportTest{
 	@Test (	dependsOnGroups = "MRC_Report_Smoke",
 			description = "SRL-360. В прейскуранте на табачные изделия проверить, что отображается 1-я цена, в случае, если при импорте отсутсвует plugin-property mrc")
 	public void test1stPriceSetIfNoMRCPlugin(){
-		String goodName;
-		String request = DisinsectorTools.getFileContentAsString("mrc_report/good_mrc_no_mrc_plugin.txt"); 
-		String first_price =  getPrice() +  ".11";
-		goodName = setPriceAndSendRequest(request, first_price);
+		good = goodGenerator.generateGood(GOODTYPE_CIGGY);
+		soapRequestSender.sendGood(good);
+
+		String first_price = goodGenerator.getPriceValue(good, 1L).toPlainString().replace(".", ",");
 		
 		doHTMLReport(MRCConfigPage, true);
-		Assert.assertTrue(htmlReportResults.containsValue(goodName), "Не найден товар в отчете " + goodName);
-		Assert.assertTrue(htmlReportResults.containsValue(first_price.replace(".", ",")), "Не найдена первая цена МРЦ " + first_price);
+		Assert.assertTrue(htmlReportResults.containsValue(good.getName()), "Не найден товар в отчете " + good.getName());
+		
+		Assert.assertTrue(htmlReportResults.containsValue(first_price), "Не найдена первая цена МРЦ " + first_price);
 		htmlReportResults.removeValue(first_price);
 		Assert.assertTrue(htmlReportResults.containsValue(first_price.replace(".", ",")), "Не найдена первая ПЦ" + first_price);
 		
@@ -72,15 +79,37 @@ public class MRCPriceReportTest extends AbstractReportTest{
 	@Test (	dependsOnGroups = "MRC_Report_Smoke",
 			description = "SRL-360. В прейскуранте на табачные изделия проверить, что МРЦ и ЦП заполняются, в случае, если они приходят в plugin-property")
 	public void testMRCandCPSetIfAllInPlugin(){
-		String goodName;
-		String request = DisinsectorTools.getFileContentAsString("mrc_report/good_mrc_prices.txt"); 
-		String mrc_price =  getPrice() +  ".55";
-		String sale_price =  getPrice() +  ".99";
+		good = goodGenerator.generateGood(GOODTYPE_CIGGY);
 		
-		goodName = setPriceAndSendRequest(request, mrc_price + ";" + sale_price);
+		String mrc_price = DisinsectorTools.randomMoney(100, ".");
+		String sale_price = goodGenerator.getPriceValue(good, 1L).toPlainString();
+		
+		/*
+		 * Добавить PluginProperty mrc,
+		 * это свойство вложенное в PluginProperty:
+		 * 	plugin-property key="mrc">
+		 *		<plugin-property key="price" value="mrc_price;sale_price"/>
+		 *	</plugin-property>
+		 * 
+		 */
+		
+		/*
+		 * Создать PluginPropertyс ценами mrc
+		 */
+		PluginProperty mrc = generateMrcProperty(mrc_price + ";" + sale_price);
+		
+		PluginProperty property = new PluginProperty();
+		property.getProperties().add(mrc);
+		property.setKey("mrc");
+		
+		good.getPluginProperties().add(property);
+		
+		/*отправить товар с новым свойством*/
+		soapRequestSender.sendGood(good);
+		
 		doHTMLReport(MRCConfigPage, true);
 
-		Assert.assertTrue(htmlReportResults.containsValue(goodName), "Не найден товар в отчете " + goodName);
+		Assert.assertTrue(htmlReportResults.containsValue(good.getName()), "Не найден товар в отчете " + good.getName());
 		Assert.assertTrue(htmlReportResults.containsValue(mrc_price.replace(".", ",")), "Не найдена цена МРЦ" + mrc_price);
 		Assert.assertTrue(htmlReportResults.containsValue(sale_price.replace(".", ",")), "Не найдена цена продажи " + sale_price);
 	}
@@ -88,14 +117,24 @@ public class MRCPriceReportTest extends AbstractReportTest{
 	@Test (	dependsOnGroups = "MRC_Report_Smoke",
 			description = "SRL-360. В прейскуранте на табачные изделия проверить, что МРЦ=ЦП если в plugin-property не приходит цена продажи")
 	public void testMRCEqualsCPIfNoCPInPlugin(){
-		String goodName;
-		String request = DisinsectorTools.getFileContentAsString("mrc_report/good_mrc_prices.txt"); 
-		String mrc_price =  getPrice() +  ".55";
+
+		String mrc_price =  DisinsectorTools.randomMoney(100, ".");
+		good = goodGenerator.generateGood(GOODTYPE_CIGGY);
 		
-		goodName = setPriceAndSendRequest(request, mrc_price);
+		/*
+		 * В PluginProperty mrc не приходит цена продажи 
+		 */
+		PluginProperty mrc = generateMrcProperty(mrc_price);
+		
+		PluginProperty property = new PluginProperty();
+		property.getProperties().add(mrc);
+		property.setKey("mrc");
+		good.getPluginProperties().add(property);
+		
+		soapRequestSender.sendGood(good);
 		doHTMLReport(MRCConfigPage, true);
 
-		Assert.assertTrue(htmlReportResults.containsValue(goodName), "Не найден товар в отчете " + goodName);
+		Assert.assertTrue(htmlReportResults.containsValue(good.getName()), "Не найден товар в отчете " + good.getName());
 		Assert.assertTrue(htmlReportResults.containsValue(mrc_price.replace(".", ",")), "Не найдена цена МРЦ (или ПЦ)" + mrc_price);
 		htmlReportResults.removeValue(mrc_price);
 		Assert.assertTrue(htmlReportResults.containsValue(mrc_price.replace(".", ",")), "Не найдена цена МРЦ(или ПЦ)" + mrc_price);
@@ -107,34 +146,41 @@ public class MRCPriceReportTest extends AbstractReportTest{
 			description = "SRL-360. В прейскуранте на табачные изделия есть все МРЦ на данный товар, перечисленные в plugin-property")
 	public void testAllMRCInPlugin(){
 		int totalMRCInDataFile = 4;
-		String request = DisinsectorTools.getFileContentAsString("mrc_report/good_mrc_4_positions.txt"); 
-		String mrc_good_name = setPriceAndSendRequest(request, "");
-
+		
+		good = goodGenerator.generateGood(GOODTYPE_CIGGY);
+		
+		PluginProperty property = new PluginProperty();
+		property.setKey("mrc");
+		
+		
+		for (int i=1; i<=4; i++){
+			String mrc_price = DisinsectorTools.randomMoney(100, ".");
+			String price = DisinsectorTools.randomMoney(100, ".");
+			PluginProperty mrc = generateMrcProperty(mrc_price + ";" + price);
+			property.getProperties().add(mrc);
+		}
+		
+		good.getPluginProperties().add(property);
+		soapRequestSender.sendGood(good);
+		
 		doHTMLReport(MRCConfigPage, true);
 		
 		int counter = 0;
-		while (htmlReportResults.containsValue(mrc_good_name)){
+		while (htmlReportResults.containsValue(good.getName())){
 			counter++;
-			htmlReportResults.removeValue(mrc_good_name);
+			htmlReportResults.removeValue(good.getName());
 		}
 
-		Assert.assertEquals(totalMRCInDataFile, counter, "Неверное количество МРЦ в отчете для товара " + mrc_good_name);
+		Assert.assertEquals(totalMRCInDataFile, counter, "Неверное количество МРЦ в отчете для товара " + good.getName());
 	}
 	
-	private String setPriceAndSendRequest(String request, String mrc_price){
-		String mrc_good_name = "Tabaco_" + String.valueOf(new Date().getTime());
-		soapRequestSender = new SoapRequestSender();
-		soapRequestSender.setSoapServiceIP(Config.RETAIL_HOST);
-		soapRequestSender.sendGoods(request
-				.replace(mrcNameDataFilePattern, mrc_good_name)
-				.replace(price, mrc_price)
-				, soapRequestSender.generateTI());
-		return mrc_good_name;
+	private PluginProperty generateMrcProperty(String prices){
+		PluginProperty mrc = new PluginProperty();
+		mrc.setKey("price");
+		mrc.setValue(prices);
+		return mrc;
 	}
-	
-	private String getPrice(){
-		return String.valueOf((new Date().getTime())).substring(8, 13).replaceFirst("0", "1"); //замещаем первый 0, чтобы цена не начиналась с 0
-	}
+
 }
 
 

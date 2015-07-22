@@ -135,7 +135,7 @@ public class DisinsectorTools {
 	public static String randomMoney(int max, String delimiter) {
 		return String.valueOf(Math.round(Math.random() * max) - 1)
 				+ delimiter
-				+ String.valueOf(Math.round(Math.random() * 99));
+				+ String.valueOf(Math.round(Math.random() * 88) + 11);
 	}
 	
 }
