@@ -50,7 +50,7 @@ public class TempTest {
 		CashEmulator.getCashEmulator(Config.RETAIL_HOST, Integer.valueOf(Config.SHOP_NUMBER), 1).nextPurchase(p1);
 	}
 	
-	@Test ()
+	@Test (enabled = false)
 	public void testPriceChecker(){
 		String mac = "mac_" + macPrefix++;
 		

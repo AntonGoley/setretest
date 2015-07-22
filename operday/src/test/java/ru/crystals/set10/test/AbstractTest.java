@@ -6,6 +6,7 @@ import org.testng.ITestResult;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
@@ -84,25 +85,9 @@ public class  AbstractTest implements IExecutionListener {
         return driver;
     }
     
-    @BeforeClass (alwaysRun = true)
-    public void setupWebDriver(ITestContext context) throws IOException {
-	    
-    	ChromeOptions options = new ChromeOptions();
-    	options.addArguments("start-maximized");
-    	
-    	DesiredCapabilities capabilities = DesiredCapabilities.chrome();
-    	capabilities.setCapability(ChromeOptions.CAPABILITY,  options);
-    	
-    	driver = new RemoteWebDriver(service.getUrl(), capabilities);
-    	
-    	driver.manage().timeouts().implicitlyWait(IMPLICIT_WAIT, TimeUnit.SECONDS);
-    	driver.manage().deleteAllCookies();
-    	
-    	if (firstRun){
-    		chromeDownloadPath = getChromeDownloadPath();
-    		clearDownloadDir();
-    	}	
-    	
+    
+    @BeforeSuite
+    public void setUpSuiteEndPoints(ITestContext context){
     	TARGET_HOST = Config.RETAIL_HOST;
     	TARGET_HOST_URL = Config.RETAIL_URL;
     	TARGET_SHOP = Config.SHOP_NUMBER;
@@ -136,6 +121,62 @@ public class  AbstractTest implements IExecutionListener {
     	log.info("TARGET_HOST: " + TARGET_HOST );
     	log.info("TARGET_HOST_URL: " + TARGET_HOST_URL );
     	log.info("TARGET_SHOP: " + TARGET_SHOP );
+    }
+    
+    @BeforeClass (alwaysRun = true)
+    public void setupWebDriver(ITestContext context) throws IOException {
+	    
+    	ChromeOptions options = new ChromeOptions();
+    	options.addArguments("start-maximized");
+    	
+    	DesiredCapabilities capabilities = DesiredCapabilities.chrome();
+    	capabilities.setCapability(ChromeOptions.CAPABILITY,  options);
+    	
+    	driver = new RemoteWebDriver(service.getUrl(), capabilities);
+    	
+    	driver.manage().timeouts().implicitlyWait(IMPLICIT_WAIT, TimeUnit.SECONDS);
+    	driver.manage().deleteAllCookies();
+    	
+    	if (firstRun){
+    		chromeDownloadPath = getChromeDownloadPath();
+    		clearDownloadDir();
+    	}	
+    	
+    	setUpSuiteEndPoints(context);
+    	
+//    	TARGET_HOST = Config.RETAIL_HOST;
+//    	TARGET_HOST_URL = Config.RETAIL_URL;
+//    	TARGET_SHOP = Config.SHOP_NUMBER;
+//    	DB_SET = DbAdapter.DB_RETAIL_SET;
+//    	DB_OPERDAY = DbAdapter.DB_RETAIL_OPERDAY;
+//    	DB_LOY = DbAdapter.DB_RETAIL_LOY;
+//    	
+//    	Config.SALES_PREFERENCES_INDEX = 10;
+//    	cashEmulator = cashEmulatorRetail;
+//    	cashEmulatorSearchCheck = cashEmulatorSearchCheckRetail;
+//    	cashEmulatorMainCash = cashEmulatorMainCashRetail;
+//    	
+//    	String[] groups = context.getIncludedGroups();
+//    	
+//    	for (int i=0; i<groups.length; i++){
+//    		if (groups[i].equals("centrum")){
+//    			TARGET_HOST = Config.CENTRUM_HOST;
+//    			TARGET_HOST_URL = Config.CENTRUM_URL;
+//    			TARGET_SHOP = Config.VIRTUAL_SHOP_NUMBER;
+//    	    	DB_SET = DbAdapter.DB_CENTRUM_SET;
+//    	    	DB_OPERDAY = DbAdapter.DB_CENTRUM_OPERDAY;
+//    	    	DB_LOY = DbAdapter.DB_CENTRUM_LOY;
+//    	    	
+//    	    	Config.SALES_PREFERENCES_INDEX = 11;
+//    			cashEmulator = cashEmulatorVirtualShop;
+//    			cashEmulatorSearchCheck = cashEmulatorSearchCheckVirtualShop;
+//    			cashEmulatorMainCash = cashEmulatorMainCashVirtualShop;
+//    		} 
+//    	}
+//    	
+//    	log.info("TARGET_HOST: " + TARGET_HOST );
+//    	log.info("TARGET_HOST_URL: " + TARGET_HOST_URL );
+//    	log.info("TARGET_SHOP: " + TARGET_SHOP );
     	
     	GoodParser.importGoods(TARGET_HOST, DB_SET);
     	PurchaseGenerator.generatePurchaseBunch();

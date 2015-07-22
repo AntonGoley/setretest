@@ -16,7 +16,9 @@ import ru.crystals.pos.check.PurchaseEntity;
 import ru.crystals.pos.payments.BankCardPaymentEntity;
 import ru.crystals.pos.payments.ChildrenCardPaymentEntity;
 import ru.crystals.set10.utils.CashEmulator;
+import ru.crystals.set10.utils.DbAdapter;
 import ru.crystals.set10.utils.DiscountEmulator;
+import ru.crystals.set10.utils.GoodParser;
 import ru.crystals.set10.utils.PaymentEmulator;
 import ru.crystals.set10.utils.DisinsectorTools;
 import ru.crystals.set10.utils.PurchaseGenerator;
@@ -33,6 +35,10 @@ public class CheckGeneratorTest {
 	CashEmulator cashEmulator = CashEmulator.getCashEmulator(Config.RETAIL_HOST, Integer.valueOf(Config.SHOP_NUMBER), Integer.valueOf(Config.CASH_NUMBER));
 	DiscountEmulator discountEmulator = new DiscountEmulator();
 	
+	
+	static {
+		GoodParser.importGoods(Config.RETAIL_HOST, DbAdapter.DB_RETAIL_SET);
+	}
 	
 	@BeforeGroups (groups = {"simple_shift", "all_payments"})
 	public void introduction(){
