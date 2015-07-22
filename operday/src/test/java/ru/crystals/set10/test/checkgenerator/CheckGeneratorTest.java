@@ -38,6 +38,7 @@ public class CheckGeneratorTest {
 	
 	static {
 		GoodParser.importGoods(Config.RETAIL_HOST, DbAdapter.DB_RETAIL_SET);
+		PurchaseGenerator.generatePurchaseBunch();
 	}
 	
 	@BeforeGroups (groups = {"simple_shift", "all_payments"})
