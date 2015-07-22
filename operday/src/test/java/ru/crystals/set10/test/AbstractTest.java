@@ -8,9 +8,11 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
+
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.concurrent.TimeUnit;
+
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -24,6 +26,7 @@ import ru.crystals.set10.config.*;
 import ru.crystals.set10.utils.CashEmulator;
 import ru.crystals.set10.utils.DbAdapter;
 import ru.crystals.set10.utils.DisinsectorTools;
+import ru.crystals.set10.utils.GoodParser;
 import ru.crystals.set10.utils.PurchaseGenerator;
 
 
@@ -129,6 +132,13 @@ public class  AbstractTest implements IExecutionListener {
     			cashEmulatorMainCash = cashEmulatorMainCashVirtualShop;
     		} 
     	}
+    	
+    	log.info("TARGET_HOST: " + TARGET_HOST );
+    	log.info("TARGET_HOST_URL: " + TARGET_HOST_URL );
+    	log.info("TARGET_SHOP: " + TARGET_SHOP );
+    	
+    	GoodParser.importGoods(TARGET_HOST, DB_SET);
+    	PurchaseGenerator.generatePurchaseBunch();
 	}
     
     @BeforeMethod(alwaysRun = true)

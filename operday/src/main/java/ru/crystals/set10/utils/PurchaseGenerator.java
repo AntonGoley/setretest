@@ -25,7 +25,7 @@ public class PurchaseGenerator {
 	public static List<DocumentEntity> peListWithoutPayments = new ArrayList<DocumentEntity>();
 	
 	
-	static {
+	public static void generatePurchaseBunch(){
 		for (int i=1; i<=100; i++) {
 			int positions = (int)random(20) + 5;
 			peList.add(generatePurchase(positions, true));

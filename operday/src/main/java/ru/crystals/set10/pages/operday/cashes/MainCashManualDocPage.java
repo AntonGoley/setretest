@@ -138,7 +138,7 @@ public class  MainCashManualDocPage extends CashesPage{
 		typeText(getDriver(), ID_OPERDAYSWF, "className:ExDateInput/id:box3", date.split("\\.")[2]);
 		
 		doFlexMouseDown(getDriver(), ID_OPERDAYSWF, BUTTON_SELECT_DATE);
-		doFlexMouseUp(getDriver(), ID_OPERDAYSWF, BUTTON_SELECT_DATE);
+		doFlexMouseUp(getDriver(), ID_OPERDAYSWF, BUTTON_SELECT_DATE, true);
 		return this;
 	}
 	

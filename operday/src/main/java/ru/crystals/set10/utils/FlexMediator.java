@@ -27,9 +27,9 @@ public class FlexMediator {
 		ecxecute(driver, String.format("document.getElementById('%s').doFlexMouseDown('%s')", swfSrc, flexId));
 	}
 	
-	public static void doFlexMouseUp(WebDriver driver, String swfSrc, String flexId) {
+	public static void doFlexMouseUp(WebDriver driver, String swfSrc, String flexId, Boolean passToParents) {
 		waitForElement(driver, swfSrc, flexId);
-		ecxecute(driver, String.format("document.getElementById('%s').doFlexMouseUp('%s')", swfSrc, flexId));
+		ecxecute(driver, String.format("document.getElementById('%s').doFlexMouseUp('%s')", swfSrc, flexId, passToParents.toString()));
 	}
 	
 	public static void checkBoxValue(WebDriver driver, String swfSrc, String flexId, boolean checkBoxValue) {

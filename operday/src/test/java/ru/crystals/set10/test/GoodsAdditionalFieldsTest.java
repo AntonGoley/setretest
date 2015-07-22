@@ -41,9 +41,8 @@ public class GoodsAdditionalFieldsTest extends AbstractTest{
 	private PluginProperty buttonOnScale;
 	private PluginProperty goodForHours;
 	private PluginProperty goodForDays;
+
 	String prefix = String.valueOf(new Date().getTime());
-	
-	
 	
 	private void setInputData(){
 		weightGood = goodGenerator.generateWeightGood("0");

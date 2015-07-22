@@ -1,6 +1,5 @@
 package ru.crystals.set10.utils;
 
-import static ru.crystals.set10.utils.DbAdapter.DB_RETAIL_SET;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,7 +9,6 @@ import org.springframework.jdbc.support.rowset.SqlRowSet;
 import ru.crystals.pos.catalog.BarcodeEntity;
 import ru.crystals.pos.catalog.MeasureEntity;
 import ru.crystals.pos.catalog.ProductEntity;
-import ru.crystals.set10.config.Config;
 
 public class GoodParser {
 	
@@ -45,25 +43,19 @@ public class GoodParser {
 			"on barc.product_marking = pr.markingofthegood " +
 			"where pr.plugin_class_name like '%s'";
 
-	static
-	  {
+	
+	public static void importGoods(String targetHost,String db_set){
 		// проверить, есть ли товары в set, и если нет, импортировать через ERP импорт
-		if ((db.queryForInt(DB_RETAIL_SET, SQL_GOODS_COUNT)) < 30 ) {
+		if ((db.queryForInt(db_set, SQL_GOODS_COUNT)) < 30 ) {
 			SoapRequestSender soapSender  = new SoapRequestSender();
-			soapSender.sendGoodsToStartTesting(Config.RETAIL_HOST, "goods.txt");
+			soapSender.sendGoodsToStartTesting(targetHost, "goods.txt");
 		}
-//		
-//		if ((db.queryForInt(DB_CENTRUM_SET, SQL_GOODS_COUNT)) < 30 ) {
-//			SoapRequestSender soapSender  = new SoapRequestSender();
-//			soapSender.sendGoodsToStartTesting(Config.CENTRUM_HOST, "goods.txt");
-//		}
 		
-		catalogAllGoods = parsePurchasesFromDB(db.queryForRowSet(DB_RETAIL_SET, SQL_GOODS_ALL));
-		catalogWeightGoods = parsePurchasesFromDB(db.queryForRowSet(DB_RETAIL_SET, String.format(SQL_GOODS, weightEntity)) );
-		catalogCiggyGoods = parsePurchasesFromDB(db.queryForRowSet(DB_RETAIL_SET, String.format(SQL_GOODS, ciggyEntity)) );
-		catalogSpiritsGoods = parsePurchasesFromDB(db.queryForRowSet(DB_RETAIL_SET, String.format(SQL_GOODS, spiritsEntity)));
-		
-    }
+		catalogAllGoods = parsePurchasesFromDB(db.queryForRowSet(db_set, SQL_GOODS_ALL));
+		catalogWeightGoods = parsePurchasesFromDB(db.queryForRowSet(db_set, String.format(SQL_GOODS, weightEntity)) );
+		catalogCiggyGoods = parsePurchasesFromDB(db.queryForRowSet(db_set, String.format(SQL_GOODS, ciggyEntity)) );
+		catalogSpiritsGoods = parsePurchasesFromDB(db.queryForRowSet(db_set, String.format(SQL_GOODS, spiritsEntity)));
+	}
 	
 	public static ArrayList<ProductEntity> parsePurchasesFromDB(SqlRowSet goods) {
 		ArrayList<ProductEntity> result = new ArrayList<ProductEntity>();

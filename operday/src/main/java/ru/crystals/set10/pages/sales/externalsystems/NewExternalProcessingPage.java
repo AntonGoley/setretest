@@ -26,7 +26,7 @@ public class NewExternalProcessingPage extends SalesPage {
 		clickElement(getDriver(),  ID_SALESSWF, LOCATOR_PROCESSING_GROUP + "/className:Text;text:" + processingGroup);
 
 		doFlexMouseDown(getDriver(),  ID_SALESSWF, LOCATOR_PROCESSING + "/className:Text;text:" + processingName);
-		doFlexMouseUp(getDriver(),  ID_SALESSWF, LOCATOR_PROCESSING + "/className:Text;text:" + processingName);
+		doFlexMouseUp(getDriver(),  ID_SALESSWF, LOCATOR_PROCESSING + "/className:Text;text:" + processingName, false);
 		
 		waitForProperty(getDriver(), ID_SALESSWF, BUTTON_REGISTER, new String[]{"enabled", "true"});
 		clickElement(getDriver(), ID_SALESSWF, BUTTON_REGISTER);
