@@ -118,7 +118,9 @@ public class  AbstractTest implements IExecutionListener {
 
     @AfterMethod(alwaysRun = true)
     public void printTestResult(Method method, ITestResult result) throws Exception {
+    	log.info("+++++++++++++++++++++++++++++++++++++++");
     	log.info(method.getDeclaringClass() + "." +  method.getName() + " finished with RESULT " + result.getStatus());
+    	log.info("+++++++++++++++++++++++++++++++++++++++");
 //    	log.info("Asserts executed withing suite: " + method.getName() + " - " + Base.getAssertsEcexuted());
 //    	log.info("TOTAL asserts executed: " + Base.getTotalAssertsEcexuted());
 //    	Base.resetAssertsEcexuted();
@@ -208,10 +210,12 @@ public class  AbstractTest implements IExecutionListener {
 	   			cashEmulatorMainCash = cashEmulatorMainCashVirtualShop;
 		   	}
 		   	
+	   		log.info("==========================================================");
 	   		log.info("Запуск тестов на " + group);
 		   	log.info("TARGET_HOST: " + TARGET_HOST );
 		   	log.info("TARGET_HOST_URL: " + TARGET_HOST_URL );
 		   	log.info("TARGET_SHOP: " + TARGET_SHOP );
+		   	log.info("==========================================================");
 		   	
 		   	GoodParser.importGoods(TARGET_HOST, DB_SET);
 	    	PurchaseGenerator.generatePurchaseBunch();
