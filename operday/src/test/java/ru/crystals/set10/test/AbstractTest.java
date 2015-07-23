@@ -168,7 +168,11 @@ public class  AbstractTest implements IExecutionListener {
 				e.printStackTrace();
 			}
 		}
-		setupEnv(Config.GROUP);
+		
+		/* достаточно инициализировать 1 раз*/
+		if (!serviceStatus){
+			setupEnv(Config.GROUP);
+		}	
 	};
 	
 	public synchronized void onExecutionFinish(){
