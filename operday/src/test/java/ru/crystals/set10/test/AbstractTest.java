@@ -164,15 +164,11 @@ public class  AbstractTest implements IExecutionListener {
 				log.info("Старт сервиса управления драйвером...");
 				service.start();
 				serviceStatus = true;
+				setupEnv(Config.GROUP);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		}
-		
-		/* достаточно инициализировать 1 раз*/
-		if (!serviceStatus){
-			setupEnv(Config.GROUP);
-		}	
 	};
 	
 	public synchronized void onExecutionFinish(){
