@@ -30,6 +30,8 @@ public class Config {
     public static String NEXT_SHIFT;
     public static String VIRTUAL_WEIGHT_PATH;
     
+    public static String GROUP;
+    
     /*
      * Настройки весового модуля
      */
@@ -141,6 +143,7 @@ public class Config {
     	CASH_NUMBER = System.getProperty("test_cash_number");
     	CHECK_COUNT = System.getProperty("test_check_number");
     	NEXT_SHIFT = System.getProperty("test_next_shift_number");
+    	GROUP = System.getProperty("groups");
     	
         // если какие-то параметры не были переданы в коммандной строке, берем значения из проперти файла
     	CENTRUM_HOST = StringUtils.defaultString(CENTRUM_HOST, props.getProperty("centrum.host.ip"));
@@ -152,6 +155,7 @@ public class Config {
     	CASH_NUMBER = StringUtils.defaultString(CASH_NUMBER, props.getProperty("cash.number"));
     	CHECK_COUNT = StringUtils.defaultString(CHECK_COUNT, props.getProperty("check.count"));
     	NEXT_SHIFT = StringUtils.defaultString(NEXT_SHIFT, "false");
+    	GROUP = StringUtils.defaultString(GROUP, props.getProperty("groups"));
     	
         /*
          * параметры, которые хранятся только в проперти файле  testng.properties
@@ -223,6 +227,7 @@ public class Config {
         log.info("DB username:   " + DB_USER);
         log.info("DB password:   " + DB_PASSWORD);
         log.info("Cash number:   " + CASH_NUMBER);
+        log.info("Group:   " + GROUP);
         
         DisinsectorTools.delay(10000);
         

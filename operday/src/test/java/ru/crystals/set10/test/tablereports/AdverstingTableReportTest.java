@@ -97,7 +97,7 @@ public class AdverstingTableReportTest extends AbstractReportTest {
 	
 	
 	@DataProvider (name = "Доступные форматы для скачивания")
-	public static Object[][] reportFormats(){
+	private  Object[][] reportFormats(){
 		return new  Object[][] {
 			{PDFREPORT, "ProductReportInAction*.pdf"},
 			{EXCELREPORT, "ProductReportInAction*.xls"}

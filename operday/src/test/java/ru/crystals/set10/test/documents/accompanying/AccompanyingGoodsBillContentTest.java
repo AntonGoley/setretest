@@ -31,7 +31,7 @@ public class AccompanyingGoodsBillContentTest extends AccompanyingDocumentsBasic
 	}	
 	
 	@DataProvider (name = "Счет-фактура")
-	private static Object[][] reportData(){
+	private  Object[][] reportData(){
 		return new Object[][] {
 				/*
 				 * TODO: добавить в тест:

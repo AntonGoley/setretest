@@ -167,7 +167,7 @@ public class SearchCheckByPaymentGroupTest extends SearchCheckAbstractTest{
 	}
 	
 	@DataProvider (name = "Карты оплаты. Отклоненные транзакции")
-	public Object[][] setCardPaymentsDataWithRefusedTransactions(){
+	private Object[][] setCardPaymentsDataWithRefusedTransactions(){
 		return new Object[][]{
 				{FILTER_CATEGORY_BANK_CARD_NUMBER, bankCardNumber, purchase9},
 				{FILTER_CATEGORY_CHILD_CARD_NUMBER, childCardNumber, purchase10},

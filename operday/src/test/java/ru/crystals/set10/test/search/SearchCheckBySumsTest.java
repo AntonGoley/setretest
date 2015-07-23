@@ -118,7 +118,7 @@ public class SearchCheckBySumsTest extends SearchCheckAbstractTest{
 	}
 	
 	@DataProvider(name = "Суммы")	
-	public Object[][] paySum(){
+	private Object[][] paySum(){
 		return new Object[][]{
 				{FILTER_CATEGORY_SUM_CHECK, p1.getCheckSumEnd(), p1},
 				{FILTER_CATEGORY_SUM_PAYMENT, p2.getCheckSumEnd()/2, p2},

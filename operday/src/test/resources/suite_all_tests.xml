@@ -7,7 +7,7 @@
     <listener class-name="org.uncommons.reportng.HTMLReporter" />
  </listeners>
  
-<suite-files > 
+<suite-files> 
 	<suite-file path="suite_search.xml" />
 	<suite-file path="suite_KM.xml" />
 	<suite-file path="suite_accompanying.xml" />
