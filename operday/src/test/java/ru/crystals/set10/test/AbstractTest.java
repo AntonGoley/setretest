@@ -87,11 +87,11 @@ public class  AbstractTest implements IExecutionListener {
 	    
     	ChromeOptions options = new ChromeOptions();
     	options.addArguments("start-maximized");
-    	options.addArguments("--disable-print-preview");
+    	//options.addArguments("disable-print-preview");
     	
     	DesiredCapabilities capabilities = DesiredCapabilities.chrome();
     	capabilities.setCapability(ChromeOptions.CAPABILITY,  options);
-    	
+    	    	
     	driver = new RemoteWebDriver(service.getUrl(), capabilities);
     	
     	driver.manage().timeouts().implicitlyWait(IMPLICIT_WAIT, TimeUnit.SECONDS);
@@ -101,6 +101,14 @@ public class  AbstractTest implements IExecutionListener {
     		chromeDownloadPath = getChromeDownloadPath();
     		clearDownloadDir();
     	}	
+    	
+    	/*
+    	 * Сейчас выполняем при каждом открытии браузера,
+    	 * потому что ни одно свойство типа "disable-print-preview" не работает
+    	 * TODO: оптимизировать, чтобы настройка выполнялась только там,
+    	 * где собираемся тестить документы
+    	 */
+    	disablePrintPreview();
     	
 //    	String[] groups = context.getIncludedGroups();
 //    	for (int i=0; i< groups.length; i++){
@@ -146,6 +154,13 @@ public class  AbstractTest implements IExecutionListener {
 		chromeDownloadPath = driver.findElement(By.xpath(".//input[@id='downloadLocationPath']")).getAttribute("value");
 		log.info("Chrome download path: " + chromeDownloadPath);
 	}
+    
+    public  void disablePrintPreview(){
+		log.info("Включение сохранения PDF отчетов в файл..");		
+		driver.get("chrome://plugins/");		
+		driver.findElements(By.xpath("//span[contains(@class, 'plugin-name') and text()='Chrome PDF Viewer']/../../..//div[@class='plugin-actions']//a[@class='disable-group-link']")).get(0).click();
+
+    }
    
     /*
      * Удаление всех возможных старых файлов отчетов
