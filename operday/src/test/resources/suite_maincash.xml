@@ -11,7 +11,7 @@
   	<test name="Документы ПКО, РКО" >
 	  	<classes>
 	  		<class name="ru.crystals.set10.test.maincash.PKOTest"/>
-	  		<class name=ru.crystals.set10.test.maincash.RKOTest"/>
+	  		<class name="ru.crystals.set10.test.maincash.RKOTest"/>
 		</classes>	 
   	</test>
   	
