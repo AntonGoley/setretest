@@ -22,6 +22,7 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.BeforeMethod;
 
 import ru.crystals.set10.config.*;
@@ -165,7 +166,7 @@ public class  AbstractTest implements IExecutionListener {
 		driver.get("chrome://plugins/");		
 		WebElement pdfViewer = 
 				driver.findElements(By.xpath("//span[contains(@class, 'plugin-name') and text()='Chrome PDF Viewer']/../../..//div[@class='plugin-actions']//a[@class='disable-group-link']")).get(0);
-		ExpectedConditions.visibilityOf(pdfViewer);
+		new WebDriverWait(driver, 15).until(ExpectedConditions.visibilityOf(pdfViewer));
 		pdfViewer.click();
     }
    
