@@ -87,6 +87,7 @@ public class  AbstractTest implements IExecutionListener {
 	    
     	ChromeOptions options = new ChromeOptions();
     	options.addArguments("start-maximized");
+    	options.addArguments("--disable-print-preview");
     	
     	DesiredCapabilities capabilities = DesiredCapabilities.chrome();
     	capabilities.setCapability(ChromeOptions.CAPABILITY,  options);
@@ -144,11 +145,6 @@ public class  AbstractTest implements IExecutionListener {
 		driver.findElement(By.xpath(".//a[@id='advanced-settings-expander']")).click();
 		chromeDownloadPath = driver.findElement(By.xpath(".//input[@id='downloadLocationPath']")).getAttribute("value");
 		log.info("Chrome download path: " + chromeDownloadPath);
-		
-		/* и отключить открытие PDF в новом окне */
-		log.info("Включение сохранения PDF отчетов в файл..");
-		driver.get("chrome://plugins/");
-		driver.findElements(By.xpath("//span[contains(@class, 'plugin-name') and text()='Chrome PDF Viewer']/../../..//div[@class='plugin-actions']//a[@class='disable-group-link']")).get(0).click();
 	}
    
     /*
