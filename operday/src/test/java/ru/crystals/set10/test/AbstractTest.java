@@ -84,7 +84,7 @@ public class  AbstractTest implements IExecutionListener {
     }
     
     @BeforeClass (alwaysRun = true)
-    public void setupWebDriver(ITestContext context, IMethodSelector methodSelector) throws IOException {
+    public void setupWebDriver(ITestContext context) throws IOException {
 	    
     	log.info("ENTER BEFORE METHOD");
     	
