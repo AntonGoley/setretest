@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+
+
+<suite name="Главная касса" preserve-order="true" configfailurepolicy="continue">
+<listeners>
+    <listener class-name="org.uncommons.reportng.HTMLReporter" />
+ </listeners>
+ 
+<!-- Документы главной кассы--> 	
+  	<test name="Документы ПКО, РКО" >
+	  	<classes>
+	  		<class name="ru.crystals.set10.test.maincash.PKOTest"/>
+	  		<class name=ru.crystals.set10.test.maincash.RKOTest"/>
+		</classes>	 
+  	</test>
+  	
+</suite> 
