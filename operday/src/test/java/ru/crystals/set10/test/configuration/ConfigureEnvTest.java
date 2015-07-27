@@ -1,9 +1,13 @@
 package ru.crystals.set10.test.configuration;
 import org.apache.log4j.Logger;
 import org.testng.annotations.Test;
+
 import ru.crystals.set10.amfcall.AMFRequester;
 import ru.crystals.set10.config.Config;
 import ru.crystals.set10.test.AbstractTest;
+import ru.crystals.set10.utils.DbAdapter;
+import ru.crystals.set10.utils.GoodParser;
+import ru.crystals.set10.utils.PurchaseGenerator;
 import flex.messaging.io.amf.client.exceptions.ClientStatusException;
 
 
@@ -29,6 +33,13 @@ public class ConfigureEnvTest extends AbstractTest{
 		} catch (ClientStatusException e) {
 			e.printStackTrace();
 		}
+		
+		/* Выполнить импорт товаров на центрум
+		 * импорт будет работать, только если центрум подключен к ретейлу
+		 */
+		GoodParser.importGoods(Config.CENTRUM_HOST, DbAdapter.DB_CENTRUM_SET);
+   		PurchaseGenerator.generatePurchaseBunch();
+		
 	}
 	
 }

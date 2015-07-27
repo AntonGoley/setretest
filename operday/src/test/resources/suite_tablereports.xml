@@ -2,7 +2,8 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 
 
-<suite name="Табличные отчеты" preserve-order="true" configfailurepolicy="continue">
+<!-- <suite name="Табличные отчеты" preserve-order="true" configfailurepolicy="continue"> -->
+<suite name="TableReports" preserve-order="true" configfailurepolicy="continue">
 <listeners>
     <listener class-name="org.uncommons.reportng.HTMLReporter" />
  </listeners>

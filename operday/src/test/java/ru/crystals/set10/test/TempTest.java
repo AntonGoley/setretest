@@ -17,8 +17,8 @@ import ru.crystals.set10.utils.SoapRequestSender;
 import ru.crystals.setretailx.products.catalog.Good;
 import static ru.crystals.set10.utils.GoodGenerator.*;
 
-
-public class TempTest {
+@Test (groups = "retail")
+public class TempTest extends AbstractTest{
 
 	protected static final Logger log = Logger.getLogger(TempTest.class);
 	long date = new Date().getTime();
@@ -60,6 +60,11 @@ public class TempTest {
 			soapSender.sendPriceCheckerRequest(mac, good.getBarCodes().get(0).getCode());
 		}	
 		
+	}
+	
+	@Test ()
+	public void testPriceChecker1(){
+		log.info("Test body!!!!!!!!!!");
 	}
 	
 }

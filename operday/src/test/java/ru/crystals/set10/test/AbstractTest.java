@@ -1,6 +1,7 @@
 package ru.crystals.set10.test;
 
 import org.testng.IExecutionListener;
+import org.testng.IMethodSelector;
 import org.testng.ITestContext;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterClass;
@@ -8,11 +9,9 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
-
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.concurrent.TimeUnit;
-
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -21,7 +20,6 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.annotations.BeforeMethod;
-
 import ru.crystals.set10.config.*;
 import ru.crystals.set10.utils.CashEmulator;
 import ru.crystals.set10.utils.DbAdapter;
@@ -79,14 +77,17 @@ public class  AbstractTest implements IExecutionListener {
     protected static String DB_OPERDAY;
     protected static String DB_LOY;
     
+   // private static List<String> groups = new ArrayList<String>();
     
     public WebDriver getDriver() {
         return driver;
     }
     
     @BeforeClass (alwaysRun = true)
-    public void setupWebDriver(ITestContext context) throws IOException {
+    public void setupWebDriver(ITestContext context, IMethodSelector methodSelector) throws IOException {
 	    
+    	log.info("ENTER BEFORE METHOD");
+    	
     	ChromeOptions options = new ChromeOptions();
     	options.addArguments("start-maximized");
     	
@@ -102,8 +103,14 @@ public class  AbstractTest implements IExecutionListener {
     		chromeDownloadPath = getChromeDownloadPath();
     		clearDownloadDir();
     	}	
-
+    	
+//    	String[] groups = context.getIncludedGroups();
+//    	for (int i=0; i< groups.length; i++){
+//    		log.info("GROUPS to RUN: " + groups[i]);
+//    	}
 	}
+    
+    
     
     @BeforeMethod(alwaysRun = true)
     public void printTestName(Method method) {
@@ -118,12 +125,10 @@ public class  AbstractTest implements IExecutionListener {
 
     @AfterMethod(alwaysRun = true)
     public void printTestResult(Method method, ITestResult result) throws Exception {
-    	log.info("+++++++++++++++++++++++++++++++++++++++");
+    	log.info("---------------------------------------");
     	log.info(method.getDeclaringClass() + "." +  method.getName() + " finished with RESULT " + result.getStatus());
-    	log.info("+++++++++++++++++++++++++++++++++++++++");
-//    	log.info("Asserts executed withing suite: " + method.getName() + " - " + Base.getAssertsEcexuted());
-//    	log.info("TOTAL asserts executed: " + Base.getTotalAssertsEcexuted());
-//    	Base.resetAssertsEcexuted();
+    	log.info("---------------------------------------");
+
     }
     
     @AfterClass (alwaysRun = true)
@@ -166,6 +171,7 @@ public class  AbstractTest implements IExecutionListener {
 				log.info("Старт сервиса управления драйвером...");
 				service.start();
 				serviceStatus = true;
+				//groups.add(Config.GROUP);
 				setupEnv(Config.GROUP);
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -217,7 +223,9 @@ public class  AbstractTest implements IExecutionListener {
 		   	log.info("TARGET_SHOP: " + TARGET_SHOP );
 		   	log.info("==========================================================");
 		   	
-		   	GoodParser.importGoods(TARGET_HOST, DB_SET);
-	    	PurchaseGenerator.generatePurchaseBunch();
+		   	if (!group.equals("centrum")){
+		   		GoodParser.importGoods(TARGET_HOST, DB_SET);
+		   		PurchaseGenerator.generatePurchaseBunch();
+		   	}
 	    }
 }
