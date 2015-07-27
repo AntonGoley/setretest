@@ -36,10 +36,10 @@ public class OdGenerator implements Runnable {
 		/* чек */
 		PurchaseEntity p1 = (PurchaseEntity) this.cashEmulator.nextPurchase();
 		
-		/* возврат по чеку*/
-		HashMap<Long, Long> returnPositions = new HashMap<Long, Long>();
-		returnPositions.put(1L, 1L);
-		this.cashEmulator.nextRefundPositions(p1, returnPositions, false);
+//		/* возврат по чеку*/
+//		HashMap<Long, Long> returnPositions = new HashMap<Long, Long>();
+//		returnPositions.put(1L, 1L);
+//		this.cashEmulator.nextRefundPositions(p1, returnPositions, false);
 		
 		/* изъятие и Z отчет*/
 		this.cashEmulator.nextWithdrawal();
