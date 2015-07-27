@@ -241,9 +241,7 @@ public class  AbstractTest implements IExecutionListener {
 		   	log.info("TARGET_SHOP: " + TARGET_SHOP );
 		   	log.info("==========================================================");
 		   	
-		   	if (!group.equals("centrum")){
-		   		GoodParser.importGoods(TARGET_HOST, DB_SET);
-		   		PurchaseGenerator.generatePurchaseBunch();
-		   	}
+	   		GoodParser.importGoods(TARGET_HOST, DB_SET);
+	   		PurchaseGenerator.generatePurchaseBunch();
 	    }
 }
