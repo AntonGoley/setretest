@@ -1,7 +1,6 @@
 package ru.crystals.set10.test;
 
 import org.testng.IExecutionListener;
-import org.testng.IMethodSelector;
 import org.testng.ITestContext;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterClass;
@@ -86,8 +85,6 @@ public class  AbstractTest implements IExecutionListener {
     @BeforeClass (alwaysRun = true)
     public void setupWebDriver(ITestContext context) throws IOException {
 	    
-    	log.info("ENTER BEFORE METHOD");
-    	
     	ChromeOptions options = new ChromeOptions();
     	options.addArguments("start-maximized");
     	
@@ -109,8 +106,6 @@ public class  AbstractTest implements IExecutionListener {
 //    		log.info("GROUPS to RUN: " + groups[i]);
 //    	}
 	}
-    
-    
     
     @BeforeMethod(alwaysRun = true)
     public void printTestName(Method method) {
@@ -149,6 +144,11 @@ public class  AbstractTest implements IExecutionListener {
 		driver.findElement(By.xpath(".//a[@id='advanced-settings-expander']")).click();
 		chromeDownloadPath = driver.findElement(By.xpath(".//input[@id='downloadLocationPath']")).getAttribute("value");
 		log.info("Chrome download path: " + chromeDownloadPath);
+		
+		/* и отключить открытие PDF в новом окне */
+		log.info("Включение сохранения PDF отчетов в файл..");
+		driver.get("chrome://plugins/");
+		driver.findElements(By.xpath("//span[contains(@class, 'plugin-name') and text()='Chrome PDF Viewer']/../../..//div[@class='plugin-actions']//a[@class='disable-group-link']")).get(0).click();
 	}
    
     /*
