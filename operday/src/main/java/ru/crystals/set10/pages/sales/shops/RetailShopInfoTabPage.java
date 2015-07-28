@@ -1,11 +1,8 @@
 package ru.crystals.set10.pages.sales.shops;
 
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-
 import static ru.crystals.set10.utils.FlexMediator.*;
 import ru.crystals.set10.pages.basic.SalesPage;
 
@@ -20,7 +17,6 @@ public class RetailShopInfoTabPage extends SalesPage{
 	
 	public RetailShopInfoTabPage(WebDriver driver) {
 		super(driver);
-		getWait().until(ExpectedConditions.visibilityOfElementLocated(By.id(ID_SALESSWF)));
 	}
 	
 	public <T> T navigateTab(String tabIndex, Class<T> tab){

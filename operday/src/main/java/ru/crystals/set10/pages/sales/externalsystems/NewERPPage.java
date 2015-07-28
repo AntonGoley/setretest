@@ -1,9 +1,7 @@
 package ru.crystals.set10.pages.sales.externalsystems;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 
+import org.openqa.selenium.WebDriver;
 import ru.crystals.set10.pages.basic.SalesPage;
 import ru.crystals.set10.utils.DisinsectorTools;
 import static ru.crystals.set10.utils.FlexMediator.*;
@@ -17,7 +15,6 @@ public class NewERPPage extends SalesPage {
 	
 	public NewERPPage(WebDriver driver) {
 		super(driver);
-		getWait().until(ExpectedConditions.visibilityOfElementLocated(By.id(ID_SALESSWF)));
 	}
 	
 	public ExternalSystemsPage addERP(String erpName){

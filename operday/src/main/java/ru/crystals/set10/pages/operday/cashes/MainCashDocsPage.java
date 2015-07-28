@@ -3,11 +3,9 @@ package ru.crystals.set10.pages.operday.cashes;
 
 import static ru.crystals.set10.utils.FlexMediator.clickElement;
 import static ru.crystals.set10.utils.FlexMediator.getElementProperty;
-
 import java.math.BigDecimal;
-
 import org.openqa.selenium.*;
-import org.openqa.selenium.support.ui.ExpectedConditions;
+
 
 
 public class  MainCashDocsPage extends CashDocsAbstractPage {
@@ -24,7 +22,6 @@ public class  MainCashDocsPage extends CashDocsAbstractPage {
 
 	public MainCashDocsPage(WebDriver driver) {
 		super(driver);
-		getWait().until(ExpectedConditions.visibilityOfElementLocated(By.id(ID_OPERDAYSWF)));
 	}
 	
 	public MainCashManualDocPage editDoc(){

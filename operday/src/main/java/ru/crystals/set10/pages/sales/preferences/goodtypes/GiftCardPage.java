@@ -1,7 +1,6 @@
 package ru.crystals.set10.pages.sales.preferences.goodtypes;
 
 import org.openqa.selenium.*;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import ru.crystals.set10.pages.sales.preferences.AbstractGoodAndPaymentPreferencesPage;
 
 /*
@@ -14,7 +13,6 @@ public class GiftCardPage extends AbstractGoodAndPaymentPreferencesPage {
 	
 	public GiftCardPage(WebDriver driver) {
 		super(driver);
-		getWait().until(ExpectedConditions.visibilityOfElementLocated(By.id(ID_SALESSWF)));
 	}
 	
 }

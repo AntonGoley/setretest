@@ -103,7 +103,7 @@ public class FlexMediator {
 		boolean resultBoolean = false;
 		while (timeout < 25000 ){
 			/*
-			 * Т.к в методе findElement поменяли возвращаемый тим с String на List, пока так:
+			 * Т.к в методе findElement поменяли возвращаемый тип с String на List, пока так:
 			 */
 //			result = (String) ecxecuteAndReturnString(driver, String.format("return document.getElementById('%s').findElement('%s')", swfSrc, flexId));
 //			if (result.equals("true")) {

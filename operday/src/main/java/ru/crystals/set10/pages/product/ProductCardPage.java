@@ -1,16 +1,16 @@
 package ru.crystals.set10.pages.product;
 
 import static ru.crystals.set10.utils.FlexMediator.*;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.By.ByXPath;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-
 import ru.crystals.set10.pages.basic.AbstractPage;
 
 public class ProductCardPage extends AbstractPage{
 
-	static final String ID_PRODUCTSWF = "Products";
+	static final ByXPath XPATH_PRODUCTSWF = new ByXPath("//embed[contains(@src, 'Products')]");
+	static final String ID_PRODUCTSWF = "application";
 	static final String TAB_LOCATOR = "id:details/className:Tab;label:";
 	
 
@@ -21,7 +21,7 @@ public class ProductCardPage extends AbstractPage{
 	public ProductCardPage(WebDriver driver) {
 		super(driver);
 		isSWFReady();
-		getWait().until(ExpectedConditions.visibilityOfElementLocated(By.id(ID_PRODUCTSWF)));
+		getWait().until(ExpectedConditions.visibilityOfElementLocated(XPATH_PRODUCTSWF));
 	}
 	
 	public <T> T selectTab(String tabName, Class<T> tab) {

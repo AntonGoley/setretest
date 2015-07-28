@@ -3,16 +3,12 @@ package ru.crystals.set10.pages.operday.tablereports;
 
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-
-import ru.crystals.set10.pages.basic.AbstractPage;
-
+import ru.crystals.set10.pages.operday.OperDayPage;
 import static ru.crystals.set10.utils.FlexMediator.*;
 
 
-public class  TableReportPage extends AbstractPage{
+public class  TableReportPage extends OperDayPage{
 	
-	public static final String ID_OPERDAYSWF = "OperDay";
 	static final String ID_TAB_LOCATOR = "id:reportsTabBar/className:Tab;label:";
 	static final String REPORT_LOCATOR = "className:LinkButton;label:";
 	
@@ -34,7 +30,6 @@ public class  TableReportPage extends AbstractPage{
 	
 	public TableReportPage(WebDriver driver) {
 		super(driver);
-		getWait().until(ExpectedConditions.visibilityOfElementLocated(By.id(ID_OPERDAYSWF)));
 	}
 	
 	public <T> T openReportConfigPage(Class<T> report, String tabName, String reportName) {

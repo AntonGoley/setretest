@@ -1,8 +1,10 @@
 package ru.crystals.set10.pages.operday;
 
 import org.openqa.selenium.*;
+import org.openqa.selenium.By.ByXPath;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+
 import ru.crystals.set10.pages.basic.AbstractPage;
 import ru.crystals.set10.utils.DisinsectorTools;
 import static ru.crystals.set10.utils.FlexMediator.*;
@@ -10,7 +12,9 @@ import static ru.crystals.set10.utils.FlexMediator.*;
 
 public class OperDayPage extends AbstractPage{
 	
-	protected static final String ID_OPERDAYSWF = "OperDay";
+
+	protected static final ByXPath XPATH_OPERDAYSWF=   new ByXPath("//embed[contains(@src, 'Operday')]");
+	protected static final String ID_OPERDAYSWF = "application";
 	public static final String TABLEREPORTS = "label:Табличные отчеты";
 	public static final String SEARCH_CHECK = "label:Поиск чеков";
 	public static final String CASHES = "label:Кассы";
@@ -30,7 +34,7 @@ public class OperDayPage extends AbstractPage{
 		super(driver);
 		switchWindow(switchWindow);
 		isSWFReady();
-		getWait().until(ExpectedConditions.visibilityOfElementLocated(By.id(ID_OPERDAYSWF)));
+		getWait().until(ExpectedConditions.visibilityOfElementLocated(XPATH_OPERDAYSWF));
 	}
 	
 	/*
@@ -39,12 +43,12 @@ public class OperDayPage extends AbstractPage{
 	public OperDayPage(WebDriver driver) {
 		super(driver);
 		isSWFReady();
-		getWait().until(ExpectedConditions.visibilityOfElementLocated(By.id(ID_OPERDAYSWF)));
+		getWait().until(ExpectedConditions.visibilityOfElementLocated(XPATH_OPERDAYSWF));
 	}
 	
 	
 	public <T> T navigatePage(Class<T> page, String linkLocator){
-		clickElement(getDriver(), ID_OPERDAYSWF, linkLocator);
+		clickElement(getDriver(), "application", linkLocator);
 		return PageFactory.initElements(getDriver(), page);
 	}
 	

@@ -2,7 +2,6 @@ package ru.crystals.set10.pages.operday.tablereports;
 
 
 import org.openqa.selenium.*;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import static ru.crystals.set10.utils.FlexMediator.*;
 
@@ -16,7 +15,6 @@ public class  GoodsOnTKConfigPage extends ReportConfigPage{
 	
 	public GoodsOnTKConfigPage(WebDriver driver) {
 		super(driver);
-		getWait().until(ExpectedConditions.visibilityOfElementLocated(By.id(ID_OPERDAYSWF)));
 	}
 	
 	public void setErpCode(String erpCode){

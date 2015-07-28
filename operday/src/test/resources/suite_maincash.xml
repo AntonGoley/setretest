@@ -8,9 +8,15 @@
  </listeners>
  
 <!-- Документы главной кассы--> 	
-  	<test name="Документы ПКО, РКО" >
+  	<test name="Ручные документы ПКО" >
 	  	<classes>
 	  		<class name="ru.crystals.set10.test.maincash.PKOTest"/>
+		</classes>	 
+  	</test>
+  	
+  	<!-- Документы главной кассы--> 	
+  	<test name="Ручные документы РКО" >
+	  	<classes>
 	  		<class name="ru.crystals.set10.test.maincash.RKOTest"/>
 		</classes>	 
   	</test>

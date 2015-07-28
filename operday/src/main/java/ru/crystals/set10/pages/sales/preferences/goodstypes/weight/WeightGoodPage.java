@@ -1,9 +1,7 @@
 package ru.crystals.set10.pages.sales.preferences.goodstypes.weight;
 
 import static ru.crystals.set10.utils.FlexMediator.*;
-
 import org.openqa.selenium.*;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import ru.crystals.set10.pages.sales.preferences.AbstractGoodAndPaymentPreferencesPage;
 import ru.crystals.set10.utils.DisinsectorTools;
 
@@ -33,7 +31,6 @@ public class WeightGoodPage extends AbstractGoodAndPaymentPreferencesPage{
 	
 	public WeightGoodPage(WebDriver driver) {
 		super(driver);
-		getWait().until(ExpectedConditions.visibilityOfElementLocated(By.id(ID_SALESSWF)));
 	}
 	
 	public WeightGoodPage setGoodAction(String action){

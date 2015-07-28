@@ -3,13 +3,8 @@ package ru.crystals.set10.pages.operday.cashes;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 import org.openqa.selenium.*;
-
 import static ru.crystals.set10.utils.FlexMediator.*;
-
-import org.openqa.selenium.support.ui.ExpectedConditions;
-
 import ru.crystals.set10.pages.operday.OperDayPage;
 import ru.crystals.set10.pages.operday.searchcheck.CheckSearchPage;
 import ru.crystals.set10.utils.DisinsectorTools;
@@ -29,7 +24,6 @@ public class  CashOperDayTabPage extends OperDayPage{
 	
 	public CashOperDayTabPage(WebDriver driver) {
 		super(driver);
-		getWait().until(ExpectedConditions.visibilityOfElementLocated(By.id(ID_OPERDAYSWF)));
 	}
 	
 	/* 

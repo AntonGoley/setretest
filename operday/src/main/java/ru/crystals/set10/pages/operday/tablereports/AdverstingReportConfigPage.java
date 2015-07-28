@@ -2,8 +2,6 @@ package ru.crystals.set10.pages.operday.tablereports;
 
 
 import org.openqa.selenium.*;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-
 import static ru.crystals.set10.utils.FlexMediator.*;
 
 
@@ -18,7 +16,6 @@ public class  AdverstingReportConfigPage extends ReportConfigPage{
 	
 	public AdverstingReportConfigPage(WebDriver driver) {
 		super(driver);
-		getWait().until(ExpectedConditions.visibilityOfElementLocated(By.id(ID_OPERDAYSWF)));
 	}
 	
 	public void setShopNumber(String shopNumber){
