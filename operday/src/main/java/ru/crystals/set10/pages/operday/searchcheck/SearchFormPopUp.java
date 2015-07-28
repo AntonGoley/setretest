@@ -223,19 +223,17 @@ public class SearchFormPopUp extends OperDayPage {
 		 * если нет, открыть его
 		 */
 		if ( !getElementProperty(getDriver(), ID_OPERDAYSWF, "name=filtersContainerPopup", "isPopUp").equals("true")){
-			log.info(getElementProperty(getDriver(), ID_OPERDAYSWF, "name=filtersContainerPopup", "isPopUp"));
 			clickElement(getDriver(), ID_OPERDAYSWF,  FILTER_OPEN);
 		};
 		
-		if ( !waitForElementVisible(getDriver(), ID_OPERDAYSWF, FILTER_CATEGORY)){
-			log.info("В фильтре поиска сбросился фильтр по дате!!! ".toUpperCase());
-			clickElement(getDriver(), ID_OPERDAYSWF,  FILTER_ADD_CATEGORY);
-		};
+//		if ( !waitForElementVisible(getDriver(), ID_OPERDAYSWF, FILTER_CATEGORY)){
+//			log.info("В фильтре поиска сбросился фильтр по дате!!! ".toUpperCase());
+//			clickElement(getDriver(), ID_OPERDAYSWF,  FILTER_ADD_CATEGORY);
+//		};
 		
 		/*
-		 * если выбираем уже выбранный фильтр, то происходит удаление фильтра - обход этого поведения
+		 * если выбираем уже выбранный фильтр, то происходит удаление фильтра - обход этого поведения:
 		 */
-
 		if (!getSelectedElement(getDriver(), ID_OPERDAYSWF, FILTER_CATEGORY + "|0").equals(filter)){
 			selectElement(getDriver(), ID_OPERDAYSWF, FILTER_CATEGORY + "|0", filter);
 		}

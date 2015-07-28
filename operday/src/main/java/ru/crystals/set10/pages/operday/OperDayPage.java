@@ -13,7 +13,7 @@ import static ru.crystals.set10.utils.FlexMediator.*;
 public class OperDayPage extends AbstractPage{
 	
 
-	protected static final ByXPath XPATH_OPERDAYSWF=   new ByXPath("//embed[contains(@src, 'Operday')]");
+	protected static final ByXPath XPATH_OPERDAYSWF=   new ByXPath("//embed[contains(@src, 'OperDay')]");
 	protected static final String ID_OPERDAYSWF = "application";
 	public static final String TABLEREPORTS = "label:Табличные отчеты";
 	public static final String SEARCH_CHECK = "label:Поиск чеков";
