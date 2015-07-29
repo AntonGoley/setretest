@@ -22,6 +22,7 @@ public class MainCashConfigTool {
 	
 	private static DbAdapter dbAdapter = new DbAdapter();
 	
+	// TODO: убрать лишние делиты
 	private static  String clearOd = "delete from od_maincash_document_km7; "
 			+ "delete from od_maincash_document_pko; "
 			+ "delete from od_maincash_document_rko; "
@@ -31,6 +32,13 @@ public class MainCashConfigTool {
 			+ "delete from od_km3; "
 			+ "delete from od_km3_row; "
 			+ "delete from od_km6; ";
+	
+	private static  String clearRKODocs = "delete from od_maincash_document_rko;"
+			+ " delete from od_maincash_document_rko_encashment;"
+			+ " delete from od_maincash_document  where doc_type = 'RKO'";
+	
+	private static  String clearPKODocs = "delete from od_maincash_document_pko;"
+			+ " delete from od_maincash_document  where doc_type = 'PKO'";
 	
 	private static  String enableMainCash = "update sales_management_properties set property_value = %s where property_key  = 'main.cash.enabled'";
 	private static  String turnMainCash = "update od_operday set initial_balance = %s where day = '%s'";
@@ -48,7 +56,6 @@ public class MainCashConfigTool {
 			+ "where p.name in ('MAIN_CASH_DESK_DOCUMENTS_PRIVILEGE', 'MAIN_CASH_DESK_SETTINGS_PRIVILEGE')   "
 			+ "and role.rolename = 'Администратор'";
 	
-	
 	/*
 	 * Удалить ОД и все документы Главной кассы:
 	 * КМ3, КМ6, КМ7, ПКО, РКО, ДДС, ЛКК
@@ -56,6 +63,22 @@ public class MainCashConfigTool {
 	public static void clearOD(){
 		dbAdapter.updateDb(DB_RETAIL_OPERDAY, clearOd);
 		log.info("Удалены все опер.дни и документы ГК!");
+	}
+	
+	/*
+	 * удалить все документы РКО
+	 */
+	public static void clearRKODocs(){
+		dbAdapter.updateDb(DB_RETAIL_OPERDAY, clearRKODocs);
+		log.info("Удалены все документы РКО");
+	}
+	
+	/*
+	 * удалить все документы ПКО
+	 */
+	public static void clearPKODocs(){
+		dbAdapter.updateDb(DB_RETAIL_OPERDAY, clearPKODocs);
+		log.info("Удалены все документы РКО");
 	}
 	
 	/*

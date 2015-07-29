@@ -28,7 +28,7 @@ public class MainCashConfigTest extends AbstractTest {
 	
 	
 	//@BeforeSuite
-	public void turnMainCash(){
+	private void turnMainCash(){
 		MainCashConfigTool.addPrivileges();
 		MainCashConfigTool.enableMainCash(true);
 		MainCashConfigTool.clearOD();
@@ -38,8 +38,7 @@ public class MainCashConfigTest extends AbstractTest {
 		MainCashConfigTool.turnMainCash(new Date().getTime(), 10000);
 	}
 	
-	@BeforeClass
-	public void openMainDocsPage(){
+	protected void openMainDocsPage(){
 //		turnMainCash();
 		//TODO: добавить проверку существования од и включенной ГК
 		docs = new LoginPage(getDriver(), Config.RETAIL_URL)

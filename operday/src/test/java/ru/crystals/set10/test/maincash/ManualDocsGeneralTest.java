@@ -4,9 +4,12 @@ package ru.crystals.set10.test.maincash;
 import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
 import org.testng.Assert;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+
 import ru.crystals.set10.config.Config;
 import ru.crystals.set10.pages.operday.cashes.MainCashManualDocPage;
 import ru.crystals.set10.utils.DisinsectorTools;
@@ -30,6 +33,11 @@ public class ManualDocsGeneralTest extends MainCashConfigTest {
 				{DOC_TYPE_PKO_EXCHANGE_INCOME},
 				{DOC_TYPE_RKO_EXCHANGE_WITHDRAWAL},
 		};
+	}
+	
+	@BeforeClass
+	public void setup(){
+		openMainDocsPage();
 	}
 	
 	@Test(description = "SRTE-175. Автомтическое заполнение полей документов ПКО/РКО при создании (автор, дата и время создания, номер документа)",
