@@ -2,9 +2,7 @@ package ru.crystals.set10.utils;
 
 import java.util.Date;
 import java.util.HashMap;
-
 import org.apache.log4j.Logger;
-
 import ru.crystals.pos.check.PurchaseEntity;
 import ru.crystals.set10.config.Config;
 
@@ -34,7 +32,7 @@ public class OdGenerator implements Runnable {
 		this.cashEmulator.nextIntroduction();
 		
 		/* чек */
-		PurchaseEntity p1 = (PurchaseEntity) this.cashEmulator.nextPurchase();
+//		PurchaseEntity p1 = (PurchaseEntity) this.cashEmulator.nextPurchase();
 		
 //		/* возврат по чеку*/
 //		HashMap<Long, Long> returnPositions = new HashMap<Long, Long>();
@@ -42,8 +40,8 @@ public class OdGenerator implements Runnable {
 //		this.cashEmulator.nextRefundPositions(p1, returnPositions, false);
 		
 		/* изъятие и Z отчет*/
-		this.cashEmulator.nextWithdrawal();
-		this.cashEmulator.nextZReport(sumCashIn, sumCashIn + (DisinsectorTools.random(100000) + 100));
+//		this.cashEmulator.nextWithdrawal();
+//		this.cashEmulator.nextZReport(sumCashIn, sumCashIn + (DisinsectorTools.random(100000) + 100));
 	}
 	
 	

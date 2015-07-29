@@ -38,6 +38,8 @@ public class  MainCashManualDocPage extends CashesPage{
 	public static final String FIELD_ENCASHMENT_BANKNOTE_1000 = "Купюр 1000 р.";
 	public static final String FIELD_ENCASHMENT_BANKNOTE_500 = "Купюр 500 р.";
 	public static final String FIELD_ENCASHMENT_BANKNOTE_100 = "Купюр 100 р.";
+	public static final String FIELD_ENCASHMENT_BAG_NUMBER= "Номер инкассаторской сумки";
+	
 	
 	
 	/*
@@ -98,7 +100,20 @@ public class  MainCashManualDocPage extends CashesPage{
 			textInputLocator = "FocusedTextArea";
 		}
 		
+		/*
+		 * Локатор для купюр
+		 */
+		if (textField.contains("Купюр")) {
+			textInputLocator = "ExNumberInput";
+		}
+		
+		
+		
 		typeText(getDriver(), ID_OPERDAYSWF, "name:" + getParentElement(textField) + String.format("className:%s", textInputLocator), value);
+		doFlexProperty(getDriver(), 
+				ID_OPERDAYSWF, 
+				"name:" + getParentElement(textField) + String.format("className:%s", textInputLocator), 
+				new String[]{"text", value});
 		log.info("Установлено значение поля " + textField + ": " + value);
 		return this;
 	}
@@ -157,6 +172,7 @@ public class  MainCashManualDocPage extends CashesPage{
 	}
 	
 	public MainCashManualDocPage selectDocType(String docType){
+		log.info("Выбрать тип документа: " + docType);
 		selectElement(getDriver(), ID_OPERDAYSWF, DOCTYPE_COMBOBOX, docType);
 		return this;
 	}

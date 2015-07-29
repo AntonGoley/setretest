@@ -46,7 +46,7 @@ public class MainCashConfigTool {
 			+ "join users_privileges as p on p.id=rolewithprivileges.privileges_id   "
 			+ "join users_server_user_role as role on role.id=rolewithprivileges.roles_id   "
 			+ "where p.name in ('MAIN_CASH_DESK_DOCUMENTS_PRIVILEGE', 'MAIN_CASH_DESK_SETTINGS_PRIVILEGE')   "
-			+ "and role.rolename = 'Администратор';";
+			+ "and role.rolename = 'Администратор'";
 	
 	
 	/*

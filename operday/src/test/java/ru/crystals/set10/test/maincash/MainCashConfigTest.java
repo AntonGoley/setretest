@@ -27,7 +27,7 @@ public class MainCashConfigTest extends AbstractTest {
 	BigDecimal balance;
 	
 	
-	@BeforeSuite
+	//@BeforeSuite
 	public void turnMainCash(){
 		MainCashConfigTool.addPrivileges();
 		MainCashConfigTool.enableMainCash(true);
@@ -40,6 +40,7 @@ public class MainCashConfigTest extends AbstractTest {
 	
 	@BeforeClass
 	public void openMainDocsPage(){
+//		turnMainCash();
 		//TODO: добавить проверку существования од и включенной ГК
 		docs = new LoginPage(getDriver(), Config.RETAIL_URL)
 		.openOperDay(Config.MANAGER, Config.MANAGER_PASSWORD)
