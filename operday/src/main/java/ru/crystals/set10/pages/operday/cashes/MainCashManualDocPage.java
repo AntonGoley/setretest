@@ -1,10 +1,15 @@
 package ru.crystals.set10.pages.operday.cashes;
 
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+
 import static ru.crystals.set10.utils.FlexMediator.*;
 
 
@@ -176,6 +181,9 @@ public class  MainCashManualDocPage extends CashesPage{
 		selectElement(getDriver(), ID_OPERDAYSWF, DOCTYPE_COMBOBOX, docType);
 		return this;
 	}
+	
+	
+	
 	
 	
 //	/*

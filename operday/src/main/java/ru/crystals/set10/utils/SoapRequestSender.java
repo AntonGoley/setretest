@@ -5,13 +5,17 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
 import javax.xml.namespace.QName;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -24,11 +28,13 @@ import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
+
 import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
+
 import ru.crystals.ERPIntegration.discounts.model.xml.imp.AdvertisingActionType;
 import ru.crystals.ERPIntegration.discounts.model.xml.imp.AdvertisingActionsType;
 import ru.crystals.set10.config.Config;
@@ -62,12 +68,16 @@ public class SoapRequestSender{
 		setSoapServiceIP(ip);
 	}
 	
+	public String getTi(){
+		return this.ti;
+	}
+	
 	public void setSoapServiceIP(String ip){
 		log.info("Таргет хост для отправки soap запроса: " + ip);
 		this.soapServiceIP = ip;
 	}
 	
-	public String generateTI(){
+	private String generateTI(){
 		this.ti =  String.valueOf((tiPrefix++)).substring(6, 13);
 		log.info("TI = " + this.ti);
 		return this.ti;

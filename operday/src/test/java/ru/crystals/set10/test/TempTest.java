@@ -1,5 +1,6 @@
 package ru.crystals.set10.test;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -15,6 +16,7 @@ import ru.crystals.set10.utils.GoodGenerator;
 import ru.crystals.set10.utils.PurchaseGenerator;
 import ru.crystals.set10.utils.SoapRequestSender;
 import ru.crystals.setretailx.products.catalog.Good;
+import ru.crystals.setretailx.products.catalog.PluginProperty;
 import static ru.crystals.set10.utils.GoodGenerator.*;
 
 @Test (groups = "retail")
@@ -60,11 +62,6 @@ public class TempTest extends AbstractTest{
 			soapSender.sendPriceCheckerRequest(mac, good.getBarCodes().get(0).getCode());
 		}	
 		
-	}
-	
-	@Test ()
-	public void testPriceChecker1(){
-		log.info("Test body!!!!!!!!!!");
 	}
 	
 }

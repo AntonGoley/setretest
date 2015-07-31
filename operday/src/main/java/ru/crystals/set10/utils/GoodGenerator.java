@@ -27,16 +27,24 @@ public class GoodGenerator {
 	public static String GOODTYPE_PIECE = "ProductPieceEntity";
 	public static String GOODTYPE_SPIRIT = "ProductSpiritsEntity";
 	public static String GOODTYPE_CIGGY = "ProductCiggyEntity";
+	public static String GOODTYPE_PIECE_WEIGHT = "ProductPieceWeightEntity";
 	
+	public String longValue = "";
 	
 	public Good generateWeightGoodWithNoBarCode(String pluNumber){
 		Good weightGood = generateGood(GOODTYPE_WEIGHT);
 		weightGood.getPluginProperties().add(generatePluginProperty("plu-number", pluNumber));
 		
-		weightGood.getPluginProperties().add(generatePluginProperty("composition", "Composition_" + weightGood.getMarkingOfTheGood() + "_PLU = "+ pluNumber));
-		weightGood.getPluginProperties().add(generatePluginProperty("food-value", "Food_value_" + weightGood.getMarkingOfTheGood() + "_PLU = "+ pluNumber));
-		weightGood.getPluginProperties().add(generatePluginProperty("storage-conditions", "Storage-condidions_" + weightGood.getMarkingOfTheGood() + "_PLU = "+ pluNumber));
-		weightGood.getPluginProperties().add(generatePluginProperty("producer", "Producer_" + weightGood.getMarkingOfTheGood() + "_PLU="+ pluNumber));
+		/*свойство Состав имеет ограничение 1024 символа*/
+		addPluginProperty(weightGood, "composition", "Composition_" + weightGood.getMarkingOfTheGood() + "_PLU = "+ pluNumber + longValue + longValue);
+		
+		/*остальные свойства имеют ограничения в 255 символов*/
+		addPluginProperty(weightGood, "food-value", "Food_value_" + weightGood.getMarkingOfTheGood() + "_PLU = "+ pluNumber + longValue);
+		addPluginProperty(weightGood, "storage-conditions", "Storage-condidions_" + weightGood.getMarkingOfTheGood() + "_PLU = "+ pluNumber + longValue);
+		addPluginProperty(weightGood, "producer", "Producer_" + weightGood.getMarkingOfTheGood() + "_PLU="+ pluNumber + longValue);
+		addPluginProperty(weightGood, "button-on-scale",  "Button-on-scale" + weightGood.getMarkingOfTheGood() + "_PLU="+ pluNumber + longValue);
+		addPluginProperty(weightGood, "description-on-scale-screen",  "Description-on-scale-screen" + weightGood.getMarkingOfTheGood() + "_PLU="+ pluNumber + longValue);
+		addPluginProperty(weightGood, "name-on-scale-screen",  "Name-on-scale-screen" + weightGood.getMarkingOfTheGood() + "_PLU="+ pluNumber + longValue);
 		
 		weightGood.getMeasure().setCode("2");
 		weightGood.getMeasure().setName("кг.");
@@ -124,6 +132,12 @@ public class GoodGenerator {
 		property.setKey(key);
 		property.setValue(value);
 		return property;
+	}
+	
+	public Good addPluginProperty(Good good, String key, String value){
+		good.getPluginProperties().
+			add(generatePluginProperty(key, value));
+		return good;
 	}
 	
 	private GoodsGroup generateGrop(){

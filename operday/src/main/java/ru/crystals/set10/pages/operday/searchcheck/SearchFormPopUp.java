@@ -223,7 +223,7 @@ public class SearchFormPopUp extends OperDayPage {
 		 * если нет, открыть его
 		 */
 		if ( !getElementProperty(getDriver(), ID_OPERDAYSWF, "name=filtersContainerPopup", "isPopUp").equals("true")){
-			log.info(getElementProperty(getDriver(), ID_OPERDAYSWF, "name=filtersContainerPopup", "isPopUp"));
+//			log.info(getElementProperty(getDriver(), ID_OPERDAYSWF, "name=filtersContainerPopup", "isPopUp"));
 			clickElement(getDriver(), ID_OPERDAYSWF,  FILTER_OPEN);
 		};
 		

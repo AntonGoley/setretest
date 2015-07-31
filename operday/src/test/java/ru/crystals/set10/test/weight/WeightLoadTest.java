@@ -21,7 +21,7 @@ public class WeightLoadTest extends WeightAbstractTest {
 	
 	protected static final Logger log = Logger.getLogger(WeightLoadTest.class);
 	
-	private int goodsAmount = 1000;
+	private int goodsAmount = 2000;
 	
 	List<Good> goods = new ArrayList<Good>(goodsAmount);
 	GoodsCatalog goodsCatalog;

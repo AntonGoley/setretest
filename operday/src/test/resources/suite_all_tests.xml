@@ -140,6 +140,12 @@
 		</classes>	 
   	</test>  	
   	
+  	<test name="Импорт свойств товаров" >
+	  	<classes>
+			<class name="ru.crystals.set10.test.GoodsPropertiesWithLongValuesTest"/>
+		</classes>	 
+  	</test>  	
+  	
 <!-- Весовой модуль -->
 	 <test name="Загрузка/выгрузка товара на весы" >
 		<classes>

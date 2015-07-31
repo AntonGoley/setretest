@@ -5,6 +5,7 @@ import java.util.HashMap;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.Test;
+
 import ru.crystals.set10.config.*;
 import ru.crystals.pos.bank.datastruct.AuthorizationData;
 import ru.crystals.pos.bank.datastruct.BankCard;
@@ -13,6 +14,8 @@ import ru.crystals.pos.check.PurchaseEntity;
 import ru.crystals.pos.payments.BankCardPaymentEntity;
 import ru.crystals.pos.payments.ChildrenCardPaymentEntity;
 import ru.crystals.set10.utils.CashEmulator;
+import ru.crystals.set10.utils.DbAdapter;
+import ru.crystals.set10.utils.GoodParser;
 import ru.crystals.set10.utils.PaymentEmulator;
 import ru.crystals.set10.utils.DisinsectorTools;
 import ru.crystals.set10.utils.PurchaseGenerator;
@@ -28,8 +31,14 @@ public class CheckGeneratorFunctionalTest {
 	PurchaseEntity p1;
 	PurchaseEntity p2;
 	
+	static {
+		GoodParser.importGoods(Config.RETAIL_HOST, DbAdapter.DB_RETAIL_SET);
+		PurchaseGenerator.generatePurchaseBunch();
+	}
+	
 	@BeforeClass
 	public void setupCash(){
+		
 		
 		cashEmulator = CashEmulator.getCashEmulator(Config.RETAIL_HOST, Integer.valueOf(Config.SHOP_NUMBER), Integer.valueOf(String.valueOf(1)));
 		//cashEmulator = CashEmulator.getCashEmulator(Config.CENTRUM_HOST, Integer.valueOf(Config.VIRTUAL_SHOP_NUMBER), Integer.valueOf(Config.CASH_NUMBER ));
@@ -62,7 +71,7 @@ public class CheckGeneratorFunctionalTest {
 //			cashEmulator.nextCancelledPurchase(p1);
 //			
 //			
-			if (i==0) {
+			if (i==1) {
 				p1 = (PurchaseEntity) cashEmulator.nextPurchase();
 				//возвращаем первую позицию в кол-ве 1шт
 				HashMap<Long, Long> returnPositions = new HashMap<Long, Long>();

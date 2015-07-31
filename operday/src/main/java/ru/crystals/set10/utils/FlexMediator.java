@@ -1,6 +1,7 @@
 package ru.crystals.set10.utils;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import org.apache.log4j.Logger;
 import org.openqa.selenium.JavascriptExecutor;
@@ -65,11 +66,21 @@ public class FlexMediator {
 		return  Integer.valueOf(
 				ecxecuteAndReturnString(driver, String.format("return document.getElementById('%s').getElementsNum('%s')", swfSrc, flexId)));
 	}
-	
-//	public static void findElements(WebDriver driver, String swfSrc, String flexId){
-//		log.info(
-//				ecxecuteAndReturnString(driver, String.format("return document.getElementById('%s').findElement('%s')", swfSrc, flexId)));
-//	}
+	/*
+	 * Возвращает список найденных объектов флекс
+	 * Каждый элемент списка содержит полный путь к объекту флекс
+	 */
+	public static ArrayList<String> findElements(WebDriver driver, String swfSrc, String flexId){
+		ArrayList<String> result = new ArrayList<String>();
+		ArrayList<Object> objects = ecxecuteAndReturnArray(driver, String.format("return document.getElementById('%s').findElement('%s')", swfSrc, flexId));
+		Iterator<Object> i = objects.iterator();
+		while (i.hasNext()){
+			String element = (String) i.next();
+			result.add(element);
+		}
+		return result;
+		
+	}
 	
 	/*
 	 * args - [property value] 
@@ -99,18 +110,11 @@ public class FlexMediator {
 	public static boolean  waitForElementPresent(WebDriver driver, String swfSrc, String flexId){
 		DisinsectorTools.delay(100);
 		int timeout = 0;
-//		String result = "false";
-		boolean resultBoolean = false;
+
 		while (timeout < 25000 ){
-			/*
-			 * Т.к в методе findElement поменяли возвращаемый тим с String на List, пока так:
-			 */
-//			result = (String) ecxecuteAndReturnString(driver, String.format("return document.getElementById('%s').findElement('%s')", swfSrc, flexId));
-//			if (result.equals("true")) {
-//				return true;
-//			}
-			resultBoolean = ecxecuteAndReturnArray(driver, String.format("return document.getElementById('%s').findElement('%s')", swfSrc, flexId));
-			if (resultBoolean) {
+			
+			ArrayList<Object> result = ecxecuteAndReturnArray(driver, String.format("return document.getElementById('%s').findElement('%s')", swfSrc, flexId));
+			if (result.size() > 0) {
 				return true;
 			}
 			
@@ -150,13 +154,10 @@ public class FlexMediator {
 	/*
 	 * TODO: сделать обрабоку для findElement
 	 */
-	private static boolean ecxecuteAndReturnArray(WebDriver driver, String command) {
+	private static ArrayList<Object> ecxecuteAndReturnArray(WebDriver driver, String command) {
 		JavascriptExecutor js = (JavascriptExecutor) driver;
 		ArrayList<Object> result = (ArrayList<Object>) js.executeScript(command);
-		if (result.size() > 0) {
-			return true;
-		}
-		return false;
+		return result;
 	}
 	
 	

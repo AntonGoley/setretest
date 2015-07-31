@@ -89,7 +89,7 @@ public class SearchCheckAbstractTest extends AbstractTest{
 		searchCheck.deleteAllFilters();
 		searchCheck.addFilter();
 		searchCheck.setFilterMultiText(FILTER_CATEGORY_CASH_NUMBER, String.valueOf(cashEmulatorSearchCheck.getCashNumber()));
-		searchCheck.addFilter();
+		//searchCheck.addFilter();
 	}
 	
 	

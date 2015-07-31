@@ -2,15 +2,10 @@ package ru.crystals.set10.test.maincash;
 
 import java.math.BigDecimal;
 import java.util.Date;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-
-import ru.crystals.set10.config.Config;
 import ru.crystals.set10.pages.operday.cashes.MainCashManualDocPage;
 import ru.crystals.set10.utils.DisinsectorTools;
 import static ru.crystals.set10.pages.operday.cashes.MainCashManualDocPage.*;
@@ -28,6 +23,7 @@ public class PKOTest extends MainCashConfigTest {
 	
 	@BeforeClass
 	public void clearPKO(){
+		MainCashConfigTool.createODWithCashDocs(new Long[]{0L});
 		MainCashConfigTool.clearPKODocs();
 		openMainDocsPage();
 	}
