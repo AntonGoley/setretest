@@ -19,7 +19,7 @@ public class RKOTest extends MainCashConfigTest {
 	MainCashManualDocPage rko;
 	int docsOnPage = 0;
 
-	String personReceived = "Вручалова Г.Г";
+	String personReceived = "Кузнецова Г.Г";
 	
 	@BeforeClass
 	public void cleaRKOdocs(){
