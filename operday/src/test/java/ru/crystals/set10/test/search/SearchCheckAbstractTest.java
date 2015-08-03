@@ -84,7 +84,7 @@ public class SearchCheckAbstractTest extends AbstractTest{
 	
 	protected void resetFiltersAndAdd2New(){
 		/*
-		 * Сбросить фильтр и добавить 2 новых, один из которых Касса
+		 * Сбросить фильтр и добавить 2 новых, одни из которых Касса
 		 */
 		searchCheck.deleteAllFilters();
 		searchCheck.addFilter();
