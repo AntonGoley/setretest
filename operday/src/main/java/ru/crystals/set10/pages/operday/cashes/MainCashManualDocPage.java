@@ -46,6 +46,7 @@ public class  MainCashManualDocPage extends CashesPage{
 	public static final String FIELD_ENCASHMENT_BAG_NUMBER= "Номер инкассаторской сумки";
 	
 	
+	
 	/*
 	 * Документы ПКО
 	 */
@@ -66,13 +67,6 @@ public class  MainCashManualDocPage extends CashesPage{
 	public static final String DOC_TYPE_RKO_EXCESS_ENCASHMENT = "Перевложение Инкассация";
 	public static final String DOC_TYPE_RKO_EXCHANGE_WITHDRAWAL = "Размен денег расход";
 	
-	/*
-	 * Автоматически создаваемые документы
-	 */
-	public static final String DOC_TYPE_RKO_REVENUE = "ПКО Выручка магазина";
-	public static final String DOC_TYPE_KM7 = "Акт КМ-7";
-	public static final String DOC_TYPE_DDS = "ДДС";
-	public static final String DOC_TYPE_LIST = "Лист Кассовой Книги";
 	
 	
 	/* HBox - parent, в котором лежит поле для ввода значения (текстовое, дата) */

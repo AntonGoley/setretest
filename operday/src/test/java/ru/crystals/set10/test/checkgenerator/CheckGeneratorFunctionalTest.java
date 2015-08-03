@@ -71,19 +71,19 @@ public class CheckGeneratorFunctionalTest {
 //			cashEmulator.nextCancelledPurchase(p1);
 //			
 //			
-			if (i==0) {
+			if (i==1) {
 				p1 = (PurchaseEntity) cashEmulator.nextPurchase();
 				//возвращаем первую позицию в кол-ве 1шт
 				HashMap<Long, Long> returnPositions = new HashMap<Long, Long>();
 				returnPositions.put(1L, 1000L);
 				cashEmulator.nextRefundPositions(p1, returnPositions, false);
-				p1 = (PurchaseEntity) cashEmulator.nextPurchase(getBankCardPayment(BankCardPaymentEntity.class));
-				returnPositions.clear();
-				returnPositions.put(2L, 1000L);
-				cashEmulator.nextRefundPositions(p1, returnPositions, false);
-				returnPositions.clear();
-				returnPositions.put(3L, 1000L);
-				cashEmulator.nextRefundPositions(p1, returnPositions, false);
+				//p1 = (PurchaseEntity) cashEmulator.nextPurchase(getBankCardPayment(BankCardPaymentEntity.class));
+//				returnPositions.clear();
+//				returnPositions.put(2L, 1000L);
+//				cashEmulator.nextRefundPositions(p1, returnPositions, false);
+//				returnPositions.clear();
+//				returnPositions.put(3L, 1000L);
+//				cashEmulator.nextRefundPositions(p1, returnPositions, false);
 				
 				
 			}	
