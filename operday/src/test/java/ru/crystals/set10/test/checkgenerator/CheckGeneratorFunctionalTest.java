@@ -44,12 +44,12 @@ public class CheckGeneratorFunctionalTest {
 		//cashEmulator = CashEmulator.getCashEmulator(Config.CENTRUM_HOST, Integer.valueOf(Config.VIRTUAL_SHOP_NUMBER), Integer.valueOf(Config.CASH_NUMBER ));
 		//cashEmulator.setTimeOfset(86400000L );
 //		cashEmulator.useNextShift();
-		//cashEmulator.nextIntroduction();
+		cashEmulator.nextIntroduction();
 	}
 	
 	@AfterClass
 	public void sendZreport(){
-	//	cashEmulator.nextWithdrawal();
+		cashEmulator.nextWithdrawal();
 		long sumStart = DisinsectorTools.random(100000) + 100;
 		
 		cashEmulator.nextZReport(sumStart, sumStart + DisinsectorTools.random(100000));

@@ -1,18 +1,17 @@
 package ru.crystals.set10.pages.operday.cashes;
 
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Iterator;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-
 import static ru.crystals.set10.utils.FlexMediator.*;
 
 
+/*
+ * Страница создания нового ручного документа главной кассы ПКО/РКО
+ */
 public class  MainCashManualDocPage extends CashesPage{
 	
 	private static final String BUTTON_SAVE_CHANGES = "id:saveChangesButton";
@@ -66,6 +65,14 @@ public class  MainCashManualDocPage extends CashesPage{
 	public static final String DOC_TYPE_RKO_CASH_LACK = "Недостача по кассе";
 	public static final String DOC_TYPE_RKO_EXCESS_ENCASHMENT = "Перевложение Инкассация";
 	public static final String DOC_TYPE_RKO_EXCHANGE_WITHDRAWAL = "Размен денег расход";
+	
+	/*
+	 * Автоматически создаваемые документы
+	 */
+	public static final String DOC_TYPE_RKO_REVENUE = "ПКО Выручка магазина";
+	public static final String DOC_TYPE_KM7 = "Акт КМ-7";
+	public static final String DOC_TYPE_DDS = "ДДС";
+	public static final String DOC_TYPE_LIST = "Лист Кассовой Книги";
 	
 	
 	

@@ -1,7 +1,10 @@
 package ru.crystals.set10.pages.operday.searchcheck;
 
+import java.util.Date;
+
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+
 import ru.crystals.set10.pages.basic.SaveFile;
 import ru.crystals.set10.utils.DisinsectorTools;
 import static ru.crystals.set10.utils.FlexMediator.*;
@@ -36,7 +39,9 @@ public class  CheckSearchPage extends SearchFormPopUp implements SaveFile {
 	public void doSearch(){
 		clickElement(getDriver(), ID_OPERDAYSWF, BUTTON_SEARCH);
 		log.info("Выполнить поиск!");
+		long timeBefore = new Date().getTime();
 		waitSpinner(ID_OPERDAYSWF);
+		log.info("Время выполнения поиска на UI: " + (new Date().getTime() - timeBefore));
 		new CheckSearchPage(getDriver());
 	}
 	

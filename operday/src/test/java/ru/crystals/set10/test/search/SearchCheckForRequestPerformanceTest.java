@@ -1,79 +1,80 @@
 package ru.crystals.set10.test.search;
 
 
-import org.openqa.selenium.internal.seleniumemulation.DeleteAllVisibleCookies;
-import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import ru.crystals.pos.check.PurchaseEntity;
+import ru.crystals.set10.utils.DisinsectorTools;
 import static ru.crystals.set10.pages.operday.searchcheck.CheckSearchPage.*;
 
 @Test (groups={"centrum", "retail"})
 public class SearchCheckForRequestPerformanceTest extends SearchCheckAbstractTest{
 	
-	private PurchaseEntity p;
-	private PurchaseEntity p1;
-	private PurchaseEntity p1refund;
-	private PurchaseEntity p1cancel;
-	
 	@BeforeClass
 	public void send1stCheck(){
 		super.openSearchPage();
 		searchCheck.openFilter();
-//		sendCheck();
-//		/*
-//		 * убедиться, что чек в системе
-//		 */
-//		
-//		searchCheck.setCheckBarcode(purchase);
-//		searchCheck.doSearch();
-//		searchCheck.getExpectedResultCount(1);
-//		
-//		resetFiltersAndAdd2New();
 	}
 	
-	@Test
-	public void addCashFilter(){
+	
+	@DataProvider (name = "cashAndSum")
+	private Object[][] cashAndSum(){
+		return new Object[][]{
+				{DisinsectorTools.random(10) + 10, "2000"},
+				{DisinsectorTools.random(10) + 10, "2500"},
+				{DisinsectorTools.random(10) + 10, "3000"}
+		};
+	}
+	
+	@Test (dataProvider = "cashAndSum")
+	public void cashAndSumSearchTest(Long cashNumber, String sum ){
 		searchCheck.deleteAllFilters();
 		searchCheck.addFilter();
-		searchCheck.setFilterMultiText(FILTER_CATEGORY_CASH_NUMBER, String.valueOf(cashEmulatorSearchCheck.getCashNumber()));
+		searchCheck.setFilterMultiText(FILTER_CATEGORY_CASH_NUMBER, String.valueOf(cashNumber));
 		searchCheck.addFilter();
-		searchCheck.setFilterSelectSum(FILTER_CATEGORY_SUM_CHECK, FILTER_CATEGORY_SELECT_GREATER ,"1500");
+		searchCheck.setFilterSelectSum(FILTER_CATEGORY_SUM_CHECK, FILTER_CATEGORY_SELECT_GREATER, sum);
+		searchCheck.doSearch();
+	}
+	
+	@DataProvider (name = "cashAndShifAndCheck")
+	private Object[][] cashAndShift(){
+		return new Object[][]{
+				{DisinsectorTools.random(10) + 10, DisinsectorTools.random(10) + 40, DisinsectorTools.random(50) + 10},
+				{DisinsectorTools.random(10) + 10, DisinsectorTools.random(10) + 40, DisinsectorTools.random(50) + 10},
+				{DisinsectorTools.random(10) + 10, DisinsectorTools.random(10) + 40, DisinsectorTools.random(50) + 10}
+		};
+	}
+	
+	@Test (dataProvider = "cashAndShift")
+	public void cashAndShiftSearchTest(Long cashNumber, Long shift, Long checkNum){
+		searchCheck.deleteAllFilters();
+		searchCheck.addFilter();
+		searchCheck.setFilterMultiText(FILTER_CATEGORY_CASH_NUMBER, String.valueOf(cashNumber));
+		searchCheck.addFilter();
+		searchCheck.setFilterText(FILTER_CATEGORY_SHIFT_NUMBER, String.valueOf(shift));
+		searchCheck.addFilter();
+		searchCheck.setFilterText(FILTER_CATEGORY_CHECK_NUMBER, String.valueOf(checkNum));
 		searchCheck.doSearch();
 	}
 	
 	
-	
-	@DataProvider(name = "Тип чека")	
-	private Object[][] checkType(){
-		p1 = cashEmulatorSearchCheck.nextPurchaseWithoutSending();
-		p1refund = cashEmulatorSearchCheck.nextRefundAllWithoutSending(purchase, false);
-		p1cancel = cashEmulatorSearchCheck.nextCancelledPurchaseWithoutSending();
+	@DataProvider (name = "productCode")
+	private Object[][] productCode(){
 		return new Object[][]{
-				{"Чек продажи",  FILTER_CATEGORY_CHECK_TYPE_SALE, p1},
-				{"Чек возврата",  FILTER_CATEGORY_CHECK_TYPE_REFUND, p1refund},
-				{"Аннулированый чек",  FILTER_CATEGORY_CHECK_TYPE_CANCEL, p1cancel},
+			{"343433_ST\\n080074_ST\\n217010_ST\\n016091_ST\\n243111_ST"},
+			{"011461_KG\\n339410KAR\\n233813_ST\\n071739_ST\\n062696_ST"},
+			{"230889_ST" + "\\n" + "181823_ST"},
+
 		};
-	};
-	
-	@Test ( enabled = false,
-			description = "SRTE-71. Поиск чека на ТК по типу чека", 
-			dataProvider = "Тип чека")
-	public void testSearchCheckByType(String category, String filterName, PurchaseEntity p){
- 		searchCheck.setFilterSelect(FILTER_CATEGORY_CHECK_TYPE, filterName);
- 		searchCheck.doSearch();
- 		searchResult = searchCheck.getSearchResultCount();
- 		
- 		sendCheck(p);
- 		searchCheck.doSearch();
- 		
- 		Assert.assertEquals(searchCheck.getExpectedResultCount(searchResult + 1), searchResult + 1, "Неверный результат поиска по условию: " + category);
- 		testExcelExport(LOCATOR_XLS_CHECK_CONTENT, XLS_REPORT_CONTENT_PATTERN);
- 		testExcelExport(LOCATOR_XLS_CHECK_HEADERS, XLS_REPORT_HEADERS_PATTERN);
 	}
 	
-	
+	@Test (dataProvider = "productCode")
+	public void productCodeTest(String codes){
+		searchCheck.deleteAllFilters();
+		searchCheck.addFilter();
+		searchCheck.setFilterMultiText(FILTER_CATEGORY_GOOD_CODE, codes);
+		searchCheck.doSearch();
+	}
 }

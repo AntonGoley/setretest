@@ -34,7 +34,7 @@ public class MainCashConfigTool {
 	private static  String clearRKODocs = "delete from od_maincash_document_rko;"
 			+ " delete from od_maincash_document_rko_encashment;"
 			+ " delete from od_maincash_document  where doc_type = 'RKO'";
-	
+
 	private static  String clearPKODocs = "delete from od_maincash_document_pko;"
 			+ " delete from od_maincash_document  where doc_type = 'PKO'";
 	

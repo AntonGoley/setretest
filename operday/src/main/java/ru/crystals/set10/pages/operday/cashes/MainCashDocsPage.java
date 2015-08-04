@@ -3,19 +3,27 @@ package ru.crystals.set10.pages.operday.cashes;
 
 
 import static ru.crystals.set10.utils.FlexMediator.*;
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Iterator;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
+import ru.crystals.set10.utils.DisinsectorTools;
 
+
+/*
+ *  Страница Документы на вкладке Кассы в опердне
+ */
 public class  MainCashDocsPage extends CashDocsAbstractPage {
 	
-	private static final String BUTTON_SELECT_ALL = "label:Выбрать все"; 
+	private static final String BUTTON_SELECT_ALL = "label:Выбрать все";
+	private static final String BUTTON_PRINT_SELECTED= "label:Распечатать выбранные"; 
 	private static final String BUTTON_ADD_DOC = "label:Добавить";
 	private static final String BUTTON_DELETE_DOC = "label:Удалить";
 	private static final String BUTTON_EDIT_DOC = "label:Редактировать";
@@ -24,7 +32,9 @@ public class  MainCashDocsPage extends CashDocsAbstractPage {
 	public static final String BALANCE_START = "id:startBalanceLabel";
 	public static final String BALANCE_END = "id:balanceLabel";
 	
-
+	
+	List<MainCashDoc> documents = new ArrayList<MainCashDoc>();
+	
 	public MainCashDocsPage(WebDriver driver) {
 		super(driver);
 		getWait().until(ExpectedConditions.visibilityOfElementLocated(By.id(ID_OPERDAYSWF)));
@@ -54,34 +64,8 @@ public class  MainCashDocsPage extends CashDocsAbstractPage {
 		
 	}
 	
-	/*
-	 * Получить номер документа
-	 */
-	private int getFlexRowTableDocNum(String rowLocator){
-		int result = 0;
-		result = Integer.valueOf(
-				getElementProperty(getDriver(), ID_OPERDAYSWF, String.format("id:documentsTable/name:%s/id:subContainer/className:Text|0", rowLocator), "text")); 
-		return result;
-	}
-	
-	/*
-	 * Последний номер документа для типа документа (ПКО, РКО, ДДС, ЛКК, КМ7)
-	 */
-	public int getLastDocNumber(String tableDoctype){
-
-		ArrayList<Integer> result = getDocNumbersForType(tableDoctype);
-		
-		if (result.isEmpty()){
-			return 0;
-		}
-		return result.get(result.size() - 1);
-	}
-	
-	/*
-	 * Получить список имен FlexTable2RowRenderer для документов определенного типа 
-	 */
-	private ArrayList<String> getRowsWithDocType(String docType){
-		
+	private void getDocsOnPage(){
+		documents.clear();
 		ArrayList<String> resultDocs = new ArrayList<String>();
 
 		/*
@@ -103,61 +87,97 @@ public class  MainCashDocsPage extends CashDocsAbstractPage {
 				String rowLocator = matcher.group();
 				/*
 				 *  Проверить, не является ли это разделителем
-				 *  у строки с документов, количество полей Text=3
+				 *  у строки с документом, количество полей Text=3
 				 */
 				int separatorProps = getElementsNum(getDriver(), ID_OPERDAYSWF, String.format("id:documentsTable/name:%s/id:subContainer/className:Text", rowLocator));
+				
 				if (separatorProps == 3) {
+					
+					MainCashDoc doc = new MainCashDoc();
+					
+					doc.setFlexTableRowLocatorName(rowLocator);
+					
 					String docTypeValue = getElementProperty(getDriver(), ID_OPERDAYSWF, String.format("id:documentsTable/name:%s/id:subContainer/className:Text|1", rowLocator), "text");
-					if (docTypeValue.contains(docType)){
-						resultDocs.add(rowLocator);
+					doc.setType(docTypeValue);
+					
+					Integer docNumber = Integer.valueOf(
+							getElementProperty(getDriver(), ID_OPERDAYSWF, String.format("id:documentsTable/name:%s/id:subContainer/className:Text|0", rowLocator), "text"));
+					doc.setNumber(docNumber);
+					
+					String employee = getElementProperty(getDriver(), ID_OPERDAYSWF, String.format("id:documentsTable/name:%s/id:subContainer/className:Text|2", rowLocator), "text");
+					doc.setEmployee(employee);
+					
+					String income = getElementProperty(getDriver(), ID_OPERDAYSWF, String.format("id:documentsTable/name:%s/className:DocumentPriceItemRenderer/id:textLabel|0", rowLocator), "text");
+					if (!income.equals("")){
+					 doc.setIncome(new BigDecimal(income.replace(",", ".")));
+					} 
+					
+					String outcome = getElementProperty(getDriver(), ID_OPERDAYSWF, String.format("id:documentsTable/name:%s/className:DocumentPriceItemRenderer/id:textLabel|1", rowLocator), "text");
+					if(!outcome.equals("")){
+						doc.setIncome(new BigDecimal(outcome.replace(",", ".")));
 					}
+					
+					String status = getElementProperty(getDriver(), ID_OPERDAYSWF, String.format("id:documentsTable/name:%s/className:DocumentStatusItemRenderer/id:iconImage", rowLocator), "source");
+					doc.setStatus(status);
+					
+					documents.add(doc);
+					
 				};	
 			};
 		}
-		return resultDocs;
 	}
 	
-	/*
-	 * Получить свойство документа:
-	 * 
-	 */
-	public String getDocProperty(String docType, Integer number, String property){
-		
-		ArrayList<String> docs = getRowsWithDocType(docType);
-		
-		if (docs.isEmpty()){
-			new Throwable(String.format("Документ %s главной кассы с номером %s не найден! ", docType, number  )); 
+	public MainCashDoc getDocByTypeAndNumber(String type, Integer number) throws Exception{
+		if ( documents.isEmpty()) {
+			getDocsOnPage();
 		}
 		
-		if (docs.size()>1){
-			new Throwable(String.format("Найден больше чем один документ %s главной кассы с номером %s не найден! ", docType, number  )); 
+		MainCashDoc doc = new MainCashDoc();
+		Iterator<MainCashDoc> docs = documents.iterator();
+		while (docs.hasNext()){
+			doc = docs.next();
+			if (doc.getType().contains(type) &&
+				 doc.getNumber().equals(number)){
+					return doc;
+			}
 		}
+		// TODO: эксепшн
+		log.info(String.format("Документ типа %s с номерном %s не найден в таблице Документы!!!", type, number));
 		
-		return getElementProperty(getDriver(), ID_OPERDAYSWF, String.format("id:documentsTable/name:%s/id:subContainer/className:Text|1", docs.get(0)), "text");
+		return null;
 	}
 	
-	/*
-	 * Получить все номера для типа документа (ПКО, РКО, ДДС, ЛКК, КМ7)
-	 */
-	public ArrayList<Integer> getDocNumbersForType(String docType){
-		ArrayList<Integer> docnums = new ArrayList<Integer>();
+	public void getNumbersByDocType(String type){
 		
-		/*
-		 * Все документы типа docType
-		 */
-		ArrayList<String> docs = getRowsWithDocType(docType);
+		List<MainCashDoc> result = new ArrayList<MainCashDoc>();
 		
-		Iterator<String> i = docs.iterator();
-		while(i.hasNext()){
-			int num = getFlexRowTableDocNum(i.next());
-			if (num >0 ){ 
-				docnums.add(num);
-			}	
+		if ( documents.isEmpty()) {
+			getDocsOnPage();
+		}	
+		
+		MainCashDoc doc = new MainCashDoc();
+		Iterator<MainCashDoc> docs = documents.iterator();
+		while (docs.hasNext()){
+			doc = docs.next();
+			if (doc.getType().contains(type)) {
+				result.add(doc);
+			}
 		}
-		
-		//TODO: сделать нормальную сортировку
-		Collections.sort(docnums);
-		return docnums;
+	}
+	
+	public boolean ifPrintEnable(MainCashDoc doc){
+		return Boolean.valueOf(
+				getElementProperty(getDriver(), ID_OPERDAYSWF, String.format("id:documentsTable/name:%s/className:DocumentStatusItemRenderer/id:selectionCheckBox", doc.getFlexTableRowLocatorName()), "visible"));
+	}
+	
+	public void selectDocForPrinting(MainCashDoc doc){
+		checkBoxValue(getDriver(), ID_OPERDAYSWF, String.format("id:documentsTable/name:%s/className:DocumentStatusItemRenderer/id:selectionCheckBox", doc.getFlexTableRowLocatorName()), true);
+	}
+	
+	public void printDoc(MainCashDoc doc){
+		selectDocForPrinting(doc);
+		clickElement(getDriver(), ID_OPERDAYSWF, ID + BUTTON_PRINT_SELECTED);
+		DisinsectorTools.delay(10000);
 	}
 	
 	
@@ -169,9 +189,6 @@ public class  MainCashDocsPage extends CashDocsAbstractPage {
 	}
 	
 	public void getdocPrintedStatus(String tableDoctype, String docNumber){
-	}
-	
-	public void selectDocForPrinting(String tableDoctype, String docNumber){
 	}
 	
 	public void selectDoc(String tableDoctype, String docNumber){
