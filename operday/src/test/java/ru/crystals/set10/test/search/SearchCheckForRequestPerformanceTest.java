@@ -26,7 +26,8 @@ public class SearchCheckForRequestPerformanceTest extends SearchCheckAbstractTes
 		};
 	}
 	
-	@Test (dataProvider = "cashAndSum")
+	@Test (priority = 1,
+			dataProvider = "cashAndSum")
 	public void cashAndSumSearchTest(Long cashNumber, String sum ){
 		searchCheck.deleteAllFilters();
 		searchCheck.addFilter();
@@ -45,7 +46,8 @@ public class SearchCheckForRequestPerformanceTest extends SearchCheckAbstractTes
 		};
 	}
 	
-	@Test (dataProvider = "cashAndShift")
+	@Test (priority = 2,
+			dataProvider = "cashAndShift")
 	public void cashAndShiftSearchTest(Long cashNumber, Long shift, Long checkNum){
 		searchCheck.deleteAllFilters();
 		searchCheck.addFilter();
@@ -68,7 +70,8 @@ public class SearchCheckForRequestPerformanceTest extends SearchCheckAbstractTes
 		};
 	}
 	
-	@Test (dataProvider = "productCode")
+	@Test (priority = 3, 
+			dataProvider = "productCode")
 	public void productCodeTest(String codes){
 		searchCheck.deleteAllFilters();
 		searchCheck.addFilter();
