@@ -47,7 +47,7 @@ public class SearchCheckForRequestPerformanceTest extends SearchCheckAbstractTes
 	}
 	
 	@Test (priority = 2,
-			dataProvider = "cashAndShift")
+			dataProvider = "cashAndShifAndCheck")
 	public void cashAndShiftSearchTest(Long cashNumber, Long shift, Long checkNum){
 		searchCheck.deleteAllFilters();
 		searchCheck.addFilter();
