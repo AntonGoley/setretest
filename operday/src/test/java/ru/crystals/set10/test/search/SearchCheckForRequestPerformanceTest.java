@@ -4,8 +4,6 @@ package ru.crystals.set10.test.search;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-
-import ru.crystals.pos.check.PurchaseEntity;
 import ru.crystals.set10.utils.DisinsectorTools;
 import static ru.crystals.set10.pages.operday.searchcheck.CheckSearchPage.*;
 
