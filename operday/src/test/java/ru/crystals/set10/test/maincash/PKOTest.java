@@ -125,7 +125,7 @@ public class PKOTest extends MainCashConfigTest {
 		String pageContent = getFileContent(1);
 		log.info(pageContent);
 		
-		Assert.assertTrue(pageContent.contains("Основание:\n" + DOC_TYPE_PKO_CASH_EXCESS), "Печатная форма не содержит название документа ПКО: " + DOC_TYPE_PKO_CASH_EXCESS);
+		Assert.assertTrue(pageContent.contains("Основание:\n" + pkoType), "Печатная форма не содержит название документа ПКО: " + pkoType);
 		Assert.assertTrue(pageContent.contains("Принято от\n" + receivedFrom), "Печатная форма не содержит заполненное поле Принято от " );
 		Assert.assertTrue(pageContent.contains("Получил кассир\n(расшифровка подписи)\n" + receivedBy), "Печатная форма не содержит заполненное поле Получил кассир");
 		Assert.assertTrue(pageContent.contains(sum), "Печатная форма не содержит сумму в таблице документа " + sum);
