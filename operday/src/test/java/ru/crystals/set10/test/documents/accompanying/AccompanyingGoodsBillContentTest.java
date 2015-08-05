@@ -27,7 +27,7 @@ public class AccompanyingGoodsBillContentTest extends AccompanyingDocumentsBasic
 				counterpartKpp, 
 				counterpartAdress);
 		File file = DisinsectorTools.getDownloadedFile(chromeDownloadPath, PDF_GOODS_BILL);
-		reportResult = checkContent.getPDFContent(file);
+		reportResult = checkContent.getPDFFileContent(file);
 	}	
 	
 	@DataProvider (name = "Счет-фактура")

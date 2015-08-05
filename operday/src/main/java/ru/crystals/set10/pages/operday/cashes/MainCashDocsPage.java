@@ -175,7 +175,6 @@ public class  MainCashDocsPage extends CashDocsAbstractPage {
 	public void printDoc(MainCashDoc doc){
 		selectDocForPrinting(doc);
 		clickElement(getDriver(), ID_OPERDAYSWF, ID + BUTTON_PRINT_SELECTED);
-		DisinsectorTools.delay(10000);
 	}
 	
 	

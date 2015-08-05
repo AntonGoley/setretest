@@ -120,7 +120,7 @@ public class KM6Test extends AbstractTest{
 		
 		if (!reportOpened) {
 			km6.printAllDocs();
-			reportText = km6.getPDFContent(DisinsectorTools.getDownloadedFile(chromeDownloadPath, KM6_PDF), 1);
+			reportText = km6.getPDFFilePageContent(DisinsectorTools.getDownloadedFile(chromeDownloadPath, KM6_PDF), 1);
 			reportOpened = true;
 		}
 		

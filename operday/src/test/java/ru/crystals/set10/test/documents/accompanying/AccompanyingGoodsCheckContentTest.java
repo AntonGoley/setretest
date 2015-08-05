@@ -22,7 +22,7 @@ public class AccompanyingGoodsCheckContentTest extends AccompanyingDocumentsBasi
 		DisinsectorTools.removeOldReport(chromeDownloadPath, PDF_GOODS_CHEQUE);
 		checkContent = checkContent.generateReport(LINK_GOODS_CHECK);
 		File file = DisinsectorTools.getDownloadedFile(chromeDownloadPath, PDF_GOODS_CHEQUE);
-		reportResult = checkContent.getPDFContent(file);
+		reportResult = checkContent.getPDFFileContent(file);
 	}	
 	
 	@DataProvider (name = "Товарный чек")

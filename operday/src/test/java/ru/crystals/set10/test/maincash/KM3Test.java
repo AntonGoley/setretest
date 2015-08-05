@@ -111,7 +111,7 @@ public class KM3Test extends AbstractTest{
 		if (!reportOpened) {
 			reportOpened = true;
 			km3.printAllDocs();
-			reportText = km3.getPDFContent(DisinsectorTools.getDownloadedFile(chromeDownloadPath, KM3_PDF), 1);
+			reportText = km3.getPDFFilePageContent(DisinsectorTools.getDownloadedFile(chromeDownloadPath, KM3_PDF), 1);
 		}
 		log.info("Значение поля: " + fiels);
 		Assert.assertTrue(reportText.contains(expectedValue), "Неверное значение поля в форме КМ3");

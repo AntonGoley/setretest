@@ -68,7 +68,7 @@ public class  MainCashManualDocPage extends CashesPage{
 	/*
 	 * Автоматически создаваемые документы
 	 */
-	public static final String DOC_TYPE_RKO_REVENUE = "ПКО Выручка магазина";
+	public static final String DOC_TYPE_PKO_REVENUE = "ПКО Выручка магазина";
 	public static final String DOC_TYPE_KM7 = "Акт КМ-7";
 	public static final String DOC_TYPE_DDS = "ДДС";
 	public static final String DOC_TYPE_LIST = "Лист Кассовой Книги";

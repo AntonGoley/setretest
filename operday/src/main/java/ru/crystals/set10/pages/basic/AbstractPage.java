@@ -101,7 +101,7 @@ public abstract class  AbstractPage {
 	}
 	
 	
-	public String getPDFContent(File file, int pageNumber){
+	public String getPDFFilePageContent(File file, int pageNumber){
 		String result = "";
 		PdfReader reader;
 		try {
@@ -116,7 +116,7 @@ public abstract class  AbstractPage {
 		return result;
 	}
 	
-	public String getPDFContent(File file){
+	public String getPDFFileContent(File file){
 		String result = "";
 		PdfReader reader;
 		try {

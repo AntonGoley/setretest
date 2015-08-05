@@ -102,10 +102,11 @@ public class PKOTest extends MainCashConfigTest {
 	public void testDeletePKO(){
 	}
 	
-	@Test(  description = "SRTE-175. Печать ПКО, сохранение полей и баланса в печатной форме")
-	public void testPrintPKO(String pkoType) throws Exception{
+	@Test(  description = "SRTE-175. Печать ПКО, сохранение заполняемых полей и баланса в печатной форме")
+	public void testPrintPKO() throws Exception{
 		String sum = DisinsectorTools.randomMoney(1000, ",");
 		String number = "0";
+		String pkoType = DOC_TYPE_PKO_CASH_EXCESS;
 		
 		pko = docs.addDoc();
 		log.info("Добавление документа ПКО: " + pkoType);
@@ -121,9 +122,13 @@ public class PKOTest extends MainCashConfigTest {
 		removeFileReports();
 		docs.printDoc(docs.getDocByTypeAndNumber(pkoType, Integer.valueOf(number)));
 		
-		log.info(getFileContent(1));
+		String pageContent = getFileContent(1);
+		log.info(pageContent);
 		
-		
+		Assert.assertTrue(pageContent.contains("Основание:\n" + DOC_TYPE_PKO_CASH_EXCESS), "Печатная форма не содержит название документа ПКО: " + DOC_TYPE_PKO_CASH_EXCESS);
+		Assert.assertTrue(pageContent.contains("Принято от\n" + receivedFrom), "Печатная форма не содержит заполненное поле Принято от " );
+		Assert.assertTrue(pageContent.contains("Получил кассир\n(расшифровка подписи)\n" + receivedBy), "Печатная форма не содержит заполненное поле Получил кассир");
+		Assert.assertTrue(pageContent.contains(sum), "Печатная форма не содержит сумму в таблице документа " + sum);
 	}
 	
 	
