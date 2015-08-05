@@ -1,9 +1,7 @@
 package ru.crystals.set10.pages.sales.equipment;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 
+import org.openqa.selenium.WebDriver;
 import ru.crystals.set10.pages.basic.SalesPage;
 import ru.crystals.set10.utils.DisinsectorTools;
 import static ru.crystals.set10.utils.FlexMediator.*;
@@ -21,7 +19,6 @@ public class NewEquipmentPage extends SalesPage {
 	
 	public NewEquipmentPage(WebDriver driver) {
 		super(driver);
-		getWait().until(ExpectedConditions.visibilityOfElementLocated(By.id(ID_SALESSWF)));
 	}
 	
 	

@@ -135,7 +135,6 @@ public abstract class  AbstractPage {
 		return result;
 	}
 	
-	
 	public String getFlexAlertMessage(){
 		return "";
 	}

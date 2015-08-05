@@ -2,7 +2,6 @@ package ru.crystals.set10.pages.operday.cashes;
 
 
 import org.openqa.selenium.*;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 
 
 public class  KmPage extends CashDocsAbstractPage{
@@ -12,6 +11,5 @@ public class  KmPage extends CashDocsAbstractPage{
 	
 	public KmPage(WebDriver driver) {
 		super(driver);
-		getWait().until(ExpectedConditions.visibilityOfElementLocated(By.id(ID_OPERDAYSWF)));
 	}
 }

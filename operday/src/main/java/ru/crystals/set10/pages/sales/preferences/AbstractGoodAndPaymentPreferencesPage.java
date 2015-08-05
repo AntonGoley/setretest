@@ -1,10 +1,8 @@
 package ru.crystals.set10.pages.sales.preferences;
 
 import static ru.crystals.set10.utils.FlexMediator.*;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import ru.crystals.set10.pages.basic.SalesPage;
 import ru.crystals.set10.utils.DisinsectorTools;
 
@@ -19,7 +17,6 @@ public class AbstractGoodAndPaymentPreferencesPage extends SalesPage{
 	
 	public AbstractGoodAndPaymentPreferencesPage(WebDriver driver) {
 		super(driver);
-		getWait().until(ExpectedConditions.visibilityOfElementLocated(By.id(ID_SALESSWF)));
 	}
 	
 	/*

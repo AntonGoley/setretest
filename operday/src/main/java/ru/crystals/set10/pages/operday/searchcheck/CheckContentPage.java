@@ -2,10 +2,8 @@ package ru.crystals.set10.pages.operday.searchcheck;
 
 
 import org.openqa.selenium.*;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import ru.crystals.set10.pages.operday.OperDayPage;
 import ru.crystals.set10.utils.DisinsectorTools;
-
 import static ru.crystals.set10.utils.FlexMediator.*;
 
 
@@ -37,7 +35,6 @@ public class  CheckContentPage extends OperDayPage{
 	
 	public CheckContentPage(WebDriver driver) {
 		super(driver);
-		getWait().until(ExpectedConditions.visibilityOfElementLocated(By.id(ID_OPERDAYSWF)));
 	}
 	
 	public CheckContentPage generateReport(String docType){

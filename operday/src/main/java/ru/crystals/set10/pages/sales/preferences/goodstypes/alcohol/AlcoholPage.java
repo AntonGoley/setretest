@@ -4,8 +4,6 @@ import static ru.crystals.set10.utils.FlexMediator.*;
 
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-
 import ru.crystals.set10.pages.sales.preferences.AbstractGoodAndPaymentPreferencesPage;
 
 /*
@@ -21,7 +19,6 @@ public class AlcoholPage extends AbstractGoodAndPaymentPreferencesPage {
 
 	public AlcoholPage(WebDriver driver) {
 		super(driver);
-		getWait().until(ExpectedConditions.visibilityOfElementLocated(By.id(ID_SALESSWF)));
 	}
 	
 	/*

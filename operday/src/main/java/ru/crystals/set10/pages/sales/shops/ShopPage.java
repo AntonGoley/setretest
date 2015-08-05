@@ -1,11 +1,8 @@
 package ru.crystals.set10.pages.sales.shops;
 
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import static ru.crystals.set10.utils.FlexMediator.*;
-
 import ru.crystals.set10.pages.basic.SalesPage;
 import ru.crystals.set10.utils.DisinsectorTools;
 
@@ -21,7 +18,6 @@ public class ShopPage extends SalesPage{
 	
 	public ShopPage(WebDriver driver) {
 		super(driver);
-		getWait().until(ExpectedConditions.visibilityOfElementLocated(By.id(ID_SALESSWF)));
 	}
 	
 	public ShopPreferencesPage addShop(){

@@ -5,7 +5,6 @@ import static ru.crystals.set10.utils.FlexMediator.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import ru.crystals.set10.pages.basic.BasicElements;
 import ru.crystals.set10.pages.basic.SalesPage;
 
 
@@ -27,6 +26,6 @@ public class CityPage extends SalesPage{
 	}
 	
 	public RegionPage goBack(){
-		return BasicElements.goBack(getDriver(), RegionPage.class, ID_SALESSWF, LOCATOR_BACK_BUTTON);
+		return goBack(getDriver(), RegionPage.class, ID_SALESSWF, LOCATOR_BACK_BUTTON);
 	}
 }

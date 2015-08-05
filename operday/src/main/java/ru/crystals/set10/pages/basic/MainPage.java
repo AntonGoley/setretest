@@ -2,6 +2,7 @@ package ru.crystals.set10.pages.basic;
 
 
 import org.openqa.selenium.*;
+import org.openqa.selenium.By.ByXPath;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import ru.crystals.set10.pages.operday.OperDayPage;
@@ -12,9 +13,10 @@ import static ru.crystals.set10.utils.FlexMediator.*;
 
 public class MainPage extends AbstractPage{
 	
+	protected static final ByXPath XPATH_RETAILX =   new ByXPath("//embed[contains(@src, 'RetailX')]");
 	static final String SALESBUTTON_LOCATOR = "id:salesButton;className:BigButton";
 	static final String OPERDAYBUTTON_LOCATOR = "id:operDayButton;className:BigButton";
-	static final String ID_MAINPAGESWF = "RetailX";
+	static final String ID_MAINPAGESWF = "application";
 	
 	static final String ID_SEARCH_GOOD = "searchParam";
 
@@ -24,8 +26,8 @@ public class MainPage extends AbstractPage{
 	public MainPage(WebDriver driver) {
 		super(driver);
 		isSWFReady();
-		getWait().until(ExpectedConditions.visibilityOfElementLocated(By.id(ID_MAINPAGESWF)));
-		waitForElementVisible(getDriver(), ID_MAINPAGESWF, SALESBUTTON_LOCATOR);
+		getWait().until(ExpectedConditions.visibilityOfElementLocated(XPATH_RETAILX));
+		//waitForElementVisible(getDriver(), ID_MAINPAGESWF, SALESBUTTON_LOCATOR);
 	}
 	
 	public OperDayPage openOperDay() {
@@ -35,7 +37,7 @@ public class MainPage extends AbstractPage{
 	
 	public SalesPage openSales() {
 		clickElement(getDriver(), ID_MAINPAGESWF, SALESBUTTON_LOCATOR);
-		// переключаемся на окно продаж т.к родажи открываются в новом окне 
+		// переключаемся на окно продаж т.к продажи открываются в новом окне 
 
 		switchWindow(true);
 		return new SalesPage(getDriver()); 

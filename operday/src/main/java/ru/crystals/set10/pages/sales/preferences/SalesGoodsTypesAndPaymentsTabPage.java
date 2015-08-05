@@ -1,10 +1,8 @@
 package ru.crystals.set10.pages.sales.preferences;
 
 import static ru.crystals.set10.utils.FlexMediator.*;
-
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import ru.crystals.set10.pages.basic.SalesPage;
 
 
@@ -35,7 +33,6 @@ public class SalesGoodsTypesAndPaymentsTabPage extends SalesPage{
 	
 	public SalesGoodsTypesAndPaymentsTabPage(WebDriver driver) {
 		super(driver);
-		getWait().until(ExpectedConditions.visibilityOfElementLocated(By.id(ID_SALESSWF)));
 	}
 	
 	public <T> T selectProductTypeItem(String productTypeItem, Class<T> page) {

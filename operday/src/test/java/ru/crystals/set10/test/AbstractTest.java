@@ -79,8 +79,7 @@ public class  AbstractTest implements IExecutionListener {
     protected static String DB_OPERDAY;
     protected static String DB_LOY;
     
-   // private static List<String> groups = new ArrayList<String>();
-    
+
     public WebDriver getDriver() {
         return driver;
     }
@@ -112,11 +111,7 @@ public class  AbstractTest implements IExecutionListener {
     	 * где собираемся тестить документы
     	 */
     	disablePrintPreview();
-    	
-//    	String[] groups = context.getIncludedGroups();
-//    	for (int i=0; i< groups.length; i++){
-//    		log.info("GROUPS to RUN: " + groups[i]);
-//    	}
+
 	}
     
     @BeforeMethod(alwaysRun = true)

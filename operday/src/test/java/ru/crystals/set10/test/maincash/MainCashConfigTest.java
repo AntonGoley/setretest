@@ -1,5 +1,6 @@
 package ru.crystals.set10.test.maincash;
 
+import java.io.File;
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -12,6 +13,7 @@ import ru.crystals.set10.pages.basic.LoginPage;
 import ru.crystals.set10.pages.operday.cashes.CashesPage;
 import ru.crystals.set10.pages.operday.cashes.MainCashDocsPage;
 import ru.crystals.set10.test.AbstractTest;
+import ru.crystals.set10.utils.DisinsectorTools;
 import static ru.crystals.set10.pages.operday.OperDayPage.CASHES;
 import static ru.crystals.set10.pages.operday.cashes.CashesPage.LOCATOR_MAINCASH_TAB;
 import static ru.crystals.set10.pages.operday.cashes.CashDocsAbstractPage.*;
@@ -48,4 +50,12 @@ public class MainCashConfigTest extends AbstractTest {
 		docs.switchToTable(LOCATOR_DOCS);
 	}
 	
+	protected void removeFileReports(){
+		DisinsectorTools.removeOldReport(chromeDownloadPath, "merged_maincash_document.pdf");
+	}
+	
+	protected String getFileContent(Integer pageNumber){
+		File file = DisinsectorTools.getDownloadedFile(chromeDownloadPath, "merged_maincash_document.pdf");
+		return docs.getPDFContent(file, pageNumber);
+	}
 }

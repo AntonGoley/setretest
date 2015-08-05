@@ -2,17 +2,15 @@ package ru.crystals.set10.pages.operday.tablereports;
 
 
 import org.openqa.selenium.*;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import ru.crystals.set10.pages.basic.AbstractPage;
 import ru.crystals.set10.pages.basic.SaveFile;
 import ru.crystals.set10.pages.operday.HTMLRepotResultPage;
+import ru.crystals.set10.pages.operday.OperDayPage;
 import ru.crystals.set10.utils.DisinsectorTools;
 import static ru.crystals.set10.utils.FlexMediator.*;
 
 
-public class  ReportConfigPage extends AbstractPage implements SaveFile {
+public class  ReportConfigPage extends OperDayPage implements SaveFile {
 	
-	static final String ID_OPERDAYSWF = "OperDay";
 	public static final String HTMLREPORT = "downloadHTMLButton";
 	public static final String EXCELREPORT = "downloadExcelButton";
 	public static final String PDFREPORT = "downloadPDFButton";
@@ -25,7 +23,6 @@ public class  ReportConfigPage extends AbstractPage implements SaveFile {
 	
 	public ReportConfigPage(WebDriver driver) {
 		super(driver);
-		getWait().until(ExpectedConditions.visibilityOfElementLocated(By.id(ID_OPERDAYSWF)));
 	}
 	
 	public HTMLRepotResultPage generateReport(String reportType){

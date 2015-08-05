@@ -1,17 +1,12 @@
 package ru.crystals.set10.pages.sales.shops;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-
-import ru.crystals.set10.pages.basic.AbstractPage;
-import ru.crystals.set10.pages.basic.BasicElements;
+import ru.crystals.set10.pages.basic.SalesPage;
 import ru.crystals.set10.utils.DisinsectorTools;
-import static ru.crystals.set10.pages.basic.BasicElements.*;
 import static ru.crystals.set10.utils.FlexMediator.*;
 
 
-public class ShopPreferencesPage extends AbstractPage {
+public class ShopPreferencesPage extends SalesPage {
 	
 	static final String LOCATOR_SHOP_NUMBER_INPUT = "id:shopNumberTI";
 	static final String LOCATOR_SHOP_NAME_INPUT = "id:shopNameTI";
@@ -27,8 +22,6 @@ public class ShopPreferencesPage extends AbstractPage {
 	
 	public ShopPreferencesPage(WebDriver driver) {
 		super(driver);
-		getWait().until(ExpectedConditions.visibilityOfElementLocated(By.id(ID_SALESSWF)));
-
 	}
 	
 	public ShopPreferencesPage setShopNumber(String number){
@@ -77,7 +70,7 @@ public class ShopPreferencesPage extends AbstractPage {
 	}
 	
 	public ShopPage goBack(){
-		return BasicElements.goBack(getDriver(), ShopPage.class, ID_SALESSWF, LOCATOR_BACK_BUTTON);
+		return goBack(getDriver(), ShopPage.class, ID_SALESSWF, LOCATOR_BACK_BUTTON);
 	}
 	
 	

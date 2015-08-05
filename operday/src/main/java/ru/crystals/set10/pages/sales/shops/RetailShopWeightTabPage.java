@@ -1,10 +1,7 @@
 package ru.crystals.set10.pages.sales.shops;
 
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-
 import static ru.crystals.set10.utils.FlexMediator.*;
 import ru.crystals.set10.pages.basic.SalesPage;
 import ru.crystals.set10.utils.DisinsectorTools;
@@ -14,14 +11,12 @@ public class RetailShopWeightTabPage extends SalesPage{
 	static final String LOCATOR_WEIGHT_PATTERN = "id:groupSalesSelector";
 	static final String LOCATOR_WEIGHT_MODEL = "id:displaySelector";
 	static final String BUTTON_ADD_TO_SHOP = "id:addScalesButton";
-//	static final String LOCATOR_WEIGHT_ITEM = "className:DeviceRowRenderer/text:%s";
 	static final String TABLE_WEIGHT_ITEMS = "id:scalesListFlexTable";
 	
 	static final String TAB_LOCATOR = "tabBar";
 	
 	public RetailShopWeightTabPage(WebDriver driver) {
 		super(driver);
-		getWait().until(ExpectedConditions.visibilityOfElementLocated(By.id(ID_SALESSWF)));
 	}
 	
 	public void bindWeight(String weightPattern, String weightModel){

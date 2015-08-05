@@ -1,18 +1,17 @@
 package ru.crystals.set10.pages.operday.cashes;
 
 
-
 import static ru.crystals.set10.utils.FlexMediator.*;
-
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
+import static ru.crystals.set10.utils.FlexMediator.clickElement;
+import static ru.crystals.set10.utils.FlexMediator.getElementProperty;
 import org.openqa.selenium.*;
-import org.openqa.selenium.support.ui.ExpectedConditions;
+
 
 import ru.crystals.set10.utils.DisinsectorTools;
 
@@ -37,7 +36,6 @@ public class  MainCashDocsPage extends CashDocsAbstractPage {
 	
 	public MainCashDocsPage(WebDriver driver) {
 		super(driver);
-		getWait().until(ExpectedConditions.visibilityOfElementLocated(By.id(ID_OPERDAYSWF)));
 	}
 	
 	public MainCashManualDocPage editDoc(){

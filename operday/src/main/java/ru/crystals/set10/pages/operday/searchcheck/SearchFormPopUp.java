@@ -2,10 +2,11 @@ package ru.crystals.set10.pages.operday.searchcheck;
 
 
 import static ru.crystals.set10.utils.FlexMediator.*;
+
 import java.util.HashMap;
-import org.openqa.selenium.By;
+
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
+
 import ru.crystals.pos.check.PurchaseEntity;
 import ru.crystals.set10.pages.operday.OperDayPage;
 import ru.crystals.set10.utils.DisinsectorTools;
@@ -132,7 +133,6 @@ public class SearchFormPopUp extends OperDayPage {
 	
 	public SearchFormPopUp(WebDriver driver) {
 		super(driver);
-		getWait().until(ExpectedConditions.visibilityOfElementLocated(By.id(ID_OPERDAYSWF)));
 	}
 	
 	public SearchFormPopUp openFilter(){
@@ -223,19 +223,18 @@ public class SearchFormPopUp extends OperDayPage {
 		 * если нет, открыть его
 		 */
 		if ( !getElementProperty(getDriver(), ID_OPERDAYSWF, "name=filtersContainerPopup", "isPopUp").equals("true")){
-//			log.info(getElementProperty(getDriver(), ID_OPERDAYSWF, "name=filtersContainerPopup", "isPopUp"));
+			log.info(getElementProperty(getDriver(), ID_OPERDAYSWF, "name=filtersContainerPopup", "isPopUp"));
 			clickElement(getDriver(), ID_OPERDAYSWF,  FILTER_OPEN);
 		};
 		
-		if ( !waitForElementPresent(getDriver(), ID_OPERDAYSWF, FILTER_CATEGORY)){
-			log.info("В фильтре поиска сбросился фильтр по дате!!! ".toUpperCase());
-			clickElement(getDriver(), ID_OPERDAYSWF,  FILTER_ADD_CATEGORY);
-		};
+//		if ( !waitForElementVisible(getDriver(), ID_OPERDAYSWF, FILTER_CATEGORY)){
+//			log.info("В фильтре поиска сбросился фильтр по дате!!! ".toUpperCase());
+//			clickElement(getDriver(), ID_OPERDAYSWF,  FILTER_ADD_CATEGORY);
+//		};
 		
 		/*
-		 * если выбираем уже выбранный фильтр, то происходит удаление фильтра - обход этого поведения
+		 * если выбираем уже выбранный фильтр, то происходит удаление фильтра - обход этого поведения:
 		 */
-
 		if (!getSelectedElement(getDriver(), ID_OPERDAYSWF, FILTER_CATEGORY + "|0").equals(filter)){
 			selectElement(getDriver(), ID_OPERDAYSWF, FILTER_CATEGORY + "|0", filter);
 		}

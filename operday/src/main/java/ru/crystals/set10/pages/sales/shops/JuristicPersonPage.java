@@ -1,15 +1,11 @@
 package ru.crystals.set10.pages.sales.shops;
 
-import org.openqa.selenium.By;
+
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import ru.crystals.set10.pages.basic.AbstractPage;
-import ru.crystals.set10.pages.basic.BasicElements;
-import static ru.crystals.set10.pages.basic.BasicElements.*;
+import ru.crystals.set10.pages.basic.SalesPage;
 import static ru.crystals.set10.utils.FlexMediator.*;
 
-
-public class JuristicPersonPage extends AbstractPage {
+public class JuristicPersonPage extends SalesPage {
 	
 	static final String LOCATOR_INPUT_NAME = "id:juristicPersonName";
 	static final String LOCATOR_INPUT_ADRESS = "id:physicalAddress";
@@ -23,8 +19,6 @@ public class JuristicPersonPage extends AbstractPage {
 	
 	public JuristicPersonPage(WebDriver driver) {
 		super(driver);
-		getWait().until(ExpectedConditions.visibilityOfElementLocated(By.id(ID_SALESSWF)));
-
 	}
 	
 	public JuristicPersonPage setName(String name){
@@ -63,6 +57,6 @@ public class JuristicPersonPage extends AbstractPage {
 	}
 	
 	public ShopPreferencesPage goBack(){
-		return BasicElements.goBack(getDriver(), ShopPreferencesPage.class, ID_SALESSWF, LOCATOR_BACK_BUTTON);
+		return goBack(getDriver(), ShopPreferencesPage.class, ID_SALESSWF, LOCATOR_BACK_BUTTON);
 	}
 }
