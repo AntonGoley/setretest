@@ -7,11 +7,12 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
 import org.openqa.selenium.*;
+
 import edu.emory.mathcs.backport.java.util.Collections;
 import ru.crystals.set10.pages.basic.WarningPopUpMessage;
-import ru.crystals.set10.test.maincash.MainCashDoc;
-import ru.crystals.set10.test.maincash.MainCashDoc.MainCashDocStatus;
+import ru.crystals.set10.pages.operday.cashes.MainCashDoc.MainCashDocStatus;
 import static ru.crystals.set10.utils.FlexMediator.*;
 
 

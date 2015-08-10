@@ -1,4 +1,4 @@
-package ru.crystals.set10.test.maincash;
+package ru.crystals.set10.pages.operday.cashes;
 
 import java.math.BigDecimal;
 

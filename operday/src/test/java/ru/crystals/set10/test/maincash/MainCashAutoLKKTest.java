@@ -7,6 +7,8 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import ru.crystals.set10.pages.operday.cashes.MainCashDoc;
+
 
 /*
  * Создание автоматического документа Лист кассовой книги

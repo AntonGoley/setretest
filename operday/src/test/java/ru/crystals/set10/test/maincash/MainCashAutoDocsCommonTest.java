@@ -8,6 +8,8 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+import ru.crystals.set10.pages.operday.cashes.MainCashDoc;
+
 
 /*
  * Создание автоматических документов при закрытии опердня

@@ -6,6 +6,7 @@ import java.util.concurrent.TimeUnit;
 
 import org.apache.log4j.Logger;
 
+import ru.crystals.set10.pages.operday.cashes.MainCashDoc;
 import ru.crystals.set10.test.AbstractTest;
 import ru.crystals.set10.utils.DbAdapter;
 import ru.crystals.set10.utils.DisinsectorTools;

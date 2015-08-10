@@ -2,10 +2,13 @@ package ru.crystals.set10.test.maincash;
 
 import java.math.BigDecimal;
 import java.util.Date;
+
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+
+import ru.crystals.set10.pages.operday.cashes.MainCashDoc;
 import ru.crystals.set10.pages.operday.cashes.MainCashManualDocPage;
 import ru.crystals.set10.utils.DisinsectorTools;
 import static ru.crystals.set10.pages.operday.cashes.MainCashManualDocPage.*;
