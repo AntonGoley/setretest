@@ -22,7 +22,6 @@ public class VirtualScalesReader {
 	public static final int FILE_EXIST_RESPONSE = 200;
 	public static final int FILE_DELETED_RESPONSE = 404;
 	private static final int defaultTimeout = 60;
-	private Iterator<LinkToPluType> pluOnScales;
 	
 	HttpURLConnection  connection;
 	StringBuffer vScalesFileContent = new StringBuffer();
@@ -69,7 +68,7 @@ public class VirtualScalesReader {
 		log.info("Ожидание загрузки PLU с номером " + pluNumber + " в весы");
 		while (timeout > 0){
 			timeout--;
-			pluOnScales = readVirtualScales();
+			Iterator<LinkToPluType> pluOnScales = readVirtualScales();
 			
 			/* если в весах пусто*/
 			if (pluOnScales == null) {
@@ -103,7 +102,7 @@ public class VirtualScalesReader {
 		log.info("Ожидание выгрузки PLU с номером " + pluNumber + " из весов");
 		while (timeout > 0){
 			timeout--;
-			pluOnScales = readVirtualScales();
+			Iterator<LinkToPluType> pluOnScales = readVirtualScales();
 			
 			/* если в весах пусто, значит товар выгрузился*/
 			if (!pluOnScales.hasNext()) {
@@ -132,7 +131,7 @@ public class VirtualScalesReader {
 			return null;
 		};
 		
-		pluOnScales = readVirtualScales();
+		Iterator<LinkToPluType> pluOnScales = readVirtualScales();
 		while(pluOnScales.hasNext()){
 			plu = pluOnScales.next().getPlu();
 			if (plu.getNumber() == pluNumber){
@@ -155,7 +154,7 @@ public class VirtualScalesReader {
 		
 		while (timeout > 0){
 			timeout--;
-			pluOnScales = readVirtualScales();
+			Iterator<LinkToPluType> pluOnScales = readVirtualScales();
 			while(pluOnScales.hasNext()){
 				resultPlu = pluOnScales.next().getPlu();
 				if (resultPlu.getNumber() == plu.getNumber()){
