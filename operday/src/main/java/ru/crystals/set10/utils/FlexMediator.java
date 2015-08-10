@@ -29,7 +29,8 @@ public class FlexMediator {
 	}
 	
 	public static void doFlexMouseUp(WebDriver driver, String swfSrc, String flexId, Boolean passToParents) {
-		waitForElement(driver, swfSrc, flexId);
+		//TODO: в календаре ОД падает этот метод при вызове doFlexMouseUp
+		//waitForElement(driver, swfSrc, flexId);
 		ecxecute(driver, String.format("document.getElementById('%s').doFlexMouseUp('%s')", swfSrc, flexId, passToParents.toString()));
 	}
 	
@@ -43,12 +44,21 @@ public class FlexMediator {
 		ecxecute(driver, String.format("document.getElementById('%s').doFlexProperty('%s', 'selected', '%s')", swfSrc, flexId, value));	
 	}
 	
-	
 	/*
 	 * Вернуть свойство элемента, который представлен на странице и visible
 	 */
 	public static String getElementProperty(WebDriver driver, String swfSrc, String flexId, String propertyName) {
 		waitForElement(driver, swfSrc, flexId);
+		return ecxecuteAndReturnString(driver, String.format("return document.getElementById('%s').getFlexProperty('%s', '%s')", swfSrc, flexId, propertyName));	
+	}
+	
+	/*
+	 * Вернуть свойство элемента, который представлен на странице и может быть не видим
+	 */
+	public static String getPresentElementProperty(WebDriver driver, String swfSrc, String flexId, String propertyName) {
+		if (!waitForElementPresent(driver, swfSrc, flexId)) {
+			throw new NoSuchElementException("Не найден элемент: " + flexId);
+		}
 		return ecxecuteAndReturnString(driver, String.format("return document.getElementById('%s').getFlexProperty('%s', '%s')", swfSrc, flexId, propertyName));	
 	}
 	
@@ -135,7 +145,7 @@ public class FlexMediator {
 	public static boolean waitForProperty(WebDriver driver, String swfSrc, String flexId, String[] args) {
 		String result;
 		int timeout = 0;
-		while (timeout < 300000 ){
+		while (timeout < 20000 ){
 			result = (String) ecxecuteAndReturnString(driver, String.format("return document.getElementById('%s').getFlexProperty('%s', '%s')", swfSrc, flexId, args[0]));
 			if (result != null && result.equals(args[1])) {
 				return true;
@@ -163,7 +173,7 @@ public class FlexMediator {
 	
 	private static void ecxecute(WebDriver driver, String command) {
 		String result;
-;		JavascriptExecutor js = (JavascriptExecutor) driver;
+		JavascriptExecutor js = (JavascriptExecutor) driver;
 		result = (String)js.executeScript(command);
 		if (result!=null) {
 			log.info(result);

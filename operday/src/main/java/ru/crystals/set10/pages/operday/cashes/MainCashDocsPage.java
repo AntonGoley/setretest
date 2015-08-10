@@ -1,19 +1,20 @@
 package ru.crystals.set10.pages.operday.cashes;
 
 
-import static ru.crystals.set10.utils.FlexMediator.*;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import static ru.crystals.set10.utils.FlexMediator.clickElement;
-import static ru.crystals.set10.utils.FlexMediator.getElementProperty;
+
 import org.openqa.selenium.*;
 
-
-import ru.crystals.set10.utils.DisinsectorTools;
+import edu.emory.mathcs.backport.java.util.Collections;
+import ru.crystals.set10.pages.basic.WarningPopUpMessage;
+import ru.crystals.set10.test.maincash.MainCashDoc;
+import ru.crystals.set10.test.maincash.MainCashDoc.MainCashDocStatus;
+import static ru.crystals.set10.utils.FlexMediator.*;
 
 
 /*
@@ -55,16 +56,54 @@ public class  MainCashDocsPage extends CashDocsAbstractPage {
 		return new MainCashManualDocPage(getDriver());
 	}
 	
-	public BigDecimal getBalance(String balance){
-		String balanceOnScreen = getElementProperty(getDriver(), ID_OPERDAYSWF, balance, "text");
-		log.info("Баланс главной кассы = " + balanceOnScreen);
-		return new BigDecimal(balanceOnScreen.replace(" ", "").replace(",", "."));
-		
+	public BigDecimal getBalanceEnd(){
+		return parseBalance(BALANCE_END);
 	}
 	
-	private void getDocsOnPage(){
+	public BigDecimal getBalanceStart(){
+		return parseBalance(BALANCE_START);
+	}
+	
+	private BigDecimal parseBalance(String balanceType){
+		String balanceOnScreen = getElementProperty(getDriver(), ID_OPERDAYSWF, balanceType, "text");
+		log.info("Баланс главной кассы = " + balanceOnScreen);
+		return new BigDecimal(balanceOnScreen.replace(" ", "").replace(",", "."));
+	}
+	
+	public MainCashDocsPage closeOperdayAndSwitchBack(long date){
+		selectODFromCalendar(date);
+		closeOperday(date);
+		return openTab(MainCashDocsPage.class, LOCATOR_MAINCASH_TAB);
+	}
+	
+	public CashOperDayTabPage closeOperday(long date){
+		try {
+			return openTab(CashOperDayTabPage.class, LOCATOR_OPERDAY_TAB).closeOperDay();
+		} catch (Exception e) {
+
+			e.printStackTrace();
+		}
+		return new CashOperDayTabPage(getDriver());
+	}
+	
+	public MainCashDocsPage reopenOperDayAndSwitchBack(long date){
+		try {
+			openTab(CashOperDayTabPage.class, LOCATOR_OPERDAY_TAB)
+					.reopenOperDay()
+					.makeDecision(WarningPopUpMessage.BUTTON_YES);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return new CashesPage(getDriver()).openTab(MainCashDocsPage.class, MainCashDocsPage.LOCATOR_MAINCASH_TAB);
+	}
+	
+	
+	public void getDocsOnPage(){
+		
+		/* отключить обновление таблицы Документов ГК */
+		doFlexProperty(getDriver(), ID_OPERDAYSWF, "id:mainCashDeskTab", new String[]{"docsUpdatingEnable", "false"});
 		documents.clear();
-		ArrayList<String> resultDocs = new ArrayList<String>();
 
 		/*
 		 * Все строки в таблице документов
@@ -110,13 +149,31 @@ public class  MainCashDocsPage extends CashDocsAbstractPage {
 					 doc.setIncome(new BigDecimal(income.replace(",", ".")));
 					} 
 					
-					String outcome = getElementProperty(getDriver(), ID_OPERDAYSWF, String.format("id:documentsTable/name:%s/className:DocumentPriceItemRenderer/id:textLabel|1", rowLocator), "text");
-					if(!outcome.equals("")){
-						doc.setIncome(new BigDecimal(outcome.replace(",", ".")));
-					}
+//					String outcome = getElementProperty(getDriver(), ID_OPERDAYSWF, String.format("id:documentsTable/name:%s/className:DocumentPriceItemRenderer/id:textLabel|1", rowLocator), "text");
+//					if(!outcome.equals("")){
+//						doc.setOutcome(new BigDecimal(outcome.replace(",", ".")));
+//					}
 					
-					String status = getElementProperty(getDriver(), ID_OPERDAYSWF, String.format("id:documentsTable/name:%s/className:DocumentStatusItemRenderer/id:iconImage", rowLocator), "source");
+					String parsedStatus = getElementProperty(getDriver(), ID_OPERDAYSWF, String.format("id:documentsTable/name:%s/className:DocumentStatusItemRenderer/id:iconImage", rowLocator), "source");
+					MainCashDocStatus status = MainCashDocStatus.GREY;
+					if (parsedStatus.contains("green")) {
+						status = MainCashDocStatus.GREEN;
+					}
+					if (parsedStatus.contains("yellow")) {
+						status =MainCashDocStatus.YELLOW;
+					}
+					if (parsedStatus.contains("grey")) {
+						status = MainCashDocStatus.GREY;
+					}
+					if (parsedStatus.contains("red")) {
+						status = MainCashDocStatus.RED;
+					}
 					doc.setStatus(status);
+					
+					
+//					Boolean printable = Boolean.valueOf(
+//							getElementProperty(getDriver(), ID_OPERDAYSWF, String.format("id:documentsTable/name:%s/className:DocumentStatusItemRenderer/id:selectionCheckBox", rowLocator), "visible"));
+//					doc.setPrinable(printable);
 					
 					documents.add(doc);
 					
@@ -124,6 +181,7 @@ public class  MainCashDocsPage extends CashDocsAbstractPage {
 			};
 		}
 	}
+	
 	
 	public MainCashDoc getDocByTypeAndNumber(String type, Integer number) throws Exception{
 		if ( documents.isEmpty()) {
@@ -140,14 +198,32 @@ public class  MainCashDocsPage extends CashDocsAbstractPage {
 			}
 		}
 		// TODO: эксепшн
-		log.info(String.format("Документ типа %s с номерном %s не найден в таблице Документы!!!", type, number));
+		log.info(String.format("Документ типа %s с номером %s не найден в таблице Документы!!!", type, number));
 		
 		return null;
 	}
 	
-	public void getNumbersByDocType(String type){
+	public List<MainCashDoc> getDocByType(String type) throws Exception{
+		if ( documents.isEmpty()) {
+			getDocsOnPage();
+		}
 		
-		List<MainCashDoc> result = new ArrayList<MainCashDoc>();
+		List<MainCashDoc> resultList = new ArrayList<MainCashDoc>(0);
+		
+		MainCashDoc doc = new MainCashDoc();
+		Iterator<MainCashDoc> docs = documents.iterator();
+		while (docs.hasNext()){
+			doc = docs.next();
+			if (doc.getType().contains(type)){
+				resultList.add(doc);
+			}
+		}
+		return resultList;
+	}
+	
+	
+	public List<Integer> getNumbersByDocType(String type){
+		List<Integer> result = new ArrayList<Integer>(0);
 		
 		if ( documents.isEmpty()) {
 			getDocsOnPage();
@@ -158,14 +234,16 @@ public class  MainCashDocsPage extends CashDocsAbstractPage {
 		while (docs.hasNext()){
 			doc = docs.next();
 			if (doc.getType().contains(type)) {
-				result.add(doc);
+				result.add(doc.getNumber());
 			}
 		}
-	}
-	
-	public boolean ifPrintEnable(MainCashDoc doc){
-		return Boolean.valueOf(
-				getElementProperty(getDriver(), ID_OPERDAYSWF, String.format("id:documentsTable/name:%s/className:DocumentStatusItemRenderer/id:selectionCheckBox", doc.getFlexTableRowLocatorName()), "visible"));
+		
+		if (result.isEmpty()) {
+			result.add(0);
+		}
+		
+		Collections.sort(result);
+		return result;
 	}
 	
 	public void selectDocForPrinting(MainCashDoc doc){
@@ -175,17 +253,6 @@ public class  MainCashDocsPage extends CashDocsAbstractPage {
 	public void printDoc(MainCashDoc doc){
 		selectDocForPrinting(doc);
 		clickElement(getDriver(), ID_OPERDAYSWF, ID + BUTTON_PRINT_SELECTED);
-	}
-	
-	
-	public void getdocStatus(String tableDoctype, String docNumber){
-	}
-	
-	
-	public void getdocSum(String tableDoctype, String docNumber){
-	}
-	
-	public void getdocPrintedStatus(String tableDoctype, String docNumber){
 	}
 	
 	public void selectDoc(String tableDoctype, String docNumber){

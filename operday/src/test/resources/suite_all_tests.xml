@@ -140,7 +140,7 @@
 		</classes>	 
   	</test>  	
   	
-  	<test name="Импорт свойств товаров" >
+  	<test name="Импорт свойств товаров с длинными значениями плагинных свойств" >
 	  	<classes>
 			<class name="ru.crystals.set10.test.GoodsPropertiesWithLongValuesTest"/>
 		</classes>	 

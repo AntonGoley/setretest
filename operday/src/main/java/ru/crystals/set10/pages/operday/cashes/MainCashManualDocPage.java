@@ -4,7 +4,9 @@ package ru.crystals.set10.pages.operday.cashes;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
 import org.openqa.selenium.*;
+
 import static ru.crystals.set10.utils.FlexMediator.*;
 
 
@@ -42,37 +44,6 @@ public class  MainCashManualDocPage extends CashesPage{
 	public static final String FIELD_ENCASHMENT_BANKNOTE_500 = "Купюр 500 р.";
 	public static final String FIELD_ENCASHMENT_BANKNOTE_100 = "Купюр 100 р.";
 	public static final String FIELD_ENCASHMENT_BAG_NUMBER= "Номер инкассаторской сумки";
-	
-	
-	
-	/*
-	 * Документы ПКО
-	 */
-	public static final String DOC_TYPE_PKO_CASH_EXCESS = "Излишек по кассе";
-	public static final String DOC_TYPE_PKO_UNENCLOSURE_ENCASHMENT = "Недовложение инкассация";
-	public static final String DOC_TYPE_PKO_UNENCLOSURE_FROM_COUNTERPARTS = "Недовложение от контрагентов";
-	public static final String DOC_TYPE_PKO_INCOME_FROM_OTHER_COUNTERPARTS = "Поступление от прочих контрагентов";
-	public static final String DOC_TYPE_PKO_INCOME_FROM_EMPLOYEES = "Поступление от сотрудников магазина";
-	public static final String DOC_TYPE_PKO_EXCHANGE_INCOME = "Размен денег приход";
-	
-	/*
-	 * Документы РКО
-	 */
-	public static final String DOC_TYPE_RKO_ENCASHMENT= "Инкассация торговой выручки";
-	public static final String DOC_TYPE_RKO_PAYMENT_FROM_DEPOSITOR = "Выдача с депонента";
-	public static final String DOC_TYPE_RKO_SALARY_PAYMENT = "Выдача зарплаты";
-	public static final String DOC_TYPE_RKO_CASH_LACK = "Недостача по кассе";
-	public static final String DOC_TYPE_RKO_EXCESS_ENCASHMENT = "Перевложение Инкассация";
-	public static final String DOC_TYPE_RKO_EXCHANGE_WITHDRAWAL = "Размен денег расход";
-	
-	/*
-	 * Автоматически создаваемые документы
-	 */
-	public static final String DOC_TYPE_PKO_REVENUE = "ПКО Выручка магазина";
-	public static final String DOC_TYPE_KM7 = "Акт КМ-7";
-	public static final String DOC_TYPE_DDS = "ДДС";
-	public static final String DOC_TYPE_LIST = "Лист Кассовой Книги";
-	
 	
 	
 	/* HBox - parent, в котором лежит поле для ввода значения (текстовое, дата) */

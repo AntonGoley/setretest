@@ -61,26 +61,12 @@ public class SetTopologyTest extends AbstractTest {
 		DisinsectorTools.delay(1000);
 		salesPage = mainPage.openSales();		
 	}
-	
-//	@AfterClass
-//	private void sendGoods(){
-//		SoapRequestSender soapSender  = new SoapRequestSender();
-//		soapSender.sendGoodsToStartTesting(Config.CENTRUM_HOST, "goods.txt");
-//	}
-	
+
 	@BeforeMethod (firstTimeOnly = false)
 	public void refreshBeforeRun(ITestResult result){
 		getDriver().navigate().refresh();
 		DisinsectorTools.delay(1000);
 	}
-	
-//	@AfterMethod
-//	public void refreshOnError(ITestResult result){
-//		if (result.getStatus() == ITestResult.FAILURE) {
-//			getDriver().navigate().refresh();
-//			DisinsectorTools.delay(1000);
-//		}
-//	}
 	
 	@Test (	priority = 1,
 			groups = "Config",
@@ -147,28 +133,7 @@ public class SetTopologyTest extends AbstractTest {
 	public void addCashierTest(){
 		addCashier();
 	}
-
 	
-//	@Test
-//	public void testAddRegionAndCity(){
-//		int totalRegions = 0;
-//		int totalCities = 0;
-//		
-//		topologyPage = salesPage.navigateMenu(1, TopologyPage.class);
-//		totalRegions = topologyPage.getRegionsCount();
-//		regionPage = topologyPage.addRegion().setRegionName("TestRegion");
-//		
-//		totalCities = regionPage.getCitiesCount();
-//		cityPage = regionPage.addCity();
-//		regionPage = cityPage.goBack();
-//		
-//		Assert.assertEquals(regionPage.getCitiesCount(), totalCities + 1, "Город не добавился");
-//		
-//		topologyPage = regionPage.goBack();
-//		
-//		Assert.assertEquals(topologyPage.getRegionsCount(), totalRegions + 1, "Регион не добавился");
-//		
-//	}
 	
 	private void addRegionAndCity() {
 		topologyPage = salesPage.navigateMenu(1, TopologyPage.class);

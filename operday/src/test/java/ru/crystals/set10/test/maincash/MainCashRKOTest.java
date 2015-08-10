@@ -2,19 +2,16 @@ package ru.crystals.set10.test.maincash;
 
 import java.math.BigDecimal;
 import java.util.Date;
-
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-
 import ru.crystals.set10.pages.operday.cashes.MainCashManualDocPage;
 import ru.crystals.set10.utils.DisinsectorTools;
-import static ru.crystals.set10.pages.operday.cashes.MainCashDocsPage.BALANCE_END;
 import static ru.crystals.set10.pages.operday.cashes.MainCashManualDocPage.*;
 
 @Test (groups= "retail")
-public class RKOTest extends MainCashConfigTest {
+public class MainCashRKOTest extends MainCashConfigTest {
 	
 	MainCashManualDocPage rko;
 	int docsOnPage = 0;
@@ -30,10 +27,10 @@ public class RKOTest extends MainCashConfigTest {
 	@DataProvider (name = "RKO")
 	private Object[][] setUpRKOData(){
 		return new Object[][]{
-				{DOC_TYPE_RKO_PAYMENT_FROM_DEPOSITOR},
-				{DOC_TYPE_RKO_SALARY_PAYMENT},
-				{DOC_TYPE_RKO_CASH_LACK},
-				{DOC_TYPE_RKO_EXCESS_ENCASHMENT},
+				{MainCashDoc.DOC_TYPE_RKO_PAYMENT_FROM_DEPOSITOR},
+				{MainCashDoc.DOC_TYPE_RKO_SALARY_PAYMENT},
+				{MainCashDoc.DOC_TYPE_RKO_CASH_LACK},
+				{MainCashDoc.DOC_TYPE_RKO_EXCESS_ENCASHMENT},
 		};
 	}
 	
@@ -42,12 +39,12 @@ public class RKOTest extends MainCashConfigTest {
 	public void testAddNewRKO(String docType){
 		docsOnPage = docs.getDocCountOnPage();
 		rko = docs.addDoc();
-		balance = docs.getBalance(BALANCE_END);
+		balance = docs.getBalanceEnd();
 		
 		String docSum = DisinsectorTools.randomMoney(1000, ".");
 		
 		log.info("Добавление документа ПКО: " + docType);
-		/* из списка ПКО, РКО выбирается текстовое представление PKOtypes */
+
 		docs = rko.selectDocType(docType)
 			.setTextField(FIELD_DOC_SUM, docSum)
 			.setOperDayDate(FIELD_DATE_OPERDAY, DisinsectorTools.getDate("dd.MM.yy", new Date().getTime()))
@@ -56,16 +53,16 @@ public class RKOTest extends MainCashConfigTest {
 			.backToMainCash();
 		Assert.assertEquals(docs.getDocCountOnPage(), docsOnPage + 1, "Документ РКО " + docType.toString() + " не добавился на вкладку главной кассы Документы");
 		/* проверить уменьшение баланса*/
-		Assert.assertEquals(docs.getBalance(BALANCE_END), balance.subtract(new BigDecimal(docSum)), "Документ РКО " + docType.toString() + ": не изменился баланс после добавления документа");
+		Assert.assertEquals(docs.getBalanceEnd(), balance.subtract(new BigDecimal(docSum)), "Документ РКО " + docType.toString() + ": не изменился баланс после добавления документа");
 	}
 	
 	@Test(enabled = false, description = "SRTE-175. Добавление нового документа Инкассация торговой выручки на вкладку \"Документы\" Главной кассы")
 	public void testAddNewRKOEncashment(){
 		docsOnPage = docs.getDocCountOnPage();
 		rko = docs.addDoc();
-		log.info("Добавление документа ПКО: " + DOC_TYPE_RKO_ENCASHMENT);
+		log.info("Добавление документа ПКО: " + MainCashDoc.DOC_TYPE_RKO_ENCASHMENT);
 		/* из списка ПКО, РКО выбирается текстовое представление PKOtypes */
-		docs = rko.selectDocType(DOC_TYPE_RKO_ENCASHMENT)
+		docs = rko.selectDocType(MainCashDoc.DOC_TYPE_RKO_ENCASHMENT)
 			.setTextField(FIELD_ENCASHMENT_BANKNOTE_5000, String.valueOf(DisinsectorTools.random(2) + 1))
 			.setTextField(FIELD_ENCASHMENT_BANKNOTE_1000, String.valueOf(DisinsectorTools.random(2) + 1))
 			.setTextField(FIELD_ENCASHMENT_BANKNOTE_500, String.valueOf(DisinsectorTools.random(5) + 1))
@@ -74,7 +71,7 @@ public class RKOTest extends MainCashConfigTest {
 			.setOperDayDate(FIELD_DATE_OPERDAY, DisinsectorTools.getDate("dd.MM.yy", new Date().getTime()))
 			.saveChanges()
 			.backToMainCash();
-		Assert.assertEquals(docs.getDocCountOnPage(), docsOnPage + 1, "Документ РКО " + DOC_TYPE_RKO_ENCASHMENT + " не добавился на вкладку главной кассы Документы");
+		Assert.assertEquals(docs.getDocCountOnPage(), docsOnPage + 1, "Документ РКО " + MainCashDoc.DOC_TYPE_RKO_ENCASHMENT + " не добавился на вкладку главной кассы Документы");
 		/* проверить увеличение баланса*/
 		//Assert.assertEquals(docs.getDocCountOnPage(), docsOnPage + 1, "Документ РКО " + docType.toString() + " не добавился на вкладку главной кассы Документы");
 	}
@@ -87,7 +84,7 @@ public class RKOTest extends MainCashConfigTest {
 		
 		rko = docs.addDoc();
 		
-		rko = rko.selectDocType(DOC_TYPE_RKO_EXCESS_ENCASHMENT)
+		rko = rko.selectDocType(MainCashDoc.DOC_TYPE_RKO_EXCESS_ENCASHMENT)
 				.setTextField(FIELD_DOC_SUM, docSum)
 				.setOperDayDate(FIELD_DATE_OPERDAY, DisinsectorTools.getDate("dd.MM.yy", new Date().getTime()))
 				.setTextField(FIELD_PERSON_GIVE_TO, personReceived)
@@ -120,7 +117,7 @@ public class RKOTest extends MainCashConfigTest {
 	@Test(  description = "SRTE-175. Печать РКО, сохранение заполненых полей и баланса в печатной форме")
 	public void testPrintRKO() throws NumberFormatException, Exception{
 		String sum = DisinsectorTools.randomMoney(1000, ",");
-		String rkoType = DOC_TYPE_RKO_SALARY_PAYMENT;
+		String rkoType = MainCashDoc.DOC_TYPE_RKO_SALARY_PAYMENT;
 				
 		rko = docs.addDoc();
 		log.info("Добавление документа ПКО: " + rkoType);

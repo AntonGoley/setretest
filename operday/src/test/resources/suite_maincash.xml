@@ -11,20 +11,20 @@
 <!-- Документы главной кассы--> 	
   	<test name="Ручные документы ПКО" >
 	  	<classes>
-	  		<class name="ru.crystals.set10.test.maincash.PKOTest"/>
+	  		<class name="ru.crystals.set10.test.maincash.MainCashPKOTest"/>
 		</classes>	 
   	</test>
   	
   	<!-- Документы главной кассы--> 	
   	<test name="Ручные документы РКО" >
 	  	<classes>
-	  		<class name="ru.crystals.set10.test.maincash.RKOTest"/>
+	  		<class name="ru.crystals.set10.test.maincash.MainCahsRKOTest"/>
 		</classes>	 
   	</test>
   	
-  	<test name="Документы РКО, РКО общие тесты" >
+  	<test name="Документы ПКО, РКО общие тесты" >
 	  	<classes>
-	<class name="ru.crystals.set10.test.maincash.ManualDocsGeneralTest"/>
+	<class name="ru.crystals.set10.test.maincash.MainCashPKOandRKOCommonTest"/>
 		</classes>	 
   	</test>
   		  	

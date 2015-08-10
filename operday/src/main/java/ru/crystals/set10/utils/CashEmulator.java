@@ -465,6 +465,7 @@ public class CashEmulator {
 	      // смотрим если произвольный возврат 
 	      if (!arbitraryReturn)
 	    	  returnPe.setSuperPurchase(superPurchase);
+	      returnPe.setCheckStatus(CheckStatus.Cancelled);
 	      return returnPe;
 	}
 	

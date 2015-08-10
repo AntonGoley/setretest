@@ -11,9 +11,9 @@ import ru.crystals.set10.utils.PurchaseGenerator;
 import flex.messaging.io.amf.client.exceptions.ClientStatusException;
 
 
-public class ConfigureEnvTest extends AbstractTest{
+public class ConnectRetailToCentrumTest extends AbstractTest{
 	
-	protected static final Logger log = Logger.getLogger(ConfigureEnvTest.class);
+	protected static final Logger log = Logger.getLogger(ConnectRetailToCentrumTest.class);
 	
 	String amfTopologyServiceUrl = "/SET-Topology-Web/messagebroker/amf";
 	String amfUsers = "/SET-Users-Web/messagebroker/amf";

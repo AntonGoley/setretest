@@ -9,11 +9,10 @@ import org.testng.annotations.Test;
 import ru.crystals.set10.pages.operday.cashes.MainCashManualDocPage;
 import ru.crystals.set10.utils.DisinsectorTools;
 import static ru.crystals.set10.pages.operday.cashes.MainCashManualDocPage.*;
-import static ru.crystals.set10.pages.operday.cashes.MainCashDocsPage.*;
 
 
 @Test (groups= "retail")
-public class PKOTest extends MainCashConfigTest {
+public class MainCashPKOTest extends MainCashConfigTest {
 	
 	MainCashManualDocPage pko;
 	int docsOnPage = 0;
@@ -31,12 +30,12 @@ public class PKOTest extends MainCashConfigTest {
 	@DataProvider (name = "PKO")
 	public Object[][] setUpRKOData(){
 		return new Object[][]{
-				{DOC_TYPE_PKO_CASH_EXCESS},
-				{DOC_TYPE_PKO_UNENCLOSURE_ENCASHMENT},
-				{DOC_TYPE_PKO_UNENCLOSURE_FROM_COUNTERPARTS},
-				{DOC_TYPE_PKO_INCOME_FROM_OTHER_COUNTERPARTS},
-				{DOC_TYPE_PKO_INCOME_FROM_EMPLOYEES},
-				{DOC_TYPE_PKO_EXCHANGE_INCOME}
+				{MainCashDoc.DOC_TYPE_PKO_CASH_EXCESS},
+				{MainCashDoc.DOC_TYPE_PKO_UNENCLOSURE_ENCASHMENT},
+				{MainCashDoc.DOC_TYPE_PKO_UNENCLOSURE_FROM_COUNTERPARTS},
+				{MainCashDoc.DOC_TYPE_PKO_INCOME_FROM_OTHER_COUNTERPARTS},
+				{MainCashDoc.DOC_TYPE_PKO_INCOME_FROM_EMPLOYEES},
+				{MainCashDoc.DOC_TYPE_PKO_EXCHANGE_INCOME}
 		};
 	}
 	
@@ -44,7 +43,7 @@ public class PKOTest extends MainCashConfigTest {
 			dataProvider = "PKO")
 	public void testAddNewPKO(String docType){
 		docsOnPage = docs.getDocCountOnPage();
-		balance = docs.getBalance(BALANCE_END);
+		balance = docs.getBalanceEnd();
 		
 		pko = docs.addDoc();
 		log.info("Добавление документа ПКО: " + docType);
@@ -60,7 +59,7 @@ public class PKOTest extends MainCashConfigTest {
 			.backToMainCash();
 		Assert.assertEquals(docs.getDocCountOnPage(), docsOnPage + 1, "Документ РКО " + docType.toString() + " не добавился на вкладку главной кассы Документы");
 		/* проверить увеличение баланса*/
-		Assert.assertEquals(docs.getBalance(BALANCE_END), balance.add(new BigDecimal(docSum)), "Документ РКО " + docType.toString() + ": не изменился баланс после добавления документа");
+		Assert.assertEquals(docs.getBalanceEnd(), balance.add(new BigDecimal(docSum)), "Документ РКО " + docType.toString() + ": не изменился баланс после добавления документа");
 	}
 	
 	@DataProvider(name = "PKOTextFields")
@@ -70,7 +69,7 @@ public class PKOTest extends MainCashConfigTest {
 		
 		pko = docs.addDoc();
 		
-		pko = pko.selectDocType(DOC_TYPE_PKO_EXCHANGE_INCOME)
+		pko = pko.selectDocType(MainCashDoc.DOC_TYPE_PKO_EXCHANGE_INCOME)
 				.setTextField(FIELD_DOC_SUM, docSum)
 				.setOperDayDate(FIELD_DATE_OPERDAY, DisinsectorTools.getDate("dd.MM.yy", new Date().getTime()))
 				.setTextField(FIELD_PERSON_RECEIVED, receivedBy)
@@ -106,7 +105,7 @@ public class PKOTest extends MainCashConfigTest {
 	public void testPrintPKO() throws Exception{
 		String sum = DisinsectorTools.randomMoney(1000, ",");
 		String number = "0";
-		String pkoType = DOC_TYPE_PKO_CASH_EXCESS;
+		String pkoType = MainCashDoc.DOC_TYPE_PKO_CASH_EXCESS;
 		
 		pko = docs.addDoc();
 		log.info("Добавление документа ПКО: " + pkoType);

@@ -35,6 +35,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+import edu.emory.mathcs.backport.java.util.Arrays;
 import ru.crystals.ERPIntegration.discounts.model.xml.imp.AdvertisingActionType;
 import ru.crystals.ERPIntegration.discounts.model.xml.imp.AdvertisingActionsType;
 import ru.crystals.set10.config.Config;
@@ -108,6 +109,16 @@ public class SoapRequestSender{
 		GoodsCatalog goodsCatalog = new GoodsCatalog();
 		List<Good> gList = new ArrayList<Good>();
 		gList.add(good);
+		goodsCatalog.getGoods().addAll(gList);
+		send(goodsCatalog);
+	}	
+	
+	/*
+	 * Отправить товар
+	 */
+	public void sendGoods(Good... goods){
+		GoodsCatalog goodsCatalog = new GoodsCatalog();
+		List<Good> gList = new ArrayList<Good>(Arrays.asList(goods));
 		goodsCatalog.getGoods().addAll(gList);
 		send(goodsCatalog);
 	}	
@@ -210,15 +221,15 @@ public class SoapRequestSender{
 		 * Залогировать результат запроса в файл
 		 * TODO: добавить опцию вкл/выкл, имя файла
 		 */
-//		File f = new File("weightGoods.txt"); 
-//		try {
-//			FileWriter fis = new FileWriter(f);
-//			fis.write(request.toString());
-//			fis.close();
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}	
+		File f = new File("weightGoods.txt"); 
+		try {
+			FileWriter fis = new FileWriter(f);
+			fis.write(request.toString());
+			fis.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	
 
 	}
 	

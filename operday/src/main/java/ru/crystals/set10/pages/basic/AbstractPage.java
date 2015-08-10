@@ -135,12 +135,4 @@ public abstract class  AbstractPage {
 		return result;
 	}
 	
-	public String getFlexAlertMessage(){
-		return "";
-	}
-	
-	public AbstractPage closeAlertMessage(Boolean desicion){
-		return this;
-	}
-	
 }

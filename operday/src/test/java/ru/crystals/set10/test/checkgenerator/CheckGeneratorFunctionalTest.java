@@ -9,6 +9,7 @@ import org.testng.annotations.Test;
 import ru.crystals.set10.config.*;
 import ru.crystals.pos.bank.datastruct.AuthorizationData;
 import ru.crystals.pos.bank.datastruct.BankCard;
+import ru.crystals.pos.check.CheckStatus;
 import ru.crystals.pos.check.PositionEntity;
 import ru.crystals.pos.check.PurchaseEntity;
 import ru.crystals.pos.payments.BankCardPaymentEntity;
@@ -44,7 +45,7 @@ public class CheckGeneratorFunctionalTest {
 		//cashEmulator = CashEmulator.getCashEmulator(Config.CENTRUM_HOST, Integer.valueOf(Config.VIRTUAL_SHOP_NUMBER), Integer.valueOf(Config.CASH_NUMBER ));
 		//cashEmulator.setTimeOfset(86400000L );
 //		cashEmulator.useNextShift();
-		cashEmulator.nextIntroduction();
+	//	cashEmulator.nextIntroduction();
 	}
 	
 	@AfterClass
@@ -61,30 +62,13 @@ public class CheckGeneratorFunctionalTest {
 		for(int i=0; i<1; i++) {
 			
 			p1 = (PurchaseEntity) cashEmulator.nextPurchase();
-//			p1 = (PurchaseEntity) cashEmulator.nextPurchase();
-//			p1 = (PurchaseEntity) cashEmulator.nextPurchase();
-//			p1 = (PurchaseEntity) cashEmulator.nextPurchase();
-//			p1 = (PurchaseEntity) cashEmulator.nextPurchase();
 			
-//			p1 = (PurchaseEntity) cashEmulator.nextPurchaseWithoutSending();
-//			p1.setReturn();
-//			cashEmulator.nextCancelledPurchase(p1);
-//			
-//			
-			if (i==1) {
-				p1 = (PurchaseEntity) cashEmulator.nextPurchase();
-				//возвращаем первую позицию в кол-ве 1шт
+			if (i==0) {
+				PositionEntity position1 = p1.getPositions().get(0);
+				//возвращаем первую позицию
 				HashMap<Long, Long> returnPositions = new HashMap<Long, Long>();
-				returnPositions.put(1L, 1000L);
-				cashEmulator.nextRefundPositions(p1, returnPositions, false);
-				//p1 = (PurchaseEntity) cashEmulator.nextPurchase(getBankCardPayment(BankCardPaymentEntity.class));
-//				returnPositions.clear();
-//				returnPositions.put(2L, 1000L);
-//				cashEmulator.nextRefundPositions(p1, returnPositions, false);
-//				returnPositions.clear();
-//				returnPositions.put(3L, 1000L);
-//				cashEmulator.nextRefundPositions(p1, returnPositions, false);
-				
+				returnPositions.put(position1.getNumber(), position1.getQnty());
+				p2 = (PurchaseEntity) cashEmulator.nextRefundPositions(p1, returnPositions, false);
 				
 			}	
 		}

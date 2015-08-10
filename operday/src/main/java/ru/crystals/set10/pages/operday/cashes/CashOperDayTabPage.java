@@ -3,8 +3,11 @@ package ru.crystals.set10.pages.operday.cashes;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
 import org.openqa.selenium.*;
+
 import static ru.crystals.set10.utils.FlexMediator.*;
+import ru.crystals.set10.pages.basic.WarningPopUpMessage;
 import ru.crystals.set10.pages.operday.OperDayPage;
 import ru.crystals.set10.pages.operday.searchcheck.CheckSearchPage;
 import ru.crystals.set10.utils.DisinsectorTools;
@@ -17,6 +20,8 @@ public class  CashOperDayTabPage extends OperDayPage{
 	private static final String LOCATOR_CASHIER_NAME = "className:SoftCuttingLabel";
 	private static final String LOCATOR_NOSHIFT_CASHIER_NAME = "id:noCashierLabel";
 	private static final String LOCATOR_CASHLIST_TABLE = "id:cashmachinesList2";
+	private static final String BUTTON_CLOSE_OPERDAY = "label:Закрыть операционный день";
+	private static final String BUTTON_OPEN_OPERDAY = "label:Открыть операционный день";
 	
 	public CashOperDayTabPage(WebDriver driver) {
 		super(driver);
@@ -50,12 +55,7 @@ public class  CashOperDayTabPage extends OperDayPage{
 		
 		return result;
 	}
-	
-//	public int getLastCahsNumber(){
-//		scrollTableDown(getDriver(), ID_OPERDAYSWF, LOCATOR_CASHLIST_TABLE);
-//		return getElementsNum(getDriver(), ID_OPERDAYSWF, LOCATOR_CASH_NUMBER) - 1;
-//	}
-//	
+
 	public String getCashierNameWithNoShift(int cashNumber){
 		scrollTableDown(getDriver(), ID_OPERDAYSWF, LOCATOR_CASHLIST_TABLE);
 		setLocatorTableRowClassName(cashNumber);
@@ -69,5 +69,37 @@ public class  CashOperDayTabPage extends OperDayPage{
 		return this;
 	}
 	
+	public CashOperDayTabPage closeOperDay() throws Exception{
+		if (canCloseOperday()) {
+			clickElement(getDriver(), ID_OPERDAYSWF, BUTTON_CLOSE_OPERDAY);
+			waitSpinner(ID_OPERDAYSWF);
+			return this;
+		} else {
+			throw new Exception("Невозможно закрыть опердень. Кнопка закрытия опердня неактивна!");
+		}
+	}
+	
+	public WarningPopUpMessage reopenOperDay() throws Exception{
+		if (canReopenOperday()) {
+			clickElement(getDriver(), ID_OPERDAYSWF, BUTTON_OPEN_OPERDAY);
+			return new WarningPopUpMessage(getDriver());
+		} else {
+			throw new Exception("Невозможно переоткрыть опердень. Кнопка переотрытия опердня неактивна!");
+		}
+	}
+	
+	public Boolean canCloseOperday(){
+		return Boolean.parseBoolean(getElementProperty(getDriver(), ID_OPERDAYSWF, BUTTON_CLOSE_OPERDAY, "enabled"));
+	}
+	
+	public Boolean canReopenOperday() throws Exception{
+		boolean buttonExist = Boolean.parseBoolean(getPresentElementProperty(getDriver(), ID_OPERDAYSWF, BUTTON_OPEN_OPERDAY, "visible"));
+		if (!buttonExist){
+			throw new Exception("Невозможно переоткрыть открытый опердень!");
+			
+		} else {
+			return Boolean.parseBoolean(getElementProperty(getDriver(), ID_OPERDAYSWF, BUTTON_OPEN_OPERDAY, "enabled"));
+		}	
+	}
 	
 }

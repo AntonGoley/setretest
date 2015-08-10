@@ -4,14 +4,13 @@ import java.io.File;
 import java.math.BigDecimal;
 import java.util.Date;
 
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Test;
 
 import ru.crystals.set10.config.Config;
 import ru.crystals.set10.pages.basic.LoginPage;
 import ru.crystals.set10.pages.operday.cashes.CashesPage;
 import ru.crystals.set10.pages.operday.cashes.MainCashDocsPage;
+import ru.crystals.set10.pages.operday.cashes.MainCashManualDocPage;
 import ru.crystals.set10.test.AbstractTest;
 import ru.crystals.set10.utils.DisinsectorTools;
 import static ru.crystals.set10.pages.operday.OperDayPage.CASHES;
@@ -28,6 +27,7 @@ public class MainCashConfigTest extends AbstractTest {
 	BigDecimal balanceStart;
 	BigDecimal balance;
 	
+	protected long today = new Date().getTime();
 	
 	//@BeforeSuite
 	private void turnMainCash(){
