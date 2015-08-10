@@ -9,7 +9,7 @@ import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 
 
-public class FlexMediator {
+public class  FlexMediator{
 
 	protected static final Logger log = Logger.getLogger(FlexMediator.class);
 	

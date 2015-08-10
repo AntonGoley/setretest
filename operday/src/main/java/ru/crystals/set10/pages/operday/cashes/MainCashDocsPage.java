@@ -7,9 +7,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 import org.openqa.selenium.*;
-
 import edu.emory.mathcs.backport.java.util.Collections;
 import ru.crystals.set10.pages.basic.WarningPopUpMessage;
 import ru.crystals.set10.test.maincash.MainCashDoc;
@@ -101,7 +99,7 @@ public class  MainCashDocsPage extends CashDocsAbstractPage {
 	
 	public void getDocsOnPage(){
 		
-		/* отключить обновление таблицы Документов ГК */
+		/* отключить обновление таблицы Документы ГК */
 		doFlexProperty(getDriver(), ID_OPERDAYSWF, "id:mainCashDeskTab", new String[]{"docsUpdatingEnable", "false"});
 		documents.clear();
 
