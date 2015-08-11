@@ -18,7 +18,7 @@
   	<!-- Документы главной кассы--> 	
   	<test name="Ручные документы РКО" >
 	  	<classes>
-	  		<class name="ru.crystals.set10.test.maincash.MainCahsRKOTest"/>
+	  		<class name="ru.crystals.set10.test.maincash.MainCashRKOTest"/>
 		</classes>	 
   	</test>
   	

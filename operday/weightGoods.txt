@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<goods-catalog>
+    <good marking-of-the-good="670636">
+        <name>Товар_670636</name>
+        <bar-code code="1439284670637">
+            <count>1</count>
+            <default-code>true</default-code>
+        </bar-code>
+        <product-type>ProductPieceEntity</product-type>
+        <child>false</child>
+        <price-entry price="39.39">
+            <begin-date>2015-08-01T12:18:27</begin-date>
+            <end-date>2015-08-21T12:18:27</end-date>
+            <number>1</number>
+            <department number="1">
+                <name>Отдел 1</name>
+            </department>
+        </price-entry>
+        <price-entry price="37.49">
+            <begin-date>2015-08-01T12:18:27</begin-date>
+            <end-date>2015-08-21T12:18:27</end-date>
+            <number>2</number>
+            <department number="1">
+                <name>Отдел 1</name>
+            </department>
+        </price-entry>
+        <vat>18.0</vat>
+        <group id="52001">
+            <name>Группа 5201</name>
+            <parent-group id="52">
+                <name>Группа 52</name>
+            </parent-group>
+        </group>
+        <measure-type id="7">
+            <name>шт.</name>
+        </measure-type>
+        <delete-from-cash>false</delete-from-cash>
+        <erp-code>670636</erp-code>
+        <fullname>Товар_670636_полное имя товара - (fullname)</fullname>
+        <certification-type>4</certification-type>
+    </good>
+</goods-catalog>

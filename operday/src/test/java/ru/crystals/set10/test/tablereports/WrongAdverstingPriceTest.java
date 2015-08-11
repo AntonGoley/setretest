@@ -47,6 +47,7 @@ public class WrongAdverstingPriceTest extends AbstractReportTest{
 				REPORT_NAME_WRONG_ADVERSTING_PRICE);
 				
 		doHTMLReport(reportConfigPage, false);
+		soapSender.setSoapServiceIP(TARGET_HOST);
 	}	
 	
 	private Price getPriceByNumber(Good good, Long priceNumber){
@@ -59,7 +60,7 @@ public class WrongAdverstingPriceTest extends AbstractReportTest{
 		return new Price();
 	}
 	
-	private  void setInputData(){
+	private void setInputData(){
 		
 		goodPrice4BiggerThanPrice2 = goodGenerator.generateGood(GOODTYPE_PIECE);
 			Price price4 = goodGenerator.generatePrice(4L);
@@ -100,7 +101,6 @@ public class WrongAdverstingPriceTest extends AbstractReportTest{
 	@DataProvider(name = "Цены")
 	private Object[][] priceData(){
 		setInputData();
-		soapSender.setSoapServiceIP(TARGET_HOST);
 		return new Object[][]{
 				{"Price_4> price_2", goodPrice4BiggerThanPrice2, getPriceByNumber(goodPrice4BiggerThanPrice2, 4L).getDiscountIdentifier()},
 				{"Price_3> price_1", goodPrice3BiggerThanPrice1, getPriceByNumber(goodPrice3BiggerThanPrice1, 3L).getDiscountIdentifier()},
@@ -109,7 +109,8 @@ public class WrongAdverstingPriceTest extends AbstractReportTest{
 		};
 	}
 	
-	@Test (	description = "SRTE-67. Проверить условие попадания рекламной цены в отчет на ТК",
+	@Test (	priority = 1,
+			description = "SRTE-67. Проверить условие попадания рекламной цены в отчет на ТК",
 			dataProvider = "Цены"
 			)
 	public void testAdverstingPrice(String description, Good good, String advIdentifier){
@@ -125,7 +126,8 @@ public class WrongAdverstingPriceTest extends AbstractReportTest{
 		Assert.assertTrue(reportRow.contains(advIdentifier), "В отчете неверно отображается название рекламной акции");
 	}
 	
-	@Test (	description = "SRTE-67. Проверить названия отчета и название колонок в шапке таблицы отчета \"Некорректная акционная цена\"", 
+	@Test (	priority = 1,
+			description = "SRTE-67. Проверить названия отчета и название колонок в шапке таблицы отчета \"Некорректная акционная цена\"", 
 			dataProvider = "Некорректная акционная цена", 
 			dataProviderClass = TableReportsDataprovider.class)
 	public void testAdverstingPriceHTMLReportTableHead(String fieldName){
@@ -133,7 +135,7 @@ public class WrongAdverstingPriceTest extends AbstractReportTest{
 		Assert.assertTrue(htmlReportResults.containsValue(fieldName), "Неверное значение поля в шапке отчета: " + fieldName);
 	}
 	
-	@Test (	dependsOnMethods = {"testAdverstingPriceHTMLReportTableHead", "testAdverstingPrice"},
+	@Test (	priority = 2,
 			alwaysRun = true,
 			description = "SRTE-67. Проверить, что \"Некорректная акционная цена\" доступен для скачивания в формате xls"
 			)
@@ -143,6 +145,32 @@ public class WrongAdverstingPriceTest extends AbstractReportTest{
 		fileSize =  reportConfigPage.exportFileData(chromeDownloadPath, reportNamePattern, reportConfigPage, EXCELREPORT).length();
 		log.info("Размер сохраненного файла: " + reportNamePattern + " равен " +  fileSize);
 		Assert.assertTrue(fileSize > 0, "Файл отчета сохранился некорректно");
+	}
+	
+	@Test ( priority = 1,
+			description = "SRL-799. 1я цена (ц1<ц2) не должна попасть в отчет, если при переоценке приходит новая ц1>ц2 ")
+	public void testTwoPricesAndFirstUpdated(){
+		ArrayList<String> reportRow;
+		
+		Good pieceGood = goodGenerator.generateGood(GOODTYPE_PIECE);
+		getPriceByNumber(pieceGood, 1L).setPrice(new BigDecimal("36.01"));
+		getPriceByNumber(pieceGood, 2L).setPrice(new BigDecimal("37.49"));
+		soapSender.sendGood(pieceGood);
+		
+		getDriver().navigate().refresh();
+		reportRow = htmlReportResults.getLineValuesByCellValue(pieceGood.getMarkingOfTheGood());
+		
+		Assert.assertTrue(reportRow.contains(pieceGood.getMarkingOfTheGood()), "В отчете не отображается значение кода товара");
+		Assert.assertTrue(reportRow.contains(pieceGood.getGroup().getCode()), "В отчете не отображается значение для группы товара" );
+		
+		getPriceByNumber(pieceGood, 1L).setPrice(new BigDecimal("39.39"));
+		soapSender.sendGood(pieceGood);
+		
+		getDriver().navigate().refresh();
+		htmlReportResults = new HTMLRepotResultPage(getDriver());
+		
+		/* Проверить, что markingofthegood изчез из отчета*/
+		Assert.assertFalse(htmlReportResults.containsValue(pieceGood.getMarkingOfTheGood()), "Цена недолжна попадать в отчет после переоценки товара!" );
 	}
 	
 }
