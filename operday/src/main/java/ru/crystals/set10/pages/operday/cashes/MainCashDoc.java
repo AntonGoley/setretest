@@ -12,7 +12,7 @@ public class MainCashDoc {
 	public static final String DOC_TYPE_PKO_UNENCLOSURE_FROM_COUNTERPARTS = "Недовложение от контрагентов";
 	public static final String DOC_TYPE_PKO_INCOME_FROM_OTHER_COUNTERPARTS = "Поступление от прочих контрагентов";
 	public static final String DOC_TYPE_PKO_INCOME_FROM_EMPLOYEES = "Поступление от сотрудников магазина";
-	public static final String DOC_TYPE_PKO_EXCHANGE_INCOME = "Размен денег приход";
+//	public static final String DOC_TYPE_PKO_EXCHANGE_INCOME = "Размен денег приход";
 	
 	/*
 	 * Документы РКО
@@ -22,7 +22,7 @@ public class MainCashDoc {
 	public static final String DOC_TYPE_RKO_SALARY_PAYMENT = "Выдача зарплаты";
 	public static final String DOC_TYPE_RKO_CASH_LACK = "Недостача по кассе";
 	public static final String DOC_TYPE_RKO_EXCESS_ENCASHMENT = "Перевложение Инкассация";
-	public static final String DOC_TYPE_RKO_EXCHANGE_WITHDRAWAL = "Размен денег расход";
+//	public static final String DOC_TYPE_RKO_EXCHANGE_WITHDRAWAL = "Размен денег расход";
 	
 	/*
 	 * Автоматически создаваемые документы

@@ -122,7 +122,7 @@ public class  MainCashDocsPage extends CashDocsAbstractPage {
 			if(matcher.find()){
 				String rowLocator = matcher.group();
 				/*
-				 *  Проверить, не является ли это разделителем
+				 *  Проверить, не является ли это разделителем;
 				 *  у строки с документом, количество полей Text=3
 				 */
 				int separatorProps = getElementsNum(getDriver(), ID_OPERDAYSWF, String.format("id:documentsTable/name:%s/id:subContainer/className:Text", rowLocator));

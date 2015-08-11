@@ -31,8 +31,8 @@ public class MainCashPKOandRKOCommonTest extends MainCashConfigTest {
 	@DataProvider (name = "Documents")
 	private Object[][] setUpData(){
 		return new Object[][]{
-				{MainCashDoc.DOC_TYPE_PKO_EXCHANGE_INCOME},
-				{MainCashDoc.DOC_TYPE_RKO_EXCHANGE_WITHDRAWAL},
+				{MainCashDoc.DOC_TYPE_PKO_INCOME_FROM_EMPLOYEES},
+				{MainCashDoc.DOC_TYPE_RKO_SALARY_PAYMENT},
 		};
 	}
 	

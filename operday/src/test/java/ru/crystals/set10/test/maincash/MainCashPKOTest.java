@@ -38,7 +38,7 @@ public class MainCashPKOTest extends MainCashConfigTest {
 				{MainCashDoc.DOC_TYPE_PKO_UNENCLOSURE_FROM_COUNTERPARTS},
 				{MainCashDoc.DOC_TYPE_PKO_INCOME_FROM_OTHER_COUNTERPARTS},
 				{MainCashDoc.DOC_TYPE_PKO_INCOME_FROM_EMPLOYEES},
-				{MainCashDoc.DOC_TYPE_PKO_EXCHANGE_INCOME}
+//				{MainCashDoc.DOC_TYPE_PKO_EXCHANGE_INCOME}
 		};
 	}
 	
@@ -72,7 +72,7 @@ public class MainCashPKOTest extends MainCashConfigTest {
 		
 		pko = docs.addDoc();
 		
-		pko = pko.selectDocType(MainCashDoc.DOC_TYPE_PKO_EXCHANGE_INCOME)
+		pko = pko.selectDocType(MainCashDoc.DOC_TYPE_PKO_CASH_EXCESS)
 				.setTextField(FIELD_DOC_SUM, docSum)
 				.setOperDayDate(FIELD_DATE_OPERDAY, DisinsectorTools.getDate("dd.MM.yy", new Date().getTime()))
 				.setTextField(FIELD_PERSON_RECEIVED, receivedBy)

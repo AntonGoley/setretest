@@ -74,7 +74,7 @@ public class  MainCashManualDocPage extends CashesPage{
 	 */
 	public MainCashManualDocPage setTextField(String textField, String value){
 		/*
-		 * Локатор отличается для поля Комментарий
+		 * Локатор для поля Комментарий
 		 */
 		String textInputLocator = "FocusedTextInput";
 		if (textField.equals(FIELD_COMMENTS)) {
@@ -157,37 +157,5 @@ public class  MainCashManualDocPage extends CashesPage{
 		selectElement(getDriver(), ID_OPERDAYSWF, DOCTYPE_COMBOBOX, docType);
 		return this;
 	}
-	
-	
-	
-	
-	
-//	/*
-//	 * Документы ПКО, добавляемые вручную
-//	 */
-//	public enum PKOtypes {
-//	
-////		PKO_REVENUE_STORE,						//Выручка магазина
-//		PKO_SURPLUS_BY_CASH,					//Излишек по кассе
-//		PKO_FAILURE_TO_INVEST_ENCASHMENT,		//Недовложение инкассация
-//		PKO_DEBIT_FROM_COUNTERPARTIES,			//Недовложение от контрагентов
-//		PKO_DEBIT_FROM_OTHER_COUNTERPARTIES,	//Поступление от прочих контрагентов
-//		PKO_DEBIT_FROM_STORE_EMPLOYEES,			//Поступление от сотрудников магазина
-//		PKO_MONEY_CHANGE;						//Размен денег приход
-//	}
-//	
-//	
-//	/*
-//	 * Документы РКО, добавляемые вручную
-//	 */
-//	public enum RKOtypes {
-//		
-//		RKO_ENCASHMENT,							//Инкассация торговой выручки
-//		RKO_ISSUANCE_OF_DEPOSITOR,				//Выдача с депонента
-//		RKO_PAYMENT_OF_SALARY,					//Выдача зарплаты
-//		RKO_DEFICIT,							//Недостача по кассе
-//		RKO_REINVESTMENT,						//Перевложение Инкассация
-//		RKO_MONEY_CHANGE;						//Размен денег расход
-//	}
 	
 }
