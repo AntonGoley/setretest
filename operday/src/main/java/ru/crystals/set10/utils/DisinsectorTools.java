@@ -133,7 +133,7 @@ public class DisinsectorTools {
 	 * Генерация рандомного значения суммы денег
 	 */
 	public static String randomMoney(int max, String delimiter) {
-		return String.valueOf(Math.round(Math.random() * max) - 1)
+		return String.valueOf(Math.round(Math.random() * max) + 1)
 				+ delimiter
 				+ String.valueOf(Math.round(Math.random() * 88) + 11);
 	}

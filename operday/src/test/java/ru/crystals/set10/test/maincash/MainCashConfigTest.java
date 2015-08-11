@@ -40,6 +40,12 @@ public class MainCashConfigTest extends AbstractTest {
 		MainCashConfigTool.turnMainCash(new Date().getTime(), 10000);
 	}
 	
+	protected void reopenOdAndGreenShifts(){
+		MainCashConfigTool.makeShiftsGreenForDate(today);
+		openMainDocsPage();
+		docs.reopenOperDayAndSwitchBack(today);
+	}
+	
 	protected void openMainDocsPage(){
 //		turnMainCash();
 		//TODO: добавить проверку существования од и включенной ГК

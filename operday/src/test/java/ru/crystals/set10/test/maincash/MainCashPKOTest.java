@@ -25,9 +25,8 @@ public class MainCashPKOTest extends MainCashConfigTest {
 	
 	@BeforeClass
 	public void clearPKO(){
-		MainCashConfigTool.createODWithCashDocs(new Long[]{0L});
 		MainCashConfigTool.clearPKODocs();
-		openMainDocsPage();
+		reopenOdAndGreenShifts();
 	}
 	
 	@DataProvider (name = "PKO")

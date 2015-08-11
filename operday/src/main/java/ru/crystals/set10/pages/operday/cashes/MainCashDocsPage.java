@@ -99,7 +99,7 @@ public class  MainCashDocsPage extends CashDocsAbstractPage {
 	
 	
 	public void getDocsOnPage(){
-		
+		waitSpinner(ID_OPERDAYSWF);
 		/* отключить обновление таблицы Документы ГК */
 		doFlexProperty(getDriver(), ID_OPERDAYSWF, "id:mainCashDeskTab", new String[]{"docsUpdatingEnable", "false"});
 		documents.clear();
@@ -143,10 +143,10 @@ public class  MainCashDocsPage extends CashDocsAbstractPage {
 					String employee = getElementProperty(getDriver(), ID_OPERDAYSWF, String.format("id:documentsTable/name:%s/id:subContainer/className:Text|2", rowLocator), "text");
 					doc.setEmployee(employee);
 					
-					String income = getElementProperty(getDriver(), ID_OPERDAYSWF, String.format("id:documentsTable/name:%s/className:DocumentPriceItemRenderer/id:textLabel|0", rowLocator), "text");
-					if (!income.equals("")){
-					 doc.setIncome(new BigDecimal(income.replace(",", ".")));
-					} 
+//					String income = getElementProperty(getDriver(), ID_OPERDAYSWF, String.format("id:documentsTable/name:%s/className:DocumentPriceItemRenderer/id:textLabel|0", rowLocator), "text");
+//					if (!income.equals("")){
+//					 doc.setIncome(new BigDecimal(income.replace(",", ".")));
+//					} 
 					
 //					String outcome = getElementProperty(getDriver(), ID_OPERDAYSWF, String.format("id:documentsTable/name:%s/className:DocumentPriceItemRenderer/id:textLabel|1", rowLocator), "text");
 //					if(!outcome.equals("")){
@@ -169,10 +169,15 @@ public class  MainCashDocsPage extends CashDocsAbstractPage {
 					}
 					doc.setStatus(status);
 					
+					boolean printableExist = findElements(getDriver(), ID_OPERDAYSWF, String.format("id:documentsTable/name:%s/className:DocumentStatusItemRenderer/id:selectionCheckBox", rowLocator)).isEmpty();
+					if (printableExist){
+						Boolean printable = Boolean.valueOf(
+								getElementProperty(getDriver(), ID_OPERDAYSWF, String.format("id:documentsTable/name:%s/className:DocumentStatusItemRenderer/id:selectionCheckBox", rowLocator), "visible"));
+						doc.setPrinable(printable);
+					} else {
+						doc.setPrinable(false);
+					}
 					
-//					Boolean printable = Boolean.valueOf(
-//							getElementProperty(getDriver(), ID_OPERDAYSWF, String.format("id:documentsTable/name:%s/className:DocumentStatusItemRenderer/id:selectionCheckBox", rowLocator), "visible"));
-//					doc.setPrinable(printable);
 					
 					documents.add(doc);
 					

@@ -24,7 +24,7 @@ public class MainCashRKOTest extends MainCashConfigTest {
 	@BeforeClass
 	public void cleaRKOdocs(){
 		MainCashConfigTool.clearRKODocs();
-		openMainDocsPage();
+		reopenOdAndGreenShifts();
 	}
 	
 	@DataProvider (name = "RKO")

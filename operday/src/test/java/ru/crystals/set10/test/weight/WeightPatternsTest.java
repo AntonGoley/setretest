@@ -36,7 +36,7 @@ public class WeightPatternsTest extends WeightAbstractTest {
 		GoodsCatalog goodsCatalog = new GoodsCatalog();
 		List<Good> goods = new ArrayList<Good>(0);
 		
-		for (int i=1; i<2000; i++){
+		for (int i=1; i<5; i++){
 		
 			/*сгенерить товары с 3 разными номерами групп*/
 			weightGood1 = goodGenerator.generateWeightGood(GoodGenerator.GOODTYPE_WEIGHT);

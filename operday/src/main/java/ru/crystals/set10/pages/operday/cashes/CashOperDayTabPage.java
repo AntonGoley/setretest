@@ -89,10 +89,14 @@ public class  CashOperDayTabPage extends OperDayPage{
 	}
 	
 	public Boolean canCloseOperday(){
+		DisinsectorTools.delay(2000);
+		waitSpinner(ID_OPERDAYSWF);
 		return Boolean.parseBoolean(getElementProperty(getDriver(), ID_OPERDAYSWF, BUTTON_CLOSE_OPERDAY, "enabled"));
 	}
 	
 	public Boolean canReopenOperday() throws Exception{
+		DisinsectorTools.delay(2000);
+		waitSpinner(ID_OPERDAYSWF);
 		boolean buttonExist = Boolean.parseBoolean(getPresentElementProperty(getDriver(), ID_OPERDAYSWF, BUTTON_OPEN_OPERDAY, "visible"));
 		if (!buttonExist){
 			throw new Exception("Невозможно переоткрыть открытый опердень!");

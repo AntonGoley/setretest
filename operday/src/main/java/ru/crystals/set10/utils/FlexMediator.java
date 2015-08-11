@@ -81,7 +81,7 @@ public class  FlexMediator{
 	 * Каждый элемент списка содержит полный путь к объекту флекс
 	 */
 	public static ArrayList<String> findElements(WebDriver driver, String swfSrc, String flexId){
-		ArrayList<String> result = new ArrayList<String>();
+		ArrayList<String> result = new ArrayList<String>(0);
 		ArrayList<Object> objects = ecxecuteAndReturnArray(driver, String.format("return document.getElementById('%s').findElement('%s')", swfSrc, flexId));
 		Iterator<Object> i = objects.iterator();
 		while (i.hasNext()){
