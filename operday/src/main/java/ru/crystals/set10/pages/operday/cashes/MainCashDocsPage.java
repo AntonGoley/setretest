@@ -143,15 +143,15 @@ public class  MainCashDocsPage extends CashDocsAbstractPage {
 					String employee = getElementProperty(getDriver(), ID_OPERDAYSWF, String.format("id:documentsTable/name:%s/id:subContainer/className:Text|2", rowLocator), "text");
 					doc.setEmployee(employee);
 					
-//					String income = getElementProperty(getDriver(), ID_OPERDAYSWF, String.format("id:documentsTable/name:%s/className:DocumentPriceItemRenderer/id:textLabel|0", rowLocator), "text");
-//					if (!income.equals("")){
-//					 doc.setIncome(new BigDecimal(income.replace(",", ".")));
-//					} 
+					String income = getElementProperty(getDriver(), ID_OPERDAYSWF, String.format("id:documentsTable/name:%s/className:DocumentPriceItemRenderer/id:textLabel", rowLocator), "text");
+					if (!income.equals("")){
+					 doc.setIncome(new BigDecimal(income.replace(",", ".").replace(" ", "")));
+					} 
 					
-//					String outcome = getElementProperty(getDriver(), ID_OPERDAYSWF, String.format("id:documentsTable/name:%s/className:DocumentPriceItemRenderer/id:textLabel|1", rowLocator), "text");
-//					if(!outcome.equals("")){
-//						doc.setOutcome(new BigDecimal(outcome.replace(",", ".")));
-//					}
+					String outcome = getElementProperty(getDriver(), ID_OPERDAYSWF, String.format("id:documentsTable/name:%s/className:DocumentWithdrawItemRenderer/id:textLabel", rowLocator), "text");
+					if(!outcome.equals("")){
+						doc.setOutcome(new BigDecimal(outcome.replace(",", ".").replace(" ", "")));
+					}
 					
 					String parsedStatus = getElementProperty(getDriver(), ID_OPERDAYSWF, String.format("id:documentsTable/name:%s/className:DocumentStatusItemRenderer/id:iconImage", rowLocator), "source");
 					MainCashDocStatus status = MainCashDocStatus.GREY;
@@ -177,7 +177,6 @@ public class  MainCashDocsPage extends CashDocsAbstractPage {
 					} else {
 						doc.setPrinable(false);
 					}
-					
 					
 					documents.add(doc);
 					

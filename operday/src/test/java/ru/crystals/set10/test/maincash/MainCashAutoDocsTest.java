@@ -85,6 +85,49 @@ public class MainCashAutoDocsTest extends MainCashConfigTest {
 				"Статус документа не изменился на зеленый, когда ОД закрыт!");
 	}
 	
+	@Test(  priority = 2,  
+			description = "Печать автоматического документа ДДС")
+	public void testPrintAutoDocDDC() throws Exception{
+		String doctype = MainCashDoc.DOC_TYPE_DDS;
+		
+		log.info("Печать " + doctype);
+		autoDoc = docs.getDocByType(doctype).get(0);
+
+		removeFileReports();
+		docs.printDoc(autoDoc);
+		String reportResult = getFileContent(1);
+		
+		for (MainCashDoc doc:docs.getDocByType("ПКО")){
+			log.info(doc.getType().replace("ПКО ", "") + ", ПКО №" + doc.getNumber() + " " + doc.getIncome().toPlainString().replace(".", ","));
+			
+			Assert.assertTrue(reportResult.contains(doc.getType().replace("ПКО ", "") 
+					+ ", ПКО №" + doc.getNumber() 
+					+ " " 
+					+ doc.getIncome().toPlainString().replace(".", ",")), 
+					"Печатная форма " + doctype + " не содержит данных по документу ПКО " + doc.getType() + "; номер " + doc.getNumber());
+		}
+		
+		for (MainCashDoc doc:docs.getDocByType("РКО")){
+			log.info(doc.getType().replace("РКО ", "") + ", РКО №" + doc.getNumber() + " " + doc.getOutcome().toPlainString().replace(".", ","));
+			
+			Assert.assertTrue(reportResult.contains(doc.getType().replace("РКО ", "")
+					+ ", РКО №" + doc.getNumber()
+					+ " "
+					+ doc.getOutcome().toPlainString().replace(".", ",")), 
+					"Печатная форма " + doctype + " не содержит данных по документу ПКО " + doc.getType() + "; номер " + doc.getNumber());
+		}
+		
+		
+		Assert.assertTrue(reportResult.contains("Сальдо на начало дня " + docs.getBalanceStart().toPlainString().replace(".", ",")), 
+				"Печатная форма " + doctype + "содержит неверные данные о сальдо на начало дня ");
+		
+		Assert.assertTrue(reportResult.contains("Сальдо на конец дня " + docs.getBalanceEnd().toPlainString().replace(".", ",")), 
+				"Печатная форма " + doctype + "содержит неверные данные о сальдо на конец дня ");
+		
+	}
+		
+	
+	
 	@Test(  priority = 3,
 			description = "Автоматический документ переходит в серый статус, если опердень был переоткрыт",
 			dataProvider = "docTypes")
