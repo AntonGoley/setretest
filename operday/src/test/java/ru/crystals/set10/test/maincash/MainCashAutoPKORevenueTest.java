@@ -35,9 +35,7 @@ public class MainCashAutoPKORevenueTest extends MainCashConfigTest {
 	public void setup(){
 		MainCashConfigTool.clearLastPKORevenuDoc(today);
 		pkoRevenueExpectedNumber = MainCashConfigTool.getNexDocNumberForType(MainCashDoc.DOC_TYPE_PKO_REVENUE);
-
 		reopenOdAndGreenShifts();
-		balanceBefore = docs.getBalanceEnd();
 	}
 	
 	@Test(	priority = 0,
@@ -59,7 +57,10 @@ public class MainCashAutoPKORevenueTest extends MainCashConfigTest {
 
 	@Test( 	priority = 1,
 			description = "SRTE-176. Каждая новая пришедшая закрытая смена (Z-отчёт) с любой кассы, меняет баланс главной кассы")
-	public void testPKORevenueChangeBalanceOnNewCheck(){
+	public void testPKORevenueChangeBalanceOnNewCheck() throws Exception{
+		balanceBefore = docs.getBalanceEnd();
+		sendZReport();
+		pkoRevenue = docs.getDocByType(MainCashDoc.DOC_TYPE_PKO_REVENUE).get(0);
 		Assert.assertEquals(docs.getBalanceEnd(), balanceBefore.add(shifDelta), "Неверная сумма документа " + MainCashDoc.DOC_TYPE_PKO_REVENUE);
 	}
 	
@@ -111,7 +112,7 @@ public class MainCashAutoPKORevenueTest extends MainCashConfigTest {
 	}
 	
 	private void sendZReport(){
-		cashEmulator.nextPurchase();
+		//cashEmulator.nextPurchase();
 		cashEmulator.nextZReport(cashInLong, cashInLong + shifDeltaLong);
 		pkoSum = pkoSum.add(shifDelta);
 		/* обновить страницу*/

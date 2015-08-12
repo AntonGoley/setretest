@@ -51,7 +51,13 @@ public class DbAdapter {
 	}
 	
 	public  int queryForInt(String db, String sql) {
-		return connectionPool.get(db).queryForInt(sql); 
+		int result = 0;
+		try {
+			result = connectionPool.get(db).queryForInt(sql);
+		} catch (Exception e) {
+			
+		}
+		return  result; 
 	}
 	
 	@SuppressWarnings("unchecked")
