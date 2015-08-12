@@ -28,7 +28,13 @@
 		</classes>	 
   	</test>
   	
-  		<test name="Автоматически создаваемые документы ДДС, ЛКК" >
+  	<test name="Автоматически создаваемые документы: ПКО Выручка" >
+	  	<classes>
+	<class name="ru.crystals.set10.test.maincash.MainCashAutoPKORevenueTest"/>
+		</classes>	 
+  	</test>
+  	
+  	<test name="Автоматически создаваемые документы: ДДС, ЛКК" >
 	  	<classes>
 	<class name="ru.crystals.set10.test.maincash.MainCashLKKAndDDSTest"/>
 		</classes>	 
