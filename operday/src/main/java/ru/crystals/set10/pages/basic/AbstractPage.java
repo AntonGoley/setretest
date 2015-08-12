@@ -108,8 +108,14 @@ public abstract class  AbstractPage {
 			reader = new PdfReader(file.getAbsolutePath());
 			PdfTextExtractor parser = new PdfTextExtractor(reader);
 			
+			String pageContent = "";
 			for (int i:pageNumbers) {
-				result = result + parser.getTextFromPage(i);
+				try {
+					pageContent = parser.getTextFromPage(i);
+					result = result + pageContent;
+				} catch (NullPointerException e){
+					log.info("В документе не найдена страница с номеро " + i);
+				}
 			}	
 				
 			
