@@ -69,7 +69,17 @@ public class  MainCashDocsPage extends CashDocsAbstractPage {
 		return new BigDecimal(balanceOnScreen.replace(" ", "").replace(",", "."));
 	}
 	
+	/*
+	 * Закрытие опердня с положительным балансом
+	 */
 	public MainCashDocsPage closeOperdayAndSwitchBack(long date){
+		/* если баланс отрицательный, добавим документ ПКО*/
+		if (!(this.getBalanceEnd().compareTo(BigDecimal.ZERO) > 0)){
+			this.addDoc().selectDocType(MainCashDoc.DOC_TYPE_PKO_CASH_EXCESS)
+				.setTextField(MainCashManualDocPage.FIELD_DOC_SUM, this.getBalanceEnd().abs().toPlainString().replace(".", ","))
+				.saveChanges()
+				.backToMainCash();
+		}
 		selectODFromCalendar(date);
 		closeOperday(date);
 		return openTab(MainCashDocsPage.class, LOCATOR_MAINCASH_TAB);

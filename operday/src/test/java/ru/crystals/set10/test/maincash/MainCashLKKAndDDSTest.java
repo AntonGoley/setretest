@@ -24,7 +24,7 @@ public class MainCashLKKAndDDSTest extends MainCashConfigTest {
 	
 	@BeforeClass
 	public void setup(){
-		MainCashConfigTool.clearLastAutoDocs();
+		MainCashConfigTool.clearLastAutoDocs(today);
 		
 		lkkExpectedNumber = MainCashConfigTool.getNexDocNumberForType(MainCashDoc.DOC_TYPE_LKK);
 		ddsExpectedNumber = MainCashConfigTool.getNexDocNumberForType(MainCashDoc.DOC_TYPE_DDS);

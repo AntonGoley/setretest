@@ -33,11 +33,11 @@ public class MainCashAutoPKORevenueTest extends MainCashConfigTest {
 	
 	@BeforeClass
 	public void setup(){
-		MainCashConfigTool.clearLastPKORevenuDoc();
+		MainCashConfigTool.clearLastPKORevenuDoc(today);
 		pkoRevenueExpectedNumber = MainCashConfigTool.getNexDocNumberForType(MainCashDoc.DOC_TYPE_PKO_REVENUE);
 
 		reopenOdAndGreenShifts();
-		balanceBefore = docs.getBalanceStart();
+		balanceBefore = docs.getBalanceEnd();
 	}
 	
 	@Test(	priority = 0,
@@ -88,6 +88,7 @@ public class MainCashAutoPKORevenueTest extends MainCashConfigTest {
 	}
 	
 	@Test( 	priority = 3,
+			dependsOnMethods = "testPKORevenueGreenStatusOnCloseOd",
 			description = "SRTE-176. Печать документа ПКО Выручка после закрытия ОД и проверка заполнения полей печатной формы")
 	public void testPKORevenuePrint(){
 		removeFileReports();
