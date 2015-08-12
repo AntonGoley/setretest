@@ -11,8 +11,6 @@ import org.testng.annotations.Test;
 @Test (groups= "retail")
 public class MainCashAutoDDSTest extends MainCashConfigTest {
 	
-
-	
 	@BeforeClass
 	public void setup(){
 	}

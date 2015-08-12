@@ -60,7 +60,7 @@ public class MainCashConfigTest extends AbstractTest {
 		DisinsectorTools.removeOldReport(chromeDownloadPath, "merged_maincash_document.pdf");
 	}
 	
-	protected String getFileContent(Integer pageNumber){
+	protected String getFileContent(Integer... pageNumber){
 		File file = DisinsectorTools.getDownloadedFile(chromeDownloadPath, "merged_maincash_document.pdf");
 		return docs.getPDFFilePageContent(file, pageNumber);
 	}

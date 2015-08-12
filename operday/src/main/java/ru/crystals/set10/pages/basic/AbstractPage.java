@@ -101,13 +101,19 @@ public abstract class  AbstractPage {
 	}
 	
 	
-	public String getPDFFilePageContent(File file, int pageNumber){
+	public String getPDFFilePageContent(File file, Integer... pageNumbers){
 		String result = "";
 		PdfReader reader;
 		try {
 			reader = new PdfReader(file.getAbsolutePath());
 			PdfTextExtractor parser = new PdfTextExtractor(reader);
-			result = parser.getTextFromPage(pageNumber);
+			
+			for (int i:pageNumbers) {
+				result = result + parser.getTextFromPage(i);
+			}	
+				
+			
+			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

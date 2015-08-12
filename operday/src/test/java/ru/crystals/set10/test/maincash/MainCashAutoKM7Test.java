@@ -15,6 +15,8 @@ public class MainCashAutoKM7Test extends MainCashConfigTest {
 	
 	@BeforeClass
 	public void setup(){
+		
+		
 	}
 	
 	@Test( enabled=false,
@@ -23,12 +25,12 @@ public class MainCashAutoKM7Test extends MainCashConfigTest {
 	}
 	
 	@Test( enabled=false,
-			description = "SRTE-181. Закрытая смена (Z-отчет) создаёт документ АКТ КМ-7")
+			description = "SRTE-181. АКТ КМ-7 содержит информацию по всем закрытым сменам")
 	public void testKM7ContainsAllClosedShifts(){
 	}
 	
 	@Test( enabled=false,
-			description = "SRTE-181. Акт КМ7 содержит данные актов КМ6.")
+			description = "SRTE-181. Акт КМ7 содержит данные актов КМ6.???")
 	public void testKM7ContainsKM6AsData(){
 	}
 	

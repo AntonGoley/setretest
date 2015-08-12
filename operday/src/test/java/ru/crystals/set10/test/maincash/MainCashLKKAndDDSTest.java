@@ -128,7 +128,7 @@ public class MainCashLKKAndDDSTest extends MainCashConfigTest {
 
 		removeFileReports();
 		docs.printDoc(autoDoc);
-		String reportResult = getFileContent(1);
+		String reportResult = getFileContent(new Integer[]{1, 2});
 		
 		assertDDCLine("ПКО", reportResult);
 		assertDDCLine("РКО", reportResult);

@@ -35,10 +35,9 @@ public class MainCashAutoPKORevenueTest extends MainCashConfigTest {
 	public void setup(){
 		MainCashConfigTool.clearLastPKORevenuDoc();
 		pkoRevenueExpectedNumber = MainCashConfigTool.getNexDocNumberForType(MainCashDoc.DOC_TYPE_PKO_REVENUE);
-		openMainDocsPage();
-		MainCashConfigTool.makeShiftsGreenForDate(today);
-		docs.reopenOperDayAndSwitchBack(today);
-		balanceBefore = docs.getBalanceEnd();
+
+		reopenOdAndGreenShifts();
+		balanceBefore = docs.getBalanceStart();
 	}
 	
 	@Test(	priority = 0,
@@ -95,7 +94,8 @@ public class MainCashAutoPKORevenueTest extends MainCashConfigTest {
 		docs.printDoc(pkoRevenue);
 		String pageContent = getFileContent(1);
 		Assert.assertTrue(pageContent.contains("Основание:\n" + MainCashDoc.DOC_TYPE_PKO_REVENUE.substring(4)), "Печатная форма не содержит название документа ПКО: " + MainCashDoc.DOC_TYPE_PKO_REVENUE);
-		Assert.assertTrue(pageContent.contains(pkoRevenue.getDocSum().toString()), "Печатная форма не содержит сумму в таблице документа " + pkoRevenue.getDocSum().toEngineeringString());
+		String docsum = pkoRevenue.getDocSum().toPlainString().replace(".", ","); 
+		Assert.assertTrue(pageContent.contains(docsum), "Печатная форма не содержит сумму в таблице документа " + docsum);
 	}
 	
 	@Test( 	enabled = false, dependsOnMethods = "testPKORevenueWhenFirstZReport",
