@@ -145,12 +145,12 @@ public class  MainCashDocsPage extends CashDocsAbstractPage {
 					
 					String income = getElementProperty(getDriver(), ID_OPERDAYSWF, String.format("id:documentsTable/name:%s/className:DocumentPriceItemRenderer/id:textLabel", rowLocator), "text");
 					if (!income.equals("")){
-					 doc.setIncome(new BigDecimal(income.replace(",", ".").replace(" ", "")));
+					 doc.setDocSum(new BigDecimal(income.replace(",", ".").replace(" ", "")));
 					} 
 					
 					String outcome = getElementProperty(getDriver(), ID_OPERDAYSWF, String.format("id:documentsTable/name:%s/className:DocumentWithdrawItemRenderer/id:textLabel", rowLocator), "text");
 					if(!outcome.equals("")){
-						doc.setOutcome(new BigDecimal(outcome.replace(",", ".").replace(" ", "")));
+						doc.setDocSum(new BigDecimal(outcome.replace(",", ".").replace(" ", "")));
 					}
 					
 					String parsedStatus = getElementProperty(getDriver(), ID_OPERDAYSWF, String.format("id:documentsTable/name:%s/className:DocumentStatusItemRenderer/id:iconImage", rowLocator), "source");

@@ -37,7 +37,6 @@ public class MainCashPKOTest extends MainCashConfigTest {
 				{MainCashDoc.DOC_TYPE_PKO_UNENCLOSURE_FROM_COUNTERPARTS},
 				{MainCashDoc.DOC_TYPE_PKO_INCOME_FROM_OTHER_COUNTERPARTS},
 				{MainCashDoc.DOC_TYPE_PKO_INCOME_FROM_EMPLOYEES},
-//				{MainCashDoc.DOC_TYPE_PKO_EXCHANGE_INCOME}
 		};
 	}
 	

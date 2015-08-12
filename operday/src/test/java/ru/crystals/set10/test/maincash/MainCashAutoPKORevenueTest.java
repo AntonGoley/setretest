@@ -70,7 +70,7 @@ public class MainCashAutoPKORevenueTest extends MainCashConfigTest {
 		sendZReport();
 		pkoRevenue = docs.getDocByType(MainCashDoc.DOC_TYPE_PKO_REVENUE).get(0);
 		DisinsectorTools.delay(1000);
-		Assert.assertEquals(pkoRevenue.getIncome(), pkoSum, "Неверная сумма документа " + MainCashDoc.DOC_TYPE_PKO_REVENUE);
+		Assert.assertEquals(pkoRevenue.getDocSum(), pkoSum, "Неверная сумма документа " + MainCashDoc.DOC_TYPE_PKO_REVENUE);
 	}
 	
 	@Test( priority = 2,
@@ -95,7 +95,7 @@ public class MainCashAutoPKORevenueTest extends MainCashConfigTest {
 		docs.printDoc(pkoRevenue);
 		String pageContent = getFileContent(1);
 		Assert.assertTrue(pageContent.contains("Основание:\n" + MainCashDoc.DOC_TYPE_PKO_REVENUE.substring(4)), "Печатная форма не содержит название документа ПКО: " + MainCashDoc.DOC_TYPE_PKO_REVENUE);
-		Assert.assertTrue(pageContent.contains(pkoRevenue.getIncome().toString()), "Печатная форма не содержит сумму в таблице документа " + pkoRevenue.getIncome().toEngineeringString());
+		Assert.assertTrue(pageContent.contains(pkoRevenue.getDocSum().toString()), "Печатная форма не содержит сумму в таблице документа " + pkoRevenue.getDocSum().toEngineeringString());
 	}
 	
 	@Test( 	enabled = false, dependsOnMethods = "testPKORevenueWhenFirstZReport",

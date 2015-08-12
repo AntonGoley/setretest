@@ -54,11 +54,11 @@ public class MainCashAutoLKKTest extends MainCashConfigTest {
 		String pageContent = getFileContent(1);
 		
 		for (MainCashDoc pko:docsPko){
-			Assert.assertTrue(pageContent.contains(pko.getIncome().toString()), "Документ " + MainCashDoc.DOC_TYPE_LKK + "не содержит данных по документу "  + pko.getType() + " номер " + pko.getNumber());
+			Assert.assertTrue(pageContent.contains(pko.getDocSum().toString()), "Документ " + MainCashDoc.DOC_TYPE_LKK + "не содержит данных по документу "  + pko.getType() + " номер " + pko.getNumber());
 		}
 		
 		for (MainCashDoc rko:docsRko){
-			Assert.assertTrue(pageContent.contains(rko.getOutcome().toString()), "Документ " + MainCashDoc.DOC_TYPE_LKK + "не содержит данных по документу "  + rko.getType() + " номер " + rko.getNumber());
+			Assert.assertTrue(pageContent.contains(rko.getDocSum().toString()), "Документ " + MainCashDoc.DOC_TYPE_LKK + "не содержит данных по документу "  + rko.getType() + " номер " + rko.getNumber());
 		}
 	}
 	
