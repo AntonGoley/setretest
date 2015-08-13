@@ -107,13 +107,11 @@ public class MainCashLKKAndDDSTest extends MainCashConfigTest {
 			/* TODO: сделать нормальную валидацию строки!
 			 *  
 			 */
-			reportResult = reportResult.replaceAll("([aA-zZ. ]+)", " ").replaceAll("([аА-яЯ. ]+)", " ");
-			log.info(reportResult);
+			reportResult = reportResult.replaceAll("([aA-zZ. ]+)", " ").replaceAll("([аА-яЯ. ]+)", "");
 			
 			String sum = doc.getDocSum().toPlainString().replace(".", ",");
-			String docLineInReport = doc.getNumber() + " " + sum + " " + sum + " " + doc.getNumber();
-			
-			log.info(docLineInReport);
+			String docLineInReport = doc.getNumber()  + sum  + sum + doc.getNumber();
+
 			Assert.assertTrue(reportResult.contains(docLineInReport), 
 					"Печатная форма " + MainCashDoc.DOC_TYPE_LKK + " не содержит данных по документу " + doc.getType() + "; номер " + doc.getNumber());
 		}
