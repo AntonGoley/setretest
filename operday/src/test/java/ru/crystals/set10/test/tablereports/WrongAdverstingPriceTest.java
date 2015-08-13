@@ -147,7 +147,7 @@ public class WrongAdverstingPriceTest extends AbstractReportTest{
 		Assert.assertTrue(fileSize > 0, "Файл отчета сохранился некорректно");
 	}
 	
-	@Test ( priority = 1,
+	@Test ( priority = 1, enabled = false,
 			description = "SRL-799. 1я цена (ц1<ц2) не должна попасть в отчет, если при переоценке приходит новая ц1>ц2 ")
 	public void testTwoPricesAndFirstUpdated(){
 		ArrayList<String> reportRow;

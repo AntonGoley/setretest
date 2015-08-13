@@ -45,11 +45,11 @@ public class GoodOnTKReportTest extends AbstractReportTest{
 		good = goodGenerator.generateGood(GOODTYPE_PIECE);
 		soapSender.sendGood(good);
 		
-		/* сгенерить акцию и не отправлять*/
+		/* сгенерить акцию */
 		advertising = adverstingGenerator.generateAdversting(good.getMarkingOfTheGood());
 		soapSender.sendAdvertising(advertising);
 		
-		// сгенерить отчет
+		/* сгенерить отчет */
 		goodOnTKConfig.setErpCode(good.getErpCode());
 		doHTMLReport(goodOnTKConfig, true);
 	}	

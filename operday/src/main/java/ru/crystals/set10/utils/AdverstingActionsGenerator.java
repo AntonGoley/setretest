@@ -1,15 +1,20 @@
 package ru.crystals.set10.utils;
 
+import java.math.BigDecimal;
 import java.util.Date;
+
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
+
 import ru.crystals.ERPIntegration.discounts.model.xml.imp.ActionModeType;
 import ru.crystals.ERPIntegration.discounts.model.xml.imp.ActionResultsType;
 import ru.crystals.ERPIntegration.discounts.model.xml.imp.AdvertisingActionType;
 import ru.crystals.ERPIntegration.discounts.model.xml.imp.MarkingOfTheGoodType;
 import ru.crystals.ERPIntegration.discounts.model.xml.imp.RowType;
 import ru.crystals.ERPIntegration.discounts.model.xml.imp.SetType;
+import ru.crystals.ERPIntegration.discounts.model.xml.imp.XmlDiscountActionResult;
+import ru.crystals.ERPIntegration.discounts.model.xml.imp.XmlDiscountActionResultType;
 
 
 public class AdverstingActionsGenerator {
@@ -18,9 +23,10 @@ public class AdverstingActionsGenerator {
 	 * TODO: добавить возможность гибко задавать акции
 	 */
 	public AdvertisingActionType generateAdversting(String markingOfTheGood){
+		
 		AdvertisingActionType action = new AdvertisingActionType();
 		long dateBegin = new Date().getTime() - 86400000L;
-		long dateEnd = new Date().getTime();
+		long dateEnd = new Date().getTime() +  86400000L;
 				
 		action.setBeginDate(getDate(dateBegin));
 		action.setEndDate(getDate(dateEnd));
@@ -36,16 +42,23 @@ public class AdverstingActionsGenerator {
 		 * Заполнить результат акции
 		 */
 		ActionResultsType results = new ActionResultsType();
+//		
+//		XmlDiscountActionResult discount = new XmlDiscountActionResult();
+//		discount.setType(XmlDiscountActionResultType.PERCENT);
+//		discount.setValue(new BigDecimal("50.00"));
+//		
+//		results.setCalculation(discount);
 		
 		// тип акции
 		SetType actionType = new SetType();
 		// Название товарного набора
 		actionType.setName("Набор_" + dateBegin);
+
 		
 		// множество товаров, на которое может действовать акция
 		RowType row = new RowType();
 		row.setRequiedQuantity(new Double(1));
-		row.setFixedPrice(new Double(10));
+		row.setFixedPrice(new Double(100));
 		
 		MarkingOfTheGoodType good = new MarkingOfTheGoodType();
 		good.setId(markingOfTheGood);
@@ -54,16 +67,21 @@ public class AdverstingActionsGenerator {
 		actionType.getRow().add(row);
 		results.getSet().add(actionType);
 		
+//		results.setCalculation(discount);
+		
 		action.setActionResults(results);
 		
 		return action;
 	}
 	
+	
 	/*
 	 * Добавить товарный набор
 	 */
-	public void addSetType(){
+	public AdvertisingActionType addSetType(AdvertisingActionType action){
+		return action;
 	}
+	
 	
 	
 	public XMLGregorianCalendar getDate(long date){

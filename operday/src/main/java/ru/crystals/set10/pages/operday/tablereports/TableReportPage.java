@@ -26,7 +26,7 @@ public class  TableReportPage extends OperDayPage{
 	public static final String REPORT_NAME_MRC_PRICE = "Прейскурант на табачные изделия";
 	public static final String REPORT_NAME_CASH_REGNUMBERS = "Отчёт по регистрационным номерам касс";
 	public static final String REPORT_NAME_WRONG_ADVERSTING_PRICE = "Некорректная акционная цена";
-	
+	public static final String REPORT_NAME_ADVERSTING_IN_CHECK = "Применение рекламной акции в чеках";
 	
 	public TableReportPage(WebDriver driver) {
 		super(driver);
