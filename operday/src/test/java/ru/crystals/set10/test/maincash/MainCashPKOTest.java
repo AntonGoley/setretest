@@ -20,8 +20,8 @@ public class MainCashPKOTest extends MainCashConfigTest {
 	MainCashManualDocPage pko;
 	int docsOnPage = 0;
 	
-	String receivedBy = "Получилов И.И";
-	String receivedFrom = "Вручалова Г.Г";
+	String receivedBy = "Polychilov I.I";
+	String receivedFrom = "Vrychalova A.A";
 	
 	@BeforeClass
 	public void clearPKO(){

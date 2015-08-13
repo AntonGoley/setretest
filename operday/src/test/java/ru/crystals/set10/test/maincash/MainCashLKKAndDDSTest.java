@@ -105,9 +105,10 @@ public class MainCashLKKAndDDSTest extends MainCashConfigTest {
 			/*пример строки:  //1 Вручалова Г.Г 691,23 1 Вручалова Г.Г 691,23 */
 			
 			/* TODO: сделать нормальную валидацию строки!
-			 * сейчас смотрим только номер документа + сумма  с хардкодом фамилии!!!! 
+			 *  
 			 */
-			reportResult = reportResult.replace(" Вручалова Г.Г ", " ").replace("Вручалова Г.Г", "");
+			reportResult = reportResult.replaceAll("([aA-zZ. ]+)", " ").replaceAll("([аА-яЯ. ]+)", " ");
+			log.info(reportResult);
 			
 			String sum = doc.getDocSum().toPlainString().replace(".", ",");
 			String docLineInReport = doc.getNumber() + " " + sum + " " + sum + doc.getNumber();

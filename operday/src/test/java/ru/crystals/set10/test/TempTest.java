@@ -3,6 +3,8 @@ package ru.crystals.set10.test;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.log4j.Logger;
 import org.testng.annotations.BeforeClass;
@@ -20,7 +22,7 @@ import ru.crystals.setretailx.products.catalog.PluginProperty;
 import static ru.crystals.set10.utils.GoodGenerator.*;
 
 @Test (groups = "retail")
-public class TempTest extends AbstractTest{
+public class TempTest {
 
 	protected static final Logger log = Logger.getLogger(TempTest.class);
 	long date = new Date().getTime();
@@ -38,6 +40,21 @@ public class TempTest extends AbstractTest{
 		
 		soapSender.setSoapServiceIP(Config.RETAIL_HOST);
 	}
+	
+	@Test
+	public void regExp(){
+		Pattern pattern = Pattern.compile("([aA-zZ. ]+)");
+		String a = "9 BLastName A. C. 1998,91 1998,91BLastName A. C.9";
+		log.info(a.replaceAll("([aA-zZ. ]+)", " "));
+
+		
+		
+		
+		
+		
+
+	}
+	
 	
 	@Test (enabled = false)
 	public void fakeTest(){
