@@ -111,7 +111,7 @@ public class MainCashLKKAndDDSTest extends MainCashConfigTest {
 			log.info(reportResult);
 			
 			String sum = doc.getDocSum().toPlainString().replace(".", ",");
-			String docLineInReport = doc.getNumber() + " " + sum + " " + sum + doc.getNumber();
+			String docLineInReport = doc.getNumber() + " " + sum + " " + sum + " " + doc.getNumber();
 			
 			log.info(docLineInReport);
 			Assert.assertTrue(reportResult.contains(docLineInReport), 
