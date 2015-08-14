@@ -192,7 +192,7 @@ public class CheckGeneratorTest {
 		
 		for (int i=0; i<pe.getPositions().size(); i++){
 			PositionEntity position = pe.getPositions().get(i);
-			returnPositions.put(position.getNumber(), 1L * 1000);
+			returnPositions.put(position.getNumber(), 1L * 1000L);
 		}
 		cashEmulator.nextRefundPositions(pe, returnPositions, false);
 		

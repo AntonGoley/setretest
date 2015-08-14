@@ -4,12 +4,19 @@ package ru.crystals.set10.test.maincash;
 import static ru.crystals.set10.pages.operday.cashes.CashDocsAbstractPage.LOCATOR_DOCS;
 import static ru.crystals.set10.pages.operday.cashes.CashDocsAbstractPage.LOCATOR_KM6;
 
+import java.util.Date;
+import java.util.HashMap;
+
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import ru.crystals.pos.check.PurchaseEntity;
+import ru.crystals.pos.check.ReportShiftEntity;
+import ru.crystals.set10.config.Config;
 import ru.crystals.set10.pages.operday.cashes.MainCashDoc;
 import ru.crystals.set10.pages.operday.cashes.MainCashDoc.MainCashDocStatus;
+import ru.crystals.setretailx.cash.CashVO;
 
 
 /*
@@ -22,13 +29,36 @@ public class MainCashAutoKM7Test extends MainCashConfigTest {
 	private MainCashDoc autoDoc;
 	private static boolean reopenOd = false;
 	
+	PurchaseEntity p1;
+	PurchaseEntity p2;
+	
+	private ReportShiftEntity reportShift1;
+	private ReportShiftEntity reportShift2;
+	
+	
+	CashVO cashVo;
+	
+	
 	@BeforeClass
 	public void setup(){
+		
 		MainCashConfigTool.clearLastKM7Doc(today);
 		km7ExpectedNumber = MainCashConfigTool.getNexDocNumberForType(MainCashDoc.DOC_TYPE_KM7);
 		reopenOdAndGreenShifts();
-		cashEmulator.nextZReport(1000L, 5000L);
-		cashEmulator.nextZReport(2000L, 6000L);
+		
+		cashVo = cashEmulator.setCashVO(cashEmulator.getCashNumber(), Config.SHOP_NUMBER, new Date().getTime());
+		cashEmulator.sendCashVO(cashVo);
+		
+		HashMap<Long, Long> returnPosition = new HashMap<>();
+		returnPosition.put(1L, 1000L);
+		
+		p1 = (PurchaseEntity) cashEmulator.nextPurchase();
+		cashEmulator.nextRefundPositions(p1, returnPosition, false);
+		reportShift1 = cashEmulator.nextZReport(1000L, 5000L);
+
+//		p2 = (PurchaseEntity) cashEmulator.nextPurchase();
+//		cashEmulator.nextRefundPositions(p2, returnPosition, false);
+//		reportShift2 = cashEmulator.nextZReport(2000L, 6000L);
 		
 		docs.switchToTable(LOCATOR_KM6);
 		docs.switchToTable(LOCATOR_DOCS);
@@ -63,14 +93,25 @@ public class MainCashAutoKM7Test extends MainCashConfigTest {
 				"Статус документа не изменился на зеленый, когда ОД закрыт!");
 	}
 	
-	@Test( priority = 3, enabled = false,
-			description = "SRTE-181. АКТ КМ-7 содержит информацию по всем закрытым сменам")
+	@Test( priority = 3,
+			description = "SRTE-191. АКТ КМ-7. Печать. содержит информацию по всем закрытым сменам")
 	public void testKM7ContainsAllClosedShifts(){
 		removeFileReports();
 		docs.printDoc(autoDoc);
-		String reportResult = getFileContent(1);
+		String reportResult = getFileContent(new Integer[]{1, 2});
 		
-		Assert.assertTrue(reportResult.contains(""), 
+		//527493 0,0019 4987 987fact0279858 fisc0279858
+		String docLineInReport =  getSumStr(reportShift1.getSumPurchaseFiscal()) + " "
+				+ getSumStr(reportShift1.getSumReturnFiscal()) 
+				+ reportShift1.getShift().getNumShift() + " "
+				+ getSumStr(reportShift1.getIncresentTotalFinish())
+				+ getSumStr(reportShift1.getIncresentTotalStart())
+				+ cashVo.getFactoryNum() + " "
+				+ cashVo.getFiscalNum() + " "
+				+ getSumStr(reportShift1.getSumCashPurchase());
+		
+		log.info("Строка для валидации: " + docLineInReport);
+		Assert.assertTrue(reportResult.contains(docLineInReport), 
 				"Печатная форма " + MainCashDoc.DOC_TYPE_KM7  + "содержит неверные данные о балансе на начало дня ");
 	}
 	
@@ -101,6 +142,14 @@ public class MainCashAutoKM7Test extends MainCashConfigTest {
 	@Test( enabled=false,
 			description = "SRTE-181. Акт КМ7 недоступен для редактирования")
 	public void testKM7UnableToEdit(){
+	}
+	
+	private String getSumStr(Long sum){
+		String sumString = sum.toString();
+		String kop = sumString.substring((sumString.length() - 2), sumString.length());
+		String rub = sumString.substring(0, (sumString.length() - 2));
+		//log.info(rub + "," + kop);
+		return rub + "," + kop;
 	}
 	
 }

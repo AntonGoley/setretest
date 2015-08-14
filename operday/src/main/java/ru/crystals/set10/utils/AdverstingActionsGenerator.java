@@ -42,12 +42,6 @@ public class AdverstingActionsGenerator {
 		 * Заполнить результат акции
 		 */
 		ActionResultsType results = new ActionResultsType();
-//		
-//		XmlDiscountActionResult discount = new XmlDiscountActionResult();
-//		discount.setType(XmlDiscountActionResultType.PERCENT);
-//		discount.setValue(new BigDecimal("50.00"));
-//		
-//		results.setCalculation(discount);
 		
 		// тип акции
 		SetType actionType = new SetType();
@@ -78,7 +72,12 @@ public class AdverstingActionsGenerator {
 	/*
 	 * Добавить товарный набор
 	 */
-	public AdvertisingActionType addSetType(AdvertisingActionType action){
+	public AdvertisingActionType addDiscountActionResult(AdvertisingActionType action){
+//		XmlDiscountActionResult discount = new XmlDiscountActionResult();
+//		discount.setType(XmlDiscountActionResultType.PERCENT);
+//		discount.setValue(new BigDecimal("50.00"));
+//		
+//		results.setCalculation(discount);
 		return action;
 	}
 	

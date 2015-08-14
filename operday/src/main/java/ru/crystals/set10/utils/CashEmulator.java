@@ -54,6 +54,8 @@ public class CashEmulator {
 	HttpClient httpConnect = new HttpClient();
 	private CashManagerRemote cashManager;
 	
+//	private CashVO cashVo;
+	
 	/*
 	 * Список созданных в тестах касс
 	 */
@@ -234,7 +236,7 @@ public class CashEmulator {
 	/*
 	 * закрыть текущую смену
 	 */
-	public DocumentEntity nextZReport(Long sumCashIn, Long sumCashOut){
+	public ReportShiftEntity nextZReport(Long sumCashIn, Long sumCashOut){
 		long sumPurchaseFiscal = Long.valueOf(getShiftSumChecks());
 		long sumReturnFiscal = (long) getShiftSumChecksRefund();
 		
@@ -271,8 +273,9 @@ public class CashEmulator {
 	    rse.setNumber((long) checkNumber);
 	    rse.setSession(shift.getSessionStart());
 	    
-	    rse.setIncresentTotalStart(100L);
-	    rse.setIncresentTotalFinish(200L);
+	    long totalStart = shift.getIncresentTotalStart() + DisinsectorTools.random(1000);
+	    rse.setIncresentTotalStart(totalStart);
+	    rse.setIncresentTotalFinish(totalStart + (sumCashOut - sumCashIn));
 	    
 	    shift.setShiftClose(dateClose);
 	    sendDocument(rse);
@@ -447,6 +450,8 @@ public class CashEmulator {
 	     returnPe.setFiscalDocNum("test; refund" + String.valueOf(System.currentTimeMillis()));
 	     returnPe.setPositions(positions);
 	     returnPe.setReturn();
+	     returnPe.setCheckSumEnd(summ);
+	     returnPe.setCheckSumStart(summ);
 	     
 	     List<PaymentEntity> paymentEntityList = new ArrayList<PaymentEntity>(1);
 	      CashPaymentEntity payE = new CashPaymentEntity();
@@ -459,8 +464,7 @@ public class CashEmulator {
 	      paymentEntityList.add(payE);
 	      returnPe.setPayments(paymentEntityList);
 	      returnPe.setDiscountValueTotal(Long.valueOf(0L));
-	      returnPe.setCheckSumEnd(Long.valueOf(summ));
-	      returnPe.setCheckSumStart(Long.valueOf(summ));
+
 	      
 	      // смотрим если произвольный возврат 
 	      if (!arbitraryReturn)
@@ -534,6 +538,7 @@ public class CashEmulator {
       shift.setCashNum(new Long(cashNumber));
       shift.setShopIndex(Long.valueOf(shopNumber));
       shift.setSessionStart(sess);
+      shift.setIncresentTotalStart(DisinsectorTools.random(1000));
       sendCashMessage();
       return shift;
     }
@@ -684,12 +689,27 @@ public class CashEmulator {
 		cashVo.setFiscalNum("fisc" + prefix);
 		cashVo.setFiscalDate(DisinsectorTools.getDate(CashManagerRemote.DATE_FORMAT, date));
 		cashVo.setHardwareName("Beetle");
+//		this.cashVo = cashVo;
 		return cashVo;
 	}
+	
+//	public CashVO getCashVO(){
+//		if (this.cashVo == null){
+//			setCashVO(this.cashNumber, String.valueOf(this.shopNumber), new Date().getTime());
+//		}
+//		
+//		return this.cashVo;
+//	}
+//	
+//	public int getShiftNum(){
+//		return this.shiftNum;
+//	}
 	
 	public void sendCashMessage(){
 		CashOnlineMessage message = new CashOnlineMessage();
 		message.setUser(shift.getSessionStart().getUser());
 		docSender.sendObject(DataTypesEnum.CASHONLINE_TYPE.code, message);
 	}
+	
+	
 }
