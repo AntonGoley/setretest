@@ -1,24 +1,28 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <goods-catalog>
-    <good marking-of-the-good="946606">
-        <name>Товар_946606</name>
-        <bar-code code="1439481946607">
+    <good marking-of-the-good="133082">
+        <name>Товар_133082</name>
+        <bar-code code="1439809133083">
             <count>1</count>
             <default-code>true</default-code>
         </bar-code>
-        <product-type>ProductPieceEntity</product-type>
+        <bar-code code="2833082">
+            <count>1</count>
+            <default-code>false</default-code>
+        </bar-code>
+        <product-type>ProductWeightEntity</product-type>
         <child>false</child>
-        <price-entry price="7778.85">
-            <begin-date>2015-08-03T19:05:57</begin-date>
-            <end-date>2015-08-23T19:05:57</end-date>
+        <price-entry price="1693.24">
+            <begin-date>2015-08-07T13:58:58</begin-date>
+            <end-date>2015-08-27T13:58:58</end-date>
             <number>1</number>
             <department number="1">
                 <name>Отдел 1</name>
             </department>
         </price-entry>
-        <price-entry price="7772.86">
-            <begin-date>2015-08-03T19:05:57</begin-date>
-            <end-date>2015-08-23T19:05:57</end-date>
+        <price-entry price="1687.25">
+            <begin-date>2015-08-07T13:58:58</begin-date>
+            <end-date>2015-08-27T13:58:58</end-date>
             <number>2</number>
             <department number="1">
                 <name>Отдел 1</name>
@@ -31,12 +35,20 @@
                 <name>Группа 52</name>
             </parent-group>
         </group>
-        <measure-type id="7">
-            <name>шт.</name>
+        <measure-type id="2">
+            <name>кг.</name>
         </measure-type>
         <delete-from-cash>false</delete-from-cash>
-        <erp-code>946606</erp-code>
-        <fullname>Товар_946606_полное имя товара - (fullname)</fullname>
+        <plugin-property key="plu-number" value="ProductWeightEntity"/>
+        <plugin-property key="composition" value="Composition_133082_PLU = ProductWeightEntityВсе хотят, чтобы: Импорт данных с превышением размера в полях плагинных свойств товара не должен приводить к ошибкам сервера и отклонению всего импортируемого пакета данных Acceptance: Корректно обрезать поля по следующим импортируемым плагинным свойствам для каждого типа товара. Обрезать значения текстовых полей, по размеру этих полей в соответствующих таблицах. 1. Разновидность товара: &quot;Штучный товар&quot; (ProductPieceEntityBillet) composition character varying(1024), – Состав продукта foodvalue character varying(255), – Пищевая ценность storageconditions character varying(255), – Условия храненияВсе хотят, чтобы: Импорт данных с превышением размера в полях плагинных свойств товара не должен приводить к ошибкам сервера и отклонению всего импортируемого пакета данных Acceptance: Корректно обрезать поля по следующим импортируемым плагинным свойствам для каждого типа товара. Обрезать значения текстовых полей, по размеру этих полей в соответствующих таблицах. 1. Разновидность товара: &quot;Штучный товар&quot; (ProductPieceEntityBillet) composition character varying(1024), – Состав продукта foodvalue character varying(255), – Пищевая ценность storageconditions character varying(255), – Условия хранения"/>
+        <plugin-property key="food-value" value="Food_value_133082_PLU = ProductWeightEntityВсе хотят, чтобы: Импорт данных с превышением размера в полях плагинных свойств товара не должен приводить к ошибкам сервера и отклонению всего импортируемого пакета данных Acceptance: Корректно обрезать поля по следующим импортируемым плагинным свойствам для каждого типа товара. Обрезать значения текстовых полей, по размеру этих полей в соответствующих таблицах. 1. Разновидность товара: &quot;Штучный товар&quot; (ProductPieceEntityBillet) composition character varying(1024), – Состав продукта foodvalue character varying(255), – Пищевая ценность storageconditions character varying(255), – Условия хранения"/>
+        <plugin-property key="storage-conditions" value="Storage-condidions_133082_PLU = ProductWeightEntityВсе хотят, чтобы: Импорт данных с превышением размера в полях плагинных свойств товара не должен приводить к ошибкам сервера и отклонению всего импортируемого пакета данных Acceptance: Корректно обрезать поля по следующим импортируемым плагинным свойствам для каждого типа товара. Обрезать значения текстовых полей, по размеру этих полей в соответствующих таблицах. 1. Разновидность товара: &quot;Штучный товар&quot; (ProductPieceEntityBillet) composition character varying(1024), – Состав продукта foodvalue character varying(255), – Пищевая ценность storageconditions character varying(255), – Условия хранения"/>
+        <plugin-property key="producer" value="Producer_133082_PLU=ProductWeightEntityВсе хотят, чтобы: Импорт данных с превышением размера в полях плагинных свойств товара не должен приводить к ошибкам сервера и отклонению всего импортируемого пакета данных Acceptance: Корректно обрезать поля по следующим импортируемым плагинным свойствам для каждого типа товара. Обрезать значения текстовых полей, по размеру этих полей в соответствующих таблицах. 1. Разновидность товара: &quot;Штучный товар&quot; (ProductPieceEntityBillet) composition character varying(1024), – Состав продукта foodvalue character varying(255), – Пищевая ценность storageconditions character varying(255), – Условия хранения"/>
+        <plugin-property key="button-on-scale" value="Button-on-scale133082_PLU=ProductWeightEntityВсе хотят, чтобы: Импорт данных с превышением размера в полях плагинных свойств товара не должен приводить к ошибкам сервера и отклонению всего импортируемого пакета данных Acceptance: Корректно обрезать поля по следующим импортируемым плагинным свойствам для каждого типа товара. Обрезать значения текстовых полей, по размеру этих полей в соответствующих таблицах. 1. Разновидность товара: &quot;Штучный товар&quot; (ProductPieceEntityBillet) composition character varying(1024), – Состав продукта foodvalue character varying(255), – Пищевая ценность storageconditions character varying(255), – Условия хранения"/>
+        <plugin-property key="description-on-scale-screen" value="Description-on-scale-screen133082_PLU=ProductWeightEntityВсе хотят, чтобы: Импорт данных с превышением размера в полях плагинных свойств товара не должен приводить к ошибкам сервера и отклонению всего импортируемого пакета данных Acceptance: Корректно обрезать поля по следующим импортируемым плагинным свойствам для каждого типа товара. Обрезать значения текстовых полей, по размеру этих полей в соответствующих таблицах. 1. Разновидность товара: &quot;Штучный товар&quot; (ProductPieceEntityBillet) composition character varying(1024), – Состав продукта foodvalue character varying(255), – Пищевая ценность storageconditions character varying(255), – Условия хранения"/>
+        <plugin-property key="name-on-scale-screen" value="Name-on-scale-screen133082_PLU=ProductWeightEntityВсе хотят, чтобы: Импорт данных с превышением размера в полях плагинных свойств товара не должен приводить к ошибкам сервера и отклонению всего импортируемого пакета данных Acceptance: Корректно обрезать поля по следующим импортируемым плагинным свойствам для каждого типа товара. Обрезать значения текстовых полей, по размеру этих полей в соответствующих таблицах. 1. Разновидность товара: &quot;Штучный товар&quot; (ProductPieceEntityBillet) composition character varying(1024), – Состав продукта foodvalue character varying(255), – Пищевая ценность storageconditions character varying(255), – Условия хранения"/>
+        <erp-code>133082</erp-code>
+        <fullname>Товар_133082_полное имя товара - (fullname)</fullname>
         <certification-type>4</certification-type>
     </good>
 </goods-catalog>

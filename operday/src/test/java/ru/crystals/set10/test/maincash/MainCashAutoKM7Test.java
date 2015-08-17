@@ -98,7 +98,7 @@ public class MainCashAutoKM7Test extends MainCashConfigTest {
 	public void testKM7ContainsAllClosedShifts(){
 		removeFileReports();
 		docs.printDoc(autoDoc);
-		String reportResult = getFileContent(new Integer[]{1, 2});
+		String reportResult = getFileContent(new Integer[]{1, 2, 3, 4});
 		
 		//527493 0,0019 4987 987fact0279858 fisc0279858
 		String docLineInReport =  getSumStr(reportShift1.getSumPurchaseFiscal()) + " "
