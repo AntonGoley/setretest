@@ -1,58 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <goods-catalog>
-    <good marking-of-the-good="899381">
-        <name>Товар_899381</name>
-        <bar-code code="1439893899382">
-            <count>1</count>
-            <default-code>true</default-code>
-        </bar-code>
-        <bar-code code="2899381">
-            <count>1</count>
-            <default-code>false</default-code>
-        </bar-code>
-        <bar-code code="1439893899384" deleted="true">
-            <count>1</count>
-            <default-code>false</default-code>
-        </bar-code>
-        <product-type>ProductWeightEntity</product-type>
-        <child>false</child>
-        <price-entry price="4707.78">
-            <begin-date>2015-08-08T13:31:44</begin-date>
-            <end-date>2015-08-28T13:31:44</end-date>
-            <number>1</number>
-            <department number="1">
-                <name>Отдел 1</name>
-            </department>
-        </price-entry>
-        <price-entry price="4701.79">
-            <begin-date>2015-08-08T13:31:44</begin-date>
-            <end-date>2015-08-28T13:31:44</end-date>
-            <number>2</number>
-            <department number="1">
-                <name>Отдел 1</name>
-            </department>
-        </price-entry>
-        <vat>18.0</vat>
-        <group id="52001">
-            <name>Группа 5201</name>
-            <parent-group id="52">
-                <name>Группа 52</name>
-            </parent-group>
-        </group>
-        <measure-type id="2">
-            <name>кг.</name>
-        </measure-type>
-        <delete-from-cash>false</delete-from-cash>
-        <plugin-property key="plu-number" value="ProductWeightEntity"/>
-        <plugin-property key="composition" value="Composition_899381_PLU = ProductWeightEntity"/>
-        <plugin-property key="food-value" value="Food_value_899381_PLU = ProductWeightEntity"/>
-        <plugin-property key="storage-conditions" value="Storage-condidions_899381_PLU = ProductWeightEntity"/>
-        <plugin-property key="producer" value="Producer_899381_PLU=ProductWeightEntity"/>
-        <plugin-property key="button-on-scale" value="Button-on-scale899381_PLU=ProductWeightEntity"/>
-        <plugin-property key="description-on-scale-screen" value="Description-on-scale-screen899381_PLU=ProductWeightEntity"/>
-        <plugin-property key="name-on-scale-screen" value="Name-on-scale-screen899381_PLU=ProductWeightEntity"/>
-        <erp-code>899381</erp-code>
-        <fullname>Товар_899381_полное имя товара - (fullname)</fullname>
-        <certification-type>4</certification-type>
-    </good>
+    <bar-code code="1439896172432" deleted="false">
+        <count>1</count>
+        <default-code>false</default-code>
+    </bar-code>
 </goods-catalog>

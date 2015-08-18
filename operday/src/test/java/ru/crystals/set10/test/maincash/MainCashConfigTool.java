@@ -133,9 +133,7 @@ public class MainCashConfigTool {
 	 */
 	public static void clearLastKM7Doc(Long date){
 		String dateFormatted = DisinsectorTools.getDate("yyyy-MM-dd", date);
-		Integer id = dbAdapter.queryForInt(DB_RETAIL_OPERDAY, String.format("select id from od_maincash_document where doc_type = 'KM7' and  operday = '%s'", dateFormatted));
-		dbAdapter.updateDb(DB_RETAIL_OPERDAY, String.format("delete from od_maincash_document_km7  where id = %s", id));
-		dbAdapter.updateDb(DB_RETAIL_OPERDAY, String.format("delete from od_maincash_document  where id = %s", id));
+		dbAdapter.updateDb(DB_RETAIL_OPERDAY, String.format("delete from od_maincash_document  where doc_type = 'KM7' and  operday = '%s'", dateFormatted));
 		log.info("Удалены автоматические документы КМ7 за " + dateFormatted);
 	}
 	
