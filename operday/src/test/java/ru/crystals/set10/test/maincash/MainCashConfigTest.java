@@ -3,15 +3,12 @@ package ru.crystals.set10.test.maincash;
 import java.io.File;
 import java.math.BigDecimal;
 import java.util.Date;
-
-import org.testng.annotations.BeforeSuite;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-
 import ru.crystals.set10.config.Config;
 import ru.crystals.set10.pages.basic.LoginPage;
 import ru.crystals.set10.pages.operday.cashes.CashesPage;
 import ru.crystals.set10.pages.operday.cashes.MainCashDocsPage;
-import ru.crystals.set10.pages.operday.cashes.MainCashManualDocPage;
 import ru.crystals.set10.test.AbstractTest;
 import ru.crystals.set10.utils.DisinsectorTools;
 import static ru.crystals.set10.pages.operday.OperDayPage.CASHES;
@@ -30,12 +27,9 @@ public class MainCashConfigTest extends AbstractTest {
 	
 	protected long today = new Date().getTime();
 	
-	@BeforeSuite
-	private void turnMainCash(){
-		MainCashConfigTool.ifOdExist(new Date().getTime());
-		Long[] operdays = new Long[1];
-		operdays[0] = 0L;
-		MainCashConfigTool.createODWithCashDocs(operdays);
+	@BeforeClass
+	public void checkOd(){
+		MainCashConfigTool.checkOd(today); 
 	}
 	
 	protected void reopenOdAndGreenShifts(){
@@ -45,7 +39,6 @@ public class MainCashConfigTest extends AbstractTest {
 	}
 	
 	protected void openMainDocsPage(){
-//		turnMainCash();
 		//TODO: добавить проверку существования од и включенной ГК
 		docs = new LoginPage(getDriver(), Config.RETAIL_URL)
 		.openOperDay(Config.MANAGER, Config.MANAGER_PASSWORD)

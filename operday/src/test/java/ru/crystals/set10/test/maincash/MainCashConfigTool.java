@@ -63,12 +63,15 @@ public class MainCashConfigTool {
 	private static String ifOdExist = "select count(*) from od_operday where day = '%s' ";
 	
 	
-	public static Boolean ifOdExist(long date){
-		int result =  dbAdapter.queryForInt(DB_RETAIL_OPERDAY, String.format(ifOdExist , DisinsectorTools.getDate("yyyy-MM-dd", date)));
+	public static void checkOd(long date){
+		String dateFormatted = DisinsectorTools.getDate("yyyy-MM-dd", date);
+		log.info("Проверить, существует ли ОД на дату: " + dateFormatted);
+		int result =  dbAdapter.queryForInt(DB_RETAIL_OPERDAY, String.format(ifOdExist , dateFormatted));
 		if (result == 0){
-			return false;	
+			Long[] operdays = new Long[1];
+			operdays[0] = 0L;
+			createODWithCashDocs(operdays);
 		} 
-		return false;
 	}
 	
 	/*

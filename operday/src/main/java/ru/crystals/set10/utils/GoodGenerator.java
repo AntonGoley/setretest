@@ -10,6 +10,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
 
 import ru.crystals.set10.config.Config;
 import ru.crystals.setretailx.products.catalog.BarCode;
+import ru.crystals.setretailx.products.catalog.BarcodeExt;
 import ru.crystals.setretailx.products.catalog.Department;
 import ru.crystals.setretailx.products.catalog.Good;
 import ru.crystals.setretailx.products.catalog.GoodsGroup;
@@ -104,10 +105,7 @@ public class GoodGenerator {
 		good.setProductType(goodType);
 		good.setGroup(generateGrop());
 		
-		BarCode bc = new BarCode();
-		bc.setCode(String.valueOf(prefix++));
-		bc.setCount(new BigDecimal(1));
-		bc.setDefaultCode(true);
+		BarcodeExt bc = generateBarcode();
 		good.getBarCodes().add(bc);
 		
 		/*
@@ -125,6 +123,14 @@ public class GoodGenerator {
 		good.getPrices().add(price1);
 		good.getPrices().add(generatePriceWithValue(2L, price1.getPrice().subtract(new BigDecimal("5.99")))); /*цена 1 генерится не меньше 10*/
 		return good;
+	}
+	
+	public BarcodeExt generateBarcode(){
+		BarcodeExt bc = new BarcodeExt();
+		bc.setCode(String.valueOf(prefix++));
+		bc.setCount(new BigDecimal(1));
+		bc.setDefaultCode(true);
+		return bc;
 	}
 	
 	public PluginProperty generatePluginProperty(String key, String value){

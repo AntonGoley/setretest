@@ -10,6 +10,8 @@ import ru.crystals.set10.config.Config;
 import ru.crystals.set10.utils.DisinsectorTools;
 import ru.crystals.set10.utils.GoodGenerator;
 import ru.crystals.set10.utils.SoapRequestSender;
+import ru.crystals.setretailx.products.catalog.BarCode;
+import ru.crystals.setretailx.products.catalog.BarcodeExt;
 import ru.crystals.setretailx.products.catalog.Good;
 import ru.crystals.setretailx.products.catalog.GoodsCatalog;
 
@@ -35,6 +37,17 @@ public class WeightPatternsTest extends WeightAbstractTest {
 		soapSender.setSoapServiceIP(Config.RETAIL_HOST);
 		GoodsCatalog goodsCatalog = new GoodsCatalog();
 		List<Good> goods = new ArrayList<Good>(0);
+		
+		
+		weightGood1 = goodGenerator.generateWeightGood(GoodGenerator.GOODTYPE_WEIGHT);
+		BarcodeExt barCodeDeleted = goodGenerator.generateBarcode();
+		barCodeDeleted.setDefaultCode(false);
+		barCodeDeleted.setDeleted(true);
+		weightGood1.getBarCodes().add(barCodeDeleted);
+		soapSender.sendGood(weightGood1);
+	
+		barCodeDeleted.setDeleted(false);
+		soapSender.sendBarcode((BarcodeExt) barCodeDeleted);
 		
 		for (int i=1; i<5; i++){
 		
@@ -64,7 +77,7 @@ public class WeightPatternsTest extends WeightAbstractTest {
 	
 	@Test ( description = "SRL-717")
 	public void testGood(){
-		// Добавить шаблоны весов и весы
+		
 	}
 	
 	
