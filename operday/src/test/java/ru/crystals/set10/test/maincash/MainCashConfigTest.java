@@ -4,6 +4,7 @@ import java.io.File;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Test;
 
 import ru.crystals.set10.config.Config;
@@ -29,15 +30,12 @@ public class MainCashConfigTest extends AbstractTest {
 	
 	protected long today = new Date().getTime();
 	
-	//@BeforeSuite
+	@BeforeSuite
 	private void turnMainCash(){
-		MainCashConfigTool.addPrivileges();
-		MainCashConfigTool.enableMainCash(true);
-		MainCashConfigTool.clearOD();
+		MainCashConfigTool.ifOdExist(new Date().getTime());
 		Long[] operdays = new Long[1];
 		operdays[0] = 0L;
 		MainCashConfigTool.createODWithCashDocs(operdays);
-		MainCashConfigTool.turnMainCash(new Date().getTime(), 10000);
 	}
 	
 	protected void reopenOdAndGreenShifts(){

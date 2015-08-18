@@ -60,6 +60,17 @@ public class MainCashConfigTool {
 	
 	private static  String makeShiftsGreen = "update od_shift set state = 1 where shiftcreate > '%s 00:00:00' and shiftcreate < '%s 23:59:59.999'"; 
 	
+	private static String ifOdExist = "select count(*) from od_operday where day = '%s' ";
+	
+	
+	public static Boolean ifOdExist(long date){
+		int result =  dbAdapter.queryForInt(DB_RETAIL_OPERDAY, String.format(ifOdExist , DisinsectorTools.getDate("yyyy-MM-dd", date)));
+		if (result == 0){
+			return false;	
+		} 
+		return false;
+	}
+	
 	/*
 	 * Удалить ОД и все документы Главной кассы:
 	 * КМ3, КМ6, КМ7, ПКО, РКО, ДДС, ЛКК
